@@ -10,14 +10,16 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.bridge.JavaScriptModule;
 
+import androidx.annotation.NonNull;
+
 public class HaskellShelleyPackage implements ReactPackage {
-    @Override
-    public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
+    @NonNull
+    public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext) {
         return Arrays.<NativeModule>asList(new HaskellShelleyModule(reactContext));
     }
 
-    @Override
-    public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
+    @NonNull
+    public List<ViewManager> createViewManagers(@NonNull ReactApplicationContext reactContext) {
         return Collections.emptyList();
     }
 }

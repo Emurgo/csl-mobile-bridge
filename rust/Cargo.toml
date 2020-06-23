@@ -1,0 +1,24 @@
+[package]
+name = "react-native-haskell-shelley"
+version = "0.0.1"
+authors = [""]
+edition = "2018"
+
+[build-dependencies]
+cbindgen = "0.14.1"
+
+[dependencies]
+cddl-lib = { git = "https://github.com/Emurgo/cardano-serialization-lib.git", branch = "tx-sign", default-features = false }
+wasm-bindgen = { version = "0.2" }
+
+[target.'cfg(target_os="android")'.dependencies]
+jni = "0.13.1"
+
+[lib]
+name = "react_native_haskell_shelley"
+crate-type = ["staticlib", "cdylib"]
+
+[profile.release]
+debug = false
+opt-level = 's'
+lto = false

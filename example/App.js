@@ -8,22 +8,35 @@
  * https://github.com/facebook/react-native
  */
 
-import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import HaskellShelley from 'react-native-haskell-shelley';
+import React, {Component} from 'react'
+import {StyleSheet, Text, View} from 'react-native'
+import {AddrKeyHash} from 'react-native-haskell-shelley'
 
 export default class App extends Component<{}> {
   state = {
     status: 'starting',
-    message: '--'
-  };
-  componentDidMount() {
-    HaskellShelley.sampleMethod('Testing', 123, (message) => {
+    message: '--',
+  }
+  async componentDidMount() {
+    const addrBytes = Buffer.from(
+      // '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbfd8800b51',
+      '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbfd8800b51',
+      'hex',
+    )
+    console.log(addrBytes)
+    // console.log(AddrKeyHash.from_bytes)
+    try {
+      const addr = await AddrKeyHash.from_bytes(addrBytes)
+      // const addr = await AddrKeyHash.from_bytes([1, 3, 3, 7])
+      console.log(addr)
+      const addrToBytes = await addr.to_bytes()
       this.setState({
         status: 'native callback received',
-        message
-      });
-    });
+      })
+      console.log(Buffer.from(addrToBytes).toString('hex'))
+    } catch (e) {
+      console.log(e)
+    }
   }
   render() {
     return (
@@ -33,7 +46,7 @@ export default class App extends Component<{}> {
         <Text style={styles.welcome}>☆NATIVE CALLBACK MESSAGE☆</Text>
         <Text style={styles.instructions}>{this.state.message}</Text>
       </View>
-    );
+    )
   }
 }
 
@@ -54,4 +67,4 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-});
+})

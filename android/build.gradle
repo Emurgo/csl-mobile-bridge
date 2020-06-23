@@ -10,10 +10,11 @@
 //   original location:
 //   - https://github.com/facebook/react-native/blob/0.58-stable/local-cli/templates/HelloWorld/android/app/build.gradle
 
-def DEFAULT_COMPILE_SDK_VERSION = 28
-def DEFAULT_BUILD_TOOLS_VERSION = '28.0.3'
+def DEFAULT_COMPILE_SDK_VERSION = 29
+def DEFAULT_BUILD_TOOLS_VERSION = '29.0.3'
 def DEFAULT_MIN_SDK_VERSION = 16
-def DEFAULT_TARGET_SDK_VERSION = 28
+def DEFAULT_TARGET_SDK_VERSION = 29
+def DEFAULT_NDK_API_LEVEL = 21
 
 def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
@@ -21,6 +22,7 @@ def safeExtGet(prop, fallback) {
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
+apply plugin: 'org.mozilla.rust-android-gradle.rust-android'
 
 buildscript {
     // The Android Gradle plugin is only required when opening the android folder stand-alone.
@@ -36,10 +38,20 @@ buildscript {
             classpath 'com.android.tools.build:gradle:3.4.1'
         }
     }
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+            google()
+        }
+    }
+    dependencies {
+        classpath 'gradle.plugin.org.mozilla.rust-android-gradle:plugin:0.8.3'
+    }
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
+apply plugin: 'org.mozilla.rust-android-gradle.rust-android'
 
 android {
     compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
@@ -50,9 +62,22 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     lintOptions {
         abortOnError false
     }
+}
+
+cargo {
+    profile = 'release'
+    module = '../rust'
+    libname = 'react_native_haskell_shelley'
+    targets = ['arm', 'arm64', 'x86', 'x86_64']
+    apiLevel = safeExtGet('ndkApiLevel', DEFAULT_NDK_API_LEVEL)
+    prebuiltToolchains = true
 }
 
 repositories {
@@ -73,6 +98,11 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
+
+    def defaultAndroidXVersion = "1.+"
+    def androidXVersion = safeExtGet('androidXVersion', defaultAndroidXVersion)
+    def androidXAnnotation = safeExtGet('androidXAnnotation', androidXVersion)
+    implementation "androidx.annotation:annotation:$androidXAnnotation"
 }
 
 def configureReactNativePom(def pom) {
@@ -131,6 +161,13 @@ afterEvaluate { project ->
         task "jar${name}"(type: Jar, dependsOn: javaCompileTask) {
             from javaCompileTask.destinationDir
         }
+
+        def productFlavor = ""
+        variant.productFlavors.each {
+            productFlavor += "${it.name.capitalize()}"
+        }
+        def buildType = "${variant.buildType.name.capitalize()}"
+        tasks["generate${productFlavor}${buildType}Assets"].dependsOn(tasks["cargoBuild"])
     }
 
     artifacts {
