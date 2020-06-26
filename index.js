@@ -98,9 +98,24 @@ export class StakeCredential extends Ptr {
   * @returns {Promise<StakeCredential>}
   */
   static async from_keyhash(hash) {
-    const addrKeyHashPtr = Ptr._assertClass(key, AddrKeyHash);
+    const addrKeyHashPtr = Ptr._assertClass(hash, AddrKeyHash);
     const ret = await HaskellShelley.stakeCredentialFromKeyHash(addrKeyHashPtr);
     return Ptr._wrap(ret, StakeCredential);
+  }
+
+  /**
+  * @returns {Promise<AddrKeyHash>}
+  */
+  async to_keyhash() {
+      const ret = await HaskellShelley.stakeCredentialToKeyHash(this.ptr);
+      return Ptr._wrap(ret, AddrKeyHash);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async kind() {
+      return await HaskellShelley.stakeCredentialKind(this.ptr);
   }
 }
 
@@ -113,9 +128,25 @@ export class BaseAddress extends Ptr {
   * @returns {Promise<BaseAddress>}
   */
   static async new(network, payment, stake) {
-      const paymentPtr = Ptr._assertClass(key, StakeCredential);
-      const stakePtr = Ptr._assertClass(key, StakeCredential);
+      const paymentPtr = Ptr._assertClass(payment, StakeCredential);
+      const stakePtr = Ptr._assertClass(stake, StakeCredential);
       const ret = await HaskellShelley.baseAddressNew(network, paymentPtr, stakePtr);
       return Ptr._wrap(ret, BaseAddress);
+  }
+
+  /**
+  * @returns {Promise<StakeCredential>}
+  */
+  async payment_cred() {
+      const ret = await HaskellShelley.baseAddressPaymentCred(this.ptr);
+      return Ptr._wrap(ret, StakeCredential);
+  }
+
+  /**
+  * @returns {Promise<StakeCredential>}
+  */
+  async stake_cred() {
+      const ret = await HaskellShelley.baseAddressStakeCred(this.ptr);
+      return Ptr._wrap(ret, StakeCredential);
   }
 }

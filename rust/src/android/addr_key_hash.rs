@@ -1,9 +1,6 @@
-use super::primitive::ToPrimitiveObject;
 use super::ptr_j::*;
 use super::result::ToJniResult;
-use super::string::ToJniString;
-use super::string::*;
-use crate::panic::{handle_exception_result, ToResult, Zip};
+use crate::panic::{handle_exception_result, ToResult};
 use crate::ptr::RPtrRepresentable;
 use jni::objects::{JObject};
 use jni::sys::{jbyteArray, jobject};

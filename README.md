@@ -34,9 +34,9 @@ For every new class:
 Now you are ready to add functions for your class/rust structure.
 
 For every new function in the module:
-- Declare an equivalent java function to the target rust function in `android/src/main/java/io/emurgo/rnhaskellshelley/Native.java`. The function name must be in camelCase and should respect the name given to the corresponding rust function.
+- Declare an equivalent java function to the target rust function in `android/src/main/java/io/emurgo/rnhaskellshelley/Native.java`. The function name must be in camelCase and should respect the name given to the corresponding rust function (note that the rust functions include a prefix in the form `Java_io_emurgo_rnhaskellshelley_Native`).
 
-- Add the function implementation in `android/src/main/java/io/emurgo/rnhaskellshelley/HaskellShelleyModule.java`
+- Add the implementation of the java function that will be exposed to react native in `android/src/main/java/io/emurgo/rnhaskellshelley/HaskellShelleyModule.java`.
 
 ### iOS
 // TODO

@@ -17,6 +17,10 @@ impl RPtrRef {
     self.0.typed_ref::<T>()
   }
 
+  pub unsafe fn owned<T: RPtrRepresentable>(mut self) -> Result<T> {
+    self.0.owned::<T>()
+  }
+
   fn new(ptr: RPtr) -> Self {
     return Self(ptr);
   }
@@ -72,6 +76,16 @@ impl JLongConvertible for u64 {
 
   fn into_jlong(self) -> jlong {
     unsafe { mem::transmute::<u64, jlong>(self) }
+  }
+}
+
+// TODO(v-almonacid): not sure about this casting. Currently not used.
+impl JLongConvertible for u8 {
+fn from_jlong(long: jlong) -> Self {
+    long as u8
+  }
+  fn into_jlong(self) -> jlong {
+    (self as u64).into_jlong()
   }
 }
 

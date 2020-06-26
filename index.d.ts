@@ -44,4 +44,35 @@ export class StakeCredential extends Ptr {
   * @returns {Promise<StakeCredential>}
   */
   static from_keyhash(hash: AddrKeyHash): Promise<StakeCredential>
+
+  /**
+  * @returns {Promise<AddrKeyHash>}
+  */
+  to_keyhash(): Promise<AddrKeyHash>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  kind(): Promise<number>
+}
+
+export class BaseAddress extends Ptr {
+
+  /**
+  * @param {number} network
+  * @param {StakeCredential} payment
+  * @param {StakeCredential} stake
+  * @returns {Promise<BaseAddress>}
+  */
+  static new(network, payment, stake): Promise<BaseAddress>
+
+  /**
+  * @returns {Promise<StakeCredential>}
+  */
+  payment_cred(): Promise<StakeCredential>
+
+  /**
+  * @returns {Promise<StakeCredential>}
+  */
+  stake_cred(): Promise<StakeCredential>
 }

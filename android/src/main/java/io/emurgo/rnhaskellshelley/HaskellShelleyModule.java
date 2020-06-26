@@ -45,7 +45,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public final void addrKeyHashFromBytes(String bytes, Promise promise) {
-        String b = bytes;
         Native.I
                 .addrKeyHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
                 .map(RPtr::toJs)
@@ -59,4 +58,56 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
                 .pour(promise);
     }
+
+    // StakeCredential
+
+    @ReactMethod
+    public final void stakeCredentialFromKeyHash(String addrKeyHash, Promise promise) {
+        Native.I
+                .stakeCredentialFromKeyHash(new RPtr(addrKeyHash))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeCredentialToKeyHash(String stakeCredential, Promise promise) {
+        Native.I
+                .stakeCredentialToKeyHash(new RPtr(stakeCredential))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeCredentialKind(String stakeCredential, Promise promise) {
+        Native.I
+                .stakeCredentialKind(new RPtr(stakeCredential))
+                .pour(promise);
+    }
+
+    // BaseAddress
+
+    @ReactMethod
+    public final void baseAddressNew(Integer network, String payment, String stake, Promise promise) {
+        Native.I
+                .baseAddressNew(network, new RPtr(payment), new RPtr(stake))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void baseAddressPaymentCred(String baseAddress, Promise promise) {
+        Native.I
+                .baseAddressPaymentCred(new RPtr(baseAddress))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void baseAddressStakeCred(String baseAddress, Promise promise) {
+        Native.I
+                .baseAddressStakeCred(new RPtr(baseAddress))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
 }
