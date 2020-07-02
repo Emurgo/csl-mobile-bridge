@@ -3,6 +3,9 @@ mod data;
 mod ptr_c;
 mod result;
 mod string;
+mod addr_key_hash;
+mod stake_credential;
+mod base_address;
 // declare other modules here
 // mod transaction;
 

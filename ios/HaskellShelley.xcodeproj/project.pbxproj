@@ -6,6 +6,14 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		AE1AC95B1CB206CFEBBDA378 /* libPods-HaskellShelley.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B79470C77387D074303A27D /* libPods-HaskellShelley.a */; };
+		E92DC13D24AB45A700800B61 /* HaskellShelley.m in Sources */ = {isa = PBXBuildFile; fileRef = E92DC13C24AB45A700800B61 /* HaskellShelley.m */; };
+		E92DC14424AB45B300800B61 /* NSString+RPtr.m in Sources */ = {isa = PBXBuildFile; fileRef = E92DC13E24AB45B200800B61 /* NSString+RPtr.m */; };
+		E92DC14524AB45B300800B61 /* NSData+DataPtr.m in Sources */ = {isa = PBXBuildFile; fileRef = E92DC13F24AB45B200800B61 /* NSData+DataPtr.m */; };
+		E92DC14624AB45B300800B61 /* SafeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E92DC14024AB45B300800B61 /* SafeOperation.m */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		58B511D91A9E6C8500147676 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -20,6 +28,17 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libHaskellShelley.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHaskellShelley.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		288C2D92A082A7DEF511068A /* Pods-HaskellShelley.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HaskellShelley.release.xcconfig"; path = "Target Support Files/Pods-HaskellShelley/Pods-HaskellShelley.release.xcconfig"; sourceTree = "<group>"; };
+		6B79470C77387D074303A27D /* libPods-HaskellShelley.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HaskellShelley.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C04E85A98CF089D86CA122D7 /* Pods-HaskellShelley.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HaskellShelley.debug.xcconfig"; path = "Target Support Files/Pods-HaskellShelley/Pods-HaskellShelley.debug.xcconfig"; sourceTree = "<group>"; };
+		E92DC13B24AB45A700800B61 /* HaskellShelley.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HaskellShelley.h; sourceTree = "<group>"; };
+		E92DC13C24AB45A700800B61 /* HaskellShelley.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HaskellShelley.m; sourceTree = "<group>"; };
+		E92DC13E24AB45B200800B61 /* NSString+RPtr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RPtr.m"; sourceTree = "<group>"; };
+		E92DC13F24AB45B200800B61 /* NSData+DataPtr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+DataPtr.m"; sourceTree = "<group>"; };
+		E92DC14024AB45B300800B61 /* SafeOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SafeOperation.m; sourceTree = "<group>"; };
+		E92DC14124AB45B300800B61 /* NSData+DataPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+DataPtr.h"; sourceTree = "<group>"; };
+		E92DC14224AB45B300800B61 /* SafeOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SafeOperation.h; sourceTree = "<group>"; };
+		E92DC14324AB45B300800B61 /* NSString+RPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RPtr.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE1AC95B1CB206CFEBBDA378 /* libPods-HaskellShelley.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,11 +61,38 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4B93580F816BA61E039B7359 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6B79470C77387D074303A27D /* libPods-HaskellShelley.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				E92DC14124AB45B300800B61 /* NSData+DataPtr.h */,
+				E92DC13F24AB45B200800B61 /* NSData+DataPtr.m */,
+				E92DC14324AB45B300800B61 /* NSString+RPtr.h */,
+				E92DC13E24AB45B200800B61 /* NSString+RPtr.m */,
+				E92DC14224AB45B300800B61 /* SafeOperation.h */,
+				E92DC14024AB45B300800B61 /* SafeOperation.m */,
+				E92DC13B24AB45A700800B61 /* HaskellShelley.h */,
+				E92DC13C24AB45A700800B61 /* HaskellShelley.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
+				DB03550605839DC9EE467E4C /* Pods */,
+				4B93580F816BA61E039B7359 /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		DB03550605839DC9EE467E4C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C04E85A98CF089D86CA122D7 /* Pods-HaskellShelley.debug.xcconfig */,
+				288C2D92A082A7DEF511068A /* Pods-HaskellShelley.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -55,6 +102,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "HaskellShelley" */;
 			buildPhases = (
+				6044332C6BA953771D886D8B /* [CP] Check Pods Manifest.lock */,
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
 				58B511D91A9E6C8500147676 /* CopyFiles */,
@@ -100,11 +148,40 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6044332C6BA953771D886D8B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HaskellShelley-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		58B511D71A9E6C8500147676 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E92DC13D24AB45A700800B61 /* HaskellShelley.m in Sources */,
+				E92DC14524AB45B300800B61 /* NSData+DataPtr.m in Sources */,
+				E92DC14624AB45B300800B61 /* SafeOperation.m in Sources */,
+				E92DC14424AB45B300800B61 /* NSString+RPtr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +301,7 @@
 		};
 		58B511F01A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C04E85A98CF089D86CA122D7 /* Pods-HaskellShelley.debug.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -240,6 +318,7 @@
 		};
 		58B511F11A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 288C2D92A082A7DEF511068A /* Pods-HaskellShelley.release.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

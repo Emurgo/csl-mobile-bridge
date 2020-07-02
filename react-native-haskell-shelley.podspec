@@ -38,6 +38,5 @@ Pod::Spec.new do |s|
   s.preserve_paths = "rust/**/*"
 
   s.dependency "React"
-  # ...
-  # s.dependency "..."
+
 end

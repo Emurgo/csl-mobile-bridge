@@ -39,6 +39,7 @@ impl<T> ToResult<T> for std::result::Result<T, Box<dyn Any + 'static>> {
   }
 }
 
+#[allow(dead_code)]
 pub fn handle_exception<F: FnOnce() -> R + panic::UnwindSafe, R>(func: F) -> Result<R> {
   handle_exception_result(|| Ok(func()))
 }
@@ -49,6 +50,7 @@ pub fn handle_exception_result<F: FnOnce() -> Result<R> + panic::UnwindSafe, R>(
   panic::catch_unwind(func).into_result().and_then(|res| res)
 }
 
+#[allow(dead_code)]
 pub fn hide_exceptions() {
   panic::set_hook(Box::new(|_| {}));
 }
