@@ -1,21 +1,22 @@
 mod address; // TODO: remove?
 mod primitive;
 mod ptr_j;
+mod hash_type;
 mod result;
 mod string;
 mod addr_key_hash;
+mod transaction_hash;
 mod stake_credential;
 mod base_address;
 mod unit_interval;
+mod transaction_input;
+mod transaction_output;
 // declare other modules here
 // mod transaction;
-
 
 pub use address::*;
 pub use addr_key_hash::*;
 pub use stake_credential::*;
-// and here:
-// pub use transaction::*;
 
 #[allow(non_snake_case)]
 #[no_mangle]

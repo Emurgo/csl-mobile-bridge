@@ -91,6 +91,26 @@ export class AddrKeyHash extends Ptr {
   }
 }
 
+export class TransactionHash extends Ptr {
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionHash>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.transactionHashFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, TransactionHash);
+  }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+      const b64 = await HaskellShelley.transactionHashToBytes(this.ptr);
+      return Uint8ArrayFromB64(b64);
+  }
+}
+
 export class StakeCredential extends Ptr {
 
   /**
@@ -177,6 +197,69 @@ export class UnitInterval extends Ptr {
   static async new(index0, index1) {
     const ret = await HaskellShelley.unitIntervalNew(index0, index1);
     return Ptr._wrap(ret, UnitInterval);
+  }
+}
+
+
+export class TransactionInput extends Ptr {
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionInput>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.transactionInputFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, TransactionInput);
+  }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+      const b64 = await HaskellShelley.transactionInputToBytes(this.ptr);
+      return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {TransactionHash} transactionId
+  * @param {TransactionIndex} index
+  * @returns {Promise<TransactionInput>}
+  */
+  static async new(transactionId, index) {
+      const transactionIdPtr = Ptr._assertClass(transactionId, TransactionHash);
+      const indexPtr = Ptr._assertClass(index, TransactionIndex);
+      const ret = await HaskellShelley.transactionInputNew(transactionIdPtr, indexPtr);
+      return Ptr._wrap(ret, TransactionInput);
+  }
+
+}
+
+export class TransactionOutput extends Ptr {
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionOutput>}
+  */
+  static async from_bytes(bytes: Uint8Array) {
+    const ret = await HaskellShelley.transactionOutputFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, TransactionOutput);
+  }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+      const b64 = await HaskellShelley.transactionOutputToBytes(this.ptr);
+      return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Address} address
+  * @param {Coin} amount
+  * @returns {Promise<TransactionOutput>}
+  */
+  static async new(address: Address, amount: Coin) {
+    const addrPtr = Ptr._assertClass(address, Address);
+    const ret = await HaskellShelley.transactionOutputNew(addrPtr, amount);
+    return Ptr._wrap(ret, TransactionOutput);
   }
 
 }

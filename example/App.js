@@ -16,6 +16,7 @@ import {
   BaseAddress,
   StakeCredential,
   UnitInterval,
+  TransactionHash,
 } from 'react-native-haskell-shelley'
 
 const assert = (value: any, message: string, ...args: any) => {
@@ -33,6 +34,7 @@ export default class App extends Component<{}> {
   async componentDidMount() {
     const addr = '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' // 28B
     const addrBytes = Buffer.from(addr, 'hex')
+
     try {
       // ------------------ Address -----------------------
       const baseAddrHex =
@@ -56,6 +58,15 @@ export default class App extends Component<{}> {
       assert(
         Buffer.from(addrToBytes).toString('hex') === addr,
         'AddrKeyHash.to_bytes should match original input address',
+      )
+
+      // ------------------ TransactionHash -----------------------
+      const txHash = await TransactionHash.from_bytes(addrBytes)
+      const txHashToBytes = await txHash.to_bytes()
+      console.log(Buffer.from(txHashToBytes).toString('hex'))
+      assert(
+        Buffer.from(txHashToBytes).toString('hex') === addr,
+        'TransactionHash.to_bytes should match original input address',
       )
 
       // ---------------- StakeCredential ---------------------
@@ -94,6 +105,7 @@ export default class App extends Component<{}> {
 
       console.log('baseAddrPtr', baseAddrPtr)
       console.log('addrKeyHash', addrKeyHash)
+      console.log('txHash', addrKeyHash)
       console.log('pymntAddrKeyHash', pymntAddrKeyHash)
       console.log('paymentCred', paymentCred)
       console.log('stakeCred', stakeCred)
