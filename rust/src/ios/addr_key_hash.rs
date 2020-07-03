@@ -14,7 +14,7 @@ pub unsafe extern "C" fn addr_key_hash_to_bytes(
   .response(result, error)
 }
 
-// cddl_lib: Address.from_bytes(Vec<u8>) -> Result<Address, JsValue>
+// cddl_lib: from_bytes(bytes: Vec<u8>) -> Result<$name, JsValue>
 // from react-native-chain-libs address.from_bytes(&[u8]) -> Result<Address, JsValue>
 #[no_mangle]
 pub unsafe extern "C" fn addr_key_hash_from_bytes(

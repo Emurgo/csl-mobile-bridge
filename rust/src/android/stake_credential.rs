@@ -16,9 +16,11 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_stakeCredentialF
   env: JNIEnv, _: JObject, key_hash_ptr: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
-    let key_hash = key_hash_ptr.owned::<AddrKeyHash>(&env)?;
-    let stake_credential = StakeCredential::from_keyhash(key_hash);
-    stake_credential.rptr().jptr(&env)
+    let key_hash = key_hash_ptr.rptr(&env)?;
+    key_hash
+      .typed_ref::<AddrKeyHash>()
+      .map(|key_hash| StakeCredential::from_keyhash(key_hash))
+      .and_then(|stake_credential| stake_credential.rptr().jptr(&env))
   })
   .jresult(&env)
 }

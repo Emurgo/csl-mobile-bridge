@@ -11,11 +11,10 @@ pub unsafe extern "C" fn stake_credential_from_keyhash(
   keyhash: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
-    // let keyhash = keyhash.owned::<AddrKeyHash>(&env)?;
-    keyhash.owned::<AddrKeyHash>()
+    keyhash
+      // .owned::<AddrKeyHash>()
+      .typed_ref::<AddrKeyHash>()
       .map(|keyhash| StakeCredential::from_keyhash(keyhash))
-    // let stake_credential = StakeCredential::from_keyhash(keyhash)
-    // .map(|keyhash| StakeCredential::from_keyhash(keyhash))
   })
     .map(|stake_credential| stake_credential.rptr())
     .response(result, error)
