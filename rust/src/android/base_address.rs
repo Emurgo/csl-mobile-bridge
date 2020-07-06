@@ -1,8 +1,7 @@
 use super::primitive::ToPrimitiveObject;
 use super::ptr_j::*;
 use super::result::ToJniResult;
-// use super::string::ToJniString;
-use crate::panic::{handle_exception_result};
+use crate::panic::{handle_exception_result, Zip};
 use crate::ptr::RPtrRepresentable;
 use jni::objects::JObject;
 use jni::sys::{jobject, jint};
@@ -14,10 +13,14 @@ use cddl_lib::address::{BaseAddress, StakeCredential};
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_baseAddressNew(
   env: JNIEnv, _: JObject, network: jint, payment: JRPtr, stake: JRPtr
 ) -> jobject {
-  let payment = payment.owned::<StakeCredential>(&env);
-  let stake = stake.owned::<StakeCredential>(&env);
   handle_exception_result(|| {
-    BaseAddress::new(network as u8, payment?, stake?).rptr().jptr(&env)
+    let payment = payment.rptr(&env)?;
+    let stake = stake.rptr(&env)?;
+    payment.typed_ref::<StakeCredential>().zip(stake.typed_ref::<StakeCredential>()).and_then(
+      |(payment, stake)| {
+        BaseAddress::new(network as u8, payment, stake).rptr().jptr(&env)
+      }
+    )
   })
   .jresult(&env)
 }

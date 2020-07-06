@@ -33,5 +33,10 @@ final class Native {
     public final native Result<RPtr> baseAddressPaymentCred(RPtr baseAddress);
     public final native Result<RPtr> baseAddressStakeCred(RPtr baseAddress);
 
+    // UnitInterval
+    public final native Result<byte[]> unitIntervalToBytes(RPtr unitInterval);
+    public final native Result<RPtr> unitIntervalFromBytes(byte[] bytes);
+    public final native Result<RPtr> unitIntervalNew(long index0, long index1);
+
     public final native void ptrFree(RPtr ptr);
 }

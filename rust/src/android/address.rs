@@ -6,6 +6,7 @@ use jni::objects::{JObject};
 use jni::sys::{jbyteArray, jobject};
 use jni::JNIEnv;
 use cddl_lib::address::{Address};
+use cddl_lib::prelude::*;
 
 // cddl_lib: (&self) -> Vec<u8>
 // from react-native-chain-libs address.as_bytes (&self) -> Vec<u8>
@@ -36,8 +37,10 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_addressFromBytes
     env
       .convert_byte_array(bytes)
       .into_result()
-      .and_then(|bytes| Address::from_bytes(bytes).into_result())
-      .and_then(|address| address.rptr().jptr(&env))
+      //TODO: fix
+      // .and_then(|bytes| Address::from_bytes(bytes).into_result())
+      .and_then(|bytes| FromBytes::from_bytes(&bytes).into_result())
+      .and_then(|address: Address| address.rptr().jptr(&env))
   })
   .jresult(&env)
 }

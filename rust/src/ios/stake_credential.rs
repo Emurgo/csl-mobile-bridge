@@ -1,7 +1,6 @@
-use super::data::DataPtr;
 use super::result::CResult;
-use super::string::{CharPtr, IntoCString, IntoStr};
-use crate::panic::{handle_exception_result, ToResult, Zip};
+use super::string::{CharPtr};
+use crate::panic::{handle_exception_result};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cddl_lib::address::{StakeCredential};
 use cddl_lib::crypto::{AddrKeyHash};
@@ -11,11 +10,9 @@ pub unsafe extern "C" fn stake_credential_from_keyhash(
   keyhash: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
-    // let keyhash = keyhash.owned::<AddrKeyHash>(&env)?;
-    keyhash.owned::<AddrKeyHash>()
+    keyhash
+      .typed_ref::<AddrKeyHash>()
       .map(|keyhash| StakeCredential::from_keyhash(keyhash))
-    // let stake_credential = StakeCredential::from_keyhash(keyhash)
-    // .map(|keyhash| StakeCredential::from_keyhash(keyhash))
   })
     .map(|stake_credential| stake_credential.rptr())
     .response(result, error)

@@ -3,7 +3,7 @@
 
 use super::data::DataPtr;
 use super::result::CResult;
-use super::string::{CharPtr, IntoStr};
+use super::string::{CharPtr};
 use crate::panic::{handle_exception_result, ToResult};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cddl_lib::address::{Address};

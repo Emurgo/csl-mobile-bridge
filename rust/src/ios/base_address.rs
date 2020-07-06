@@ -1,10 +1,8 @@
-use super::data::DataPtr;
 use super::result::CResult;
-use super::string::{CharPtr, IntoCString, IntoStr};
-use crate::panic::{handle_exception_result, ToResult, Zip};
+use super::string::{CharPtr};
+use crate::panic::{handle_exception_result, Zip};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cddl_lib::address::{BaseAddress, StakeCredential};
-use cddl_lib::crypto::{AddrKeyHash};
 
 #[no_mangle]
 pub unsafe extern "C" fn base_address_new(
@@ -12,11 +10,9 @@ pub unsafe extern "C" fn base_address_new(
 ) -> bool {
   handle_exception_result(|| {
     payment
-      // .typed_ref::<StakeCredential>()
-      .owned::<StakeCredential>()
+      .typed_ref::<StakeCredential>()
       .zip(
-        // stake.typed_ref::<StakeCredential>()
-        stake.owned::<StakeCredential>()
+        stake.typed_ref::<StakeCredential>()
       )
       .map(|(payment, stake)| {
         BaseAddress::new(network, payment, stake)

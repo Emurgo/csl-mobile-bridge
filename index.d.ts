@@ -76,3 +76,23 @@ export class BaseAddress extends Ptr {
   */
   stake_cred(): Promise<StakeCredential>
 }
+
+export class UnitInterval extends Ptr {
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<UnitInterval>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<UnitInterval>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {number} index0
+  * @param {number} index1
+  * @returns {Promise<UnitInterval>}
+  */
+  static new(index0, index1): Promise<UnitInterval>
+}

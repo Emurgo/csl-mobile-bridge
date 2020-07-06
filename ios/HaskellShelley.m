@@ -129,6 +129,42 @@ RCT_EXPORT_METHOD(baseAddressStakeCred:(nonnull NSString *)ptr  withResolve:(RCT
     }] exec:ptr andResolve:resolve orReject:reject];
 }
 
+// UnitInterval
+
+RCT_EXPORT_METHOD(unitIntervalToBytes:(nonnull NSString *)unitIntervalPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* unitIntervalPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr unitInterval = [unitIntervalPtr rPtr];
+        return unit_interval_to_bytes(unitInterval, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:unitIntervalPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(unitIntervalFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return unit_interval_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(unitIntervalNew:(nonnull NSNumber *)index0 withIndex1:(nonnull NSNumber *)index1 withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        uint64_t index0 = [[params objectAtIndex:0] unsignedLongLongValue];
+        uint64_t index1 = [[params objectAtIndex:0] unsignedLongLongValue];
+        return unit_interval_new(index0, index1, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[index0, index1] andResolve:resolve orReject:reject];
+}
+
 + (void)initialize
 {
     if (self == [HaskellShelley class]) {

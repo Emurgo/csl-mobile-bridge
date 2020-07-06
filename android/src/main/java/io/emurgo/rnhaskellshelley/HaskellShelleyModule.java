@@ -110,4 +110,30 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // UnitInterval
+
+    @ReactMethod
+    public final void unitIntervalToBytes(String unitInterval, Promise promise) {
+        Native.I
+                .unitIntervalToBytes(new RPtr(unitInterval))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void unitIntervalFromBytes(String bytes, Promise promise) {
+        Native.I
+                .unitIntervalFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void unitIntervalNew(Double index0, Double index1, Promise promise) {
+        Native.I
+                .unitIntervalNew(index0.longValue(), index1.longValue())
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
 }
