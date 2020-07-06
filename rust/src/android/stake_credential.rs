@@ -1,7 +1,6 @@
 use super::primitive::ToPrimitiveObject;
 use super::ptr_j::*;
 use super::result::ToJniResult;
-// use super::string::ToJniString;
 use crate::panic::{handle_exception_result};
 use crate::ptr::RPtrRepresentable;
 use jni::objects::JObject;
@@ -48,7 +47,6 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_stakeCredentialK
       .typed_ref::<StakeCredential>()
       .map(|credential| credential.kind())
       .and_then(|kind| (kind as jint).jobject(&env))
-      // .and_then(|kind| kind.into_jlong().jobject(&env))
   })
   .jresult(&env)
 }

@@ -150,3 +150,33 @@ export class BaseAddress extends Ptr {
       return Ptr._wrap(ret, StakeCredential);
   }
 }
+
+export class UnitInterval extends Ptr {
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<UnitInterval>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.unitIntervalFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.unitIntervalToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {number} index0
+  * @param {number} index1
+  * @returns {Promise<UnitInterval>}
+  */
+  static async new(index0, index1) {
+    const ret = await HaskellShelley.unitIntervalNew(index0, index1);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+}

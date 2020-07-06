@@ -11,9 +11,11 @@
 import React, {Component} from 'react'
 import {StyleSheet, Text, View} from 'react-native'
 import {
+  Address,
   AddrKeyHash,
   BaseAddress,
   StakeCredential,
+  UnitInterval,
 } from 'react-native-haskell-shelley'
 
 const assert = (value: any, message: string, ...args: any) => {
@@ -30,10 +32,22 @@ export default class App extends Component<{}> {
     message: '--',
   }
   async componentDidMount() {
-    const addr =
-      '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbfd8800b51'
+    const addr = '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' // 28B
     const addrBytes = Buffer.from(addr, 'hex')
     try {
+      // ------------------ Address -----------------------
+      // TODO: throws rust type error
+      // const addr2 = '0100b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' // 28B
+      // const addrBytes2 = Buffer.from(addr2, 'hex')
+      // const addrGeneric = await Address.from_bytes(addrBytes2)
+      // console.log(addrGeneric)
+      // const addrGenericToBytes = await addrGeneric.to_bytes()
+      // console.log(Buffer.from(addrGenericToBytes).toString('hex'))
+      // assert(
+      //   Buffer.from(addrGenericToBytes).toString('hex') === addr2,
+      //   'Address.to_bytes should match original input address',
+      // )
+
       // ------------------ AddrKeyHash -----------------------
       const addrKeyHash = await AddrKeyHash.from_bytes(addrBytes)
       console.log(addrKeyHash)
@@ -59,7 +73,7 @@ export default class App extends Component<{}> {
 
       // ------------------- BaseAddress ---------------------
       const pymntAddr =
-        '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbfd8800b52'
+        '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41c0a' // 28B
       const pymntAddrKeyHash = await AddrKeyHash.from_bytes(
         Buffer.from(pymntAddr, 'hex'),
       )
@@ -74,18 +88,26 @@ export default class App extends Component<{}> {
         'BaseAddress:: -> payment_cred -> keyhash should match original input',
       )
 
-      /* eslint-disable-next-line react/no-did-mount-set-state */
-      this.setState({
-        status: 'tests finished',
-      })
+      // ------------------- UnitInterval ---------------------
+      const unitInterval = await UnitInterval.new(0, 1)
+      console.log(await unitInterval.to_bytes())
 
       console.log('addrKeyHash', addrKeyHash)
       console.log('pymntAddrKeyHash', pymntAddrKeyHash)
       console.log('paymentCred', paymentCred)
       console.log('stakeCred', stakeCred)
       console.log('baseAddr', baseAddr)
+
+      /* eslint-disable-next-line react/no-did-mount-set-state */
+      this.setState({
+        status: 'tests finished',
+      })
     } catch (e) {
       console.log(e)
+      /* eslint-disable-next-line react/no-did-mount-set-state */
+      this.setState({
+        status: e.message,
+      })
     }
   }
   render() {

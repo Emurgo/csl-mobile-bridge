@@ -3,7 +3,7 @@ use super::result::ToJniResult;
 use crate::panic::{handle_exception_result, ToResult};
 use crate::ptr::RPtrRepresentable;
 use jni::objects::{JObject};
-use jni::sys::{jbyteArray, jobject};
+use jni::sys::{jbyteArray, jobject, jlong};
 use jni::JNIEnv;
 use cddl_lib::{UnitInterval};
 
@@ -41,10 +41,10 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_unitIntervalFrom
 #[allow(non_snake_case)]
 #[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_unitIntervalNew(
-  env: JNIEnv, _: JObject, index_0: jint, index_1: jint
+  env: JNIEnv, _: JObject, index_0: jlong, index_1: jlong
 ) -> jobject {
   handle_exception_result(|| {
-    UnitInterval::new(index_0 as u32, index_1 as u32).rptr().jptr(&env)
+    UnitInterval::new(u64::from_jlong(index_0), u64::from_jlong(index_1)).rptr().jptr(&env)
   })
   .jresult(&env)
 }
