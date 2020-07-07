@@ -29,24 +29,24 @@ const assert = (value: any, message: string, ...args: any) => {
 export default class App extends Component<{}> {
   state = {
     status: 'starting',
-    message: '--',
   }
   async componentDidMount() {
     const addr = '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' // 28B
     const addrBytes = Buffer.from(addr, 'hex')
     try {
       // ------------------ Address -----------------------
-      // TODO: throws rust type error
-      // const addr2 = '0100b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' // 28B
-      // const addrBytes2 = Buffer.from(addr2, 'hex')
-      // const addrGeneric = await Address.from_bytes(addrBytes2)
-      // console.log(addrGeneric)
-      // const addrGenericToBytes = await addrGeneric.to_bytes()
-      // console.log(Buffer.from(addrGenericToBytes).toString('hex'))
-      // assert(
-      //   Buffer.from(addrGenericToBytes).toString('hex') === addr2,
-      //   'Address.to_bytes should match original input address',
-      // )
+      const baseAddrHex =
+        '00' +
+        '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' +
+        '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf'
+      const baseAddrBytes = Buffer.from(baseAddrHex, 'hex')
+      const baseAddrPtr = await Address.from_bytes(baseAddrBytes)
+      const addrPtrToBytes = await baseAddrPtr.to_bytes()
+      console.log(Buffer.from(addrPtrToBytes).toString('hex'))
+      assert(
+        Buffer.from(addrPtrToBytes).toString('hex') === baseAddrHex,
+        'Address.to_bytes should match original input address',
+      )
 
       // ------------------ AddrKeyHash -----------------------
       const addrKeyHash = await AddrKeyHash.from_bytes(addrBytes)
@@ -92,6 +92,7 @@ export default class App extends Component<{}> {
       const unitInterval = await UnitInterval.new(0, 1)
       console.log(await unitInterval.to_bytes())
 
+      console.log('baseAddrPtr', baseAddrPtr)
       console.log('addrKeyHash', addrKeyHash)
       console.log('pymntAddrKeyHash', pymntAddrKeyHash)
       console.log('paymentCred', paymentCred)
@@ -115,8 +116,6 @@ export default class App extends Component<{}> {
       <View style={styles.container}>
         <Text style={styles.welcome}>☆HaskellShelley example☆</Text>
         <Text style={styles.instructions}>STATUS: {this.state.status}</Text>
-        <Text style={styles.welcome}>☆NATIVE CALLBACK MESSAGE☆</Text>
-        <Text style={styles.instructions}>{this.state.message}</Text>
       </View>
     )
   }
