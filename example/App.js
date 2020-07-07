@@ -99,8 +99,6 @@ export default class App extends Component<{}> {
       console.log('stakeCred', stakeCred)
       console.log('baseAddr', baseAddr)
 
-      console.log(Number.MAX_SAFE_INTEGER)
-
       /* eslint-disable-next-line react/no-did-mount-set-state */
       this.setState({
         status: 'tests finished',
