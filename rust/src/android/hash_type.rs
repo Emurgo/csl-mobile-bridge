@@ -5,11 +5,11 @@ use crate::ptr::RPtrRepresentable;
 use jni::objects::{JObject};
 use jni::sys::{jbyteArray, jobject};
 use jni::JNIEnv;
-use wasm_bindgen::JsValue;
+use cardano_serialization_lib::error::{DeserializeError};
 
 pub trait HashType {
   fn to_bytes(&self) -> Vec<u8>;
-  fn from_bytes(bytes: Vec<u8>) -> Result<Self, JsValue> where Self: Sized;
+  fn from_bytes(bytes: Vec<u8>) -> Result<Self, DeserializeError> where Self: Sized;
 }
 
 pub unsafe fn hash_to_bytes<T: RPtrRepresentable + HashType>(

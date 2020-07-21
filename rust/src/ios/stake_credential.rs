@@ -2,8 +2,8 @@ use super::result::CResult;
 use super::string::{CharPtr};
 use crate::panic::{handle_exception_result};
 use crate::ptr::{RPtr, RPtrRepresentable};
-use cddl_lib::address::{StakeCredential};
-use cddl_lib::crypto::{AddrKeyHash};
+use cardano_serialization_lib::address::{StakeCredential};
+use cardano_serialization_lib::crypto::{Ed25519KeyHash};
 
 #[no_mangle]
 pub unsafe extern "C" fn stake_credential_from_keyhash(
@@ -11,12 +11,15 @@ pub unsafe extern "C" fn stake_credential_from_keyhash(
 ) -> bool {
   handle_exception_result(|| {
     keyhash
-      .typed_ref::<AddrKeyHash>()
+      .typed_ref::<Ed25519KeyHash>()
       .map(|keyhash| StakeCredential::from_keyhash(keyhash))
   })
     .map(|stake_credential| stake_credential.rptr())
     .response(result, error)
 }
+
+// TODO
+// pub unsafe extern "C" fn stake_credential_from_scripthash
 
 #[no_mangle]
 pub unsafe extern "C" fn stake_credential_to_keyhash(
@@ -30,6 +33,9 @@ pub unsafe extern "C" fn stake_credential_to_keyhash(
     .map(|keyhash| keyhash.rptr())
     .response(result, error)
 }
+
+// TODO
+// pub unsafe extern "C" fn stake_credential_to_scripthash
 
 #[no_mangle]
 pub unsafe extern "C" fn stake_credential_to_kind(

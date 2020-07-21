@@ -12,7 +12,27 @@ export class Ptr {
   free(): Promise<void>;
 }
 
-// NOT SUPPORTED
+/**
+* Generic u64 wrapper for platforms that don't support u64 or BigInt/etc
+* This is an unsigned type - no negative numbers.
+* Can be converted to/from plain rust
+*/
+export class BigNum extends Ptr {
+  /**
+  * @param {string} string
+  * @returns {Promise<Value>}
+  */
+  static from_str(string: string): Promise<BigNum>;
+
+  /**
+  * String representation of the BigNum value for use from environments that
+  * don't support BigInt
+  * @returns {Promise<string>}
+  */
+  to_str(): Promise<string>;
+
+}
+
 export class Address extends Ptr {
   /**
   * @param {Uint8Array} bytes
@@ -27,12 +47,12 @@ export class Address extends Ptr {
 
 }
 
-export class AddrKeyHash extends Ptr {
+export class Ed25519KeyHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<AddrKeyHash>}
+  * @returns {Promise<Ed25519KeyHash>}
   */
-  static from_bytes(bytes: Uint8Array): Promise<AddrKeyHash>;
+  static from_bytes(bytes: Uint8Array): Promise<Ed25519KeyHash>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -58,15 +78,15 @@ export class TransactionHash extends Ptr {
 export class StakeCredential extends Ptr {
 
   /**
-  * @param {AddrKeyHash} hash
+  * @param {Ed25519KeyHash} hash
   * @returns {Promise<StakeCredential>}
   */
-  static from_keyhash(hash: AddrKeyHash): Promise<StakeCredential>
+  static from_keyhash(hash: Ed25519KeyHash): Promise<StakeCredential>
 
   /**
-  * @returns {Promise<AddrKeyHash>}
+  * @returns {Promise<Ed25519KeyHash>}
   */
-  to_keyhash(): Promise<AddrKeyHash>;
+  to_keyhash(): Promise<Ed25519KeyHash>;
 
   /**
   * @returns {Promise<number>}
@@ -103,11 +123,11 @@ export class UnitInterval extends Ptr {
   static from_bytes(bytes: Uint8Array): Promise<UnitInterval>;
 
   /**
-  * @param {number} index0
-  * @param {number} index1
+  * @param {BigNum} numerator
+  * @param {BigNum} denominator
   * @returns {Promise<UnitInterval>}
   */
-  static new(index0, index1): Promise<UnitInterval>
+  static new(numerator, denominator): Promise<UnitInterval>
 }
 
 export class TransactionInput extends Ptr {

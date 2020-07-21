@@ -3,7 +3,8 @@ use super::hash_type::*;
 use jni::objects::{JObject};
 use jni::sys::{jbyteArray, jobject};
 use jni::JNIEnv;
-use cddl_lib::crypto::{TransactionHash};
+use cardano_serialization_lib::crypto::{TransactionHash};
+use cardano_serialization_lib::error::{DeserializeError};
 use wasm_bindgen::JsValue;
 
 
@@ -12,7 +13,7 @@ impl HashType for TransactionHash {
     self.to_bytes()
   }
 
-  fn from_bytes(bytes: Vec<u8>) -> Result<TransactionHash, JsValue> {
+  fn from_bytes(bytes: Vec<u8>) -> Result<TransactionHash, DeserializeError> {
     TransactionHash::from_bytes(bytes)
   }
 

@@ -153,7 +153,7 @@ RCT_EXPORT_METHOD(unitIntervalFromBytes:(nonnull NSString *)bytesStr  withResolv
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(unitIntervalNew:(nonnull NSNumber *)index0 withIndex1:(nonnull NSNumber *)index1 withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(unitIntervalNew:(nonnull NSString *)numerator withDenominator:(nonnull NSString *)denominator withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr result;

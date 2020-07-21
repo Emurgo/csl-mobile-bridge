@@ -1,18 +1,19 @@
 use super::primitive::ToPrimitiveObject;
 use super::ptr_j::*;
 use super::result::ToJniResult;
-use crate::panic::{handle_exception_result, ToResult};
+use crate::panic::{handle_exception_result, ToResult, Zip};
 use crate::ptr::RPtrRepresentable;
 use jni::objects::JObject;
 use jni::sys::{jbyteArray, jobject, jlong};
 use jni::JNIEnv;
-use cddl_lib::address::{Address, StakeCredential};
-use cddl_lib::crypto::{TransactionHash};
-use cddl_lib::TransactionOutput;
+use cardano_serialization_lib::address::{Address, StakeCredential};
+use cardano_serialization_lib::crypto::{TransactionHash};
+use cardano_serialization_lib::TransactionOutput;
+use cardano_serialization_lib::utils::{BigNum};
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_TransactionOutputToBytes(
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionOutputToBytes(
   env: JNIEnv, _: JObject, ptr: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
@@ -28,7 +29,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_TransactionOutpu
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_TransactionOutputFromBytes(
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionOutputFromBytes(
   env: JNIEnv, _: JObject, bytes: jbyteArray
 ) -> jobject {
   handle_exception_result(|| {
@@ -43,13 +44,17 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_TransactionOutpu
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_TransactionOutputNew(
-  env: JNIEnv, _: JObject, address: JRPtr, amount: jlong
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionOutputNew(
+  env: JNIEnv, _: JObject, address: JRPtr, amount: JRPtr
 ) -> jobject {
-  let address = address.owned::<Address>(&env);
-  let coin_u64 = u64::from_jlong(amount);
   handle_exception_result(|| {
-    TransactionOutput::new(address?, coin_u64).rptr().jptr(&env)
+    let address = address.rptr(&env)?;
+    let amount = amount.rptr(&env)?;
+    address.typed_ref::<Address>().zip(amount.typed_ref::<BigNum>()).and_then(
+      |(address, amount)| {
+        TransactionOutput::new(address, amount).rptr().jptr(&env)
+      }
+    )
   })
   .jresult(&env)
 }

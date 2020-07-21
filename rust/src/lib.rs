@@ -1,4 +1,4 @@
-extern crate cddl_lib;
+extern crate cardano_serialization_lib;
 extern crate wasm_bindgen;
 
 mod js_result;

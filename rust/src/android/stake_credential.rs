@@ -6,8 +6,8 @@ use crate::ptr::RPtrRepresentable;
 use jni::objects::JObject;
 use jni::sys::{jobject, jint};
 use jni::JNIEnv;
-use cddl_lib::crypto::{AddrKeyHash};
-use cddl_lib::address::{StakeCredential};
+use cardano_serialization_lib::crypto::{Ed25519KeyHash};
+use cardano_serialization_lib::address::{StakeCredential};
 
 #[allow(non_snake_case)]
 #[no_mangle]
@@ -17,7 +17,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_stakeCredentialF
   handle_exception_result(|| {
     let key_hash = key_hash_ptr.rptr(&env)?;
     key_hash
-      .typed_ref::<AddrKeyHash>()
+      .typed_ref::<Ed25519KeyHash>()
       .map(|key_hash| StakeCredential::from_keyhash(key_hash))
       .and_then(|stake_credential| stake_credential.rptr().jptr(&env))
   })

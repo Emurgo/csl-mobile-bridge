@@ -1,6 +1,6 @@
 use crate::panic::{Result, ToResult};
 use wasm_bindgen::JsValue;
-use cddl_lib::prelude::{DeserializeError};
+use cardano_serialization_lib::error::{DeserializeError};
 
 impl<T> ToResult<T> for std::result::Result<T, JsValue> {
   fn into_result(self) -> Result<T> {

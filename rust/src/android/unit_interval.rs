@@ -1,11 +1,12 @@
 use super::ptr_j::*;
 use super::result::ToJniResult;
-use crate::panic::{handle_exception_result, ToResult};
+use crate::panic::{handle_exception_result, ToResult, Zip};
 use crate::ptr::RPtrRepresentable;
 use jni::objects::{JObject};
 use jni::sys::{jbyteArray, jobject, jlong};
 use jni::JNIEnv;
-use cddl_lib::{UnitInterval};
+use cardano_serialization_lib::{UnitInterval};
+use cardano_serialization_lib::utils::{BigNum};
 
 #[allow(non_snake_case)]
 #[no_mangle]
@@ -41,10 +42,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_unitIntervalFrom
 #[allow(non_snake_case)]
 #[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_unitIntervalNew(
-  env: JNIEnv, _: JObject, index_0: jlong, index_1: jlong
+  env: JNIEnv, _: JObject, numerator: JRPtr, denominator: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
-    UnitInterval::new(u64::from_jlong(index_0), u64::from_jlong(index_1)).rptr().jptr(&env)
+    // let numerator = numerator.rptr(&env)?;
+    // let denominator = denominator.rptr(&env)?;
+    // numerator.typed_ref::<BigNum>().zip(denominator.typed_ref::<BigNum>()).and_then(
+    //   |(numerator, denominator)| {
+    //     UnitInterval::new(numerator, denominator).rptr().jptr(&env)
+    //   }
+    // )
+    let numerator = numerator.owned::<BigNum>(&env);
+    let denominator = denominator.owned::<BigNum>(&env);
+    UnitInterval::new(numerator?, denominator?).rptr().jptr(&env)
   })
   .jresult(&env)
 }

@@ -23,15 +23,24 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
         return "HaskellShelley";
     }
 
-    // Address
+    // BigNum
 
     @ReactMethod
-    public final void addressFromBytes(String bytes, Promise promise) {
+    public final void bigNumFromStr(String string, Promise promise) {
         Native.I
-                .addressFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .bigNumFromStr(string)
                 .map(RPtr::toJs)
                 .pour(promise);
     }
+
+    @ReactMethod
+    public final void bigNumToStr(String bigNum, Promise promise) {
+        Native.I
+                .bigNumToStr(new RPtr(bigNum))
+                .pour(promise);
+    }
+
+    // Address
 
     @ReactMethod
     public final void addressToBytes(String address, Promise promise) {
@@ -41,21 +50,29 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
-    // AddrKeyHash
-
     @ReactMethod
-    public final void addrKeyHashFromBytes(String bytes, Promise promise) {
+    public final void addressFromBytes(String bytes, Promise promise) {
         Native.I
-                .addrKeyHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .addressFromBytes(Base64.decode(bytes, Base64.DEFAULT))
                 .map(RPtr::toJs)
                 .pour(promise);
     }
 
+    // Ed25519KeyHash
+
     @ReactMethod
-    public final void addrKeyHashToBytes(String addrKeyHash, Promise promise) {
+    public final void ed25519KeyHashToBytes(String ed25519KeyHash, Promise promise) {
         Native.I
-                .addrKeyHashToBytes(new RPtr(addrKeyHash))
+                .ed25519KeyHashToBytes(new RPtr(ed25519KeyHash))
                 .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void ed25519KeyHashFromBytes(String bytes, Promise promise) {
+        Native.I
+                .ed25519KeyHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
                 .pour(promise);
     }
 
@@ -70,9 +87,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionHashToBytes(String addrKeyHash, Promise promise) {
+    public final void transactionHashToBytes(String transactionHash, Promise promise) {
         Native.I
-                .transactionHashToBytes(new RPtr(addrKeyHash))
+                .transactionHashToBytes(new RPtr(transactionHash))
                 .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
                 .pour(promise);
     }
@@ -80,9 +97,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     // StakeCredential
 
     @ReactMethod
-    public final void stakeCredentialFromKeyHash(String addrKeyHash, Promise promise) {
+    public final void stakeCredentialFromKeyHash(String keyHash, Promise promise) {
         Native.I
-                .stakeCredentialFromKeyHash(new RPtr(addrKeyHash))
+                .stakeCredentialFromKeyHash(new RPtr(keyHash))
                 .map(RPtr::toJs)
                 .pour(promise);
     }
@@ -136,6 +153,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .unitIntervalFromBytes(Base64.decode(bytes, Base64.DEFAULT))
                 .map(RPtr::toJs)
                 .pour(promise);
+    }
 
     @ReactMethod
     public final void unitIntervalToBytes(String unitInterval, Promise promise) {
@@ -143,13 +161,15 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .unitIntervalToBytes(new RPtr(unitInterval))
                 .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
                 .pour(promise);
+    }
 
     @ReactMethod
-    public final void unitIntervalNew(Double index0, Double index1, Promise promise) {
+    public final void unitIntervalNew(String numerator, String denominator, Promise promise) {
         Native.I
-                .unitIntervalNew(index0.longValue(), index1.longValue())
+                .unitIntervalNew(new RPtr(numerator), new RPtr(denominator))
                 .map(RPtr::toJs)
                 .pour(promise);
+    }
 
     // TransactionInput
 
@@ -195,9 +215,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionOutputNew(String address, Double amount, Promise promise) {
+    public final void transactionOutputNew(String address, String amount, Promise promise) {
         Native.I
-                .transactionOutputNew(new RPtr(address), amount.longValue())
+                .transactionOutputNew(new RPtr(address), new RPtr(amount))
                 .map(RPtr::toJs)
                 .pour(promise);
     }

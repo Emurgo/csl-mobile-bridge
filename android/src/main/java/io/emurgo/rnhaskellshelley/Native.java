@@ -15,20 +15,24 @@ final class Native {
 
     private native void initLibrary();
 
+    // BigNum
+    public final native Result<RPtr> bigNumFromStr(String str);
+    public final native Result<String> bigNumToStr(RPtr bigNum);
+
     // Address
     public final native Result<byte[]> addressToBytes(RPtr address);
     public final native Result<RPtr> addressFromBytes(byte[] bytes);
 
-    // AddrKeyHash
-    public final native Result<byte[]> addrKeyHashToBytes(RPtr addrKeyHash);
-    public final native Result<RPtr> addrKeyHashFromBytes(byte[] bytes);
+    // Ed25519KeyHash
+    public final native Result<byte[]> ed25519KeyHashToBytes(RPtr ed25519KeyHash);
+    public final native Result<RPtr> ed25519KeyHashFromBytes(byte[] bytes);
 
     // TransactionHash
     public final native Result<byte[]> transactionHashToBytes(RPtr transactionHash);
     public final native Result<RPtr> transactionHashFromBytes(byte[] bytes);
 
     // StakeCredential
-    public final native Result<RPtr> stakeCredentialFromKeyHash(RPtr addrKeyHash);
+    public final native Result<RPtr> stakeCredentialFromKeyHash(RPtr keyHash);
     public final native Result<RPtr> stakeCredentialToKeyHash(RPtr stakeCredential);
     public final native Result<Integer> stakeCredentialKind(RPtr stakeCredential);
 
@@ -40,7 +44,7 @@ final class Native {
     // UnitInterval
     public final native Result<byte[]> unitIntervalToBytes(RPtr unitInterval);
     public final native Result<RPtr> unitIntervalFromBytes(byte[] bytes);
-    public final native Result<RPtr> unitIntervalNew(long index0, long index1);
+    public final native Result<RPtr> unitIntervalNew(RPtr numerator, RPtr denominator);
 
     // TransactionInput
     public final native Result<byte[]> transactionInputToBytes(RPtr transactionInput);
@@ -50,7 +54,7 @@ final class Native {
     // TransactionOutput
     public final native Result<byte[]> transactionOutputToBytes(RPtr transactionOutput);
     public final native Result<RPtr> transactionOutputFromBytes(byte[] bytes);
-    public final native Result<RPtr> transactionOutputNew(RPtr address, long amount);
+    public final native Result<RPtr> transactionOutputNew(RPtr address, RPtr amount);
 
     public final native void ptrFree(RPtr ptr);
 }

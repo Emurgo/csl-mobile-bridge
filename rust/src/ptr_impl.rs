@@ -1,10 +1,12 @@
 use crate::ptr::RPtrRepresentable;
-use cddl_lib::address::*;
-use cddl_lib::crypto::*;
-use cddl_lib::*;
+use cardano_serialization_lib::address::*;
+use cardano_serialization_lib::crypto::*;
+use cardano_serialization_lib::utils::*;
+use cardano_serialization_lib::*;
 
+impl RPtrRepresentable for BigNum {}
 impl RPtrRepresentable for Address {}
-impl RPtrRepresentable for AddrKeyHash {}
+impl RPtrRepresentable for Ed25519KeyHash {}
 impl RPtrRepresentable for TransactionHash {}
 impl RPtrRepresentable for BaseAddress {}
 impl RPtrRepresentable for StakeCredential {}

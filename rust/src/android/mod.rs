@@ -1,10 +1,11 @@
-mod address; // TODO: remove?
+mod address;
 mod primitive;
 mod ptr_j;
 mod hash_type;
 mod result;
 mod string;
-mod addr_key_hash;
+mod big_num;
+mod ed25519_key_hash;
 mod transaction_hash;
 mod stake_credential;
 mod base_address;
@@ -15,7 +16,6 @@ mod transaction_output;
 // mod transaction;
 
 pub use address::*;
-pub use addr_key_hash::*;
 pub use stake_credential::*;
 
 #[allow(non_snake_case)]

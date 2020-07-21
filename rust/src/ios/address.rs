@@ -6,9 +6,9 @@ use super::result::CResult;
 use super::string::{CharPtr};
 use crate::panic::{handle_exception_result, ToResult};
 use crate::ptr::{RPtr, RPtrRepresentable};
-use cddl_lib::address::{Address};
+use cardano_serialization_lib::address::{Address};
 
-// cddl_lib: (&self) -> Vec<u8>
+// cardano_serialization_lib: (&self) -> Vec<u8>
 // from react-native-chain-libs address.as_bytes -> Vec<u8>
 #[no_mangle]
 pub unsafe extern "C" fn address_to_bytes(
@@ -19,7 +19,7 @@ pub unsafe extern "C" fn address_to_bytes(
   .response(result, error)
 }
 
-// cddl_lib: Address.from_bytes(Vec<u8>) -> Result<Address, JsValue>
+// cardano_serialization_lib: Address.from_bytes(Vec<u8>) -> Result<Address, JsValue>
 // from react-native-chain-libs address.from_bytes(&[u8]) -> Result<Address, JsValue>
 #[no_mangle]
 pub unsafe extern "C" fn address_from_bytes(
