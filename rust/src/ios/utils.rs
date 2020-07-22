@@ -4,7 +4,6 @@ use super::string::*;
 use crate::utils::ToFromBytes;
 use crate::panic::*;
 use crate::ptr::{RPtr, RPtrRepresentable};
-use cardano_serialization_lib::error::{DeserializeError};
 
 pub unsafe fn to_bytes<T: RPtrRepresentable + ToFromBytes>(
   obj: RPtr, result: &mut DataPtr, error: &mut CharPtr

@@ -5,6 +5,7 @@ use cardano_serialization_lib::utils::*;
 use cardano_serialization_lib::*;
 
 impl RPtrRepresentable for BigNum {}
+impl RPtrRepresentable for ByronAddress {}
 impl RPtrRepresentable for Address {}
 impl RPtrRepresentable for Ed25519KeyHash {}
 impl RPtrRepresentable for TransactionHash {}

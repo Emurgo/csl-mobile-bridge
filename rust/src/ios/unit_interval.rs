@@ -1,7 +1,7 @@
 use super::data::DataPtr;
 use super::result::CResult;
 use super::string::{CharPtr};
-use crate::panic::{handle_exception_result, ToResult, Zip};
+use crate::panic::{handle_exception_result, ToResult};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::{UnitInterval};
 use cardano_serialization_lib::utils::{BigNum};

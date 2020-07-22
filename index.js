@@ -70,6 +70,45 @@ export class BigNum extends Ptr {
   }
 }
 
+// use same underlying functions written for BigNum
+export class Coin extends Ptr {
+
+  /**
+  * @param {string} string
+  * @returns {Promise<Coin>}
+  */
+  static async from_str(string) {
+    const ret = await HaskellShelley.bigNumFromStr(string);
+    return Ptr._wrap(ret, Coin);
+  }
+
+  /**
+  * @returns {Promise<string>}
+  */
+  async to_str() {
+    return await HaskellShelley.bigNumToStr(this.ptr);
+  }
+}
+
+export class ByronAddress extends Ptr {
+  /**
+  * @returns {Promise<string>}
+  */
+  async to_base58() {
+    return HaskellShelley.byronAddressToBase58(this.ptr);
+  }
+
+  /**
+  * @param {string} string
+  * @returns {Promise<ByronAddress>}
+  */
+  static async from_base58(string) {
+    const ret = await HaskellShelley.byronAddressFromBase58(string);
+    return Ptr._wrap(ret, ByronAddress);
+  }
+
+}
+
 export class Address extends Ptr {
 
   /**

@@ -40,6 +40,23 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // ByronAddress
+
+    @ReactMethod
+    public final void byronAddressToBase58(String byronAddress, Promise promise) {
+        Native.I
+                .byronAddressToBase58(new RPtr(byronAddress))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void byronAddressFromBase58(String string, Promise promise) {
+        Native.I
+                .byronAddressFromBase58(string)
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // Address
 
     @ReactMethod

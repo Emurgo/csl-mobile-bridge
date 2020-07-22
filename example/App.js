@@ -12,6 +12,8 @@ import React, {Component} from 'react'
 import {StyleSheet, Text, View} from 'react-native'
 import {
   BigNum,
+  Coin,
+  ByronAddress,
   Address,
   Ed25519KeyHash,
   BaseAddress,
@@ -44,6 +46,24 @@ export default class App extends Component<{}> {
         (await bigNum.to_str()) === bigNumStr,
         'BigNum.to_str() should match original input value',
       )
+
+      // ------------------ Coin -----------------------
+      const coinStr = '2000000'
+      const coin = await Coin.from_str(coinStr)
+      assert(
+        (await coin.to_str()) === coinStr,
+        'Coin.to_str() should match original input value',
+      )
+
+      // ------------------ ByronAddress -----------------------
+      const addrBase58 =
+        'Ae2tdPwUPEZHu3NZa6kCwet2msq4xrBXKHBDvogFKwMsF18Jca8JHLRBas7'
+      const byronAddress = await ByronAddress.from_base58(addrBase58)
+      assert(
+        (await byronAddress.to_base58()) === addrBase58,
+        'ByronAddress.to_base58 should match original input address',
+      )
+
       // ------------------ Address -----------------------
       const baseAddrHex =
         '00' +

@@ -1,7 +1,6 @@
 use jni::objects::{JObject, JString};
 use jni::sys::{jobject};
 use jni::JNIEnv;
-
 use super::ptr_j::*;
 use super::result::ToJniResult;
 use super::string::*;

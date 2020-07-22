@@ -19,6 +19,10 @@ final class Native {
     public final native Result<RPtr> bigNumFromStr(String str);
     public final native Result<String> bigNumToStr(RPtr bigNum);
 
+    // ByronAddress
+    public final native Result<String> byronAddressToBase58(RPtr byronAddress);
+    public final native Result<RPtr> byronAddressFromBase58(String str);
+
     // Address
     public final native Result<byte[]> addressToBytes(RPtr address);
     public final native Result<RPtr> addressFromBytes(byte[] bytes);

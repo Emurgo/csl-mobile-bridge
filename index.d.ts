@@ -1,9 +1,5 @@
 export type Optional<T> = T | undefined;
 
-export type TransactionIndex = number;
-
-export type Coin = number;
-
 export class Ptr {
   /**
     * Frees the pointer
@@ -30,6 +26,36 @@ export class BigNum extends Ptr {
   * @returns {Promise<string>}
   */
   to_str(): Promise<string>;
+
+}
+
+export class Coin extends Ptr {
+  /**
+  * @param {string} string
+  * @returns {Promise<Value>}
+  */
+  static from_str(string: string): Promise<Coin>;
+
+  /**
+  * String representation of the BigNum value for use from environments that
+  * don't support BigInt
+  * @returns {Promise<string>}
+  */
+  to_str(): Promise<string>;
+
+}
+
+export class ByronAddress extends Ptr {
+  /**
+  * @returns {Promise<string>}
+  */
+  to_base58(): Promise<string>
+
+  /**
+  * @param {string} string
+  * @returns {Promise<ByronAddress>}
+  */
+  static from_base58(string: string): Promise<ByronAddress>
 
 }
 

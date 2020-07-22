@@ -5,6 +5,7 @@ mod hash_type;
 mod result;
 mod string;
 mod big_num;
+mod byron_address;
 mod ed25519_key_hash;
 mod transaction_hash;
 mod stake_credential;
