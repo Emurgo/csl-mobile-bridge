@@ -9,7 +9,29 @@
 
 RCT_EXPORT_MODULE()
 
-// address
+// BigNumber
+
+RCT_EXPORT_METHOD(bigNumFromStr:(nonnull NSString *)string withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* string, CharPtr* error) {
+        RPtr result;
+        return big_num_from_str([string charPtr], &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:string andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(bigNumToStr:(nonnull NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        CharPtr result;
+        return big_num_to_str([ptr rPtr], &result, error)
+            ? [NSString stringFromCharPtr:&result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+// Address
 
 RCT_EXPORT_METHOD(addressToBytes:(nonnull NSString *)addressPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
@@ -33,25 +55,49 @@ RCT_EXPORT_METHOD(addressFromBytes:(nonnull NSString *)bytesStr  withResolve:(RC
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
-// AddrKeyHash
+// Ed25519KeyHash
 
-RCT_EXPORT_METHOD(addrKeyHashToBytes:(nonnull NSString *)keyHashPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(ed25519KeyHashToBytes:(nonnull NSString *)keyHashPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* keyHashPtr, CharPtr* error) {
         DataPtr result;
         RPtr keyHash = [keyHashPtr rPtr];
-        return addr_key_hash_to_bytes(keyHash, &result, error)
+        return ed25519_key_hash_to_bytes(keyHash, &result, error)
             ? [[NSData fromDataPtr:&result] base64]
             : nil;
     }] exec:keyHashPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(addrKeyHashFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(ed25519KeyHashFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
         RPtr result;
         NSData* data = [NSData fromBase64:bytesStr];
-        return addr_key_hash_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+        return ed25519_key_hash_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
+// TransactionHash
+
+RCT_EXPORT_METHOD(transactionHashToBytes:(nonnull NSString *)txHashPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* txHashPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr txHash = [txHashPtr rPtr];
+        return transaction_hash_to_bytes(txHash, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:txHashPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionHashFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return transaction_hash_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:bytesStr andResolve:resolve orReject:reject];
@@ -153,16 +199,16 @@ RCT_EXPORT_METHOD(unitIntervalFromBytes:(nonnull NSString *)bytesStr  withResolv
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(unitIntervalNew:(nonnull NSString *)numerator withDenominator:(nonnull NSString *)denominator withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(unitIntervalNew:(nonnull NSString *)numeratorPtr withDenominator:(nonnull NSString *)denominatorPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr result;
-        uint64_t index0 = [[params objectAtIndex:0] unsignedLongLongValue];
-        uint64_t index1 = [[params objectAtIndex:0] unsignedLongLongValue];
-        return unit_interval_new(index0, index1, &result, error)
+        RPtr numerator = [[params objectAtIndex:0] rPtr];
+        RPtr denominator = [[params objectAtIndex:1] rPtr];
+        return unit_interval_new(numerator, denominator, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
-    }] exec:@[index0, index1] andResolve:resolve orReject:reject];
+    }] exec:@[numeratorPtr, denominatorPtr] andResolve:resolve orReject:reject];
 }
 
 + (void)initialize

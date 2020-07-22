@@ -5,6 +5,7 @@ mod js_result;
 mod panic;
 mod ptr;
 mod ptr_impl;
+mod utils;
 
 pub use ptr::*;
 

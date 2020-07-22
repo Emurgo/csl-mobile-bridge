@@ -1,6 +1,3 @@
-// NOTE: currently the Address structure is not supported for
-// non-wasm targets
-
 use super::data::DataPtr;
 use super::result::CResult;
 use super::string::{CharPtr};

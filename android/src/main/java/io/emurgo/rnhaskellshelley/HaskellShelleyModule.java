@@ -79,18 +79,18 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     // TransactionHash
 
     @ReactMethod
-    public final void transactionHashFromBytes(String bytes, Promise promise) {
-        Native.I
-                .transactionHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
-                .map(RPtr::toJs)
-                .pour(promise);
-    }
-
-    @ReactMethod
     public final void transactionHashToBytes(String transactionHash, Promise promise) {
         Native.I
                 .transactionHashToBytes(new RPtr(transactionHash))
                 .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionHashFromBytes(String bytes, Promise promise) {
+        Native.I
+                .transactionHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
                 .pour(promise);
     }
 
@@ -148,18 +148,18 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     // UnitInterval
 
     @ReactMethod
-    public final void unitIntervalFromBytes(String bytes, Promise promise) {
-        Native.I
-                .unitIntervalFromBytes(Base64.decode(bytes, Base64.DEFAULT))
-                .map(RPtr::toJs)
-                .pour(promise);
-    }
-
-    @ReactMethod
     public final void unitIntervalToBytes(String unitInterval, Promise promise) {
         Native.I
                 .unitIntervalToBytes(new RPtr(unitInterval))
                 .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void unitIntervalFromBytes(String bytes, Promise promise) {
+        Native.I
+                .unitIntervalFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
                 .pour(promise);
     }
 
@@ -174,18 +174,18 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     // TransactionInput
 
     @ReactMethod
-    public final void transactionInputFromBytes(String bytes, Promise promise) {
-        Native.I
-                .transactionInputFromBytes(Base64.decode(bytes, Base64.DEFAULT))
-                .map(RPtr::toJs)
-                .pour(promise);
-    }
-
-    @ReactMethod
     public final void transactionInputToBytes(String transactionInput, Promise promise) {
         Native.I
                 .transactionInputToBytes(new RPtr(transactionInput))
                 .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionInputFromBytes(String bytes, Promise promise) {
+        Native.I
+                .transactionInputFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
                 .pour(promise);
     }
 
@@ -199,18 +199,18 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     // TransactionOutput
 
     @ReactMethod
-    public final void transactionOutputFromBytes(String bytes, Promise promise) {
-        Native.I
-                .transactionOutputFromBytes(Base64.decode(bytes, Base64.DEFAULT))
-                .map(RPtr::toJs)
-                .pour(promise);
-    }
-
-    @ReactMethod
     public final void transactionOutputToBytes(String transactionOutput, Promise promise) {
         Native.I
                 .transactionOutputToBytes(new RPtr(transactionOutput))
                 .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionOutputFromBytes(String bytes, Promise promise) {
+        Native.I
+                .transactionOutputFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
                 .pour(promise);
     }
 

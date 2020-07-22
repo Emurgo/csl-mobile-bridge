@@ -1,6 +1,5 @@
 use super::result::CResult;
 use super::string::*;
-use crate::js_chain_libs::Value;
 use crate::panic::*;
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::utils::{BigNum};
