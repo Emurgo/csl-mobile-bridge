@@ -37,8 +37,6 @@ export class Coin extends Ptr {
   static from_str(string: string): Promise<Coin>;
 
   /**
-  * String representation of the BigNum value for use from environments that
-  * don't support BigInt
   * @returns {Promise<string>}
   */
   to_str(): Promise<string>;
@@ -194,4 +192,23 @@ export class TransactionOutput extends Ptr {
   * @returns {Promise<TransactionInput>}
   */
   static new(address: Address, amount: Coin): Promise<TransactionOutput>;
+}
+
+export class LinearFee extends Ptr {
+  /**
+  * @returns {Promise<Coin>}
+  */
+  constant(): Promise<Coin>;
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  coefficient(): Promise<Coin>;
+
+  /**
+  * @param {Coin} coefficient
+  * @param {Coin} constant
+  * @returns {Promise<LinearFee>}
+  */
+  static new(coefficient: Coin, constant: Coin): Promise<LinearFee>;
 }

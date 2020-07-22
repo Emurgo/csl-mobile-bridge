@@ -60,5 +60,10 @@ final class Native {
     public final native Result<RPtr> transactionOutputFromBytes(byte[] bytes);
     public final native Result<RPtr> transactionOutputNew(RPtr address, RPtr amount);
 
+    // LinearFee
+    public final native Result<RPtr> linearFeeCoefficient(RPtr linearFee);
+    public final native Result<RPtr> linearFeeConstant(RPtr linearFee);
+    public final native Result<RPtr> linearFeeNew(RPtr coefficient, RPtr constant);
+
     public final native void ptrFree(RPtr ptr);
 }

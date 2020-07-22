@@ -20,6 +20,7 @@ import {
   StakeCredential,
   UnitInterval,
   TransactionHash,
+  LinearFee,
 } from 'react-native-haskell-shelley'
 
 const assert = (value: any, message: string, ...args: any) => {
@@ -137,6 +138,21 @@ export default class App extends Component<{}> {
         denominatorBigNum,
       )
 
+      // ------------------- LinearFee ---------------------
+      const coeffStr = '1000000'
+      const constStr = '1000000'
+      const coeff = await Coin.from_str(coeffStr)
+      const constant = await Coin.from_str(constStr)
+      const fee = await LinearFee.new(coeff, constant)
+      assert(
+        (await (await fee.coefficient()).to_str()) === coeffStr,
+        'LinearFee.coefficient() should match original input',
+      )
+      assert(
+        (await (await fee.constant()).to_str()) === constStr,
+        'LinearFee.constant() should match original input',
+      )
+
       console.log('address', address)
       console.log('ed25519KeyHash', ed25519KeyHash)
       console.log('txHash', txHash)
@@ -144,6 +160,7 @@ export default class App extends Component<{}> {
       console.log('paymentCred', paymentCred)
       console.log('stakeCred', stakeCred)
       console.log('baseAddr', baseAddr)
+      console.log('unitInterval', unitInterval)
 
       /* eslint-disable-next-line react/no-did-mount-set-state */
       this.setState({

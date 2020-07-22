@@ -2,6 +2,7 @@ use crate::ptr::RPtrRepresentable;
 use cardano_serialization_lib::address::*;
 use cardano_serialization_lib::crypto::*;
 use cardano_serialization_lib::utils::*;
+use cardano_serialization_lib::fees::*;
 use cardano_serialization_lib::*;
 
 impl RPtrRepresentable for BigNum {}
@@ -14,3 +15,4 @@ impl RPtrRepresentable for StakeCredential {}
 impl RPtrRepresentable for UnitInterval {}
 impl RPtrRepresentable for TransactionInput {}
 impl RPtrRepresentable for TransactionOutput {}
+impl RPtrRepresentable for LinearFee {}

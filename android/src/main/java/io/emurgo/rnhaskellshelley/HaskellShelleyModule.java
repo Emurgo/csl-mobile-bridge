@@ -239,4 +239,30 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // LinearFee
+
+    @ReactMethod
+    public final void linearFeeCoefficient(String linearFee, Promise promise) {
+        Native.I
+                .linearFeeCoefficient(new RPtr(linearFee))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void linearFeeConstant(String linearFee, Promise promise) {
+        Native.I
+                .linearFeeConstant(new RPtr(linearFee))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void linearFeeNew(String coefficient, String constant, Promise promise) {
+        Native.I
+                .linearFeeNew(new RPtr(coefficient), new RPtr(constant))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
 }

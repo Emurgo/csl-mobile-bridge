@@ -11,6 +11,7 @@ mod transaction_hash;
 mod stake_credential;
 mod base_address;
 mod unit_interval;
+mod linear_fee;
 // declare other modules here
 // mod transaction;
 

@@ -13,6 +13,7 @@ mod base_address;
 mod unit_interval;
 mod transaction_input;
 mod transaction_output;
+mod linear_fee;
 // declare other modules here
 // mod transaction;
 

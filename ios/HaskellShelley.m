@@ -233,6 +233,42 @@ RCT_EXPORT_METHOD(unitIntervalNew:(nonnull NSString *)numeratorPtr withDenominat
     }] exec:@[numeratorPtr, denominatorPtr] andResolve:resolve orReject:reject];
 }
 
+// LinearFee
+
+RCT_EXPORT_METHOD(linearFeeCoefficient:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr linearFee = [ptr rPtr];
+        return linear_fee_coefficient(linearFee, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(linearFeeConstant:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr linearFee = [ptr rPtr];
+        return linear_fee_constant(linearFee, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(linearFeeNew:(nonnull NSString *)coefficientPtr withConstant:(nonnull NSString *)constantPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr coeff = [[params objectAtIndex:0] rPtr];
+        RPtr constant = [[params objectAtIndex:1] rPtr];
+        return linear_fee_new(coeff, constant, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[coefficientPtr, constantPtr] andResolve:resolve orReject:reject];
+}
+
 + (void)initialize
 {
     if (self == [HaskellShelley class]) {

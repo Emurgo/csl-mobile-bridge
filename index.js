@@ -106,7 +106,6 @@ export class ByronAddress extends Ptr {
     const ret = await HaskellShelley.byronAddressFromBase58(string);
     return Ptr._wrap(ret, ByronAddress);
   }
-
 }
 
 export class Address extends Ptr {
@@ -171,7 +170,6 @@ export class TransactionHash extends Ptr {
 }
 
 export class StakeCredential extends Ptr {
-
   /**
   * @param {Ed25519KeyHash} hash
   * @returns {Promise<StakeCredential>}
@@ -205,7 +203,6 @@ export class StakeCredential extends Ptr {
 }
 
 export class BaseAddress extends Ptr {
-
   /**
   * @param {number} network
   * @param {StakeCredential} payment
@@ -237,7 +234,6 @@ export class BaseAddress extends Ptr {
 }
 
 export class UnitInterval extends Ptr {
-
   /**
   * @returns {Promise<Uint8Array>}
   */
@@ -270,7 +266,6 @@ export class UnitInterval extends Ptr {
 
 
 export class TransactionInput extends Ptr {
-
   /**
   * @returns {Promise<Uint8Array>}
   */
@@ -299,17 +294,15 @@ export class TransactionInput extends Ptr {
     const ret = await HaskellShelley.transactionInputNew(transactionIdPtr, indexPtr);
     return Ptr._wrap(ret, TransactionInput);
   }
-
 }
 
 export class TransactionOutput extends Ptr {
-
   /**
   * @returns {Promise<Uint8Array>}
   */
   async to_bytes() {
-      const b64 = await HaskellShelley.transactionOutputToBytes(this.ptr);
-      return Uint8ArrayFromB64(b64);
+    const b64 = await HaskellShelley.transactionOutputToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
   }
 
   /**
@@ -331,5 +324,34 @@ export class TransactionOutput extends Ptr {
     const ret = await HaskellShelley.transactionOutputNew(addrPtr, amount);
     return Ptr._wrap(ret, TransactionOutput);
   }
+}
 
+export class LinearFee extends Ptr {
+  /**
+  * @returns {Promise<Coin>}
+  */
+  async constant() {
+    const ret = await HaskellShelley.linearFeeConstant(this.ptr);
+    return Ptr._wrap(ret, Coin);
+  }
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  async coefficient() {
+    const ret = await HaskellShelley.linearFeeCoefficient(this.ptr);
+    return Ptr._wrap(ret, Coin);
+  }
+
+  /**
+  * @param {Coin} coefficient
+  * @param {Coin} constant
+  * @returns {Promise<LinearFee>}
+  */
+  static async new(coefficient: Coin, constant: Coin) {
+    const coeffPtr = Ptr._assertClass(coefficient, Coin);
+    const constPtr = Ptr._assertClass(constant, Coin);
+    const ret = await HaskellShelley.linearFeeNew(coeffPtr, constPtr);
+    return Ptr._wrap(ret, LinearFee);
+  }
 }
