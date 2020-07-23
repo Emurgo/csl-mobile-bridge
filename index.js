@@ -284,14 +284,28 @@ export class TransactionInput extends Ptr {
   }
 
   /**
+  * @returns {Promise<TransactionHash>}
+  */
+  async transaction_id() {
+    const ret = await HaskellShelley.transactionInputTransactionId(this.ptr);
+    return Ptr._wrap(ret, TransactionHash);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async index() {
+    return await HaskellShelley.transactionInputIndex(this.ptr);
+  }
+
+  /**
   * @param {TransactionHash} transactionId
   * @param {TransactionIndex} index
   * @returns {Promise<TransactionInput>}
   */
   static async new(transactionId, index) {
     const transactionIdPtr = Ptr._assertClass(transactionId, TransactionHash);
-    const indexPtr = Ptr._assertClass(index, TransactionIndex);
-    const ret = await HaskellShelley.transactionInputNew(transactionIdPtr, indexPtr);
+    const ret = await HaskellShelley.transactionInputNew(transactionIdPtr, index);
     return Ptr._wrap(ret, TransactionInput);
   }
 }
@@ -321,7 +335,8 @@ export class TransactionOutput extends Ptr {
   */
   static async new(address: Address, amount: Coin) {
     const addrPtr = Ptr._assertClass(address, Address);
-    const ret = await HaskellShelley.transactionOutputNew(addrPtr, amount);
+    const amountPtr = Ptr._assertClass(amount, Coin);
+    const ret = await HaskellShelley.transactionOutputNew(addrPtr, amountPtr);
     return Ptr._wrap(ret, TransactionOutput);
   }
 }

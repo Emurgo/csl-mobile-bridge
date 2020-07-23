@@ -206,6 +206,23 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void transactionInputTransactionId(String transactionInput, Promise promise) {
+        Native.I
+                .transactionInputTransactionId(new RPtr(transactionInput))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionInputIndex(String transactionInput, Promise promise) {
+        Native.I
+                .transactionInputIndex(new RPtr(transactionInput))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionInputNew(String transactionId, Double index, Promise promise) {
         Native.I
                 .transactionInputNew(new RPtr(transactionId), index.longValue())

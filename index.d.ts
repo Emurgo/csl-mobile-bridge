@@ -8,6 +8,8 @@ export class Ptr {
   free(): Promise<void>;
 }
 
+export type TransactionIndex = number
+
 /**
 * Generic u64 wrapper for platforms that don't support u64 or BigInt/etc
 * This is an unsigned type - no negative numbers.
@@ -165,6 +167,16 @@ export class TransactionInput extends Ptr {
   * @returns {Promise<Uint8Array>}
   */
   to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @returns {Promise<TransactionHash>}
+  */
+  transaction_id(): Promise<TransactionHash>
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async index(): Promise<number>
 
   /**
   * @param {TransactionHash} transactionId

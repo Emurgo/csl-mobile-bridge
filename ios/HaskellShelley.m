@@ -233,6 +233,100 @@ RCT_EXPORT_METHOD(unitIntervalNew:(nonnull NSString *)numeratorPtr withDenominat
     }] exec:@[numeratorPtr, denominatorPtr] andResolve:resolve orReject:reject];
 }
 
+// TransactionInput
+
+RCT_EXPORT_METHOD(transactionInputToBytes:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        DataPtr result;
+        RPtr txInput = [ptr rPtr];
+        return transaction_input_to_bytes(txInput, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionInputFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return transaction_input_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionInputTransactionId:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr txInput = [ptr rPtr];
+        return transaction_input_transaction_id(txInput, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionInputIndex:(nonnull NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* ptr, CharPtr* error) {
+        uint32_t result;
+        RPtr txInput = [ptr rPtr];
+        return transaction_input_index(txInput, &result, error)
+            ? [NSNumber numberWithLong:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionInputNew:(nonnull NSString *)transactionIdPtr withTransactionIndex:(nonnull NSNumber *)index withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr transactionIdPtr = [[params objectAtIndex:0] rPtr];
+        uint32_t index = [[params objectAtIndex:1] unsignedIntegerValue];
+        return transaction_input_new(transactionIdPtr, index, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[transactionIdPtr, index] andResolve:resolve orReject:reject];
+}
+
+// TransactionOutput
+
+RCT_EXPORT_METHOD(transactionOutputToBytes:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        DataPtr result;
+        RPtr rptr = [ptr rPtr];
+        return transaction_output_to_bytes(rptr, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionOutputFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return transaction_output_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionOutputNew:(nonnull NSString *)addressPtr withAmount:(nonnull NSString *)amountPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr address = [[params objectAtIndex:0] rPtr];
+        RPtr amount = [[params objectAtIndex:1] rPtr];
+        return transaction_output_new(address, amount, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[addressPtr, amountPtr] andResolve:resolve orReject:reject];
+}
+
 // LinearFee
 
 RCT_EXPORT_METHOD(linearFeeCoefficient:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

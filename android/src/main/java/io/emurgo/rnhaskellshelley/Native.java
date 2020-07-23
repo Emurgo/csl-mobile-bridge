@@ -53,6 +53,8 @@ final class Native {
     // TransactionInput
     public final native Result<byte[]> transactionInputToBytes(RPtr transactionInput);
     public final native Result<RPtr> transactionInputFromBytes(byte[] bytes);
+    public final native Result<RPtr> transactionInputTransactionId(RPtr transactionInput);
+    public final native Result<Long> transactionInputIndex(RPtr transactionInput);
     public final native Result<RPtr> transactionInputNew(RPtr transactionId, long index);
 
     // TransactionOutput

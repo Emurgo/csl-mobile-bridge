@@ -43,6 +43,33 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionInput
 
 #[allow(non_snake_case)]
 #[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionInputTransactionId(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr.typed_ref::<TransactionInput>().and_then(|tx_input| tx_input.transaction_id().rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionInputIndex(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr
+      .typed_ref::<TransactionInput>()
+      .map(|tx_input| tx_input.index())
+      .and_then(|index| (index as jlong).jobject(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionInputNew(
   env: JNIEnv, _: JObject, transaction_id: JRPtr, index: jlong
 ) -> jobject {

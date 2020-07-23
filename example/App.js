@@ -20,6 +20,8 @@ import {
   StakeCredential,
   UnitInterval,
   TransactionHash,
+  TransactionInput,
+  TransactionOutput,
   LinearFee,
 } from 'react-native-haskell-shelley'
 
@@ -89,13 +91,12 @@ export default class App extends Component<{}> {
       )
 
       // ------------------ TransactionHash -----------------------
-      const addr32Hex = '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf3ce41cbf'
-      const addr32Bytes = Buffer.from(addr32Hex, 'hex')
-      const txHash = await TransactionHash.from_bytes(addr32Bytes)
+      const hash32Hex = '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf3ce41cbf'
+      const hash32Bytes = Buffer.from(hash32Hex, 'hex')
+      const txHash = await TransactionHash.from_bytes(hash32Bytes)
       const txHashToBytes = await txHash.to_bytes()
-      console.log(Buffer.from(txHashToBytes).toString('hex'))
       assert(
-        Buffer.from(txHashToBytes).toString('hex') === addr32Hex,
+        Buffer.from(txHashToBytes).toString('hex') === hash32Hex,
         'TransactionHash.to_bytes should match original input address',
       )
 
@@ -138,6 +139,27 @@ export default class App extends Component<{}> {
         denominatorBigNum,
       )
 
+      // ---------------- TransactionInput ---------------------
+      const txInput = await TransactionInput.new(txHash, 0)
+      assert(
+        (await txInput.index()) === 0,
+        'TransactionInput:: index should match',
+      )
+      // prettier-ignore
+      assert(
+        Buffer.from(
+          (await (await txInput.transaction_id()).to_bytes()),
+        ).toString('hex') === Buffer.from(txHashToBytes).toString('hex'),
+        'TransactionInput:: transaction id should match',
+      )
+
+      // ---------------- TransactionOutput ---------------------
+      const amountStr = '1000000'
+      const amount = await Coin.from_str(amountStr)
+      const recipientAddr = await Address.from_bytes(baseAddrBytes)
+      console.log(recipientAddr);
+      const txOutput = await TransactionOutput.new(recipientAddr, amount)
+      console.log('pass 3');
       // ------------------- LinearFee ---------------------
       const coeffStr = '1000000'
       const constStr = '1000000'
@@ -161,6 +183,9 @@ export default class App extends Component<{}> {
       console.log('stakeCred', stakeCred)
       console.log('baseAddr', baseAddr)
       console.log('unitInterval', unitInterval)
+      console.log('txInput', txInput)
+      console.log('txOutput', txOutput)
+      console.log('fee', fee)
 
       /* eslint-disable-next-line react/no-did-mount-set-state */
       this.setState({
