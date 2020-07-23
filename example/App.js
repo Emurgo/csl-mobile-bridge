@@ -14,6 +14,7 @@ import {
   BigNum,
   Coin,
   ByronAddress,
+  Bip32PrivateKey,
   Address,
   Ed25519KeyHash,
   BaseAddress,
@@ -58,6 +59,20 @@ export default class App extends Component<{}> {
         'Coin.to_str() should match original input value',
       )
 
+      // ------------------ Bip32PrivateKey -----------------------
+      const xprvBytes =
+        '70afd5ff1f7f551c481b7e3f3541f7c63f5f6bcb293af92565af3deea0bcd648' +
+        '1a6e7b8acbe38f3906c63ccbe8b2d9b876572651ac5d2afc0aca284d9412bb1b' +
+        '4839bf02e1d990056d0f06af22ce4bcca52ac00f1074324aab96bbaaaccf290d'
+      const bip32PrivateKey = await Bip32PrivateKey.from_bytes(
+        Buffer.from(xprvBytes, 'hex'),
+      )
+      assert(
+        Buffer.from(await bip32PrivateKey.as_bytes()).toString('hex') ===
+          xprvBytes,
+        'bip32PrivateKey.as_bytes() should match original input value',
+      )
+
       // ------------------ ByronAddress -----------------------
       const addrBase58 =
         'Ae2tdPwUPEZHu3NZa6kCwet2msq4xrBXKHBDvogFKwMsF18Jca8JHLRBas7'
@@ -91,7 +106,8 @@ export default class App extends Component<{}> {
       )
 
       // ------------------ TransactionHash -----------------------
-      const hash32Hex = '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf3ce41cbf'
+      const hash32Hex =
+        '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf3ce41cbf'
       const hash32Bytes = Buffer.from(hash32Hex, 'hex')
       const txHash = await TransactionHash.from_bytes(hash32Bytes)
       const txHashToBytes = await txHash.to_bytes()
@@ -104,7 +120,8 @@ export default class App extends Component<{}> {
       const stakeCred = await StakeCredential.from_keyhash(ed25519KeyHash)
       const ed25519KeyHashOrig = await stakeCred.to_keyhash()
       assert(
-        Buffer.from(await ed25519KeyHashOrig.to_bytes()).toString('hex') === addrHex,
+        Buffer.from(await ed25519KeyHashOrig.to_bytes()).toString('hex') ===
+          addrHex,
         'StakeCredential:: -> to_keyhash -> to_bytes should match original input',
       )
       assert(
@@ -157,9 +174,8 @@ export default class App extends Component<{}> {
       const amountStr = '1000000'
       const amount = await Coin.from_str(amountStr)
       const recipientAddr = await Address.from_bytes(baseAddrBytes)
-      console.log(recipientAddr);
       const txOutput = await TransactionOutput.new(recipientAddr, amount)
-      console.log('pass 3');
+
       // ------------------- LinearFee ---------------------
       const coeffStr = '1000000'
       const constStr = '1000000'
@@ -175,6 +191,7 @@ export default class App extends Component<{}> {
         'LinearFee.constant() should match original input',
       )
 
+      console.log('bip32PrivateKey', bip32PrivateKey)
       console.log('address', address)
       console.log('ed25519KeyHash', ed25519KeyHash)
       console.log('txHash', txHash)

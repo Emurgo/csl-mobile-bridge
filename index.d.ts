@@ -45,6 +45,78 @@ export class Coin extends Ptr {
 
 }
 
+/**
+*/
+export class Bip32PrivateKey extends Ptr {
+  /**
+  * derive this private key with the given index.
+  *
+  * # Security considerations
+  *
+  * * hard derivation index cannot be soft derived with the public key
+  *
+  * # Hard derivation vs Soft derivation
+  *
+  * If you pass an index below 0x80000000 then it is a soft derivation.
+  * The advantage of soft derivation is that it is possible to derive the
+  * public key too. I.e. derivation the private key with a soft derivation
+  * index and then retrieving the associated public key is equivalent to
+  * deriving the public key associated to the parent private key.
+  *
+  * Hard derivation index does not allow public key derivation.
+  *
+  * This is why deriving the private key should not fail while deriving
+  * the public key may fail (if the derivation index is invalid).
+  * @param {number} index
+  * @returns {Promise<Bip32PrivateKey>}
+  */
+  derive(index: number): Promise<Bip32PrivateKey>;
+
+  /**
+  * @returns {Promise<Bip32PrivateKey>}
+  */
+  static generate_ed25519_bip32(): Promise<Bip32PrivateKey>;
+
+  /**
+  * @returns {Promise<PrivateKey>}
+  */
+  to_raw_key(): Promise<PrivateKey>;
+
+  /**
+  * @returns {Promise<Bip32PublicKey>}
+  */
+  to_public(): Promise<Bip32PublicKey>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Bip32PrivateKey>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<Bip32PrivateKey>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  as_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {string} bech32_str
+  * @returns {Promise<Bip32PrivateKey>}
+  */
+  static from_bech32(bech32_str: string): Promise<Bip32PrivateKey>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_bech32(): Promise<string>;
+
+  /**
+  * @param {Uint8Array} entropy
+  * @param {Uint8Array} password
+  * @returns {Promise<Bip32PrivateKey>}
+  */
+  static from_bip39_entropy(entropy: Uint8Array, password: Uint8Array): Promise<Bip32PrivateKey>;
+}
+
 export class ByronAddress extends Ptr {
   /**
   * @returns {Promise<string>}

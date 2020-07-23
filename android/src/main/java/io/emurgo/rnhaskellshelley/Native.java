@@ -19,6 +19,17 @@ final class Native {
     public final native Result<RPtr> bigNumFromStr(String str);
     public final native Result<String> bigNumToStr(RPtr bigNum);
 
+    // Bip32PrivateKey
+    public final native Result<RPtr> bip32PrivateKeyDerive(RPtr bip32PrivateKey, long index);
+    public final native Result<RPtr> bip32PrivateKeyGenerateEd25519Bip32();
+    public final native Result<RPtr> bip32PrivateKeyToRawKey(RPtr bip32PrivateKey);
+    public final native Result<RPtr> bip32PrivateKeyToPublic(RPtr bip32PrivateKey);
+    public final native Result<RPtr> bip32PrivateKeyFromBytes(byte[] bytes);
+    public final native Result<byte[]> bip32PrivateKeyAsBytes(RPtr bip32PrivateKey);
+    public final native Result<RPtr> bip32PrivateKeyFromBech32(String bech32Str);
+    public final native Result<String> bip32PrivateKeyToBech32(RPtr bip32PrivateKey);
+    public final native Result<RPtr> bip32PrivateKeyFromBip39Entropy(byte[] entropy, byte[] password);
+
     // ByronAddress
     public final native Result<String> byronAddressToBase58(RPtr byronAddress);
     public final native Result<RPtr> byronAddressFromBase58(String str);

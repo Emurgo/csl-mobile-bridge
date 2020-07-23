@@ -31,6 +31,110 @@ RCT_EXPORT_METHOD(bigNumToStr:(nonnull NSString *)ptr withResolve:(RCTPromiseRes
     }] exec:ptr andResolve:resolve orReject:reject];
 }
 
+// Bip32PrivateKey
+
+RCT_EXPORT_METHOD(bip32PrivateKeyDerive:(nonnull NSString *)bip32PrivateKeyPtr withIndex:(nonnull NSNumber *)index withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr bip32PrivateKey = [[params objectAtIndex:0] rPtr];
+        int64_t index = [[params objectAtIndex:1] longLongValue];
+        return bip_32_private_key_derive(bip32PrivateKey, index, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[bip32PrivateKeyPtr, index] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(bip32PrivateKeyGenerateEd25519Bip32:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return bip_32_private_key_generate_ed25519_bip32(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(bip32PrivateKeyToRawKey:(nonnull NSString *)bip32PrivateKeyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bip32PrivateKeyPtr, CharPtr* error) {
+        RPtr result;
+        RPtr bip32PrivateKey = [bip32PrivateKeyPtr rPtr];
+        return bip_32_private_key_to_raw_key(bip32PrivateKey, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bip32PrivateKeyPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(bip32PrivateKeyToPublic:(nonnull NSString *)bip32PrivateKeyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bip32PrivateKeyPtr, CharPtr* error) {
+        RPtr result;
+        RPtr bip32PrivateKey = [bip32PrivateKeyPtr rPtr];
+        return bip_32_private_key_to_public(bip32PrivateKey, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bip32PrivateKeyPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(bip32PrivateKeyFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return bip_32_private_key_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(bip32PrivateKeyAsBytes:(nonnull NSString *)bip32PrivateKeyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bip32PrivateKeyPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr bip32PrivateKey = [bip32PrivateKeyPtr rPtr];
+        return bip_32_private_key_as_bytes(bip32PrivateKey, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:bip32PrivateKeyPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(bip32PrivateKeyFromBech32:(nonnull NSString *)bech32Str withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bech32Str, CharPtr* error) {
+        RPtr result;
+        return bip_32_private_key_from_bech32([bech32Str charPtr], &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bech32Str andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(bip32PrivateKeyToBech32:(nonnull NSString *)bip32PrivateKeyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bip32PrivateKeyPtr, CharPtr* error) {
+        CharPtr result;
+        RPtr bip32PrivateKey = [bip32PrivateKeyPtr rPtr];
+        return bip_32_private_key_to_bech32(bip32PrivateKey, &result, error)
+            ? [NSString stringFromCharPtr:&result]
+            : nil;
+    }] exec:bip32PrivateKeyPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(bip32PrivateKeyFromBip39Entropy:(nonnull NSString *)entropy withPassword:(nonnull NSString *)password withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        NSData* entropy = [NSData fromBase64:[params objectAtIndex:0]];
+        NSData* password = [NSData fromBase64:[params objectAtIndex:1]];
+        return bip_32_private_key_from_bip39_entropy(
+                                                     (uint8_t*)entropy.bytes, entropy.length,
+                                                     (uint8_t*)password.bytes, password.length,
+                                                     &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[entropy, password] andResolve:resolve orReject:reject];
+}
+
 // ByronAddress
 
 RCT_EXPORT_METHOD(byronAddressToBase58:(nonnull NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

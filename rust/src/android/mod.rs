@@ -1,19 +1,20 @@
 mod address;
-mod primitive;
-mod ptr_j;
-mod hash_type;
-mod result;
-mod string;
+mod base_address;
 mod big_num;
+mod bip32_private_key;
 mod byron_address;
 mod ed25519_key_hash;
-mod transaction_hash;
+mod hash_type;
+mod linear_fee;
+mod primitive;
+mod ptr_j;
+mod result;
 mod stake_credential;
-mod base_address;
-mod unit_interval;
+mod transaction_hash;
+mod string;
 mod transaction_input;
 mod transaction_output;
-mod linear_fee;
+mod unit_interval;
 // declare other modules here
 // mod transaction;
 
