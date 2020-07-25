@@ -9,7 +9,32 @@
 
 RCT_EXPORT_MODULE()
 
-// BigNumber
+// Utils
+
+RCT_EXPORT_METHOD(makeIcarusBootstrapWitness:(nonnull NSString *)txBodyHashPtr withAddr:(nonnull NSString *)addrPtr andKey:(nonnull NSString *)keyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr txBodyHash = [[params objectAtIndex:0] rPtr];
+        RPtr addr = [[params objectAtIndex:1] rPtr];
+        RPtr key = [[params objectAtIndex:2] rPtr];
+        RPtr result;
+        utils_make_icarus_bootstrap_witness(txBodyHash, addr, key, &result, error);
+        return nil;
+    }] exec:@[txBodyHashPtr, addrPtr, keyPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(makeVkeyWitness:(nonnull NSString *)txBodyHashPtr withSk:(nonnull NSString *)skPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr txBodyHash = [[params objectAtIndex:0] rPtr];
+        RPtr sk = [[params objectAtIndex:1] rPtr];
+        RPtr result;
+        utils_make_vkey_witness(txBodyHash, sk, &result, error);
+        return nil;
+    }] exec:@[txBodyHashPtr, skPtr] andResolve:resolve orReject:reject];
+}
+
+// BigNum
 
 RCT_EXPORT_METHOD(bigNumFromStr:(nonnull NSString *)string withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
@@ -465,6 +490,104 @@ RCT_EXPORT_METHOD(linearFeeNew:(nonnull NSString *)coefficientPtr withConstant:(
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:@[coefficientPtr, constantPtr] andResolve:resolve orReject:reject];
+}
+
+// Vkeywitnesses
+
+RCT_EXPORT_METHOD(vkeywitnessesNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return vkeywitnesses_new(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(vkeywitnessesLen:(nonnull NSString *)witnessesPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* witnessesPtr, CharPtr* error) {
+        uintptr_t result;
+        RPtr witnesses = [witnessesPtr rPtr];
+        return vkeywitnesses_len(witnesses, &result, error)
+            ? [NSNumber numberWithUnsignedLong:result]
+            : nil;
+    }] exec:witnessesPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(vkeywitnessesAdd:(nonnull NSString *)witnessesPtr withItem:(nonnull NSString *)item withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr witnesses = [[params objectAtIndex:0] rPtr];
+        RPtr item = [[params objectAtIndex:1] rPtr];
+        vkeywitnesses_add(&witnesses, item, error);
+        return nil;
+    }] exec:@[witnessesPtr, item] andResolve:resolve orReject:reject];
+}
+
+// BootstrapWitnesses
+
+RCT_EXPORT_METHOD(bootstrapWitnessesNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return bootstrap_witnesses_new(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(bootstrapWitnessesLen:(nonnull NSString *)witnessesPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* witnessesPtr, CharPtr* error) {
+        uintptr_t result;
+        RPtr witnesses = [witnessesPtr rPtr];
+        return bootstrap_witnesses_len(witnesses, &result, error)
+            ? [NSNumber numberWithUnsignedLong:result]
+            : nil;
+    }] exec:witnessesPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(bootstrapWitnessesAdd:(nonnull NSString *)witnessesPtr withItem:(nonnull NSString *)item withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr witnesses = [[params objectAtIndex:0] rPtr];
+        RPtr item = [[params objectAtIndex:1] rPtr];
+        bootstrap_witnesses_add(&witnesses, item, error);
+        return nil;
+    }] exec:@[witnessesPtr, item] andResolve:resolve orReject:reject];
+}
+
+// TransactionWitnessSet
+
+RCT_EXPORT_METHOD(transactionWitnessSetNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return transaction_witness_set_new(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionWitnessSetSetVkeys:(nonnull NSString *)witnessSetPtr withVkeys:(nonnull NSString *)vkeysPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr witnessSet = [[params objectAtIndex:0] rPtr];
+        RPtr vkeys = [[params objectAtIndex:1] rPtr];
+        transaction_witness_set_set_bootstraps(&witnessSet, vkeys, error);
+        return nil;
+    }] exec:@[witnessSetPtr, vkeysPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionWitnessSetSetBootstraps:(nonnull NSString *)witnessSetPtr withBootstraps:(nonnull NSString *)bootstrapsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr witnessSet = [[params objectAtIndex:0] rPtr];
+        RPtr bootstraps = [[params objectAtIndex:1] rPtr];
+        transaction_witness_set_set_bootstraps(&witnessSet, bootstraps, error);
+        return nil;
+    }] exec:@[witnessSetPtr, bootstrapsPtr] andResolve:resolve orReject:reject];
 }
 
 + (void)initialize

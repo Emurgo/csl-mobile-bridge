@@ -23,6 +23,24 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
         return "HaskellShelley";
     }
 
+    // Utils
+
+    @ReactMethod
+    public final void makeIcarusBootstrapWitness(String txBodyHash, String addr, String key, Promise promise) {
+        Native.I
+                .makeIcarusBootstrapWitness(new RPtr(txBodyHash), new RPtr(addr), new RPtr(key))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void makeVkeyWitness(String txBodyHash, String sk, Promise promise) {
+        Native.I
+                .makeVkeyWitness(new RPtr(txBodyHash), new RPtr(sk))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // BigNum
 
     @ReactMethod
@@ -352,6 +370,80 @@ public final void bip32PrivateKeyFromBip39Entropy(String entropy, String passwor
         Native.I
                 .linearFeeNew(new RPtr(coefficient), new RPtr(constant))
                 .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    // Vkeywitnesses
+
+    @ReactMethod
+    public final void vkeywitnessesNew(Promise promise) {
+        Native.I
+                .vkeywitnessesNew()
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void vkeywitnessesLen(String vkwitnesses, Promise promise) {
+        Native.I
+                .vkeywitnessesLen(new RPtr(vkwitnesses))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void vkeywitnessesAdd(String vkwitnesses, String item, Promise promise) {
+        Native.I
+                .vkeywitnessesAdd(new RPtr(vkwitnesses), new RPtr(item))
+                .pour(promise);
+    }
+
+    // BootstrapWitnesses
+
+    @ReactMethod
+    public final void bootstrapWitnessesNew(Promise promise) {
+        Native.I
+                .bootstrapWitnessesNew()
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void bootstrapWitnessesLen(String witnesses, Promise promise) {
+        Native.I
+                .bootstrapWitnessesLen(new RPtr(witnesses))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void bootstrapWitnessesAdd(String witnesses, String item, Promise promise) {
+        Native.I
+                .bootstrapWitnessesAdd(new RPtr(witnesses), new RPtr(item))
+                .pour(promise);
+    }
+
+    // TransactionWitnessSet
+
+    @ReactMethod
+    public final void transactionWitnessSetNew(Promise promise) {
+        Native.I
+                .transactionWitnessSetNew()
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionWitnessSetSetVkeys(String witnessSet, String vkeys, Promise promise) {
+        Native.I
+                .transactionWitnessSetSetVkeys(new RPtr(witnessSet), new RPtr(vkeys))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionWitnessSetSetBootstraps(String witnessSet, String bootstraps, Promise promise) {
+        Native.I
+                .transactionWitnessSetSetBootstraps(new RPtr(witnessSet), new RPtr(bootstraps))
                 .pour(promise);
     }
 

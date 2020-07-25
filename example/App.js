@@ -11,19 +11,26 @@
 import React, {Component} from 'react'
 import {StyleSheet, Text, View} from 'react-native'
 import {
-  BigNum,
-  Coin,
-  ByronAddress,
-  Bip32PrivateKey,
   Address,
-  Ed25519KeyHash,
   BaseAddress,
+  BigNum,
+  Bip32PrivateKey,
+  BootstrapWitness,
+  BootstrapWitnesses,
+  ByronAddress,
+  Coin,
+  Ed25519KeyHash,
+  LinearFee,
+  make_vkey_witness,
+  make_icarus_bootstrap_witness,
   StakeCredential,
-  UnitInterval,
   TransactionHash,
   TransactionInput,
   TransactionOutput,
-  LinearFee,
+  TransactionWitnessSet,
+  UnitInterval,
+  Vkeywitness,
+  Vkeywitnesses,
 } from 'react-native-haskell-shelley'
 
 const assert = (value: any, message: string, ...args: any) => {
@@ -175,6 +182,10 @@ export default class App extends Component<{}> {
       const amount = await Coin.from_str(amountStr)
       const recipientAddr = await Address.from_bytes(baseAddrBytes)
       const txOutput = await TransactionOutput.new(recipientAddr, amount)
+      assert(
+        txOutput instanceof TransactionOutput,
+        'TransactionOutput.new should return instance of TransactionOutput',
+      )
 
       // ------------------- LinearFee ---------------------
       const coeffStr = '1000000'
@@ -191,6 +202,40 @@ export default class App extends Component<{}> {
         'LinearFee.constant() should match original input',
       )
 
+      // ------------------- Utils ---------------------
+      const bootstrapWitness = await make_icarus_bootstrap_witness(
+        txHash,
+        byronAddress,
+        bip32PrivateKey,
+      )
+      assert(
+        bootstrapWitness instanceof BootstrapWitness,
+        'make_icarus_bootstrap_witness should return instance of BootstrapWitness',
+      )
+      const sk = await bip32PrivateKey.to_raw_key()
+      const vkeywitness = await make_vkey_witness(txHash, sk)
+      assert(
+        vkeywitness instanceof Vkeywitness,
+        'make_vkey_witness should return instance of Vkeywitness',
+      )
+
+      // ------------------- BootstrapWitnesses ---------------------
+      const bootstrapWits = await BootstrapWitnesses.new()
+      assert(
+        (await bootstrapWits.len()) === 0,
+        'BootstrapWitnesses.len() should return 0',
+      )
+
+      // ------------------- Vkeywitnesses ---------------------
+      const vkeyWits = await Vkeywitnesses.new()
+      assert(
+        (await vkeyWits.len()) === 0,
+        'Vkeywitnesses.len() should return 0',
+      )
+
+      // ------------------- TransactionWitnessSet ---------------------
+      const witSet = await TransactionWitnessSet.new()
+
       console.log('bip32PrivateKey', bip32PrivateKey)
       console.log('address', address)
       console.log('ed25519KeyHash', ed25519KeyHash)
@@ -203,6 +248,8 @@ export default class App extends Component<{}> {
       console.log('txInput', txInput)
       console.log('txOutput', txOutput)
       console.log('fee', fee)
+      console.log('bootstrapWitness', bootstrapWitness)
+      console.log('vkeywitness', vkeywitness)
 
       /* eslint-disable-next-line react/no-did-mount-set-state */
       this.setState({

@@ -15,6 +15,7 @@ mod transaction_input;
 mod transaction_output;
 mod unit_interval;
 mod utils;
+mod vkeywitnesses;
 // declare other modules here
 // mod transaction;
 

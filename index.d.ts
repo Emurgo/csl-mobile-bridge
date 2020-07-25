@@ -10,6 +10,17 @@ export class Ptr {
 
 export type TransactionIndex = number
 
+export const make_icarus_bootstrap_witness: (
+  txBodyHash: TransactionHash,
+  addr: ByronAddress,
+  key: Bip32PrivateKey,
+) => Promise<BootstrapWitness>
+
+export const make_vkey_witness: (
+  txBodyHash: TransactionHash,
+  sk: PrivateKey,
+) => Promise<Vkeywitness>
+
 /**
 * Generic u64 wrapper for platforms that don't support u64 or BigInt/etc
 * This is an unsigned type - no negative numbers.
@@ -128,7 +139,6 @@ export class ByronAddress extends Ptr {
   * @returns {Promise<ByronAddress>}
   */
   static from_base58(string: string): Promise<ByronAddress>
-
 }
 
 export class Address extends Ptr {
@@ -142,7 +152,6 @@ export class Address extends Ptr {
   * @returns {Promise<Uint8Array>}
   */
   to_bytes(): Promise<Uint8Array>;
-
 }
 
 export class Ed25519KeyHash extends Ptr {
@@ -156,7 +165,6 @@ export class Ed25519KeyHash extends Ptr {
   * @returns {Promise<Uint8Array>}
   */
   to_bytes(): Promise<Uint8Array>;
-
 }
 
 export class TransactionHash extends Ptr {
@@ -170,7 +178,6 @@ export class TransactionHash extends Ptr {
   * @returns {Promise<Uint8Array>}
   */
   to_bytes(): Promise<Uint8Array>;
-
 }
 
 export class StakeCredential extends Ptr {
@@ -273,7 +280,7 @@ export class TransactionOutput extends Ptr {
   /**
   * @param {Address} address
   * @param {Coin} amount
-  * @returns {Promise<TransactionInput>}
+  * @returns {Promise<TransactionOutput>}
   */
   static new(address: Address, amount: Coin): Promise<TransactionOutput>;
 }
@@ -295,4 +302,65 @@ export class LinearFee extends Ptr {
   * @returns {Promise<LinearFee>}
   */
   static new(coefficient: Coin, constant: Coin): Promise<LinearFee>;
+}
+
+// TODO
+export class Vkeywitness extends Ptr {}
+
+export class Vkeywitnesses extends Ptr {
+    /**
+    * @returns {Promise<Vkeywitnesses>}
+    */
+    static new(): Promise<Vkeywitnesses>
+
+    /**
+    * @returns {Promise<number>}
+    */
+    len(): Promise<number>
+
+    /**
+    * @param {Vkwitness} item
+    * @returns {Promise<void>}
+    */
+    add(item: Vkwitness): Promise<void>
+}
+
+// TODO
+export class BootstrapWitness extends Ptr {}
+
+export class BootstrapWitnesses extends Ptr {
+    /**
+    * @returns {Promise<BootstrapWitnesses>}
+    */
+    static new(): Promise<BootstrapWitnesses>
+
+    /**
+    * @returns {Promise<number>}
+    */
+    len(): Promise<number>
+
+    /**
+    * @param {BootstrapWitness} item
+    * @returns {Promise<void>}
+    */
+    add(item: BootstrapWitness): Promise<void>
+}
+
+export class TransactionWitnessSet extends Ptr {
+  /**
+  * @returns {Promise<TransactionWitnessSet>}
+  */
+  static new(): Promise<TransactionWitnessSet>
+
+  /**
+  * @param {BootstrapWitnesses} bootstraps
+  * @returns {Promise<void>}
+  */
+  async set_bootstraps(bootstraps): Promise<void>
+
+  /**
+  * @param {Vkeywitnesses} bootstraps
+  * @returns {Promise<void>}
+  */
+  async set_vkeys(bootstraps): Promise<void>
 }

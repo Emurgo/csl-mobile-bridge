@@ -15,6 +15,11 @@ final class Native {
 
     private native void initLibrary();
 
+    // Utils
+    public final native Result<RPtr> makeIcarusBootstrapWitness(RPtr txBodyHash, RPtr addr, RPtr key);
+    public final native Result<RPtr> makeVkeyWitness(RPtr txBodyHash, RPtr sk);
+    // public final native Result<RPtr> hashTransaction(RPtr txBody);
+
     // BigNum
     public final native Result<RPtr> bigNumFromStr(String str);
     public final native Result<String> bigNumToStr(RPtr bigNum);
@@ -77,6 +82,21 @@ final class Native {
     public final native Result<RPtr> linearFeeCoefficient(RPtr linearFee);
     public final native Result<RPtr> linearFeeConstant(RPtr linearFee);
     public final native Result<RPtr> linearFeeNew(RPtr coefficient, RPtr constant);
+
+    // Vkeywitnesses
+    public final native Result<RPtr> vkeywitnessesNew();
+    public final native Result<Long> vkeywitnessesLen(RPtr vkwitnesses);
+    public final native Result<Void> vkeywitnessesAdd(RPtr vkwitnesses, RPtr item);
+
+    // BootstrapWitnesses
+    public final native Result<RPtr> bootstrapWitnessesNew();
+    public final native Result<Long> bootstrapWitnessesLen(RPtr witnesses);
+    public final native Result<Void> bootstrapWitnessesAdd(RPtr witnesses, RPtr item);
+
+    // TransactionWitnessSet
+    public final native Result<RPtr> transactionWitnessSetNew();
+    public final native Result<Void> transactionWitnessSetSetVkeys(RPtr witnessSet, RPtr vkeys);
+    public final native Result<Void> transactionWitnessSetSetBootstraps(RPtr witnessSet, RPtr bootstraps);
 
     public final native void ptrFree(RPtr ptr);
 }

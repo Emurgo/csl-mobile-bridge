@@ -3,8 +3,8 @@ mod base_address;
 mod big_num;
 mod bip32_private_key;
 mod byron_address;
+mod bootstrap_witnesses;
 mod ed25519_key_hash;
-mod hash_type;
 mod linear_fee;
 mod primitive;
 mod ptr_j;
@@ -14,7 +14,10 @@ mod transaction_hash;
 mod string;
 mod transaction_input;
 mod transaction_output;
+mod transaction_witness_set;
 mod unit_interval;
+mod utils;
+mod vkeywitnesses;
 // declare other modules here
 // mod transaction;
 

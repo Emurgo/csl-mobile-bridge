@@ -49,6 +49,32 @@ class Ptr {
   }
 }
 
+/**
+* @param {TransactionHash} txBodyHash
+* @param {ByronAddress} addr
+* @param {Bip32PrivateKey} key
+* @returns {Promise<BootstrapWitness>}
+*/
+export const make_icarus_bootstrap_witness = async (txBodyHash, addr, key) => {
+  const txBodyHashPtr = Ptr._assertClass(txBodyHash, TransactionHash);
+  const addrPtr = Ptr._assertClass(addr, ByronAddress);
+  const keyPtr = Ptr._assertClass(key, Bip32PrivateKey);
+  const ret = await HaskellShelley.makeIcarusBootstrapWitness(txBodyHashPtr, addrPtr, keyPtr);
+  return Ptr._wrap(ret, BootstrapWitness);
+}
+
+/**
+* @param {TransactionHash} txBodyHash
+* @param {PrivateKey} sk
+* @returns {Promise<Vkeywitness>}
+*/
+export const make_vkey_witness = async (txBodyHash, sk) => {
+  const txBodyHashPtr = Ptr._assertClass(txBodyHash, TransactionHash);
+  const skPtr = Ptr._assertClass(sk, PrivateKey);
+  const ret = await HaskellShelley.makeVkeyWitness(txBodyHashPtr, skPtr);
+  return Ptr._wrap(ret, Vkeywitness);
+}
+
 export class BigNum extends Ptr {
 
   /**
@@ -89,6 +115,9 @@ export class Coin extends Ptr {
     return await HaskellShelley.bigNumToStr(this.ptr);
   }
 }
+
+// TODO
+export class PrivateKey extends Ptr {}
 
 /**
 */
@@ -466,5 +495,95 @@ export class LinearFee extends Ptr {
     const constPtr = Ptr._assertClass(constant, Coin);
     const ret = await HaskellShelley.linearFeeNew(coeffPtr, constPtr);
     return Ptr._wrap(ret, LinearFee);
+  }
+}
+
+// TODO
+export class Vkeywitness extends Ptr {}
+
+export class Vkeywitnesses extends Ptr {
+    /**
+    * @returns {Promise<Vkeywitnesses>}
+    */
+    static async new() {
+        const ret = await HaskellShelley.vkeywitnessesNew();
+        return Ptr._wrap(ret, Vkeywitnesses);
+    }
+
+    /**
+    * @returns {Promise<number>}
+    */
+    async len() {
+      return HaskellShelley.vkeywitnessesLen(this.ptr);
+    }
+
+    /**
+    * @param {Vkwitness} item
+    * @returns {Promise<void>}
+    */
+    async add(item) {
+      const itemPtr = Ptr._assertClass(item, Vkwitness);
+      item.ptr = null;
+      return HaskellShelley.vkeywitnessesAdd(this.ptr, itemPtr);
+    }
+}
+
+// TODO
+export class BootstrapWitness extends Ptr {}
+
+export class BootstrapWitnesses extends Ptr {
+  /**
+  * @returns {Promise<BootstrapWitnesses>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.bootstrapWitnessesNew();
+    return Ptr._wrap(ret, BootstrapWitnesses);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.bootstrapWitnessesLen(this.ptr);
+  }
+
+  /**
+  * @param {BootstrapWitness} item
+  * @returns {Promise<void>}
+  */
+  async add(item) {
+    const itemPtr = Ptr._assertClass(item, BootstrapWitness);
+    item.ptr = null;
+    return HaskellShelley.bootstrapWitnessAdd(this.ptr, itemPtr);
+  }
+}
+
+export class TransactionWitnessSet extends Ptr {
+  /**
+  * @returns {Promise<TransactionWitnessSet>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.transactionWitnessSetNew();
+    return Ptr._wrap(ret, TransactionWitnessSet);
+  }
+
+  /**
+  * @param {BootstrapWitnesses} bootstraps
+  * @returns {Promise<void>}
+  */
+  async set_bootstraps(bootstraps) {
+    const bootstrapsPtr = Ptr._assertClass(bootstraps, BootstrapWitnesses);
+    bootstraps.ptr = null;
+    return HaskellShelley.transactionWitnessSetSetBootstraps(this.ptr, bootstrapsPtr);
+  }
+
+  /**
+  * @param {Vkeywitnesses} vkeys
+  * @returns {Promise<void>}
+  */
+  async set_vkeys(vkeys) {
+    const vkeysPtr = Ptr._assertClass(vkeys, Vkeywitnesses);
+    vkeys.ptr = null;
+    return HaskellShelley.transactionWitnessSetSetVkeys(this.ptr, vkeysPtr);
   }
 }

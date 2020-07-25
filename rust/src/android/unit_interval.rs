@@ -45,13 +45,6 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_unitIntervalNew(
   env: JNIEnv, _: JObject, numerator: JRPtr, denominator: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
-    // let numerator = numerator.rptr(&env)?;
-    // let denominator = denominator.rptr(&env)?;
-    // numerator.typed_ref::<BigNum>().zip(denominator.typed_ref::<BigNum>()).and_then(
-    //   |(numerator, denominator)| {
-    //     UnitInterval::new(numerator, denominator).rptr().jptr(&env)
-    //   }
-    // )
     let numerator = numerator.owned::<BigNum>(&env);
     let denominator = denominator.owned::<BigNum>(&env);
     UnitInterval::new(numerator?, denominator?).rptr().jptr(&env)
