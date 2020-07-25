@@ -12,10 +12,25 @@ import React, {Component} from 'react'
 import {StyleSheet, Text, View} from 'react-native'
 import {
   Address,
-  AddrKeyHash,
   BaseAddress,
+  BigNum,
+  Bip32PrivateKey,
+  BootstrapWitness,
+  BootstrapWitnesses,
+  ByronAddress,
+  Coin,
+  Ed25519KeyHash,
+  LinearFee,
+  make_vkey_witness,
+  make_icarus_bootstrap_witness,
   StakeCredential,
+  TransactionHash,
+  TransactionInput,
+  TransactionOutput,
+  TransactionWitnessSet,
   UnitInterval,
+  Vkeywitness,
+  Vkeywitnesses,
 } from 'react-native-haskell-shelley'
 
 const assert = (value: any, message: string, ...args: any) => {
@@ -31,39 +46,89 @@ export default class App extends Component<{}> {
     status: 'starting',
   }
   async componentDidMount() {
-    const addr = '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' // 28B
-    const addrBytes = Buffer.from(addr, 'hex')
+    const addrHex = '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' // 28B
+    const addrBytes = Buffer.from(addrHex, 'hex')
+
     try {
+      // ------------------ BigNum -----------------------
+      const bigNumStr = '1000000'
+      const bigNum = await BigNum.from_str(bigNumStr)
+      assert(
+        (await bigNum.to_str()) === bigNumStr,
+        'BigNum.to_str() should match original input value',
+      )
+
+      // ------------------ Coin -----------------------
+      const coinStr = '2000000'
+      const coin = await Coin.from_str(coinStr)
+      assert(
+        (await coin.to_str()) === coinStr,
+        'Coin.to_str() should match original input value',
+      )
+
+      // ------------------ Bip32PrivateKey -----------------------
+      const xprvBytes =
+        '70afd5ff1f7f551c481b7e3f3541f7c63f5f6bcb293af92565af3deea0bcd648' +
+        '1a6e7b8acbe38f3906c63ccbe8b2d9b876572651ac5d2afc0aca284d9412bb1b' +
+        '4839bf02e1d990056d0f06af22ce4bcca52ac00f1074324aab96bbaaaccf290d'
+      const bip32PrivateKey = await Bip32PrivateKey.from_bytes(
+        Buffer.from(xprvBytes, 'hex'),
+      )
+      assert(
+        Buffer.from(await bip32PrivateKey.as_bytes()).toString('hex') ===
+          xprvBytes,
+        'bip32PrivateKey.as_bytes() should match original input value',
+      )
+
+      // ------------------ ByronAddress -----------------------
+      const addrBase58 =
+        'Ae2tdPwUPEZHu3NZa6kCwet2msq4xrBXKHBDvogFKwMsF18Jca8JHLRBas7'
+      const byronAddress = await ByronAddress.from_base58(addrBase58)
+      assert(
+        (await byronAddress.to_base58()) === addrBase58,
+        'ByronAddress.to_base58 should match original input address',
+      )
+
       // ------------------ Address -----------------------
       const baseAddrHex =
         '00' +
         '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' +
         '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf'
       const baseAddrBytes = Buffer.from(baseAddrHex, 'hex')
-      const baseAddrPtr = await Address.from_bytes(baseAddrBytes)
-      const addrPtrToBytes = await baseAddrPtr.to_bytes()
+      const address = await Address.from_bytes(baseAddrBytes)
+      const addrPtrToBytes = await address.to_bytes()
       console.log(Buffer.from(addrPtrToBytes).toString('hex'))
       assert(
         Buffer.from(addrPtrToBytes).toString('hex') === baseAddrHex,
         'Address.to_bytes should match original input address',
       )
 
-      // ------------------ AddrKeyHash -----------------------
-      const addrKeyHash = await AddrKeyHash.from_bytes(addrBytes)
-      console.log(addrKeyHash)
-      const addrToBytes = await addrKeyHash.to_bytes()
+      // ------------------ Ed25519KeyHash -----------------------
+      const ed25519KeyHash = await Ed25519KeyHash.from_bytes(addrBytes)
+      const addrToBytes = await ed25519KeyHash.to_bytes()
       console.log(Buffer.from(addrToBytes).toString('hex'))
       assert(
-        Buffer.from(addrToBytes).toString('hex') === addr,
-        'AddrKeyHash.to_bytes should match original input address',
+        Buffer.from(addrToBytes).toString('hex') === addrHex,
+        'Ed25519KeyHash.to_bytes should match original input address',
+      )
+
+      // ------------------ TransactionHash -----------------------
+      const hash32Hex =
+        '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf3ce41cbf'
+      const hash32Bytes = Buffer.from(hash32Hex, 'hex')
+      const txHash = await TransactionHash.from_bytes(hash32Bytes)
+      const txHashToBytes = await txHash.to_bytes()
+      assert(
+        Buffer.from(txHashToBytes).toString('hex') === hash32Hex,
+        'TransactionHash.to_bytes should match original input address',
       )
 
       // ---------------- StakeCredential ---------------------
-      const stakeCred = await StakeCredential.from_keyhash(addrKeyHash)
-      const addrKeyHashOrig = await stakeCred.to_keyhash()
-      console.log(Buffer.from(await addrKeyHashOrig.to_bytes()).toString('hex'))
+      const stakeCred = await StakeCredential.from_keyhash(ed25519KeyHash)
+      const ed25519KeyHashOrig = await stakeCred.to_keyhash()
       assert(
-        Buffer.from(await addrKeyHashOrig.to_bytes()).toString('hex') === addr,
+        Buffer.from(await ed25519KeyHashOrig.to_bytes()).toString('hex') ===
+          addrHex,
         'StakeCredential:: -> to_keyhash -> to_bytes should match original input',
       )
       assert(
@@ -74,7 +139,7 @@ export default class App extends Component<{}> {
       // ------------------- BaseAddress ---------------------
       const pymntAddr =
         '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41c0a' // 28B
-      const pymntAddrKeyHash = await AddrKeyHash.from_bytes(
+      const pymntAddrKeyHash = await Ed25519KeyHash.from_bytes(
         Buffer.from(pymntAddr, 'hex'),
       )
       const paymentCred = await StakeCredential.from_keyhash(pymntAddrKeyHash)
@@ -89,15 +154,102 @@ export default class App extends Component<{}> {
       )
 
       // ------------------- UnitInterval ---------------------
-      const unitInterval = await UnitInterval.new(0, 1)
-      console.log(await unitInterval.to_bytes())
+      const numeratorStr = '1000000'
+      const denominatorStr = '1000000'
+      const numeratorBigNum = await BigNum.from_str(numeratorStr)
+      const denominatorBigNum = await BigNum.from_str(denominatorStr)
+      const unitInterval = await UnitInterval.new(
+        numeratorBigNum,
+        denominatorBigNum,
+      )
 
-      console.log('baseAddrPtr', baseAddrPtr)
-      console.log('addrKeyHash', addrKeyHash)
+      // ---------------- TransactionInput ---------------------
+      const txInput = await TransactionInput.new(txHash, 0)
+      assert(
+        (await txInput.index()) === 0,
+        'TransactionInput:: index should match',
+      )
+      // prettier-ignore
+      assert(
+        Buffer.from(
+          (await (await txInput.transaction_id()).to_bytes()),
+        ).toString('hex') === Buffer.from(txHashToBytes).toString('hex'),
+        'TransactionInput:: transaction id should match',
+      )
+
+      // ---------------- TransactionOutput ---------------------
+      const amountStr = '1000000'
+      const amount = await Coin.from_str(amountStr)
+      const recipientAddr = await Address.from_bytes(baseAddrBytes)
+      const txOutput = await TransactionOutput.new(recipientAddr, amount)
+      assert(
+        txOutput instanceof TransactionOutput,
+        'TransactionOutput.new should return instance of TransactionOutput',
+      )
+
+      // ------------------- LinearFee ---------------------
+      const coeffStr = '1000000'
+      const constStr = '1000000'
+      const coeff = await Coin.from_str(coeffStr)
+      const constant = await Coin.from_str(constStr)
+      const fee = await LinearFee.new(coeff, constant)
+      assert(
+        (await (await fee.coefficient()).to_str()) === coeffStr,
+        'LinearFee.coefficient() should match original input',
+      )
+      assert(
+        (await (await fee.constant()).to_str()) === constStr,
+        'LinearFee.constant() should match original input',
+      )
+
+      // ------------------- Utils ---------------------
+      const bootstrapWitness = await make_icarus_bootstrap_witness(
+        txHash,
+        byronAddress,
+        bip32PrivateKey,
+      )
+      assert(
+        bootstrapWitness instanceof BootstrapWitness,
+        'make_icarus_bootstrap_witness should return instance of BootstrapWitness',
+      )
+      const sk = await bip32PrivateKey.to_raw_key()
+      const vkeywitness = await make_vkey_witness(txHash, sk)
+      assert(
+        vkeywitness instanceof Vkeywitness,
+        'make_vkey_witness should return instance of Vkeywitness',
+      )
+
+      // ------------------- BootstrapWitnesses ---------------------
+      const bootstrapWits = await BootstrapWitnesses.new()
+      assert(
+        (await bootstrapWits.len()) === 0,
+        'BootstrapWitnesses.len() should return 0',
+      )
+
+      // ------------------- Vkeywitnesses ---------------------
+      const vkeyWits = await Vkeywitnesses.new()
+      assert(
+        (await vkeyWits.len()) === 0,
+        'Vkeywitnesses.len() should return 0',
+      )
+
+      // ------------------- TransactionWitnessSet ---------------------
+      const witSet = await TransactionWitnessSet.new()
+
+      console.log('bip32PrivateKey', bip32PrivateKey)
+      console.log('address', address)
+      console.log('ed25519KeyHash', ed25519KeyHash)
+      console.log('txHash', txHash)
       console.log('pymntAddrKeyHash', pymntAddrKeyHash)
       console.log('paymentCred', paymentCred)
       console.log('stakeCred', stakeCred)
       console.log('baseAddr', baseAddr)
+      console.log('unitInterval', unitInterval)
+      console.log('txInput', txInput)
+      console.log('txOutput', txOutput)
+      console.log('fee', fee)
+      console.log('bootstrapWitness', bootstrapWitness)
+      console.log('vkeywitness', vkeywitness)
 
       /* eslint-disable-next-line react/no-did-mount-set-state */
       this.setState({

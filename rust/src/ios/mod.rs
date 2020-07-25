@@ -1,12 +1,21 @@
 mod address;
+mod base_address;
+mod big_num;
+mod bip32_private_key;
+mod byron_address;
 mod data;
+mod ed25519_key_hash;
+mod linear_fee;
 mod ptr_c;
 mod result;
-mod string;
-mod addr_key_hash;
 mod stake_credential;
-mod base_address;
+mod string;
+mod transaction_hash;
+mod transaction_input;
+mod transaction_output;
 mod unit_interval;
+mod utils;
+mod vkeywitnesses;
 // declare other modules here
 // mod transaction;
 

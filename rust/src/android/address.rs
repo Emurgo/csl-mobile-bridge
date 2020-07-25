@@ -5,8 +5,7 @@ use crate::ptr::RPtrRepresentable;
 use jni::objects::{JObject};
 use jni::sys::{jbyteArray, jobject};
 use jni::JNIEnv;
-use cddl_lib::address::{Address};
-use cddl_lib::prelude::*;
+use cardano_serialization_lib::address::{Address};
 
 // cddl_lib: (&self) -> Vec<u8>
 // from react-native-chain-libs address.as_bytes (&self) -> Vec<u8>

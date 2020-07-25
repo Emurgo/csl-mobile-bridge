@@ -6,7 +6,7 @@ use crate::ptr::RPtrRepresentable;
 use jni::objects::JObject;
 use jni::sys::{jobject, jint};
 use jni::JNIEnv;
-use cddl_lib::address::{BaseAddress, StakeCredential};
+use cardano_serialization_lib::address::{BaseAddress, StakeCredential};
 
 #[allow(non_snake_case)]
 #[no_mangle]

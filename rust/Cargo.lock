@@ -101,11 +101,30 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "cardano-legacy-address"
 version = "0.1.1"
-source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#7050377668d40625015561d7ab13d9542cd7ffd8"
+source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#39a57f8dea256cc2bed8009a5f5906a083146e00"
 dependencies = [
  "cbor_event 2.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "cryptoxide 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "ed25519-bip32 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "cardano-serialization-lib"
+version = "0.2.0"
+source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#39a57f8dea256cc2bed8009a5f5906a083146e00"
+dependencies = [
+ "bech32 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "cardano-legacy-address 0.1.1 (git+https://github.com/Emurgo/cardano-serialization-lib.git)",
+ "cbor_event 2.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "chain-crypto 0.1.0 (git+https://github.com/Emurgo/cardano-serialization-lib.git)",
+ "chain-impl-mockchain 0.1.0 (git+https://github.com/Emurgo/cardano-serialization-lib.git)",
+ "clear_on_drop 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "cryptoxide 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ed25519-bip32 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hex 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "js-sys 0.3.40 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rand_os 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "wasm-bindgen 0.2.63 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -136,23 +155,6 @@ version = "1.0.54"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
-name = "cddl-lib"
-version = "0.1.0"
-source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#7050377668d40625015561d7ab13d9542cd7ffd8"
-dependencies = [
- "bech32 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "cbor_event 2.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "chain-crypto 0.1.0 (git+https://github.com/Emurgo/cardano-serialization-lib.git)",
- "chain-impl-mockchain 0.1.0 (git+https://github.com/Emurgo/cardano-serialization-lib.git)",
- "clear_on_drop 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "cryptoxide 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "hex 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "js-sys 0.3.40 (registry+https://github.com/rust-lang/crates.io-index)",
- "rand_os 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "wasm-bindgen 0.2.63 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
 name = "cesu8"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -165,7 +167,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "chain-addr"
 version = "0.1.0"
-source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#7050377668d40625015561d7ab13d9542cd7ffd8"
+source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#39a57f8dea256cc2bed8009a5f5906a083146e00"
 dependencies = [
  "bech32 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -177,7 +179,7 @@ dependencies = [
 [[package]]
 name = "chain-core"
 version = "0.1.0"
-source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#7050377668d40625015561d7ab13d9542cd7ffd8"
+source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#39a57f8dea256cc2bed8009a5f5906a083146e00"
 dependencies = [
  "cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -185,7 +187,7 @@ dependencies = [
 [[package]]
 name = "chain-crypto"
 version = "0.1.0"
-source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#7050377668d40625015561d7ab13d9542cd7ffd8"
+source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#39a57f8dea256cc2bed8009a5f5906a083146e00"
 dependencies = [
  "bech32 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -204,7 +206,7 @@ dependencies = [
 [[package]]
 name = "chain-impl-mockchain"
 version = "0.1.0"
-source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#7050377668d40625015561d7ab13d9542cd7ffd8"
+source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#39a57f8dea256cc2bed8009a5f5906a083146e00"
 dependencies = [
  "cardano-legacy-address 0.1.1 (git+https://github.com/Emurgo/cardano-serialization-lib.git)",
  "cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -226,7 +228,7 @@ dependencies = [
 [[package]]
 name = "chain-storage"
 version = "0.1.0"
-source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#7050377668d40625015561d7ab13d9542cd7ffd8"
+source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#39a57f8dea256cc2bed8009a5f5906a083146e00"
 dependencies = [
  "chain-core 0.1.0 (git+https://github.com/Emurgo/cardano-serialization-lib.git)",
 ]
@@ -234,7 +236,7 @@ dependencies = [
 [[package]]
 name = "chain-time"
 version = "0.1.0"
-source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#7050377668d40625015561d7ab13d9542cd7ffd8"
+source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#39a57f8dea256cc2bed8009a5f5906a083146e00"
 dependencies = [
  "cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -423,7 +425,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "imhamt"
 version = "0.1.0"
-source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#7050377668d40625015561d7ab13d9542cd7ffd8"
+source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#39a57f8dea256cc2bed8009a5f5906a083146e00"
 
 [[package]]
 name = "itoa"
@@ -610,8 +612,8 @@ dependencies = [
 name = "react-native-haskell-shelley"
 version = "0.0.1"
 dependencies = [
+ "cardano-serialization-lib 0.2.0 (git+https://github.com/Emurgo/cardano-serialization-lib.git)",
  "cbindgen 0.14.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "cddl-lib 0.1.0 (git+https://github.com/Emurgo/cardano-serialization-lib.git)",
  "jni 0.13.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "wasm-bindgen 0.2.63 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -689,7 +691,7 @@ dependencies = [
 [[package]]
 name = "sparse-array"
 version = "0.1.0"
-source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#7050377668d40625015561d7ab13d9542cd7ffd8"
+source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#39a57f8dea256cc2bed8009a5f5906a083146e00"
 
 [[package]]
 name = "strsim"
@@ -769,7 +771,7 @@ dependencies = [
 [[package]]
 name = "typed-bytes"
 version = "0.1.0"
-source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#7050377668d40625015561d7ab13d9542cd7ffd8"
+source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#39a57f8dea256cc2bed8009a5f5906a083146e00"
 
 [[package]]
 name = "typenum"
@@ -933,10 +935,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum byte-tools 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)" = "e3b5ca7a04898ad4bcd41c90c5285445ff5b791899bb1b0abdd2a2aa791211d7"
 "checksum byteorder 1.3.4 (registry+https://github.com/rust-lang/crates.io-index)" = "08c48aae112d48ed9f069b33538ea9e3e90aa263cfa3d1c24309612b1f7472de"
 "checksum cardano-legacy-address 0.1.1 (git+https://github.com/Emurgo/cardano-serialization-lib.git)" = "<none>"
+"checksum cardano-serialization-lib 0.2.0 (git+https://github.com/Emurgo/cardano-serialization-lib.git)" = "<none>"
 "checksum cbindgen 0.14.2 (registry+https://github.com/rust-lang/crates.io-index)" = "104ca409bbff8293739438c71820a2606111b5f8f81835536dc673dfd807369e"
 "checksum cbor_event 2.1.3 (registry+https://github.com/rust-lang/crates.io-index)" = "2b6cda8a789815488ee290d106bc97dba47785dae73d63576fc42c126912a451"
 "checksum cc 1.0.54 (registry+https://github.com/rust-lang/crates.io-index)" = "7bbb73db36c1246e9034e307d0fba23f9a2e251faa47ade70c1bd252220c8311"
-"checksum cddl-lib 0.1.0 (git+https://github.com/Emurgo/cardano-serialization-lib.git)" = "<none>"
 "checksum cesu8 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "6d43a04d8753f35258c91f8ec639f792891f748a1edbd759cf1dcea3382ad83c"
 "checksum cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)" = "4785bdd1c96b2a846b2bd7cc02e86b6b3dbf14e7e53446c4f54c92a361040822"
 "checksum chain-addr 0.1.0 (git+https://github.com/Emurgo/cardano-serialization-lib.git)" = "<none>"

@@ -2,7 +2,7 @@ use super::result::CResult;
 use super::string::{CharPtr};
 use crate::panic::{handle_exception_result, Zip};
 use crate::ptr::{RPtr, RPtrRepresentable};
-use cddl_lib::address::{BaseAddress, StakeCredential};
+use cardano_serialization_lib::address::{BaseAddress, StakeCredential};
 
 #[no_mangle]
 pub unsafe extern "C" fn base_address_new(
