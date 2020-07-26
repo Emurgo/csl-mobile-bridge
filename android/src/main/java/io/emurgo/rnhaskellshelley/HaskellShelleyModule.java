@@ -463,4 +463,14 @@ public final void bip32PrivateKeyFromBip39Entropy(String entropy, String passwor
                 .pour(promise);
     }
 
+    // Transaction
+
+    @ReactMethod
+    public final void transactionNew( String body, String witnessSet, Promise promise) {
+        Native.I
+                .transactionNew(new RPtr(body), new RPtr(witnessSet))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
 }

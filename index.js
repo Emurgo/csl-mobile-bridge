@@ -604,3 +604,31 @@ export class TransactionWitnessSet extends Ptr {
     return HaskellShelley.transactionWitnessSetSetVkeys(this.ptr, vkeysPtr);
   }
 }
+
+// TODO
+export class TransactionMetadata extends Ptr {}
+
+// TODO
+export class TransactionBody extends Ptr {}
+
+export class Transaction extends Ptr {
+  /**
+  * @param {TransactionBody} body
+  * @param {TransactionWitnessSet} witnessSet
+  * @param {TransactionMetadata | void} metadata
+  * @returns {Promise<Transaction>}
+  */
+  static async new(body: TransactionBody, witnessSet: TransactionWitnessSet, metadata: TransactionMetadata) {
+    const bodyPtr = Ptr._assertClass(body, TransactionBody);
+    const witnessSetPtr = Ptr._assertClass(witnessSet, TransactionWitnessSet);
+    let ret
+    if (metadata == null) {
+      ret = await HaskellShelley.transactionNew(coeffPtr, constPtr);
+    } else {
+      // assert should fail. TODO
+      const metadataPtr = Ptr._assertClass(metadata, TransactionMetadata);
+      ret = await HaskellShelley.transactionNewWithMetadata(coeffPtr, constPtr, metadataPtr);
+    }
+    return Ptr._wrap(ret, Transaction);
+  }
+}

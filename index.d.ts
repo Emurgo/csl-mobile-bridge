@@ -367,11 +367,29 @@ export class TransactionWitnessSet extends Ptr {
   * @param {BootstrapWitnesses} bootstraps
   * @returns {Promise<void>}
   */
-  async set_bootstraps(bootstraps): Promise<void>
+  async set_bootstraps(bootstraps: BootstrapWitnesses): Promise<void>
 
   /**
   * @param {Vkeywitnesses} bootstraps
   * @returns {Promise<void>}
   */
-  async set_vkeys(bootstraps): Promise<void>
+  async set_vkeys(vkeywitnesses: Vkeywitnesses): Promise<void>
+}
+
+export class TransactionMetadata extends Ptr {}
+
+export class TransactionBody extends Ptr {}
+
+export class Transaction extends Ptr {
+  /**
+  * @param {TransactionBody} body
+  * @param {TransactionWitnessSet} witnessSet
+  * @param {TransactionMetadata | void} metadata
+  * @returns {Promise<Transaction>}
+  */
+  static new(
+    body: TransactionBody,
+    witnessSet: TransactionWitnessSet,
+    metadata?: TransactionMetadata,
+  ): Promise<Transaction>
 }

@@ -100,5 +100,8 @@ final class Native {
     public final native Result<Void> transactionWitnessSetSetVkeys(RPtr witnessSet, RPtr vkeys);
     public final native Result<Void> transactionWitnessSetSetBootstraps(RPtr witnessSet, RPtr bootstraps);
 
+    // Transaction
+    public final native Result<RPtr> transactionNew(RPtr body, RPtr witnessSet);
+
     public final native void ptrFree(RPtr ptr);
 }
