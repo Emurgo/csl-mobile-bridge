@@ -289,6 +289,28 @@ RCT_EXPORT_METHOD(stakeCredentialKind:(nonnull NSString *)stakeCredentialPtr wit
     }] exec:stakeCredentialPtr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(stakeCredentialToBytes:(nonnull NSString *)stakeCredentialPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* txHashPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr stakeCredential = [stakeCredentialPtr rPtr];
+        return stake_credential_to_bytes(stakeCredential, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:stakeCredentialPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(stakeCredentialFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return stake_credential_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
 // BaseAddress
 
 RCT_EXPORT_METHOD(baseAddressNew:(nonnull NSNumber *)network withPaymentCredential:(nonnull NSString *)payment andStakeCredential:(nonnull NSString *)stake withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

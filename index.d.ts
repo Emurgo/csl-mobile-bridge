@@ -197,6 +197,17 @@ export class StakeCredential extends Ptr {
   * @returns {Promise<number>}
   */
   kind(): Promise<number>
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<StakeCredential>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<StakeCredential>;
 }
 
 export class BaseAddress extends Ptr {

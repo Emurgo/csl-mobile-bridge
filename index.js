@@ -327,6 +327,23 @@ export class StakeCredential extends Ptr {
   async kind() {
     return await HaskellShelley.stakeCredentialKind(this.ptr);
   }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.stakeCredentialToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<StakeCredential>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.stakeCredentialFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, StakeCredential);
+  }
 }
 
 export class BaseAddress extends Ptr {

@@ -3,11 +3,24 @@ use super::ptr_j::*;
 use super::result::ToJniResult;
 use crate::panic::{handle_exception_result};
 use crate::ptr::RPtrRepresentable;
+use crate::utils::ToFromBytes;
+use super::utils::{to_bytes, from_bytes};
 use jni::objects::JObject;
-use jni::sys::{jobject, jint};
+use jni::sys::{jobject, jint, jbyteArray};
 use jni::JNIEnv;
 use cardano_serialization_lib::crypto::{Ed25519KeyHash};
+use cardano_serialization_lib::error::{DeserializeError};
 use cardano_serialization_lib::address::{StakeCredential};
+
+impl ToFromBytes for StakeCredential {
+  fn to_bytes(&self) -> Vec<u8> {
+    self.to_bytes()
+  }
+
+  fn from_bytes(bytes: Vec<u8>) -> Result<StakeCredential, DeserializeError> {
+    StakeCredential::from_bytes(bytes)
+  }
+}
 
 #[allow(non_snake_case)]
 #[no_mangle]
@@ -49,4 +62,20 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_stakeCredentialK
       .and_then(|kind| (kind as jint).jobject(&env))
   })
   .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_stakeCredentialToBytes(
+  env: JNIEnv, _: JObject, stake_credential: JRPtr
+) -> jobject {
+  to_bytes::<StakeCredential>(env, stake_credential)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_stakeCredentialFromBytes(
+  env: JNIEnv, _: JObject, bytes: jbyteArray
+) -> jobject {
+  from_bytes::<StakeCredential>(env, bytes)
 }

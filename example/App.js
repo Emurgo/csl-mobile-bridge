@@ -126,6 +126,10 @@ export default class App extends Component<{}> {
       // ---------------- StakeCredential ---------------------
       const stakeCred = await StakeCredential.from_keyhash(ed25519KeyHash)
       const ed25519KeyHashOrig = await stakeCred.to_keyhash()
+      const stakeCredBytes = await stakeCred.to_bytes()
+      const stakeCredFromBytes = await StakeCredential.from_bytes(
+        Buffer.from(stakeCredBytes, 'hex'),
+      )
       assert(
         Buffer.from(await ed25519KeyHashOrig.to_bytes()).toString('hex') ===
           addrHex,
@@ -134,6 +138,12 @@ export default class App extends Component<{}> {
       assert(
         (await stakeCred.kind()) === 0,
         'StakeCredential:: kind should match',
+      )
+      assert(
+        Buffer.from(
+          await (await stakeCredFromBytes.to_keyhash()).to_bytes(),
+        ).toString('hex') === addrHex,
+        'StakeCredential -> to_bytes -> from_bytes -> to_keyhash -> should match',
       )
 
       // ------------------- BaseAddress ---------------------

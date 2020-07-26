@@ -55,6 +55,8 @@ final class Native {
     public final native Result<RPtr> stakeCredentialFromKeyHash(RPtr keyHash);
     public final native Result<RPtr> stakeCredentialToKeyHash(RPtr stakeCredential);
     public final native Result<Integer> stakeCredentialKind(RPtr stakeCredential);
+    public final native Result<byte[]> stakeCredentialToBytes(RPtr stakeCredential);
+    public final native Result<RPtr> stakeCredentialFromBytes(byte[] bytes);
 
     // BaseAddress
     public final native Result<RPtr> baseAddressNew(int network, RPtr payment, RPtr stake);

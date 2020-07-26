@@ -227,6 +227,22 @@ public final void bip32PrivateKeyFromBip39Entropy(String entropy, String passwor
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void stakeCredentialToBytes(String stakeCredential, Promise promise) {
+        Native.I
+                .stakeCredentialToBytes(new RPtr(stakeCredential))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeCredentialFromBytes(String bytes, Promise promise) {
+        Native.I
+                .stakeCredentialFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // BaseAddress
 
     @ReactMethod

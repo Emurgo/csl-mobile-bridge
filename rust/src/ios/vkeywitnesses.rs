@@ -2,7 +2,6 @@ use super::result::CResult;
 use super::string::CharPtr;
 use crate::panic::{handle_exception, handle_exception_result, Zip};
 use crate::ptr::{RPtr, RPtrRepresentable};
-use cardano_serialization_lib::TransactionMetadata;
 use cardano_serialization_lib::crypto::{Vkeywitness, Vkeywitnesses};
 
 #[no_mangle]
