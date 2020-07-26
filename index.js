@@ -641,11 +641,11 @@ export class Transaction extends Ptr {
     const witnessSetPtr = Ptr._assertClass(witnessSet, TransactionWitnessSet);
     let ret
     if (metadata == null) {
-      ret = await HaskellShelley.transactionNew(coeffPtr, constPtr);
+      ret = await HaskellShelley.transactionNew(bodyPtr, witnessSetPtr);
     } else {
       // assert should fail. TODO
       const metadataPtr = Ptr._assertClass(metadata, TransactionMetadata);
-      ret = await HaskellShelley.transactionNewWithMetadata(coeffPtr, constPtr, metadataPtr);
+      ret = await HaskellShelley.transactionNewWithMetadata(bodyPtr, witnessSetPtr, metadataPtr);
     }
     return Ptr._wrap(ret, Transaction);
   }
