@@ -609,7 +609,25 @@ export class TransactionWitnessSet extends Ptr {
 export class TransactionMetadata extends Ptr {}
 
 // TODO
-export class TransactionBody extends Ptr {}
+export class TransactionBody extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.transactionBodyToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionBody>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.transactionBodyFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, TransactionBody);
+  }
+
+}
 
 export class Transaction extends Ptr {
   /**

@@ -612,6 +612,30 @@ RCT_EXPORT_METHOD(transactionWitnessSetSetBootstraps:(nonnull NSString *)witness
     }] exec:@[witnessSetPtr, bootstrapsPtr] andResolve:resolve orReject:reject];
 }
 
+  // TransactionBody
+
+RCT_EXPORT_METHOD(transactionBodyToBytes:(nonnull NSString *)txBodyPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* txHashPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr txBody = [txBodyPtr rPtr];
+        return transaction_hash_to_bytes(txBody, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:txBodyPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBodyFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return transaction_hash_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
 + (void)initialize
 {
     if (self == [HaskellShelley class]) {

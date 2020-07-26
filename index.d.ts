@@ -378,7 +378,18 @@ export class TransactionWitnessSet extends Ptr {
 
 export class TransactionMetadata extends Ptr {}
 
-export class TransactionBody extends Ptr {}
+export class TransactionBody extends Ptr {
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionBody>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<TransactionBody>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+}
 
 export class Transaction extends Ptr {
   /**

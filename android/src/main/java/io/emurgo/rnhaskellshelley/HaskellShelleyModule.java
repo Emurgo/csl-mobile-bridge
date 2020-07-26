@@ -463,6 +463,24 @@ public final void bip32PrivateKeyFromBip39Entropy(String entropy, String passwor
                 .pour(promise);
     }
 
+    // TransactionBody
+
+    @ReactMethod
+    public final void transactionBodyToBytes(String TransactionBody, Promise promise) {
+        Native.I
+                .transactionBodyToBytes(new RPtr(TransactionBody))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBodyFromBytes(String bytes, Promise promise) {
+        Native.I
+                .transactionBodyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // Transaction
 
     @ReactMethod
