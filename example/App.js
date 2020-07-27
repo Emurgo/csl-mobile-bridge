@@ -25,6 +25,7 @@ import {
   make_icarus_bootstrap_witness,
   StakeCredential,
   Transaction,
+  TransactionBuilder,
   TransactionBody,
   TransactionHash,
   TransactionInput,
@@ -302,6 +303,18 @@ export default class App extends Component<{}> {
         'Transaction:: -> from_bytes -> to_bytes should match original input',
       )
 
+      // ------------------------------------------------
+      // -------------- TransactionBuilder --------------
+      const minUtxoVal = await Coin.from_str('1000000')
+      const poolDeposit = await BigNum.from_str('2000000')
+      const keyDeposit = await BigNum.from_str('3000000')
+      const txBuilder = await TransactionBuilder.new(
+        fee,
+        minUtxoVal,
+        poolDeposit,
+        keyDeposit,
+      )
+
       console.log('bip32PrivateKey', bip32PrivateKey)
       console.log('address', address)
       console.log('ed25519KeyHash', ed25519KeyHash)
@@ -319,6 +332,7 @@ export default class App extends Component<{}> {
       console.log('witSet', witSet)
       console.log('txBody', txBody)
       console.log('tx', tx)
+      console.log('txBuilder', txBuilder)
 
       /* eslint-disable-next-line react/no-did-mount-set-state */
       this.setState({

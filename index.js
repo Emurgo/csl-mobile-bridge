@@ -666,3 +666,31 @@ export class Transaction extends Ptr {
     return Ptr._wrap(ret, Transaction);
   }
 }
+
+export class TransactionBuilder extends Ptr {
+  /**
+  * @param {LinearFee} linearFee
+  * @param {Coin} minimumUtxoVal
+  * @param {BigNum} poolDeposit
+  * @param {BigNum} keyDeposit
+  * @returns {Promise<TransactionBuilder>}
+  */
+  static async new(
+    linearFee: LinearFee,
+    minimumUtxoVal: Coin,
+    poolDeposit: BigNum,
+    keyDeposit: BigNum,
+  ) {
+    const linearFeePtr = Ptr._assertClass(linearFee, LinearFee);
+    const minimumUtxoValPtr = Ptr._assertClass(minimumUtxoVal, Coin);
+    const poolDepositPtr = Ptr._assertClass(poolDeposit, BigNum);
+    const keyDepositPtr = Ptr._assertClass(keyDeposit, BigNum);
+    const ret = await HaskellShelley.transactionBuilderNew(
+      linearFeePtr,
+      minimumUtxoValPtr,
+      poolDepositPtr,
+      keyDepositPtr,
+    );
+    return Ptr._wrap(ret, TransactionBuilder);
+  }
+}

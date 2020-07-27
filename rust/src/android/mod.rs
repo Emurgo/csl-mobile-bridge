@@ -13,6 +13,7 @@ mod stake_credential;
 mod string;
 mod transaction;
 mod transaction_body;
+mod transaction_builder;
 mod transaction_hash;
 mod transaction_input;
 mod transaction_output;

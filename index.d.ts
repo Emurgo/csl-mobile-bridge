@@ -404,3 +404,19 @@ export class Transaction extends Ptr {
     metadata?: TransactionMetadata,
   ): Promise<Transaction>
 }
+
+export class TransactionBuilder extends Ptr {
+  /**
+  * @param {LinearFee} linearFee
+  * @param {Coin} minimumUtxoVal
+  * @param {BigNum} poolDeposit
+  * @param {BigNum} keyDeposit
+  * @returns {Promise<TransactionBuilder>}
+  */
+  static new(
+    linearFee: LinearFee,
+    minimumUtxoVal: Coin,
+    poolDeposit: BigNum,
+    keyDeposit: BigNum,
+  ): Promise<TransactionBuilder>
+}

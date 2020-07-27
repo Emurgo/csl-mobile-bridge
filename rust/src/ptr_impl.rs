@@ -3,6 +3,7 @@ use cardano_serialization_lib::address::*;
 use cardano_serialization_lib::crypto::*;
 use cardano_serialization_lib::utils::*;
 use cardano_serialization_lib::fees::*;
+use cardano_serialization_lib::tx_builder::*;
 use cardano_serialization_lib::*;
 
 impl RPtrRepresentable for Address {}
@@ -19,6 +20,7 @@ impl RPtrRepresentable for PrivateKey {}
 impl RPtrRepresentable for StakeCredential {}
 impl RPtrRepresentable for Transaction {}
 impl RPtrRepresentable for TransactionBody {}
+impl RPtrRepresentable for TransactionBuilder {}
 impl RPtrRepresentable for TransactionInput {}
 impl RPtrRepresentable for TransactionMetadata {}
 impl RPtrRepresentable for TransactionOutput {}

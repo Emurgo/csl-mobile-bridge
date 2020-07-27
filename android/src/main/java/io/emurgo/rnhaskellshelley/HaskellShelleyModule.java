@@ -507,4 +507,14 @@ public final void bip32PrivateKeyFromBip39Entropy(String entropy, String passwor
                 .pour(promise);
     }
 
+    // TransactionBuilder
+
+    @ReactMethod
+    public final void transactionBuilderNew(String linearFee, String minimumUtxoVal, String poolDeposit, String keyDeposit, Promise promise) {
+        Native.I
+                .transactionBuilderNew(new RPtr(linearFee), new RPtr(minimumUtxoVal), new RPtr(poolDeposit), new RPtr(keyDeposit))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
 }

@@ -685,6 +685,22 @@ RCT_EXPORT_METHOD(transactionFromBytes:(nonnull NSString *)bytesStr  withResolve
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
+// TransactionBuilder
+
+RCT_EXPORT_METHOD(transactionBuilderNew:(nonnull NSString *)linearFeePtr withMinUtxoVal:(nonnull NSString *)minimumUtxoValPtr withPoolDeposit:(nonnull NSString *)poolDepositPtr andKeyDeposit:(nonnull NSString *)keyDepositPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr linearFee = [[params objectAtIndex:0] rPtr];
+        RPtr minUtxoVal = [[params objectAtIndex:1] rPtr];
+        RPtr poolDeposit = [[params objectAtIndex:2] rPtr];
+        RPtr keyDeposit = [[params objectAtIndex:3] rPtr];
+        return transaction_builder_new(linearFee, minUtxoVal, poolDeposit, keyDeposit, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[linearFeePtr, minimumUtxoValPtr, poolDepositPtr, keyDepositPtr] andResolve:resolve orReject:reject];
+}
+
 + (void)initialize
 {
     if (self == [HaskellShelley class]) {

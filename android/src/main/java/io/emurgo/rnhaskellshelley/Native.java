@@ -109,6 +109,8 @@ final class Native {
     public final native Result<byte[]> transactionToBytes(RPtr Transaction);
     public final native Result<RPtr> transactionFromBytes(byte[] bytes);
 
+    // TransactionBuilder
+    public final native Result<RPtr> transactionBuilderNew(RPtr linearFee, RPtr minimumUtxoVal, RPtr poolDeposit, RPtr keyDeposit);
 
     public final native void ptrFree(RPtr ptr);
 }
