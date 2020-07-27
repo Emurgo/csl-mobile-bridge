@@ -597,7 +597,7 @@ RCT_EXPORT_METHOD(transactionWitnessSetSetVkeys:(nonnull NSString *)witnessSetPt
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr witnessSet = [[params objectAtIndex:0] rPtr];
         RPtr vkeys = [[params objectAtIndex:1] rPtr];
-        transaction_witness_set_set_bootstraps(&witnessSet, vkeys, error);
+        transaction_witness_set_set_vkeys(witnessSet, vkeys, error);
         return nil;
     }] exec:@[witnessSetPtr, vkeysPtr] andResolve:resolve orReject:reject];
 }
@@ -607,7 +607,7 @@ RCT_EXPORT_METHOD(transactionWitnessSetSetBootstraps:(nonnull NSString *)witness
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr witnessSet = [[params objectAtIndex:0] rPtr];
         RPtr bootstraps = [[params objectAtIndex:1] rPtr];
-        transaction_witness_set_set_bootstraps(&witnessSet, bootstraps, error);
+        transaction_witness_set_set_bootstraps(witnessSet, bootstraps, error);
         return nil;
     }] exec:@[witnessSetPtr, bootstrapsPtr] andResolve:resolve orReject:reject];
 }
@@ -657,7 +657,7 @@ RCT_EXPORT_METHOD(transactionNewWithMetadata:(nonnull NSString *)bodyPtr withWit
         RPtr body = [[params objectAtIndex:0] rPtr];
         RPtr witnesses = [[params objectAtIndex:1] rPtr];
         RPtr metadata = [[params objectAtIndex:2] rPtr];
-        return transaction_new_with_metadata(body, witnesses, metadata, &result, error)
+        return transaction_new_with_metadata(body, witnesses, &metadata, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:@[bodyPtr, witnessSetPtr] andResolve:resolve orReject:reject];
@@ -687,6 +687,40 @@ RCT_EXPORT_METHOD(transactionFromBytes:(nonnull NSString *)bytesStr  withResolve
 
 // TransactionBuilder
 
+RCT_EXPORT_METHOD(transactionBuilderAddKeyInput:(nonnull NSString *)txBuilderPtr withHash:(nonnull NSString *)hashPtr withInput:(nonnull NSString *)inputPtr andAmount:(nonnull NSString *)amountPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr txBuilder = [[params objectAtIndex:0] rPtr];
+        RPtr hash = [[params objectAtIndex:1] rPtr];
+        RPtr input = [[params objectAtIndex:2] rPtr];
+        RPtr amount = [[params objectAtIndex:3] rPtr];
+        transaction_builder_add_key_input(txBuilder, hash, input, amount, error);
+        return nil;
+    }] exec:@[txBuilderPtr, hashPtr, inputPtr, amountPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderAddBootstrapInput:(nonnull NSString *)txBuilderPtr withHash:(nonnull NSString *)hashPtr withInput:(nonnull NSString *)inputPtr andAmount:(nonnull NSString *)amountPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr txBuilder = [[params objectAtIndex:0] rPtr];
+        RPtr hash = [[params objectAtIndex:1] rPtr];
+        RPtr input = [[params objectAtIndex:2] rPtr];
+        RPtr amount = [[params objectAtIndex:3] rPtr];
+        transaction_builder_add_bootstrap_input(txBuilder, hash, input, amount, error);
+        return nil;
+    }] exec:@[txBuilderPtr, hashPtr, inputPtr, amountPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderAddOutput:(nonnull NSString *)txBuilderPtr withOutput:(nonnull NSString *)outputPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr txBuilder = [[params objectAtIndex:0] rPtr];
+        RPtr output = [[params objectAtIndex:1] rPtr];
+        transaction_builder_add_output(txBuilder, output, error);
+        return nil;
+    }] exec:@[txBuilderPtr, outputPtr] andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(transactionBuilderNew:(nonnull NSString *)linearFeePtr withMinUtxoVal:(nonnull NSString *)minimumUtxoValPtr withPoolDeposit:(nonnull NSString *)poolDepositPtr andKeyDeposit:(nonnull NSString *)keyDepositPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
@@ -699,6 +733,13 @@ RCT_EXPORT_METHOD(transactionBuilderNew:(nonnull NSString *)linearFeePtr withMin
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:@[linearFeePtr, minimumUtxoValPtr, poolDepositPtr, keyDepositPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(ptrFree:(NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    RPtr rPtr = [ptr rPtr];
+    rptr_free(&rPtr);
+    resolve(nil);
 }
 
 + (void)initialize

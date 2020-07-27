@@ -110,6 +110,9 @@ final class Native {
     public final native Result<RPtr> transactionFromBytes(byte[] bytes);
 
     // TransactionBuilder
+    public final native Result<Void> transactionBuilderAddKeyInput(RPtr txBuilder, RPtr hash, RPtr input, RPtr value);
+    public final native Result<Void> transactionBuilderAddBootstrapInput(RPtr txBuilder, RPtr hash, RPtr input, RPtr value);
+    public final native Result<Void> transactionBuilderAddOutput(RPtr txBuilder, RPtr input);
     public final native Result<RPtr> transactionBuilderNew(RPtr linearFee, RPtr minimumUtxoVal, RPtr poolDeposit, RPtr keyDeposit);
 
     public final native void ptrFree(RPtr ptr);

@@ -7,9 +7,70 @@ use jni::objects::JObject;
 use jni::sys::{jlong, jobject};
 use jni::JNIEnv;
 use cardano_serialization_lib::tx_builder::{TransactionBuilder};
-use cardano_serialization_lib::crypto::{Vkeywitness, Vkeywitnesses};
 use cardano_serialization_lib::fees::{LinearFee};
 use cardano_serialization_lib::utils::{Coin, BigNum};
+use cardano_serialization_lib::address::ByronAddress;
+use cardano_serialization_lib::crypto::{Ed25519KeyHash};
+use cardano_serialization_lib::{TransactionInput, TransactionOutput};
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderAddKeyInput(
+  env: JNIEnv, _: JObject, tx_builder: JRPtr, hash: JRPtr, input: JRPtr, amount: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let tx_builder = tx_builder.rptr(&env)?;
+    let hash = hash.rptr(&env)?;
+    let input = input.rptr(&env)?;
+    let amount = amount.rptr(&env)?;
+    tx_builder
+      .typed_ref::<TransactionBuilder>()
+      .zip(hash.typed_ref::<Ed25519KeyHash>())
+      .zip(input.typed_ref::<TransactionInput>())
+      .zip(amount.typed_ref::<Coin>())
+      .map(|(((tx_builder, hash), input), amount)| tx_builder.add_key_input(hash, input, amount))
+  })
+  .map(|_| JObject::null())
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderAddBootstrapInput(
+  env: JNIEnv, _: JObject, tx_builder: JRPtr, hash: JRPtr, input: JRPtr, amount: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let tx_builder = tx_builder.rptr(&env)?;
+    let hash = hash.rptr(&env)?;
+    let input = input.rptr(&env)?;
+    let amount = amount.rptr(&env)?;
+    tx_builder
+      .typed_ref::<TransactionBuilder>()
+      .zip(hash.typed_ref::<ByronAddress>())
+      .zip(input.typed_ref::<TransactionInput>())
+      .zip(amount.typed_ref::<Coin>())
+      .map(|(((tx_builder, hash), input), amount)| tx_builder.add_bootstrap_input(hash, input, amount))
+  })
+  .map(|_| JObject::null())
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderAddOutput(
+  env: JNIEnv, _: JObject, tx_builder: JRPtr, output: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let tx_builder = tx_builder.rptr(&env)?;
+    let output = output.rptr(&env)?;
+    tx_builder
+      .typed_ref::<TransactionBuilder>()
+      .zip(output.typed_ref::<TransactionOutput>())
+      .map(|(tx_builder, output)| tx_builder.add_output(output))
+  })
+  .map(|_| JObject::null())
+  .jresult(&env)
+}
 
 #[allow(non_snake_case)]
 #[no_mangle]

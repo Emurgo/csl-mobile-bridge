@@ -314,6 +314,17 @@ export default class App extends Component<{}> {
         poolDeposit,
         keyDeposit,
       )
+      await txBuilder.add_key_input(
+        ed25519KeyHash,
+        txInput,
+        await Coin.from_str('1000000'),
+      )
+      await txBuilder.add_bootstrap_input(
+        byronAddress,
+        txInput,
+        await Coin.from_str('1000000'),
+      )
+      await txBuilder.add_output(txOutput)
 
       console.log('bip32PrivateKey', bip32PrivateKey)
       console.log('address', address)

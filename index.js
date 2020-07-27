@@ -540,7 +540,6 @@ export class Vkeywitnesses extends Ptr {
     */
     async add(item) {
       const itemPtr = Ptr._assertClass(item, Vkwitness);
-      item.ptr = null;
       return HaskellShelley.vkeywitnessesAdd(this.ptr, itemPtr);
     }
 }
@@ -570,7 +569,6 @@ export class BootstrapWitnesses extends Ptr {
   */
   async add(item) {
     const itemPtr = Ptr._assertClass(item, BootstrapWitness);
-    item.ptr = null;
     return HaskellShelley.bootstrapWitnessAdd(this.ptr, itemPtr);
   }
 }
@@ -590,7 +588,6 @@ export class TransactionWitnessSet extends Ptr {
   */
   async set_bootstraps(bootstraps) {
     const bootstrapsPtr = Ptr._assertClass(bootstraps, BootstrapWitnesses);
-    bootstraps.ptr = null;
     return HaskellShelley.transactionWitnessSetSetBootstraps(this.ptr, bootstrapsPtr);
   }
 
@@ -600,7 +597,6 @@ export class TransactionWitnessSet extends Ptr {
   */
   async set_vkeys(vkeys) {
     const vkeysPtr = Ptr._assertClass(vkeys, Vkeywitnesses);
-    vkeys.ptr = null;
     return HaskellShelley.transactionWitnessSetSetVkeys(this.ptr, vkeysPtr);
   }
 }
@@ -668,6 +664,59 @@ export class Transaction extends Ptr {
 }
 
 export class TransactionBuilder extends Ptr {
+  /**
+  * @param {Ed25519KeyHash} hash
+  * @param {TransactionInput} input
+  * @param {Coin} amount
+  * @returns {Promise<void>}
+  */
+  async add_key_input(
+    hash: Ed25519KeyHash,
+    input: TransactionInput,
+    amount: Coin,
+  ) {
+    const hashPtr = Ptr._assertClass(hash, Ed25519KeyHash);
+    const inputPtr = Ptr._assertClass(input, TransactionInput);
+    const amountPtr = Ptr._assertClass(amount, Coin);
+    return HaskellShelley.transactionBuilderAddKeyInput(
+      this.ptr,
+      hashPtr,
+      inputPtr,
+      amountPtr,
+    );
+  }
+
+  /**
+  * @param {ByronAddress} hash
+  * @param {TransactionInput} input
+  * @param {Coin} amount
+  * @returns {Promise<void>}
+  */
+  async add_bootstrap_input(
+    hash: ByronAddress,
+    input: TransactionInput,
+    amount: Coin,
+  ) {
+    const hashPtr = Ptr._assertClass(hash, ByronAddress);
+    const inputPtr = Ptr._assertClass(input, TransactionInput);
+    const amountPtr = Ptr._assertClass(amount, Coin);
+    return HaskellShelley.transactionBuilderAddBootstrapInput(
+      this.ptr,
+      hashPtr,
+      inputPtr,
+      amountPtr,
+    );
+  }
+
+  /**
+  * @param {TransactionOutput} output
+  * @returns {Promise<void>}
+  */
+  async add_output(output: TransactionOutput) {
+    const outputPtr = Ptr._assertClass(output, TransactionOutput);
+    return HaskellShelley.transactionBuilderAddOutput(this.ptr, outputPtr);
+  }
+
   /**
   * @param {LinearFee} linearFee
   * @param {Coin} minimumUtxoVal

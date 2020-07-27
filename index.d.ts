@@ -407,6 +407,38 @@ export class Transaction extends Ptr {
 
 export class TransactionBuilder extends Ptr {
   /**
+  * @param {Ed25519KeyHash} hash
+  * @param {TransactionInput} input
+  * @param {Coin} amount
+  * @returns {Promise<void>}
+  */
+  add_key_input(
+    hash: Ed25519KeyHash,
+    input: TransactionInput,
+    amount: Coin,
+  ): Promise<void>
+
+  /**
+  * @param {ByronAddress} hash
+  * @param {TransactionInput} input
+  * @param {Coin} amount
+  * @returns {Promise<void>}
+  */
+  add_key_input(
+    hash: ByronAddress,
+    input: TransactionInput,
+    amount: Coin,
+  ): Promise<void>
+
+  /**
+  * @param {TransactionOutput} output
+  * @returns {Promise<void>}
+  */
+  add_output(
+    output: TransactionOutput,
+  ): Promise<void>
+
+  /**
   * @param {LinearFee} linearFee
   * @param {Coin} minimumUtxoVal
   * @param {BigNum} poolDeposit

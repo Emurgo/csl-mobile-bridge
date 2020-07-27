@@ -12,7 +12,7 @@ pub extern "C" fn transaction_witness_set_new(result: &mut RPtr, error: &mut Cha
 
 #[no_mangle]
 pub unsafe extern "C" fn transaction_witness_set_set_vkeys(
-  transaction_witness_set: &mut RPtr, vkeywitnesses: RPtr, error: &mut CharPtr
+  transaction_witness_set: RPtr, vkeywitnesses: RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
     transaction_witness_set
@@ -25,7 +25,7 @@ pub unsafe extern "C" fn transaction_witness_set_set_vkeys(
 
 #[no_mangle]
 pub unsafe extern "C" fn transaction_witness_set_set_bootstraps(
-  transaction_witness_set: &mut RPtr, bootstrap_witnesses: RPtr, error: &mut CharPtr
+  transaction_witness_set: RPtr, bootstrap_witnesses: RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
     transaction_witness_set

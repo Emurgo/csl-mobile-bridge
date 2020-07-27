@@ -31,6 +31,8 @@ pub unsafe extern "C" fn unit_interval_new(
   numerator: RPtr, denominator: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
+    // TODO: normally owned() operates on mut self, so probably it should be
+    // numerator: &mut.
     let numerator = numerator.owned::<BigNum>();
     let denominator = denominator.owned::<BigNum>();
     Ok(UnitInterval::new(numerator?, denominator?))

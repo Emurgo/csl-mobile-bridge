@@ -510,6 +510,27 @@ public final void bip32PrivateKeyFromBip39Entropy(String entropy, String passwor
     // TransactionBuilder
 
     @ReactMethod
+    public final void transactionBuilderAddKeyInput(String txBuilder, String hash, String input, String amount, Promise promise) {
+        Native.I
+                .transactionBuilderAddKeyInput(new RPtr(txBuilder), new RPtr(hash), new RPtr(input), new RPtr(amount))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderAddBootstrapInput(String txBuilder, String hash, String input, String amount, Promise promise) {
+        Native.I
+                .transactionBuilderAddBootstrapInput(new RPtr(txBuilder), new RPtr(hash), new RPtr(input), new RPtr(amount))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderAddOutput(String txBuilder, String output, Promise promise) {
+        Native.I
+                .transactionBuilderAddOutput(new RPtr(txBuilder), new RPtr(output))
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBuilderNew(String linearFee, String minimumUtxoVal, String poolDeposit, String keyDeposit, Promise promise) {
         Native.I
                 .transactionBuilderNew(new RPtr(linearFee), new RPtr(minimumUtxoVal), new RPtr(poolDeposit), new RPtr(keyDeposit))
