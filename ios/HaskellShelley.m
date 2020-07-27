@@ -612,14 +612,14 @@ RCT_EXPORT_METHOD(transactionWitnessSetSetBootstraps:(nonnull NSString *)witness
     }] exec:@[witnessSetPtr, bootstrapsPtr] andResolve:resolve orReject:reject];
 }
 
-  // TransactionBody
+// TransactionBody
 
 RCT_EXPORT_METHOD(transactionBodyToBytes:(nonnull NSString *)txBodyPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* txHashPtr, CharPtr* error) {
         DataPtr result;
         RPtr txBody = [txBodyPtr rPtr];
-        return transaction_hash_to_bytes(txBody, &result, error)
+        return transaction_body_to_bytes(txBody, &result, error)
             ? [[NSData fromDataPtr:&result] base64]
             : nil;
     }] exec:txBodyPtr andResolve:resolve orReject:reject];
@@ -630,7 +630,56 @@ RCT_EXPORT_METHOD(transactionBodyFromBytes:(nonnull NSString *)bytesStr  withRes
     [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
         RPtr result;
         NSData* data = [NSData fromBase64:bytesStr];
-        return transaction_hash_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+        return transaction_body_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
+// Transaction
+
+RCT_EXPORT_METHOD(transactionNew:(nonnull NSString *)bodyPtr withWitnessSet:(nonnull NSString *)witnessSetPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr body = [[params objectAtIndex:0] rPtr];
+        RPtr witnesses = [[params objectAtIndex:1] rPtr];
+        return transaction_new(body, witnesses, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[bodyPtr, witnessSetPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionNewWithMetadata:(nonnull NSString *)bodyPtr withWitnessSet:(nonnull NSString *)witnessSetPtr andMetadata:(nonnull NSString *)metadataPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr body = [[params objectAtIndex:0] rPtr];
+        RPtr witnesses = [[params objectAtIndex:1] rPtr];
+        RPtr metadata = [[params objectAtIndex:2] rPtr];
+        return transaction_new_with_metadata(body, witnesses, metadata, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[bodyPtr, witnessSetPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionToBytes:(nonnull NSString *)txPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* txHashPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr tx = [txPtr rPtr];
+        return transaction_to_bytes(tx, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:txPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return transaction_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:bytesStr andResolve:resolve orReject:reject];

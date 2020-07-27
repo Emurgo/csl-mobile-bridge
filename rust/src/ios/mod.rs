@@ -11,6 +11,7 @@ mod ptr_c;
 mod result;
 mod stake_credential;
 mod string;
+mod transaction;
 mod transaction_body;
 mod transaction_hash;
 mod transaction_input;

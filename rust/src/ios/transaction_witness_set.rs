@@ -7,7 +7,7 @@ use cardano_serialization_lib::crypto::{BootstrapWitnesses, Vkeywitnesses};
 
 #[no_mangle]
 pub extern "C" fn transaction_witness_set_new(result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception(|| Vkeywitnesses::new().rptr()).response(result, error)
+  handle_exception(|| TransactionWitnessSet::new().rptr()).response(result, error)
 }
 
 #[no_mangle]

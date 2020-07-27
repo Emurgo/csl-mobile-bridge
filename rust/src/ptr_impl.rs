@@ -17,8 +17,10 @@ impl RPtrRepresentable for Ed25519KeyHash {}
 impl RPtrRepresentable for LinearFee {}
 impl RPtrRepresentable for PrivateKey {}
 impl RPtrRepresentable for StakeCredential {}
+impl RPtrRepresentable for Transaction {}
 impl RPtrRepresentable for TransactionBody {}
 impl RPtrRepresentable for TransactionInput {}
+impl RPtrRepresentable for TransactionMetadata {}
 impl RPtrRepresentable for TransactionOutput {}
 impl RPtrRepresentable for TransactionWitnessSet {}
 impl RPtrRepresentable for TransactionHash {}

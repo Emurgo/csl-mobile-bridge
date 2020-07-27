@@ -626,7 +626,6 @@ export class TransactionBody extends Ptr {
     const ret = await HaskellShelley.transactionBodyFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionBody);
   }
-
 }
 
 export class Transaction extends Ptr {
@@ -636,7 +635,7 @@ export class Transaction extends Ptr {
   * @param {TransactionMetadata | void} metadata
   * @returns {Promise<Transaction>}
   */
-  static async new(body: TransactionBody, witnessSet: TransactionWitnessSet, metadata: TransactionMetadata) {
+  static async new(body: TransactionBody, witnessSet: TransactionWitnessSet, metadata?: TransactionMetadata) {
     const bodyPtr = Ptr._assertClass(body, TransactionBody);
     const witnessSetPtr = Ptr._assertClass(witnessSet, TransactionWitnessSet);
     let ret
@@ -647,6 +646,23 @@ export class Transaction extends Ptr {
       const metadataPtr = Ptr._assertClass(metadata, TransactionMetadata);
       ret = await HaskellShelley.transactionNewWithMetadata(bodyPtr, witnessSetPtr, metadataPtr);
     }
+    return Ptr._wrap(ret, Transaction);
+  }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.transactionToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Transaction>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.transactionFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Transaction);
   }
 }
