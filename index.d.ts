@@ -439,6 +439,18 @@ export class TransactionBuilder extends Ptr {
   ): Promise<void>
 
   /**
+  * @param {Coin} fee
+  * @returns {Promise<void>}
+  */
+  set_fee(fee: Coin): Promise<void>
+
+  /**
+  * @param {number} ttl
+  * @returns {Promise<void>}
+  */
+  async set_ttl(ttl: number): Promise<void>
+
+  /**
   * @param {LinearFee} linearFee
   * @param {Coin} minimumUtxoVal
   * @param {BigNum} poolDeposit

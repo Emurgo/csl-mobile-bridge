@@ -718,6 +718,23 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
+  * @param {Coin} fee
+  * @returns {Promise<void>}
+  */
+  async set_fee(fee: Coin) {
+    const feePtr = Ptr._assertClass(fee, Coin);
+    return HaskellShelley.transactionBuilderSetFee(this.ptr, feePtr);
+  }
+
+  /**
+  * @param {number} ttl
+  * @returns {Promise<void>}
+  */
+  async set_ttl(ttl: number) {
+    return HaskellShelley.transactionBuilderSetTtl(this.ptr, ttl);
+  }
+
+  /**
   * @param {LinearFee} linearFee
   * @param {Coin} minimumUtxoVal
   * @param {BigNum} poolDeposit

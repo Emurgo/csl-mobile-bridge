@@ -325,6 +325,8 @@ export default class App extends Component<{}> {
         await Coin.from_str('1000000'),
       )
       await txBuilder.add_output(txOutput)
+      await txBuilder.set_fee(await Coin.from_str('500000'))
+      await txBuilder.set_ttl(10)
 
       console.log('bip32PrivateKey', bip32PrivateKey)
       console.log('address', address)
