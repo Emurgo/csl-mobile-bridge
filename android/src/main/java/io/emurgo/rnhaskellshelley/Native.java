@@ -119,6 +119,9 @@ final class Native {
     public final native Result<RPtr> transactionBuilderGetExplicitInput(RPtr txBuilder);
     public final native Result<RPtr> transactionBuilderGetImplicitInput(RPtr txBuilder);
     public final native Result<RPtr> transactionBuilderGetExplicitOutput(RPtr txBuilder);
+    public final native Result<Boolean> transactionBuilderAddChangeIfNeeded(RPtr txBuilder, RPtr address);
+    public final native Result<RPtr> transactionBuilderBuild(RPtr txBuilder);
+    public final native Result<RPtr> transactionBuilderEstimateFee(RPtr txBuilder);
 
     public final native void ptrFree(RPtr ptr);
 }

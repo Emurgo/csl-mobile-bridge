@@ -788,6 +788,40 @@ RCT_EXPORT_METHOD(transactionBuilderGetExplicitOutput:(nonnull NSString *)ptr  w
     }] exec:ptr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(transactionBuilderAddChangeIfNeeded:(nonnull NSString *)ptr withAddress:(nonnull NSString *)addressPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr txBuilder = [[params objectAtIndex:0] rPtr];
+        RPtr address = [[params objectAtIndex:1] rPtr];
+        BOOL result;
+        return transaction_builder_add_change_if_needed(txBuilder, address, &result, error)
+            ? [NSNumber numberWithBool:result]
+            : nil;
+    }] exec:@[ptr, addressPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderBuild:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr txBuilder = [ptr rPtr];
+        return transaction_builder_build(txBuilder, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderEstimateFee:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr txBuilder = [ptr rPtr];
+        return transaction_builder_estimate_fee(txBuilder, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(ptrFree:(NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     RPtr rPtr = [ptr rPtr];

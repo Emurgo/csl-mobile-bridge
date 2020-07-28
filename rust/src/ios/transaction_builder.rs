@@ -6,7 +6,7 @@ use cardano_serialization_lib::tx_builder::{TransactionBuilder};
 use cardano_serialization_lib::fees::{LinearFee};
 use cardano_serialization_lib::utils::{Coin, BigNum};
 use cardano_serialization_lib::crypto::{Ed25519KeyHash};
-use cardano_serialization_lib::address::ByronAddress;
+use cardano_serialization_lib::address::{Address, ByronAddress};
 use cardano_serialization_lib::{TransactionInput, TransactionOutput};
 
 #[no_mangle]
@@ -103,7 +103,6 @@ pub unsafe extern "C" fn transaction_builder_get_explicit_input(
   handle_exception_result(|| {
     rptr
       .typed_ref::<TransactionBuilder>()
-      // .map(|tx_builder| tx_builder.get_explicit_input())
       .and_then(|tx_builder| tx_builder.get_explicit_input().into_result())
     })
     .map(|amount| amount.rptr())
@@ -117,7 +116,6 @@ pub unsafe extern "C" fn transaction_builder_get_implicit_input(
   handle_exception_result(|| {
     rptr
       .typed_ref::<TransactionBuilder>()
-      // .map(|tx_builder| tx_builder.get_implicit_input())
       .and_then(|tx_builder| tx_builder.get_implicit_input().into_result())
     })
     .map(|amount| amount.rptr())
@@ -131,9 +129,47 @@ pub unsafe extern "C" fn transaction_builder_get_explicit_output(
   handle_exception_result(|| {
     rptr
       .typed_ref::<TransactionBuilder>()
-      // .map(|tx_builder| tx_builder.get_explicit_output())
       .and_then(|tx_builder| tx_builder.get_explicit_output().into_result())
     })
     .map(|amount| amount.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_builder_add_change_if_needed(
+  rptr: RPtr, address: RPtr, result: &mut bool, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBuilder>()
+      .zip(address.typed_ref::<Address>())
+      .and_then(|(tx_builder, address)| tx_builder.add_change_if_needed(address).into_result())
+    })
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_builder_build(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBuilder>()
+      .and_then(|tx_builder| tx_builder.build().into_result())
+    })
+    .map(|tx_body| tx_body.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_builder_estimate_fee(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBuilder>()
+      .and_then(|tx_builder| tx_builder.estimate_fee().into_result())
+    })
+    .map(|fee| fee.rptr())
     .response(result, error)
 }

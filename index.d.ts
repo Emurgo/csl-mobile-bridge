@@ -478,4 +478,20 @@ export class TransactionBuilder extends Ptr {
   * @returns {Promise<Coin>}
   */
   get_explicit_output(): Promise<Coin>
+
+  /**
+  * @param {Address} address
+  * @returns {Promise<boolean>}
+  */
+  add_change_if_needed(address: Address)
+
+  /**
+  * @returns {Promise<TransactionBody>}
+  */
+  build(): Promise<TransactionBody>
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  estimate_fee(): Promise<Coin>
 }

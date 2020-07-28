@@ -576,4 +576,27 @@ public final void bip32PrivateKeyFromBip39Entropy(String entropy, String passwor
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void transactionBuilderAddChangeIfNeeded(String txBuilder, String address, Promise promise) {
+        Native.I
+                .transactionBuilderAddChangeIfNeeded(new RPtr(txBuilder), new RPtr(address))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderBuild(String txBuilder, Promise promise) {
+        Native.I
+                .transactionBuilderBuild(new RPtr(txBuilder))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderEstimateFee(String txBuilder, Promise promise) {
+        Native.I
+                .transactionBuilderEstimateFee(new RPtr(txBuilder))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
 }

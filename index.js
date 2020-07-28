@@ -783,4 +783,29 @@ export class TransactionBuilder extends Ptr {
     const ret = await HaskellShelley.transactionBuilderGetExplicitOutput(this.ptr);
     return Ptr._wrap(ret, Coin);
   }
+
+  /**
+  * @param {Address} address
+  * @returns {Promise<boolean>}
+  */
+  async add_change_if_needed(address: Address) {
+    const addressPtr = Ptr._assertClass(address, Address);
+    return HaskellShelley.transactionBuilderAddChangeIfNeeded(this.ptr, addressPtr);
+  }
+
+  /**
+  * @returns {Promise<TransactionBody>}
+  */
+  async build() {
+    const ret = await HaskellShelley.transactionBuilderBuild(this.ptr);
+    return Ptr._wrap(ret, TransactionBody);
+  }
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  async estimate_fee() {
+    const ret = await HaskellShelley.transactionBuilderEstimateFee(this.ptr);
+    return Ptr._wrap(ret, Coin);
+  }
 }

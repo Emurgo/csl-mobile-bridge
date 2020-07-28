@@ -2,14 +2,15 @@ use super::ptr_j::*;
 use super::result::ToJniResult;
 use crate::panic::{handle_exception_result, Zip, ToResult};
 use crate::ptr::RPtrRepresentable;
+use super::primitive::ToPrimitiveObject;
 use jni::objects::JObject;
-use jni::sys::{jlong, jobject};
+use jni::sys::{jlong, jobject, jboolean};
 use jni::JNIEnv;
 use std::convert::TryFrom;
 use cardano_serialization_lib::tx_builder::{TransactionBuilder};
 use cardano_serialization_lib::fees::{LinearFee};
 use cardano_serialization_lib::utils::{Coin, BigNum};
-use cardano_serialization_lib::address::ByronAddress;
+use cardano_serialization_lib::address::{Address, ByronAddress};
 use cardano_serialization_lib::crypto::{Ed25519KeyHash};
 use cardano_serialization_lib::{TransactionInput, TransactionOutput};
 
@@ -170,6 +171,54 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
       .typed_ref::<TransactionBuilder>()
       .and_then(|tx_builder| tx_builder.get_explicit_output().into_result())
       .and_then(|amount| amount.rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderAddChangeIfNeeded(
+  env: JNIEnv, _: JObject, tx_builder: JRPtr, address: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let tx_builder = tx_builder.rptr(&env)?;
+    let address = address.rptr(&env)?;
+    tx_builder
+      .typed_ref::<TransactionBuilder>()
+      .zip(address.typed_ref::<Address>())
+      .and_then(|(tx_builder, address)| (tx_builder.add_change_if_needed(address)).into_result())
+      .and_then(|val| (val as jboolean).jobject(&env))
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderBuild(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr
+      .typed_ref::<TransactionBuilder>()
+      .and_then(|tx_builder| tx_builder.build().into_result())
+      .and_then(|tx_body| tx_body.rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderEstimateFee(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr
+      .typed_ref::<TransactionBuilder>()
+      .and_then(|tx_builder| tx_builder.estimate_fee().into_result())
+      .and_then(|fee| fee.rptr().jptr(&env))
   })
   .jresult(&env)
 }

@@ -105,7 +105,6 @@ export default class App extends Component<{}> {
       const baseAddrBytes = Buffer.from(baseAddrHex, 'hex')
       const address = await Address.from_bytes(baseAddrBytes)
       const addrPtrToBytes = await address.to_bytes()
-      console.log(Buffer.from(addrPtrToBytes).toString('hex'))
       assert(
         Buffer.from(addrPtrToBytes).toString('hex') === baseAddrHex,
         'Address.to_bytes should match original input address',
@@ -115,7 +114,6 @@ export default class App extends Component<{}> {
       // ---------------- Ed25519KeyHash ----------------
       const ed25519KeyHash = await Ed25519KeyHash.from_bytes(addrBytes)
       const addrToBytes = await ed25519KeyHash.to_bytes()
-      console.log(Buffer.from(addrToBytes).toString('hex'))
       assert(
         Buffer.from(addrToBytes).toString('hex') === addrHex,
         'Ed25519KeyHash.to_bytes should match original input address',
@@ -214,8 +212,8 @@ export default class App extends Component<{}> {
 
       // ------------------------------------------------
       // ------------------- LinearFee ------------------
-      const coeffStr = '1000000'
-      const constStr = '1000000'
+      const coeffStr = '44'
+      const constStr = '155381'
       const coeff = await Coin.from_str(coeffStr)
       const constant = await Coin.from_str(constStr)
       const fee = await LinearFee.new(coeff, constant)
@@ -305,6 +303,8 @@ export default class App extends Component<{}> {
 
       // ------------------------------------------------
       // -------------- TransactionBuilder --------------
+      // note: changing some of the function parameters will result in some tests
+      // failing.
       const minUtxoVal = await Coin.from_str('1000000')
       const poolDeposit = await BigNum.from_str('2000000')
       const keyDeposit = await BigNum.from_str('3000000')
@@ -325,7 +325,9 @@ export default class App extends Component<{}> {
         await Coin.from_str('1000000'),
       )
       await txBuilder.add_output(txOutput)
-      await txBuilder.set_fee(await Coin.from_str('500000'))
+      // commented out so that we can test add_change_if_needed(), which
+      // throws if fee has been previously set
+      // await txBuilder.set_fee(await Coin.from_str('500000'))
       await txBuilder.set_ttl(10)
       assert(
         (await (await txBuilder.get_explicit_input()).to_str()) === '2000000',
@@ -339,6 +341,21 @@ export default class App extends Component<{}> {
       assert(
         (await (await txBuilder.get_explicit_output()).to_str()) === '1000000',
         'TransactionBuilder::get_explicit_output()',
+      )
+      const changeAddrHex =
+        '00' +
+        '0000b04c3aa051f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' +
+        '0000b03c3aa052f51c084c54bd4059ead2d2e426ac89fa4b3ce41cbf'
+      const change = await Address.from_bytes(Buffer.from(changeAddrHex, 'hex'))
+      assert(
+        (await txBuilder.add_change_if_needed(change)) === false,
+        'TransactionBuilder::add_change_if_needed()',
+      )
+      const txBodyFromBuilder = await txBuilder.build()
+      // note: estimated fee changed after .build()
+      assert(
+        (await (await txBuilder.estimate_fee()).to_str()) === '172761',
+        'TransactionBuilder::estimate_fee()',
       )
 
       console.log('bip32PrivateKey', bip32PrivateKey)
@@ -359,6 +376,7 @@ export default class App extends Component<{}> {
       console.log('txBody', txBody)
       console.log('tx', tx)
       console.log('txBuilder', txBuilder)
+      console.log('txBodyFromBuilder', txBodyFromBuilder)
 
       /* eslint-disable-next-line react/no-did-mount-set-state */
       this.setState({
