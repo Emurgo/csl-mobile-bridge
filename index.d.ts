@@ -463,4 +463,19 @@ export class TransactionBuilder extends Ptr {
     poolDeposit: BigNum,
     keyDeposit: BigNum,
   ): Promise<TransactionBuilder>
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  get_explicit_input(): Promise<Coin>
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  get_implicit_input(): Promise<Coin>
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  get_explicit_output(): Promise<Coin>
 }

@@ -1,12 +1,11 @@
 use crate::utils::ToFromBytes;
 use super::utils::{to_bytes, from_bytes};
-use super::primitive::ToPrimitiveObject;
 use super::ptr_j::*;
 use super::result::ToJniResult;
 use crate::panic::{handle_exception_result, Zip};
 use crate::ptr::RPtrRepresentable;
 use jni::objects::JObject;
-use jni::sys::{jobject, jint, jbyteArray};
+use jni::sys::{jobject, jbyteArray};
 use jni::JNIEnv;
 use cardano_serialization_lib::{Transaction, TransactionBody, TransactionWitnessSet, TransactionMetadata};
 use cardano_serialization_lib::error::{DeserializeError};

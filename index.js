@@ -759,4 +759,28 @@ export class TransactionBuilder extends Ptr {
     );
     return Ptr._wrap(ret, TransactionBuilder);
   }
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  async get_explicit_input() {
+    const ret = await HaskellShelley.transactionBuilderGetExplicitInput(this.ptr);
+    return Ptr._wrap(ret, Coin);
+  }
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  async get_implicit_input() {
+    const ret = await HaskellShelley.transactionBuilderGetImplicitInput(this.ptr);
+    return Ptr._wrap(ret, Coin);
+  }
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  async get_explicit_output() {
+    const ret = await HaskellShelley.transactionBuilderGetExplicitOutput(this.ptr);
+    return Ptr._wrap(ret, Coin);
+  }
 }

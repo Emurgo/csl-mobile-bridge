@@ -6,7 +6,6 @@ use crate::ptr::RPtrRepresentable;
 use jni::objects::JObject;
 use jni::sys::{jlong, jobject};
 use jni::JNIEnv;
-use cardano_serialization_lib::TransactionMetadata;
 use cardano_serialization_lib::crypto::{Vkeywitness, Vkeywitnesses};
 
 

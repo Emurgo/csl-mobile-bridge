@@ -327,6 +327,19 @@ export default class App extends Component<{}> {
       await txBuilder.add_output(txOutput)
       await txBuilder.set_fee(await Coin.from_str('500000'))
       await txBuilder.set_ttl(10)
+      assert(
+        (await (await txBuilder.get_explicit_input()).to_str()) === '2000000',
+        'TransactionBuilder::get_explicit_input()',
+      )
+      assert(
+        parseInt(await (await txBuilder.get_implicit_input()).to_str(), 10) ===
+          0,
+        'TransactionBuilder::get_implicit_input()',
+      )
+      assert(
+        (await (await txBuilder.get_explicit_output()).to_str()) === '1000000',
+        'TransactionBuilder::get_explicit_output()',
+      )
 
       console.log('bip32PrivateKey', bip32PrivateKey)
       console.log('address', address)

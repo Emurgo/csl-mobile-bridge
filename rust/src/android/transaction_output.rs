@@ -1,13 +1,11 @@
-use super::primitive::ToPrimitiveObject;
 use super::ptr_j::*;
 use super::result::ToJniResult;
 use crate::panic::{handle_exception_result, ToResult, Zip};
 use crate::ptr::RPtrRepresentable;
 use jni::objects::JObject;
-use jni::sys::{jbyteArray, jobject, jlong};
+use jni::sys::{jbyteArray, jobject};
 use jni::JNIEnv;
-use cardano_serialization_lib::address::{Address, StakeCredential};
-use cardano_serialization_lib::crypto::{TransactionHash};
+use cardano_serialization_lib::address::{Address};
 use cardano_serialization_lib::TransactionOutput;
 use cardano_serialization_lib::utils::{BigNum};
 

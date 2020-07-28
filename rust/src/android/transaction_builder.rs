@@ -1,7 +1,6 @@
-use super::primitive::ToPrimitiveObject;
 use super::ptr_j::*;
 use super::result::ToJniResult;
-use crate::panic::{handle_exception_result, Zip};
+use crate::panic::{handle_exception_result, Zip, ToResult};
 use crate::ptr::RPtrRepresentable;
 use jni::objects::JObject;
 use jni::sys::{jlong, jobject};
@@ -125,6 +124,52 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
         TransactionBuilder::new(linear_fee, minimum_utxo_val, pool_deposit, key_deposit)
       })
       .and_then(|tx_builder| tx_builder.rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderGetExplicitInput(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr
+      .typed_ref::<TransactionBuilder>()
+      .and_then(|tx_builder| tx_builder.get_explicit_input().into_result())
+      .and_then(|amount| amount.rptr().jptr(&env))
+  })
+  // .map(|amount: BigNum| amount.rptr().jptr(&env))
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderGetImplicitInput(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr
+      .typed_ref::<TransactionBuilder>()
+      .and_then(|tx_builder| tx_builder.get_implicit_input().into_result())
+      .and_then(|amount| amount.rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderGetExplicitOutput(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr
+      .typed_ref::<TransactionBuilder>()
+      .and_then(|tx_builder| tx_builder.get_explicit_output().into_result())
+      .and_then(|amount| amount.rptr().jptr(&env))
   })
   .jresult(&env)
 }

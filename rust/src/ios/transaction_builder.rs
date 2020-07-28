@@ -1,6 +1,6 @@
 use super::result::CResult;
 use super::string::{CharPtr};
-use crate::panic::{handle_exception_result, Zip};
+use crate::panic::{handle_exception_result, Zip, ToResult};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::tx_builder::{TransactionBuilder};
 use cardano_serialization_lib::fees::{LinearFee};
@@ -93,5 +93,47 @@ pub unsafe extern "C" fn transaction_builder_new(
       })
     })
     .map(|fee| fee.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_builder_get_explicit_input(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBuilder>()
+      // .map(|tx_builder| tx_builder.get_explicit_input())
+      .and_then(|tx_builder| tx_builder.get_explicit_input().into_result())
+    })
+    .map(|amount| amount.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_builder_get_implicit_input(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBuilder>()
+      // .map(|tx_builder| tx_builder.get_implicit_input())
+      .and_then(|tx_builder| tx_builder.get_implicit_input().into_result())
+    })
+    .map(|amount| amount.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_builder_get_explicit_output(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBuilder>()
+      // .map(|tx_builder| tx_builder.get_explicit_output())
+      .and_then(|tx_builder| tx_builder.get_explicit_output().into_result())
+    })
+    .map(|amount| amount.rptr())
     .response(result, error)
 }

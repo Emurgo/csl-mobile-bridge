@@ -116,6 +116,9 @@ final class Native {
     public final native Result<Void> transactionBuilderSetFee(RPtr txBuilder, RPtr fee);
     public final native Result<Void> transactionBuilderSetTtl(RPtr txBuilder, long ttl);
     public final native Result<RPtr> transactionBuilderNew(RPtr linearFee, RPtr minimumUtxoVal, RPtr poolDeposit, RPtr keyDeposit);
+    public final native Result<RPtr> transactionBuilderGetExplicitInput(RPtr txBuilder);
+    public final native Result<RPtr> transactionBuilderGetImplicitInput(RPtr txBuilder);
+    public final native Result<RPtr> transactionBuilderGetExplicitOutput(RPtr txBuilder);
 
     public final native void ptrFree(RPtr ptr);
 }
