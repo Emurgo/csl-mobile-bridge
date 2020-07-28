@@ -197,6 +197,17 @@ export class StakeCredential extends Ptr {
   * @returns {Promise<number>}
   */
   kind(): Promise<number>
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<StakeCredential>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<StakeCredential>;
 }
 
 export class BaseAddress extends Ptr {
@@ -356,11 +367,131 @@ export class TransactionWitnessSet extends Ptr {
   * @param {BootstrapWitnesses} bootstraps
   * @returns {Promise<void>}
   */
-  async set_bootstraps(bootstraps): Promise<void>
+  async set_bootstraps(bootstraps: BootstrapWitnesses): Promise<void>
 
   /**
   * @param {Vkeywitnesses} bootstraps
   * @returns {Promise<void>}
   */
-  async set_vkeys(bootstraps): Promise<void>
+  async set_vkeys(vkeywitnesses: Vkeywitnesses): Promise<void>
+}
+
+export class TransactionMetadata extends Ptr {}
+
+export class TransactionBody extends Ptr {
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionBody>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<TransactionBody>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+}
+
+export class Transaction extends Ptr {
+  /**
+  * @param {TransactionBody} body
+  * @param {TransactionWitnessSet} witnessSet
+  * @param {TransactionMetadata | void} metadata
+  * @returns {Promise<Transaction>}
+  */
+  static new(
+    body: TransactionBody,
+    witnessSet: TransactionWitnessSet,
+    metadata?: TransactionMetadata,
+  ): Promise<Transaction>
+}
+
+export class TransactionBuilder extends Ptr {
+  /**
+  * @param {Ed25519KeyHash} hash
+  * @param {TransactionInput} input
+  * @param {Coin} amount
+  * @returns {Promise<void>}
+  */
+  add_key_input(
+    hash: Ed25519KeyHash,
+    input: TransactionInput,
+    amount: Coin,
+  ): Promise<void>
+
+  /**
+  * @param {ByronAddress} hash
+  * @param {TransactionInput} input
+  * @param {Coin} amount
+  * @returns {Promise<void>}
+  */
+  add_key_input(
+    hash: ByronAddress,
+    input: TransactionInput,
+    amount: Coin,
+  ): Promise<void>
+
+  /**
+  * @param {TransactionOutput} output
+  * @returns {Promise<void>}
+  */
+  add_output(
+    output: TransactionOutput,
+  ): Promise<void>
+
+  /**
+  * @param {Coin} fee
+  * @returns {Promise<void>}
+  */
+  set_fee(fee: Coin): Promise<void>
+
+  /**
+  * @param {number} ttl
+  * @returns {Promise<void>}
+  */
+  async set_ttl(ttl: number): Promise<void>
+
+  /**
+  * @param {LinearFee} linearFee
+  * @param {Coin} minimumUtxoVal
+  * @param {BigNum} poolDeposit
+  * @param {BigNum} keyDeposit
+  * @returns {Promise<TransactionBuilder>}
+  */
+  static new(
+    linearFee: LinearFee,
+    minimumUtxoVal: Coin,
+    poolDeposit: BigNum,
+    keyDeposit: BigNum,
+  ): Promise<TransactionBuilder>
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  get_explicit_input(): Promise<Coin>
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  get_implicit_input(): Promise<Coin>
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  get_explicit_output(): Promise<Coin>
+
+  /**
+  * @param {Address} address
+  * @returns {Promise<boolean>}
+  */
+  add_change_if_needed(address: Address)
+
+  /**
+  * @returns {Promise<TransactionBody>}
+  */
+  build(): Promise<TransactionBody>
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  estimate_fee(): Promise<Coin>
 }

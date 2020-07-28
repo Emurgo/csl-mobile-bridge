@@ -327,6 +327,23 @@ export class StakeCredential extends Ptr {
   async kind() {
     return await HaskellShelley.stakeCredentialKind(this.ptr);
   }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.stakeCredentialToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<StakeCredential>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.stakeCredentialFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, StakeCredential);
+  }
 }
 
 export class BaseAddress extends Ptr {
@@ -523,7 +540,6 @@ export class Vkeywitnesses extends Ptr {
     */
     async add(item) {
       const itemPtr = Ptr._assertClass(item, Vkwitness);
-      item.ptr = null;
       return HaskellShelley.vkeywitnessesAdd(this.ptr, itemPtr);
     }
 }
@@ -553,7 +569,6 @@ export class BootstrapWitnesses extends Ptr {
   */
   async add(item) {
     const itemPtr = Ptr._assertClass(item, BootstrapWitness);
-    item.ptr = null;
     return HaskellShelley.bootstrapWitnessAdd(this.ptr, itemPtr);
   }
 }
@@ -573,7 +588,6 @@ export class TransactionWitnessSet extends Ptr {
   */
   async set_bootstraps(bootstraps) {
     const bootstrapsPtr = Ptr._assertClass(bootstraps, BootstrapWitnesses);
-    bootstraps.ptr = null;
     return HaskellShelley.transactionWitnessSetSetBootstraps(this.ptr, bootstrapsPtr);
   }
 
@@ -583,7 +597,215 @@ export class TransactionWitnessSet extends Ptr {
   */
   async set_vkeys(vkeys) {
     const vkeysPtr = Ptr._assertClass(vkeys, Vkeywitnesses);
-    vkeys.ptr = null;
     return HaskellShelley.transactionWitnessSetSetVkeys(this.ptr, vkeysPtr);
+  }
+}
+
+// TODO
+export class TransactionMetadata extends Ptr {}
+
+// TODO
+export class TransactionBody extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.transactionBodyToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionBody>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.transactionBodyFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, TransactionBody);
+  }
+}
+
+export class Transaction extends Ptr {
+  /**
+  * @param {TransactionBody} body
+  * @param {TransactionWitnessSet} witnessSet
+  * @param {TransactionMetadata | void} metadata
+  * @returns {Promise<Transaction>}
+  */
+  static async new(body: TransactionBody, witnessSet: TransactionWitnessSet, metadata?: TransactionMetadata) {
+    const bodyPtr = Ptr._assertClass(body, TransactionBody);
+    const witnessSetPtr = Ptr._assertClass(witnessSet, TransactionWitnessSet);
+    let ret
+    if (metadata == null) {
+      ret = await HaskellShelley.transactionNew(bodyPtr, witnessSetPtr);
+    } else {
+      // assert should fail. TODO
+      const metadataPtr = Ptr._assertClass(metadata, TransactionMetadata);
+      ret = await HaskellShelley.transactionNewWithMetadata(bodyPtr, witnessSetPtr, metadataPtr);
+    }
+    return Ptr._wrap(ret, Transaction);
+  }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.transactionToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Transaction>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.transactionFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, Transaction);
+  }
+}
+
+export class TransactionBuilder extends Ptr {
+  /**
+  * @param {Ed25519KeyHash} hash
+  * @param {TransactionInput} input
+  * @param {Coin} amount
+  * @returns {Promise<void>}
+  */
+  async add_key_input(
+    hash: Ed25519KeyHash,
+    input: TransactionInput,
+    amount: Coin,
+  ) {
+    const hashPtr = Ptr._assertClass(hash, Ed25519KeyHash);
+    const inputPtr = Ptr._assertClass(input, TransactionInput);
+    const amountPtr = Ptr._assertClass(amount, Coin);
+    return HaskellShelley.transactionBuilderAddKeyInput(
+      this.ptr,
+      hashPtr,
+      inputPtr,
+      amountPtr,
+    );
+  }
+
+  /**
+  * @param {ByronAddress} hash
+  * @param {TransactionInput} input
+  * @param {Coin} amount
+  * @returns {Promise<void>}
+  */
+  async add_bootstrap_input(
+    hash: ByronAddress,
+    input: TransactionInput,
+    amount: Coin,
+  ) {
+    const hashPtr = Ptr._assertClass(hash, ByronAddress);
+    const inputPtr = Ptr._assertClass(input, TransactionInput);
+    const amountPtr = Ptr._assertClass(amount, Coin);
+    return HaskellShelley.transactionBuilderAddBootstrapInput(
+      this.ptr,
+      hashPtr,
+      inputPtr,
+      amountPtr,
+    );
+  }
+
+  /**
+  * @param {TransactionOutput} output
+  * @returns {Promise<void>}
+  */
+  async add_output(output: TransactionOutput) {
+    const outputPtr = Ptr._assertClass(output, TransactionOutput);
+    return HaskellShelley.transactionBuilderAddOutput(this.ptr, outputPtr);
+  }
+
+  /**
+  * @param {Coin} fee
+  * @returns {Promise<void>}
+  */
+  async set_fee(fee: Coin) {
+    const feePtr = Ptr._assertClass(fee, Coin);
+    return HaskellShelley.transactionBuilderSetFee(this.ptr, feePtr);
+  }
+
+  /**
+  * @param {number} ttl
+  * @returns {Promise<void>}
+  */
+  async set_ttl(ttl: number) {
+    return HaskellShelley.transactionBuilderSetTtl(this.ptr, ttl);
+  }
+
+  /**
+  * @param {LinearFee} linearFee
+  * @param {Coin} minimumUtxoVal
+  * @param {BigNum} poolDeposit
+  * @param {BigNum} keyDeposit
+  * @returns {Promise<TransactionBuilder>}
+  */
+  static async new(
+    linearFee: LinearFee,
+    minimumUtxoVal: Coin,
+    poolDeposit: BigNum,
+    keyDeposit: BigNum,
+  ) {
+    const linearFeePtr = Ptr._assertClass(linearFee, LinearFee);
+    const minimumUtxoValPtr = Ptr._assertClass(minimumUtxoVal, Coin);
+    const poolDepositPtr = Ptr._assertClass(poolDeposit, BigNum);
+    const keyDepositPtr = Ptr._assertClass(keyDeposit, BigNum);
+    const ret = await HaskellShelley.transactionBuilderNew(
+      linearFeePtr,
+      minimumUtxoValPtr,
+      poolDepositPtr,
+      keyDepositPtr,
+    );
+    return Ptr._wrap(ret, TransactionBuilder);
+  }
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  async get_explicit_input() {
+    const ret = await HaskellShelley.transactionBuilderGetExplicitInput(this.ptr);
+    return Ptr._wrap(ret, Coin);
+  }
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  async get_implicit_input() {
+    const ret = await HaskellShelley.transactionBuilderGetImplicitInput(this.ptr);
+    return Ptr._wrap(ret, Coin);
+  }
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  async get_explicit_output() {
+    const ret = await HaskellShelley.transactionBuilderGetExplicitOutput(this.ptr);
+    return Ptr._wrap(ret, Coin);
+  }
+
+  /**
+  * @param {Address} address
+  * @returns {Promise<boolean>}
+  */
+  async add_change_if_needed(address: Address) {
+    const addressPtr = Ptr._assertClass(address, Address);
+    return HaskellShelley.transactionBuilderAddChangeIfNeeded(this.ptr, addressPtr);
+  }
+
+  /**
+  * @returns {Promise<TransactionBody>}
+  */
+  async build() {
+    const ret = await HaskellShelley.transactionBuilderBuild(this.ptr);
+    return Ptr._wrap(ret, TransactionBody);
+  }
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  async estimate_fee() {
+    const ret = await HaskellShelley.transactionBuilderEstimateFee(this.ptr);
+    return Ptr._wrap(ret, Coin);
   }
 }

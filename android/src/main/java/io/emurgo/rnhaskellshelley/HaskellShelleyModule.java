@@ -227,6 +227,22 @@ public final void bip32PrivateKeyFromBip39Entropy(String entropy, String passwor
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void stakeCredentialToBytes(String stakeCredential, Promise promise) {
+        Native.I
+                .stakeCredentialToBytes(new RPtr(stakeCredential))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeCredentialFromBytes(String bytes, Promise promise) {
+        Native.I
+                .stakeCredentialFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // BaseAddress
 
     @ReactMethod
@@ -444,6 +460,142 @@ public final void bip32PrivateKeyFromBip39Entropy(String entropy, String passwor
     public final void transactionWitnessSetSetBootstraps(String witnessSet, String bootstraps, Promise promise) {
         Native.I
                 .transactionWitnessSetSetBootstraps(new RPtr(witnessSet), new RPtr(bootstraps))
+                .pour(promise);
+    }
+
+    // TransactionBody
+
+    @ReactMethod
+    public final void transactionBodyToBytes(String transactionBody, Promise promise) {
+        Native.I
+                .transactionBodyToBytes(new RPtr(transactionBody))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBodyFromBytes(String bytes, Promise promise) {
+        Native.I
+                .transactionBodyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    // Transaction
+
+    @ReactMethod
+    public final void transactionNew(String body, String witnessSet, Promise promise) {
+        Native.I
+                .transactionNew(new RPtr(body), new RPtr(witnessSet))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionToBytes(String transaction, Promise promise) {
+        Native.I
+                .transactionToBytes(new RPtr(transaction))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionFromBytes(String bytes, Promise promise) {
+        Native.I
+                .transactionFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    // TransactionBuilder
+
+    @ReactMethod
+    public final void transactionBuilderAddKeyInput(String txBuilder, String hash, String input, String amount, Promise promise) {
+        Native.I
+                .transactionBuilderAddKeyInput(new RPtr(txBuilder), new RPtr(hash), new RPtr(input), new RPtr(amount))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderAddBootstrapInput(String txBuilder, String hash, String input, String amount, Promise promise) {
+        Native.I
+                .transactionBuilderAddBootstrapInput(new RPtr(txBuilder), new RPtr(hash), new RPtr(input), new RPtr(amount))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderAddOutput(String txBuilder, String output, Promise promise) {
+        Native.I
+                .transactionBuilderAddOutput(new RPtr(txBuilder), new RPtr(output))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderSetFee(String txBuilder, String fee, Promise promise) {
+        Native.I
+                .transactionBuilderSetFee(new RPtr(txBuilder), new RPtr(fee))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderSetTtl(String txBuilder, Double ttl, Promise promise) {
+        Native.I
+                .transactionBuilderSetTtl(new RPtr(txBuilder), ttl.longValue())
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderNew(String linearFee, String minimumUtxoVal, String poolDeposit, String keyDeposit, Promise promise) {
+        Native.I
+                .transactionBuilderNew(new RPtr(linearFee), new RPtr(minimumUtxoVal), new RPtr(poolDeposit), new RPtr(keyDeposit))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderGetExplicitInput(String txBuilder, Promise promise) {
+        Native.I
+                .transactionBuilderGetExplicitInput(new RPtr(txBuilder))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderGetImplicitInput(String txBuilder, Promise promise) {
+        Native.I
+                .transactionBuilderGetImplicitInput(new RPtr(txBuilder))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderGetExplicitOutput(String txBuilder, Promise promise) {
+        Native.I
+                .transactionBuilderGetExplicitOutput(new RPtr(txBuilder))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderAddChangeIfNeeded(String txBuilder, String address, Promise promise) {
+        Native.I
+                .transactionBuilderAddChangeIfNeeded(new RPtr(txBuilder), new RPtr(address))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderBuild(String txBuilder, Promise promise) {
+        Native.I
+                .transactionBuilderBuild(new RPtr(txBuilder))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderEstimateFee(String txBuilder, Promise promise) {
+        Native.I
+                .transactionBuilderEstimateFee(new RPtr(txBuilder))
+                .map(RPtr::toJs)
                 .pour(promise);
     }
 

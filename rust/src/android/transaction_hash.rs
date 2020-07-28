@@ -6,7 +6,6 @@ use jni::sys::{jbyteArray, jobject};
 use jni::JNIEnv;
 use cardano_serialization_lib::crypto::{TransactionHash};
 use cardano_serialization_lib::error::{DeserializeError};
-use wasm_bindgen::JsValue;
 
 impl ToFromBytes for TransactionHash {
   fn to_bytes(&self) -> Vec<u8> {

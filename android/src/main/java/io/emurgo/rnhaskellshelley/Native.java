@@ -55,6 +55,8 @@ final class Native {
     public final native Result<RPtr> stakeCredentialFromKeyHash(RPtr keyHash);
     public final native Result<RPtr> stakeCredentialToKeyHash(RPtr stakeCredential);
     public final native Result<Integer> stakeCredentialKind(RPtr stakeCredential);
+    public final native Result<byte[]> stakeCredentialToBytes(RPtr stakeCredential);
+    public final native Result<RPtr> stakeCredentialFromBytes(byte[] bytes);
 
     // BaseAddress
     public final native Result<RPtr> baseAddressNew(int network, RPtr payment, RPtr stake);
@@ -97,6 +99,29 @@ final class Native {
     public final native Result<RPtr> transactionWitnessSetNew();
     public final native Result<Void> transactionWitnessSetSetVkeys(RPtr witnessSet, RPtr vkeys);
     public final native Result<Void> transactionWitnessSetSetBootstraps(RPtr witnessSet, RPtr bootstraps);
+
+    // TransactionBody
+    public final native Result<byte[]> transactionBodyToBytes(RPtr TransactionBody);
+    public final native Result<RPtr> transactionBodyFromBytes(byte[] bytes);
+
+    // Transaction
+    public final native Result<RPtr> transactionNew(RPtr body, RPtr witnessSet);
+    public final native Result<byte[]> transactionToBytes(RPtr Transaction);
+    public final native Result<RPtr> transactionFromBytes(byte[] bytes);
+
+    // TransactionBuilder
+    public final native Result<Void> transactionBuilderAddKeyInput(RPtr txBuilder, RPtr hash, RPtr input, RPtr value);
+    public final native Result<Void> transactionBuilderAddBootstrapInput(RPtr txBuilder, RPtr hash, RPtr input, RPtr value);
+    public final native Result<Void> transactionBuilderAddOutput(RPtr txBuilder, RPtr input);
+    public final native Result<Void> transactionBuilderSetFee(RPtr txBuilder, RPtr fee);
+    public final native Result<Void> transactionBuilderSetTtl(RPtr txBuilder, long ttl);
+    public final native Result<RPtr> transactionBuilderNew(RPtr linearFee, RPtr minimumUtxoVal, RPtr poolDeposit, RPtr keyDeposit);
+    public final native Result<RPtr> transactionBuilderGetExplicitInput(RPtr txBuilder);
+    public final native Result<RPtr> transactionBuilderGetImplicitInput(RPtr txBuilder);
+    public final native Result<RPtr> transactionBuilderGetExplicitOutput(RPtr txBuilder);
+    public final native Result<Boolean> transactionBuilderAddChangeIfNeeded(RPtr txBuilder, RPtr address);
+    public final native Result<RPtr> transactionBuilderBuild(RPtr txBuilder);
+    public final native Result<RPtr> transactionBuilderEstimateFee(RPtr txBuilder);
 
     public final native void ptrFree(RPtr ptr);
 }

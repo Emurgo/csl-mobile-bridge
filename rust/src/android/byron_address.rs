@@ -8,8 +8,6 @@ use crate::panic::{handle_exception_result, ToResult};
 use crate::ptr::RPtrRepresentable;
 use cardano_serialization_lib::address::{ByronAddress};
 
-use cardano_serialization_lib::utils::{BigNum};
-
 #[allow(non_snake_case)]
 #[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_byronAddressToBase58(
