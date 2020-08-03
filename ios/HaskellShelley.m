@@ -203,7 +203,6 @@ RCT_EXPORT_METHOD(byronAddressFromAddress:(nonnull NSString *)addrPtr withResolv
     }] exec:addrPtr andResolve:resolve orReject:reject];
 }
 
-
 // Address
 
 RCT_EXPORT_METHOD(addressToBytes:(nonnull NSString *)addressPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -368,6 +367,17 @@ RCT_EXPORT_METHOD(baseAddressStakeCred:(nonnull NSString *)ptr  withResolve:(RCT
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(baseAddressFromAddress:(nonnull NSString *)addrPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr addr = [addrPtr rPtr];
+        return base_address_from_address(addr, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:addrPtr andResolve:resolve orReject:reject];
 }
 
 // UnitInterval

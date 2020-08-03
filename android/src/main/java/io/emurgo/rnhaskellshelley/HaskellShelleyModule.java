@@ -284,6 +284,14 @@ public final void bip32PrivateKeyFromBip39Entropy(String entropy, String passwor
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void baseAddressFromAddress(String address, Promise promise) {
+        Native.I
+                .baseAddressFromAddress(new RPtr(address))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // UnitInterval
 
     @ReactMethod

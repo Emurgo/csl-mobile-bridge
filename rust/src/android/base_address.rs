@@ -5,7 +5,7 @@ use crate::ptr::RPtrRepresentable;
 use jni::objects::JObject;
 use jni::sys::{jobject, jint};
 use jni::JNIEnv;
-use cardano_serialization_lib::address::{BaseAddress, StakeCredential};
+use cardano_serialization_lib::address::{Address, BaseAddress, StakeCredential};
 
 #[allow(non_snake_case)]
 #[no_mangle]
@@ -44,6 +44,21 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_baseAddressStake
   handle_exception_result(|| {
     let rptr = ptr.rptr(&env)?;
     rptr.typed_ref::<BaseAddress>().and_then(|base_address| base_address.stake_cred().rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_baseAddressFromAddress(
+  env: JNIEnv, _: JObject, address: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let address = address.rptr(&env)?;
+    address
+      .typed_ref::<Address>()
+      .map(|address| BaseAddress::from_address(address))
+      .and_then(|base_address| base_address.rptr().jptr(&env))
   })
   .jresult(&env)
 }

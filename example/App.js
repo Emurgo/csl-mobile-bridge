@@ -181,6 +181,8 @@ export default class App extends Component<{}> {
           pymntAddr,
         'BaseAddress:: -> payment_cred -> keyhash should match original input',
       )
+      const baseAddrFromAddr = await BaseAddress.from_address(address)
+      assert(!!baseAddrFromAddr, 'baseAddress.from_address')
 
       // ------------------------------------------------
       // ------------------ UnitInterval ----------------

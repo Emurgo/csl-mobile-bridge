@@ -150,7 +150,7 @@ export class ByronAddress extends Ptr {
   * @param {Address} addr
   * @returns {Promise<ByronAddress | undefined>}
   */
-  static from_address(addr): Promise<ByronAddress>
+  static from_address(addr): Promise<ByronAddress | undefined>
 }
 
 export class Address extends Ptr {
@@ -241,6 +241,12 @@ export class BaseAddress extends Ptr {
   * @returns {Promise<StakeCredential>}
   */
   stake_cred(): Promise<StakeCredential>
+
+  /**
+  * @param {Address} addr
+  * @returns {Promise<BaseAddress | undefined>}
+  */
+  static from_address(addr): Promise<BaseAddress | undefined>
 }
 
 export class UnitInterval extends Ptr {

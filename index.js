@@ -393,6 +393,16 @@ export class BaseAddress extends Ptr {
     const ret = await HaskellShelley.baseAddressStakeCred(this.ptr);
     return Ptr._wrap(ret, StakeCredential);
   }
+
+  /**
+  * @param {Address} addr
+  * @returns {Promise<BaseAddress | undefined>}
+  */
+  static async from_address(addr) {
+    const addrPtr = Ptr._assertClass(addr, Address);
+    const ret = await HaskellShelley.baseAddressFromAddress(addrPtr);
+    return Ptr._wrap(ret, BaseAddress);
+  }
 }
 
 export class UnitInterval extends Ptr {
