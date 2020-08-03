@@ -87,16 +87,6 @@ export default class App extends Component<{}> {
       )
 
       // ------------------------------------------------
-      // ----------------- ByronAddress -----------------
-      const addrBase58 =
-        'Ae2tdPwUPEZHu3NZa6kCwet2msq4xrBXKHBDvogFKwMsF18Jca8JHLRBas7'
-      const byronAddress = await ByronAddress.from_base58(addrBase58)
-      assert(
-        (await byronAddress.to_base58()) === addrBase58,
-        'ByronAddress.to_base58 should match original input address',
-      )
-
-      // ------------------------------------------------
       // ------------------ Address ---------------------
       const baseAddrHex =
         '00' +
@@ -108,6 +98,25 @@ export default class App extends Component<{}> {
       assert(
         Buffer.from(addrPtrToBytes).toString('hex') === baseAddrHex,
         'Address.to_bytes should match original input address',
+      )
+
+      // ------------------------------------------------
+      // ----------------- ByronAddress -----------------
+      const addrBase58 =
+        'Ae2tdPwUPEZHu3NZa6kCwet2msq4xrBXKHBDvogFKwMsF18Jca8JHLRBas7'
+      const byronAddress = await ByronAddress.from_base58(addrBase58)
+      assert(
+        (await byronAddress.to_base58()) === addrBase58,
+        'ByronAddress.to_base58 should match original input address',
+      )
+      const byronAddrFromAddr = await ByronAddress.from_address(address)
+      assert(
+        byronAddrFromAddr === undefined,
+        'ByronAddress.from_address should return undefined on non-byron Address',
+      )
+      assert(
+        !(await ByronAddress.is_valid(baseAddrHex)),
+        'ByronAddress.is_valid should return false on non-byron Address',
       )
 
       // ------------------------------------------------
