@@ -227,6 +227,26 @@ RCT_EXPORT_METHOD(addressFromBytes:(nonnull NSString *)bytesStr  withResolve:(RC
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(addressToBech32:(nonnull NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        CharPtr result;
+        return address_to_bech32([ptr rPtr], &result, error)
+            ? [NSString stringFromCharPtr:&result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(addressFromBech32:(nonnull NSString *)string withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* string, CharPtr* error) {
+        RPtr result;
+        return address_from_bech32([string charPtr], &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:string andResolve:resolve orReject:reject];
+}
+
 // Ed25519KeyHash
 
 RCT_EXPORT_METHOD(ed25519KeyHashToBytes:(nonnull NSString *)keyHashPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

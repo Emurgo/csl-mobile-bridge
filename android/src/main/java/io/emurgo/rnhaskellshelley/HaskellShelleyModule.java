@@ -181,6 +181,21 @@ public final void bip32PrivateKeyFromBip39Entropy(String entropy, String passwor
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void addressToBech32(String address, Promise promise) {
+        Native.I
+                .addressToBech32(new RPtr(address))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void addressFromBech32(String string, Promise promise) {
+        Native.I
+                .addressFromBech32(string)
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // Ed25519KeyHash
 
     @ReactMethod

@@ -1,6 +1,6 @@
 use super::data::DataPtr;
 use super::result::CResult;
-use super::string::{CharPtr};
+use super::string::*;
 use crate::panic::{handle_exception_result, ToResult};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::address::{Address};
@@ -27,4 +27,20 @@ pub unsafe extern "C" fn address_from_bytes(
   })
   .map(|address| address.rptr())
   .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn address_to_bech32(
+  rptr: RPtr, result: &mut CharPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| rptr.typed_ref::<Address>().map(|addr| addr.to_bech32().into_cstr()))
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn address_from_bech32(
+  chars: CharPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| Address::from_bech32(chars.into_str()).map(|addr| addr.rptr()).into_result())
+    .response(result, error)
 }

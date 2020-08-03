@@ -44,6 +44,8 @@ final class Native {
     // Address
     public final native Result<byte[]> addressToBytes(RPtr address);
     public final native Result<RPtr> addressFromBytes(byte[] bytes);
+    public final native Result<String> addressToBech32(RPtr address);
+    public final native Result<RPtr> addressFromBech32(String str);
 
     // Ed25519KeyHash
     public final native Result<byte[]> ed25519KeyHashToBytes(RPtr ed25519KeyHash);

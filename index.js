@@ -272,6 +272,21 @@ export class Address extends Ptr {
     return Ptr._wrap(ret, Address);
   }
 
+  /**
+  * @returns {Promise<string>}
+  */
+  async to_bech32() {
+    return HaskellShelley.addressToBech32(this.ptr);
+  }
+
+  /**
+  * @param {string} string
+  * @returns {Promise<Address>}
+  */
+  static async from_bech32(string) {
+    const ret = await HaskellShelley.addressFromBech32(string);
+    return Ptr._wrap(ret, Address);
+  }
 }
 
 export class Ed25519KeyHash extends Ptr {

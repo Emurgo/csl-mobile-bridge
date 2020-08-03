@@ -164,6 +164,17 @@ export class Address extends Ptr {
   * @returns {Promise<Uint8Array>}
   */
   to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_bech32(): Promise<string>
+
+  /**
+  * @param {string} string
+  * @returns {Promise<Address>}
+  */
+  static from_bech32(string) : Promise<Address>
 }
 
 export class Ed25519KeyHash extends Ptr {

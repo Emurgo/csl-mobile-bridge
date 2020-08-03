@@ -99,6 +99,16 @@ export default class App extends Component<{}> {
         Buffer.from(addrPtrToBytes).toString('hex') === baseAddrHex,
         'Address.to_bytes should match original input address',
       )
+      const addrFromBech32 = await Address.from_bech32(
+        /* eslint-disable-next-line max-len */
+        'addr1qqqqpvpu82s99aguppk9f02qt84d95hyy6kgn7jt8njpe0cqqzcrcw4q2t63czrv2j75qk026tfwgf4v38ayk08yrjls4jecre',
+      )
+      assert(
+        (await addrFromBech32.to_bech32()) ===
+          /* eslint-disable-next-line max-len */
+          'addr1qqqqpvpu82s99aguppk9f02qt84d95hyy6kgn7jt8njpe0cqqzcrcw4q2t63czrv2j75qk026tfwgf4v38ayk08yrjls4jecre',
+        'Address.to_bech32',
+      )
 
       // ------------------------------------------------
       // ----------------- ByronAddress -----------------
