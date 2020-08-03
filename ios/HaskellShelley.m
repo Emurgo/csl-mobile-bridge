@@ -182,6 +182,28 @@ RCT_EXPORT_METHOD(byronAddressFromBase58:(nonnull NSString *)string withResolve:
     }] exec:string andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(byronAddressIsValid:(nonnull NSString *)string  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* string, CharPtr* error) {
+        BOOL result;
+        return byron_address_is_valid([string charPtr], &result, error)
+            ? [NSNumber numberWithBool:result]
+            : nil;
+    }] exec:string andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(byronAddressFromAddress:(nonnull NSString *)addrPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr addr = [addrPtr rPtr];
+        return byron_address_from_address(addr, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:addrPtr andResolve:resolve orReject:reject];
+}
+
+
 // Address
 
 RCT_EXPORT_METHOD(addressToBytes:(nonnull NSString *)addressPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

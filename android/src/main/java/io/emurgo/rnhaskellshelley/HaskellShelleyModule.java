@@ -148,6 +148,21 @@ public final void bip32PrivateKeyFromBip39Entropy(String entropy, String passwor
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void byronAddressIsValid(String string, Promise promise) {
+        Native.I
+                .byronAddressIsValid(string)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void byronAddressFromAddress(String address, Promise promise) {
+        Native.I
+                .byronAddressFromAddress(new RPtr(address))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // Address
 
     @ReactMethod

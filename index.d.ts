@@ -139,6 +139,18 @@ export class ByronAddress extends Ptr {
   * @returns {Promise<ByronAddress>}
   */
   static from_base58(string: string): Promise<ByronAddress>
+
+  /**
+  * @param {string} string
+  * @returns {Promise<boolean>}
+  */
+  static async is_valid(string): Promise<boolean>
+
+  /**
+  * @param {Address} addr
+  * @returns {Promise<ByronAddress | undefined>}
+  */
+  static from_address(addr): Promise<ByronAddress>
 }
 
 export class Address extends Ptr {

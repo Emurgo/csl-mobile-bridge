@@ -233,6 +233,24 @@ export class ByronAddress extends Ptr {
     const ret = await HaskellShelley.byronAddressFromBase58(string);
     return Ptr._wrap(ret, ByronAddress);
   }
+
+  /**
+  * @param {string} string
+  * @returns {Promise<boolean>}
+  */
+  static async is_valid(string) {
+    return HaskellShelley.byronAddressIsValid(string);
+  }
+
+  /**
+  * @param {Address} addr
+  * @returns {Promise<ByronAddress | undefined>}
+  */
+  static async from_address(addr) {
+    const addrPtr = Ptr._assertClass(addr, Address);
+    const ret = await HaskellShelley.byronAddressFromAddress(addrPtr);
+    return Ptr._wrap(ret, ByronAddress);
+  }
 }
 
 export class Address extends Ptr {
