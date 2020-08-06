@@ -40,12 +40,8 @@ buildscript {
     }
     repositories {
         maven {
-            url "https://plugins.gradle.org/m2/"
             google()
         }
-    }
-    dependencies {
-        classpath 'gradle.plugin.org.mozilla.rust-android-gradle:plugin:0.8.3'
     }
 }
 
