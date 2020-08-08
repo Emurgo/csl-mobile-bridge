@@ -34,7 +34,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_bootstrapWitness
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_BootstrapWitnessesAdd(
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_bootstrapWitnessesAdd(
   env: JNIEnv, _: JObject, witnesses: JRPtr, item: JRPtr
 ) -> jobject {
   handle_exception_result(|| {

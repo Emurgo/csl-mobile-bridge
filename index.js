@@ -670,7 +670,7 @@ export class BootstrapWitnesses extends Ptr {
   */
   async add(item) {
     const itemPtr = Ptr._assertClass(item, BootstrapWitness);
-    return HaskellShelley.bootstrapWitnessAdd(this.ptr, itemPtr);
+    return HaskellShelley.bootstrapWitnessesAdd(this.ptr, itemPtr);
   }
 }
 
