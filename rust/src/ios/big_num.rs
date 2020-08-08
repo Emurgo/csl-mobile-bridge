@@ -25,27 +25,27 @@ pub unsafe extern "C" fn big_num_to_str(
 // pub unsafe extern "C" fn value_from_u64(u: u64, result: &mut RPtr, error: &mut CharPtr) -> bool {
 //   handle_exception(|| Value::from(u).rptr()).response(result, error)
 // }
-//
-// #[no_mangle]
-// pub unsafe extern "C" fn value_checked_add(
-//   value: RPtr, other: RPtr, result: &mut RPtr, error: &mut CharPtr
-// ) -> bool {
-//   handle_exception_result(|| {
-//     let val = value.typed_ref::<Value>()?;
-//     let oth = other.typed_ref::<Value>()?;
-//     val.checked_add(oth).map(|val| val.rptr()).into_result()
-//   })
-//   .response(result, error)
-// }
-//
-// #[no_mangle]
-// pub unsafe extern "C" fn value_checked_sub(
-//   value: RPtr, other: RPtr, result: &mut RPtr, error: &mut CharPtr
-// ) -> bool {
-//   handle_exception_result(|| {
-//     let val = value.typed_ref::<Value>()?;
-//     let oth = other.typed_ref::<Value>()?;
-//     val.checked_sub(oth).into_result().map(|val| val.rptr())
-//   })
-//   .response(result, error)
-// }
+
+#[no_mangle]
+pub unsafe extern "C" fn big_num_checked_add(
+  big_num: RPtr, other: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    let val = big_num.typed_ref::<BigNum>()?;
+    let oth = other.typed_ref::<BigNum>()?;
+    val.checked_add(oth).map(|val| val.rptr()).into_result()
+  })
+  .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn big_num_checked_sub(
+  big_num: RPtr, other: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    let val = big_num.typed_ref::<BigNum>()?;
+    let oth = other.typed_ref::<BigNum>()?;
+    val.checked_sub(oth).into_result().map(|val| val.rptr())
+  })
+  .response(result, error)
+}

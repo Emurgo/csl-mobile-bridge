@@ -47,34 +47,34 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_bigNumToStr(
 //   .jresult(&env)
 // }
 
-// #[allow(non_snake_case)]
-// #[no_mangle]
-// pub unsafe extern "C" fn Java_io_emurgo_chainlibs_Native_valueCheckedAdd(
-//   env: JNIEnv, _: JObject, ptr: JRPtr, other: JRPtr
-// ) -> jobject {
-//   handle_exception_result(|| {
-//     let rptr = ptr.rptr(&env)?;
-//     let val = rptr.typed_ref::<Value>()?;
-//     let rother = other.rptr(&env)?;
-//     let otherval = rother.typed_ref::<Value>()?;
-//     let res = val.checked_add(otherval).into_result()?;
-//     res.rptr().jptr(&env)
-//   })
-//   .jresult(&env)
-// }
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_bigNumCheckedAdd(
+  env: JNIEnv, _: JObject, ptr: JRPtr, other: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    let val = rptr.typed_ref::<BigNum>()?;
+    let rother = other.rptr(&env)?;
+    let otherval = rother.typed_ref::<BigNum>()?;
+    let res = val.checked_add(otherval).into_result()?;
+    res.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
 
-// #[allow(non_snake_case)]
-// #[no_mangle]
-// pub unsafe extern "C" fn Java_io_emurgo_chainlibs_Native_valueCheckedSub(
-//   env: JNIEnv, _: JObject, ptr: JObject, other: JObject
-// ) -> jobject {
-//   handle_exception_result(|| {
-//     let rptr = ptr.rptr(&env)?;
-//     let val = rptr.typed_ref::<Value>()?;
-//     let rother = other.rptr(&env)?;
-//     let otherval = rother.typed_ref::<Value>()?;
-//     let res = val.checked_sub(otherval).into_result()?;
-//     res.rptr().jptr(&env)
-//   })
-//   .jresult(&env)
-// }
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_bigNumCheckedSub(
+  env: JNIEnv, _: JObject, ptr: JObject, other: JObject
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    let val = rptr.typed_ref::<BigNum>()?;
+    let rother = other.rptr(&env)?;
+    let otherval = rother.typed_ref::<BigNum>()?;
+    let res = val.checked_sub(otherval).into_result()?;
+    res.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}

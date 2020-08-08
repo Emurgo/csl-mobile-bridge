@@ -23,6 +23,8 @@ final class Native {
     // BigNum
     public final native Result<RPtr> bigNumFromStr(String str);
     public final native Result<String> bigNumToStr(RPtr bigNum);
+    public final native Result<RPtr> bigNumCheckedAdd(RPtr bigNum, RPtr other);
+    public final native Result<RPtr> bigNumCheckedSub(RPtr bigNum, RPtr other);
 
     // Bip32PrivateKey
     public final native Result<RPtr> bip32PrivateKeyDerive(RPtr bip32PrivateKey, long index);

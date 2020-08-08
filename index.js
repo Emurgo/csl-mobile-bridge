@@ -94,6 +94,26 @@ export class BigNum extends Ptr {
   async to_str() {
     return await HaskellShelley.bigNumToStr(this.ptr);
   }
+
+  /**
+  * @param {BigNum} other
+  * @returns {Promise<BigNum>}
+  */
+  async checked_add(other) {
+    const otherPtr = Ptr._assertClass(other, BigNum);
+    const ret = await HaskellShelley.bigNumCheckedAdd(this.ptr, otherPtr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  /**
+  * @param {BigNum} other
+  * @returns {Promise<BigNum>}
+  */
+  async checked_sub(other) {
+    const otherPtr = Ptr._assertClass(other, BigNum);
+    const ret = await HaskellShelley.bigNumCheckedSub(this.ptr, otherPtr);
+    return Ptr._wrap(ret, BigNum);
+  }
 }
 
 // use same underlying functions written for BigNum
@@ -113,6 +133,26 @@ export class Coin extends Ptr {
   */
   async to_str() {
     return await HaskellShelley.bigNumToStr(this.ptr);
+  }
+
+  /**
+  * @param {Coin} other
+  * @returns {Promise<Coin>}
+  */
+  async checked_add(other) {
+    const otherPtr = Ptr._assertClass(other, Coin);
+    const ret = await HaskellShelley.bigNumCheckedAdd(this.ptr, otherPtr);
+    return Ptr._wrap(ret, Coin);
+  }
+
+  /**
+  * @param {Coin} other
+  * @returns {Promise<Coin>}
+  */
+  async checked_sub(other) {
+    const otherPtr = Ptr._assertClass(other, Coin);
+    const ret = await HaskellShelley.bigNumCheckedSub(this.ptr, otherPtr);
+    return Ptr._wrap(ret, Coin);
   }
 }
 

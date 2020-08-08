@@ -61,6 +61,16 @@ export default class App extends Component<{}> {
         (await bigNum.to_str()) === bigNumStr,
         'BigNum.to_str() should match original input value',
       )
+      const bigNum2 = await BigNum.from_str('500')
+      assert(
+        (await (await bigNum.checked_add(bigNum2)).to_str()) === '1000500',
+        'BigNum.checked_add()',
+      )
+      console.log(await (await bigNum.checked_sub(bigNum2)).to_str())
+      assert(
+        (await (await bigNum.checked_sub(bigNum2)).to_str()) === '999500',
+        'BigNum.checked_sub()',
+      )
 
       // ------------------------------------------------
       // ------------------- Coin -----------------------
@@ -69,6 +79,15 @@ export default class App extends Component<{}> {
       assert(
         (await coin.to_str()) === coinStr,
         'Coin.to_str() should match original input value',
+      )
+      const coin2 = await Coin.from_str('500')
+      assert(
+        (await (await coin.checked_add(coin2)).to_str()) === '2000500',
+        'Coin.checked_add()',
+      )
+      assert(
+        (await (await coin.checked_sub(coin2)).to_str()) === '1999500',
+        'Coin.checked_sub()',
       )
 
       // ------------------------------------------------

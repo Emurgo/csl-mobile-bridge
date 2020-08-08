@@ -56,6 +56,31 @@ RCT_EXPORT_METHOD(bigNumToStr:(nonnull NSString *)ptr withResolve:(RCTPromiseRes
     }] exec:ptr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(bigNumCheckedAdd:(nonnull NSString *)ptr1 other:(nonnull NSString *)ptr2 withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray<NSString*>* ptrs, CharPtr* error) {
+        RPtr result;
+        return big_num_checked_add([[ptrs objectAtIndex:0] rPtr],
+                                 [[ptrs objectAtIndex:1] rPtr],
+                                 &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[ptr1, ptr2] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(bigNumCheckedSub:(nonnull NSString *)ptr1 other:(nonnull NSString *)ptr2 withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray<NSString*>* ptrs, CharPtr* error) {
+        RPtr result;
+        return big_num_checked_sub([[ptrs objectAtIndex:0] rPtr],
+                                 [[ptrs objectAtIndex:1] rPtr],
+                                 &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[ptr1, ptr2] andResolve:resolve orReject:reject];
+}
+
+
 // Bip32PrivateKey
 
 RCT_EXPORT_METHOD(bip32PrivateKeyDerive:(nonnull NSString *)bip32PrivateKeyPtr withIndex:(nonnull NSNumber *)index withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

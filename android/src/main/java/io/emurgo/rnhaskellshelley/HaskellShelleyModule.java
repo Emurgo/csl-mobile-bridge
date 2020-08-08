@@ -58,6 +58,22 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void bigNumCheckedAdd(String bigNumPtr, String otherPtr, Promise promise) {
+        Native.I
+                .bigNumCheckedAdd(new RPtr(bigNumPtr), new RPtr(otherPtr))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void bigNumCheckedSub(String bigNumPtr, String otherPtr, Promise promise) {
+        Native.I
+                .bigNumCheckedSub(new RPtr(bigNumPtr), new RPtr(otherPtr))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // Bip32PrivateKey
 
 @ReactMethod
