@@ -192,6 +192,17 @@ RCT_EXPORT_METHOD(byronAddressIsValid:(nonnull NSString *)string  withResolve:(R
     }] exec:string andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(byronAddressToAddress:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr byronAddr = [ptr rPtr];
+        return byron_address_to_address(byronAddr, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(byronAddressFromAddress:(nonnull NSString *)addrPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {

@@ -31,6 +31,19 @@ pub unsafe extern "C" fn byron_address_is_valid(
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn byron_address_to_address(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<ByronAddress>()
+      .map(|byron_addr| byron_addr.to_address())
+    })
+    .map(|addr| addr.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
 pub unsafe extern "C" fn byron_address_from_address(
   rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {

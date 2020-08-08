@@ -40,6 +40,7 @@ final class Native {
     public final native Result<RPtr> byronAddressFromBase58(String str);
     public final native Result<Boolean> byronAddressIsValid(String str);
     public final native Result<RPtr> byronAddressFromAddress(RPtr address);
+    public final native Result<RPtr> byronAddressToAddress(RPtr byronAddress);
 
     // Address
     public final native Result<byte[]> addressToBytes(RPtr address);

@@ -120,6 +120,7 @@ export default class App extends Component<{}> {
         'ByronAddress.to_base58 should match original input address',
       )
       const byronAddrFromAddr = await ByronAddress.from_address(address)
+      const addrFromByronAddr = await byronAddress.to_address()
       assert(
         byronAddrFromAddr === undefined,
         'ByronAddress.from_address should return undefined on non-byron Address',
@@ -127,6 +128,16 @@ export default class App extends Component<{}> {
       assert(
         !(await ByronAddress.is_valid(baseAddrHex)),
         'ByronAddress.is_valid should return false on non-byron Address',
+      )
+      assert(
+        await ByronAddress.is_valid(addrBase58),
+        'ByronAddress.is_valid should return true on valid address',
+      )
+      assert(
+        (await (
+          await ByronAddress.from_address(addrFromByronAddr)
+        ).to_base58()) === addrBase58,
+        'ByronAddress.to_address',
       )
 
       // ------------------------------------------------

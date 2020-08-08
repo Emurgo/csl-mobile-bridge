@@ -243,6 +243,14 @@ export class ByronAddress extends Ptr {
   }
 
   /**
+  * @returns {Promise<Address>}
+  */
+  async to_address() {
+    const ret = await HaskellShelley.byronAddressToAddress(this.ptr);
+    return Ptr._wrap(ret, Address);
+  }
+
+  /**
   * @param {Address} addr
   * @returns {Promise<ByronAddress | undefined>}
   */
