@@ -1,7 +1,7 @@
 use super::data::DataPtr;
 use super::result::CResult;
 use super::string::{CharPtr};
-use crate::panic::{handle_exception_result, ToResult};
+use crate::panic::{handle_exception_result, ToResult, Zip};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::{UnitInterval};
 use cardano_serialization_lib::utils::{BigNum};
@@ -31,11 +31,14 @@ pub unsafe extern "C" fn unit_interval_new(
   numerator: RPtr, denominator: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
-    // TODO: normally owned() operates on mut self, so probably it should be
-    // numerator: &mut.
-    let numerator = numerator.owned::<BigNum>();
-    let denominator = denominator.owned::<BigNum>();
-    Ok(UnitInterval::new(numerator?, denominator?))
+    numerator
+      .typed_ref::<BigNum>()
+      .zip(
+        denominator.typed_ref::<BigNum>()
+      )
+      .map(|(numerator, denominator)| {
+        UnitInterval::new(numerator, denominator)
+      })
   })
   .map(|unit_interval| unit_interval.rptr())
   .response(result, error)
