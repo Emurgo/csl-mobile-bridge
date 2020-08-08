@@ -18,7 +18,7 @@ final class Native {
     // Utils
     public final native Result<RPtr> makeIcarusBootstrapWitness(RPtr txBodyHash, RPtr addr, RPtr key);
     public final native Result<RPtr> makeVkeyWitness(RPtr txBodyHash, RPtr sk);
-    // public final native Result<RPtr> hashTransaction(RPtr txBody);
+    public final native Result<RPtr> hashTransaction(RPtr txBody);
 
     // BigNum
     public final native Result<RPtr> bigNumFromStr(String str);

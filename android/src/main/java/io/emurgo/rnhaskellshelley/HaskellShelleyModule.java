@@ -41,6 +41,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void hashTransaction(String txBody, Promise promise) {
+        Native.I
+                .hashTransaction(new RPtr(txBody))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // BigNum
 
     @ReactMethod

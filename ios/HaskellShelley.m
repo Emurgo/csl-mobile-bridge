@@ -34,6 +34,16 @@ RCT_EXPORT_METHOD(makeVkeyWitness:(nonnull NSString *)txBodyHashPtr withSk:(nonn
     }] exec:@[txBodyHashPtr, skPtr] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(hashTransaction:(nonnull NSString *)txBodyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr txBody = [txBodyPtr rPtr];
+        RPtr result;
+        utils_hash_transaction(txBody, &result, error);
+        return nil;
+    }] exec:txBodyPtr andResolve:resolve orReject:reject];
+}
+
 // BigNum
 
 RCT_EXPORT_METHOD(bigNumFromStr:(nonnull NSString *)string withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

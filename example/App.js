@@ -21,6 +21,7 @@ import {
   Coin,
   Ed25519KeyHash,
   LinearFee,
+  hash_transaction,
   make_vkey_witness,
   make_icarus_bootstrap_witness,
   StakeCredential,
@@ -66,7 +67,6 @@ export default class App extends Component<{}> {
         (await (await bigNum.checked_add(bigNum2)).to_str()) === '1000500',
         'BigNum.checked_add()',
       )
-      console.log(await (await bigNum.checked_sub(bigNum2)).to_str())
       assert(
         (await (await bigNum.checked_sub(bigNum2)).to_str()) === '999500',
         'BigNum.checked_sub()',
@@ -278,24 +278,6 @@ export default class App extends Component<{}> {
       )
 
       // ------------------------------------------------
-      // -------------------- Utils ---------------------
-      const bootstrapWitness = await make_icarus_bootstrap_witness(
-        txHash,
-        byronAddress,
-        bip32PrivateKey,
-      )
-      assert(
-        bootstrapWitness instanceof BootstrapWitness,
-        'make_icarus_bootstrap_witness should return instance of BootstrapWitness',
-      )
-      const sk = await bip32PrivateKey.to_raw_key()
-      const vkeywitness = await make_vkey_witness(txHash, sk)
-      assert(
-        vkeywitness instanceof Vkeywitness,
-        'make_vkey_witness should return instance of Vkeywitness',
-      )
-
-      // ------------------------------------------------
       // -------------- BootstrapWitnesses --------------
       const bootstrapWits = await BootstrapWitnesses.new()
       assert(
@@ -325,6 +307,29 @@ export default class App extends Component<{}> {
         '624ef1d2f4c7b480a0001a88e5cdab1913890219042803191c20'
       const txBody = await TransactionBody.from_bytes(
         Buffer.from(bodyHex, 'hex'),
+      )
+
+      // ------------------------------------------------
+      // -------------------- Utils ---------------------
+      const bootstrapWitness = await make_icarus_bootstrap_witness(
+        txHash,
+        byronAddress,
+        bip32PrivateKey,
+      )
+      assert(
+        bootstrapWitness instanceof BootstrapWitness,
+        'make_icarus_bootstrap_witness should return instance of BootstrapWitness',
+      )
+      const sk = await bip32PrivateKey.to_raw_key()
+      const vkeywitness = await make_vkey_witness(txHash, sk)
+      assert(
+        vkeywitness instanceof Vkeywitness,
+        'make_vkey_witness should return instance of Vkeywitness',
+      )
+      const hash = await hash_transaction(txBody)
+      assert(
+        hash instanceof TransactionHash,
+        'hash_transaction should return instance of TransactionHash',
       )
 
       // ------------------------------------------------

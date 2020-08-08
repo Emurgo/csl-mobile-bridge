@@ -21,6 +21,10 @@ export const make_vkey_witness: (
   sk: PrivateKey,
 ) => Promise<Vkeywitness>
 
+export const hash_transaction: (
+  txBody: TransactionBody,
+) => Promise<TransactionHash>
+
 /**
 * Generic u64 wrapper for platforms that don't support u64 or BigInt/etc
 * This is an unsigned type - no negative numbers.

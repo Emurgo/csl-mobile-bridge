@@ -75,6 +75,16 @@ export const make_vkey_witness = async (txBodyHash, sk) => {
   return Ptr._wrap(ret, Vkeywitness);
 }
 
+/**
+* @param {TransactionBody} txBody
+* @returns {Promise<TransactionHash>}
+*/
+export const hash_transaction = async (txBody) => {
+  const txBodyPtr = Ptr._assertClass(txBody, TransactionBody);
+  const ret = await HaskellShelley.hashTransaction(txBodyPtr);
+  return Ptr._wrap(ret, TransactionHash);
+}
+
 export class BigNum extends Ptr {
 
   /**
