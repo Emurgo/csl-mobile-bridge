@@ -893,6 +893,14 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
+  * @returns {Promise<Coin>}
+  */
+  async get_fee_or_calc() {
+    const ret = await HaskellShelley.transactionBuilderGetFeeOrCalc(this.ptr);
+    return Ptr._wrap(ret, Coin);
+  }
+
+  /**
   * @param {Address} address
   * @returns {Promise<boolean>}
   */

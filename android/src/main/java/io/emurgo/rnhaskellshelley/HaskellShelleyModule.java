@@ -655,6 +655,14 @@ public final void bip32PrivateKeyFromBip39Entropy(String entropy, String passwor
     }
 
     @ReactMethod
+    public final void transactionBuilderGetFeeOrCalc(String txBuilder, Promise promise) {
+        Native.I
+                .transactionBuilderGetFeeOrCalc(new RPtr(txBuilder))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBuilderAddChangeIfNeeded(String txBuilder, String address, Promise promise) {
         Native.I
                 .transactionBuilderAddChangeIfNeeded(new RPtr(txBuilder), new RPtr(address))

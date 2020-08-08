@@ -546,6 +546,11 @@ export class TransactionBuilder extends Ptr {
   get_explicit_output(): Promise<Coin>
 
   /**
+  * @returns {Promise<Coin>}
+  */
+  get_fee_or_calc(): Promise<Coin>
+
+  /**
   * @param {Address} address
   * @returns {Promise<boolean>}
   */

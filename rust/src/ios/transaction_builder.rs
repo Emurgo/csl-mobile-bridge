@@ -136,6 +136,19 @@ pub unsafe extern "C" fn transaction_builder_get_explicit_output(
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn transaction_builder_get_fee_or_calc(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBuilder>()
+      .and_then(|tx_builder| tx_builder.get_fee_or_calc().into_result())
+    })
+    .map(|amount| amount.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
 pub unsafe extern "C" fn transaction_builder_add_change_if_needed(
   rptr: RPtr, address: RPtr, result: &mut bool, error: &mut CharPtr
 ) -> bool {

@@ -417,6 +417,10 @@ export default class App extends Component<{}> {
         (await (await txBuilder.estimate_fee()).to_str()) === '172761',
         'TransactionBuilder::estimate_fee()',
       )
+      assert(
+        (await (await txBuilder.get_fee_or_calc()).to_str()) === '1000000',
+        'TransactionBuilder::get_fee_or_calc()',
+      )
 
       console.log('bip32PrivateKey', bip32PrivateKey)
       console.log('address', address)
