@@ -39,6 +39,18 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionFromB
 
 #[allow(non_snake_case)]
 #[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBody(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr.typed_ref::<Transaction>().and_then(|tx| tx.body().rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionNew(
   env: JNIEnv, _: JObject, body: JRPtr, witness_set: JRPtr
 ) -> jobject {

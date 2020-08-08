@@ -34,6 +34,19 @@ pub unsafe extern "C" fn transaction_from_bytes(
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn transaction_body(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<Transaction>()
+      .map(|tx| tx.body())
+    })
+    .map(|body| body.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
 pub unsafe extern "C" fn transaction_new(
   body: RPtr, witness_set: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {

@@ -5603,9 +5603,8 @@ react-is@^16.12.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
 "react-native-haskell-shelley@link:..":
-  version "1.0.0"
-  dependencies:
-    base-64 "0.1.0"
+  version "0.0.0"
+  uid ""
 
 react-native@0.60.0:
   version "0.60.0"

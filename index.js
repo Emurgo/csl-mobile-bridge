@@ -669,6 +669,13 @@ export class TransactionBody extends Ptr {
 
 export class Transaction extends Ptr {
   /**
+  * @returns {Promise<TransactionBody>}
+  */
+  async body() {
+    const ret = await HaskellShelley.transactionBody(this.ptr);
+    return Ptr._wrap(ret, TransactionBody);
+  }
+  /**
   * @param {TransactionBody} body
   * @param {TransactionWitnessSet} witnessSet
   * @param {TransactionMetadata | void} metadata

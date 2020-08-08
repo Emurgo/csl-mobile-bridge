@@ -422,6 +422,10 @@ export class TransactionBody extends Ptr {
 
 export class Transaction extends Ptr {
   /**
+  * @returns {Promise<TransactionBody>}
+  */
+  async body(): Promise<TransactionBody>
+  /**
   * @param {TransactionBody} body
   * @param {TransactionWitnessSet} witnessSet
   * @param {TransactionMetadata | void} metadata

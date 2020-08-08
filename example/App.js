@@ -300,6 +300,10 @@ export default class App extends Component<{}> {
       // ------------------------------------------------
       // ----------------- Transaction ------------------
       const tx = await Transaction.new(txBody, witSet)
+      const bodyBytes = Buffer.from(
+        await (await tx.body()).to_bytes(),
+      ).toString('hex')
+      assert(bodyBytes.length, 'Transaction.body()')
 
       // tx bytes extracted from yoroi tests
       const txHex =
