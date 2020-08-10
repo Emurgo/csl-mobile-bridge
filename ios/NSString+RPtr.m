@@ -16,7 +16,7 @@
 
 + (NSString *)stringFromCharPtr:(CharPtr *)ptr {
     NSString* str = [NSString stringWithUTF8String:*ptr];
-    charptr_free(ptr);
+    em_charptr_free(ptr);
     return str;
 }
 

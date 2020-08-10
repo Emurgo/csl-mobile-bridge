@@ -19,7 +19,7 @@ pub unsafe extern "C" fn address_to_bytes(
 // cardano_serialization_lib: Address.from_bytes(Vec<u8>) -> Result<Address, JsValue>
 // from react-native-chain-libs address.from_bytes(&[u8]) -> Result<Address, JsValue>
 #[no_mangle]
-pub unsafe extern "C" fn address_from_bytes(
+pub unsafe extern "C" fn em_address_from_bytes(
   data: *const u8, len: usize, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {

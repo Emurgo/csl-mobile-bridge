@@ -36,6 +36,6 @@ impl From<Vec<u8>> for DataPtr {
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn dataptr_free(data: &mut DataPtr) {
+pub unsafe extern "C" fn em_dataptr_free(data: &mut DataPtr) {
   data.free();
 }

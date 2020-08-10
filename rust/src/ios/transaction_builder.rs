@@ -79,7 +79,7 @@ pub unsafe extern "C" fn transaction_builder_set_ttl(
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn transaction_builder_new(
+pub unsafe extern "C" fn em_transaction_builder_new(
   linear_fee: RPtr, minimum_utxo_val: RPtr, pool_deposit: RPtr, key_deposit: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {

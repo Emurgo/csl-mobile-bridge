@@ -267,7 +267,7 @@ RCT_EXPORT_METHOD(addressFromBytes:(nonnull NSString *)bytesStr  withResolve:(RC
     [[EMCSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
         RPtr result;
         NSData* data = [NSData fromBase64:bytesStr];
-        return address_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+        return em_address_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:bytesStr andResolve:resolve orReject:reject];
@@ -858,7 +858,7 @@ RCT_EXPORT_METHOD(transactionBuilderNew:(nonnull NSString *)linearFeePtr withMin
         RPtr minUtxoVal = [[params objectAtIndex:1] rPtr];
         RPtr poolDeposit = [[params objectAtIndex:2] rPtr];
         RPtr keyDeposit = [[params objectAtIndex:3] rPtr];
-        return transaction_builder_new(linearFee, minUtxoVal, poolDeposit, keyDeposit, &result, error)
+        return em_transaction_builder_new(linearFee, minUtxoVal, poolDeposit, keyDeposit, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:@[linearFeePtr, minimumUtxoValPtr, poolDepositPtr, keyDepositPtr] andResolve:resolve orReject:reject];
