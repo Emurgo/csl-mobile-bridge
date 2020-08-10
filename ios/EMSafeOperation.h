@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (EMBaseSafeOperation<In, Out> *)new:(Out(^)(In param, NSError** error))cb;
 
-- (SafeOperation<In, Out> *)initWithCallback:(Out(^)(In param, NSError** error))cb;
+- (EMSafeOperation<In, Out> *)initWithCallback:(Out(^)(In param, NSError** error))cb;
 
 @end
 
