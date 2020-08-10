@@ -1,11 +1,11 @@
 //
-//  SafeOperation.m
+//  EMSafeOperation.m
 //
 
-#import "SafeOperation.h"
+#import "EMSafeOperation.h"
 #import "NSString+RPtr.h"
 
-@implementation BaseSafeOperation
+@implementation EMBaseSafeOperation
 
 - (void)exec:(_Nullable id)param andResolve:(RCTPromiseResolveBlock)resolve orReject:(RCTPromiseRejectBlock)reject {
     @try {
@@ -32,19 +32,19 @@
 
 @end
 
-@interface SafeOperation<In, Out> (/* Private */)
+@interface EMSafeOperation<In, Out> (/* Private */)
 
 @property (copy) Out (^callback)(In param, NSError** error);
 
 @end
 
-@implementation SafeOperation
+@implementation EMSafeOperation
 
-+ (BaseSafeOperation *)new:(_Nullable id (^)(_Nullable id param, NSError** error))cb {
-    return [[SafeOperation alloc] initWithCallback: cb];
++ (EMBaseSafeOperation *)new:(_Nullable id (^)(_Nullable id param, NSError** error))cb {
+    return [[EMSafeOperation alloc] initWithCallback: cb];
 }
 
-- (SafeOperation *)initWithCallback:(_Nullable id(^)(_Nullable id param, NSError** error))cb {
+- (EMSafeOperation *)initWithCallback:(_Nullable id(^)(_Nullable id param, NSError** error))cb {
     if (self = [super init]) {
         self.callback = cb;
     }
@@ -57,13 +57,13 @@
 
 @end
 
-@implementation CSafeOperation
+@implementation EMCSafeOperation
 
-+ (BaseSafeOperation *)new:(_Nullable id(^)(_Nullable id param, CharPtr _Nullable* _Nonnull error))cb {
-    return [[CSafeOperation alloc] initWithCallback:cb];
++ (EMBaseSafeOperation *)new:(_Nullable id(^)(_Nullable id param, CharPtr _Nullable* _Nonnull error))cb {
+    return [[EMCSafeOperation alloc] initWithCallback:cb];
 }
 
-- (CSafeOperation *)initWithCallback:(_Nullable id(^)(_Nullable id param, CharPtr _Nullable* _Nonnull error))cb {
+- (EMCSafeOperation *)initWithCallback:(_Nullable id(^)(_Nullable id param, CharPtr _Nullable* _Nonnull error))cb {
     return [super initWithCallback:^_Nullable id(_Nullable id param, NSError **error) {
         CharPtr cError = NULL;
         id result = cb(param, &cError);
@@ -76,20 +76,20 @@
 
 @end
 
-@interface SafeOperationCombined (/* Private */)
+@interface EMSafeOperationCombined (/* Private */)
 
-@property (strong) SafeOperation* op1;
-@property (strong) SafeOperation* op2;
+@property (strong) EMSafeOperation* op1;
+@property (strong) EMSafeOperation* op2;
 
 @end
 
-@implementation SafeOperationCombined
+@implementation EMSafeOperationCombined
 
-+ (BaseSafeOperation* )combine:(SafeOperation *)op1 with:(SafeOperation *)op2 {
++ (EMBaseSafeOperation* )combine:(EMSafeOperation *)op1 with:(EMSafeOperation *)op2 {
     return [[self alloc] init:op1 and: op2];
 }
 
-- (SafeOperationCombined* )init:(SafeOperation *)op1 and:(SafeOperation *)op2 {
+- (EMSafeOperationCombined* )init:(EMSafeOperation *)op1 and:(EMSafeOperation *)op2 {
     if (self = [super init]) {
         self.op1 = op1;
         self.op2 = op2;

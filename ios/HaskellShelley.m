@@ -1,7 +1,7 @@
 #import "HaskellShelley.h"
 #import "NSString+RPtr.h"
 #import "NSData+DataPtr.h"
-#import "SafeOperation.h"
+#import "EMSafeOperation.h"
 #import <react_native_haskell_shelley.h>
 
 

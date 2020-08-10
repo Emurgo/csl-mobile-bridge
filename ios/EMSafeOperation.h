@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface BaseSafeOperation<In, Out> : NSObject
+@interface EMBaseSafeOperation<In, Out> : NSObject
 
 - (Out)exec:(In)param error:(NSError **)error;
 
@@ -32,29 +32,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface SafeOperation<In, Out> : BaseSafeOperation<In, Out>
+@interface EMSafeOperation<In, Out> : EMBaseSafeOperation<In, Out>
 
-+ (BaseSafeOperation<In, Out> *)new:(Out(^)(In param, NSError** error))cb;
++ (EMBaseSafeOperation<In, Out> *)new:(Out(^)(In param, NSError** error))cb;
 
 - (SafeOperation<In, Out> *)initWithCallback:(Out(^)(In param, NSError** error))cb;
 
 @end
 
-@interface CSafeOperation<In, Out> : SafeOperation<In, Out>
+@interface EMCSafeOperation<In, Out> : EMSafeOperation<In, Out>
 
-+ (BaseSafeOperation *)new:(Out(^)(In param, CharPtr _Nullable* _Nonnull error))cb;
++ (EMBaseSafeOperation *)new:(Out(^)(In param, CharPtr _Nullable* _Nonnull error))cb;
 
-- (CSafeOperation *)initWithCallback:(Out(^)(In param, CharPtr _Nullable* _Nonnull error))cb;
+- (EMCSafeOperation *)initWithCallback:(Out(^)(In param, CharPtr _Nullable* _Nonnull error))cb;
 
 @end
 
-@interface SafeOperationCombined<In1, Out1, Out2> : BaseSafeOperation<In1, Out2>
+@interface EMSafeOperationCombined<In1, Out1, Out2> : EMBaseSafeOperation<In1, Out2>
 
-+ (BaseSafeOperation<In1, Out2>* )combine:(BaseSafeOperation<In1, Out1> *)op1
-                                    with:(BaseSafeOperation<Out1, Out2> *)op2;
++ (EMBaseSafeOperation<In1, Out2>* )combine:(EMBaseSafeOperation<In1, Out1> *)op1
+                                    with:(EMBaseSafeOperation<Out1, Out2> *)op2;
 
-- (SafeOperationCombined<In1, Out1, Out2> *)init:(BaseSafeOperation<In1, Out1> *)op1
-                                                and:(BaseSafeOperation<Out1, Out2> *)op2;
+- (EMSafeOperationCombined<In1, Out1, Out2> *)init:(EMBaseSafeOperation<In1, Out1> *)op1
+                                                and:(EMBaseSafeOperation<Out1, Out2> *)op2;
 
 @end
 

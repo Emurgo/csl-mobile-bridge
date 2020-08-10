@@ -11,7 +11,7 @@
 		E92DC13D24AB45A700800B61 /* HaskellShelley.m in Sources */ = {isa = PBXBuildFile; fileRef = E92DC13C24AB45A700800B61 /* HaskellShelley.m */; };
 		E92DC14424AB45B300800B61 /* NSString+RPtr.m in Sources */ = {isa = PBXBuildFile; fileRef = E92DC13E24AB45B200800B61 /* NSString+RPtr.m */; };
 		E92DC14524AB45B300800B61 /* NSData+DataPtr.m in Sources */ = {isa = PBXBuildFile; fileRef = E92DC13F24AB45B200800B61 /* NSData+DataPtr.m */; };
-		E92DC14624AB45B300800B61 /* SafeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E92DC14024AB45B300800B61 /* SafeOperation.m */; };
+		E92DC14624AB45B300800B61 /* EMSafeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E92DC14024AB45B300800B61 /* EMSafeOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,9 +35,9 @@
 		E92DC13C24AB45A700800B61 /* HaskellShelley.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HaskellShelley.m; sourceTree = "<group>"; };
 		E92DC13E24AB45B200800B61 /* NSString+RPtr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RPtr.m"; sourceTree = "<group>"; };
 		E92DC13F24AB45B200800B61 /* NSData+DataPtr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+DataPtr.m"; sourceTree = "<group>"; };
-		E92DC14024AB45B300800B61 /* SafeOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SafeOperation.m; sourceTree = "<group>"; };
+		E92DC14024AB45B300800B61 /* EMSafeOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMSafeOperation.m; sourceTree = "<group>"; };
 		E92DC14124AB45B300800B61 /* NSData+DataPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+DataPtr.h"; sourceTree = "<group>"; };
-		E92DC14224AB45B300800B61 /* SafeOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SafeOperation.h; sourceTree = "<group>"; };
+		E92DC14224AB45B300800B61 /* EMSafeOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMSafeOperation.h; sourceTree = "<group>"; };
 		E92DC14324AB45B300800B61 /* NSString+RPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RPtr.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,8 +76,8 @@
 				E92DC13F24AB45B200800B61 /* NSData+DataPtr.m */,
 				E92DC14324AB45B300800B61 /* NSString+RPtr.h */,
 				E92DC13E24AB45B200800B61 /* NSString+RPtr.m */,
-				E92DC14224AB45B300800B61 /* SafeOperation.h */,
-				E92DC14024AB45B300800B61 /* SafeOperation.m */,
+				E92DC14224AB45B300800B61 /* EMSafeOperation.h */,
+				E92DC14024AB45B300800B61 /* EMSafeOperation.m */,
 				E92DC13B24AB45A700800B61 /* HaskellShelley.h */,
 				E92DC13C24AB45A700800B61 /* HaskellShelley.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
@@ -180,7 +180,7 @@
 			files = (
 				E92DC13D24AB45A700800B61 /* HaskellShelley.m in Sources */,
 				E92DC14524AB45B300800B61 /* NSData+DataPtr.m in Sources */,
-				E92DC14624AB45B300800B61 /* SafeOperation.m in Sources */,
+				E92DC14624AB45B300800B61 /* EMSafeOperation.m in Sources */,
 				E92DC14424AB45B300800B61 /* NSString+RPtr.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
