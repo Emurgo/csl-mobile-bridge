@@ -9,10 +9,11 @@ cbindgen = "0.14.1"
 
 [dependencies]
 cardano-serialization-lib = { git = "https://github.com/Emurgo/cardano-serialization-lib.git" }
-wasm-bindgen = { version = "0.2" }
 
 [target.'cfg(target_os="android")'.dependencies]
 jni = "0.13.1"
+# maybe just keep in Android
+# wasm-bindgen = { version = "0.2" }
 
 [lib]
 name = "react_native_haskell_shelley"

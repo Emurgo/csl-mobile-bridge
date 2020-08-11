@@ -27,17 +27,23 @@ fn string_from_any_err(err: Box<dyn Any>) -> String {
   }
 }
 
-impl<T> ToResult<T> for std::result::Result<T, Box<dyn Any + Send + 'static>> {
+impl<T, E: 'static> ToResult<T> for std::result::Result<T, E> {
   fn into_result(self) -> Result<T> {
-    self.map_err(|err| string_from_any_err(err))
+    self.map_err(|err| string_from_any_err(Box::new(err)))
   }
 }
 
-impl<T> ToResult<T> for std::result::Result<T, Box<dyn Any + 'static>> {
-  fn into_result(self) -> Result<T> {
-    self.map_err(string_from_any_err)
-  }
-}
+// impl<T> ToResult<T> for std::result::Result<T, Box<dyn Any + Send + 'static>> {
+//   fn into_result(self) -> Result<T> {
+//     self.map_err(|err| string_from_any_err(err))
+//   }
+// }
+//
+// impl<T> ToResult<T> for std::result::Result<T, Box<dyn Any + 'static>> {
+//   fn into_result(self) -> Result<T> {
+//     self.map_err(string_from_any_err)
+//   }
+// }
 
 #[allow(dead_code)]
 pub fn handle_exception<F: FnOnce() -> R + panic::UnwindSafe, R>(func: F) -> Result<R> {

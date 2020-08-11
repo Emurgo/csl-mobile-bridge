@@ -615,7 +615,6 @@ dependencies = [
  "cardano-serialization-lib 1.0.2 (git+https://github.com/Emurgo/cardano-serialization-lib.git)",
  "cbindgen 0.14.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "jni 0.13.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "wasm-bindgen 0.2.63 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
