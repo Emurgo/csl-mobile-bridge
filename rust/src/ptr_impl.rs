@@ -14,6 +14,7 @@ impl RPtrRepresentable for Bip32PublicKey {}
 impl RPtrRepresentable for BootstrapWitness {}
 impl RPtrRepresentable for BootstrapWitnesses {}
 impl RPtrRepresentable for ByronAddress {}
+impl RPtrRepresentable for Certificate {}
 impl RPtrRepresentable for Ed25519KeyHash {}
 impl RPtrRepresentable for LinearFee {}
 impl RPtrRepresentable for PrivateKey {}

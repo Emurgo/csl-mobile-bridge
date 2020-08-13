@@ -537,6 +537,35 @@ export class StakeRegistration extends Ptr {
   }
 }
 
+export class Certificate extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.certificateToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Certificate>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.certificateFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  /**
+  * @param {StakeRegistration} stakeRegistration
+  * @returns {Promise<Certificate>}
+  */
+  static async new_stake_registration(stakeRegistration) {
+    const stakeRegistrationPtr = Ptr._assertClass(stakeRegistration, StakeRegistration);
+    const ret = await HaskellShelley.certificateNewStakeRegistration(stakeRegistrationPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+}
+
 export class BaseAddress extends Ptr {
   /**
   * @param {number} network

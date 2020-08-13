@@ -435,7 +435,7 @@ RCT_EXPORT_METHOD(stakeCredentialKind:(nonnull NSString *)stakeCredentialPtr wit
 
 RCT_EXPORT_METHOD(stakeCredentialToBytes:(nonnull NSString *)stakeCredentialPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
-    [[CSafeOperation new:^NSString*(NSString* txHashPtr, CharPtr* error) {
+    [[CSafeOperation new:^NSString*(NSString* stakeCredentialPtr, CharPtr* error) {
         DataPtr result;
         RPtr stakeCredential = [stakeCredentialPtr rPtr];
         return stake_credential_to_bytes(stakeCredential, &result, error)
@@ -482,7 +482,7 @@ RCT_EXPORT_METHOD(stakeRegistrationStakeCredential:(nonnull NSString *)ptr  with
 
 RCT_EXPORT_METHOD(stakeRegistrationToBytes:(nonnull NSString *)stakeRegistrationPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
-    [[CSafeOperation new:^NSString*(NSString* txHashPtr, CharPtr* error) {
+    [[CSafeOperation new:^NSString*(NSString* stakeRegistrationPtr, CharPtr* error) {
         DataPtr result;
         RPtr stakeRegistration = [stakeRegistrationPtr rPtr];
         return stake_registration_to_bytes(stakeRegistration, &result, error)
@@ -497,6 +497,42 @@ RCT_EXPORT_METHOD(stakeRegistrationFromBytes:(nonnull NSString *)bytesStr  withR
         RPtr result;
         NSData* data = [NSData fromBase64:bytesStr];
         return stake_registration_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
+// Certificate
+
+RCT_EXPORT_METHOD(certificateNewStakeRegistration:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr stakeRegistration = [ptr rPtr];
+        return certificate_new_stake_registration(stakeRegistration, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+
+RCT_EXPORT_METHOD(certificateToBytes:(nonnull NSString *)certificatePtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* certificatePtr, CharPtr* error) {
+        DataPtr result;
+        RPtr certificate = [certificatePtr rPtr];
+        return certificate_to_bytes(certificate, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:certificatePtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(certificateFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return certificate_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:bytesStr andResolve:resolve orReject:reject];
@@ -818,7 +854,7 @@ RCT_EXPORT_METHOD(transactionWitnessSetSetBootstraps:(nonnull NSString *)witness
 
 RCT_EXPORT_METHOD(transactionBodyToBytes:(nonnull NSString *)txBodyPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
-    [[CSafeOperation new:^NSString*(NSString* txHashPtr, CharPtr* error) {
+    [[CSafeOperation new:^NSString*(NSString* txBodyPtr, CharPtr* error) {
         DataPtr result;
         RPtr txBody = [txBodyPtr rPtr];
         return transaction_body_to_bytes(txBody, &result, error)
@@ -878,7 +914,7 @@ RCT_EXPORT_METHOD(transactionNewWithMetadata:(nonnull NSString *)bodyPtr withWit
 
 RCT_EXPORT_METHOD(transactionToBytes:(nonnull NSString *)txPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
-    [[CSafeOperation new:^NSString*(NSString* txHashPtr, CharPtr* error) {
+    [[CSafeOperation new:^NSString*(NSString* txPtr, CharPtr* error) {
         DataPtr result;
         RPtr tx = [txPtr rPtr];
         return transaction_to_bytes(tx, &result, error)

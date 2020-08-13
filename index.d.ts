@@ -334,6 +334,25 @@ export class StakeRegistration extends Ptr {
   static new(stakeCredential): Promise<StakeRegistration>
 }
 
+export class Certificate extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Certificate>}
+  */
+  static from_bytes(bytes): Promise<Certificate>
+
+  /**
+  * @param {StakeRegistration} stakeRegistration
+  * @returns {Promise<Certificate>}
+  */
+  static new_stake_registration(stakeRegistration): Promise<Certificate>
+}
+
 
 export class BaseAddress extends Ptr {
 

@@ -20,6 +20,7 @@ import {
   BootstrapWitness,
   BootstrapWitnesses,
   ByronAddress,
+  Certificate,
   Coin,
   Ed25519KeyHash,
   LinearFee,
@@ -232,6 +233,28 @@ export default class App extends Component<{}> {
         ).toString('hex') ===
           Buffer.from(await stakeCred.to_bytes()).toString('hex'),
         'StakeRegistration:: new() -> stake_credential()',
+      )
+      const stakeRegHex = Buffer.from(
+        await stakeReg.to_bytes(),
+        'hex',
+      ).toString('hex')
+      const _stakeReg = await StakeRegistration.from_bytes(
+        Buffer.from(stakeRegHex, 'hex'),
+      )
+      assert(
+        Buffer.from(await _stakeReg.to_bytes(), 'hex').toString('hex') ===
+          stakeRegHex,
+        'StakeRegistration::to/from_bytes()',
+      )
+
+      // ------------------------------------------------
+      // --------------- Certificate --------------
+      const cert = await Certificate.new_stake_registration(stakeReg)
+      const certHex = Buffer.from(await cert.to_bytes(), 'hex').toString('hex')
+      const _cert = await Certificate.from_bytes(Buffer.from(certHex, 'hex'))
+      assert(
+        Buffer.from(await _cert.to_bytes(), 'hex').toString('hex') === certHex,
+        'Certificate::new_stake_registration()',
       )
 
       // ------------------------------------------------
@@ -461,6 +484,7 @@ export default class App extends Component<{}> {
       console.log('paymentCred', paymentCred)
       console.log('stakeCred', stakeCred)
       console.log('stakeReg', stakeReg)
+      console.log('certificate', cert)
       console.log('baseAddr', baseAddr)
       console.log('unitInterval', unitInterval)
       console.log('txInput', txInput)
