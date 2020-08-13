@@ -8,6 +8,7 @@ mod ed25519_key_hash;
 mod linear_fee;
 mod primitive;
 mod ptr_j;
+mod public_key;
 mod result;
 mod stake_credential;
 mod string;

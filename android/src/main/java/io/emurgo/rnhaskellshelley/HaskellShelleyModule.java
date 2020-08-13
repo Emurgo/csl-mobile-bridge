@@ -82,78 +82,126 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // PublicKey
+
+    @ReactMethod
+    public final void publicKeyFromBech32(String bech32, Promise promise) {
+        Native.I.publicKeyFromBech32(bech32)
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void publicKeyToBech32(String pubPtr, Promise promise) {
+        Native.I
+                .publicKeyToBech32(new RPtr(pubPtr))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void publicKeyFromBytes(String bytes, Promise promise) {
+        Native.I
+                .publicKeyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void publicKeyAsBytes(String pubPtr, Promise promise) {
+        Native.I
+                .publicKeyAsBytes(new RPtr(pubPtr))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    // @ReactMethod
+    // public final void publicKeyVerify(String pubPtr, String data, String signature, Promise promise) {
+    //     Native.I
+    //             .publicKeyVerify(new RPtr(pubPtr), Base64.decode(data, Base64.DEFAULT), new RPtr(signature))
+    //             .pour(promise);
+    // }
+
+    @ReactMethod
+    public final void publicKeyHash(String pubPtr, Promise promise) {
+        Native.I
+                .publicKeyHash(new RPtr(pubPtr))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+
     // Bip32PrivateKey
 
-@ReactMethod
-public final void bip32PrivateKeyDerive(String bip32PrivateKey, Double index, Promise promise) {
-    Native.I
-            .bip32PrivateKeyDerive(new RPtr(bip32PrivateKey), index.longValue())
-            .map(RPtr::toJs)
-            .pour(promise);
-}
+    @ReactMethod
+    public final void bip32PrivateKeyDerive(String bip32PrivateKey, Double index, Promise promise) {
+        Native.I
+                .bip32PrivateKeyDerive(new RPtr(bip32PrivateKey), index.longValue())
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
 
-@ReactMethod
-public final void bip32PrivateKeyGenerateEd25519Bip32(Promise promise) {
-    Native.I
-            .bip32PrivateKeyGenerateEd25519Bip32()
-            .map(RPtr::toJs)
-            .pour(promise);
-}
+    @ReactMethod
+    public final void bip32PrivateKeyGenerateEd25519Bip32(Promise promise) {
+        Native.I
+                .bip32PrivateKeyGenerateEd25519Bip32()
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
 
-@ReactMethod
-public final void bip32PrivateKeyToRawKey(String bip32PrivateKey, Promise promise) {
-    Native.I
-            .bip32PrivateKeyToRawKey(new RPtr(bip32PrivateKey))
-            .map(RPtr::toJs)
-            .pour(promise);
-}
+    @ReactMethod
+    public final void bip32PrivateKeyToRawKey(String bip32PrivateKey, Promise promise) {
+        Native.I
+                .bip32PrivateKeyToRawKey(new RPtr(bip32PrivateKey))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
 
-@ReactMethod
-public final void bip32PrivateKeyToPublic(String bip32PrivateKey, Promise promise) {
-    Native.I
-            .bip32PrivateKeyToPublic(new RPtr(bip32PrivateKey))
-            .map(RPtr::toJs)
-            .pour(promise);
-}
+    @ReactMethod
+    public final void bip32PrivateKeyToPublic(String bip32PrivateKey, Promise promise) {
+        Native.I
+                .bip32PrivateKeyToPublic(new RPtr(bip32PrivateKey))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
 
-@ReactMethod
-public final void bip32PrivateKeyFromBytes(String bytes, Promise promise) {
-    Native.I
-            .bip32PrivateKeyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
-            .map(RPtr::toJs)
-            .pour(promise);
-}
+    @ReactMethod
+    public final void bip32PrivateKeyFromBytes(String bytes, Promise promise) {
+        Native.I
+                .bip32PrivateKeyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
 
-@ReactMethod
-public final void bip32PrivateKeyAsBytes(String bip32PrivateKey, Promise promise) {
-    Native.I
-            .bip32PrivateKeyAsBytes(new RPtr(bip32PrivateKey))
-            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
-            .pour(promise);
-}
+    @ReactMethod
+    public final void bip32PrivateKeyAsBytes(String bip32PrivateKey, Promise promise) {
+        Native.I
+                .bip32PrivateKeyAsBytes(new RPtr(bip32PrivateKey))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
 
-@ReactMethod
-public final void bip32PrivateKeyFromBech32(String bech32Str, Promise promise) {
-    Native.I
-            .bip32PrivateKeyFromBech32(bech32Str)
-            .map(RPtr::toJs)
-            .pour(promise);
-}
+    @ReactMethod
+    public final void bip32PrivateKeyFromBech32(String bech32Str, Promise promise) {
+        Native.I
+                .bip32PrivateKeyFromBech32(bech32Str)
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
 
-@ReactMethod
-public final void bip32PrivateKeyToBech32(String bip32PrivateKey, Promise promise) {
-    Native.I
-            .bip32PrivateKeyToBech32(new RPtr(bip32PrivateKey))
-            .pour(promise);
-}
+    @ReactMethod
+    public final void bip32PrivateKeyToBech32(String bip32PrivateKey, Promise promise) {
+        Native.I
+                .bip32PrivateKeyToBech32(new RPtr(bip32PrivateKey))
+                .pour(promise);
+    }
 
-@ReactMethod
-public final void bip32PrivateKeyFromBip39Entropy(String entropy, String password, Promise promise) {
-    Native.I
-            .bip32PrivateKeyFromBip39Entropy(Base64.decode(entropy, Base64.DEFAULT), Base64.decode(password, Base64.DEFAULT))
-            .map(RPtr::toJs)
-            .pour(promise);
-}
+    @ReactMethod
+    public final void bip32PrivateKeyFromBip39Entropy(String entropy, String password, Promise promise) {
+        Native.I
+                .bip32PrivateKeyFromBip39Entropy(Base64.decode(entropy, Base64.DEFAULT), Base64.decode(password, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
 
     // ByronAddress
 

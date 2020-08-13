@@ -8,6 +8,8 @@
  * https://github.com/facebook/react-native
  */
 
+/* eslint-disable  max-len */
+
 import React, {Component} from 'react'
 import {StyleSheet, Text, View} from 'react-native'
 import {
@@ -24,6 +26,7 @@ import {
   hash_transaction,
   make_vkey_witness,
   make_icarus_bootstrap_witness,
+  PublicKey,
   StakeCredential,
   Transaction,
   TransactionBuilder,
@@ -91,6 +94,23 @@ export default class App extends Component<{}> {
       )
 
       // ------------------------------------------------
+      // ------------------ PublicKey -------------------
+      const pkeyBech32 =
+        'ed25519_pk1dgaagyh470y66p899txcl3r0jaeaxu6yd7z2dxyk55qcycdml8gszkxze2'
+      const publicKey = await PublicKey.from_bech32(pkeyBech32)
+      assert(
+        (await publicKey.to_bech32()) === pkeyBech32,
+        'PublicKey.to_bech32() should match original input value',
+      )
+      assert(
+        (await publicKey.as_bytes()).length === 32,
+        'PublicKey.as_bytes() should be 32 bytes length',
+      )
+      assert(
+        (await (await publicKey.hash()).to_bytes()).length,
+        'PublicKey.hash()',
+      )
+      // ------------------------------------------------
       // --------------- Bip32PrivateKey ----------------
       const xprvBytes =
         '70afd5ff1f7f551c481b7e3f3541f7c63f5f6bcb293af92565af3deea0bcd648' +
@@ -119,12 +139,10 @@ export default class App extends Component<{}> {
         'Address.to_bytes should match original input address',
       )
       const addrFromBech32 = await Address.from_bech32(
-        /* eslint-disable-next-line max-len */
         'addr1qqqqpvpu82s99aguppk9f02qt84d95hyy6kgn7jt8njpe0cqqzcrcw4q2t63czrv2j75qk026tfwgf4v38ayk08yrjls4jecre',
       )
       assert(
         (await addrFromBech32.to_bech32()) ===
-          /* eslint-disable-next-line max-len */
           'addr1qqqqpvpu82s99aguppk9f02qt84d95hyy6kgn7jt8njpe0cqqzcrcw4q2t63czrv2j75qk026tfwgf4v38ayk08yrjls4jecre',
         'Address.to_bech32',
       )

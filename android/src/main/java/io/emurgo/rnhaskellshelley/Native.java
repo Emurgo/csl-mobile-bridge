@@ -26,6 +26,14 @@ final class Native {
     public final native Result<RPtr> bigNumCheckedAdd(RPtr bigNum, RPtr other);
     public final native Result<RPtr> bigNumCheckedSub(RPtr bigNum, RPtr other);
 
+    // PublicKey
+    public final native Result<RPtr> publicKeyFromBech32(String bech32);
+    public final native Result<String> publicKeyToBech32(RPtr pubKey);
+    public final native Result<RPtr> publicKeyFromBytes(byte[] bytes);
+    public final native Result<byte[]> publicKeyAsBytes(RPtr pubKey);
+    // public final native Result<RPtr> publicKeyVerify(RPtr pubKey, byte[] bytes, RPtr signature);
+    public final native Result<RPtr> publicKeyHash(RPtr pubKey);
+
     // Bip32PrivateKey
     public final native Result<RPtr> bip32PrivateKeyDerive(RPtr bip32PrivateKey, long index);
     public final native Result<RPtr> bip32PrivateKeyGenerateEd25519Bip32();

@@ -17,6 +17,7 @@ impl RPtrRepresentable for ByronAddress {}
 impl RPtrRepresentable for Ed25519KeyHash {}
 impl RPtrRepresentable for LinearFee {}
 impl RPtrRepresentable for PrivateKey {}
+impl RPtrRepresentable for PublicKey {}
 impl RPtrRepresentable for StakeCredential {}
 impl RPtrRepresentable for Transaction {}
 impl RPtrRepresentable for TransactionBody {}
