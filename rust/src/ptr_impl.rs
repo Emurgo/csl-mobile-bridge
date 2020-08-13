@@ -19,6 +19,7 @@ impl RPtrRepresentable for LinearFee {}
 impl RPtrRepresentable for PrivateKey {}
 impl RPtrRepresentable for PublicKey {}
 impl RPtrRepresentable for StakeCredential {}
+impl RPtrRepresentable for StakeRegistration {}
 impl RPtrRepresentable for Transaction {}
 impl RPtrRepresentable for TransactionBody {}
 impl RPtrRepresentable for TransactionBuilder {}

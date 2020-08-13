@@ -353,6 +353,40 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // StakeRegistration
+
+    @ReactMethod
+    public final void stakeRegistrationNew(String stakeCredential, Promise promise) {
+        Native.I
+                .stakeRegistrationNew(new RPtr(stakeCredential))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeRegistrationStakeCredential(String stakeRegistration, Promise promise) {
+        Native.I
+                .stakeRegistrationStakeCredential(new RPtr(stakeRegistration))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeRegistrationToBytes(String stakeRegistration, Promise promise) {
+        Native.I
+                .stakeRegistrationToBytes(new RPtr(stakeRegistration))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeRegistrationFromBytes(String bytes, Promise promise) {
+        Native.I
+                .stakeRegistrationFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // BaseAddress
 
     @ReactMethod

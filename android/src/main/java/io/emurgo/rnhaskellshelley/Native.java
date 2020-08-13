@@ -73,6 +73,13 @@ final class Native {
     public final native Result<byte[]> stakeCredentialToBytes(RPtr stakeCredential);
     public final native Result<RPtr> stakeCredentialFromBytes(byte[] bytes);
 
+    // StakeRegistration
+    public final native Result<RPtr> stakeRegistrationNew(RPtr stakeCredential);
+    public final native Result<RPtr> stakeRegistrationStakeCredential(RPtr stakeRegistration);
+    public final native Result<byte[]> stakeRegistrationToBytes(RPtr stakeRegistration);
+    public final native Result<RPtr> stakeRegistrationFromBytes(byte[] bytes);
+
+
     // BaseAddress
     public final native Result<RPtr> baseAddressNew(int network, RPtr payment, RPtr stake);
     public final native Result<RPtr> baseAddressPaymentCred(RPtr baseAddress);

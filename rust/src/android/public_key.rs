@@ -1,5 +1,5 @@
 use jni::objects::{JObject, JString};
-use jni::sys::{jobject, jbyteArray, jboolean};
+use jni::sys::{jobject, jbyteArray};
 use jni::JNIEnv;
 
 use super::ptr_j::*;

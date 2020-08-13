@@ -28,6 +28,7 @@ import {
   make_icarus_bootstrap_witness,
   PublicKey,
   StakeCredential,
+  StakeRegistration,
   Transaction,
   TransactionBuilder,
   TransactionBody,
@@ -220,6 +221,17 @@ export default class App extends Component<{}> {
           await (await stakeCredFromBytes.to_keyhash()).to_bytes(),
         ).toString('hex') === addrHex,
         'StakeCredential -> to_bytes -> from_bytes -> to_keyhash -> should match',
+      )
+
+      // ------------------------------------------------
+      // --------------- StakeRegistration --------------
+      const stakeReg = await StakeRegistration.new(stakeCred)
+      assert(
+        Buffer.from(
+          await (await stakeReg.stake_credential()).to_bytes(),
+        ).toString('hex') ===
+          Buffer.from(await stakeCred.to_bytes()).toString('hex'),
+        'StakeRegistration:: new() -> stake_credential()',
       )
 
       // ------------------------------------------------
@@ -440,6 +452,7 @@ export default class App extends Component<{}> {
         'TransactionBuilder::get_fee_or_calc()',
       )
 
+      console.log('publicKey', publicKey)
       console.log('bip32PrivateKey', bip32PrivateKey)
       console.log('address', address)
       console.log('ed25519KeyHash', ed25519KeyHash)
@@ -447,6 +460,7 @@ export default class App extends Component<{}> {
       console.log('pymntAddrKeyHash', pymntAddrKeyHash)
       console.log('paymentCred', paymentCred)
       console.log('stakeCred', stakeCred)
+      console.log('stakeReg', stakeReg)
       console.log('baseAddr', baseAddr)
       console.log('unitInterval', unitInterval)
       console.log('txInput', txInput)

@@ -11,6 +11,7 @@ mod ptr_j;
 mod public_key;
 mod result;
 mod stake_credential;
+mod stake_registration;
 mod string;
 mod transaction;
 mod transaction_body;
