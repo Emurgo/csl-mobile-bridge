@@ -5,6 +5,7 @@ mod bip32_private_key;
 mod byron_address;
 mod bootstrap_witnesses;
 mod certificate;
+mod certificates;
 mod data;
 mod ed25519_key_hash;
 mod linear_fee;

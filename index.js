@@ -566,6 +566,49 @@ export class Certificate extends Ptr {
   }
 }
 
+export class Certificates extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.certificatesToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Certificates>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.certificatesFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, Certificates);
+  }
+
+  /**
+  * @returns {Promise<Certificates>}
+  */
+  static async new() {
+      const ret = await HaskellShelley.certificatesNew();
+      return Ptr._wrap(ret, Certificates);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.certificatesLen(this.ptr);
+  }
+
+  /**
+  * @param {Certificate} item
+  * @returns {Promise<void>}
+  */
+  async add(item) {
+    const itemPtr = Ptr._assertClass(item, Certificate);
+    return HaskellShelley.certificatesAdd(this.ptr, itemPtr);
+  }
+}
+
 export class BaseAddress extends Ptr {
   /**
   * @param {number} network
@@ -749,29 +792,29 @@ export class LinearFee extends Ptr {
 export class Vkeywitness extends Ptr {}
 
 export class Vkeywitnesses extends Ptr {
-    /**
-    * @returns {Promise<Vkeywitnesses>}
-    */
-    static async new() {
-        const ret = await HaskellShelley.vkeywitnessesNew();
-        return Ptr._wrap(ret, Vkeywitnesses);
-    }
+  /**
+  * @returns {Promise<Vkeywitnesses>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.vkeywitnessesNew();
+    return Ptr._wrap(ret, Vkeywitnesses);
+  }
 
-    /**
-    * @returns {Promise<number>}
-    */
-    async len() {
-      return HaskellShelley.vkeywitnessesLen(this.ptr);
-    }
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.vkeywitnessesLen(this.ptr);
+  }
 
-    /**
-    * @param {Vkwitness} item
-    * @returns {Promise<void>}
-    */
-    async add(item) {
-      const itemPtr = Ptr._assertClass(item, Vkwitness);
-      return HaskellShelley.vkeywitnessesAdd(this.ptr, itemPtr);
-    }
+  /**
+  * @param {Vkwitness} item
+  * @returns {Promise<void>}
+  */
+  async add(item) {
+    const itemPtr = Ptr._assertClass(item, Vkwitness);
+    return HaskellShelley.vkeywitnessesAdd(this.ptr, itemPtr);
+  }
 }
 
 // TODO

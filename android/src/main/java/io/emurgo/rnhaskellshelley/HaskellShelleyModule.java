@@ -379,6 +379,15 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void stakeRegistrationFromBytes(String bytes, Promise promise) {
+        Native.I
+                .stakeRegistrationFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+
     // Certificate
 
     @ReactMethod
@@ -402,6 +411,47 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
         Native.I
                 .certificateFromBytes(Base64.decode(bytes, Base64.DEFAULT))
                 .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    // Certificates
+
+    @ReactMethod
+    public final void certificatesToBytes(String certificates, Promise promise) {
+        Native.I
+                .certificatesToBytes(new RPtr(certificates))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificatesFromBytes(String bytes, Promise promise) {
+        Native.I
+                .certificatesFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificatesNew(Promise promise) {
+        Native.I
+                .certificatesNew()
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificatesLen(String certificates, Promise promise) {
+        Native.I
+                .vkeywitnessesLen(new RPtr(certificates))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificatesAdd(String certificates, String item, Promise promise) {
+        Native.I
+                .certificatesAdd(new RPtr(certificates), new RPtr(item))
                 .pour(promise);
     }
 

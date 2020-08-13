@@ -353,6 +353,35 @@ export class Certificate extends Ptr {
   static new_stake_registration(stakeRegistration): Promise<Certificate>
 }
 
+export class Certificates extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Certificates>}
+  */
+  static from_bytes(bytes): Promise<Certificates>
+
+  /**
+  * @returns {Promise<Certificates>}
+  */
+  static new(): Promise<Certificates>
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len(): Promise<number>
+
+  /**
+  * @param {Certificate} item
+  * @returns {Promise<void>}
+  */
+  add(item: Certificate): Promise<void>
+}
+
 
 export class BaseAddress extends Ptr {
 

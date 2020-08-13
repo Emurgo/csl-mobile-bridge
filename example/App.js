@@ -21,6 +21,7 @@ import {
   BootstrapWitnesses,
   ByronAddress,
   Certificate,
+  Certificates,
   Coin,
   Ed25519KeyHash,
   LinearFee,
@@ -248,7 +249,7 @@ export default class App extends Component<{}> {
       )
 
       // ------------------------------------------------
-      // --------------- Certificate --------------
+      // ------------------ Certificate -----------------
       const cert = await Certificate.new_stake_registration(stakeReg)
       const certHex = Buffer.from(await cert.to_bytes(), 'hex').toString('hex')
       const _cert = await Certificate.from_bytes(Buffer.from(certHex, 'hex'))
@@ -256,6 +257,14 @@ export default class App extends Component<{}> {
         Buffer.from(await _cert.to_bytes(), 'hex').toString('hex') === certHex,
         'Certificate::new_stake_registration()',
       )
+
+      // ------------------------------------------------
+      // ----------------- Certificates -----------------
+      const certs = await Certificates.new()
+      await certs.add(cert)
+      // TODO: bug
+      assert((await certs.len()) === 0, 'Certificates.len() should return 0')
+      assert((await certs.len()) === 1, 'Certificates.len() should return 1')
 
       // ------------------------------------------------
       // ----------------- BaseAddress ------------------
