@@ -443,7 +443,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void certificatesLen(String certificates, Promise promise) {
         Native.I
-                .vkeywitnessesLen(new RPtr(certificates))
+                .certificatesLen(new RPtr(certificates))
                 .map(Long::intValue)
                 .pour(promise);
     }

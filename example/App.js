@@ -261,9 +261,8 @@ export default class App extends Component<{}> {
       // ------------------------------------------------
       // ----------------- Certificates -----------------
       const certs = await Certificates.new()
-      await certs.add(cert)
-      // TODO: bug
       assert((await certs.len()) === 0, 'Certificates.len() should return 0')
+      await certs.add(cert)
       assert((await certs.len()) === 1, 'Certificates.len() should return 1')
 
       // ------------------------------------------------

@@ -577,7 +577,7 @@ RCT_EXPORT_METHOD(certificatesLen:(nonnull NSString *)certificatesPtr withResolv
     [[CSafeOperation new:^NSNumber*(NSString* certificatesPtr, CharPtr* error) {
         uintptr_t result;
         RPtr certificates = [certificatesPtr rPtr];
-        return vkeywitnesses_len(certificates, &result, error)
+        return certificates_len(certificates, &result, error)
             ? [NSNumber numberWithUnsignedLong:result]
             : nil;
     }] exec:certificatesPtr andResolve:resolve orReject:reject];
