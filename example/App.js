@@ -381,17 +381,26 @@ export default class App extends Component<{}> {
         bootstrapWitness instanceof BootstrapWitness,
         'make_icarus_bootstrap_witness should return instance of BootstrapWitness',
       )
+      assert(
+        bootstrapWitness.ptr !== undefined,
+        'make_icarus_bootstrap_witness:: returns non-undefined',
+      )
       const sk = await bip32PrivateKey.to_raw_key()
       const vkeywitness = await make_vkey_witness(txHash, sk)
       assert(
         vkeywitness instanceof Vkeywitness,
         'make_vkey_witness should return instance of Vkeywitness',
       )
+      assert(
+        vkeywitness.ptr !== undefined,
+        'make_vkey_witness:: returns non-undefined',
+      )
       const hash = await hash_transaction(txBody)
       assert(
         hash instanceof TransactionHash,
         'hash_transaction should return instance of TransactionHash',
       )
+      assert(hash.ptr !== undefined, 'hash_transaction:: returns non-undefined')
 
       // ------------------------------------------------
       // ----------------- Transaction ------------------

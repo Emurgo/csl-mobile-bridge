@@ -18,8 +18,9 @@ RCT_EXPORT_METHOD(makeIcarusBootstrapWitness:(nonnull NSString *)txBodyHashPtr w
         RPtr addr = [[params objectAtIndex:1] rPtr];
         RPtr key = [[params objectAtIndex:2] rPtr];
         RPtr result;
-        utils_make_icarus_bootstrap_witness(txBodyHash, addr, key, &result, error);
-        return nil;
+        return utils_make_icarus_bootstrap_witness(txBodyHash, addr, key, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
     }] exec:@[txBodyHashPtr, addrPtr, keyPtr] andResolve:resolve orReject:reject];
 }
 
@@ -29,18 +30,20 @@ RCT_EXPORT_METHOD(makeVkeyWitness:(nonnull NSString *)txBodyHashPtr withSk:(nonn
         RPtr txBodyHash = [[params objectAtIndex:0] rPtr];
         RPtr sk = [[params objectAtIndex:1] rPtr];
         RPtr result;
-        utils_make_vkey_witness(txBodyHash, sk, &result, error);
-        return nil;
+        return utils_make_vkey_witness(txBodyHash, sk, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
     }] exec:@[txBodyHashPtr, skPtr] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(hashTransaction:(nonnull NSString *)txBodyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
-    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+    [[CSafeOperation new:^NSString*(NSString* txBodyPtr, CharPtr* error) {
         RPtr txBody = [txBodyPtr rPtr];
         RPtr result;
-        utils_hash_transaction(txBody, &result, error);
-        return nil;
+        return utils_hash_transaction(txBody, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
     }] exec:txBodyPtr andResolve:resolve orReject:reject];
 }
 
