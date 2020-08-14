@@ -8,6 +8,8 @@
  * https://github.com/facebook/react-native
  */
 
+/* eslint-disable  max-len */
+
 import React, {Component} from 'react'
 import {StyleSheet, Text, View} from 'react-native'
 import {
@@ -18,13 +20,17 @@ import {
   BootstrapWitness,
   BootstrapWitnesses,
   ByronAddress,
+  Certificate,
+  Certificates,
   Coin,
   Ed25519KeyHash,
   LinearFee,
   hash_transaction,
   make_vkey_witness,
   make_icarus_bootstrap_witness,
+  PublicKey,
   StakeCredential,
+  StakeRegistration,
   Transaction,
   TransactionBuilder,
   TransactionBody,
@@ -91,6 +97,23 @@ export default class App extends Component<{}> {
       )
 
       // ------------------------------------------------
+      // ------------------ PublicKey -------------------
+      const pkeyBech32 =
+        'ed25519_pk1dgaagyh470y66p899txcl3r0jaeaxu6yd7z2dxyk55qcycdml8gszkxze2'
+      const publicKey = await PublicKey.from_bech32(pkeyBech32)
+      assert(
+        (await publicKey.to_bech32()) === pkeyBech32,
+        'PublicKey.to_bech32() should match original input value',
+      )
+      assert(
+        (await publicKey.as_bytes()).length === 32,
+        'PublicKey.as_bytes() should be 32 bytes length',
+      )
+      assert(
+        (await (await publicKey.hash()).to_bytes()).length,
+        'PublicKey.hash()',
+      )
+      // ------------------------------------------------
       // --------------- Bip32PrivateKey ----------------
       const xprvBytes =
         '70afd5ff1f7f551c481b7e3f3541f7c63f5f6bcb293af92565af3deea0bcd648' +
@@ -119,12 +142,10 @@ export default class App extends Component<{}> {
         'Address.to_bytes should match original input address',
       )
       const addrFromBech32 = await Address.from_bech32(
-        /* eslint-disable-next-line max-len */
         'addr1qqqqpvpu82s99aguppk9f02qt84d95hyy6kgn7jt8njpe0cqqzcrcw4q2t63czrv2j75qk026tfwgf4v38ayk08yrjls4jecre',
       )
       assert(
         (await addrFromBech32.to_bech32()) ===
-          /* eslint-disable-next-line max-len */
           'addr1qqqqpvpu82s99aguppk9f02qt84d95hyy6kgn7jt8njpe0cqqzcrcw4q2t63czrv2j75qk026tfwgf4v38ayk08yrjls4jecre',
         'Address.to_bech32',
       )
@@ -203,6 +224,46 @@ export default class App extends Component<{}> {
         ).toString('hex') === addrHex,
         'StakeCredential -> to_bytes -> from_bytes -> to_keyhash -> should match',
       )
+
+      // ------------------------------------------------
+      // --------------- StakeRegistration --------------
+      const stakeReg = await StakeRegistration.new(stakeCred)
+      assert(
+        Buffer.from(
+          await (await stakeReg.stake_credential()).to_bytes(),
+        ).toString('hex') ===
+          Buffer.from(await stakeCred.to_bytes()).toString('hex'),
+        'StakeRegistration:: new() -> stake_credential()',
+      )
+      const stakeRegHex = Buffer.from(
+        await stakeReg.to_bytes(),
+        'hex',
+      ).toString('hex')
+      const _stakeReg = await StakeRegistration.from_bytes(
+        Buffer.from(stakeRegHex, 'hex'),
+      )
+      assert(
+        Buffer.from(await _stakeReg.to_bytes(), 'hex').toString('hex') ===
+          stakeRegHex,
+        'StakeRegistration::to/from_bytes()',
+      )
+
+      // ------------------------------------------------
+      // ------------------ Certificate -----------------
+      const cert = await Certificate.new_stake_registration(stakeReg)
+      const certHex = Buffer.from(await cert.to_bytes(), 'hex').toString('hex')
+      const _cert = await Certificate.from_bytes(Buffer.from(certHex, 'hex'))
+      assert(
+        Buffer.from(await _cert.to_bytes(), 'hex').toString('hex') === certHex,
+        'Certificate::new_stake_registration()',
+      )
+
+      // ------------------------------------------------
+      // ----------------- Certificates -----------------
+      const certs = await Certificates.new()
+      assert((await certs.len()) === 0, 'Certificates.len() should return 0')
+      await certs.add(cert)
+      assert((await certs.len()) === 1, 'Certificates.len() should return 1')
 
       // ------------------------------------------------
       // ----------------- BaseAddress ------------------
@@ -422,6 +483,7 @@ export default class App extends Component<{}> {
         'TransactionBuilder::get_fee_or_calc()',
       )
 
+      console.log('publicKey', publicKey)
       console.log('bip32PrivateKey', bip32PrivateKey)
       console.log('address', address)
       console.log('ed25519KeyHash', ed25519KeyHash)
@@ -429,6 +491,8 @@ export default class App extends Component<{}> {
       console.log('pymntAddrKeyHash', pymntAddrKeyHash)
       console.log('paymentCred', paymentCred)
       console.log('stakeCred', stakeCred)
+      console.log('stakeReg', stakeReg)
+      console.log('certificate', cert)
       console.log('baseAddr', baseAddr)
       console.log('unitInterval', unitInterval)
       console.log('txInput', txInput)

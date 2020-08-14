@@ -85,6 +85,51 @@ export class Coin extends Ptr {
 }
 
 /**
+* ED25519 key used as public key
+*/
+export class PublicKey extends Ptr {
+  /**
+  * Get private key from its bech32 representation
+  * Example:
+  * ```javascript
+  * const pkey = PublicKey.from_bech32(&#39;ed25519_pk1dgaagyh470y66p899txcl3r0jaeaxu6yd7z2dxyk55qcycdml8gszkxze2&#39;);
+  * ```
+  * @param {string} bech32_str
+  * @returns {Promise<PublicKey>}
+  */
+  static from_bech32(bech32_str: string): Promise<PublicKey>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_bech32(): Promise<string>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<PublicKey>}
+  */
+  static from_bytes(bytes): Promise<PublicKey>
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  as_bytes(): Promise<Uint8Array>;
+
+  // TODO: cannot implement yet since Ed25519Signature is missing
+  // /**
+  // * @param {Uint8Array} data
+  // * @param {Ed25519Signature} signature
+  // * @returns {Promise<boolean>}
+  // */
+  // static verify(data, signature): Promise<boolean>
+
+  /**
+  * @returns {Promise<Ed25519KeyHash>}
+  */
+  hash(): Promise<Ed25519KeyHash>
+}
+
+/**
 */
 export class Bip32PrivateKey extends Ptr {
   /**
@@ -237,6 +282,16 @@ export class TransactionHash extends Ptr {
 }
 
 export class StakeCredential extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<StakeCredential>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<StakeCredential>;
 
   /**
   * @param {Ed25519KeyHash} hash
@@ -253,7 +308,9 @@ export class StakeCredential extends Ptr {
   * @returns {Promise<number>}
   */
   kind(): Promise<number>
+}
 
+export class StakeRegistration extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
   */
@@ -261,10 +318,70 @@ export class StakeCredential extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
+  * @returns {Promise<StakeRegistration>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<StakeRegistration>;
+
+  /**
   * @returns {Promise<StakeCredential>}
   */
-  static from_bytes(bytes: Uint8Array): Promise<StakeCredential>;
+  stake_credential(): Promise<StakeCredential>
+
+  /**
+  * @param {StakeCredential} stakeCredential
+  * @returns {Promise<StakeRegistration>}
+  */
+  static new(stakeCredential): Promise<StakeRegistration>
 }
+
+export class Certificate extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Certificate>}
+  */
+  static from_bytes(bytes): Promise<Certificate>
+
+  /**
+  * @param {StakeRegistration} stakeRegistration
+  * @returns {Promise<Certificate>}
+  */
+  static new_stake_registration(stakeRegistration): Promise<Certificate>
+}
+
+export class Certificates extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Certificates>}
+  */
+  static from_bytes(bytes): Promise<Certificates>
+
+  /**
+  * @returns {Promise<Certificates>}
+  */
+  static new(): Promise<Certificates>
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len(): Promise<number>
+
+  /**
+  * @param {Certificate} item
+  * @returns {Promise<void>}
+  */
+  add(item: Certificate): Promise<void>
+}
+
 
 export class BaseAddress extends Ptr {
 

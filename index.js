@@ -170,101 +170,164 @@ export class Coin extends Ptr {
 export class PrivateKey extends Ptr {}
 
 /**
+* ED25519 key used as public key
 */
-export class Bip32PrivateKey extends Ptr {
+export class PublicKey extends Ptr {
     /**
-    * derive this private key with the given index.
-    *
-    * # Security considerations
-    *
-    * * hard derivation index cannot be soft derived with the public key
-    *
-    * # Hard derivation vs Soft derivation
-    *
-    * If you pass an index below 0x80000000 then it is a soft derivation.
-    * The advantage of soft derivation is that it is possible to derive the
-    * public key too. I.e. derivation the private key with a soft derivation
-    * index and then retrieving the associated public key is equivalent to
-    * deriving the public key associated to the parent private key.
-    *
-    * Hard derivation index does not allow public key derivation.
-    *
-    * This is why deriving the private key should not fail while deriving
-    * the public key may fail (if the derivation index is invalid).
-    * @param {number} index
-    * @returns {Promise<Bip32PrivateKey>}
+    * Get private key from its bech32 representation
+    * Example:
+    * ```javascript
+    * const pkey = PublicKey.from_bech32("ed25519_pk1dgaagyh470y66p899txcl3r0jaeaxu6yd7z2dxyk55qcycdml8gszkxze2");
+    * ```
+    * @param {string} bech32_str
+    * @returns {Promise<PublicKey>}
     */
-    async derive(index) {
-        const ret = await HaskellShelley.bip32PrivateKeyDerive(this.ptr, index);
-        return Ptr._wrap(ret, Bip32PrivateKey);
-    }
-
-    /**
-    * @returns {Promise<Bip32PrivateKey>}
-    */
-    static async generate_ed25519_bip32() {
-        const ret = await HaskellShelley.bip32PrivateKeyGenerateEd25519Bip32();
-        return Ptr._wrap(ret, Bip32PrivateKey);
-    }
-
-    /**
-    * @returns {Promise<PrivateKey>}
-    */
-    async to_raw_key() {
-        const ret = await HaskellShelley.bip32PrivateKeyToRawKey(this.ptr);
-        return Ptr._wrap(ret, PrivateKey);
-    }
-
-    /**
-    * @returns {Promise<Bip32PublicKey>}
-    */
-    async to_public() {
-        const ret = await HaskellShelley.bip32PrivateKeyToPublic(this.ptr);
-        return Ptr._wrap(ret, Bip32PublicKey);
-    }
-
-    /**
-    * @param {Uint8Array} bytes
-    * @returns {Promise<Bip32PrivateKey>}
-    */
-    static async from_bytes(bytes) {
-        const ret = await HaskellShelley.bip32PrivateKeyFromBytes(b64FromUint8Array(bytes));
-        return Ptr._wrap(ret, Bip32PrivateKey);
-    }
-
-    /**
-    * @returns {Promise<Uint8Array>}
-    */
-    async as_bytes() {
-        const b64 = await HaskellShelley.bip32PrivateKeyAsBytes(this.ptr);
-        return Uint8ArrayFromB64(b64);
-    }
-
-    /**
-    * @param {string} bech32Str
-    * @returns {Promise<Bip32PrivateKey>}
-    */
-    static async from_bech32(bech32Str) {
-        const ret = await HaskellShelley.bip32PrivateKeyFromBech32(bech32Str);
-        return Ptr._wrap(ret, Bip32PrivateKey);
+    static async from_bech32(bech32_str) {
+        const ret = await HaskellShelley.publicKeyFromBech32(bech32_str);
+        return Ptr._wrap(ret, PublicKey);
     }
 
     /**
     * @returns {Promise<string>}
     */
     to_bech32() {
-        return HaskellShelley.bip32PrivateKeyToBech32(this.ptr);
+      return HaskellShelley.publicKeyToBech32(this.ptr);
     }
 
     /**
-    * @param {Uint8Array} entropy
-    * @param {Uint8Array} password
-    * @returns {Promise<Bip32PrivateKey>}
+    * @param {Uint8Array} bytes
+    * @returns {Promise<PublicKey>}
     */
-    static async from_bip39_entropy(entropy, password) {
-        const ret = await HaskellShelley.bip32PrivateKeyFromBip39Entropy(b64FromUint8Array(entropy), b64FromUint8Array(password));
-        return Ptr._wrap(ret, Bip32PrivateKey);
+    static async from_bytes(bytes) {
+      const ret = await HaskellShelley.publicKeyFromBytes(b64FromUint8Array(bytes));
+      return Ptr._wrap(ret, PublicKey);
     }
+
+    /**
+    * @returns {Promise<Uint8Array>}
+    */
+    async as_bytes() {
+        const b64 = await HaskellShelley.publicKeyAsBytes(this.ptr);
+        return Uint8ArrayFromB64(b64);
+    }
+
+    // TODO: cannot implement yet since Ed25519Signature is missing
+    // /**
+    // * @param {Uint8Array} data
+    // * @param {Ed25519Signature} signature
+    // * @returns {Promise<boolean>}
+    // */
+    // static async verify(data, signature) {
+    //   const signaturePtr = Ptr._assertClass(signature, Ed25519Signature);
+    //   return HaskellShelley.publicKeyVerify(b64FromUint8Array(data), signaturePtr);
+    // }
+
+    /**
+    * @returns {Promise<Ed25519KeyHash>}
+    */
+    async hash() {
+      const ret = await HaskellShelley.publicKeyHash(this.ptr);
+      return Ptr._wrap(ret, Ed25519KeyHash);
+    }
+}
+
+
+/**
+*/
+export class Bip32PrivateKey extends Ptr {
+  /**
+  * derive this private key with the given index.
+  *
+  * # Security considerations
+  *
+  * * hard derivation index cannot be soft derived with the public key
+  *
+  * # Hard derivation vs Soft derivation
+  *
+  * If you pass an index below 0x80000000 then it is a soft derivation.
+  * The advantage of soft derivation is that it is possible to derive the
+  * public key too. I.e. derivation the private key with a soft derivation
+  * index and then retrieving the associated public key is equivalent to
+  * deriving the public key associated to the parent private key.
+  *
+  * Hard derivation index does not allow public key derivation.
+  *
+  * This is why deriving the private key should not fail while deriving
+  * the public key may fail (if the derivation index is invalid).
+  * @param {number} index
+  * @returns {Promise<Bip32PrivateKey>}
+  */
+  async derive(index) {
+    const ret = await HaskellShelley.bip32PrivateKeyDerive(this.ptr, index);
+    return Ptr._wrap(ret, Bip32PrivateKey);
+  }
+
+  /**
+  * @returns {Promise<Bip32PrivateKey>}
+  */
+  static async generate_ed25519_bip32() {
+    const ret = await HaskellShelley.bip32PrivateKeyGenerateEd25519Bip32();
+    return Ptr._wrap(ret, Bip32PrivateKey);
+  }
+
+  /**
+  * @returns {Promise<PrivateKey>}
+  */
+  async to_raw_key() {
+    const ret = await HaskellShelley.bip32PrivateKeyToRawKey(this.ptr);
+    return Ptr._wrap(ret, PrivateKey);
+  }
+
+  /**
+  * @returns {Promise<Bip32PublicKey>}
+  */
+  async to_public() {
+    const ret = await HaskellShelley.bip32PrivateKeyToPublic(this.ptr);
+    return Ptr._wrap(ret, Bip32PublicKey);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Bip32PrivateKey>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.bip32PrivateKeyFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, Bip32PrivateKey);
+  }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async as_bytes() {
+    const b64 = await HaskellShelley.bip32PrivateKeyAsBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {string} bech32Str
+  * @returns {Promise<Bip32PrivateKey>}
+  */
+  static async from_bech32(bech32Str) {
+    const ret = await HaskellShelley.bip32PrivateKeyFromBech32(bech32Str);
+    return Ptr._wrap(ret, Bip32PrivateKey);
+  }
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_bech32() {
+    return HaskellShelley.bip32PrivateKeyToBech32(this.ptr);
+  }
+
+  /**
+  * @param {Uint8Array} entropy
+  * @param {Uint8Array} password
+  * @returns {Promise<Bip32PrivateKey>}
+  */
+  static async from_bip39_entropy(entropy, password) {
+    const ret = await HaskellShelley.bip32PrivateKeyFromBip39Entropy(b64FromUint8Array(entropy), b64FromUint8Array(password));
+    return Ptr._wrap(ret, Bip32PrivateKey);
+  }
 }
 
 export class ByronAddress extends Ptr {
@@ -434,6 +497,115 @@ export class StakeCredential extends Ptr {
   static async from_bytes(bytes) {
     const ret = await HaskellShelley.stakeCredentialFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, StakeCredential);
+  }
+}
+
+export class StakeRegistration extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.stakeRegistrationToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<StakeRegistration>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.stakeRegistrationFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, StakeRegistration);
+  }
+
+  /**
+  * @returns {Promise<StakeCredential>}
+  */
+  async stake_credential() {
+    const ret = await HaskellShelley.stakeRegistrationStakeCredential(this.ptr);
+    return Ptr._wrap(ret, StakeCredential);
+  }
+
+  /**
+  * @param {StakeCredential} stakeCredential
+  * @returns {Promise<StakeRegistration>}
+  */
+  static async new(stakeCredential) {
+    const stakeCredentialPtr = Ptr._assertClass(stakeCredential, StakeCredential);
+    const ret = await HaskellShelley.stakeRegistrationNew(stakeCredentialPtr);
+    return Ptr._wrap(ret, StakeRegistration);
+  }
+}
+
+export class Certificate extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.certificateToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Certificate>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.certificateFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  /**
+  * @param {StakeRegistration} stakeRegistration
+  * @returns {Promise<Certificate>}
+  */
+  static async new_stake_registration(stakeRegistration) {
+    const stakeRegistrationPtr = Ptr._assertClass(stakeRegistration, StakeRegistration);
+    const ret = await HaskellShelley.certificateNewStakeRegistration(stakeRegistrationPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+}
+
+export class Certificates extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.certificatesToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Certificates>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.certificatesFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, Certificates);
+  }
+
+  /**
+  * @returns {Promise<Certificates>}
+  */
+  static async new() {
+      const ret = await HaskellShelley.certificatesNew();
+      return Ptr._wrap(ret, Certificates);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.certificatesLen(this.ptr);
+  }
+
+  /**
+  * @param {Certificate} item
+  * @returns {Promise<void>}
+  */
+  async add(item) {
+    const itemPtr = Ptr._assertClass(item, Certificate);
+    return HaskellShelley.certificatesAdd(this.ptr, itemPtr);
   }
 }
 
@@ -620,29 +792,29 @@ export class LinearFee extends Ptr {
 export class Vkeywitness extends Ptr {}
 
 export class Vkeywitnesses extends Ptr {
-    /**
-    * @returns {Promise<Vkeywitnesses>}
-    */
-    static async new() {
-        const ret = await HaskellShelley.vkeywitnessesNew();
-        return Ptr._wrap(ret, Vkeywitnesses);
-    }
+  /**
+  * @returns {Promise<Vkeywitnesses>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.vkeywitnessesNew();
+    return Ptr._wrap(ret, Vkeywitnesses);
+  }
 
-    /**
-    * @returns {Promise<number>}
-    */
-    async len() {
-      return HaskellShelley.vkeywitnessesLen(this.ptr);
-    }
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.vkeywitnessesLen(this.ptr);
+  }
 
-    /**
-    * @param {Vkwitness} item
-    * @returns {Promise<void>}
-    */
-    async add(item) {
-      const itemPtr = Ptr._assertClass(item, Vkwitness);
-      return HaskellShelley.vkeywitnessesAdd(this.ptr, itemPtr);
-    }
+  /**
+  * @param {Vkwitness} item
+  * @returns {Promise<void>}
+  */
+  async add(item) {
+    const itemPtr = Ptr._assertClass(item, Vkwitness);
+    return HaskellShelley.vkeywitnessesAdd(this.ptr, itemPtr);
+  }
 }
 
 // TODO

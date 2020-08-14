@@ -26,6 +26,14 @@ final class Native {
     public final native Result<RPtr> bigNumCheckedAdd(RPtr bigNum, RPtr other);
     public final native Result<RPtr> bigNumCheckedSub(RPtr bigNum, RPtr other);
 
+    // PublicKey
+    public final native Result<RPtr> publicKeyFromBech32(String bech32);
+    public final native Result<String> publicKeyToBech32(RPtr pubKey);
+    public final native Result<RPtr> publicKeyFromBytes(byte[] bytes);
+    public final native Result<byte[]> publicKeyAsBytes(RPtr pubKey);
+    // public final native Result<RPtr> publicKeyVerify(RPtr pubKey, byte[] bytes, RPtr signature);
+    public final native Result<RPtr> publicKeyHash(RPtr pubKey);
+
     // Bip32PrivateKey
     public final native Result<RPtr> bip32PrivateKeyDerive(RPtr bip32PrivateKey, long index);
     public final native Result<RPtr> bip32PrivateKeyGenerateEd25519Bip32();
@@ -64,6 +72,24 @@ final class Native {
     public final native Result<Integer> stakeCredentialKind(RPtr stakeCredential);
     public final native Result<byte[]> stakeCredentialToBytes(RPtr stakeCredential);
     public final native Result<RPtr> stakeCredentialFromBytes(byte[] bytes);
+
+    // StakeRegistration
+    public final native Result<RPtr> stakeRegistrationNew(RPtr stakeCredential);
+    public final native Result<RPtr> stakeRegistrationStakeCredential(RPtr stakeRegistration);
+    public final native Result<byte[]> stakeRegistrationToBytes(RPtr stakeRegistration);
+    public final native Result<RPtr> stakeRegistrationFromBytes(byte[] bytes);
+
+    // Certificate
+    public final native Result<RPtr> certificateNewStakeRegistration(RPtr stakeRegistration);
+    public final native Result<byte[]> certificateToBytes(RPtr certificate);
+    public final native Result<RPtr> certificateFromBytes(byte[] bytes);
+
+    // Certificates
+    public final native Result<byte[]> certificatesToBytes(RPtr certificates);
+    public final native Result<RPtr> certificatesFromBytes(byte[] bytes);
+    public final native Result<RPtr> certificatesNew();
+    public final native Result<Long> certificatesLen(RPtr certificates);
+    public final native Result<Void> certificatesAdd(RPtr certificates, RPtr item);
 
     // BaseAddress
     public final native Result<RPtr> baseAddressNew(int network, RPtr payment, RPtr stake);
