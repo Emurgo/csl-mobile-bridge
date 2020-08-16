@@ -136,13 +136,26 @@ pub unsafe extern "C" fn transaction_builder_get_explicit_output(
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn transaction_builder_get_fee_or_calc(
+pub unsafe extern "C" fn transaction_builder_get_deposit(
   rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
     rptr
       .typed_ref::<TransactionBuilder>()
-      .and_then(|tx_builder| tx_builder.get_fee_or_calc().into_result())
+      .and_then(|tx_builder| tx_builder.get_deposit().into_result())
+    })
+    .map(|deposit| deposit.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_builder_get_fee_if_set(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBuilder>()
+      .map(|tx_builder| tx_builder.get_fee_if_set())
     })
     .map(|amount| amount.rptr())
     .response(result, error)
@@ -175,13 +188,13 @@ pub unsafe extern "C" fn transaction_builder_build(
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn transaction_builder_estimate_fee(
+pub unsafe extern "C" fn transaction_builder_min_fee(
   rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
     rptr
       .typed_ref::<TransactionBuilder>()
-      .and_then(|tx_builder| tx_builder.estimate_fee().into_result())
+      .and_then(|tx_builder| tx_builder.min_fee().into_result())
     })
     .map(|fee| fee.rptr())
     .response(result, error)

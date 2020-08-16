@@ -33,7 +33,15 @@ pub unsafe extern "C" fn address_from_bytes(
 pub unsafe extern "C" fn address_to_bech32(
   rptr: RPtr, result: &mut CharPtr, error: &mut CharPtr
 ) -> bool {
-  handle_exception_result(|| rptr.typed_ref::<Address>().map(|addr| addr.to_bech32().into_cstr()))
+  handle_exception_result(|| rptr.typed_ref::<Address>().map(|addr| addr.to_bech32(None).into_cstr()))
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn address_to_bech32_with_prefix(
+  rptr: RPtr, prefix: CharPtr, result: &mut CharPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| rptr.typed_ref::<Address>().map(|addr| addr.to_bech32(Some(prefix.into_str().to_string())).into_cstr()))
     .response(result, error)
 }
 

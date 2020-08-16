@@ -343,6 +343,18 @@ RCT_EXPORT_METHOD(addressToBech32:(nonnull NSString *)ptr withResolve:(RCTPromis
     }] exec:ptr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(addressToBech32WithPrefix:(nonnull NSString *)ptr withPrefix:(nonnull NSString *)prefix withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+      RPtr rptr = [[params objectAtIndex:0] rPtr];
+      CharPtr prefixChars = [[params objectAtIndex:1] charPtr];
+        CharPtr result;
+        return address_to_bech32_with_prefix(rptr, prefixChars, &result, error)
+            ? [NSString stringFromCharPtr:&result]
+            : nil;
+    }] exec:@[ptr, prefix] andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(addressFromBech32:(nonnull NSString *)string withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* string, CharPtr* error) {
@@ -1095,12 +1107,23 @@ RCT_EXPORT_METHOD(transactionBuilderGetExplicitOutput:(nonnull NSString *)ptr  w
     }] exec:ptr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(transactionBuilderGetFeeOrCalc:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(transactionBuilderGetDeposit:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
         RPtr result;
         RPtr txBuilder = [ptr rPtr];
-        return transaction_builder_get_fee_or_calc(txBuilder, &result, error)
+        return transaction_builder_get_deposit(txBuilder, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderGetFeeIfSet:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr txBuilder = [ptr rPtr];
+        return transaction_builder_get_fee_if_set(txBuilder, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:ptr andResolve:resolve orReject:reject];
@@ -1129,12 +1152,12 @@ RCT_EXPORT_METHOD(transactionBuilderBuild:(nonnull NSString *)ptr  withResolve:(
     }] exec:ptr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(transactionBuilderEstimateFee:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(transactionBuilderMinFee:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
         RPtr result;
         RPtr txBuilder = [ptr rPtr];
-        return transaction_builder_estimate_fee(txBuilder, &result, error)
+        return transaction_builder_min_fee(txBuilder, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:ptr andResolve:resolve orReject:reject];

@@ -812,9 +812,17 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionBuilderGetFeeOrCalc(String txBuilder, Promise promise) {
+    public final void transactionBuilderGetDeposit(String txBuilder, Promise promise) {
         Native.I
-                .transactionBuilderGetFeeOrCalc(new RPtr(txBuilder))
+                .transactionBuilderGetDeposit(new RPtr(txBuilder))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderGetFeeIfSet(String txBuilder, Promise promise) {
+        Native.I
+                .transactionBuilderGetFeeIfSet(new RPtr(txBuilder))
                 .map(RPtr::toJs)
                 .pour(promise);
     }
@@ -835,9 +843,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionBuilderEstimateFee(String txBuilder, Promise promise) {
+    public final void transactionBuilderMinFee(String txBuilder, Promise promise) {
         Native.I
-                .transactionBuilderEstimateFee(new RPtr(txBuilder))
+                .transactionBuilderMinFee(new RPtr(txBuilder))
                 .map(RPtr::toJs)
                 .pour(promise);
     }

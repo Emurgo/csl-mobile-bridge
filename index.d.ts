@@ -666,7 +666,12 @@ export class TransactionBuilder extends Ptr {
   /**
   * @returns {Promise<Coin>}
   */
-  get_fee_or_calc(): Promise<Coin>
+  get_deposit(): Promise<Coin>
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  get_fee_if_set(): Promise<Coin>
 
   /**
   * @param {Address} address
@@ -682,5 +687,5 @@ export class TransactionBuilder extends Ptr {
   /**
   * @returns {Promise<Coin>}
   */
-  estimate_fee(): Promise<Coin>
+  min_fee(): Promise<Coin>
 }

@@ -177,15 +177,27 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderGetFeeOrCalc(
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderGetDeposit(
   env: JNIEnv, _: JObject, ptr: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
     let rptr = ptr.rptr(&env)?;
     rptr
       .typed_ref::<TransactionBuilder>()
-      .and_then(|tx_builder| tx_builder.get_fee_or_calc().into_result())
+      .and_then(|tx_builder| tx_builder.get_deposit().into_result())
       .and_then(|amount| amount.rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderGetFeeIfSet(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr.typed_ref::<TransactionBuilder>().and_then(|tx_builder| tx_builder.get_fee_if_set().rptr().jptr(&env))
   })
   .jresult(&env)
 }
@@ -225,14 +237,14 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderEstimateFee(
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderMinFee(
   env: JNIEnv, _: JObject, ptr: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
     let rptr = ptr.rptr(&env)?;
     rptr
       .typed_ref::<TransactionBuilder>()
-      .and_then(|tx_builder| tx_builder.estimate_fee().into_result())
+      .and_then(|tx_builder| tx_builder.min_fee().into_result())
       .and_then(|fee| fee.rptr().jptr(&env))
   })
   .jresult(&env)

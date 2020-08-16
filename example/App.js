@@ -482,13 +482,16 @@ export default class App extends Component<{}> {
         'TransactionBuilder::add_change_if_needed()',
       )
       const txBodyFromBuilder = await txBuilder.build()
-      // note: estimated fee changed after .build()
       assert(
-        (await (await txBuilder.estimate_fee()).to_str()) === '172761',
-        'TransactionBuilder::estimate_fee()',
+        (await (await txBuilder.min_fee()).to_str()) === '172937',
+        'TransactionBuilder::min_fee()',
       )
       assert(
-        (await (await txBuilder.get_fee_or_calc()).to_str()) === '1000000',
+        (await (await txBuilder.get_deposit()).to_str()) === '0',
+        'TransactionBuilder::get_fee_or_calc()',
+      )
+      assert(
+        (await (await txBuilder.get_fee_if_set()).to_str()) === '1000000',
         'TransactionBuilder::get_fee_or_calc()',
       )
 

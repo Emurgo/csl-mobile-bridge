@@ -1070,8 +1070,16 @@ export class TransactionBuilder extends Ptr {
   /**
   * @returns {Promise<Coin>}
   */
-  async get_fee_or_calc() {
-    const ret = await HaskellShelley.transactionBuilderGetFeeOrCalc(this.ptr);
+  async get_deposit() {
+    const ret = await HaskellShelley.transactionBuilderGetDeposit(this.ptr);
+    return Ptr._wrap(ret, Coin);
+  }
+
+  /**
+  * @returns {Promise<Coin>}
+  */
+  async get_fee_if_set() {
+    const ret = await HaskellShelley.transactionBuilderGetFeeIfSet(this.ptr);
     return Ptr._wrap(ret, Coin);
   }
 
@@ -1095,8 +1103,8 @@ export class TransactionBuilder extends Ptr {
   /**
   * @returns {Promise<Coin>}
   */
-  async estimate_fee() {
-    const ret = await HaskellShelley.transactionBuilderEstimateFee(this.ptr);
+  async min_fee() {
+    const ret = await HaskellShelley.transactionBuilderMinFee(this.ptr);
     return Ptr._wrap(ret, Coin);
   }
 }
