@@ -394,10 +394,13 @@ export class Address extends Ptr {
   }
 
   /**
+  * @param {string | void} prefix
   * @returns {Promise<string>}
   */
-  async to_bech32() {
-    return HaskellShelley.addressToBech32(this.ptr);
+  to_bech32(prefix) {
+    if (prefix == null)
+      return HaskellShelley.addressToBech32(this.ptr);
+    return HaskellShelley.addressToBech32WithPrefix(this.ptr, prefix);
   }
 
   /**

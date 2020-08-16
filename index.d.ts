@@ -244,9 +244,10 @@ export class Address extends Ptr {
   to_bytes(): Promise<Uint8Array>;
 
   /**
+  * @param {string | void} prefix
   * @returns {Promise<string>}
   */
-  to_bech32(): Promise<string>
+  to_bech32(prefix?: string): Promise<string>;
 
   /**
   * @param {string} string

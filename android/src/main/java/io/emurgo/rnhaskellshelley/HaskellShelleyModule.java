@@ -269,6 +269,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void addressToBech32WithPrefix(String address, String prefix, Promise promise) {
+        Native.I
+                .addressToBech32WithPrefix(new RPtr(address), prefix)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void addressFromBech32(String string, Promise promise) {
         Native.I
                 .addressFromBech32(string)

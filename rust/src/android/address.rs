@@ -51,7 +51,21 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_addressToBech32(
   handle_exception_result(|| {
     let rptr = ptr.rptr(&env)?;
     let val = rptr.typed_ref::<Address>()?;
-    val.to_bech32().jstring(&env)
+    val.to_bech32(None).jstring(&env)
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_addressToBech32WithPrefix(
+  env: JNIEnv, _: JObject, ptr: JRPtr, prefix: JString
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    let rstr = prefix.string(&env)?;
+    let val = rptr.typed_ref::<Address>()?;
+    val.to_bech32(Some(rstr)).jstring(&env)
   })
   .jresult(&env)
 }
