@@ -16,6 +16,7 @@ import {
   Address,
   BaseAddress,
   BigNum,
+  Bip32PublicKey,
   Bip32PrivateKey,
   BootstrapWitness,
   BootstrapWitnesses,
@@ -113,19 +114,34 @@ export default class App extends Component<{}> {
         (await (await publicKey.hash()).to_bytes()).length,
         'PublicKey.hash()',
       )
+
       // ------------------------------------------------
       // --------------- Bip32PrivateKey ----------------
-      const xprvBytes =
+      const bip32PrivKeyBytes =
         '70afd5ff1f7f551c481b7e3f3541f7c63f5f6bcb293af92565af3deea0bcd648' +
         '1a6e7b8acbe38f3906c63ccbe8b2d9b876572651ac5d2afc0aca284d9412bb1b' +
         '4839bf02e1d990056d0f06af22ce4bcca52ac00f1074324aab96bbaaaccf290d'
       const bip32PrivateKey = await Bip32PrivateKey.from_bytes(
-        Buffer.from(xprvBytes, 'hex'),
+        Buffer.from(bip32PrivKeyBytes, 'hex'),
       )
       assert(
         Buffer.from(await bip32PrivateKey.as_bytes()).toString('hex') ===
-          xprvBytes,
+          bip32PrivKeyBytes,
         'bip32PrivateKey.as_bytes() should match original input value',
+      )
+
+      // ------------------------------------------------
+      // --------------- Bip32PublicKey ----------------
+      const bip32PubKeyBytes =
+        '64593d25cfbb70ddff435e75194cc4854e5d0f67a26e4493c5c00e0a989bd144' +
+        '4839bf02e1d990056d0f06af22ce4bcca52ac00f1074324aab96bbaaaccf290d'
+      const bip32PublicKey = await Bip32PublicKey.from_bytes(
+        Buffer.from(bip32PubKeyBytes, 'hex'),
+      )
+      assert(
+        Buffer.from(await bip32PublicKey.as_bytes()).toString('hex') ===
+          bip32PubKeyBytes,
+        'bip32PublicKey.as_bytes() should match original input value',
       )
 
       // ------------------------------------------------
@@ -496,6 +512,7 @@ export default class App extends Component<{}> {
       )
 
       console.log('publicKey', publicKey)
+      console.log('bip32PublicKey', bip32PublicKey)
       console.log('bip32PrivateKey', bip32PrivateKey)
       console.log('address', address)
       console.log('ed25519KeyHash', ed25519KeyHash)

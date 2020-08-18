@@ -129,6 +129,55 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // Bip32PublicKey
+
+    @ReactMethod
+    public final void bip32PublicKeyDerive(String bip32PublicKey, Double index, Promise promise) {
+        Native.I
+                .bip32PublicKeyDerive(new RPtr(bip32PublicKey), index.longValue())
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void bip32PublicKeyToRawKey(String bip32PublicKey, Promise promise) {
+        Native.I
+                .bip32PublicKeyToRawKey(new RPtr(bip32PublicKey))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void bip32PublicKeyFromBytes(String bytes, Promise promise) {
+        Native.I
+                .bip32PublicKeyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void bip32PublicKeyAsBytes(String bip32PublicKey, Promise promise) {
+        Native.I
+                .bip32PublicKeyAsBytes(new RPtr(bip32PublicKey))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void bip32PublicKeyFromBech32(String bech32Str, Promise promise) {
+        Native.I
+                .bip32PublicKeyFromBech32(bech32Str)
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void bip32PublicKeyToBech32(String bip32PublicKey, Promise promise) {
+        Native.I
+                .bip32PublicKeyToBech32(new RPtr(bip32PublicKey))
+                .pour(promise);
+    }
+
 
     // Bip32PrivateKey
 

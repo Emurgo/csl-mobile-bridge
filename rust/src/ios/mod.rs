@@ -2,6 +2,7 @@ mod address;
 mod base_address;
 mod big_num;
 mod bip32_private_key;
+mod bip32_public_key;
 mod byron_address;
 mod bootstrap_witnesses;
 mod certificate;
