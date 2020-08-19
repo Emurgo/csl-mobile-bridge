@@ -58,32 +58,6 @@ export class BigNum extends Ptr {
 
 }
 
-export class Coin extends Ptr {
-  /**
-  * @param {string} string
-  * @returns {Promise<Value>}
-  */
-  static from_str(string: string): Promise<Coin>;
-
-  /**
-  * @returns {Promise<string>}
-  */
-  to_str(): Promise<string>;
-
-  /**
-  * @param {Coin} other
-  * @returns {Promise<Coin>}
-  */
-  checked_add(other): Promise<Coin>
-
-  /**
-  * @param {Coin} other
-  * @returns {Promise<Coin>}
-  */
-  checked_sub(other): Promise<Coin>
-
-}
-
 /**
 * ED25519 key used as public key
 */

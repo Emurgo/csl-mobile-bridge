@@ -126,46 +126,6 @@ export class BigNum extends Ptr {
   }
 }
 
-// use same underlying functions written for BigNum
-export class Coin extends Ptr {
-
-  /**
-  * @param {string} string
-  * @returns {Promise<Coin>}
-  */
-  static async from_str(string) {
-    const ret = await HaskellShelley.bigNumFromStr(string);
-    return Ptr._wrap(ret, Coin);
-  }
-
-  /**
-  * @returns {Promise<string>}
-  */
-  async to_str() {
-    return await HaskellShelley.bigNumToStr(this.ptr);
-  }
-
-  /**
-  * @param {Coin} other
-  * @returns {Promise<Coin>}
-  */
-  async checked_add(other) {
-    const otherPtr = Ptr._assertClass(other, Coin);
-    const ret = await HaskellShelley.bigNumCheckedAdd(this.ptr, otherPtr);
-    return Ptr._wrap(ret, Coin);
-  }
-
-  /**
-  * @param {Coin} other
-  * @returns {Promise<Coin>}
-  */
-  async checked_sub(other) {
-    const otherPtr = Ptr._assertClass(other, Coin);
-    const ret = await HaskellShelley.bigNumCheckedSub(this.ptr, otherPtr);
-    return Ptr._wrap(ret, Coin);
-  }
-}
-
 // TODO
 export class PrivateKey extends Ptr {}
 
@@ -828,12 +788,12 @@ export class TransactionOutput extends Ptr {
 
   /**
   * @param {Address} address
-  * @param {Coin} amount
+  * @param {BigNum} amount
   * @returns {Promise<TransactionOutput>}
   */
-  static async new(address: Address, amount: Coin) {
+  static async new(address: Address, amount: BigNum) {
     const addrPtr = Ptr._assertClass(address, Address);
-    const amountPtr = Ptr._assertClass(amount, Coin);
+    const amountPtr = Ptr._assertClass(amount, BigNum);
     const ret = await HaskellShelley.transactionOutputNew(addrPtr, amountPtr);
     return Ptr._wrap(ret, TransactionOutput);
   }
@@ -841,29 +801,29 @@ export class TransactionOutput extends Ptr {
 
 export class LinearFee extends Ptr {
   /**
-  * @returns {Promise<Coin>}
+  * @returns {Promise<BigNum>}
   */
   async constant() {
     const ret = await HaskellShelley.linearFeeConstant(this.ptr);
-    return Ptr._wrap(ret, Coin);
+    return Ptr._wrap(ret, BigNum);
   }
 
   /**
-  * @returns {Promise<Coin>}
+  * @returns {Promise<BigNum>}
   */
   async coefficient() {
     const ret = await HaskellShelley.linearFeeCoefficient(this.ptr);
-    return Ptr._wrap(ret, Coin);
+    return Ptr._wrap(ret, BigNum);
   }
 
   /**
-  * @param {Coin} coefficient
-  * @param {Coin} constant
+  * @param {BigNum} coefficient
+  * @param {BigNum} constant
   * @returns {Promise<LinearFee>}
   */
-  static async new(coefficient: Coin, constant: Coin) {
-    const coeffPtr = Ptr._assertClass(coefficient, Coin);
-    const constPtr = Ptr._assertClass(constant, Coin);
+  static async new(coefficient: BigNum, constant: BigNum) {
+    const coeffPtr = Ptr._assertClass(coefficient, BigNum);
+    const constPtr = Ptr._assertClass(constant, BigNum);
     const ret = await HaskellShelley.linearFeeNew(coeffPtr, constPtr);
     return Ptr._wrap(ret, LinearFee);
   }
@@ -1028,17 +988,17 @@ export class TransactionBuilder extends Ptr {
   /**
   * @param {Ed25519KeyHash} hash
   * @param {TransactionInput} input
-  * @param {Coin} amount
+  * @param {BigNum} amount
   * @returns {Promise<void>}
   */
   async add_key_input(
     hash: Ed25519KeyHash,
     input: TransactionInput,
-    amount: Coin,
+    amount: BigNum,
   ) {
     const hashPtr = Ptr._assertClass(hash, Ed25519KeyHash);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const amountPtr = Ptr._assertClass(amount, Coin);
+    const amountPtr = Ptr._assertClass(amount, BigNum);
     return HaskellShelley.transactionBuilderAddKeyInput(
       this.ptr,
       hashPtr,
@@ -1050,17 +1010,17 @@ export class TransactionBuilder extends Ptr {
   /**
   * @param {ByronAddress} hash
   * @param {TransactionInput} input
-  * @param {Coin} amount
+  * @param {BigNum} amount
   * @returns {Promise<void>}
   */
   async add_bootstrap_input(
     hash: ByronAddress,
     input: TransactionInput,
-    amount: Coin,
+    amount: BigNum,
   ) {
     const hashPtr = Ptr._assertClass(hash, ByronAddress);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const amountPtr = Ptr._assertClass(amount, Coin);
+    const amountPtr = Ptr._assertClass(amount, BigNum);
     return HaskellShelley.transactionBuilderAddBootstrapInput(
       this.ptr,
       hashPtr,
@@ -1079,11 +1039,11 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
-  * @param {Coin} fee
+  * @param {BigNum} fee
   * @returns {Promise<void>}
   */
-  async set_fee(fee: Coin) {
-    const feePtr = Ptr._assertClass(fee, Coin);
+  async set_fee(fee: BigNum) {
+    const feePtr = Ptr._assertClass(fee, BigNum);
     return HaskellShelley.transactionBuilderSetFee(this.ptr, feePtr);
   }
 
@@ -1097,19 +1057,19 @@ export class TransactionBuilder extends Ptr {
 
   /**
   * @param {LinearFee} linearFee
-  * @param {Coin} minimumUtxoVal
+  * @param {BigNum} minimumUtxoVal
   * @param {BigNum} poolDeposit
   * @param {BigNum} keyDeposit
   * @returns {Promise<TransactionBuilder>}
   */
   static async new(
     linearFee: LinearFee,
-    minimumUtxoVal: Coin,
+    minimumUtxoVal: BigNum,
     poolDeposit: BigNum,
     keyDeposit: BigNum,
   ) {
     const linearFeePtr = Ptr._assertClass(linearFee, LinearFee);
-    const minimumUtxoValPtr = Ptr._assertClass(minimumUtxoVal, Coin);
+    const minimumUtxoValPtr = Ptr._assertClass(minimumUtxoVal, BigNum);
     const poolDepositPtr = Ptr._assertClass(poolDeposit, BigNum);
     const keyDepositPtr = Ptr._assertClass(keyDeposit, BigNum);
     const ret = await HaskellShelley.transactionBuilderNew(
@@ -1122,43 +1082,43 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
-  * @returns {Promise<Coin>}
+  * @returns {Promise<BigNum>}
   */
   async get_explicit_input() {
     const ret = await HaskellShelley.transactionBuilderGetExplicitInput(this.ptr);
-    return Ptr._wrap(ret, Coin);
+    return Ptr._wrap(ret, BigNum);
   }
 
   /**
-  * @returns {Promise<Coin>}
+  * @returns {Promise<BigNum>}
   */
   async get_implicit_input() {
     const ret = await HaskellShelley.transactionBuilderGetImplicitInput(this.ptr);
-    return Ptr._wrap(ret, Coin);
+    return Ptr._wrap(ret, BigNum);
   }
 
   /**
-  * @returns {Promise<Coin>}
+  * @returns {Promise<BigNum>}
   */
   async get_explicit_output() {
     const ret = await HaskellShelley.transactionBuilderGetExplicitOutput(this.ptr);
-    return Ptr._wrap(ret, Coin);
+    return Ptr._wrap(ret, BigNum);
   }
 
   /**
-  * @returns {Promise<Coin>}
+  * @returns {Promise<BigNum>}
   */
   async get_deposit() {
     const ret = await HaskellShelley.transactionBuilderGetDeposit(this.ptr);
-    return Ptr._wrap(ret, Coin);
+    return Ptr._wrap(ret, BigNum);
   }
 
   /**
-  * @returns {Promise<Coin>}
+  * @returns {Promise<BigNum>}
   */
   async get_fee_if_set() {
     const ret = await HaskellShelley.transactionBuilderGetFeeIfSet(this.ptr);
-    return Ptr._wrap(ret, Coin);
+    return Ptr._wrap(ret, BigNum);
   }
 
   /**
@@ -1179,10 +1139,10 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
-  * @returns {Promise<Coin>}
+  * @returns {Promise<BigNum>}
   */
   async min_fee() {
     const ret = await HaskellShelley.transactionBuilderMinFee(this.ptr);
-    return Ptr._wrap(ret, Coin);
+    return Ptr._wrap(ret, BigNum);
   }
 }
