@@ -544,10 +544,10 @@ export class Vkeywitnesses extends Ptr {
     len(): Promise<number>
 
     /**
-    * @param {Vkwitness} item
+    * @param {Vkeywitness} item
     * @returns {Promise<void>}
     */
-    add(item: Vkwitness): Promise<void>
+    add(item: Vkeywitness): Promise<void>
 }
 
 // TODO

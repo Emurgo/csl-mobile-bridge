@@ -849,11 +849,11 @@ export class Vkeywitnesses extends Ptr {
   }
 
   /**
-  * @param {Vkwitness} item
+  * @param {Vkeywitness} item
   * @returns {Promise<void>}
   */
   async add(item) {
-    const itemPtr = Ptr._assertClass(item, Vkwitness);
+    const itemPtr = Ptr._assertClass(item, Vkeywitness);
     return HaskellShelley.vkeywitnessesAdd(this.ptr, itemPtr);
   }
 }
