@@ -713,6 +713,14 @@ export class BaseAddress extends Ptr {
   }
 
   /**
+  * @returns {Promise<Address>}
+  */
+  async to_address() {
+    const ret = await HaskellShelley.baseAddressToAddress(this.ptr);
+    return Ptr._wrap(ret, Address);
+  }
+
+  /**
   * @param {Address} addr
   * @returns {Promise<BaseAddress | undefined>}
   */

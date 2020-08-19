@@ -50,6 +50,18 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_baseAddressStake
 
 #[allow(non_snake_case)]
 #[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_baseAddressToAddress(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr.typed_ref::<BaseAddress>().and_then(|base_address| base_address.to_address().rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_baseAddressFromAddress(
   env: JNIEnv, _: JObject, address: JRPtr
 ) -> jobject {

@@ -105,6 +105,7 @@ final class Native {
     public final native Result<RPtr> baseAddressNew(int network, RPtr payment, RPtr stake);
     public final native Result<RPtr> baseAddressPaymentCred(RPtr baseAddress);
     public final native Result<RPtr> baseAddressStakeCred(RPtr baseAddress);
+    public final native Result<RPtr> baseAddressToAddress(RPtr baseAddress);
     public final native Result<RPtr> baseAddressFromAddress(RPtr address);
 
     // UnitInterval

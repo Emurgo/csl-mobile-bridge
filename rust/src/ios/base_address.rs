@@ -49,6 +49,19 @@ pub unsafe extern "C" fn base_address_stake_cred(
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn base_address_to_address(
+  base_address: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    base_address
+      .typed_ref::<BaseAddress>()
+      .map(|base_address| base_address.to_address())
+    })
+    .map(|stake_credential| stake_credential.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
 pub unsafe extern "C" fn base_address_from_address(
   rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {

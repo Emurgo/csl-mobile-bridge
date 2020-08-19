@@ -300,6 +300,12 @@ export default class App extends Component<{}> {
       )
       const baseAddrFromAddr = await BaseAddress.from_address(address)
       assert(!!baseAddrFromAddr, 'baseAddress.from_address')
+      const baseAddrToAddr = await baseAddrFromAddr.to_address()
+      assert(
+        Buffer.from(await baseAddrToAddr.to_bytes(), 'hex').toString('hex') ===
+          Buffer.from(await address.to_bytes(), 'hex').toString('hex'),
+        'baseAddress.to_address',
+      )
 
       // ------------------------------------------------
       // ------------------ UnitInterval ----------------

@@ -460,6 +460,11 @@ export class BaseAddress extends Ptr {
   stake_cred(): Promise<StakeCredential>
 
   /**
+  * @returns {Promise<Address>}
+  */
+  to_address(): Promise<Address>
+
+  /**
   * @param {Address} addr
   * @returns {Promise<BaseAddress | undefined>}
   */

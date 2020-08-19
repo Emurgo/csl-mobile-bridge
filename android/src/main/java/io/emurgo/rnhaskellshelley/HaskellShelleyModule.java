@@ -538,6 +538,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void baseAddressToAddress(String baseAddress, Promise promise) {
+        Native.I
+                .baseAddressToAddress(new RPtr(baseAddress))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void baseAddressFromAddress(String address, Promise promise) {
         Native.I
                 .baseAddressFromAddress(new RPtr(address))
