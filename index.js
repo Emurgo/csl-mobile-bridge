@@ -570,6 +570,43 @@ export class StakeRegistration extends Ptr {
   }
 }
 
+export class StakeDeregistration extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.stakeDeregistrationToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<StakeDeregistration>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.stakeDeregistrationFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, StakeDeregistration);
+  }
+
+  /**
+  * @returns {Promise<StakeCredential>}
+  */
+  async stake_credential() {
+    const ret = await HaskellShelley.stakeDeregistrationStakeCredential(this.ptr);
+    return Ptr._wrap(ret, StakeCredential);
+  }
+
+  /**
+  * @param {StakeCredential} stakeCredential
+  * @returns {Promise<StakeDeregistration>}
+  */
+  static async new(stakeCredential) {
+    const stakeCredentialPtr = Ptr._assertClass(stakeCredential, StakeCredential);
+    const ret = await HaskellShelley.stakeDeregistrationNew(stakeCredentialPtr);
+    return Ptr._wrap(ret, StakeDeregistration);
+  }
+}
+
 export class Certificate extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}

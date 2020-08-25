@@ -31,6 +31,7 @@ import {
   PublicKey,
   RewardAddress,
   StakeCredential,
+  StakeDeregistration,
   StakeRegistration,
   Transaction,
   TransactionBuilder,
@@ -244,6 +245,29 @@ export default class App extends Component<{}> {
         Buffer.from(await _stakeReg.to_bytes(), 'hex').toString('hex') ===
           stakeRegHex,
         'StakeRegistration::to/from_bytes()',
+      )
+
+      // ------------------------------------------------
+      // --------------- StakeDeregistration --------------
+      const stakeDereg = await StakeDeregistration.new(stakeCred)
+      assert(
+        Buffer.from(
+          await (await stakeDereg.stake_credential()).to_bytes(),
+        ).toString('hex') ===
+          Buffer.from(await stakeCred.to_bytes()).toString('hex'),
+        'StakeDeregistration:: new() -> stake_credential()',
+      )
+      const stakeDeregHex = Buffer.from(
+        await stakeDereg.to_bytes(),
+        'hex',
+      ).toString('hex')
+      const _stakeDereg = await StakeDeregistration.from_bytes(
+        Buffer.from(stakeDeregHex, 'hex'),
+      )
+      assert(
+        Buffer.from(await _stakeDereg.to_bytes(), 'hex').toString('hex') ===
+          stakeDeregHex,
+        'StakeDeregistration::to/from_bytes()',
       )
 
       // ------------------------------------------------

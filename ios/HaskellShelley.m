@@ -584,6 +584,53 @@ RCT_EXPORT_METHOD(stakeRegistrationFromBytes:(nonnull NSString *)bytesStr  withR
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
+// StakeDeregistration
+
+RCT_EXPORT_METHOD(stakeDeregistrationNew:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr stakeCred = [ptr rPtr];
+        return stake_deregistration_new(stakeCred, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(stakeDeregistrationStakeCredential:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr stakeDeregistration = [ptr rPtr];
+        return stake_deregistration_stake_credential(stakeDeregistration, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+
+RCT_EXPORT_METHOD(stakeDeregistrationToBytes:(nonnull NSString *)stakeDeregistrationPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* stakeDeregistrationPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr stakeDeregistration = [stakeDeregistrationPtr rPtr];
+        return stake_deregistration_to_bytes(stakeDeregistration, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:stakeDeregistrationPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(stakeDeregistrationFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return stake_deregistration_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
 // Certificate
 
 RCT_EXPORT_METHOD(certificateNewStakeRegistration:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

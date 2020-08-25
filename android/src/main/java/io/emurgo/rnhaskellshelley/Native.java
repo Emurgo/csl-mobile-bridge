@@ -89,6 +89,12 @@ final class Native {
     public final native Result<byte[]> stakeRegistrationToBytes(RPtr stakeRegistration);
     public final native Result<RPtr> stakeRegistrationFromBytes(byte[] bytes);
 
+    // StakeDeregistration
+    public final native Result<RPtr> stakeDeregistrationNew(RPtr stakeCredential);
+    public final native Result<RPtr> stakeDeregistrationStakeCredential(RPtr stakeDeregistration);
+    public final native Result<byte[]> stakeDeregistrationToBytes(RPtr stakeDeregistration);
+    public final native Result<RPtr> stakeDeregistrationFromBytes(byte[] bytes);
+
     // Certificate
     public final native Result<RPtr> certificateNewStakeRegistration(RPtr stakeRegistration);
     public final native Result<byte[]> certificateToBytes(RPtr certificate);
