@@ -13,6 +13,7 @@ mod primitive;
 mod ptr_j;
 mod public_key;
 mod result;
+mod reward_address;
 mod stake_credential;
 mod stake_registration;
 mod string;

@@ -20,6 +20,7 @@ impl RPtrRepresentable for Ed25519KeyHash {}
 impl RPtrRepresentable for LinearFee {}
 impl RPtrRepresentable for PrivateKey {}
 impl RPtrRepresentable for PublicKey {}
+impl RPtrRepresentable for RewardAddress {}
 impl RPtrRepresentable for StakeCredential {}
 impl RPtrRepresentable for StakeRegistration {}
 impl RPtrRepresentable for Transaction {}

@@ -57,7 +57,7 @@ pub unsafe extern "C" fn base_address_to_address(
       .typed_ref::<BaseAddress>()
       .map(|base_address| base_address.to_address())
     })
-    .map(|stake_credential| stake_credential.rptr())
+    .map(|address| address.rptr())
     .response(result, error)
 }
 

@@ -108,6 +108,12 @@ final class Native {
     public final native Result<RPtr> baseAddressToAddress(RPtr baseAddress);
     public final native Result<RPtr> baseAddressFromAddress(RPtr address);
 
+    // RewardAddress
+    public final native Result<RPtr> rewardAddressNew(int network, RPtr payment);
+    public final native Result<RPtr> rewardAddressPaymentCred(RPtr baseAddress);
+    public final native Result<RPtr> rewardAddressToAddress(RPtr baseAddress);
+    public final native Result<RPtr> rewardAddressFromAddress(RPtr address);
+
     // UnitInterval
     public final native Result<byte[]> unitIntervalToBytes(RPtr unitInterval);
     public final native Result<RPtr> unitIntervalFromBytes(byte[] bytes);

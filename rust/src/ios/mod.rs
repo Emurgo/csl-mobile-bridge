@@ -13,6 +13,7 @@ mod linear_fee;
 mod ptr_c;
 mod public_key;
 mod result;
+mod reward_address;
 mod stake_credential;
 mod stake_registration;
 mod string;

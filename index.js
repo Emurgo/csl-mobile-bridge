@@ -691,6 +691,45 @@ export class BaseAddress extends Ptr {
   }
 }
 
+export class RewardAddress extends Ptr {
+  /**
+  * @param {number} network
+  * @param {StakeCredential} payment
+  * @returns {Promise<RewardAddress>}
+  */
+  static async new(network, payment) {
+    const paymentPtr = Ptr._assertClass(payment, StakeCredential);
+    const ret = await HaskellShelley.rewardAddressNew(network, paymentPtr);
+    return Ptr._wrap(ret, RewardAddress);
+  }
+
+  /**
+  * @returns {Promise<StakeCredential>}
+  */
+  async payment_cred() {
+    const ret = await HaskellShelley.rewardAddressPaymentCred(this.ptr);
+    return Ptr._wrap(ret, StakeCredential);
+  }
+
+  /**
+  * @returns {Promise<Address>}
+  */
+  async to_address() {
+    const ret = await HaskellShelley.rewardAddressToAddress(this.ptr);
+    return Ptr._wrap(ret, Address);
+  }
+
+  /**
+  * @param {Address} addr
+  * @returns {Promise<RewardAddress | undefined>}
+  */
+  static async from_address(addr) {
+    const addrPtr = Ptr._assertClass(addr, Address);
+    const ret = await HaskellShelley.rewardAddressFromAddress(addrPtr);
+    return Ptr._wrap(ret, RewardAddress);
+  }
+}
+
 export class UnitInterval extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}

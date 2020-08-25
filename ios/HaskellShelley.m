@@ -725,10 +725,57 @@ RCT_EXPORT_METHOD(baseAddressToAddress:(nonnull NSString *)ptr  withResolve:(RCT
 
 RCT_EXPORT_METHOD(baseAddressFromAddress:(nonnull NSString *)addrPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
-    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+    [[CSafeOperation new:^NSString*(NSString* addrPtr, CharPtr* error) {
         RPtr result;
         RPtr addr = [addrPtr rPtr];
         return base_address_from_address(addr, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:addrPtr andResolve:resolve orReject:reject];
+}
+
+// RewardAddress
+
+RCT_EXPORT_METHOD(rewardAddressNew:(nonnull NSNumber *)network withPaymentCredential:(nonnull NSString *)payment withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        uintptr_t network = [[params objectAtIndex:0] unsignedIntegerValue];
+        RPtr payment = [[params objectAtIndex:1] rPtr];
+        return reward_address_new(network, payment, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[network, payment] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(rewardAddressPaymentCred:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr rewardAddress = [ptr rPtr];
+        return reward_address_payment_cred(rewardAddress, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(rewardAddressToAddress:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr rewardAddress = [ptr rPtr];
+        return reward_address_to_address(rewardAddress, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(rewardAddressFromAddress:(nonnull NSString *)addrPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* addrPtr, CharPtr* error) {
+        RPtr result;
+        RPtr addr = [addrPtr rPtr];
+        return reward_address_from_address(addr, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:addrPtr andResolve:resolve orReject:reject];

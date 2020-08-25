@@ -445,6 +445,31 @@ export class BaseAddress extends Ptr {
   static from_address(addr): Promise<BaseAddress | undefined>
 }
 
+export class RewardAddress extends Ptr {
+  /**
+  * @param {number} network
+  * @param {StakeCredential} payment
+  * @returns {Promise<RewardAddress>}
+  */
+  static new(network, payment): Promise<RewardAddress>
+
+  /**
+  * @returns {Promise<StakeCredential>}
+  */
+  payment_cred(): Promise<StakeCredential>
+
+  /**
+  * @returns {Promise<Address>}
+  */
+  to_address(): Promise<Address>
+
+  /**
+  * @param {Address} addr
+  * @returns {Promise<RewardAddress | undefined>}
+  */
+  static from_address(addr): Promise<RewardAddress | undefined>
+}
+
 export class UnitInterval extends Ptr {
   /**
   * @param {Uint8Array} bytes
