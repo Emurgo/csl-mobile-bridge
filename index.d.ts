@@ -388,6 +388,36 @@ export class StakeDeregistration extends Ptr {
   static new(stakeCredential): Promise<StakeDeregistration>
 }
 
+export class StakeDelegation extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<StakeDelegation>}
+  */
+  static from_bytes(bytes): Promise<StakeDelegation>
+
+  /**
+  * @returns {Promise<StakeCredential>}
+  */
+  stake_credential(): Promise<StakeCredential>
+
+  /**
+  * @returns {Promise<Ed25519KeyHash>}
+  */
+  pool_keyhash(): Promise<Ed25519KeyHash>
+
+  /**
+  * @param {StakeCredential} stakeCredential
+  * @param {Ed25519KeyHash} poolKeyHash
+  * @returns {Promise<StakeDelegation>}
+  */
+  static new(stakeCredential, poolKeyHash): Promise<StakeDelegation>
+}
+
 export class Certificate extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}

@@ -22,6 +22,7 @@ impl RPtrRepresentable for PrivateKey {}
 impl RPtrRepresentable for PublicKey {}
 impl RPtrRepresentable for RewardAddress {}
 impl RPtrRepresentable for StakeCredential {}
+impl RPtrRepresentable for StakeDelegation {}
 impl RPtrRepresentable for StakeDeregistration {}
 impl RPtrRepresentable for StakeRegistration {}
 impl RPtrRepresentable for Transaction {}

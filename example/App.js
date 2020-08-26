@@ -31,6 +31,7 @@ import {
   PublicKey,
   RewardAddress,
   StakeCredential,
+  StakeDelegation,
   StakeDeregistration,
   StakeRegistration,
   Transaction,
@@ -248,7 +249,7 @@ export default class App extends Component<{}> {
       )
 
       // ------------------------------------------------
-      // --------------- StakeDeregistration --------------
+      // -------------- StakeDeregistration -------------
       const stakeDereg = await StakeDeregistration.new(stakeCred)
       assert(
         Buffer.from(
@@ -267,6 +268,42 @@ export default class App extends Component<{}> {
       assert(
         Buffer.from(await _stakeDereg.to_bytes(), 'hex').toString('hex') ===
           stakeDeregHex,
+        'StakeDeregistration::to/from_bytes()',
+      )
+
+      // ------------------------------------------------
+      // ---------------- StakeDelegation ---------------
+      const poolKeyHash = await Ed25519KeyHash.from_bytes(
+        Buffer.from(
+          '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce43dcd',
+          'hex',
+        ),
+      )
+      const stakeDelegation = await StakeDelegation.new(stakeCred, poolKeyHash)
+      assert(
+        Buffer.from(
+          await (await stakeDelegation.stake_credential()).to_bytes(),
+        ).toString('hex') ===
+          Buffer.from(await stakeCred.to_bytes()).toString('hex'),
+        'StakeDelegation:: new() -> stake_credential()',
+      )
+      assert(
+        Buffer.from(
+          await (await stakeDelegation.pool_keyhash()).to_bytes(),
+        ).toString('hex') ===
+          Buffer.from(await poolKeyHash.to_bytes()).toString('hex'),
+        'StakeDelegation:: new() -> pool_keyhash()',
+      )
+      const stakeDelHex = Buffer.from(
+        await stakeDelegation.to_bytes(),
+        'hex',
+      ).toString('hex')
+      const _stakeDel = await StakeDelegation.from_bytes(
+        Buffer.from(stakeDelHex, 'hex'),
+      )
+      assert(
+        Buffer.from(await _stakeDel.to_bytes(), 'hex').toString('hex') ===
+          stakeDelHex,
         'StakeDeregistration::to/from_bytes()',
       )
 

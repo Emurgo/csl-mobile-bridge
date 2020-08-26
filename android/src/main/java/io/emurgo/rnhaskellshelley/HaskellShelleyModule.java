@@ -477,6 +477,48 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // StakeDelegation
+
+    @ReactMethod
+    public final void stakeDelegationNew(String stakeCredential, String poolKeyhash, Promise promise) {
+        Native.I
+                .stakeDelegationNew(new RPtr(stakeCredential), new RPtr(poolKeyhash))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeDelegationStakeCredential(String stakeDelegation, Promise promise) {
+        Native.I
+                .stakeDelegationStakeCredential(new RPtr(stakeDelegation))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeDelegationPoolKeyhash(String poolKeyHash, Promise promise) {
+        Native.I
+                .stakeDelegationPoolKeyhash(new RPtr(poolKeyHash))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeDelegationToBytes(String stakeDelegation, Promise promise) {
+        Native.I
+                .stakeDelegationToBytes(new RPtr(stakeDelegation))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeDelegationFromBytes(String bytes, Promise promise) {
+        Native.I
+                .stakeDelegationFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // Certificate
 
     @ReactMethod

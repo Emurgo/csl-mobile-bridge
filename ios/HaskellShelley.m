@@ -631,6 +631,64 @@ RCT_EXPORT_METHOD(stakeDeregistrationFromBytes:(nonnull NSString *)bytesStr  wit
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
+// StakeDelegation
+
+RCT_EXPORT_METHOD(stakeDelegationNew:(nonnull NSString *)stakeCredPtr withPoolKeyhash:(nonnull NSString *)poolKeyhashPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr stakeCred = [[params objectAtIndex:0] rPtr];
+        RPtr poolKeyhash = [[params objectAtIndex:1] rPtr];
+        return stake_delegation_new(stakeCred, poolKeyhash, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[stakeCredPtr, poolKeyhashPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(stakeDelegationStakeCredential:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr stakeDelegation = [ptr rPtr];
+        return stake_delegation_stake_credential(stakeDelegation, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(stakeDelegationPoolKeyhash:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr stakeDelegation = [ptr rPtr];
+        return stake_delegation_pool_keyhash(stakeDelegation, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(stakeDelegationToBytes:(nonnull NSString *)stakeDeregistrationPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* stakeDeregistrationPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr stakeDeregistration = [stakeDeregistrationPtr rPtr];
+        return stake_delegation_to_bytes(stakeDeregistration, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:stakeDeregistrationPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(stakeDelegationFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return stake_delegation_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
 // Certificate
 
 RCT_EXPORT_METHOD(certificateNewStakeRegistration:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

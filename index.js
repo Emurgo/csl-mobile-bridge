@@ -607,6 +607,53 @@ export class StakeDeregistration extends Ptr {
   }
 }
 
+export class StakeDelegation extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.stakeDelegationToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<StakeDelegation>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.stakeDelegationFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, StakeDelegation);
+  }
+
+  /**
+  * @returns {Promise<StakeCredential>}
+  */
+  async stake_credential() {
+    const ret = await HaskellShelley.stakeDelegationStakeCredential(this.ptr);
+    return Ptr._wrap(ret, StakeCredential);
+  }
+
+  /**
+  * @returns {Promise<Ed25519KeyHash>}
+  */
+  async pool_keyhash() {
+    const ret = await HaskellShelley.stakeDelegationPoolKeyhash(this.ptr);
+    return Ptr._wrap(ret, Ed25519KeyHash);
+  }
+
+  /**
+  * @param {StakeCredential} stakeCredential
+  * @param {Ed25519KeyHash} poolKeyHash
+  * @returns {Promise<StakeDelegation>}
+  */
+  static async new(stakeCredential, poolKeyHash) {
+    const stakeCredentialPtr = Ptr._assertClass(stakeCredential, StakeCredential);
+    const poolKeyHashPtr = Ptr._assertClass(poolKeyHash, Ed25519KeyHash);
+    const ret = await HaskellShelley.stakeDelegationNew(stakeCredentialPtr, poolKeyHashPtr);
+    return Ptr._wrap(ret, StakeDelegation);
+  }
+}
+
 export class Certificate extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
