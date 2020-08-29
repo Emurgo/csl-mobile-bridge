@@ -942,6 +942,24 @@ export class TransactionOutput extends Ptr {
   }
 }
 
+export class TransactionOutputs extends Ptr {
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.transactionOutputsLen(this.ptr);
+  }
+
+  /**
+  * @param {number} index
+  * @returns {Promise<TransactionOutput>}
+  */
+  async get(index: number) {
+    const ret = await HaskellShelley.transactionOutputsGet(this.ptr, index);
+    return Ptr._wrap(ret, TransactionOutput);
+  }
+}
+
 export class LinearFee extends Ptr {
   /**
   * @returns {Promise<BigNum>}
@@ -1078,6 +1096,14 @@ export class TransactionBody extends Ptr {
   static async from_bytes(bytes) {
     const ret = await HaskellShelley.transactionBodyFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionBody);
+  }
+
+  /**
+  * @returns {Promise<TransactionOutputs>}
+  */
+  async outputs() {
+    const ret = await HaskellShelley.transactionBodyOutputs(this.ptr);
+    return Ptr._wrap(ret, TransactionOutputs);
   }
 }
 

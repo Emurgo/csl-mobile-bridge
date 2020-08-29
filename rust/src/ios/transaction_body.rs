@@ -1,8 +1,10 @@
+use super::result::CResult;
 use crate::utils::ToFromBytes;
 use super::utils::{to_bytes, from_bytes};
 use super::data::DataPtr;
 use super::string::{CharPtr};
-use crate::ptr::{RPtr};
+use crate::ptr::{RPtr, RPtrRepresentable};
+use crate::panic::{handle_exception_result};
 use cardano_serialization_lib::error::{DeserializeError};
 use cardano_serialization_lib::{TransactionBody};
 
@@ -29,4 +31,17 @@ pub unsafe extern "C" fn transaction_body_from_bytes(
   data: *const u8, len: usize, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   from_bytes::<TransactionBody>(data, len, result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_body_outputs(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBody>()
+      .map(|tx_body| tx_body.outputs())
+    })
+    .map(|tx_outputs| tx_outputs.rptr())
+    .response(result, error)
 }

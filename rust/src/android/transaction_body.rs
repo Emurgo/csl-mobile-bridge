@@ -1,6 +1,9 @@
 use crate::utils::ToFromBytes;
+use super::result::ToJniResult;
 use super::utils::{to_bytes, from_bytes};
 use super::ptr_j::*;
+use crate::panic::{handle_exception_result};
+use crate::ptr::RPtrRepresentable;
 use jni::objects::{JObject};
 use jni::sys::{jbyteArray, jobject};
 use jni::JNIEnv;
@@ -32,4 +35,16 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBodyF
   env: JNIEnv, _: JObject, bytes: jbyteArray
 ) -> jobject {
   from_bytes::<TransactionBody>(env, bytes)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBodyOutputs(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr.typed_ref::<TransactionBody>().and_then(|tx_body| tx_body.outputs().rptr().jptr(&env))
+  })
+  .jresult(&env)
 }

@@ -1037,6 +1037,31 @@ RCT_EXPORT_METHOD(transactionOutputNew:(nonnull NSString *)addressPtr withAmount
     }] exec:@[addressPtr, amountPtr] andResolve:resolve orReject:reject];
 }
 
+// TransactionOutputs
+
+RCT_EXPORT_METHOD(transactionOutputsLen:(nonnull NSString *)txOutputsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* txOutputsPtr, CharPtr* error) {
+        uintptr_t result;
+        RPtr txOutputs = [txOutputsPtr rPtr];
+        return transaction_outputs_len(txOutputs, &result, error)
+            ? [NSNumber numberWithUnsignedLong:result]
+            : nil;
+    }] exec:txOutputsPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionOutputsGet:(nonnull NSString *)txOutputsPtr withIndex:(nonnull NSNumber *)index withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr txOutputs = [[params objectAtIndex:0] rPtr];
+        uintptr_t index = [[params objectAtIndex:1] unsignedIntegerValue];
+        return transaction_outputs_get(txOutputs, index, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[txOutputsPtr, index] andResolve:resolve orReject:reject];
+}
+
 // LinearFee
 
 RCT_EXPORT_METHOD(linearFeeCoefficient:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -1194,6 +1219,18 @@ RCT_EXPORT_METHOD(transactionBodyFromBytes:(nonnull NSString *)bytesStr  withRes
             : nil;
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
+
+RCT_EXPORT_METHOD(transactionBodyOutputs:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr txBody = [ptr rPtr];
+        return transaction_body_outputs(txBody, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
 
 // Transaction
 

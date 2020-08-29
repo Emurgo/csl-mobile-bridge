@@ -600,6 +600,13 @@ export default class App extends Component<{}> {
       )
       await txBuilder.set_certs(certs)
 
+      // ------------------------------------------------
+      // -------------- TransactionOutputs --------------
+      const outputs = await txBodyFromBuilder.outputs()
+      assert((await outputs.len()) === 1, 'TransactionOutputs::len()')
+      const output = await outputs.get(0)
+      assert(output instanceof TransactionOutput, 'TransactionOutputs::get()')
+
       console.log('publicKey', publicKey)
       console.log('bip32PublicKey', bip32PublicKey)
       console.log('bip32PrivateKey', bip32PrivateKey)

@@ -601,6 +601,18 @@ export class TransactionOutput extends Ptr {
   static new(address: Address, amount: Coin): Promise<TransactionOutput>;
 }
 
+export class TransactionOutputs extends Ptr {
+  /**
+  * @returns {Promise<number>}
+  */
+  len(): Promise<number>
+  /**
+  * @param {number} index
+  * @returns {Promise<TransactionOutput>}
+  */
+  get(index: number): Promise<TransactionOutput>
+}
+
 export class LinearFee extends Ptr {
   /**
   * @returns {Promise<Coin>}
@@ -694,6 +706,11 @@ export class TransactionBody extends Ptr {
   * @returns {Promise<Uint8Array>}
   */
   to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @returns {Promise<TransactionOutputs>}
+  */
+  outputs(): Promise<TransactionOutputs>
 }
 
 export class Transaction extends Ptr {

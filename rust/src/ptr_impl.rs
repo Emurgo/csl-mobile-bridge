@@ -31,6 +31,7 @@ impl RPtrRepresentable for TransactionBuilder {}
 impl RPtrRepresentable for TransactionInput {}
 impl RPtrRepresentable for TransactionMetadata {}
 impl RPtrRepresentable for TransactionOutput {}
+impl RPtrRepresentable for TransactionOutputs {}
 impl RPtrRepresentable for TransactionWitnessSet {}
 impl RPtrRepresentable for TransactionHash {}
 impl RPtrRepresentable for UnitInterval {}

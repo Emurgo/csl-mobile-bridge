@@ -146,6 +146,10 @@ final class Native {
     public final native Result<RPtr> transactionOutputFromBytes(byte[] bytes);
     public final native Result<RPtr> transactionOutputNew(RPtr address, RPtr amount);
 
+    // TransactionOutputs
+    public final native Result<Long> transactionOutputsLen(RPtr txOutputs);
+    public final native Result<RPtr> transactionOutputsGet(RPtr txOutputs, long index);
+
     // LinearFee
     public final native Result<RPtr> linearFeeCoefficient(RPtr linearFee);
     public final native Result<RPtr> linearFeeConstant(RPtr linearFee);
@@ -169,6 +173,7 @@ final class Native {
     // TransactionBody
     public final native Result<byte[]> transactionBodyToBytes(RPtr TransactionBody);
     public final native Result<RPtr> transactionBodyFromBytes(byte[] bytes);
+    public final native Result<RPtr> transactionBodyOutputs(RPtr TransactionBody);
 
     // Transaction
     public final native Result<RPtr> transactionBody(RPtr tx);
