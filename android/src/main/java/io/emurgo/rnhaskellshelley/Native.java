@@ -34,6 +34,11 @@ final class Native {
     // public final native Result<RPtr> publicKeyVerify(RPtr pubKey, byte[] bytes, RPtr signature);
     public final native Result<RPtr> publicKeyHash(RPtr pubKey);
 
+    // PrivateKey
+    public final native Result<RPtr> privateKeyToPublic(RPtr privateKey);
+    public final native Result<byte[]> privateKeyAsBytes(RPtr privateKey);
+    public final native Result<RPtr> privateKeyFromExtendedBytes(byte[] bytes);
+
     // Bip32PublicKey
     public final native Result<RPtr> bip32PublicKeyDerive(RPtr bip32PublicKey, long index);
     public final native Result<RPtr> bip32PublicKeyToRawKey(RPtr bip32PublicKey);

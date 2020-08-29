@@ -11,6 +11,7 @@ mod data;
 mod ed25519_key_hash;
 mod linear_fee;
 mod ptr_c;
+mod private_key;
 mod public_key;
 mod result;
 mod reward_address;

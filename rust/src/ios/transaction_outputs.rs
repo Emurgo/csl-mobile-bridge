@@ -1,6 +1,6 @@
 use super::result::CResult;
 use super::string::CharPtr;
-use crate::panic::{handle_exception, handle_exception_result};
+use crate::panic::{handle_exception_result};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::{TransactionOutputs};
 

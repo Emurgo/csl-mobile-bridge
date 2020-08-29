@@ -48,13 +48,13 @@ export class BigNum extends Ptr {
   * @param {BigNum} other
   * @returns {Promise<BigNum>}
   */
-  checked_add(other): Promise<Coin>
+  checked_add(other): Promise<Coin>;
 
   /**
   * @param {BigNum} other
   * @returns {Promise<BigNum>}
   */
-  checked_sub(other): Promise<Coin>
+  checked_sub(other): Promise<Coin>;
 
 }
 
@@ -101,6 +101,24 @@ export class PublicKey extends Ptr {
   * @returns {Promise<Ed25519KeyHash>}
   */
   hash(): Promise<Ed25519KeyHash>
+}
+
+export class PrivateKey extends Ptr {
+  /**
+  * @returns {Promise<PublicKey>}
+  */
+  to_public(): Promise<PublicKey>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  as_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<PrivateKey>}
+  */
+  static from_extended_bytes(bytes): Promise<PublicKey>;
 }
 
 /**
