@@ -940,6 +940,22 @@ export class TransactionOutput extends Ptr {
     const ret = await HaskellShelley.transactionOutputNew(addrPtr, amountPtr);
     return Ptr._wrap(ret, TransactionOutput);
   }
+
+  /**
+  * @returns {Promise<Address>}
+  */
+  async address() {
+    const ret = await HaskellShelley.transactionOutputAddress(this.ptr);
+    return Ptr._wrap(ret, Address);
+  }
+
+  /**
+  * @returns {Promise<BigNum>}
+  */
+  async amount() {
+    const ret = await HaskellShelley.transactionOutputAmount(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
 }
 
 export class TransactionOutputs extends Ptr {

@@ -1037,6 +1037,29 @@ RCT_EXPORT_METHOD(transactionOutputNew:(nonnull NSString *)addressPtr withAmount
     }] exec:@[addressPtr, amountPtr] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(transactionOutputAmount:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr txOutput = [ptr rPtr];
+        return transaction_output_amount(txOutput, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionOutputAddress:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr txOutput = [ptr rPtr];
+        return transaction_output_address(txOutput, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+
 // TransactionOutputs
 
 RCT_EXPORT_METHOD(transactionOutputsLen:(nonnull NSString *)txOutputsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

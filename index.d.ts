@@ -566,12 +566,12 @@ export class TransactionInput extends Ptr {
   /**
   * @returns {Promise<TransactionHash>}
   */
-  transaction_id(): Promise<TransactionHash>
+  transaction_id(): Promise<TransactionHash>;
 
   /**
   * @returns {Promise<number>}
   */
-  async index(): Promise<number>
+  async index(): Promise<number>;
 
   /**
   * @param {TransactionHash} transactionId
@@ -599,6 +599,16 @@ export class TransactionOutput extends Ptr {
   * @returns {Promise<TransactionOutput>}
   */
   static new(address: Address, amount: Coin): Promise<TransactionOutput>;
+
+  /**
+  * @returns {Promise<Address>}
+  */
+  address(): Promise<Address>
+
+  /**
+  * @returns {Promise<BigNum>}
+  */
+  amount(): Promise<BigNum>
 }
 
 export class TransactionOutputs extends Ptr {

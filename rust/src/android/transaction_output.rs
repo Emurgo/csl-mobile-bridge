@@ -56,3 +56,27 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionOutpu
   })
   .jresult(&env)
 }
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionOutputAddress(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr.typed_ref::<TransactionOutput>().and_then(|tx_output| tx_output.address().rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionOutputAmount(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr.typed_ref::<TransactionOutput>().and_then(|tx_output| tx_output.amount().rptr().jptr(&env))
+  })
+  .jresult(&env)
+}

@@ -772,6 +772,22 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void transactionOutputAmount(String transactionOutput, Promise promise) {
+        Native.I
+                .transactionOutputAmount(new RPtr(transactionOutput))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionOutputAddress(String transactionOutput, Promise promise) {
+        Native.I
+                .transactionOutputAddress(new RPtr(transactionOutput))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // TransactionOutputs
 
     @ReactMethod

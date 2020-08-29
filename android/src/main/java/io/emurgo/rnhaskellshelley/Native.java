@@ -145,6 +145,8 @@ final class Native {
     public final native Result<byte[]> transactionOutputToBytes(RPtr transactionOutput);
     public final native Result<RPtr> transactionOutputFromBytes(byte[] bytes);
     public final native Result<RPtr> transactionOutputNew(RPtr address, RPtr amount);
+    public final native Result<RPtr> transactionOutputAmount(RPtr transactionOutput);
+    public final native Result<RPtr> transactionOutputAddress(RPtr transactionOutput);
 
     // TransactionOutputs
     public final native Result<Long> transactionOutputsLen(RPtr txOutputs);

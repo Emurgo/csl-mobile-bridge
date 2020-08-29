@@ -425,6 +425,17 @@ export default class App extends Component<{}> {
         txOutput instanceof TransactionOutput,
         'TransactionOutput.new should return instance of TransactionOutput',
       )
+      assert(
+        (await (await txOutput.amount()).to_str()) === amountStr,
+        'TransactionOutput::amount()',
+      )
+      const outputAddrHex = Buffer.from(
+        await (await txOutput.address()).to_bytes(),
+      ).toString('hex')
+      assert(
+        outputAddrHex === Buffer.from(await recipientAddr.to_bytes()).toString('hex'),
+        'TransactionOutput::address()',
+      )
 
       // ------------------------------------------------
       // ------------------- LinearFee ------------------

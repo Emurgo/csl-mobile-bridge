@@ -52,3 +52,29 @@ pub unsafe extern "C" fn transaction_output_new(
     .map(|tx_output| tx_output.rptr())
     .response(result, error)
 }
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_output_amount(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionOutput>()
+      .map(|tx_output| tx_output.amount())
+    })
+    .map(|amount| amount.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_output_address(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionOutput>()
+      .map(|tx_output| tx_output.address())
+    })
+    .map(|address| address.rptr())
+    .response(result, error)
+}
