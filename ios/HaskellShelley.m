@@ -1311,6 +1311,16 @@ RCT_EXPORT_METHOD(transactionBuilderSetTtl:(nonnull NSString *)txBuilderPtr with
     }] exec:@[txBuilderPtr, ttl] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(transactionBuilderSetCerts:(nonnull NSString *)txBuilderPtr withCerts:(nonnull NSString *)certsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr txBuilder = [[params objectAtIndex:0] rPtr];
+        RPtr certs = [[params objectAtIndex:1] rPtr];
+        transaction_builder_set_certs(txBuilder, certs, error);
+        return nil;
+    }] exec:@[txBuilderPtr, certsPtr] andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(transactionBuilderNew:(nonnull NSString *)linearFeePtr withMinUtxoVal:(nonnull NSString *)minimumUtxoValPtr withPoolDeposit:(nonnull NSString *)poolDepositPtr andKeyDeposit:(nonnull NSString *)keyDepositPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {

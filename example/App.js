@@ -598,6 +598,7 @@ export default class App extends Component<{}> {
         (await (await txBuilder.get_fee_if_set()).to_str()) === '1000000',
         'TransactionBuilder::get_fee_or_calc()',
       )
+      await txBuilder.set_certs(certs)
 
       console.log('publicKey', publicKey)
       console.log('bip32PublicKey', bip32PublicKey)

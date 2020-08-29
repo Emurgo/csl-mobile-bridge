@@ -7,7 +7,7 @@ use cardano_serialization_lib::fees::{LinearFee};
 use cardano_serialization_lib::utils::{Coin, BigNum};
 use cardano_serialization_lib::crypto::{Ed25519KeyHash};
 use cardano_serialization_lib::address::{Address, ByronAddress};
-use cardano_serialization_lib::{TransactionInput, TransactionOutput};
+use cardano_serialization_lib::{TransactionInput, TransactionOutput, Certificates};
 
 #[no_mangle]
 pub unsafe extern "C" fn transaction_builder_add_key_input(
@@ -74,6 +74,19 @@ pub unsafe extern "C" fn transaction_builder_set_ttl(
     tx_builder
       .typed_ref::<TransactionBuilder>()
       .map(|tx_builder| tx_builder.set_ttl(ttl))
+  })
+  .response(&mut (), error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_builder_set_certs(
+  tx_builder: RPtr, certs: RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    tx_builder
+      .typed_ref::<TransactionBuilder>()
+      .zip(certs.typed_ref::<Certificates>())
+      .map(|(tx_builder, certs)| tx_builder.set_certs(certs))
   })
   .response(&mut (), error)
 }

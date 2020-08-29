@@ -1199,6 +1199,15 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
+  * @param {Certificates} certs
+  * @returns {Promise<void>}
+  */
+  async set_certs(certs: Certificates) {
+    const certsPtr = Ptr._assertClass(certs, Certificates);
+    return HaskellShelley.transactionBuilderSetCerts(this.ptr, certsPtr);
+  }
+
+  /**
   * @param {LinearFee} linearFee
   * @param {BigNum} minimumUtxoVal
   * @param {BigNum} poolDeposit

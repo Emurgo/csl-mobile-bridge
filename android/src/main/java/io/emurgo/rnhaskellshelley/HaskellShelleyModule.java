@@ -962,6 +962,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionBuilderSetCerts(String txBuilder, String certs, Promise promise) {
+        Native.I
+                .transactionBuilderSetCerts(new RPtr(txBuilder), new RPtr(certs))
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBuilderNew(String linearFee, String minimumUtxoVal, String poolDeposit, String keyDeposit, Promise promise) {
         Native.I
                 .transactionBuilderNew(new RPtr(linearFee), new RPtr(minimumUtxoVal), new RPtr(poolDeposit), new RPtr(keyDeposit))

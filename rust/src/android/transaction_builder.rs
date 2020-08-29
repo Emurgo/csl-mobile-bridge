@@ -12,7 +12,7 @@ use cardano_serialization_lib::fees::{LinearFee};
 use cardano_serialization_lib::utils::{Coin, BigNum};
 use cardano_serialization_lib::address::{Address, ByronAddress};
 use cardano_serialization_lib::crypto::{Ed25519KeyHash};
-use cardano_serialization_lib::{TransactionInput, TransactionOutput};
+use cardano_serialization_lib::{TransactionInput, TransactionOutput, Certificates};
 
 #[allow(non_snake_case)]
 #[no_mangle]
@@ -101,6 +101,23 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
     tx_builder
       .typed_ref::<TransactionBuilder>()
       .map(|tx_builder| tx_builder.set_ttl(ttl_u32))
+  })
+  .map(|_| JObject::null())
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderSetCerts(
+  env: JNIEnv, _: JObject, tx_builder: JRPtr, certs: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let tx_builder = tx_builder.rptr(&env)?;
+    let certs = certs.rptr(&env)?;
+    tx_builder
+      .typed_ref::<TransactionBuilder>()
+      .zip(certs.typed_ref::<Certificates>())
+      .map(|(tx_builder, certs)| tx_builder.set_certs(certs))
   })
   .map(|_| JObject::null())
   .jresult(&env)

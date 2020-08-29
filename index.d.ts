@@ -757,7 +757,13 @@ export class TransactionBuilder extends Ptr {
   * @param {number} ttl
   * @returns {Promise<void>}
   */
-  async set_ttl(ttl: number): Promise<void>
+  set_ttl(ttl: number): Promise<void>
+
+  /**
+  * @param {Certificates} certs
+  * @returns {Promise<void>}
+  */
+  set_certs(certs: Certificates): Promise<void>
 
   /**
   * @param {LinearFee} linearFee
