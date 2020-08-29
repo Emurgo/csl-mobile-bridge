@@ -435,6 +435,18 @@ export class Certificate extends Ptr {
   * @returns {Promise<Certificate>}
   */
   static new_stake_registration(stakeRegistration): Promise<Certificate>
+
+  /**
+  * @param {StakeDeregistration} stakeDeregistration
+  * @returns {Promise<Certificate>}
+  */
+  static new_stake_deregistration(stakeDeregistration): Promise<Certificate>
+
+  /**
+  * @param {StakeDelegation} stakeDelegation
+  * @returns {Promise<Certificate>}
+  */
+  static new_stake_delegation(stakeDelegation): Promise<Certificate>
 }
 
 export class Certificates extends Ptr {

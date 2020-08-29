@@ -316,6 +316,10 @@ export default class App extends Component<{}> {
         Buffer.from(await _cert.to_bytes(), 'hex').toString('hex') === certHex,
         'Certificate::new_stake_registration()',
       )
+      const certDereg = await Certificate.new_stake_deregistration(stakeDereg)
+      assert(certDereg, 'Certificate::new_stake_deregistration()')
+      const certDel = await Certificate.new_stake_delegation(stakeDelegation)
+      assert(certDel, 'Certificate::new_stake_delegation()')
 
       // ------------------------------------------------
       // ----------------- Certificates -----------------

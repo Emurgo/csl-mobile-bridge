@@ -681,6 +681,26 @@ export class Certificate extends Ptr {
     const ret = await HaskellShelley.certificateNewStakeRegistration(stakeRegistrationPtr);
     return Ptr._wrap(ret, Certificate);
   }
+
+  /**
+  * @param {StakeDeregistration} stakeDeregistration
+  * @returns {Promise<Certificate>}
+  */
+  static async new_stake_deregistration(stakeDeregistration) {
+    const stakeDeregistrationPtr = Ptr._assertClass(stakeDeregistration, StakeDeregistration);
+    const ret = await HaskellShelley.certificateNewStakeDeregistration(stakeDeregistrationPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+
+    /**
+    * @param {StakeDelegation} stakeDelegation
+    * @returns {Promise<Certificate>}
+    */
+    static async new_stake_delegation(stakeDelegation) {
+      const stakeDelegationPtr = Ptr._assertClass(stakeDelegation, StakeDelegation);
+      const ret = await HaskellShelley.certificateNewStakeDelegation(stakeDelegationPtr);
+      return Ptr._wrap(ret, Certificate);
+    }
 }
 
 export class Certificates extends Ptr {

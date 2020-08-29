@@ -6,7 +6,7 @@ use crate::utils::ToFromBytes;
 use super::utils::{to_bytes, from_bytes};
 use super::data::DataPtr;
 use cardano_serialization_lib::error::{DeserializeError};
-use cardano_serialization_lib::{StakeRegistration, Certificate};
+use cardano_serialization_lib::{StakeRegistration, StakeDeregistration, StakeDelegation, Certificate};
 
 impl ToFromBytes for Certificate {
   fn to_bytes(&self) -> Vec<u8> {
@@ -41,6 +41,32 @@ pub unsafe extern "C" fn certificate_new_stake_registration(
     stake_reg_ptr
       .typed_ref::<StakeRegistration>()
       .map(|stake_reg| Certificate::new_stake_registration(stake_reg))
+  })
+    .map(|certificate| certificate.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn certificate_new_stake_deregistration(
+  stake_dereg_ptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    stake_dereg_ptr
+      .typed_ref::<StakeDeregistration>()
+      .map(|stake_dereg| Certificate::new_stake_deregistration(stake_dereg))
+  })
+    .map(|certificate| certificate.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn certificate_new_stake_delegation(
+  stake_delegation_ptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    stake_delegation_ptr
+      .typed_ref::<StakeDelegation>()
+      .map(|stake_delegation| Certificate::new_stake_delegation(stake_delegation))
   })
     .map(|certificate| certificate.rptr())
     .response(result, error)

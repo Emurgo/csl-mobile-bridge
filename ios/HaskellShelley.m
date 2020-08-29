@@ -702,6 +702,27 @@ RCT_EXPORT_METHOD(certificateNewStakeRegistration:(nonnull NSString *)ptr  withR
     }] exec:ptr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(certificateNewStakeDeregistration:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr stakeDeregistration = [ptr rPtr];
+        return certificate_new_stake_deregistration(stakeDeregistration, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(certificateNewStakeDelegation:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr stakeDelegation = [ptr rPtr];
+        return certificate_new_stake_delegation(stakeDelegation, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
 
 RCT_EXPORT_METHOD(certificateToBytes:(nonnull NSString *)certificatePtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {

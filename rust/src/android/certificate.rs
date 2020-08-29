@@ -8,7 +8,7 @@ use super::utils::{to_bytes, from_bytes};
 use jni::objects::JObject;
 use jni::sys::{jobject, jbyteArray};
 use jni::JNIEnv;
-use cardano_serialization_lib::{StakeRegistration, Certificate};
+use cardano_serialization_lib::{StakeRegistration, StakeDeregistration, StakeDelegation, Certificate};
 use cardano_serialization_lib::error::{DeserializeError};
 
 impl ToFromBytes for Certificate {
@@ -48,6 +48,36 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_certificateNewSt
     stake_reg
       .typed_ref::<StakeRegistration>()
       .map(|stake_reg| Certificate::new_stake_registration(stake_reg))
+      .and_then(|certificate| certificate.rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_certificateNewStakeDeregistration(
+  env: JNIEnv, _: JObject, stake_dereg_ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let stake_dereg = stake_dereg_ptr.rptr(&env)?;
+    stake_dereg
+      .typed_ref::<StakeDeregistration>()
+      .map(|stake_dereg| Certificate::new_stake_deregistration(stake_dereg))
+      .and_then(|certificate| certificate.rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_certificateNewStakeDelegation(
+  env: JNIEnv, _: JObject, stake_delegation_ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let stake_delegation = stake_delegation_ptr.rptr(&env)?;
+    stake_delegation
+      .typed_ref::<StakeDelegation>()
+      .map(|stake_delegation| Certificate::new_stake_delegation(stake_delegation))
       .and_then(|certificate| certificate.rptr().jptr(&env))
   })
   .jresult(&env)
