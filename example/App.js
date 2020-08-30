@@ -91,7 +91,10 @@ export default class App extends Component<{}> {
         Buffer.from(bip32PrvKeyHex, 'hex'),
       )
       const privateKey = await _bip32PrivateKey.to_raw_key()
-      assert(await (await privateKey.to_public()).as_bytes())
+      assert(
+        (await (await privateKey.to_public()).as_bytes()).length === 32,
+        'PrivateKey::to_public()',
+      )
 
       // ------------------------------------------------
       // ------------------ PublicKey -------------------

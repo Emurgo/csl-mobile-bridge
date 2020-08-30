@@ -109,7 +109,7 @@ RCT_EXPORT_METHOD(privateKeyAsBytes:(nonnull NSString *)ptr withResolve:(RCTProm
 {
     [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
         DataPtr result;
-        return public_key_as_bytes([ptr rPtr], &result, error)
+        return private_key_as_bytes([ptr rPtr], &result, error)
             ? [[NSData fromDataPtr:&result] base64]
             : nil;
     }] exec:ptr andResolve:resolve orReject:reject];
