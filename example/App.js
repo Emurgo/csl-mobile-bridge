@@ -156,13 +156,26 @@ export default class App extends Component<{}> {
         Buffer.from(addrPtrToBytes).toString('hex') === baseAddrHex,
         'Address.to_bytes should match original input address',
       )
-      const addrFromBech32 = await Address.from_bech32(
-        'addr1qqqqpvpu82s99aguppk9f02qt84d95hyy6kgn7jt8njpe0cqqzcrcw4q2t63czrv2j75qk026tfwgf4v38ayk08yrjls4jecre',
+      let addrFromBech32 = await Address.from_bech32(
+        'addr1u8pcjgmx7962w6hey5hhsd502araxp26kdtgagakhaqtq8sxy9w7g',
+      )
+      assert(
+        (await addrFromBech32.to_bech32('foobar')) ===
+          'foobar1u8pcjgmx7962w6hey5hhsd502araxp26kdtgagakhaqtq8s92n4tm',
+        'Address.to_bech32 with prefix',
       )
       assert(
         (await addrFromBech32.to_bech32()) ===
-          'addr1qqqqpvpu82s99aguppk9f02qt84d95hyy6kgn7jt8njpe0cqqzcrcw4q2t63czrv2j75qk026tfwgf4v38ayk08yrjls4jecre',
-        'Address.to_bech32',
+          'stake1u8pcjgmx7962w6hey5hhsd502araxp26kdtgagakhaqtq8squng76',
+        'Address.to_bech32 with default prefix',
+      )
+      addrFromBech32 = await Address.from_bech32(
+        'addr1qyfh4879pratq227f5z6qr48mvwa3acwvtyvgq5553jk8g7nsw44z0v5d2emp8unhqz5em0d7cup75vrxhlqf6l9nzfqphk420',
+      )
+      assert(
+        (await addrFromBech32.to_bech32()) ===
+          'addr1qyfh4879pratq227f5z6qr48mvwa3acwvtyvgq5553jk8g7nsw44z0v5d2emp8unhqz5em0d7cup75vrxhlqf6l9nzfqphk420',
+        'Address.to_bech32 with default prefix',
       )
 
       // ------------------------------------------------
@@ -667,7 +680,7 @@ export default class App extends Component<{}> {
       console.log(e)
       /* eslint-disable-next-line react/no-did-mount-set-state */
       this.setState({
-        status: e.message,
+        status: `error: ${e.message}`,
       })
     }
   }

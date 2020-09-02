@@ -8,8 +8,9 @@ edition = "2018"
 cbindgen = "0.14.1"
 
 [dependencies]
-cardano-serialization-lib = { git = "https://github.com/Emurgo/cardano-serialization-lib.git" }
 wasm-bindgen = { version = "0.2" }
+cardano-serialization-lib = { git = "https://github.com/Emurgo/cardano-serialization-lib.git" }
+# tag = "2.3.1"
 
 [target.'cfg(target_os="android")'.dependencies]
 jni = "0.13.1"
