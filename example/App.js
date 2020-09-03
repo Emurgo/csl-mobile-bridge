@@ -641,6 +641,13 @@ export default class App extends Component<{}> {
       await txBuilder.set_certs(certs)
 
       // ------------------------------------------------
+      // -------------- TransactionInputs ---------------
+      const inputs = await txBodyFromBuilder.inputs()
+      assert((await inputs.len()) === 2, 'TransactionInputs::len()')
+      const input = await inputs.get(0)
+      assert(input instanceof TransactionInput, 'TransactionInputs::get()')
+
+      // ------------------------------------------------
       // -------------- TransactionOutputs --------------
       const outputs = await txBodyFromBuilder.outputs()
       assert((await outputs.len()) === 1, 'TransactionOutputs::len()')
@@ -671,6 +678,8 @@ export default class App extends Component<{}> {
       console.log('tx', tx)
       console.log('txBuilder', txBuilder)
       console.log('txBodyFromBuilder', txBodyFromBuilder)
+      console.log('inputs', inputs)
+      console.log('outputs', outputs)
 
       /* eslint-disable-next-line react/no-did-mount-set-state */
       this.setState({

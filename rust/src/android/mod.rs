@@ -25,6 +25,7 @@ mod transaction_body;
 mod transaction_builder;
 mod transaction_hash;
 mod transaction_input;
+mod transaction_inputs;
 mod transaction_output;
 mod transaction_outputs;
 mod transaction_witness_set;

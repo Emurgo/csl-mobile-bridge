@@ -935,6 +935,23 @@ export class TransactionInput extends Ptr {
   }
 }
 
+export class TransactionInputs extends Ptr {
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.transactionInputsLen(this.ptr);
+  }
+
+  /**
+  * @param {number} index
+  * @returns {Promise<TransactionInput>}
+  */
+  async get(index: number) {
+    const ret = await HaskellShelley.transactionInputsGet(this.ptr, index);
+    return Ptr._wrap(ret, TransactionInput);
+  }
+}
 export class TransactionOutput extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -1136,6 +1153,14 @@ export class TransactionBody extends Ptr {
   static async from_bytes(bytes) {
     const ret = await HaskellShelley.transactionBodyFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionBody);
+  }
+
+  /**
+  * @returns {Promise<TransactionOutputs>}
+  */
+  async inputs() {
+    const ret = await HaskellShelley.transactionBodyInputs(this.ptr);
+    return Ptr._wrap(ret, TransactionInputs);
   }
 
   /**

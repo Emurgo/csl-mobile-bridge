@@ -29,6 +29,7 @@ impl RPtrRepresentable for Transaction {}
 impl RPtrRepresentable for TransactionBody {}
 impl RPtrRepresentable for TransactionBuilder {}
 impl RPtrRepresentable for TransactionInput {}
+impl RPtrRepresentable for TransactionInputs {}
 impl RPtrRepresentable for TransactionMetadata {}
 impl RPtrRepresentable for TransactionOutput {}
 impl RPtrRepresentable for TransactionOutputs {}

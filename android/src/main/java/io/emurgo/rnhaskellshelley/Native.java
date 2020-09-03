@@ -146,6 +146,11 @@ final class Native {
     public final native Result<Long> transactionInputIndex(RPtr transactionInput);
     public final native Result<RPtr> transactionInputNew(RPtr transactionId, long index);
 
+    // TransactionInputs
+    public final native Result<Long> transactionInputsLen(RPtr txInputs);
+    public final native Result<RPtr> transactionInputsGet(RPtr txInputs, long index);
+
+
     // TransactionOutput
     public final native Result<byte[]> transactionOutputToBytes(RPtr transactionOutput);
     public final native Result<RPtr> transactionOutputFromBytes(byte[] bytes);
@@ -181,6 +186,7 @@ final class Native {
     public final native Result<byte[]> transactionBodyToBytes(RPtr TransactionBody);
     public final native Result<RPtr> transactionBodyFromBytes(byte[] bytes);
     public final native Result<RPtr> transactionBodyOutputs(RPtr TransactionBody);
+    public final native Result<RPtr> transactionBodyInputs(RPtr TransactionBody);
 
     // Transaction
     public final native Result<RPtr> transactionBody(RPtr tx);

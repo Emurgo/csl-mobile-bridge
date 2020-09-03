@@ -772,6 +772,24 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // TransactionInputs
+
+    @ReactMethod
+    public final void transactionInputsLen(String transactionInputs, Promise promise) {
+        Native.I
+                .transactionInputsLen(new RPtr(transactionInputs))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionInputsGet(String transactionInputs, Integer index, Promise promise) {
+        Native.I
+                .transactionInputsGet(new RPtr(transactionInputs), index)
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // TransactionOutput
 
     @ReactMethod
@@ -831,7 +849,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .map(RPtr::toJs)
                 .pour(promise);
     }
-
 
     // LinearFee
 
@@ -955,6 +972,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBodyOutputs(String txBody, Promise promise) {
         Native.I
                 .transactionBodyOutputs(new RPtr(txBody))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBodyInputs(String txBody, Promise promise) {
+        Native.I
+                .transactionBodyInputs(new RPtr(txBody))
                 .map(RPtr::toJs)
                 .pour(promise);
     }

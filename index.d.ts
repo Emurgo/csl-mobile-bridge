@@ -599,6 +599,18 @@ export class TransactionInput extends Ptr {
   static new(transactionId: TransactionHash, index: TransactionIndex): Promise<TransactionInput>;
 }
 
+export class TransactionInputs extends Ptr {
+  /**
+  * @returns {Promise<number>}
+  */
+  len(): Promise<number>
+  /**
+  * @param {number} index
+  * @returns {Promise<TransactionInput>}
+  */
+  get(index: number): Promise<TransactionInput>
+}
+
 export class TransactionOutput extends Ptr {
   /**
   * @param {Uint8Array} bytes
@@ -739,6 +751,11 @@ export class TransactionBody extends Ptr {
   * @returns {Promise<TransactionOutputs>}
   */
   outputs(): Promise<TransactionOutputs>
+
+  /**
+  * @returns {Promise<TransactionInputs>}
+  */
+  inputs(): Promise<TransactionInputs>
 }
 
 export class Transaction extends Ptr {
