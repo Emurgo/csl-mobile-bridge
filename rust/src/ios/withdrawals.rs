@@ -3,7 +3,6 @@ use super::string::{CharPtr};
 use crate::panic::{handle_exception_result, handle_exception, Zip};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::address::RewardAddress;
-use cardano_serialization_lib::RewardAddresses;
 use cardano_serialization_lib::Withdrawals;
 use cardano_serialization_lib::utils::{Coin};
 

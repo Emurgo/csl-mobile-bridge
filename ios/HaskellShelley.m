@@ -1,4 +1,4 @@
-transactionInputs#import "HaskellShelley.h"
+#import "HaskellShelley.h"
 #import "NSString+RPtr.h"
 #import "NSData+DataPtr.h"
 #import "SafeOperation.h"
@@ -1027,6 +1027,7 @@ RCT_EXPORT_METHOD(transactionInputNew:(nonnull NSString *)transactionIdPtr withT
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr result;
         RPtr transactionIdPtr = [[params objectAtIndex:0] rPtr];
+        // note: this is a bad conversion (unsigned long -> unsigned int)
         uint32_t index = [[params objectAtIndex:1] unsignedIntegerValue];
         return transaction_input_new(transactionIdPtr, index, &result, error)
             ? [NSString stringFromPtr:result]
@@ -1301,12 +1302,34 @@ RCT_EXPORT_METHOD(transactionBodyFromBytes:(nonnull NSString *)bytesStr  withRes
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(transactionBodyInputs:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr txBody = [ptr rPtr];
+        return transaction_body_inputs(txBody, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(transactionBodyOutputs:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
         RPtr result;
         RPtr txBody = [ptr rPtr];
         return transaction_body_outputs(txBody, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBodyWithdrawals:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr txBody = [ptr rPtr];
+        return transaction_body_withdrawals(txBody, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:ptr andResolve:resolve orReject:reject];
@@ -1540,6 +1563,65 @@ RCT_EXPORT_METHOD(transactionBuilderMinFee:(nonnull NSString *)ptr  withResolve:
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+// Withdrawals
+
+RCT_EXPORT_METHOD(withdrawalsNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return withdrawals_new(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(withdrawalsLen:(nonnull NSString *)withdrawalsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* withdrawalsPtr, CharPtr* error) {
+        uintptr_t result;
+        RPtr withdrawals = [withdrawalsPtr rPtr];
+        return withdrawals_len(withdrawals, &result, error)
+            ? [NSNumber numberWithUnsignedLong:result]
+            : nil;
+    }] exec:withdrawalsPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(withdrawalsInsert:(nonnull NSString *)withdrawalsPtr withKey:(nonnull NSString *)keyPtr withValue:(nonnull NSString *)valuePtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr withdrawals = [[params objectAtIndex:0] rPtr];
+        RPtr key = [[params objectAtIndex:1] rPtr];
+        RPtr value = [[params objectAtIndex:2] rPtr];
+        return withdrawals_insert(withdrawals, key, value, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[withdrawalsPtr, keyPtr, valuePtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(withdrawalsGet:(nonnull NSString *)withdrawalsPtr withKey:(nonnull NSString *)keyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr withdrawals = [[params objectAtIndex:0] rPtr];
+        RPtr key = [[params objectAtIndex:1] rPtr];
+        return withdrawals_get(withdrawals, key, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[withdrawalsPtr, keyPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(withdrawalsKeys:(nonnull NSString *)withdrawalsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* withdrawalsPtr, CharPtr* error) {
+        RPtr result;
+        RPtr withdrawals = [withdrawalsPtr rPtr];
+        return withdrawals_keys(withdrawals, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:withdrawalsPtr andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(ptrFree:(NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
