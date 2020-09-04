@@ -751,14 +751,29 @@ export class TransactionBody extends Ptr {
   to_bytes(): Promise<Uint8Array>;
 
   /**
+  * @returns {Promise<TransactionInputs>}
+  */
+  inputs(): Promise<TransactionInputs>
+
+  /**
   * @returns {Promise<TransactionOutputs>}
   */
   outputs(): Promise<TransactionOutputs>
 
   /**
-  * @returns {Promise<TransactionInputs>}
+  * @returns {Promise<number>}
   */
-  inputs(): Promise<TransactionInputs>
+  fee(): Promise<number>
+
+  /**
+  * @returns {Promise<number>}
+  */
+  ttl(): Promise<number>
+
+  /**
+  * @returns {Promise<Certificates>}
+  */
+  certs(): Promise<Certificates>
 
   /**
   * @returns {Promise<Withdrawals>}
@@ -834,6 +849,12 @@ export class TransactionBuilder extends Ptr {
   * @returns {Promise<void>}
   */
   set_certs(certs: Certificates): Promise<void>
+
+  /**
+  * @param {Withdrawals} certs
+  * @returns {Promise<void>}
+  */
+  set_withdrawals(withdrawals: Withdrawals): Promise<void>
 
   /**
   * @param {LinearFee} linearFee

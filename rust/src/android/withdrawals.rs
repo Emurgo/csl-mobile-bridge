@@ -9,7 +9,7 @@ use jni::JNIEnv;
 use cardano_serialization_lib::address::RewardAddress;
 use cardano_serialization_lib::RewardAddresses;
 use cardano_serialization_lib::Withdrawals;
-use cardano_serialization_lib::utils::{BigNum, Coin};
+use cardano_serialization_lib::utils::{Coin};
 
 
 #[allow(non_snake_case)]

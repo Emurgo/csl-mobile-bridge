@@ -61,6 +61,45 @@ pub unsafe extern "C" fn transaction_body_outputs(
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn transaction_body_fee(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBody>()
+      .map(|tx_body| tx_body.fee())
+    })
+    .map(|fee| fee.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_body_ttl(
+  rptr: RPtr, result: &mut u32, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBody>()
+      .map(|tx_body| tx_body.ttl())
+    })
+    .map(|ttl| ttl.into())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_body_certs(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBody>()
+      .map(|tx_body| tx_body.certs())
+    })
+    .map(|certs| certs.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
 pub unsafe extern "C" fn transaction_body_withdrawals(
   rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {

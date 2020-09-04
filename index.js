@@ -1139,7 +1139,6 @@ export class TransactionWitnessSet extends Ptr {
 // TODO
 export class TransactionMetadata extends Ptr {}
 
-// TODO
 export class TransactionBody extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -1167,11 +1166,34 @@ export class TransactionBody extends Ptr {
   }
 
   /**
+  * @returns {Promise<BigNum>}
+  */
+  async fee() {
+    const ret = await HaskellShelley.transactionBodyFee(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async ttl() {
+    return HaskellShelley.transactionBodyTtl(this.ptr);
+  }
+
+  /**
   * @returns {Promise<TransactionOutputs>}
   */
   async outputs() {
     const ret = await HaskellShelley.transactionBodyOutputs(this.ptr);
     return Ptr._wrap(ret, TransactionOutputs);
+  }
+
+  /**
+  * @returns {Promise<Certificates>}
+  */
+  async certs() {
+    const ret = await HaskellShelley.transactionBodyCerts(this.ptr);
+    return Ptr._wrap(ret, Certificates);
   }
 
   /**
@@ -1307,6 +1329,15 @@ export class TransactionBuilder extends Ptr {
   async set_certs(certs: Certificates) {
     const certsPtr = Ptr._assertClass(certs, Certificates);
     return HaskellShelley.transactionBuilderSetCerts(this.ptr, certsPtr);
+  }
+
+  /**
+  * @param {Withdrawals} certs
+  * @returns {Promise<void>}
+  */
+  async set_withdrawals(withdrawals: Withdrawals) {
+    const withdrawalsPtr = Ptr._assertClass(withdrawals, Withdrawals);
+    return HaskellShelley.transactionBuilderSetWithdrawals(this.ptr, withdrawalsPtr);
   }
 
   /**

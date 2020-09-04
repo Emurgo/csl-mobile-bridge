@@ -985,6 +985,29 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionBodyFee(String txBody, Promise promise) {
+        Native.I
+                .transactionBodyFee(new RPtr(txBody))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBodyTtl(String txBody, Promise promise) {
+        Native.I
+                .transactionBodyTtl(new RPtr(txBody))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBodyCerts(String txBody, Promise promise) {
+        Native.I
+                .transactionBodyCerts(new RPtr(txBody))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBodyWithdrawals(String txBody, Promise promise) {
         Native.I
                 .transactionBodyWithdrawals(new RPtr(txBody))
@@ -1067,6 +1090,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderSetCerts(String txBuilder, String certs, Promise promise) {
         Native.I
                 .transactionBuilderSetCerts(new RPtr(txBuilder), new RPtr(certs))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderSetWithdrawals(String txBuilder, String withdrawals, Promise promise) {
+        Native.I
+                .transactionBuilderSetWithdrawals(new RPtr(txBuilder), new RPtr(withdrawals))
                 .pour(promise);
     }
 

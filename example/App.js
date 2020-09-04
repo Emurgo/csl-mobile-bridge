@@ -580,7 +580,8 @@ export default class App extends Component<{}> {
       // ------------------------------------------------
       // -------------- TransactionBuilder --------------
       // note: changing some of the function parameters will result in some tests
-      // failing.
+      // failing. Same happens if more inputs/outputs/certificates — or anything
+      // that will change the tx size — are added
       const minUtxoVal = await BigNum.from_str('1000000')
       const poolDeposit = await BigNum.from_str('2000000')
       const keyDeposit = await BigNum.from_str('3000000')
@@ -604,7 +605,8 @@ export default class App extends Component<{}> {
       // commented out so that we can test add_change_if_needed(), which
       // throws if fee has been previously set
       // await txBuilder.set_fee(await BigNum.from_str('500000'))
-      await txBuilder.set_ttl(10)
+      const TTL = 10
+      await txBuilder.set_ttl(TTL)
       assert(
         (await (await txBuilder.get_explicit_input()).to_str()) === '2000000',
         'TransactionBuilder::get_explicit_input()',
@@ -627,7 +629,9 @@ export default class App extends Component<{}> {
         (await txBuilder.add_change_if_needed(change)) === false,
         'TransactionBuilder::add_change_if_needed()',
       )
-      const txBodyFromBuilder = await txBuilder.build()
+
+      let txBodyFromBuilder = await txBuilder.build()
+
       assert(
         (await (await txBuilder.min_fee()).to_str()) === '172937',
         'TransactionBuilder::min_fee()',
@@ -641,9 +645,6 @@ export default class App extends Component<{}> {
         'TransactionBuilder::get_fee_or_calc()',
       )
       await txBuilder.set_certs(certs)
-
-      const withdrawalsFromTxBody = await txBodyFromBuilder.withdrawals()
-      assert(withdrawalsFromTxBody == null, 'Withdrawals::len()')
 
       // ------------------------------------------------
       // -------------- TransactionInputs ---------------
@@ -696,6 +697,35 @@ export default class App extends Component<{}> {
       assert(
         (await withdrawals.keys()) instanceof RewardAddresses,
         'Withdrawals::keys()',
+      )
+
+      // ------------------------------------------------
+      // --------------- TransactionBody ----------------
+      // addditional TransactionBody tests using previous
+      // outputs
+      await txBuilder.set_certs(certs)
+      await txBuilder.set_withdrawals(withdrawals)
+
+      // re-generate tx body
+      txBodyFromBuilder = await txBuilder.build()
+
+      const feeFromTxBody = await txBodyFromBuilder.fee()
+      assert(await feeFromTxBody.to_str(), 'TransactionBody::fee()')
+
+      const ttlFromTxBody = await txBodyFromBuilder.ttl()
+      assert(ttlFromTxBody === TTL, 'TransactionBody::ttl()')
+
+      const withdrawalsFromTxBody = await txBodyFromBuilder.withdrawals()
+      assert(
+        (await (await withdrawalsFromTxBody.get(withdrawalAddr)).to_str()) ===
+          '10000000',
+        'TransactionBody::withdrawals() -> Withdrawals::get()',
+      )
+
+      const certsFromTxBody = await txBodyFromBuilder.certs()
+      assert(
+        (await certsFromTxBody.len()) === 1,
+        'TransactionBody::certs() -> Certificates::len()',
       )
 
       console.log('publicKey', publicKey)
