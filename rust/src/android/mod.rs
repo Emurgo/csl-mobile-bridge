@@ -32,6 +32,7 @@ mod transaction_witness_set;
 mod unit_interval;
 mod utils;
 mod vkeywitnesses;
+mod withdrawals;
 // declare other modules here
 // mod transaction;
 

@@ -21,6 +21,7 @@ impl RPtrRepresentable for LinearFee {}
 impl RPtrRepresentable for PrivateKey {}
 impl RPtrRepresentable for PublicKey {}
 impl RPtrRepresentable for RewardAddress {}
+impl RPtrRepresentable for RewardAddresses {}
 impl RPtrRepresentable for StakeCredential {}
 impl RPtrRepresentable for StakeDelegation {}
 impl RPtrRepresentable for StakeDeregistration {}
@@ -38,3 +39,4 @@ impl RPtrRepresentable for TransactionHash {}
 impl RPtrRepresentable for UnitInterval {}
 impl RPtrRepresentable for Vkeywitness {}
 impl RPtrRepresentable for Vkeywitnesses {}
+impl RPtrRepresentable for Withdrawals {}

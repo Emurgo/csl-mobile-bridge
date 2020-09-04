@@ -187,6 +187,7 @@ final class Native {
     public final native Result<RPtr> transactionBodyFromBytes(byte[] bytes);
     public final native Result<RPtr> transactionBodyOutputs(RPtr TransactionBody);
     public final native Result<RPtr> transactionBodyInputs(RPtr TransactionBody);
+    public final native Result<RPtr> transactionBodyWithdrawals(RPtr TransactionBody);
 
     // Transaction
     public final native Result<RPtr> transactionBody(RPtr tx);
@@ -210,6 +211,14 @@ final class Native {
     public final native Result<Boolean> transactionBuilderAddChangeIfNeeded(RPtr txBuilder, RPtr address);
     public final native Result<RPtr> transactionBuilderBuild(RPtr txBuilder);
     public final native Result<RPtr> transactionBuilderMinFee(RPtr txBuilder);
+
+    // Withdrawals
+    public final native Result<RPtr> withdrawalsNew();
+    public final native Result<Long> withdrawalsLen(RPtr withdrawals);
+    public final native Result<RPtr> withdrawalsInsert(RPtr withdrawals, RPtr key, RPtr value);
+    public final native Result<RPtr> withdrawalsGet(RPtr withdrawals, RPtr key);
+    public final native Result<RPtr> withdrawalsKeys(RPtr withdrawals);
+
 
     public final native void ptrFree(RPtr ptr);
 }

@@ -30,6 +30,7 @@ import {
   make_icarus_bootstrap_witness,
   PublicKey,
   RewardAddress,
+  RewardAddresses,
   StakeCredential,
   StakeDelegation,
   StakeDeregistration,
@@ -44,6 +45,7 @@ import {
   UnitInterval,
   Vkeywitness,
   Vkeywitnesses,
+  Withdrawals,
 } from 'react-native-haskell-shelley'
 
 const assert = (value: any, message: string, ...args: any) => {
@@ -640,6 +642,9 @@ export default class App extends Component<{}> {
       )
       await txBuilder.set_certs(certs)
 
+      const withdrawalsFromTxBody = await txBodyFromBuilder.withdrawals()
+      assert(withdrawalsFromTxBody == null, 'Withdrawals::len()')
+
       // ------------------------------------------------
       // -------------- TransactionInputs ---------------
       const inputs = await txBodyFromBuilder.inputs()
@@ -653,6 +658,45 @@ export default class App extends Component<{}> {
       assert((await outputs.len()) === 1, 'TransactionOutputs::len()')
       const output = await outputs.get(0)
       assert(output instanceof TransactionOutput, 'TransactionOutputs::get()')
+
+      // ------------------------------------------------
+      // ------------------ Withdrawals -----------------
+      const withdrawals = await Withdrawals.new()
+      assert((await withdrawals.len()) === 0, 'Withdrawals::len()')
+      const withdrawalAddr = await RewardAddress.from_address(
+        await Address.from_bech32(
+          'addr1u8pcjgmx7962w6hey5hhsd502araxp26kdtgagakhaqtq8sxy9w7g',
+        ),
+      )
+      // returns coin
+      const _oldAmount = await withdrawals.insert(
+        withdrawalAddr,
+        await BigNum.from_str('10000000'),
+      )
+      assert(_oldAmount == null, 'Withdrawals::insert()')
+      assert((await withdrawals.len()) === 1, 'Withdrawals::len() should be 1')
+      assert(
+        (await withdrawals.get(withdrawalAddr)) != null,
+        'Withdrawals::get()',
+      )
+      assert(
+        (await (await withdrawals.get(withdrawalAddr)).to_str()) === '10000000',
+        'Withdrawals::get()',
+      )
+
+      const randomAddr = await RewardAddress.from_address(
+        await Address.from_bech32(
+          'addr1uyvxhwsjarwzr67sutmer7dplwx0jl2czzsp8cvku0wjftgtt8ge9',
+        ),
+      )
+      assert(
+        (await withdrawals.get(randomAddr)) == null,
+        'Withdrawals::get() must be null for invalid key address',
+      )
+      assert(
+        (await withdrawals.keys()) instanceof RewardAddresses,
+        'Withdrawals::keys()',
+      )
 
       console.log('publicKey', publicKey)
       console.log('bip32PublicKey', bip32PublicKey)

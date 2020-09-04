@@ -984,6 +984,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void transactionBodyWithdrawals(String txBody, Promise promise) {
+        Native.I
+                .transactionBodyWithdrawals(new RPtr(txBody))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // Transaction
 
     @ReactMethod
@@ -1129,6 +1137,48 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderMinFee(String txBuilder, Promise promise) {
         Native.I
                 .transactionBuilderMinFee(new RPtr(txBuilder))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    // Vkeywitnesses
+
+    @ReactMethod
+    public final void withdrawalsNew(Promise promise) {
+        Native.I
+                .withdrawalsNew()
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void withdrawalsLen(String withdrawals, Promise promise) {
+        Native.I
+                .withdrawalsLen(new RPtr(withdrawals))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void withdrawalsInsert(String withdrawals, String key, String value, Promise promise) {
+        Native.I
+                .withdrawalsInsert(new RPtr(withdrawals), new RPtr(key), new RPtr(value))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void withdrawalsGet(String withdrawals, String key, Promise promise) {
+        Native.I
+                .withdrawalsGet(new RPtr(withdrawals), new RPtr(key))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void withdrawalsKeys(String withdrawals, Promise promise) {
+        Native.I
+                .withdrawalsKeys(new RPtr(withdrawals))
                 .map(RPtr::toJs)
                 .pour(promise);
     }

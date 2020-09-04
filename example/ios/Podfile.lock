@@ -57,7 +57,7 @@ PODS:
     - React-cxxreact (= 0.60.0)
     - React-jsi (= 0.60.0)
   - React-jsinspector (0.60.0)
-  - react-native-haskell-shelley (1.0.0):
+  - react-native-haskell-shelley (0.0.5):
     - React
   - React-RCTActionSheet (0.60.0):
     - React-Core (= 0.60.0)
@@ -175,7 +175,7 @@ SPEC CHECKSUMS:
   React-jsi: 8e128c4d0d8febc2977ef617d1c09bb54326069c
   React-jsiexecutor: 7a3554f703a58963ec80b860144ea0f0e9b910e1
   React-jsinspector: d4ed52225912efe0019bb7f1a225aec20f23049a
-  react-native-haskell-shelley: f46f8f75597882d5ca69bccadd3cfdea75bf9457
+  react-native-haskell-shelley: 963db135ddf00646fb4170b9b5f6f8c4da449036
   React-RCTActionSheet: b27ff3cf3a68f917c46d2b94abf938b625b96570
   React-RCTAnimation: 9e4708e5bd65fca8285ce7c0aa076f3f4fa5c2f8
   React-RCTBlob: 6eafcc3a24f33785692a7be24918ade607bc8719
@@ -188,6 +188,6 @@ SPEC CHECKSUMS:
   React-RCTWebSocket: fca087d583724aa0e5fef7d911f0f2a28d0f2736
   yoga: 616fde658be980aa60a2158835170f3f9c2d04b4
 
-PODFILE CHECKSUM: 5a605fb21b09bb0bd53cf39d1d084327693cb446
+PODFILE CHECKSUM: b60392e8fc849f5da30c5bbfadedc5791f069a17
 
 COCOAPODS: 1.9.1

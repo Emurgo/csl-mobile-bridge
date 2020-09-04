@@ -1,4 +1,4 @@
-#import "HaskellShelley.h"
+transactionInputs#import "HaskellShelley.h"
 #import "NSString+RPtr.h"
 #import "NSData+DataPtr.h"
 #import "SafeOperation.h"
@@ -1032,6 +1032,31 @@ RCT_EXPORT_METHOD(transactionInputNew:(nonnull NSString *)transactionIdPtr withT
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:@[transactionIdPtr, index] andResolve:resolve orReject:reject];
+}
+
+// TransactionInputs
+
+RCT_EXPORT_METHOD(transactionInputsLen:(nonnull NSString *)txInputsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* txInputsPtr, CharPtr* error) {
+        uintptr_t result;
+        RPtr txInputs = [txInputsPtr rPtr];
+        return transaction_inputs_len(txInputs, &result, error)
+            ? [NSNumber numberWithUnsignedLong:result]
+            : nil;
+    }] exec:txInputsPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionInputsGet:(nonnull NSString *)txInputsPtr withIndex:(nonnull NSNumber *)index withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr txInputs = [[params objectAtIndex:0] rPtr];
+        uintptr_t index = [[params objectAtIndex:1] unsignedIntegerValue];
+        return transaction_inputs_get(txInputs, index, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[txInputsPtr, index] andResolve:resolve orReject:reject];
 }
 
 // TransactionOutput

@@ -858,6 +858,9 @@ export class RewardAddress extends Ptr {
   }
 }
 
+/* TODO */
+export class RewardAddresses extends Ptr {}
+
 export class UnitInterval extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -1170,6 +1173,14 @@ export class TransactionBody extends Ptr {
     const ret = await HaskellShelley.transactionBodyOutputs(this.ptr);
     return Ptr._wrap(ret, TransactionOutputs);
   }
+
+  /**
+  * @returns {Promise<Withdrawals>}
+  */
+  async withdrawals() {
+    const ret = await HaskellShelley.transactionBodyWithdrawals(this.ptr);
+    return Ptr._wrap(ret, Withdrawals);
+  }
 }
 
 export class Transaction extends Ptr {
@@ -1387,5 +1398,52 @@ export class TransactionBuilder extends Ptr {
   async min_fee() {
     const ret = await HaskellShelley.transactionBuilderMinFee(this.ptr);
     return Ptr._wrap(ret, BigNum);
+  }
+}
+
+export class Withdrawals extends Ptr {
+  /**
+  * @returns {Promise<Withdrawals>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.withdrawalsNew();
+    return Ptr._wrap(ret, Withdrawals);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.withdrawalsLen(this.ptr);
+  }
+
+  /**
+  * @param {RewardAddress} key
+  * @param {BigNum} value
+  * @returns {Promise<BigNum>}
+  */
+  async insert(key, value) {
+    const keyPtr = Ptr._assertClass(key, RewardAddress);
+    const valuePtr = Ptr._assertClass(value, BigNum);
+    const ret = await HaskellShelley.withdrawalsInsert(this.ptr, keyPtr, valuePtr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  /**
+  * @param {RewardAddress} key
+  * @returns {Promise<BigNum | undefined>}
+  */
+  async get(key) {
+    const keyPtr = Ptr._assertClass(key, RewardAddress);
+    const ret = await HaskellShelley.withdrawalsGet(this.ptr, keyPtr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  /**
+  * @returns {Promise<RewardAddress>}
+  */
+  async keys() {
+    const ret = await HaskellShelley.withdrawalsKeys(this.ptr);
+    return Ptr._wrap(ret, RewardAddresses);
   }
 }
