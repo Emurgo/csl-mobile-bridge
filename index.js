@@ -467,6 +467,25 @@ export class Address extends Ptr {
   }
 }
 
+export class Ed25519Signature extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.ed25519SignatureToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Ed25519Signature>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.ed25519SignatureFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, Ed25519Signature);
+  }
+}
+
 export class Ed25519KeyHash extends Ptr {
 
   /**
@@ -1051,7 +1070,15 @@ export class LinearFee extends Ptr {
 }
 
 // TODO
-export class Vkeywitness extends Ptr {}
+export class Vkeywitness extends Ptr {
+  /**
+  * @returns {Promise<Ed25519Signature>}
+  */
+  async signature() {
+    const ret = await HaskellShelley.vkeywitnessSignature(this.ptr);
+    return Ptr._wrap(ret, Ed25519Signature);
+  }
+}
 
 export class Vkeywitnesses extends Ptr {
   /**

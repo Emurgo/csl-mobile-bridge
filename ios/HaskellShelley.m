@@ -465,6 +465,30 @@ RCT_EXPORT_METHOD(addressFromBech32:(nonnull NSString *)string withResolve:(RCTP
     }] exec:string andResolve:resolve orReject:reject];
 }
 
+// Ed25519Signature
+
+RCT_EXPORT_METHOD(ed25519SignatureToBytes:(nonnull NSString *)signaturePtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* signaturePtr, CharPtr* error) {
+        DataPtr result;
+        RPtr signature = [signaturePtr rPtr];
+        return ed25519_signature_to_bytes(signature, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:signaturePtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(ed25519SignatureFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return ed25519_signature_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
 // Ed25519KeyHash
 
 RCT_EXPORT_METHOD(ed25519KeyHashToBytes:(nonnull NSString *)keyHashPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -1178,6 +1202,19 @@ RCT_EXPORT_METHOD(linearFeeNew:(nonnull NSString *)coefficientPtr withConstant:(
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:@[coefficientPtr, constantPtr] andResolve:resolve orReject:reject];
+}
+
+// Vkeywitnes
+
+RCT_EXPORT_METHOD(vkeywitnessSignature:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr vkeywit = [ptr rPtr];
+        return vkeywitness_signature(vkeywit, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
 }
 
 // Vkeywitnesses

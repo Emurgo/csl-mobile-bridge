@@ -23,6 +23,7 @@ import {
   ByronAddress,
   Certificate,
   Certificates,
+  Ed25519Signature,
   Ed25519KeyHash,
   LinearFee,
   hash_transaction,
@@ -208,6 +209,19 @@ export default class App extends Component<{}> {
           await ByronAddress.from_address(addrFromByronAddr)
         ).to_base58()) === addrBase58,
         'ByronAddress.to_address',
+      )
+
+      // ------------------------------------------------
+      // ---------------- Ed25519Signature ----------------
+      const signatureHex =
+        '00b36cebd884e6661f27d8888d7e1baa5de6ced4eb66dd14b4103abb755c83f0196d5cbd7851ec1b60e94f6a8e4b9ef2deab3f680af7319e4fc86aba1c412f02'
+      const ed25519Signature = await Ed25519Signature.from_bytes(
+        Buffer.from(signatureHex, 'hex'),
+      )
+      const ed25519SignatureToBytes = await ed25519Signature.to_bytes()
+      assert(
+        Buffer.from(ed25519SignatureToBytes).toString('hex') === signatureHex,
+        'Ed25519Signature from_bytes/to_bytes',
       )
 
       // ------------------------------------------------
@@ -531,6 +545,7 @@ export default class App extends Component<{}> {
         bootstrapWitness.ptr !== undefined,
         'make_icarus_bootstrap_witness:: returns non-undefined',
       )
+
       const sk = await bip32PrivateKey.to_raw_key()
       const vkeywitness = await make_vkey_witness(txHash, sk)
       assert(
@@ -541,6 +556,11 @@ export default class App extends Component<{}> {
         vkeywitness.ptr !== undefined,
         'make_vkey_witness:: returns non-undefined',
       )
+      assert(
+        await vkeywitness.signature(),
+        'make_vkey_witness::witness::signature()',
+      )
+
       const hash = await hash_transaction(txBody)
       assert(
         hash instanceof TransactionHash,
@@ -732,6 +752,7 @@ export default class App extends Component<{}> {
       console.log('bip32PublicKey', bip32PublicKey)
       console.log('bip32PrivateKey', bip32PrivateKey)
       console.log('address', address)
+      console.log('ed25519Signature', ed25519Signature)
       console.log('ed25519KeyHash', ed25519KeyHash)
       console.log('txHash', txHash)
       console.log('pymntAddrKeyHash', pymntAddrKeyHash)

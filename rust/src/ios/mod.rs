@@ -9,6 +9,7 @@ mod certificate;
 mod certificates;
 mod data;
 mod ed25519_key_hash;
+mod ed25519_signature;
 mod linear_fee;
 mod ptr_c;
 mod private_key;
@@ -31,6 +32,7 @@ mod transaction_outputs;
 mod transaction_witness_set;
 mod unit_interval;
 mod utils;
+mod vkeywitness;
 mod vkeywitnesses;
 mod withdrawals;
 // declare other modules here

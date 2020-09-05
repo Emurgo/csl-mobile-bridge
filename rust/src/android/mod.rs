@@ -7,6 +7,7 @@ mod byron_address;
 mod bootstrap_witnesses;
 mod certificate;
 mod certificates;
+mod ed25519_signature;
 mod ed25519_key_hash;
 mod linear_fee;
 mod primitive;
@@ -31,6 +32,7 @@ mod transaction_outputs;
 mod transaction_witness_set;
 mod unit_interval;
 mod utils;
+mod vkeywitness;
 mod vkeywitnesses;
 mod withdrawals;
 // declare other modules here

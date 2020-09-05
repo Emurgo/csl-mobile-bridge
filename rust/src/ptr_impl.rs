@@ -16,6 +16,7 @@ impl RPtrRepresentable for BootstrapWitnesses {}
 impl RPtrRepresentable for ByronAddress {}
 impl RPtrRepresentable for Certificate {}
 impl RPtrRepresentable for Certificates {}
+impl RPtrRepresentable for Ed25519Signature {}
 impl RPtrRepresentable for Ed25519KeyHash {}
 impl RPtrRepresentable for LinearFee {}
 impl RPtrRepresentable for PrivateKey {}
@@ -37,6 +38,7 @@ impl RPtrRepresentable for TransactionOutputs {}
 impl RPtrRepresentable for TransactionWitnessSet {}
 impl RPtrRepresentable for TransactionHash {}
 impl RPtrRepresentable for UnitInterval {}
+impl RPtrRepresentable for Vkey {}
 impl RPtrRepresentable for Vkeywitness {}
 impl RPtrRepresentable for Vkeywitnesses {}
 impl RPtrRepresentable for Withdrawals {}

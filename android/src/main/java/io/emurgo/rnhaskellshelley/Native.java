@@ -73,6 +73,10 @@ final class Native {
     public final native Result<String> addressToBech32WithPrefix(RPtr address, String prefix);
     public final native Result<RPtr> addressFromBech32(String str);
 
+    // Ed25519Signature
+    public final native Result<byte[]> ed25519SignatureToBytes(RPtr ed25519Signature);
+    public final native Result<RPtr> ed25519SignatureFromBytes(byte[] bytes);
+
     // Ed25519KeyHash
     public final native Result<byte[]> ed25519KeyHashToBytes(RPtr ed25519KeyHash);
     public final native Result<RPtr> ed25519KeyHashFromBytes(byte[] bytes);
@@ -166,6 +170,9 @@ final class Native {
     public final native Result<RPtr> linearFeeCoefficient(RPtr linearFee);
     public final native Result<RPtr> linearFeeConstant(RPtr linearFee);
     public final native Result<RPtr> linearFeeNew(RPtr coefficient, RPtr constant);
+
+    // Vkeywitness
+    public final native Result<RPtr> vkeywitnessSignature(RPtr vkwitnesses);
 
     // Vkeywitnesses
     public final native Result<RPtr> vkeywitnessesNew();

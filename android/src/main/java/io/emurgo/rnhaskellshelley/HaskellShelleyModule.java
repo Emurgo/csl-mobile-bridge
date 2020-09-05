@@ -358,6 +358,24 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // Ed25519Signature
+
+    @ReactMethod
+    public final void ed25519SignatureToBytes(String ed25519Signature, Promise promise) {
+        Native.I
+                .ed25519SignatureToBytes(new RPtr(ed25519Signature))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void ed25519SignatureFromBytes(String bytes, Promise promise) {
+        Native.I
+                .ed25519SignatureFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // Ed25519KeyHash
 
     @ReactMethod
@@ -876,6 +894,16 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // Vkeywitness
+
+    @ReactMethod
+    public final void vkeywitnessSignature(String vkeywitness, Promise promise) {
+        Native.I
+                .vkeywitnessSignature(new RPtr(vkeywitness))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // Vkeywitnesses
 
     @ReactMethod
@@ -887,17 +915,17 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void vkeywitnessesLen(String vkwitnesses, Promise promise) {
+    public final void vkeywitnessesLen(String vkeywitnesses, Promise promise) {
         Native.I
-                .vkeywitnessesLen(new RPtr(vkwitnesses))
+                .vkeywitnessesLen(new RPtr(vkeywitnesses))
                 .map(Long::intValue)
                 .pour(promise);
     }
 
     @ReactMethod
-    public final void vkeywitnessesAdd(String vkwitnesses, String item, Promise promise) {
+    public final void vkeywitnessesAdd(String vkeywitnesses, String item, Promise promise) {
         Native.I
-                .vkeywitnessesAdd(new RPtr(vkwitnesses), new RPtr(item))
+                .vkeywitnessesAdd(new RPtr(vkeywitnesses), new RPtr(item))
                 .pour(promise);
     }
 

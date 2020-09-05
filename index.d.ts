@@ -303,6 +303,19 @@ export class Address extends Ptr {
   static from_bech32(string) : Promise<Address>
 }
 
+export class Ed25519Signature extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Ed25519Signature>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<Ed25519Signature>;
+}
+
 export class Ed25519KeyHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
@@ -676,7 +689,12 @@ export class LinearFee extends Ptr {
 }
 
 // TODO
-export class Vkeywitness extends Ptr {}
+export class Vkeywitness extends Ptr {
+  /**
+  * @returns {Promise<Ed25519Signature>}
+  */
+  signature(): Promise<Ed25519Signature>
+}
 
 export class Vkeywitnesses extends Ptr {
     /**
