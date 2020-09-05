@@ -1069,8 +1069,31 @@ export class LinearFee extends Ptr {
   }
 }
 
-// TODO
+export class Vkey extends Ptr {
+  /**
+  * @param {PublicKey} pk
+  * @returns {Promise<Vkey>}
+  */
+  static async new(pk) {
+    const pkPtr = Ptr._assertClass(pk, PublicKey);
+    const ret = await HaskellShelley.vkeyNew(pkPtr);
+    return Ptr._wrap(ret, Vkey);
+  }
+}
+
 export class Vkeywitness extends Ptr {
+  /**
+  * @param {Vkey} vkey
+  * @param {Ed25519Signature} signature
+  * @returns {Promise<Vkeywitness>}
+  */
+  static async new(vkey, signature) {
+    const vkeyPtr = Ptr._assertClass(vkey, Vkey);
+    const signaturePtr = Ptr._assertClass(signature, Ed25519Signature);
+    const ret = await HaskellShelley.vkeywitnessNew(vkeyPtr, signaturePtr);
+    return Ptr._wrap(ret, Vkeywitness);
+  }
+
   /**
   * @returns {Promise<Ed25519Signature>}
   */

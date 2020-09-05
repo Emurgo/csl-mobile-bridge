@@ -171,7 +171,11 @@ final class Native {
     public final native Result<RPtr> linearFeeConstant(RPtr linearFee);
     public final native Result<RPtr> linearFeeNew(RPtr coefficient, RPtr constant);
 
+    // Vkey
+    public final native Result<RPtr> vkeyNew(RPtr publicKey);
+
     // Vkeywitness
+    public final native Result<RPtr> vkeywitnessNew(RPtr vkey, RPtr signature);
     public final native Result<RPtr> vkeywitnessSignature(RPtr vkwitnesses);
 
     // Vkeywitnesses

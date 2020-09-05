@@ -7,7 +7,6 @@ use jni::sys::{jobject};
 use jni::JNIEnv;
 use cardano_serialization_lib::crypto::{Vkeywitness, Vkey, Ed25519Signature};
 
-// TODO: js/java
 #[allow(non_snake_case)]
 #[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_vkeywitnessNew(

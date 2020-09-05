@@ -688,12 +688,27 @@ export class LinearFee extends Ptr {
   static new(coefficient: BigNum, constant: BigNum): Promise<LinearFee>;
 }
 
+export class Vkey extends Ptr {
+  /**
+  * @param {PublicKey} pk
+  * @returns {Promise<Vkey>}
+  */
+  static new(pk): Promise<Vkey>;
+}
+
 // TODO
 export class Vkeywitness extends Ptr {
   /**
+  * @param {Vkey} vkey
+  * @param {Ed25519Signature} signature
+  * @returns {Promise<Vkeywitness>}
+  */
+  static new(vkey, signature): Promise<Vkeywitness>;
+
+  /**
   * @returns {Promise<Ed25519Signature>}
   */
-  signature(): Promise<Ed25519Signature>
+  signature(): Promise<Ed25519Signature>;
 }
 
 export class Vkeywitnesses extends Ptr {

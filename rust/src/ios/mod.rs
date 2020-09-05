@@ -32,6 +32,7 @@ mod transaction_outputs;
 mod transaction_witness_set;
 mod unit_interval;
 mod utils;
+mod vkey;
 mod vkeywitness;
 mod vkeywitnesses;
 mod withdrawals;

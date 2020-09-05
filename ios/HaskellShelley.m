@@ -1204,7 +1204,32 @@ RCT_EXPORT_METHOD(linearFeeNew:(nonnull NSString *)coefficientPtr withConstant:(
     }] exec:@[coefficientPtr, constantPtr] andResolve:resolve orReject:reject];
 }
 
-// Vkeywitnes
+// Vkey
+
+RCT_EXPORT_METHOD(vkeyNew:(nonnull NSString *)publicKeyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* publicKeyPtr, CharPtr* error) {
+        RPtr result;
+        RPtr publicKey = [publicKeyPtr rPtr];
+        return vkey_new(publicKey, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:publicKeyPtr andResolve:resolve orReject:reject];
+}
+
+// Vkeywitness
+
+RCT_EXPORT_METHOD(vkeywitnessNew:(nonnull NSString *)vkeyPtr withSignature:(nonnull NSString *)signaturePtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr vkey = [[params objectAtIndex:0] rPtr];
+        RPtr signature = [[params objectAtIndex:1] rPtr];
+        return vkeywitness_new(vkey, signature, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[vkeyPtr, signaturePtr] andResolve:resolve orReject:reject];
+}
 
 RCT_EXPORT_METHOD(vkeywitnessSignature:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {

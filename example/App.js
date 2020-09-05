@@ -44,6 +44,7 @@ import {
   TransactionOutput,
   TransactionWitnessSet,
   UnitInterval,
+  Vkey,
   Vkeywitness,
   Vkeywitnesses,
   Withdrawals,
@@ -232,6 +233,13 @@ export default class App extends Component<{}> {
         Buffer.from(addrToBytes).toString('hex') === addrHex,
         'Ed25519KeyHash.to_bytes should match original input address',
       )
+
+      // ------------------------------------------------
+      // -------------- Vkey & Vkeywitness --------------
+      const _vkey = await Vkey.new(publicKey)
+      assert(_vkey instanceof Vkey, 'Vkey::new()')
+      const _vkeywitness = await Vkeywitness.new(_vkey, ed25519Signature)
+      assert(_vkeywitness instanceof Vkeywitness, 'Vkeywitness::new()')
 
       // ------------------------------------------------
       // --------------- TransactionHash ----------------

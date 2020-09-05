@@ -894,7 +894,25 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // Vkey
+
+    @ReactMethod
+    public final void vkeyNew(String publicKey, Promise promise) {
+        Native.I
+                .vkeyNew(new RPtr(publicKey))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // Vkeywitness
+
+    @ReactMethod
+    public final void vkeywitnessNew(String vkey, String signature, Promise promise) {
+        Native.I
+                .vkeywitnessNew(new RPtr(vkey), new RPtr(signature))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
 
     @ReactMethod
     public final void vkeywitnessSignature(String vkeywitness, Promise promise) {
