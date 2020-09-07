@@ -257,30 +257,35 @@ export class ByronAddress extends Ptr {
   /**
   * @returns {Promise<string>}
   */
-  to_base58(): Promise<string>
+  to_base58(): Promise<string>;
 
   /**
   * @param {string} string
   * @returns {Promise<ByronAddress>}
   */
-  static from_base58(string: string): Promise<ByronAddress>
+  static from_base58(string: string): Promise<ByronAddress>;
 
   /**
   * @param {string} string
   * @returns {Promise<boolean>}
   */
-  static is_valid(string): Promise<boolean>
+  static is_valid(string): Promise<boolean>;
 
   /**
   * @returns {Promise<Address>}
   */
-  to_address(): Promise<Address>
+  to_address(): Promise<Address>;
 
   /**
   * @param {Address} addr
   * @returns {Promise<ByronAddress | undefined>}
   */
-  static from_address(addr): Promise<ByronAddress | undefined>
+  static from_address(addr): Promise<ByronAddress | undefined>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async attributes(): Promise<Uint8Array>;
 }
 
 export class Address extends Ptr {

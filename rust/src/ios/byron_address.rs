@@ -1,4 +1,5 @@
 use super::result::CResult;
+use super::data::DataPtr;
 use super::string::*;
 use crate::panic::*;
 use crate::ptr::{RPtr, RPtrRepresentable};
@@ -54,4 +55,13 @@ pub unsafe extern "C" fn byron_address_from_address(
     })
     .map(|byron_address| byron_address.rptr())
     .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn byron_address_attributes(
+  rptr: RPtr, result: &mut DataPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| rptr.typed_ref::<ByronAddress>().map(|byron_addr| byron_addr.attributes()))
+  .map(|bytes| bytes.into())
+  .response(result, error)
 }

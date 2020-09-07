@@ -434,6 +434,14 @@ export class ByronAddress extends Ptr {
     const ret = await HaskellShelley.byronAddressFromAddress(addrPtr);
     return Ptr._wrap(ret, ByronAddress);
   }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async attributes() {
+    const b64 = await  HaskellShelley.byronAddressAttributes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
 }
 
 export class Address extends Ptr {

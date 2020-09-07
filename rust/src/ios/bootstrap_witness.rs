@@ -1,8 +1,7 @@
 use std::slice::from_raw_parts;
-use super::data::DataPtr;
 use super::result::CResult;
 use super::string::*;
-use crate::panic::{handle_exception_result, ToResult, Zip};
+use crate::panic::{handle_exception_result, Zip};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::crypto::{BootstrapWitness, Vkey, Ed25519Signature};
 

@@ -211,6 +211,15 @@ export default class App extends Component<{}> {
         ).to_base58()) === addrBase58,
         'ByronAddress.to_address',
       )
+      const byronAddressAttributesHex = Buffer.from(
+        await byronAddress.attributes(),
+        'hex',
+      ).toString('hex')
+      assert(
+        byronAddressAttributesHex instanceof String ||
+          typeof byronAddressAttributesHex === 'string',
+        'ByronAddress::attributes()',
+      )
 
       // ------------------------------------------------
       // ---------------- Ed25519Signature ----------------
@@ -532,11 +541,11 @@ export default class App extends Component<{}> {
       // )
       const _chaincode = await _bip32PubKey.chaincode()
 
-      // const _addr = await ByronAddress.from_base58(
-      //   'Ae2tdPwUPEZG1E5qPwzH4XZqc9ToVzBC8n1YXwyojGSYbNnfAAZxx5Ckw25',
-      // )
-      // const _attributes = await _addr.attributes()
-      const _attributes = Buffer.from('a0', 'hex')
+      const _addr = await ByronAddress.from_base58(
+        'Ae2tdPwUPEZG1E5qPwzH4XZqc9ToVzBC8n1YXwyojGSYbNnfAAZxx5Ckw25',
+      )
+      const _attributes = await _addr.attributes()
+      // const _attributes = Buffer.from('a0', 'hex')
 
       const _bootStrapWitness = await BootstrapWitness.new(
         _vkey,

@@ -76,3 +76,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_byronAddressFrom
   })
   .jresult(&env)
 }
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_byronAddressAttributes(
+  env: JNIEnv, _: JObject, byron_address: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let byron_address = byron_address.rptr(&env)?;
+    byron_address
+      .typed_ref::<ByronAddress>()
+      .map(|byron_address| byron_address.attributes())
+      .and_then(|bytes| env.byte_array_from_slice(&bytes).into_result())
+      .map(|arr| JObject::from(arr))
+  })
+  .jresult(&env)
+}

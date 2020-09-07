@@ -420,6 +420,17 @@ RCT_EXPORT_METHOD(byronAddressFromAddress:(nonnull NSString *)addrPtr withResolv
     }] exec:addrPtr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(byronAddressAttributes:(nonnull NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        CharPtr result;
+        RPtr byronAddr = [ptr rPtr];
+        return byron_address_attributes(byronAddr, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
 // Address
 
 RCT_EXPORT_METHOD(addressToBytes:(nonnull NSString *)addressPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

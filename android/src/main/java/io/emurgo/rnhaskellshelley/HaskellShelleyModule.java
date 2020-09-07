@@ -326,6 +326,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void byronAddressAttributes(String byronAddress, Promise promise) {
+        Native.I
+                .byronAddressAttributes(new RPtr(byronAddress))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
     // Address
 
     @ReactMethod
