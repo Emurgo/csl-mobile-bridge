@@ -78,3 +78,16 @@ pub unsafe extern "C" fn bip32_public_key_to_bech32(
   .map(|bech32| bech32.into_cstr())
   .response(result, error)
 }
+
+#[no_mangle]
+pub unsafe extern "C" fn bip32_public_key_chaincode(
+  bip32_public_key: RPtr, result: &mut DataPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    bip32_public_key
+      .typed_ref::<Bip32PublicKey>()
+      .map(|bip32_public_key| bip32_public_key.chaincode())
+  })
+  .map(|bytes| bytes.into())
+  .response(result, error)
+}

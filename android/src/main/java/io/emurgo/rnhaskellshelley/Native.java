@@ -46,6 +46,7 @@ final class Native {
     public final native Result<byte[]> bip32PublicKeyAsBytes(RPtr bip32PublicKey);
     public final native Result<RPtr> bip32PublicKeyFromBech32(String bech32Str);
     public final native Result<String> bip32PublicKeyToBech32(RPtr bip32PublicKey);
+    public final native Result<byte[]> bip32PublicKeyChaincode(RPtr bip32PublicKey);
 
 
     // Bip32PrivateKey
@@ -182,6 +183,9 @@ final class Native {
     public final native Result<RPtr> vkeywitnessesNew();
     public final native Result<Long> vkeywitnessesLen(RPtr vkwitnesses);
     public final native Result<Void> vkeywitnessesAdd(RPtr vkwitnesses, RPtr item);
+
+    // BootstrapWitness
+    public final native Result<RPtr> bootstrapWitnessNew(RPtr vkey, RPtr signature, byte[] chainCode, byte[] attributes);
 
     // BootstrapWitnesses
     public final native Result<RPtr> bootstrapWitnessesNew();

@@ -242,11 +242,22 @@ RCT_EXPORT_METHOD(bip32PublicKeyFromBech32:(nonnull NSString *)bech32Str withRes
 
 RCT_EXPORT_METHOD(bip32PublicKeyToBech32:(nonnull NSString *)bip32PublicKeyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
-    [[CSafeOperation new:^NSString*(NSString* bip32PrivateKeyPtr, CharPtr* error) {
+    [[CSafeOperation new:^NSString*(NSString* bip32PublicKeyPtr, CharPtr* error) {
         CharPtr result;
         RPtr bip32PublicKey = [bip32PublicKeyPtr rPtr];
         return bip32_public_key_to_bech32(bip32PublicKey, &result, error)
             ? [NSString stringFromCharPtr:&result]
+            : nil;
+    }] exec:bip32PublicKeyPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(bip32PublicKeyChaincode:(nonnull NSString *)bip32PublicKeyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bip32PublicKeyPtr, CharPtr* error) {
+        CharPtr result;
+        RPtr bip32PublicKey = [bip32PublicKeyPtr rPtr];
+        return bip32_public_key_chaincode(bip32PublicKey, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
             : nil;
     }] exec:bip32PublicKeyPtr andResolve:resolve orReject:reject];
 }
@@ -1265,15 +1276,32 @@ RCT_EXPORT_METHOD(vkeywitnessesLen:(nonnull NSString *)witnessesPtr withResolve:
     }] exec:witnessesPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(vkeywitnessesAdd:(nonnull NSString *)witnessesPtr withItem:(nonnull NSString *)item withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(vkeywitnessesAdd:(nonnull NSString *)witnessesPtr withItem:(nonnull NSString *)itemPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr witnesses = [[params objectAtIndex:0] rPtr];
         RPtr item = [[params objectAtIndex:1] rPtr];
         vkeywitnesses_add(&witnesses, item, error);
         return nil;
-    }] exec:@[witnessesPtr, item] andResolve:resolve orReject:reject];
+    }] exec:@[witnessesPtr, itemPtr] andResolve:resolve orReject:reject];
 }
+
+// BootstrapWitness
+
+RCT_EXPORT_METHOD(bootstrapWitnessNew:(nonnull NSString *)vkeyPtr withSignature:(nonnull NSString *)signaturePtr withChainCode:(nonnull NSString *)chainCodeStr withAttributes:(nonnull NSString *)attributesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr vkey = [[params objectAtIndex:0] rPtr];
+        RPtr signature = [[params objectAtIndex:1] rPtr];
+        NSData* chainCode = [NSData fromBase64:[params objectAtIndex:2]];
+        NSData* attributes = [NSData fromBase64:[params objectAtIndex:3]];
+        return bootstrap_witness_new(vkey, signature, (uint8_t*)chainCode.bytes, chainCode.length, (uint8_t*)attributes.bytes, attributes.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[vkeyPtr, signaturePtr, chainCodeStr, attributesStr] andResolve:resolve orReject:reject];
+}
+
 
 // BootstrapWitnesses
 

@@ -99,3 +99,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_bip32PublicKeyTo
   })
   .jresult(&env)
 }
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_bip32PublicKeyChaincode(
+  env: JNIEnv, _: JObject, bip32_public_key: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let bip32_public_key = bip32_public_key.rptr(&env)?;
+    bip32_public_key
+      .typed_ref::<Bip32PublicKey>()
+      .map(|bip32_public_key| bip32_public_key.chaincode())
+      .and_then(|bytes| env.byte_array_from_slice(&bytes).into_result())
+      .map(|arr| JObject::from(arr))
+  })
+  .jresult(&env)
+}

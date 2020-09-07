@@ -174,6 +174,11 @@ export class Bip32PublicKey extends Ptr {
   * @returns {Promise<string>}
   */
   to_bech32(): Promise<string>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  chaincode(): Promise<Uint8Array>;
 }
 
 /**
@@ -729,8 +734,21 @@ export class Vkeywitnesses extends Ptr {
     add(item: Vkeywitness): Promise<void>
 }
 
-// TODO
-export class BootstrapWitness extends Ptr {}
+export class BootstrapWitness extends Ptr {
+  /**
+  * @param {Vkey} vkey
+  * @param {Ed25519Signature} signature
+  * @param {Uint8Array} chainCode
+  * @param {Uint8Array} attributes
+  * @returns {Promise<BootstrapWitness>}
+  */
+  static new(
+    vkey: Vkey,
+    signature: Ed25519Signature,
+    chainCode: Uint8Array,
+    attributes: Uint8Array,
+  ): Promise<BootstrapWitness>
+}
 
 export class BootstrapWitnesses extends Ptr {
     /**

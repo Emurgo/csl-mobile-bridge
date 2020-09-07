@@ -283,6 +283,14 @@ export class Bip32PublicKey extends Ptr {
   to_bech32() {
     return HaskellShelley.bip32PublicKeyToBech32(this.ptr);
   }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async chaincode() {
+    const b64 = await  HaskellShelley.bip32PublicKeyChaincode(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
 }
 
 
@@ -1129,8 +1137,26 @@ export class Vkeywitnesses extends Ptr {
   }
 }
 
-// TODO
-export class BootstrapWitness extends Ptr {}
+export class BootstrapWitness extends Ptr {
+  /**
+  * @param {Vkey} vkey
+  * @param {Ed25519Signature} signature
+  * @param {Uint8Array} chainCode
+  * @param {Uint8Array} attributes
+  * @returns {Promise<BootstrapWitness>}
+  */
+  static async new(vkey, signature, chainCode, attributes) {
+    const vkeyPtr = Ptr._assertClass(vkey, Vkey);
+    const signaturePtr = Ptr._assertClass(signature, Ed25519Signature);
+    const ret = await HaskellShelley.bootstrapWitnessNew(
+      vkeyPtr,
+      signaturePtr,
+      b64FromUint8Array(chainCode),
+      b64FromUint8Array(attributes),
+    );
+    return Ptr._wrap(ret, BootstrapWitness);
+  }
+}
 
 export class BootstrapWitnesses extends Ptr {
   /**

@@ -121,9 +121,9 @@ export default class App extends Component<{}> {
       // ------------------------------------------------
       // --------------- Bip32PrivateKey ----------------
       const bip32PrivKeyBytes =
-        '70afd5ff1f7f551c481b7e3f3541f7c63f5f6bcb293af92565af3deea0bcd648' +
-        '1a6e7b8acbe38f3906c63ccbe8b2d9b876572651ac5d2afc0aca284d9412bb1b' +
-        '4839bf02e1d990056d0f06af22ce4bcca52ac00f1074324aab96bbaaaccf290d'
+        '2001e30383cdb706f494829906e1d5090fcd67db66eba8c573a9e6f036161c59' +
+        '5cbcccbf3b32e9b94e9cf1dfd29270af1f242f7d0bf1344c9b8034567ac2a7e1' +
+        '15582aa9bf54e792ef62aba8ba3014c6a86c186140ad317fbfbba00929ec458b'
       const bip32PrivateKey = await Bip32PrivateKey.from_bytes(
         Buffer.from(bip32PrivKeyBytes, 'hex'),
       )
@@ -233,13 +233,6 @@ export default class App extends Component<{}> {
         Buffer.from(addrToBytes).toString('hex') === addrHex,
         'Ed25519KeyHash.to_bytes should match original input address',
       )
-
-      // ------------------------------------------------
-      // -------------- Vkey & Vkeywitness --------------
-      const _vkey = await Vkey.new(publicKey)
-      assert(_vkey instanceof Vkey, 'Vkey::new()')
-      const _vkeywitness = await Vkeywitness.new(_vkey, ed25519Signature)
-      assert(_vkeywitness instanceof Vkeywitness, 'Vkeywitness::new()')
 
       // ------------------------------------------------
       // --------------- TransactionHash ----------------
@@ -507,12 +500,67 @@ export default class App extends Component<{}> {
       )
 
       // ------------------------------------------------
+      // --------------------- Vkey ---------------------
+      const vkey = await Vkey.new(publicKey)
+      assert(vkey instanceof Vkey, 'Vkey::new()')
+
+      // ------------------------------------------------
+      // --------------- BootstrapWitness ---------------
+      const _publicKey = await PublicKey.from_bytes(
+        Buffer.from(
+          '42cfdc53da2220ba52ce62f8e20ab9bb99857a3fceacf43d676d7987ad909b53',
+          'hex',
+        ),
+      )
+      const _bip32PubKey = await Bip32PublicKey.from_bytes(
+        Buffer.from(
+          '42cfdc53da2220ba52ce62f8e20ab9bb99857a3fceacf43d676d7987ad909b53ed75534e0d0ee8fce835eb2e7c67c5caec18a9c894388d9a046380edebbfc46d',
+          'hex',
+        ),
+      )
+
+      const _vkey = await Vkey.new(_publicKey)
+      const _signature = await Ed25519Signature.from_bytes(
+        Buffer.from(
+          '00469b3a56dab16881a5a1b9a9415ba183979e919ae05b1475eca670df85a14bc7004375744570f02eb07729b5a9d39a3a61eec372183e2e5ea14649cea8970b',
+          'hex',
+        ),
+      )
+      // const _chaincode = Buffer.from(
+      //   '15582aa9bf54e792ef62aba8ba3014c6a86c186140ad317fbfbba00929ec458b',
+      //   'hex',
+      // )
+      const _chaincode = await _bip32PubKey.chaincode()
+
+      // const _addr = await ByronAddress.from_base58(
+      //   'Ae2tdPwUPEZG1E5qPwzH4XZqc9ToVzBC8n1YXwyojGSYbNnfAAZxx5Ckw25',
+      // )
+      // const _attributes = await _addr.attributes()
+      const _attributes = Buffer.from('a0', 'hex')
+
+      const _bootStrapWitness = await BootstrapWitness.new(
+        _vkey,
+        _signature,
+        _chaincode,
+        _attributes,
+      )
+      assert(
+        _bootStrapWitness instanceof BootstrapWitness,
+        'BootstrapWitness::new()',
+      )
+
+      // ------------------------------------------------
       // -------------- BootstrapWitnesses --------------
       const bootstrapWits = await BootstrapWitnesses.new()
       assert(
         (await bootstrapWits.len()) === 0,
         'BootstrapWitnesses.len() should return 0',
       )
+
+      // ------------------------------------------------
+      // ------------------ Vkeywitness -----------------
+      const _vkeywitness = await Vkeywitness.new(vkey, ed25519Signature)
+      assert(_vkeywitness instanceof Vkeywitness, 'Vkeywitness::new()')
 
       // ------------------------------------------------
       // ---------------- Vkeywitnesses -----------------

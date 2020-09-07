@@ -204,6 +204,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void bip32PublicKeyChaincode(String bip32PublicKey, Promise promise) {
+        Native.I
+                .bip32PublicKeyChaincode(new RPtr(bip32PublicKey))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
 
     // Bip32PrivateKey
 
@@ -944,6 +952,16 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void vkeywitnessesAdd(String vkeywitnesses, String item, Promise promise) {
         Native.I
                 .vkeywitnessesAdd(new RPtr(vkeywitnesses), new RPtr(item))
+                .pour(promise);
+    }
+
+    // BootstrapWitness
+
+    @ReactMethod
+    public final void bootstrapWitnessNew(String vkey, String signature, String chainCode, String attributes, Promise promise) {
+        Native.I
+                .bootstrapWitnessNew(new RPtr(vkey), new RPtr(signature), Base64.decode(chainCode, Base64.DEFAULT), Base64.decode(attributes, Base64.DEFAULT))
+                .map(RPtr::toJs)
                 .pour(promise);
     }
 
