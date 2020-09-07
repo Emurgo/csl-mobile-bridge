@@ -34,6 +34,20 @@ pub unsafe extern "C" fn transaction_body_from_bytes(
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn transaction_body_inputs(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBody>()
+      .map(|tx_body| tx_body.inputs())
+    })
+    .map(|tx_inputs| tx_inputs.rptr())
+    .response(result, error)
+}
+
+
+#[no_mangle]
 pub unsafe extern "C" fn transaction_body_outputs(
   rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
@@ -43,5 +57,57 @@ pub unsafe extern "C" fn transaction_body_outputs(
       .map(|tx_body| tx_body.outputs())
     })
     .map(|tx_outputs| tx_outputs.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_body_fee(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBody>()
+      .map(|tx_body| tx_body.fee())
+    })
+    .map(|fee| fee.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_body_ttl(
+  rptr: RPtr, result: &mut u32, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBody>()
+      .map(|tx_body| tx_body.ttl())
+    })
+    .map(|ttl| ttl.into())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_body_certs(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBody>()
+      .map(|tx_body| tx_body.certs())
+    })
+    .map(|certs| certs.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_body_withdrawals(
+  rptr: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBody>()
+      .map(|tx_body| tx_body.withdrawals())
+    })
+    .map(|withdrawals| withdrawals.rptr())
     .response(result, error)
 }

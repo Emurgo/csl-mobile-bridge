@@ -23,6 +23,7 @@ import {
   ByronAddress,
   Certificate,
   Certificates,
+  Ed25519Signature,
   Ed25519KeyHash,
   LinearFee,
   hash_transaction,
@@ -30,6 +31,7 @@ import {
   make_icarus_bootstrap_witness,
   PublicKey,
   RewardAddress,
+  RewardAddresses,
   StakeCredential,
   StakeDelegation,
   StakeDeregistration,
@@ -42,8 +44,10 @@ import {
   TransactionOutput,
   TransactionWitnessSet,
   UnitInterval,
+  Vkey,
   Vkeywitness,
   Vkeywitnesses,
+  Withdrawals,
 } from 'react-native-haskell-shelley'
 
 const assert = (value: any, message: string, ...args: any) => {
@@ -117,9 +121,9 @@ export default class App extends Component<{}> {
       // ------------------------------------------------
       // --------------- Bip32PrivateKey ----------------
       const bip32PrivKeyBytes =
-        '70afd5ff1f7f551c481b7e3f3541f7c63f5f6bcb293af92565af3deea0bcd648' +
-        '1a6e7b8acbe38f3906c63ccbe8b2d9b876572651ac5d2afc0aca284d9412bb1b' +
-        '4839bf02e1d990056d0f06af22ce4bcca52ac00f1074324aab96bbaaaccf290d'
+        '2001e30383cdb706f494829906e1d5090fcd67db66eba8c573a9e6f036161c59' +
+        '5cbcccbf3b32e9b94e9cf1dfd29270af1f242f7d0bf1344c9b8034567ac2a7e1' +
+        '15582aa9bf54e792ef62aba8ba3014c6a86c186140ad317fbfbba00929ec458b'
       const bip32PrivateKey = await Bip32PrivateKey.from_bytes(
         Buffer.from(bip32PrivKeyBytes, 'hex'),
       )
@@ -206,6 +210,28 @@ export default class App extends Component<{}> {
           await ByronAddress.from_address(addrFromByronAddr)
         ).to_base58()) === addrBase58,
         'ByronAddress.to_address',
+      )
+      const byronAddressAttributesHex = Buffer.from(
+        await byronAddress.attributes(),
+        'hex',
+      ).toString('hex')
+      assert(
+        byronAddressAttributesHex instanceof String ||
+          typeof byronAddressAttributesHex === 'string',
+        'ByronAddress::attributes()',
+      )
+
+      // ------------------------------------------------
+      // ---------------- Ed25519Signature ----------------
+      const signatureHex =
+        '00b36cebd884e6661f27d8888d7e1baa5de6ced4eb66dd14b4103abb755c83f0196d5cbd7851ec1b60e94f6a8e4b9ef2deab3f680af7319e4fc86aba1c412f02'
+      const ed25519Signature = await Ed25519Signature.from_bytes(
+        Buffer.from(signatureHex, 'hex'),
+      )
+      const ed25519SignatureToBytes = await ed25519Signature.to_bytes()
+      assert(
+        Buffer.from(ed25519SignatureToBytes).toString('hex') === signatureHex,
+        'Ed25519Signature from_bytes/to_bytes',
       )
 
       // ------------------------------------------------
@@ -483,12 +509,67 @@ export default class App extends Component<{}> {
       )
 
       // ------------------------------------------------
+      // --------------------- Vkey ---------------------
+      const vkey = await Vkey.new(publicKey)
+      assert(vkey instanceof Vkey, 'Vkey::new()')
+
+      // ------------------------------------------------
+      // --------------- BootstrapWitness ---------------
+      const _publicKey = await PublicKey.from_bytes(
+        Buffer.from(
+          '42cfdc53da2220ba52ce62f8e20ab9bb99857a3fceacf43d676d7987ad909b53',
+          'hex',
+        ),
+      )
+      const _bip32PubKey = await Bip32PublicKey.from_bytes(
+        Buffer.from(
+          '42cfdc53da2220ba52ce62f8e20ab9bb99857a3fceacf43d676d7987ad909b53ed75534e0d0ee8fce835eb2e7c67c5caec18a9c894388d9a046380edebbfc46d',
+          'hex',
+        ),
+      )
+
+      const _vkey = await Vkey.new(_publicKey)
+      const _signature = await Ed25519Signature.from_bytes(
+        Buffer.from(
+          '00469b3a56dab16881a5a1b9a9415ba183979e919ae05b1475eca670df85a14bc7004375744570f02eb07729b5a9d39a3a61eec372183e2e5ea14649cea8970b',
+          'hex',
+        ),
+      )
+      // const _chaincode = Buffer.from(
+      //   '15582aa9bf54e792ef62aba8ba3014c6a86c186140ad317fbfbba00929ec458b',
+      //   'hex',
+      // )
+      const _chaincode = await _bip32PubKey.chaincode()
+
+      const _addr = await ByronAddress.from_base58(
+        'Ae2tdPwUPEZG1E5qPwzH4XZqc9ToVzBC8n1YXwyojGSYbNnfAAZxx5Ckw25',
+      )
+      const _attributes = await _addr.attributes()
+      // const _attributes = Buffer.from('a0', 'hex')
+
+      const _bootStrapWitness = await BootstrapWitness.new(
+        _vkey,
+        _signature,
+        _chaincode,
+        _attributes,
+      )
+      assert(
+        _bootStrapWitness instanceof BootstrapWitness,
+        'BootstrapWitness::new()',
+      )
+
+      // ------------------------------------------------
       // -------------- BootstrapWitnesses --------------
       const bootstrapWits = await BootstrapWitnesses.new()
       assert(
         (await bootstrapWits.len()) === 0,
         'BootstrapWitnesses.len() should return 0',
       )
+
+      // ------------------------------------------------
+      // ------------------ Vkeywitness -----------------
+      const _vkeywitness = await Vkeywitness.new(vkey, ed25519Signature)
+      assert(_vkeywitness instanceof Vkeywitness, 'Vkeywitness::new()')
 
       // ------------------------------------------------
       // ---------------- Vkeywitnesses -----------------
@@ -529,6 +610,7 @@ export default class App extends Component<{}> {
         bootstrapWitness.ptr !== undefined,
         'make_icarus_bootstrap_witness:: returns non-undefined',
       )
+
       const sk = await bip32PrivateKey.to_raw_key()
       const vkeywitness = await make_vkey_witness(txHash, sk)
       assert(
@@ -539,6 +621,11 @@ export default class App extends Component<{}> {
         vkeywitness.ptr !== undefined,
         'make_vkey_witness:: returns non-undefined',
       )
+      assert(
+        await vkeywitness.signature(),
+        'make_vkey_witness::witness::signature()',
+      )
+
       const hash = await hash_transaction(txBody)
       assert(
         hash instanceof TransactionHash,
@@ -578,7 +665,8 @@ export default class App extends Component<{}> {
       // ------------------------------------------------
       // -------------- TransactionBuilder --------------
       // note: changing some of the function parameters will result in some tests
-      // failing.
+      // failing. Same happens if more inputs/outputs/certificates — or anything
+      // that will change the tx size — are added
       const minUtxoVal = await BigNum.from_str('1000000')
       const poolDeposit = await BigNum.from_str('2000000')
       const keyDeposit = await BigNum.from_str('3000000')
@@ -602,7 +690,8 @@ export default class App extends Component<{}> {
       // commented out so that we can test add_change_if_needed(), which
       // throws if fee has been previously set
       // await txBuilder.set_fee(await BigNum.from_str('500000'))
-      await txBuilder.set_ttl(10)
+      const TTL = 10
+      await txBuilder.set_ttl(TTL)
       assert(
         (await (await txBuilder.get_explicit_input()).to_str()) === '2000000',
         'TransactionBuilder::get_explicit_input()',
@@ -625,7 +714,9 @@ export default class App extends Component<{}> {
         (await txBuilder.add_change_if_needed(change)) === false,
         'TransactionBuilder::add_change_if_needed()',
       )
-      const txBodyFromBuilder = await txBuilder.build()
+
+      let txBodyFromBuilder = await txBuilder.build()
+
       assert(
         (await (await txBuilder.min_fee()).to_str()) === '172937',
         'TransactionBuilder::min_fee()',
@@ -641,16 +732,92 @@ export default class App extends Component<{}> {
       await txBuilder.set_certs(certs)
 
       // ------------------------------------------------
+      // -------------- TransactionInputs ---------------
+      const inputs = await txBodyFromBuilder.inputs()
+      assert((await inputs.len()) === 2, 'TransactionInputs::len()')
+      const input = await inputs.get(0)
+      assert(input instanceof TransactionInput, 'TransactionInputs::get()')
+
+      // ------------------------------------------------
       // -------------- TransactionOutputs --------------
       const outputs = await txBodyFromBuilder.outputs()
       assert((await outputs.len()) === 1, 'TransactionOutputs::len()')
       const output = await outputs.get(0)
       assert(output instanceof TransactionOutput, 'TransactionOutputs::get()')
 
+      // ------------------------------------------------
+      // ------------------ Withdrawals -----------------
+      const withdrawals = await Withdrawals.new()
+      assert((await withdrawals.len()) === 0, 'Withdrawals::len()')
+      const withdrawalAddr = await RewardAddress.from_address(
+        await Address.from_bech32(
+          'addr1u8pcjgmx7962w6hey5hhsd502araxp26kdtgagakhaqtq8sxy9w7g',
+        ),
+      )
+      // returns coin
+      const _oldAmount = await withdrawals.insert(
+        withdrawalAddr,
+        await BigNum.from_str('10000000'),
+      )
+      assert(_oldAmount == null, 'Withdrawals::insert()')
+      assert((await withdrawals.len()) === 1, 'Withdrawals::len() should be 1')
+      assert(
+        (await withdrawals.get(withdrawalAddr)) != null,
+        'Withdrawals::get()',
+      )
+      assert(
+        (await (await withdrawals.get(withdrawalAddr)).to_str()) === '10000000',
+        'Withdrawals::get()',
+      )
+
+      const randomAddr = await RewardAddress.from_address(
+        await Address.from_bech32(
+          'addr1uyvxhwsjarwzr67sutmer7dplwx0jl2czzsp8cvku0wjftgtt8ge9',
+        ),
+      )
+      assert(
+        (await withdrawals.get(randomAddr)) == null,
+        'Withdrawals::get() must be null for invalid key address',
+      )
+      assert(
+        (await withdrawals.keys()) instanceof RewardAddresses,
+        'Withdrawals::keys()',
+      )
+
+      // ------------------------------------------------
+      // --------------- TransactionBody ----------------
+      // addditional TransactionBody tests using previous
+      // outputs
+      await txBuilder.set_certs(certs)
+      await txBuilder.set_withdrawals(withdrawals)
+
+      // re-generate tx body
+      txBodyFromBuilder = await txBuilder.build()
+
+      const feeFromTxBody = await txBodyFromBuilder.fee()
+      assert(await feeFromTxBody.to_str(), 'TransactionBody::fee()')
+
+      const ttlFromTxBody = await txBodyFromBuilder.ttl()
+      assert(ttlFromTxBody === TTL, 'TransactionBody::ttl()')
+
+      const withdrawalsFromTxBody = await txBodyFromBuilder.withdrawals()
+      assert(
+        (await (await withdrawalsFromTxBody.get(withdrawalAddr)).to_str()) ===
+          '10000000',
+        'TransactionBody::withdrawals() -> Withdrawals::get()',
+      )
+
+      const certsFromTxBody = await txBodyFromBuilder.certs()
+      assert(
+        (await certsFromTxBody.len()) === 1,
+        'TransactionBody::certs() -> Certificates::len()',
+      )
+
       console.log('publicKey', publicKey)
       console.log('bip32PublicKey', bip32PublicKey)
       console.log('bip32PrivateKey', bip32PrivateKey)
       console.log('address', address)
+      console.log('ed25519Signature', ed25519Signature)
       console.log('ed25519KeyHash', ed25519KeyHash)
       console.log('txHash', txHash)
       console.log('pymntAddrKeyHash', pymntAddrKeyHash)
@@ -671,6 +838,8 @@ export default class App extends Component<{}> {
       console.log('tx', tx)
       console.log('txBuilder', txBuilder)
       console.log('txBodyFromBuilder', txBodyFromBuilder)
+      console.log('inputs', inputs)
+      console.log('outputs', outputs)
 
       /* eslint-disable-next-line react/no-did-mount-set-state */
       this.setState({

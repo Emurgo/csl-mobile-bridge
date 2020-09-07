@@ -4,9 +4,11 @@ mod big_num;
 mod bip32_private_key;
 mod bip32_public_key;
 mod byron_address;
+mod bootstrap_witness;
 mod bootstrap_witnesses;
 mod certificate;
 mod certificates;
+mod ed25519_signature;
 mod ed25519_key_hash;
 mod linear_fee;
 mod primitive;
@@ -25,12 +27,16 @@ mod transaction_body;
 mod transaction_builder;
 mod transaction_hash;
 mod transaction_input;
+mod transaction_inputs;
 mod transaction_output;
 mod transaction_outputs;
 mod transaction_witness_set;
 mod unit_interval;
 mod utils;
+mod vkey;
+mod vkeywitness;
 mod vkeywitnesses;
+mod withdrawals;
 // declare other modules here
 // mod transaction;
 

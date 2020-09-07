@@ -1,6 +1,6 @@
 use super::ptr_j::*;
 use super::result::ToJniResult;
-use crate::panic::{handle_exception_result, Zip};
+use crate::panic::{handle_exception_result};
 use crate::ptr::RPtrRepresentable;
 use jni::objects::JObject;
 use jni::sys::{jobject, jint};

@@ -283,6 +283,14 @@ export class Bip32PublicKey extends Ptr {
   to_bech32() {
     return HaskellShelley.bip32PublicKeyToBech32(this.ptr);
   }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async chaincode() {
+    const b64 = await  HaskellShelley.bip32PublicKeyChaincode(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
 }
 
 
@@ -426,6 +434,14 @@ export class ByronAddress extends Ptr {
     const ret = await HaskellShelley.byronAddressFromAddress(addrPtr);
     return Ptr._wrap(ret, ByronAddress);
   }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async attributes() {
+    const b64 = await  HaskellShelley.byronAddressAttributes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
 }
 
 export class Address extends Ptr {
@@ -464,6 +480,25 @@ export class Address extends Ptr {
   static async from_bech32(string) {
     const ret = await HaskellShelley.addressFromBech32(string);
     return Ptr._wrap(ret, Address);
+  }
+}
+
+export class Ed25519Signature extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.ed25519SignatureToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Ed25519Signature>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.ed25519SignatureFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, Ed25519Signature);
   }
 }
 
@@ -858,6 +893,9 @@ export class RewardAddress extends Ptr {
   }
 }
 
+/* TODO */
+export class RewardAddresses extends Ptr {}
+
 export class UnitInterval extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -935,6 +973,23 @@ export class TransactionInput extends Ptr {
   }
 }
 
+export class TransactionInputs extends Ptr {
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.transactionInputsLen(this.ptr);
+  }
+
+  /**
+  * @param {number} index
+  * @returns {Promise<TransactionInput>}
+  */
+  async get(index: number) {
+    const ret = await HaskellShelley.transactionInputsGet(this.ptr, index);
+    return Ptr._wrap(ret, TransactionInput);
+  }
+}
 export class TransactionOutput extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -1030,8 +1085,39 @@ export class LinearFee extends Ptr {
   }
 }
 
-// TODO
-export class Vkeywitness extends Ptr {}
+export class Vkey extends Ptr {
+  /**
+  * @param {PublicKey} pk
+  * @returns {Promise<Vkey>}
+  */
+  static async new(pk) {
+    const pkPtr = Ptr._assertClass(pk, PublicKey);
+    const ret = await HaskellShelley.vkeyNew(pkPtr);
+    return Ptr._wrap(ret, Vkey);
+  }
+}
+
+export class Vkeywitness extends Ptr {
+  /**
+  * @param {Vkey} vkey
+  * @param {Ed25519Signature} signature
+  * @returns {Promise<Vkeywitness>}
+  */
+  static async new(vkey, signature) {
+    const vkeyPtr = Ptr._assertClass(vkey, Vkey);
+    const signaturePtr = Ptr._assertClass(signature, Ed25519Signature);
+    const ret = await HaskellShelley.vkeywitnessNew(vkeyPtr, signaturePtr);
+    return Ptr._wrap(ret, Vkeywitness);
+  }
+
+  /**
+  * @returns {Promise<Ed25519Signature>}
+  */
+  async signature() {
+    const ret = await HaskellShelley.vkeywitnessSignature(this.ptr);
+    return Ptr._wrap(ret, Ed25519Signature);
+  }
+}
 
 export class Vkeywitnesses extends Ptr {
   /**
@@ -1059,8 +1145,26 @@ export class Vkeywitnesses extends Ptr {
   }
 }
 
-// TODO
-export class BootstrapWitness extends Ptr {}
+export class BootstrapWitness extends Ptr {
+  /**
+  * @param {Vkey} vkey
+  * @param {Ed25519Signature} signature
+  * @param {Uint8Array} chainCode
+  * @param {Uint8Array} attributes
+  * @returns {Promise<BootstrapWitness>}
+  */
+  static async new(vkey, signature, chainCode, attributes) {
+    const vkeyPtr = Ptr._assertClass(vkey, Vkey);
+    const signaturePtr = Ptr._assertClass(signature, Ed25519Signature);
+    const ret = await HaskellShelley.bootstrapWitnessNew(
+      vkeyPtr,
+      signaturePtr,
+      b64FromUint8Array(chainCode),
+      b64FromUint8Array(attributes),
+    );
+    return Ptr._wrap(ret, BootstrapWitness);
+  }
+}
 
 export class BootstrapWitnesses extends Ptr {
   /**
@@ -1119,7 +1223,6 @@ export class TransactionWitnessSet extends Ptr {
 // TODO
 export class TransactionMetadata extends Ptr {}
 
-// TODO
 export class TransactionBody extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -1141,9 +1244,48 @@ export class TransactionBody extends Ptr {
   /**
   * @returns {Promise<TransactionOutputs>}
   */
+  async inputs() {
+    const ret = await HaskellShelley.transactionBodyInputs(this.ptr);
+    return Ptr._wrap(ret, TransactionInputs);
+  }
+
+  /**
+  * @returns {Promise<BigNum>}
+  */
+  async fee() {
+    const ret = await HaskellShelley.transactionBodyFee(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async ttl() {
+    return HaskellShelley.transactionBodyTtl(this.ptr);
+  }
+
+  /**
+  * @returns {Promise<TransactionOutputs>}
+  */
   async outputs() {
     const ret = await HaskellShelley.transactionBodyOutputs(this.ptr);
     return Ptr._wrap(ret, TransactionOutputs);
+  }
+
+  /**
+  * @returns {Promise<Certificates>}
+  */
+  async certs() {
+    const ret = await HaskellShelley.transactionBodyCerts(this.ptr);
+    return Ptr._wrap(ret, Certificates);
+  }
+
+  /**
+  * @returns {Promise<Withdrawals>}
+  */
+  async withdrawals() {
+    const ret = await HaskellShelley.transactionBodyWithdrawals(this.ptr);
+    return Ptr._wrap(ret, Withdrawals);
   }
 }
 
@@ -1274,6 +1416,15 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
+  * @param {Withdrawals} certs
+  * @returns {Promise<void>}
+  */
+  async set_withdrawals(withdrawals: Withdrawals) {
+    const withdrawalsPtr = Ptr._assertClass(withdrawals, Withdrawals);
+    return HaskellShelley.transactionBuilderSetWithdrawals(this.ptr, withdrawalsPtr);
+  }
+
+  /**
   * @param {LinearFee} linearFee
   * @param {BigNum} minimumUtxoVal
   * @param {BigNum} poolDeposit
@@ -1362,5 +1513,52 @@ export class TransactionBuilder extends Ptr {
   async min_fee() {
     const ret = await HaskellShelley.transactionBuilderMinFee(this.ptr);
     return Ptr._wrap(ret, BigNum);
+  }
+}
+
+export class Withdrawals extends Ptr {
+  /**
+  * @returns {Promise<Withdrawals>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.withdrawalsNew();
+    return Ptr._wrap(ret, Withdrawals);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.withdrawalsLen(this.ptr);
+  }
+
+  /**
+  * @param {RewardAddress} key
+  * @param {BigNum} value
+  * @returns {Promise<BigNum>}
+  */
+  async insert(key, value) {
+    const keyPtr = Ptr._assertClass(key, RewardAddress);
+    const valuePtr = Ptr._assertClass(value, BigNum);
+    const ret = await HaskellShelley.withdrawalsInsert(this.ptr, keyPtr, valuePtr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  /**
+  * @param {RewardAddress} key
+  * @returns {Promise<BigNum | undefined>}
+  */
+  async get(key) {
+    const keyPtr = Ptr._assertClass(key, RewardAddress);
+    const ret = await HaskellShelley.withdrawalsGet(this.ptr, keyPtr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  /**
+  * @returns {Promise<RewardAddress>}
+  */
+  async keys() {
+    const ret = await HaskellShelley.withdrawalsKeys(this.ptr);
+    return Ptr._wrap(ret, RewardAddresses);
   }
 }

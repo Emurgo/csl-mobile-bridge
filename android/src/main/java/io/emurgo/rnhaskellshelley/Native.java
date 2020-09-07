@@ -46,6 +46,7 @@ final class Native {
     public final native Result<byte[]> bip32PublicKeyAsBytes(RPtr bip32PublicKey);
     public final native Result<RPtr> bip32PublicKeyFromBech32(String bech32Str);
     public final native Result<String> bip32PublicKeyToBech32(RPtr bip32PublicKey);
+    public final native Result<byte[]> bip32PublicKeyChaincode(RPtr bip32PublicKey);
 
 
     // Bip32PrivateKey
@@ -65,6 +66,7 @@ final class Native {
     public final native Result<Boolean> byronAddressIsValid(String str);
     public final native Result<RPtr> byronAddressFromAddress(RPtr address);
     public final native Result<RPtr> byronAddressToAddress(RPtr byronAddress);
+    public final native Result<byte[]> byronAddressAttributes(RPtr byronAddress);
 
     // Address
     public final native Result<byte[]> addressToBytes(RPtr address);
@@ -72,6 +74,10 @@ final class Native {
     public final native Result<String> addressToBech32(RPtr address);
     public final native Result<String> addressToBech32WithPrefix(RPtr address, String prefix);
     public final native Result<RPtr> addressFromBech32(String str);
+
+    // Ed25519Signature
+    public final native Result<byte[]> ed25519SignatureToBytes(RPtr ed25519Signature);
+    public final native Result<RPtr> ed25519SignatureFromBytes(byte[] bytes);
 
     // Ed25519KeyHash
     public final native Result<byte[]> ed25519KeyHashToBytes(RPtr ed25519KeyHash);
@@ -146,6 +152,11 @@ final class Native {
     public final native Result<Long> transactionInputIndex(RPtr transactionInput);
     public final native Result<RPtr> transactionInputNew(RPtr transactionId, long index);
 
+    // TransactionInputs
+    public final native Result<Long> transactionInputsLen(RPtr txInputs);
+    public final native Result<RPtr> transactionInputsGet(RPtr txInputs, long index);
+
+
     // TransactionOutput
     public final native Result<byte[]> transactionOutputToBytes(RPtr transactionOutput);
     public final native Result<RPtr> transactionOutputFromBytes(byte[] bytes);
@@ -162,10 +173,20 @@ final class Native {
     public final native Result<RPtr> linearFeeConstant(RPtr linearFee);
     public final native Result<RPtr> linearFeeNew(RPtr coefficient, RPtr constant);
 
+    // Vkey
+    public final native Result<RPtr> vkeyNew(RPtr publicKey);
+
+    // Vkeywitness
+    public final native Result<RPtr> vkeywitnessNew(RPtr vkey, RPtr signature);
+    public final native Result<RPtr> vkeywitnessSignature(RPtr vkwitnesses);
+
     // Vkeywitnesses
     public final native Result<RPtr> vkeywitnessesNew();
     public final native Result<Long> vkeywitnessesLen(RPtr vkwitnesses);
     public final native Result<Void> vkeywitnessesAdd(RPtr vkwitnesses, RPtr item);
+
+    // BootstrapWitness
+    public final native Result<RPtr> bootstrapWitnessNew(RPtr vkey, RPtr signature, byte[] chainCode, byte[] attributes);
 
     // BootstrapWitnesses
     public final native Result<RPtr> bootstrapWitnessesNew();
@@ -180,7 +201,12 @@ final class Native {
     // TransactionBody
     public final native Result<byte[]> transactionBodyToBytes(RPtr TransactionBody);
     public final native Result<RPtr> transactionBodyFromBytes(byte[] bytes);
+    public final native Result<RPtr> transactionBodyInputs(RPtr TransactionBody);
     public final native Result<RPtr> transactionBodyOutputs(RPtr TransactionBody);
+    public final native Result<RPtr> transactionBodyFee(RPtr TransactionBody);
+    public final native Result<Integer> transactionBodyTtl(RPtr TransactionBody);
+    public final native Result<RPtr> transactionBodyWithdrawals(RPtr TransactionBody);
+    public final native Result<RPtr> transactionBodyCerts(RPtr TransactionBody);
 
     // Transaction
     public final native Result<RPtr> transactionBody(RPtr tx);
@@ -195,6 +221,7 @@ final class Native {
     public final native Result<Void> transactionBuilderSetFee(RPtr txBuilder, RPtr fee);
     public final native Result<Void> transactionBuilderSetTtl(RPtr txBuilder, long ttl);
     public final native Result<Void> transactionBuilderSetCerts(RPtr txBuilder, RPtr certs);
+    public final native Result<Void> transactionBuilderSetWithdrawals(RPtr txBuilder, RPtr withdrawals);
     public final native Result<RPtr> transactionBuilderNew(RPtr linearFee, RPtr minimumUtxoVal, RPtr poolDeposit, RPtr keyDeposit);
     public final native Result<RPtr> transactionBuilderGetExplicitInput(RPtr txBuilder);
     public final native Result<RPtr> transactionBuilderGetImplicitInput(RPtr txBuilder);
@@ -204,6 +231,14 @@ final class Native {
     public final native Result<Boolean> transactionBuilderAddChangeIfNeeded(RPtr txBuilder, RPtr address);
     public final native Result<RPtr> transactionBuilderBuild(RPtr txBuilder);
     public final native Result<RPtr> transactionBuilderMinFee(RPtr txBuilder);
+
+    // Withdrawals
+    public final native Result<RPtr> withdrawalsNew();
+    public final native Result<Long> withdrawalsLen(RPtr withdrawals);
+    public final native Result<RPtr> withdrawalsInsert(RPtr withdrawals, RPtr key, RPtr value);
+    public final native Result<RPtr> withdrawalsGet(RPtr withdrawals, RPtr key);
+    public final native Result<RPtr> withdrawalsKeys(RPtr withdrawals);
+
 
     public final native void ptrFree(RPtr ptr);
 }
