@@ -2,7 +2,7 @@ module.exports = {
   dependency: {
     platforms: {
       ios: {
-        sharedLibraries: ["libresolv"],
+        sharedLibraries: ['libresolv'],
       },
     },
   },

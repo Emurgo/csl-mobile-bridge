@@ -63,9 +63,6 @@ export default class App extends Component<{}> {
     status: 'starting',
   }
   async componentDidMount() {
-    const addrHex = '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' // 28B
-    const addrBytes = Buffer.from(addrHex, 'hex')
-
     try {
       // ------------------------------------------------
       // -------------------- BigNum --------------------
@@ -236,6 +233,8 @@ export default class App extends Component<{}> {
 
       // ------------------------------------------------
       // ---------------- Ed25519KeyHash ----------------
+      const addrHex = '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' // 28B
+      const addrBytes = Buffer.from(addrHex, 'hex')
       const ed25519KeyHash = await Ed25519KeyHash.from_bytes(addrBytes)
       const addrToBytes = await ed25519KeyHash.to_bytes()
       assert(
@@ -730,6 +729,21 @@ export default class App extends Component<{}> {
         'TransactionBuilder::get_fee_or_calc()',
       )
       await txBuilder.set_certs(certs)
+
+      const feeForOutput = await (
+        await txBuilder.fee_for_output(
+          await TransactionOutput.new(
+            await Address.from_bytes(baseAddrBytes),
+            // largest possible CBOR value
+            // note: this slightly over-estimates by a few bytes
+            await BigNum.from_str((0x100000000).toString()),
+          ),
+        )
+      ).to_str()
+      assert(
+        feeForOutput instanceof String || typeof feeForOutput === 'string',
+        'TransactionBuilder::fee_for_output()',
+      )
 
       // ------------------------------------------------
       // -------------- TransactionInputs ---------------

@@ -852,7 +852,7 @@ export class Transaction extends Ptr {
     body: TransactionBody,
     witnessSet: TransactionWitnessSet,
     metadata?: TransactionMetadata,
-  ): Promise<Transaction>
+  ): Promise<Transaction>;
 }
 
 export class TransactionBuilder extends Ptr {
@@ -866,7 +866,7 @@ export class TransactionBuilder extends Ptr {
     hash: Ed25519KeyHash,
     input: TransactionInput,
     amount: BigNum,
-  ): Promise<void>
+  ): Promise<void>;
 
   /**
   * @param {ByronAddress} hash
@@ -878,39 +878,43 @@ export class TransactionBuilder extends Ptr {
     hash: ByronAddress,
     input: TransactionInput,
     amount: BigNum,
-  ): Promise<void>
+  ): Promise<void>;
 
   /**
   * @param {TransactionOutput} output
   * @returns {Promise<void>}
   */
-  add_output(
-    output: TransactionOutput,
-  ): Promise<void>
+  add_output(output: TransactionOutput): Promise<void>;
+
+  /**
+  * @param {TransactionOutput} output
+  * @returns {Promise<BigNum>}
+  */
+  fee_for_output(output: TransactionOutput): Promise<BigNum>;
 
   /**
   * @param {BigNum} fee
   * @returns {Promise<void>}
   */
-  set_fee(fee: BigNum): Promise<void>
+  set_fee(fee: BigNum): Promise<void>;
 
   /**
   * @param {number} ttl
   * @returns {Promise<void>}
   */
-  set_ttl(ttl: number): Promise<void>
+  set_ttl(ttl: number): Promise<void>;
 
   /**
   * @param {Certificates} certs
   * @returns {Promise<void>}
   */
-  set_certs(certs: Certificates): Promise<void>
+  set_certs(certs: Certificates): Promise<void>;
 
   /**
   * @param {Withdrawals} certs
   * @returns {Promise<void>}
   */
-  set_withdrawals(withdrawals: Withdrawals): Promise<void>
+  set_withdrawals(withdrawals: Withdrawals): Promise<void>;
 
   /**
   * @param {LinearFee} linearFee
@@ -924,48 +928,48 @@ export class TransactionBuilder extends Ptr {
     minimumUtxoVal: BigNum,
     poolDeposit: BigNum,
     keyDeposit: BigNum,
-  ): Promise<TransactionBuilder>
+  ): Promise<TransactionBuilder>;
 
   /**
   * @returns {Promise<BigNum>}
   */
-  get_explicit_input(): Promise<BigNum>
+  get_explicit_input(): Promise<BigNum>;
 
   /**
   * @returns {Promise<BigNum>}
   */
-  get_implicit_input(): Promise<BigNum>
+  get_implicit_input(): Promise<BigNum>;
 
   /**
   * @returns {Promise<BigNum>}
   */
-  get_explicit_output(): Promise<BigNum>
+  get_explicit_output(): Promise<BigNum>;
 
   /**
   * @returns {Promise<BigNum>}
   */
-  get_deposit(): Promise<BigNum>
+  get_deposit(): Promise<BigNum>;
 
   /**
   * @returns {Promise<BigNum>}
   */
-  get_fee_if_set(): Promise<BigNum>
+  get_fee_if_set(): Promise<BigNum>;
 
   /**
   * @param {Address} address
   * @returns {Promise<boolean>}
   */
-  add_change_if_needed(address: Address)
+  add_change_if_needed(address: Address);
 
   /**
   * @returns {Promise<TransactionBody>}
   */
-  build(): Promise<TransactionBody>
+  build(): Promise<TransactionBody>;
 
   /**
   * @returns {Promise<BigNum>}
   */
-  min_fee(): Promise<BigNum>
+  min_fee(): Promise<BigNum>;
 }
 
 export class Withdrawals extends Ptr {

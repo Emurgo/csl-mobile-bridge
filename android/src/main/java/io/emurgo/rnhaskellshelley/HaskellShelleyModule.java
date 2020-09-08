@@ -1145,6 +1145,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionBuilderFeeForOutput(String txBuilder, String output, Promise promise) {
+        Native.I
+                .transactionBuilderFeeForOutput(new RPtr(txBuilder), new RPtr(output))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBuilderSetFee(String txBuilder, String fee, Promise promise) {
         Native.I
                 .transactionBuilderSetFee(new RPtr(txBuilder), new RPtr(fee))

@@ -217,7 +217,8 @@ final class Native {
     // TransactionBuilder
     public final native Result<Void> transactionBuilderAddKeyInput(RPtr txBuilder, RPtr hash, RPtr input, RPtr value);
     public final native Result<Void> transactionBuilderAddBootstrapInput(RPtr txBuilder, RPtr hash, RPtr input, RPtr value);
-    public final native Result<Void> transactionBuilderAddOutput(RPtr txBuilder, RPtr input);
+    public final native Result<Void> transactionBuilderAddOutput(RPtr txBuilder, RPtr output);
+    public final native Result<RPtr> transactionBuilderFeeForOutput(RPtr txBuilder, RPtr output);
     public final native Result<Void> transactionBuilderSetFee(RPtr txBuilder, RPtr fee);
     public final native Result<Void> transactionBuilderSetTtl(RPtr txBuilder, long ttl);
     public final native Result<Void> transactionBuilderSetCerts(RPtr txBuilder, RPtr certs);

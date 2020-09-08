@@ -1387,6 +1387,16 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
+  * @param {TransactionOutput} output
+  * @returns {Promise<BigNum>}
+  */
+  async fee_for_output(output) {
+    const outputPtr = Ptr._assertClass(output, TransactionOutput);
+    const ret = await HaskellShelley.transactionBuilderFeeForOutput(this.ptr, outputPtr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  /**
   * @param {BigNum} fee
   * @returns {Promise<void>}
   */

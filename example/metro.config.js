@@ -19,11 +19,10 @@ module.exports = {
   resolver: {
     extraNodeModules: new Proxy(
       {},
-      { get: (_, name) => path.resolve('.', 'node_modules', name) }
-    )
+      {get: (_, name) => path.resolve('.', 'node_modules', name)},
+    ),
   },
-
   // quick workaround for another issue with symlinks
-  watchFolders: ['.', '..']
-  // watchFolders: ['.']
+  watchFolders: ['.', '..'],
+  // watchFolders: ['.'],
 }

@@ -54,6 +54,20 @@ pub unsafe extern "C" fn transaction_builder_add_output(
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn transaction_builder_fee_for_output(
+  rptr: RPtr, output: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<TransactionBuilder>()
+      .zip(output.typed_ref::<TransactionOutput>())
+      .and_then(|(tx_builder, output)| tx_builder.fee_for_output(output).into_result())
+    })
+    .map(|fee| fee.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
 pub unsafe extern "C" fn transaction_builder_set_fee(
   tx_builder: RPtr, fee: RPtr, error: &mut CharPtr
 ) -> bool {
@@ -118,7 +132,7 @@ pub unsafe extern "C" fn transaction_builder_new(
         TransactionBuilder::new(linear_fee, minimum_utxo_val, pool_deposit, key_deposit)
       })
     })
-    .map(|fee| fee.rptr())
+    .map(|tx_builder| tx_builder.rptr())
     .response(result, error)
 }
 
