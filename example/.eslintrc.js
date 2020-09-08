@@ -6,7 +6,7 @@ module.exports = {
     'react-native/react-native': true,
   },
   rules: {
-    'quotes': ['error', 'single', {'avoidEscape': true}],
+    quotes: ['error', 'single', {avoidEscape: true}],
     'object-curly-spacing': ['error', 'never'],
     'max-len': [
       1,

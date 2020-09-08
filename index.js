@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { NativeModules } from 'react-native';
 import { decode as base64_decode, encode as base64_encode } from 'base-64';
 
@@ -61,7 +62,7 @@ export const make_icarus_bootstrap_witness = async (txBodyHash, addr, key) => {
   const keyPtr = Ptr._assertClass(key, Bip32PrivateKey);
   const ret = await HaskellShelley.makeIcarusBootstrapWitness(txBodyHashPtr, addrPtr, keyPtr);
   return Ptr._wrap(ret, BootstrapWitness);
-}
+};
 
 /**
 * @param {TransactionHash} txBodyHash
@@ -73,7 +74,7 @@ export const make_vkey_witness = async (txBodyHash, sk) => {
   const skPtr = Ptr._assertClass(sk, PrivateKey);
   const ret = await HaskellShelley.makeVkeyWitness(txBodyHashPtr, skPtr);
   return Ptr._wrap(ret, Vkeywitness);
-}
+};
 
 /**
 * @param {TransactionBody} txBody
@@ -83,7 +84,7 @@ export const hash_transaction = async (txBody) => {
   const txBodyPtr = Ptr._assertClass(txBody, TransactionBody);
   const ret = await HaskellShelley.hashTransaction(txBodyPtr);
   return Ptr._wrap(ret, TransactionHash);
-}
+};
 
 export class BigNum extends Ptr {
 
@@ -168,7 +169,7 @@ export class PublicKey extends Ptr {
       return Uint8ArrayFromB64(b64);
     }
 
-    // TODO: cannot implement yet since Ed25519Signature is missing
+    // TODO
     // /**
     // * @param {Uint8Array} data
     // * @param {Ed25519Signature} signature
@@ -985,7 +986,7 @@ export class TransactionInputs extends Ptr {
   * @param {number} index
   * @returns {Promise<TransactionInput>}
   */
-  async get(index: number) {
+  async get(index) {
     const ret = await HaskellShelley.transactionInputsGet(this.ptr, index);
     return Ptr._wrap(ret, TransactionInput);
   }
@@ -1003,7 +1004,7 @@ export class TransactionOutput extends Ptr {
   * @param {Uint8Array} bytes
   * @returns {Promise<TransactionOutput>}
   */
-  static async from_bytes(bytes: Uint8Array) {
+  static async from_bytes(bytes) {
     const ret = await HaskellShelley.transactionOutputFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionOutput);
   }
@@ -1013,7 +1014,7 @@ export class TransactionOutput extends Ptr {
   * @param {BigNum} amount
   * @returns {Promise<TransactionOutput>}
   */
-  static async new(address: Address, amount: BigNum) {
+  static async new(address, amount) {
     const addrPtr = Ptr._assertClass(address, Address);
     const amountPtr = Ptr._assertClass(amount, BigNum);
     const ret = await HaskellShelley.transactionOutputNew(addrPtr, amountPtr);
@@ -1049,7 +1050,7 @@ export class TransactionOutputs extends Ptr {
   * @param {number} index
   * @returns {Promise<TransactionOutput>}
   */
-  async get(index: number) {
+  async get(index) {
     const ret = await HaskellShelley.transactionOutputsGet(this.ptr, index);
     return Ptr._wrap(ret, TransactionOutput);
   }
@@ -1077,7 +1078,7 @@ export class LinearFee extends Ptr {
   * @param {BigNum} constant
   * @returns {Promise<LinearFee>}
   */
-  static async new(coefficient: BigNum, constant: BigNum) {
+  static async new(coefficient, constant) {
     const coeffPtr = Ptr._assertClass(coefficient, BigNum);
     const constPtr = Ptr._assertClass(constant, BigNum);
     const ret = await HaskellShelley.linearFeeNew(coeffPtr, constPtr);
@@ -1303,10 +1304,10 @@ export class Transaction extends Ptr {
   * @param {TransactionMetadata | void} metadata
   * @returns {Promise<Transaction>}
   */
-  static async new(body: TransactionBody, witnessSet: TransactionWitnessSet, metadata?: TransactionMetadata) {
+  static async new(body, witnessSet, metadata) {
     const bodyPtr = Ptr._assertClass(body, TransactionBody);
     const witnessSetPtr = Ptr._assertClass(witnessSet, TransactionWitnessSet);
-    let ret
+    let ret;
     if (metadata == null) {
       ret = await HaskellShelley.transactionNew(bodyPtr, witnessSetPtr);
     } else {
@@ -1342,11 +1343,7 @@ export class TransactionBuilder extends Ptr {
   * @param {BigNum} amount
   * @returns {Promise<void>}
   */
-  async add_key_input(
-    hash: Ed25519KeyHash,
-    input: TransactionInput,
-    amount: BigNum,
-  ) {
+  async add_key_input(hash, input, amount) {
     const hashPtr = Ptr._assertClass(hash, Ed25519KeyHash);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, BigNum);
@@ -1365,9 +1362,9 @@ export class TransactionBuilder extends Ptr {
   * @returns {Promise<void>}
   */
   async add_bootstrap_input(
-    hash: ByronAddress,
-    input: TransactionInput,
-    amount: BigNum,
+    hash,
+    input,
+    amount,
   ) {
     const hashPtr = Ptr._assertClass(hash, ByronAddress);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
@@ -1384,7 +1381,7 @@ export class TransactionBuilder extends Ptr {
   * @param {TransactionOutput} output
   * @returns {Promise<void>}
   */
-  async add_output(output: TransactionOutput) {
+  async add_output(output) {
     const outputPtr = Ptr._assertClass(output, TransactionOutput);
     return HaskellShelley.transactionBuilderAddOutput(this.ptr, outputPtr);
   }
@@ -1393,7 +1390,7 @@ export class TransactionBuilder extends Ptr {
   * @param {BigNum} fee
   * @returns {Promise<void>}
   */
-  async set_fee(fee: BigNum) {
+  async set_fee(fee) {
     const feePtr = Ptr._assertClass(fee, BigNum);
     return HaskellShelley.transactionBuilderSetFee(this.ptr, feePtr);
   }
@@ -1402,7 +1399,7 @@ export class TransactionBuilder extends Ptr {
   * @param {number} ttl
   * @returns {Promise<void>}
   */
-  async set_ttl(ttl: number) {
+  async set_ttl(ttl) {
     return HaskellShelley.transactionBuilderSetTtl(this.ptr, ttl);
   }
 
@@ -1410,7 +1407,7 @@ export class TransactionBuilder extends Ptr {
   * @param {Certificates} certs
   * @returns {Promise<void>}
   */
-  async set_certs(certs: Certificates) {
+  async set_certs(certs) {
     const certsPtr = Ptr._assertClass(certs, Certificates);
     return HaskellShelley.transactionBuilderSetCerts(this.ptr, certsPtr);
   }
@@ -1419,7 +1416,7 @@ export class TransactionBuilder extends Ptr {
   * @param {Withdrawals} certs
   * @returns {Promise<void>}
   */
-  async set_withdrawals(withdrawals: Withdrawals) {
+  async set_withdrawals(withdrawals) {
     const withdrawalsPtr = Ptr._assertClass(withdrawals, Withdrawals);
     return HaskellShelley.transactionBuilderSetWithdrawals(this.ptr, withdrawalsPtr);
   }
@@ -1431,12 +1428,7 @@ export class TransactionBuilder extends Ptr {
   * @param {BigNum} keyDeposit
   * @returns {Promise<TransactionBuilder>}
   */
-  static async new(
-    linearFee: LinearFee,
-    minimumUtxoVal: BigNum,
-    poolDeposit: BigNum,
-    keyDeposit: BigNum,
-  ) {
+  static async new(linearFee, minimumUtxoVal, poolDeposit, keyDeposit) {
     const linearFeePtr = Ptr._assertClass(linearFee, LinearFee);
     const minimumUtxoValPtr = Ptr._assertClass(minimumUtxoVal, BigNum);
     const poolDepositPtr = Ptr._assertClass(poolDeposit, BigNum);
@@ -1494,7 +1486,7 @@ export class TransactionBuilder extends Ptr {
   * @param {Address} address
   * @returns {Promise<boolean>}
   */
-  async add_change_if_needed(address: Address) {
+  async add_change_if_needed(address) {
     const addressPtr = Ptr._assertClass(address, Address);
     return HaskellShelley.transactionBuilderAddChangeIfNeeded(this.ptr, addressPtr);
   }
