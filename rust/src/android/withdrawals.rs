@@ -7,7 +7,6 @@ use jni::objects::JObject;
 use jni::sys::{jobject};
 use jni::JNIEnv;
 use cardano_serialization_lib::address::RewardAddress;
-use cardano_serialization_lib::RewardAddresses;
 use cardano_serialization_lib::Withdrawals;
 use cardano_serialization_lib::utils::{Coin};
 

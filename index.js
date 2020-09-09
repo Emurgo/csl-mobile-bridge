@@ -1100,6 +1100,23 @@ export class Vkey extends Ptr {
 
 export class Vkeywitness extends Ptr {
   /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.vkeywitnessToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Vkeywitness>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.vkeywitnessFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, Vkeywitness);
+  }
+
+  /**
   * @param {Vkey} vkey
   * @param {Ed25519Signature} signature
   * @returns {Promise<Vkeywitness>}

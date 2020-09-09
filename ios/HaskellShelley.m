@@ -254,7 +254,7 @@ RCT_EXPORT_METHOD(bip32PublicKeyToBech32:(nonnull NSString *)bip32PublicKeyPtr w
 RCT_EXPORT_METHOD(bip32PublicKeyChaincode:(nonnull NSString *)bip32PublicKeyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* bip32PublicKeyPtr, CharPtr* error) {
-        CharPtr result;
+        DataPtr result;
         RPtr bip32PublicKey = [bip32PublicKeyPtr rPtr];
         return bip32_public_key_chaincode(bip32PublicKey, &result, error)
             ? [[NSData fromDataPtr:&result] base64]
@@ -423,7 +423,7 @@ RCT_EXPORT_METHOD(byronAddressFromAddress:(nonnull NSString *)addrPtr withResolv
 RCT_EXPORT_METHOD(byronAddressAttributes:(nonnull NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
-        CharPtr result;
+        DataPtr result;
         RPtr byronAddr = [ptr rPtr];
         return byron_address_attributes(byronAddr, &result, error)
             ? [[NSData fromDataPtr:&result] base64]
@@ -1240,6 +1240,28 @@ RCT_EXPORT_METHOD(vkeyNew:(nonnull NSString *)publicKeyPtr withResolve:(RCTPromi
 }
 
 // Vkeywitness
+
+RCT_EXPORT_METHOD(vkeywitnessToBytes:(nonnull NSString *)vkeywitnessPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* vkeywitnessPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr vkeywitness = [vkeywitnessPtr rPtr];
+        return vkeywitness_to_bytes(vkeywitness, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:vkeywitnessPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(vkeywitnessFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return vkeywitness_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
 
 RCT_EXPORT_METHOD(vkeywitnessNew:(nonnull NSString *)vkeyPtr withSignature:(nonnull NSString *)signaturePtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {

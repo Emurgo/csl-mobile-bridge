@@ -569,6 +569,16 @@ export default class App extends Component<{}> {
       // ------------------ Vkeywitness -----------------
       const _vkeywitness = await Vkeywitness.new(vkey, ed25519Signature)
       assert(_vkeywitness instanceof Vkeywitness, 'Vkeywitness::new()')
+      const _vkeywitnessToBytes = await _vkeywitness.to_bytes()
+      const _vkeywitnessFromBytes = await Vkeywitness.from_bytes(
+        _vkeywitnessToBytes,
+      )
+      const _vkeywitnessFromBytesToBytes = await _vkeywitnessFromBytes.to_bytes()
+      assert(
+        Buffer.from(_vkeywitnessToBytes).toString('hex') ===
+          Buffer.from(_vkeywitnessFromBytesToBytes).toString('hex'),
+        'Vkeywitness from_bytes/to_bytes',
+      )
 
       // ------------------------------------------------
       // ---------------- Vkeywitnesses -----------------

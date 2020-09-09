@@ -177,6 +177,8 @@ final class Native {
     public final native Result<RPtr> vkeyNew(RPtr publicKey);
 
     // Vkeywitness
+    public final native Result<byte[]> vkeywitnessToBytes(RPtr vkeywitness);
+    public final native Result<RPtr> vkeywitnessFromBytes(byte[] bytes);
     public final native Result<RPtr> vkeywitnessNew(RPtr vkey, RPtr signature);
     public final native Result<RPtr> vkeywitnessSignature(RPtr vkwitnesses);
 

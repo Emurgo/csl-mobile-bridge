@@ -923,6 +923,22 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     // Vkeywitness
 
     @ReactMethod
+    public final void vkeywitnessToBytes(String vkeywitness, Promise promise) {
+        Native.I
+                .vkeywitnessToBytes(new RPtr(vkeywitness))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void vkeywitnessFromBytes(String bytes, Promise promise) {
+        Native.I
+                .vkeywitnessFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void vkeywitnessNew(String vkey, String signature, Promise promise) {
         Native.I
                 .vkeywitnessNew(new RPtr(vkey), new RPtr(signature))

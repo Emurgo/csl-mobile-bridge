@@ -706,8 +706,18 @@ export class Vkey extends Ptr {
   static new(pk): Promise<Vkey>;
 }
 
-// TODO
 export class Vkeywitness extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Vkeywitness>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<Vkeywitness>;
+
   /**
   * @param {Vkey} vkey
   * @param {Ed25519Signature} signature
@@ -725,18 +735,18 @@ export class Vkeywitnesses extends Ptr {
     /**
     * @returns {Promise<Vkeywitnesses>}
     */
-    static new(): Promise<Vkeywitnesses>
+    static new(): Promise<Vkeywitnesses>;
 
     /**
     * @returns {Promise<number>}
     */
-    len(): Promise<number>
+    len(): Promise<number>;
 
     /**
     * @param {Vkeywitness} item
     * @returns {Promise<void>}
     */
-    add(item: Vkeywitness): Promise<void>
+    add(item: Vkeywitness): Promise<void>;
 }
 
 export class BootstrapWitness extends Ptr {
