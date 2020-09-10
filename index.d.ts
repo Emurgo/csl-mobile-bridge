@@ -1007,7 +1007,7 @@ export class Withdrawals extends Ptr {
   get(key: RewardAddress): Promise<BigNum | undefined>;
 
   /**
-  * @returns {Promise<RewardAddress>}
+  * @returns {Promise<RewardAddresses>}
   */
-  keys(): Promise<RewardAddress>;
+  keys(): Promise<RewardAddresses>;
 }
