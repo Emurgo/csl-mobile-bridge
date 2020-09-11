@@ -950,8 +950,40 @@ export class RewardAddress extends Ptr {
   }
 }
 
-/* TODO */
-export class RewardAddresses extends Ptr {}
+export class RewardAddresses extends Ptr {
+  /**
+  * @returns {Promise<RewardAddresses>}
+  */
+  static async new() {
+      const ret = await HaskellShelley.rewardAddressesNew();
+      return Ptr._wrap(ret, RewardAddresses);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.rewardAddressesLen(this.ptr);
+  }
+
+  /**
+  * @param {number} index
+  * @returns {Promise<RewardAddress>}
+  */
+  async get(index) {
+    const ret = await HaskellShelley.rewardAddressesGet(this.ptr, index);
+    return Ptr._wrap(ret, RewardAddress);
+  }
+
+  /**
+  * @param {RewardAddress} item
+  * @returns {Promise<void>}
+  */
+  async add(item) {
+    const itemPtr = Ptr._assertClass(item, RewardAddress);
+    return HaskellShelley.rewardAddressesAdd(this.ptr, itemPtr);
+  }
+}
 
 export class UnitInterval extends Ptr {
   /**

@@ -796,6 +796,39 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // RewardAddresses
+
+    @ReactMethod
+    public final void rewardAddressesNew(Promise promise) {
+        Native.I
+                .rewardAddressesNew()
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void rewardAddressesLen(String rewardAddresses, Promise promise) {
+        Native.I
+                .rewardAddressesLen(new RPtr(rewardAddresses))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void rewardAddressesGet(String rewardAddresses, Integer index, Promise promise) {
+        Native.I
+                .rewardAddressesGet(new RPtr(rewardAddresses), index)
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void rewardAddressesAdd(String rewardAddresses, String item, Promise promise) {
+        Native.I
+                .rewardAddressesAdd(new RPtr(rewardAddresses), new RPtr(item))
+                .pour(promise);
+    }
+
     // UnitInterval
 
     @ReactMethod

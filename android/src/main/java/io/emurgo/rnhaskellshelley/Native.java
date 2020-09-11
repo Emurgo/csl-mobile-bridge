@@ -149,6 +149,12 @@ final class Native {
     public final native Result<RPtr> rewardAddressToAddress(RPtr baseAddress);
     public final native Result<RPtr> rewardAddressFromAddress(RPtr address);
 
+    // RewardAddresses
+    public final native Result<RPtr> rewardAddressesNew();
+    public final native Result<Long> rewardAddressesLen(RPtr rewardAddresses);
+    public final native Result<RPtr> rewardAddressesGet(RPtr rewardAddresses, long index);
+    public final native Result<Void> rewardAddressesAdd(RPtr rewardAddresses, RPtr item);
+
     // UnitInterval
     public final native Result<byte[]> unitIntervalToBytes(RPtr unitInterval);
     public final native Result<RPtr> unitIntervalFromBytes(byte[] bytes);

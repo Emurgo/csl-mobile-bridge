@@ -1065,6 +1065,51 @@ RCT_EXPORT_METHOD(rewardAddressFromAddress:(nonnull NSString *)addrPtr withResol
     }] exec:addrPtr andResolve:resolve orReject:reject];
 }
 
+// RewardAddresses
+
+RCT_EXPORT_METHOD(rewardAddressesNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return reward_addresses_new(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(rewardAddressesLen:(nonnull NSString *)rewardAddressesPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* rewardAddressesPtr, CharPtr* error) {
+        uintptr_t result;
+        RPtr rewardAddresses = [rewardAddressesPtr rPtr];
+        return reward_addresses_len(rewardAddresses, &result, error)
+            ? [NSNumber numberWithUnsignedLong:result]
+            : nil;
+    }] exec:rewardAddressesPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(rewardAddressesGet:(nonnull NSString *)rewardAddressesPtr withIndex:(nonnull NSNumber *)index withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr rewardAddresses = [[params objectAtIndex:0] rPtr];
+        uintptr_t index = [[params objectAtIndex:1] unsignedIntegerValue];
+        return reward_addresses_get(rewardAddresses, index, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[rewardAddressesPtr, index] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(rewardAddressesAdd:(nonnull NSString *)rewardAddressesPtr withItem:(nonnull NSString *)itemPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr rewardAddresses = [[params objectAtIndex:0] rPtr];
+        RPtr item = [[params objectAtIndex:1] rPtr];
+        reward_addresses_add(&rewardAddresses, item, error);
+        return nil;
+    }] exec:@[rewardAddressesPtr, itemPtr] andResolve:resolve orReject:reject];
+}
+
 // UnitInterval
 
 RCT_EXPORT_METHOD(unitIntervalToBytes:(nonnull NSString *)unitIntervalPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

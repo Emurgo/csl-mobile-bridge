@@ -496,6 +496,20 @@ export default class App extends Component<{}> {
       )
 
       // ------------------------------------------------
+      // ----------------- RewardAddresses ------------------
+      const rewardAddresses = await RewardAddresses.new()
+      assert(
+        rewardAddresses instanceof RewardAddresses,
+        'RewardAddresses::new()',
+      )
+      await rewardAddresses.add(rewardAddr)
+      assert((await rewardAddresses.len()) === 1, 'RewardAddresses::len()')
+      assert(
+        (await rewardAddresses.get(0)) instanceof RewardAddress,
+        'RewardAddresses::get()',
+      )
+
+      // ------------------------------------------------
       // ------------------ UnitInterval ----------------
       const numeratorStr = '1000000'
       const denominatorStr = '1000000'

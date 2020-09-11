@@ -617,8 +617,29 @@ export class RewardAddress extends Ptr {
   static from_address(addr: Address): Promise<RewardAddress | undefined>
 }
 
-/* TODO */
-export class RewardAddresses extends Ptr {}
+export class RewardAddresses extends Ptr {
+  /**
+  * @returns {Promise<RewardAddresses>}
+  */
+  static new(): Promise<RewardAddresses>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len(): Promise<number>;
+
+  /**
+  * @param {number} index
+  * @returns {Promise<RewardAddress>}
+  */
+  get(index: number): Promise<RewardAddress>;
+
+  /**
+  * @param {RewardAddress} item
+  * @returns {Promise<void>}
+  */
+  add(item: RewardAddress): Promise<void>;
+}
 
 export class UnitInterval extends Ptr {
   /**
