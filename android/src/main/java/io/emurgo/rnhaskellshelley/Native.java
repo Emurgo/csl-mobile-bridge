@@ -66,6 +66,7 @@ final class Native {
     public final native Result<Boolean> byronAddressIsValid(String str);
     public final native Result<RPtr> byronAddressFromAddress(RPtr address);
     public final native Result<RPtr> byronAddressToAddress(RPtr byronAddress);
+    public final native Result<Long> byronAddressByronProtocolMagic(RPtr byronAddress);
     public final native Result<byte[]> byronAddressAttributes(RPtr byronAddress);
 
     // Address
@@ -74,6 +75,7 @@ final class Native {
     public final native Result<String> addressToBech32(RPtr address);
     public final native Result<String> addressToBech32WithPrefix(RPtr address, String prefix);
     public final native Result<RPtr> addressFromBech32(String str);
+    public final native Result<Integer> addressNetworkId(RPtr address);
 
     // Ed25519Signature
     public final native Result<byte[]> ed25519SignatureToBytes(RPtr ed25519Signature);

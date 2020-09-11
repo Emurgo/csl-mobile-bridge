@@ -58,6 +58,19 @@ pub unsafe extern "C" fn byron_address_from_address(
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn byron_address_byron_protocol_magic(
+  rptr: RPtr, result: &mut u32, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr
+      .typed_ref::<ByronAddress>()
+      .map(|addr| addr.byron_protocol_magic())
+  })
+  .map(|protocol_magic| protocol_magic.into())
+  .response(result, error)
+}
+
+#[no_mangle]
 pub unsafe extern "C" fn byron_address_attributes(
   rptr: RPtr, result: &mut DataPtr, error: &mut CharPtr
 ) -> bool {

@@ -283,6 +283,11 @@ export class ByronAddress extends Ptr {
   static from_address(addr): Promise<ByronAddress | undefined>;
 
   /**
+  * @returns {Promise<number>}
+  */
+  byron_protocol_magic(): Promise<number>;
+
+  /**
   * @returns {Promise<Uint8Array>}
   */
   async attributes(): Promise<Uint8Array>;
@@ -311,6 +316,11 @@ export class Address extends Ptr {
   * @returns {Promise<Address>}
   */
   static from_bech32(string) : Promise<Address>
+
+  /**
+  * @returns {Promise<number>}
+  */
+  network_id(): Promise<number>;
 }
 
 export class Ed25519Signature extends Ptr {

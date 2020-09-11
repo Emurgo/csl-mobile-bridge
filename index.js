@@ -437,6 +437,13 @@ export class ByronAddress extends Ptr {
   }
 
   /**
+  * @returns {Promise<number>}
+  */
+  byron_protocol_magic() {
+    return HaskellShelley.byronAddressByronProtocolMagic(this.ptr);
+  }
+
+  /**
   * @returns {Promise<Uint8Array>}
   */
   async attributes() {
@@ -481,6 +488,13 @@ export class Address extends Ptr {
   static async from_bech32(string) {
     const ret = await HaskellShelley.addressFromBech32(string);
     return Ptr._wrap(ret, Address);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  network_id() {
+    return HaskellShelley.addressNetworkId(this.ptr);
   }
 }
 
@@ -856,7 +870,7 @@ export class Certificates extends Ptr {
   * @param {Certificate} item
   * @returns {Promise<void>}
   */
-  async add(item) {
+  add(item) {
     const itemPtr = Ptr._assertClass(item, Certificate);
     return HaskellShelley.certificatesAdd(this.ptr, itemPtr);
   }

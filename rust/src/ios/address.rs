@@ -52,3 +52,14 @@ pub unsafe extern "C" fn address_from_bech32(
   handle_exception_result(|| Address::from_bech32(chars.into_str()).map(|addr| addr.rptr()).into_result())
     .response(result, error)
 }
+
+#[no_mangle]
+pub unsafe extern "C" fn address_network_id(
+  rptr: RPtr, result: &mut u8, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    rptr.typed_ref::<Address>().map(|addr| addr.network_id())
+  })
+  .map(|network_id| network_id.into())
+  .response(result, error)
+}

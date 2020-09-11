@@ -179,6 +179,7 @@ export default class App extends Component<{}> {
           'addr1qyfh4879pratq227f5z6qr48mvwa3acwvtyvgq5553jk8g7nsw44z0v5d2emp8unhqz5em0d7cup75vrxhlqf6l9nzfqphk420',
         'Address.to_bech32 with default prefix',
       )
+      assert((await address.network_id()) === 0, 'address.network_id()')
 
       // ------------------------------------------------
       // ----------------- ByronAddress -----------------
@@ -208,6 +209,10 @@ export default class App extends Component<{}> {
           await ByronAddress.from_address(addrFromByronAddr)
         ).to_base58()) === addrBase58,
         'ByronAddress.to_address',
+      )
+      assert(
+        (await byronAddress.byron_protocol_magic()) === 764824073,
+        'ByronAddress.byron_protocol_magic()',
       )
       const byronAddressAttributesHex = Buffer.from(
         await byronAddress.attributes(),

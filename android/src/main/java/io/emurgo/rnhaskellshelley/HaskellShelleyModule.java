@@ -327,6 +327,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void byronAddressByronProtocolMagic(String byronAddress, Promise promise) {
+        Native.I
+                .byronAddressByronProtocolMagic(new RPtr(byronAddress))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void byronAddressAttributes(String byronAddress, Promise promise) {
         Native.I
                 .byronAddressAttributes(new RPtr(byronAddress))
@@ -371,6 +379,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
         Native.I
                 .addressFromBech32(string)
                 .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void addressNetworkId(String address, Promise promise) {
+        Native.I
+                .addressNetworkId(new RPtr(address))
                 .pour(promise);
     }
 

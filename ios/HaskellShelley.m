@@ -420,6 +420,17 @@ RCT_EXPORT_METHOD(byronAddressFromAddress:(nonnull NSString *)addrPtr withResolv
     }] exec:addrPtr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(byronAddressByronProtocolMagic:(nonnull NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* ptr, CharPtr* error) {
+        uint32_t result;
+        RPtr byronAddress = [ptr rPtr];
+        return byron_address_byron_protocol_magic(byronAddress, &result, error)
+            ? [NSNumber numberWithLong:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(byronAddressAttributes:(nonnull NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
@@ -485,6 +496,17 @@ RCT_EXPORT_METHOD(addressFromBech32:(nonnull NSString *)string withResolve:(RCTP
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:string andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(addressNetworkId:(nonnull NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* ptr, CharPtr* error) {
+        uint8_t result;
+        RPtr address = [ptr rPtr];
+        return address_network_id(address, &result, error)
+            ? [NSNumber numberWithInt:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
 }
 
 // Ed25519Signature
