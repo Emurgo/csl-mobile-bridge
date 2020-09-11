@@ -32,6 +32,7 @@ import {
   PublicKey,
   RewardAddress,
   RewardAddresses,
+  ScriptHash,
   StakeCredential,
   StakeDelegation,
   StakeDeregistration,
@@ -233,13 +234,23 @@ export default class App extends Component<{}> {
 
       // ------------------------------------------------
       // ---------------- Ed25519KeyHash ----------------
-      const addrHex = '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' // 28B
-      const addrBytes = Buffer.from(addrHex, 'hex')
-      const ed25519KeyHash = await Ed25519KeyHash.from_bytes(addrBytes)
-      const addrToBytes = await ed25519KeyHash.to_bytes()
+      const keyHashHex =
+        '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' // 28B
+      const keyHashBytes = Buffer.from(keyHashHex, 'hex')
+      const ed25519KeyHash = await Ed25519KeyHash.from_bytes(keyHashBytes)
+      const ed25519KeyHashToBytes = await ed25519KeyHash.to_bytes()
       assert(
-        Buffer.from(addrToBytes).toString('hex') === addrHex,
+        Buffer.from(ed25519KeyHashToBytes).toString('hex') === keyHashHex,
         'Ed25519KeyHash.to_bytes should match original input address',
+      )
+
+      // ------------------------------------------------
+      // ------------------- ScriptHash -----------------
+      const scriptHash = await ScriptHash.from_bytes(keyHashBytes)
+      const scriptHashToBytes = await scriptHash.to_bytes()
+      assert(
+        Buffer.from(scriptHashToBytes).toString('hex') === keyHashHex,
+        'ScriptHash.to_bytes should match original input address',
       )
 
       // ------------------------------------------------
@@ -264,7 +275,7 @@ export default class App extends Component<{}> {
       )
       assert(
         Buffer.from(await ed25519KeyHashOrig.to_bytes()).toString('hex') ===
-          addrHex,
+          keyHashHex,
         'StakeCredential:: -> to_keyhash -> to_bytes should match original input',
       )
       assert(
@@ -274,7 +285,7 @@ export default class App extends Component<{}> {
       assert(
         Buffer.from(
           await (await stakeCredFromBytes.to_keyhash()).to_bytes(),
-        ).toString('hex') === addrHex,
+        ).toString('hex') === keyHashHex,
         'StakeCredential -> to_bytes -> from_bytes -> to_keyhash -> should match',
       )
 

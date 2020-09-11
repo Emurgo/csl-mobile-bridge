@@ -410,6 +410,24 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // ScriptHash
+
+    @ReactMethod
+    public final void scriptHashToBytes(String scriptHash, Promise promise) {
+        Native.I
+                .scriptHashToBytes(new RPtr(scriptHash))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void scriptHashFromBytes(String bytes, Promise promise) {
+        Native.I
+                .scriptHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // TransactionHash
 
     @ReactMethod

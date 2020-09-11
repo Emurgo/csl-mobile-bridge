@@ -535,6 +535,30 @@ RCT_EXPORT_METHOD(ed25519KeyHashFromBytes:(nonnull NSString *)bytesStr  withReso
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
+// ScriptHash
+
+RCT_EXPORT_METHOD(scriptHashToBytes:(nonnull NSString *)keyHashPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* keyHashPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr keyHash = [keyHashPtr rPtr];
+        return script_hash_to_bytes(keyHash, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:keyHashPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(scriptHashFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return script_hash_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
 // TransactionHash
 
 RCT_EXPORT_METHOD(transactionHashToBytes:(nonnull NSString *)txHashPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

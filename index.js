@@ -523,6 +523,26 @@ export class Ed25519KeyHash extends Ptr {
   }
 }
 
+export class ScriptHash extends Ptr {
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.scriptHashToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<ScriptHash>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.scriptHashFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, ScriptHash);
+  }
+}
+
 export class TransactionHash extends Ptr {
 
   /**
@@ -558,15 +578,20 @@ export class StakeCredential extends Ptr {
   // static async from_scripthash(hash)
 
   /**
-  * @returns {Promise<Ed25519KeyHash>}
+  * @returns {Promise<Ed25519KeyHash | undefined>}
   */
   async to_keyhash() {
     const ret = await HaskellShelley.stakeCredentialToKeyHash(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
-  // TODO
-  // static async to_scripthash(hash)
+  /**
+  * @returns {Promise<ScriptHash | undefined>}
+  */
+  async to_scripthash() {
+    const ret = await HaskellShelley.stakeCredentialToScriptHash(this.ptr);
+    return Ptr._wrap(ret, ScriptHash);
+  }
 
   /**
   * @returns {Promise<number>}

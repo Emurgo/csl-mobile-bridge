@@ -339,6 +339,20 @@ export class Ed25519KeyHash extends Ptr {
   to_bytes(): Promise<Uint8Array>;
 }
 
+export class ScriptHash extends Ptr {
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<ScriptHash>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<ScriptHash>;
+}
+
 export class TransactionHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
@@ -373,7 +387,7 @@ export class StakeCredential extends Ptr {
   /**
   * @returns {Promise<Ed25519KeyHash>}
   */
-  to_keyhash(): Promise<Ed25519KeyHash>;
+  to_keyhash(): Promise<Ed25519KeyHash | undefined>;
 
   /**
   * @returns {Promise<number>}

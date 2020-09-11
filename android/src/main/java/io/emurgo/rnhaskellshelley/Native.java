@@ -83,6 +83,10 @@ final class Native {
     public final native Result<byte[]> ed25519KeyHashToBytes(RPtr ed25519KeyHash);
     public final native Result<RPtr> ed25519KeyHashFromBytes(byte[] bytes);
 
+    // ScriptHash
+    public final native Result<byte[]> scriptHashToBytes(RPtr scriptHash);
+    public final native Result<RPtr> scriptHashFromBytes(byte[] bytes);
+
     // TransactionHash
     public final native Result<byte[]> transactionHashToBytes(RPtr transactionHash);
     public final native Result<RPtr> transactionHashFromBytes(byte[] bytes);
