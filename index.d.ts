@@ -385,9 +385,20 @@ export class StakeCredential extends Ptr {
   static from_keyhash(hash: Ed25519KeyHash): Promise<StakeCredential>
 
   /**
+  * @param {ScriptHash} hash
+  * @returns {Promise<StakeCredential>}
+  */
+  static from_scripthash(hash: ScriptHash): Promise<StakeCredential>;
+
+  /**
   * @returns {Promise<Ed25519KeyHash>}
   */
   to_keyhash(): Promise<Ed25519KeyHash | undefined>;
+
+  /**
+  * @returns {Promise<ScriptHash | undefined>}
+  */
+  to_scripthash(): Promise<ScriptHash | undefined>;
 
   /**
   * @returns {Promise<number>}

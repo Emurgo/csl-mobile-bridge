@@ -93,7 +93,9 @@ final class Native {
 
     // StakeCredential
     public final native Result<RPtr> stakeCredentialFromKeyHash(RPtr keyHash);
+    public final native Result<RPtr> stakeCredentialFromScriptHash(RPtr keyHash);
     public final native Result<RPtr> stakeCredentialToKeyHash(RPtr stakeCredential);
+    public final native Result<RPtr> stakeCredentialToScriptHash(RPtr stakeCredential);
     public final native Result<Integer> stakeCredentialKind(RPtr stakeCredential);
     public final native Result<byte[]> stakeCredentialToBytes(RPtr stakeCredential);
     public final native Result<RPtr> stakeCredentialFromBytes(byte[] bytes);

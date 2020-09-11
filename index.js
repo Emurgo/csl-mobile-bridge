@@ -574,8 +574,15 @@ export class StakeCredential extends Ptr {
     return Ptr._wrap(ret, StakeCredential);
   }
 
-  // TODO
-  // static async from_scripthash(hash)
+  /**
+  * @param {ScriptHash} hash
+  * @returns {Promise<StakeCredential>}
+  */
+  static async from_scripthash(hash) {
+    const scriptHashPtr = Ptr._assertClass(hash, ScriptHash);
+    const ret = await HaskellShelley.stakeCredentialFromScriptHash(scriptHashPtr);
+    return Ptr._wrap(ret, StakeCredential);
+  }
 
   /**
   * @returns {Promise<Ed25519KeyHash | undefined>}

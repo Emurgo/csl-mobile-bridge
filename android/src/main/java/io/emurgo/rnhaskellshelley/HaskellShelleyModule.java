@@ -457,9 +457,25 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void stakeCredentialFromScriptHash(String scriptHash, Promise promise) {
+        Native.I
+                .stakeCredentialFromScriptHash(new RPtr(scriptHash))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void stakeCredentialToKeyHash(String stakeCredential, Promise promise) {
         Native.I
                 .stakeCredentialToKeyHash(new RPtr(stakeCredential))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeCredentialToScriptHash(String stakeCredential, Promise promise) {
+        Native.I
+                .stakeCredentialToScriptHash(new RPtr(stakeCredential))
                 .map(RPtr::toJs)
                 .pour(promise);
     }
