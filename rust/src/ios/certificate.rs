@@ -71,3 +71,42 @@ pub unsafe extern "C" fn certificate_new_stake_delegation(
     .map(|certificate| certificate.rptr())
     .response(result, error)
 }
+
+#[no_mangle]
+pub unsafe extern "C" fn certificate_as_stake_registration(
+  certificate: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    certificate
+      .typed_ref::<Certificate>()
+      .map(|certificate| certificate.as_stake_registration())
+  })
+    .map(|stake_registration| stake_registration.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn certificate_as_stake_deregistration(
+  certificate: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    certificate
+      .typed_ref::<Certificate>()
+      .map(|certificate| certificate.as_stake_deregistration())
+  })
+    .map(|stake_deregistration| stake_deregistration.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn certificate_as_stake_delegation(
+  certificate: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    certificate
+      .typed_ref::<Certificate>()
+      .map(|certificate| certificate.as_stake_delegation())
+  })
+    .map(|stake_delegation| stake_delegation.rptr())
+    .response(result, error)
+}

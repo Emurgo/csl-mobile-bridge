@@ -327,6 +327,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void byronAddressByronProtocolMagic(String byronAddress, Promise promise) {
+        Native.I
+                .byronAddressByronProtocolMagic(new RPtr(byronAddress))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void byronAddressAttributes(String byronAddress, Promise promise) {
         Native.I
                 .byronAddressAttributes(new RPtr(byronAddress))
@@ -374,6 +382,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void addressNetworkId(String address, Promise promise) {
+        Native.I
+                .addressNetworkId(new RPtr(address))
+                .pour(promise);
+    }
+
     // Ed25519Signature
 
     @ReactMethod
@@ -410,6 +425,24 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // ScriptHash
+
+    @ReactMethod
+    public final void scriptHashToBytes(String scriptHash, Promise promise) {
+        Native.I
+                .scriptHashToBytes(new RPtr(scriptHash))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void scriptHashFromBytes(String bytes, Promise promise) {
+        Native.I
+                .scriptHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // TransactionHash
 
     @ReactMethod
@@ -439,9 +472,25 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void stakeCredentialFromScriptHash(String scriptHash, Promise promise) {
+        Native.I
+                .stakeCredentialFromScriptHash(new RPtr(scriptHash))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void stakeCredentialToKeyHash(String stakeCredential, Promise promise) {
         Native.I
                 .stakeCredentialToKeyHash(new RPtr(stakeCredential))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeCredentialToScriptHash(String stakeCredential, Promise promise) {
+        Native.I
+                .stakeCredentialToScriptHash(new RPtr(stakeCredential))
                 .map(RPtr::toJs)
                 .pour(promise);
     }
@@ -606,6 +655,30 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void certificateAsStakeRegistration(String certificate, Promise promise) {
+        Native.I
+                .certificateAsStakeRegistration(new RPtr(certificate))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateAsStakeDeregistration(String certificate, Promise promise) {
+        Native.I
+                .certificateAsStakeDeregistration(new RPtr(certificate))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateAsStakeDelegation(String certificate, Promise promise) {
+        Native.I
+                .certificateAsStakeDelegation(new RPtr(certificate))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void certificateToBytes(String certificate, Promise promise) {
         Native.I
                 .certificateToBytes(new RPtr(certificate))
@@ -735,6 +808,39 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
         Native.I
                 .rewardAddressFromAddress(new RPtr(address))
                 .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    // RewardAddresses
+
+    @ReactMethod
+    public final void rewardAddressesNew(Promise promise) {
+        Native.I
+                .rewardAddressesNew()
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void rewardAddressesLen(String rewardAddresses, Promise promise) {
+        Native.I
+                .rewardAddressesLen(new RPtr(rewardAddresses))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void rewardAddressesGet(String rewardAddresses, Integer index, Promise promise) {
+        Native.I
+                .rewardAddressesGet(new RPtr(rewardAddresses), index)
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void rewardAddressesAdd(String rewardAddresses, String item, Promise promise) {
+        Native.I
+                .rewardAddressesAdd(new RPtr(rewardAddresses), new RPtr(item))
                 .pour(promise);
     }
 

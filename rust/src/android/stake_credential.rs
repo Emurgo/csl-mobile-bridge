@@ -8,7 +8,7 @@ use super::utils::{to_bytes, from_bytes};
 use jni::objects::JObject;
 use jni::sys::{jobject, jint, jbyteArray};
 use jni::JNIEnv;
-use cardano_serialization_lib::crypto::{Ed25519KeyHash};
+use cardano_serialization_lib::crypto::{Ed25519KeyHash, ScriptHash};
 use cardano_serialization_lib::error::{DeserializeError};
 use cardano_serialization_lib::address::{StakeCredential};
 
@@ -39,12 +39,39 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_stakeCredentialF
 
 #[allow(non_snake_case)]
 #[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_stakeCredentialFromScriptHash(
+  env: JNIEnv, _: JObject, script_hash_ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let script_hash = script_hash_ptr.rptr(&env)?;
+    script_hash
+      .typed_ref::<ScriptHash>()
+      .map(|script_hash| StakeCredential::from_scripthash(script_hash))
+      .and_then(|stake_credential| stake_credential.rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_stakeCredentialToKeyHash(
   env: JNIEnv, _: JObject, ptr: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
     let rptr = ptr.rptr(&env)?;
     rptr.typed_ref::<StakeCredential>().and_then(|stake_credential| stake_credential.to_keyhash().rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_stakeCredentialToScriptHash(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr.typed_ref::<StakeCredential>().and_then(|stake_credential| stake_credential.to_scripthash().rptr().jptr(&env))
   })
   .jresult(&env)
 }

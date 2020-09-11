@@ -32,6 +32,7 @@ import {
   PublicKey,
   RewardAddress,
   RewardAddresses,
+  ScriptHash,
   StakeCredential,
   StakeDelegation,
   StakeDeregistration,
@@ -178,6 +179,7 @@ export default class App extends Component<{}> {
           'addr1qyfh4879pratq227f5z6qr48mvwa3acwvtyvgq5553jk8g7nsw44z0v5d2emp8unhqz5em0d7cup75vrxhlqf6l9nzfqphk420',
         'Address.to_bech32 with default prefix',
       )
+      assert((await address.network_id()) === 0, 'address.network_id()')
 
       // ------------------------------------------------
       // ----------------- ByronAddress -----------------
@@ -208,6 +210,10 @@ export default class App extends Component<{}> {
         ).to_base58()) === addrBase58,
         'ByronAddress.to_address',
       )
+      assert(
+        (await byronAddress.byron_protocol_magic()) === 764824073,
+        'ByronAddress.byron_protocol_magic()',
+      )
       const byronAddressAttributesHex = Buffer.from(
         await byronAddress.attributes(),
         'hex',
@@ -233,13 +239,23 @@ export default class App extends Component<{}> {
 
       // ------------------------------------------------
       // ---------------- Ed25519KeyHash ----------------
-      const addrHex = '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' // 28B
-      const addrBytes = Buffer.from(addrHex, 'hex')
-      const ed25519KeyHash = await Ed25519KeyHash.from_bytes(addrBytes)
-      const addrToBytes = await ed25519KeyHash.to_bytes()
+      const keyHashHex =
+        '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf' // 28B
+      const keyHashBytes = Buffer.from(keyHashHex, 'hex')
+      const ed25519KeyHash = await Ed25519KeyHash.from_bytes(keyHashBytes)
+      const ed25519KeyHashToBytes = await ed25519KeyHash.to_bytes()
       assert(
-        Buffer.from(addrToBytes).toString('hex') === addrHex,
+        Buffer.from(ed25519KeyHashToBytes).toString('hex') === keyHashHex,
         'Ed25519KeyHash.to_bytes should match original input address',
+      )
+
+      // ------------------------------------------------
+      // ------------------- ScriptHash -----------------
+      const scriptHash = await ScriptHash.from_bytes(keyHashBytes)
+      const scriptHashToBytes = await scriptHash.to_bytes()
+      assert(
+        Buffer.from(scriptHashToBytes).toString('hex') === keyHashHex,
+        'ScriptHash.to_bytes should match original input address',
       )
 
       // ------------------------------------------------
@@ -264,7 +280,7 @@ export default class App extends Component<{}> {
       )
       assert(
         Buffer.from(await ed25519KeyHashOrig.to_bytes()).toString('hex') ===
-          addrHex,
+          keyHashHex,
         'StakeCredential:: -> to_keyhash -> to_bytes should match original input',
       )
       assert(
@@ -274,8 +290,25 @@ export default class App extends Component<{}> {
       assert(
         Buffer.from(
           await (await stakeCredFromBytes.to_keyhash()).to_bytes(),
-        ).toString('hex') === addrHex,
+        ).toString('hex') === keyHashHex,
         'StakeCredential -> to_bytes -> from_bytes -> to_keyhash -> should match',
+      )
+      assert(
+        (await stakeCred.to_scripthash()) == null,
+        'StakeCredential::to_scripthash should be null for Ed25519KeyHash',
+      )
+      const stakeCredFromScriptHash = await StakeCredential.from_scripthash(
+        scriptHash,
+      )
+      assert(
+        (await stakeCredFromScriptHash.to_keyhash()) == null,
+        'StakeCredential::to_keyhash should be null for ScriptHash',
+      )
+      assert(
+        Buffer.from(
+          await (await stakeCredFromScriptHash.to_scripthash()).to_bytes(),
+        ).toString('hex') === keyHashHex,
+        'StakeCredential::to_scripthash',
       )
 
       // ------------------------------------------------
@@ -369,10 +402,35 @@ export default class App extends Component<{}> {
         Buffer.from(await _cert.to_bytes(), 'hex').toString('hex') === certHex,
         'Certificate::new_stake_registration()',
       )
+      assert(
+        (await cert.as_stake_registration()) instanceof StakeRegistration,
+        'Certificate::as_stake_registration()',
+      )
+      assert(
+        (await cert.as_stake_deregistration()) == null,
+        'Certificate::as_stake_deregistration() should be null for different cert',
+      )
       const certDereg = await Certificate.new_stake_deregistration(stakeDereg)
       assert(certDereg, 'Certificate::new_stake_deregistration()')
+      assert(
+        (await certDereg.as_stake_deregistration()) instanceof
+          StakeDeregistration,
+        'Certificate::as_stake_deregistration()',
+      )
+      assert(
+        (await certDereg.as_stake_delegation()) == null,
+        'Certificate::as_stake_delegation() should be null for different cert',
+      )
       const certDel = await Certificate.new_stake_delegation(stakeDelegation)
       assert(certDel, 'Certificate::new_stake_delegation()')
+      assert(
+        (await certDel.as_stake_delegation()) instanceof StakeDelegation,
+        'Certificate::as_stake_delegation()',
+      )
+      assert(
+        (await certDel.as_stake_registration()) == null,
+        'Certificate::as_stake_registration() should be null for different cert',
+      )
 
       // ------------------------------------------------
       // ----------------- Certificates -----------------
@@ -440,6 +498,20 @@ export default class App extends Component<{}> {
             'hex',
           ).toString('hex'),
         'rewardAddress.to_address',
+      )
+
+      // ------------------------------------------------
+      // ----------------- RewardAddresses ------------------
+      const rewardAddresses = await RewardAddresses.new()
+      assert(
+        rewardAddresses instanceof RewardAddresses,
+        'RewardAddresses::new()',
+      )
+      await rewardAddresses.add(rewardAddr)
+      assert((await rewardAddresses.len()) === 1, 'RewardAddresses::len()')
+      assert(
+        (await rewardAddresses.get(0)) instanceof RewardAddress,
+        'RewardAddresses::get()',
       )
 
       // ------------------------------------------------
@@ -843,6 +915,7 @@ export default class App extends Component<{}> {
       console.log('address', address)
       console.log('ed25519Signature', ed25519Signature)
       console.log('ed25519KeyHash', ed25519KeyHash)
+      console.log('scriptHash', scriptHash)
       console.log('txHash', txHash)
       console.log('pymntAddrKeyHash', pymntAddrKeyHash)
       console.log('paymentCred', paymentCred)

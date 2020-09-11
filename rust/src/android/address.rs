@@ -4,8 +4,9 @@ use super::string::*;
 use crate::panic::{handle_exception_result, ToResult};
 use crate::ptr::RPtrRepresentable;
 use jni::objects::{JObject, JString};
-use jni::sys::{jbyteArray, jobject};
+use jni::sys::{jbyteArray, jobject, jint};
 use jni::JNIEnv;
+use super::primitive::ToPrimitiveObject;
 use cardano_serialization_lib::address::{Address};
 
 // cddl_lib: (&self) -> Vec<u8>
@@ -79,6 +80,21 @@ pub extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_addressFromBech32(
     let rstr = string.string(&env)?;
     let val = Address::from_bech32(&rstr).into_result()?;
     val.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_addressNetworkId(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr
+      .typed_ref::<Address>()
+      .map(|addr| addr.network_id())
+      .and_then(|network_id| (network_id as jint).jobject(&env))
   })
   .jresult(&env)
 }

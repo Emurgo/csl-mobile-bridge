@@ -66,6 +66,7 @@ final class Native {
     public final native Result<Boolean> byronAddressIsValid(String str);
     public final native Result<RPtr> byronAddressFromAddress(RPtr address);
     public final native Result<RPtr> byronAddressToAddress(RPtr byronAddress);
+    public final native Result<Long> byronAddressByronProtocolMagic(RPtr byronAddress);
     public final native Result<byte[]> byronAddressAttributes(RPtr byronAddress);
 
     // Address
@@ -74,6 +75,7 @@ final class Native {
     public final native Result<String> addressToBech32(RPtr address);
     public final native Result<String> addressToBech32WithPrefix(RPtr address, String prefix);
     public final native Result<RPtr> addressFromBech32(String str);
+    public final native Result<Integer> addressNetworkId(RPtr address);
 
     // Ed25519Signature
     public final native Result<byte[]> ed25519SignatureToBytes(RPtr ed25519Signature);
@@ -83,13 +85,19 @@ final class Native {
     public final native Result<byte[]> ed25519KeyHashToBytes(RPtr ed25519KeyHash);
     public final native Result<RPtr> ed25519KeyHashFromBytes(byte[] bytes);
 
+    // ScriptHash
+    public final native Result<byte[]> scriptHashToBytes(RPtr scriptHash);
+    public final native Result<RPtr> scriptHashFromBytes(byte[] bytes);
+
     // TransactionHash
     public final native Result<byte[]> transactionHashToBytes(RPtr transactionHash);
     public final native Result<RPtr> transactionHashFromBytes(byte[] bytes);
 
     // StakeCredential
     public final native Result<RPtr> stakeCredentialFromKeyHash(RPtr keyHash);
+    public final native Result<RPtr> stakeCredentialFromScriptHash(RPtr keyHash);
     public final native Result<RPtr> stakeCredentialToKeyHash(RPtr stakeCredential);
+    public final native Result<RPtr> stakeCredentialToScriptHash(RPtr stakeCredential);
     public final native Result<Integer> stakeCredentialKind(RPtr stakeCredential);
     public final native Result<byte[]> stakeCredentialToBytes(RPtr stakeCredential);
     public final native Result<RPtr> stakeCredentialFromBytes(byte[] bytes);
@@ -117,6 +125,9 @@ final class Native {
     public final native Result<RPtr> certificateNewStakeRegistration(RPtr stakeRegistration);
     public final native Result<RPtr> certificateNewStakeDeregistration(RPtr stakeDeregistration);
     public final native Result<RPtr> certificateNewStakeDelegation(RPtr stakeDelegation);
+    public final native Result<RPtr> certificateAsStakeRegistration(RPtr certificate);
+    public final native Result<RPtr> certificateAsStakeDeregistration(RPtr certificate);
+    public final native Result<RPtr> certificateAsStakeDelegation(RPtr certificate);
     public final native Result<byte[]> certificateToBytes(RPtr certificate);
     public final native Result<RPtr> certificateFromBytes(byte[] bytes);
 
@@ -139,6 +150,12 @@ final class Native {
     public final native Result<RPtr> rewardAddressPaymentCred(RPtr baseAddress);
     public final native Result<RPtr> rewardAddressToAddress(RPtr baseAddress);
     public final native Result<RPtr> rewardAddressFromAddress(RPtr address);
+
+    // RewardAddresses
+    public final native Result<RPtr> rewardAddressesNew();
+    public final native Result<Long> rewardAddressesLen(RPtr rewardAddresses);
+    public final native Result<RPtr> rewardAddressesGet(RPtr rewardAddresses, long index);
+    public final native Result<Void> rewardAddressesAdd(RPtr rewardAddresses, RPtr item);
 
     // UnitInterval
     public final native Result<byte[]> unitIntervalToBytes(RPtr unitInterval);

@@ -283,6 +283,11 @@ export class ByronAddress extends Ptr {
   static from_address(addr): Promise<ByronAddress | undefined>;
 
   /**
+  * @returns {Promise<number>}
+  */
+  byron_protocol_magic(): Promise<number>;
+
+  /**
   * @returns {Promise<Uint8Array>}
   */
   async attributes(): Promise<Uint8Array>;
@@ -311,6 +316,11 @@ export class Address extends Ptr {
   * @returns {Promise<Address>}
   */
   static from_bech32(string) : Promise<Address>
+
+  /**
+  * @returns {Promise<number>}
+  */
+  network_id(): Promise<number>;
 }
 
 export class Ed25519Signature extends Ptr {
@@ -337,6 +347,20 @@ export class Ed25519KeyHash extends Ptr {
   * @returns {Promise<Uint8Array>}
   */
   to_bytes(): Promise<Uint8Array>;
+}
+
+export class ScriptHash extends Ptr {
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<ScriptHash>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<ScriptHash>;
 }
 
 export class TransactionHash extends Ptr {
@@ -371,9 +395,20 @@ export class StakeCredential extends Ptr {
   static from_keyhash(hash: Ed25519KeyHash): Promise<StakeCredential>
 
   /**
+  * @param {ScriptHash} hash
+  * @returns {Promise<StakeCredential>}
+  */
+  static from_scripthash(hash: ScriptHash): Promise<StakeCredential>;
+
+  /**
   * @returns {Promise<Ed25519KeyHash>}
   */
-  to_keyhash(): Promise<Ed25519KeyHash>;
+  to_keyhash(): Promise<Ed25519KeyHash | undefined>;
+
+  /**
+  * @returns {Promise<ScriptHash | undefined>}
+  */
+  to_scripthash(): Promise<ScriptHash | undefined>;
 
   /**
   * @returns {Promise<number>}
@@ -469,25 +504,40 @@ export class Certificate extends Ptr {
   * @param {Uint8Array} bytes
   * @returns {Promise<Certificate>}
   */
-  static from_bytes(bytes): Promise<Certificate>
+  static from_bytes(bytes): Promise<Certificate>;
 
   /**
   * @param {StakeRegistration} stakeRegistration
   * @returns {Promise<Certificate>}
   */
-  static new_stake_registration(stakeRegistration): Promise<Certificate>
+  static new_stake_registration(stakeRegistration): Promise<Certificate>;
 
   /**
   * @param {StakeDeregistration} stakeDeregistration
   * @returns {Promise<Certificate>}
   */
-  static new_stake_deregistration(stakeDeregistration): Promise<Certificate>
+  static new_stake_deregistration(stakeDeregistration): Promise<Certificate>;
 
   /**
   * @param {StakeDelegation} stakeDelegation
   * @returns {Promise<Certificate>}
   */
-  static new_stake_delegation(stakeDelegation): Promise<Certificate>
+  static new_stake_delegation(stakeDelegation): Promise<Certificate>;
+
+  /**
+  * @returns {Promise<StakeRegistration | undefined>}
+  */
+  as_stake_registration(): Promise<StakeRegistration | undefined>;
+
+  /**
+  * @returns {Promise<StakeDeregistration | undefined>}
+  */
+  as_stake_deregistration(): Promise<StakeDeregistration | undefined>;
+
+  /**
+  * @returns {Promise<StakeDelegation | undefined>}
+  */
+  as_stake_delegation(): Promise<StakeDelegation | undefined>;
 }
 
 export class Certificates extends Ptr {
@@ -577,8 +627,29 @@ export class RewardAddress extends Ptr {
   static from_address(addr: Address): Promise<RewardAddress | undefined>
 }
 
-/* TODO */
-export class RewardAddresses extends Ptr {}
+export class RewardAddresses extends Ptr {
+  /**
+  * @returns {Promise<RewardAddresses>}
+  */
+  static new(): Promise<RewardAddresses>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len(): Promise<number>;
+
+  /**
+  * @param {number} index
+  * @returns {Promise<RewardAddress>}
+  */
+  get(index: number): Promise<RewardAddress>;
+
+  /**
+  * @param {RewardAddress} item
+  * @returns {Promise<void>}
+  */
+  add(item: RewardAddress): Promise<void>;
+}
 
 export class UnitInterval extends Ptr {
   /**
@@ -1007,7 +1078,7 @@ export class Withdrawals extends Ptr {
   get(key: RewardAddress): Promise<BigNum | undefined>;
 
   /**
-  * @returns {Promise<RewardAddress>}
+  * @returns {Promise<RewardAddresses>}
   */
-  keys(): Promise<RewardAddress>;
+  keys(): Promise<RewardAddresses>;
 }

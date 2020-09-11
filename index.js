@@ -437,6 +437,13 @@ export class ByronAddress extends Ptr {
   }
 
   /**
+  * @returns {Promise<number>}
+  */
+  byron_protocol_magic() {
+    return HaskellShelley.byronAddressByronProtocolMagic(this.ptr);
+  }
+
+  /**
   * @returns {Promise<Uint8Array>}
   */
   async attributes() {
@@ -482,6 +489,13 @@ export class Address extends Ptr {
     const ret = await HaskellShelley.addressFromBech32(string);
     return Ptr._wrap(ret, Address);
   }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  network_id() {
+    return HaskellShelley.addressNetworkId(this.ptr);
+  }
 }
 
 export class Ed25519Signature extends Ptr {
@@ -523,6 +537,26 @@ export class Ed25519KeyHash extends Ptr {
   }
 }
 
+export class ScriptHash extends Ptr {
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.scriptHashToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<ScriptHash>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.scriptHashFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, ScriptHash);
+  }
+}
+
 export class TransactionHash extends Ptr {
 
   /**
@@ -554,19 +588,31 @@ export class StakeCredential extends Ptr {
     return Ptr._wrap(ret, StakeCredential);
   }
 
-  // TODO
-  // static async from_scripthash(hash)
+  /**
+  * @param {ScriptHash} hash
+  * @returns {Promise<StakeCredential>}
+  */
+  static async from_scripthash(hash) {
+    const scriptHashPtr = Ptr._assertClass(hash, ScriptHash);
+    const ret = await HaskellShelley.stakeCredentialFromScriptHash(scriptHashPtr);
+    return Ptr._wrap(ret, StakeCredential);
+  }
 
   /**
-  * @returns {Promise<Ed25519KeyHash>}
+  * @returns {Promise<Ed25519KeyHash | undefined>}
   */
   async to_keyhash() {
     const ret = await HaskellShelley.stakeCredentialToKeyHash(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
-  // TODO
-  // static async to_scripthash(hash)
+  /**
+  * @returns {Promise<ScriptHash | undefined>}
+  */
+  async to_scripthash() {
+    const ret = await HaskellShelley.stakeCredentialToScriptHash(this.ptr);
+    return Ptr._wrap(ret, ScriptHash);
+  }
 
   /**
   * @returns {Promise<number>}
@@ -752,15 +798,39 @@ export class Certificate extends Ptr {
     return Ptr._wrap(ret, Certificate);
   }
 
-    /**
-    * @param {StakeDelegation} stakeDelegation
-    * @returns {Promise<Certificate>}
-    */
-    static async new_stake_delegation(stakeDelegation) {
-      const stakeDelegationPtr = Ptr._assertClass(stakeDelegation, StakeDelegation);
-      const ret = await HaskellShelley.certificateNewStakeDelegation(stakeDelegationPtr);
-      return Ptr._wrap(ret, Certificate);
-    }
+  /**
+  * @param {StakeDelegation} stakeDelegation
+  * @returns {Promise<Certificate>}
+  */
+  static async new_stake_delegation(stakeDelegation) {
+    const stakeDelegationPtr = Ptr._assertClass(stakeDelegation, StakeDelegation);
+    const ret = await HaskellShelley.certificateNewStakeDelegation(stakeDelegationPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  /**
+  * @returns {Promise<StakeRegistration | undefined>}
+  */
+  async as_stake_registration() {
+    const ret = await HaskellShelley.certificateAsStakeRegistration(this.ptr);
+    return Ptr._wrap(ret, StakeRegistration);
+  }
+
+  /**
+  * @returns {Promise<StakeDeregistration | undefined>}
+  */
+  async as_stake_deregistration() {
+    const ret = await HaskellShelley.certificateAsStakeDeregistration(this.ptr);
+    return Ptr._wrap(ret, StakeDeregistration);
+  }
+
+  /**
+  * @returns {Promise<StakeDelegation | undefined>}
+  */
+  async as_stake_delegation() {
+    const ret = await HaskellShelley.certificateAsStakeDelegation(this.ptr);
+    return Ptr._wrap(ret, StakeDelegation);
+  }
 }
 
 export class Certificates extends Ptr {
@@ -800,7 +870,7 @@ export class Certificates extends Ptr {
   * @param {Certificate} item
   * @returns {Promise<void>}
   */
-  async add(item) {
+  add(item) {
     const itemPtr = Ptr._assertClass(item, Certificate);
     return HaskellShelley.certificatesAdd(this.ptr, itemPtr);
   }
@@ -894,8 +964,40 @@ export class RewardAddress extends Ptr {
   }
 }
 
-/* TODO */
-export class RewardAddresses extends Ptr {}
+export class RewardAddresses extends Ptr {
+  /**
+  * @returns {Promise<RewardAddresses>}
+  */
+  static async new() {
+      const ret = await HaskellShelley.rewardAddressesNew();
+      return Ptr._wrap(ret, RewardAddresses);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.rewardAddressesLen(this.ptr);
+  }
+
+  /**
+  * @param {number} index
+  * @returns {Promise<RewardAddress>}
+  */
+  async get(index) {
+    const ret = await HaskellShelley.rewardAddressesGet(this.ptr, index);
+    return Ptr._wrap(ret, RewardAddress);
+  }
+
+  /**
+  * @param {RewardAddress} item
+  * @returns {Promise<void>}
+  */
+  async add(item) {
+    const itemPtr = Ptr._assertClass(item, RewardAddress);
+    return HaskellShelley.rewardAddressesAdd(this.ptr, itemPtr);
+  }
+}
 
 export class UnitInterval extends Ptr {
   /**

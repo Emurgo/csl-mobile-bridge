@@ -420,6 +420,17 @@ RCT_EXPORT_METHOD(byronAddressFromAddress:(nonnull NSString *)addrPtr withResolv
     }] exec:addrPtr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(byronAddressByronProtocolMagic:(nonnull NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* ptr, CharPtr* error) {
+        uint32_t result;
+        RPtr byronAddress = [ptr rPtr];
+        return byron_address_byron_protocol_magic(byronAddress, &result, error)
+            ? [NSNumber numberWithLong:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(byronAddressAttributes:(nonnull NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
@@ -487,6 +498,17 @@ RCT_EXPORT_METHOD(addressFromBech32:(nonnull NSString *)string withResolve:(RCTP
     }] exec:string andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(addressNetworkId:(nonnull NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* ptr, CharPtr* error) {
+        uint8_t result;
+        RPtr address = [ptr rPtr];
+        return address_network_id(address, &result, error)
+            ? [NSNumber numberWithInt:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
 // Ed25519Signature
 
 RCT_EXPORT_METHOD(ed25519SignatureToBytes:(nonnull NSString *)signaturePtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -535,6 +557,30 @@ RCT_EXPORT_METHOD(ed25519KeyHashFromBytes:(nonnull NSString *)bytesStr  withReso
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
+// ScriptHash
+
+RCT_EXPORT_METHOD(scriptHashToBytes:(nonnull NSString *)keyHashPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* keyHashPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr keyHash = [keyHashPtr rPtr];
+        return script_hash_to_bytes(keyHash, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:keyHashPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(scriptHashFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return script_hash_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
 // TransactionHash
 
 RCT_EXPORT_METHOD(transactionHashToBytes:(nonnull NSString *)txHashPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -572,12 +618,34 @@ RCT_EXPORT_METHOD(stakeCredentialFromKeyHash:(nonnull NSString *)ptr  withResolv
     }] exec:ptr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(stakeCredentialFromScriptHash:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr scriptHash = [ptr rPtr];
+        return stake_credential_from_scripthash(scriptHash, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(stakeCredentialToKeyHash:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
         RPtr result;
         RPtr stakeCredential = [ptr rPtr];
         return stake_credential_to_keyhash(stakeCredential, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(stakeCredentialToScriptHash:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr stakeCredential = [ptr rPtr];
+        return stake_credential_to_scripthash(stakeCredential, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:ptr andResolve:resolve orReject:reject];
@@ -803,6 +871,39 @@ RCT_EXPORT_METHOD(certificateNewStakeDelegation:(nonnull NSString *)ptr  withRes
     }] exec:ptr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(certificateAsStakeRegistration:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr certificate = [ptr rPtr];
+        return certificate_as_stake_registration(certificate, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(certificateAsStakeDeregistration:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr certificate = [ptr rPtr];
+        return certificate_as_stake_deregistration(certificate, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(certificateAsStakeDelegation:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr certificate = [ptr rPtr];
+        return certificate_as_stake_delegation(certificate, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(certificateToBytes:(nonnull NSString *)certificatePtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* certificatePtr, CharPtr* error) {
@@ -984,6 +1085,51 @@ RCT_EXPORT_METHOD(rewardAddressFromAddress:(nonnull NSString *)addrPtr withResol
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:addrPtr andResolve:resolve orReject:reject];
+}
+
+// RewardAddresses
+
+RCT_EXPORT_METHOD(rewardAddressesNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return reward_addresses_new(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(rewardAddressesLen:(nonnull NSString *)rewardAddressesPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* rewardAddressesPtr, CharPtr* error) {
+        uintptr_t result;
+        RPtr rewardAddresses = [rewardAddressesPtr rPtr];
+        return reward_addresses_len(rewardAddresses, &result, error)
+            ? [NSNumber numberWithUnsignedLong:result]
+            : nil;
+    }] exec:rewardAddressesPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(rewardAddressesGet:(nonnull NSString *)rewardAddressesPtr withIndex:(nonnull NSNumber *)index withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr rewardAddresses = [[params objectAtIndex:0] rPtr];
+        uintptr_t index = [[params objectAtIndex:1] unsignedIntegerValue];
+        return reward_addresses_get(rewardAddresses, index, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[rewardAddressesPtr, index] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(rewardAddressesAdd:(nonnull NSString *)rewardAddressesPtr withItem:(nonnull NSString *)itemPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr rewardAddresses = [[params objectAtIndex:0] rPtr];
+        RPtr item = [[params objectAtIndex:1] rPtr];
+        reward_addresses_add(&rewardAddresses, item, error);
+        return nil;
+    }] exec:@[rewardAddressesPtr, itemPtr] andResolve:resolve orReject:reject];
 }
 
 // UnitInterval

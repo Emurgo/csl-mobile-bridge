@@ -1,5 +1,5 @@
 use jni::objects::{JObject, JString};
-use jni::sys::{jobject, jboolean};
+use jni::sys::{jobject, jboolean, jlong};
 use jni::JNIEnv;
 use super::ptr_j::*;
 use super::result::ToJniResult;
@@ -73,6 +73,21 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_byronAddressFrom
       .typed_ref::<Address>()
       .map(|address| ByronAddress::from_address(address))
       .and_then(|byron_address| byron_address.rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_byronAddressByronProtocolMagic(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    rptr
+      .typed_ref::<ByronAddress>()
+      .map(|addr| addr.byron_protocol_magic())
+      .and_then(|protocol_magic| (protocol_magic as jlong).jobject(&env))
   })
   .jresult(&env)
 }

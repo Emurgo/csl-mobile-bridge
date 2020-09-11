@@ -17,6 +17,8 @@ mod private_key;
 mod public_key;
 mod result;
 mod reward_address;
+mod reward_addresses;
+mod script_hash;
 mod stake_credential;
 mod stake_delegation;
 mod stake_deregistration;
