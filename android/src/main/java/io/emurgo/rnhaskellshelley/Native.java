@@ -117,6 +117,9 @@ final class Native {
     public final native Result<RPtr> certificateNewStakeRegistration(RPtr stakeRegistration);
     public final native Result<RPtr> certificateNewStakeDeregistration(RPtr stakeDeregistration);
     public final native Result<RPtr> certificateNewStakeDelegation(RPtr stakeDelegation);
+    public final native Result<RPtr> certificateAsStakeRegistration(RPtr certificate);
+    public final native Result<RPtr> certificateAsStakeDeregistration(RPtr certificate);
+    public final native Result<RPtr> certificateAsStakeDelegation(RPtr certificate);
     public final native Result<byte[]> certificateToBytes(RPtr certificate);
     public final native Result<RPtr> certificateFromBytes(byte[] bytes);
 

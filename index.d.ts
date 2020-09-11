@@ -469,25 +469,40 @@ export class Certificate extends Ptr {
   * @param {Uint8Array} bytes
   * @returns {Promise<Certificate>}
   */
-  static from_bytes(bytes): Promise<Certificate>
+  static from_bytes(bytes): Promise<Certificate>;
 
   /**
   * @param {StakeRegistration} stakeRegistration
   * @returns {Promise<Certificate>}
   */
-  static new_stake_registration(stakeRegistration): Promise<Certificate>
+  static new_stake_registration(stakeRegistration): Promise<Certificate>;
 
   /**
   * @param {StakeDeregistration} stakeDeregistration
   * @returns {Promise<Certificate>}
   */
-  static new_stake_deregistration(stakeDeregistration): Promise<Certificate>
+  static new_stake_deregistration(stakeDeregistration): Promise<Certificate>;
 
   /**
   * @param {StakeDelegation} stakeDelegation
   * @returns {Promise<Certificate>}
   */
-  static new_stake_delegation(stakeDelegation): Promise<Certificate>
+  static new_stake_delegation(stakeDelegation): Promise<Certificate>;
+
+  /**
+  * @returns {Promise<StakeRegistration | undefined>}
+  */
+  as_stake_registration(): Promise<StakeRegistration | undefined>;
+
+  /**
+  * @returns {Promise<StakeDeregistration | undefined>}
+  */
+  as_stake_deregistration(): Promise<StakeDeregistration | undefined>;
+
+  /**
+  * @returns {Promise<StakeDelegation | undefined>}
+  */
+  as_stake_delegation(): Promise<StakeDelegation | undefined>;
 }
 
 export class Certificates extends Ptr {

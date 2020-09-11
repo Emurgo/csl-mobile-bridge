@@ -752,15 +752,39 @@ export class Certificate extends Ptr {
     return Ptr._wrap(ret, Certificate);
   }
 
-    /**
-    * @param {StakeDelegation} stakeDelegation
-    * @returns {Promise<Certificate>}
-    */
-    static async new_stake_delegation(stakeDelegation) {
-      const stakeDelegationPtr = Ptr._assertClass(stakeDelegation, StakeDelegation);
-      const ret = await HaskellShelley.certificateNewStakeDelegation(stakeDelegationPtr);
-      return Ptr._wrap(ret, Certificate);
-    }
+  /**
+  * @param {StakeDelegation} stakeDelegation
+  * @returns {Promise<Certificate>}
+  */
+  static async new_stake_delegation(stakeDelegation) {
+    const stakeDelegationPtr = Ptr._assertClass(stakeDelegation, StakeDelegation);
+    const ret = await HaskellShelley.certificateNewStakeDelegation(stakeDelegationPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  /**
+  * @returns {Promise<StakeRegistration | undefined>}
+  */
+  async as_stake_registration() {
+    const ret = await HaskellShelley.certificateAsStakeRegistration(this.ptr);
+    return Ptr._wrap(ret, StakeRegistration);
+  }
+
+  /**
+  * @returns {Promise<StakeDeregistration | undefined>}
+  */
+  async as_stake_deregistration() {
+    const ret = await HaskellShelley.certificateAsStakeDeregistration(this.ptr);
+    return Ptr._wrap(ret, StakeDeregistration);
+  }
+
+  /**
+  * @returns {Promise<StakeDelegation | undefined>}
+  */
+  async as_stake_delegation() {
+    const ret = await HaskellShelley.certificateAsStakeDelegation(this.ptr);
+    return Ptr._wrap(ret, StakeDelegation);
+  }
 }
 
 export class Certificates extends Ptr {

@@ -369,10 +369,35 @@ export default class App extends Component<{}> {
         Buffer.from(await _cert.to_bytes(), 'hex').toString('hex') === certHex,
         'Certificate::new_stake_registration()',
       )
+      assert(
+        (await cert.as_stake_registration()) instanceof StakeRegistration,
+        'Certificate::as_stake_registration()',
+      )
+      assert(
+        (await cert.as_stake_deregistration()) == null,
+        'Certificate::as_stake_deregistration() should be null for different cert',
+      )
       const certDereg = await Certificate.new_stake_deregistration(stakeDereg)
       assert(certDereg, 'Certificate::new_stake_deregistration()')
+      assert(
+        (await certDereg.as_stake_deregistration()) instanceof
+          StakeDeregistration,
+        'Certificate::as_stake_deregistration()',
+      )
+      assert(
+        (await certDereg.as_stake_delegation()) == null,
+        'Certificate::as_stake_delegation() should be null for different cert',
+      )
       const certDel = await Certificate.new_stake_delegation(stakeDelegation)
       assert(certDel, 'Certificate::new_stake_delegation()')
+      assert(
+        (await certDel.as_stake_delegation()) instanceof StakeDelegation,
+        'Certificate::as_stake_delegation()',
+      )
+      assert(
+        (await certDel.as_stake_registration()) == null,
+        'Certificate::as_stake_registration() should be null for different cert',
+      )
 
       // ------------------------------------------------
       // ----------------- Certificates -----------------
