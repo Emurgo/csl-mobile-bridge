@@ -904,9 +904,9 @@ export class TransactionBody extends Ptr {
   outputs(): Promise<TransactionOutputs>
 
   /**
-  * @returns {Promise<number>}
+  * @returns {Promise<BigNum>}
   */
-  fee(): Promise<number>
+  fee(): Promise<BigNum>
 
   /**
   * @returns {Promise<number>}
