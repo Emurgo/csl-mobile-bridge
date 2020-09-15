@@ -971,6 +971,18 @@ RCT_EXPORT_METHOD(certificatesLen:(nonnull NSString *)certificatesPtr withResolv
     }] exec:certificatesPtr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(certificatesGet:(nonnull NSString *)certificatesPtr withIndex:(nonnull NSNumber *)index withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr certificates = [[params objectAtIndex:0] rPtr];
+        uintptr_t index = [[params objectAtIndex:1] unsignedIntegerValue];
+        return certificates_get(certificates, index, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[certificatesPtr, index] andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(certificatesAdd:(nonnull NSString *)certificatesPtr withItem:(nonnull NSString *)item withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {

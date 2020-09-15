@@ -563,6 +563,12 @@ export class Certificates extends Ptr {
   len(): Promise<number>
 
   /**
+  * @param {number} index
+  * @returns {Promise<Certificate>}
+  */
+  get(index: number): Promise<Certificate>
+
+  /**
   * @param {Certificate} item
   * @returns {Promise<void>}
   */

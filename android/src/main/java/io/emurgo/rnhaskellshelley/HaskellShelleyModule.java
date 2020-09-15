@@ -729,6 +729,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void certificatesGet(String certificates, Integer index, Promise promise) {
+        Native.I
+                .certificatesGet(new RPtr(certificates), index)
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void certificatesAdd(String certificates, String item, Promise promise) {
         Native.I
                 .certificatesAdd(new RPtr(certificates), new RPtr(item))

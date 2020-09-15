@@ -46,6 +46,17 @@ pub unsafe extern "C" fn certificates_len(
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn certificates_get(
+  certificates: RPtr, index: usize, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    certificates.typed_ref::<Certificates>().map(|certificates| certificates.get(index))
+  })
+  .map(|certificate| certificate.rptr())
+  .response(result, error)
+}
+
+#[no_mangle]
 pub unsafe extern "C" fn certificates_add(
   certificates: &mut RPtr, item: RPtr, error: &mut CharPtr
 ) -> bool {

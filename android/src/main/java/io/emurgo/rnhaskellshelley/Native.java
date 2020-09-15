@@ -136,6 +136,7 @@ final class Native {
     public final native Result<RPtr> certificatesFromBytes(byte[] bytes);
     public final native Result<RPtr> certificatesNew();
     public final native Result<Long> certificatesLen(RPtr certificates);
+    public final native Result<RPtr> certificatesGet(RPtr certificates, long index);
     public final native Result<Void> certificatesAdd(RPtr certificates, RPtr item);
 
     // BaseAddress

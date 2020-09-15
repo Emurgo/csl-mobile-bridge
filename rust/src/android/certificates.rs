@@ -6,7 +6,7 @@ use crate::ptr::RPtrRepresentable;
 use crate::utils::ToFromBytes;
 use super::utils::{to_bytes, from_bytes};
 use jni::objects::JObject;
-use jni::sys::{jobject, jbyteArray};
+use jni::sys::{jobject, jbyteArray, jlong};
 use jni::JNIEnv;
 use cardano_serialization_lib::error::{DeserializeError};
 use cardano_serialization_lib::{Certificate, Certificates};
@@ -56,6 +56,21 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_certificatesLen(
       .typed_ref::<Certificates>()
       .map(|certificates| certificates.len())
       .and_then(|len| len.into_jlong().jobject(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_certificatesGet(
+  env: JNIEnv, _: JObject, certificates: JRPtr, index: jlong
+) -> jobject {
+  handle_exception_result(|| {
+    let certificates = certificates.rptr(&env)?;
+    certificates
+      .typed_ref::<Certificates>()
+      .map(|certificates| certificates.get(usize::from_jlong(index)))
+      .and_then(|certificate| certificate.rptr().jptr(&env))
   })
   .jresult(&env)
 }

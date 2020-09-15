@@ -867,6 +867,15 @@ export class Certificates extends Ptr {
   }
 
   /**
+  * @param {number} index
+  * @returns {Promise<Certificate>}
+  */
+  async get(index) {
+    const ret = await HaskellShelley.certificatesGet(this.ptr, index);
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  /**
   * @param {Certificate} item
   * @returns {Promise<void>}
   */

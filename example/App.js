@@ -438,6 +438,7 @@ export default class App extends Component<{}> {
       assert((await certs.len()) === 0, 'Certificates.len() should return 0')
       await certs.add(cert)
       assert((await certs.len()) === 1, 'Certificates.len() should return 1')
+      assert((await certs.get(0)) instanceof Certificate, 'Certificates::get()')
 
       // ------------------------------------------------
       // ----------------- BaseAddress ------------------
