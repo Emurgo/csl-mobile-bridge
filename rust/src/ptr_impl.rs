@@ -4,6 +4,7 @@ use cardano_serialization_lib::crypto::*;
 use cardano_serialization_lib::utils::*;
 use cardano_serialization_lib::fees::*;
 use cardano_serialization_lib::tx_builder::*;
+use cardano_serialization_lib::metadata::*;
 use cardano_serialization_lib::*;
 
 impl RPtrRepresentable for Address {}

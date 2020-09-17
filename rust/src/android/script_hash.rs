@@ -1,7 +1,6 @@
 use super::ptr_j::*;
-use super::result::ToJniResult;
-use crate::panic::{handle_exception_result, ToResult};
-use crate::ptr::RPtrRepresentable;
+// use crate::panic::{handle_exception_result, ToResult};
+// use crate::ptr::RPtrRepresentable;
 use crate::utils::ToFromBytes;
 use super::utils::{to_bytes, from_bytes};
 use jni::objects::{JObject};

@@ -7,7 +7,8 @@ use crate::ptr::RPtrRepresentable;
 use jni::objects::JObject;
 use jni::sys::{jobject, jbyteArray};
 use jni::JNIEnv;
-use cardano_serialization_lib::{Transaction, TransactionBody, TransactionWitnessSet, TransactionMetadata};
+use cardano_serialization_lib::{Transaction, TransactionBody, TransactionWitnessSet};
+use cardano_serialization_lib::metadata::TransactionMetadata;
 use cardano_serialization_lib::error::{DeserializeError};
 
 impl ToFromBytes for Transaction {

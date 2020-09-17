@@ -52,7 +52,8 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_addressToBech32(
   handle_exception_result(|| {
     let rptr = ptr.rptr(&env)?;
     let val = rptr.typed_ref::<Address>()?;
-    val.to_bech32(None).jstring(&env)
+    val.to_bech32(None).into_result()
+    .and_then(|address_str| address_str.jstring(&env))
   })
   .jresult(&env)
 }
@@ -66,7 +67,8 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_addressToBech32W
     let rptr = ptr.rptr(&env)?;
     let rstr = prefix.string(&env)?;
     let val = rptr.typed_ref::<Address>()?;
-    val.to_bech32(Some(rstr)).jstring(&env)
+    val.to_bech32(Some(rstr)).into_result()
+    .and_then(|address_str| address_str.jstring(&env))
   })
   .jresult(&env)
 }
@@ -93,7 +95,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_addressNetworkId
     let rptr = ptr.rptr(&env)?;
     rptr
       .typed_ref::<Address>()
-      .map(|addr| addr.network_id())
+      .and_then(|addr| addr.network_id().into_result())
       .and_then(|network_id| (network_id as jint).jobject(&env))
   })
   .jresult(&env)

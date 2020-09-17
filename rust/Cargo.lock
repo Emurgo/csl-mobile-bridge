@@ -117,8 +117,8 @@ checksum = "08c48aae112d48ed9f069b33538ea9e3e90aa263cfa3d1c24309612b1f7472de"
 
 [[package]]
 name = "cardano-serialization-lib"
-version = "3.0.0"
-source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#4559d18f349943a7eb31e20c9ad4e41078085db7"
+version = "4.0.0"
+source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#3a1e02cee119a26a99b76abb6d00717463281676"
 dependencies = [
  "bech32",
  "cbor_event",
@@ -133,6 +133,7 @@ dependencies = [
  "js-sys",
  "linked-hash-map",
  "rand_os",
+ "serde_json",
  "sha2 0.8.2",
  "wasm-bindgen",
 ]
@@ -592,7 +593,7 @@ dependencies = [
 
 [[package]]
 name = "react-native-haskell-shelley"
-version = "0.0.1"
+version = "0.0.6"
 dependencies = [
  "cardano-serialization-lib",
  "cbindgen",

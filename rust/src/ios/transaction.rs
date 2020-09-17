@@ -6,7 +6,8 @@ use super::string::{CharPtr};
 use crate::panic::{handle_exception_result, Zip};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::error::{DeserializeError};
-use cardano_serialization_lib::{Transaction, TransactionBody, TransactionWitnessSet, TransactionMetadata};
+use cardano_serialization_lib::{Transaction, TransactionBody, TransactionWitnessSet};
+use cardano_serialization_lib::metadata::TransactionMetadata;
 
 impl ToFromBytes for Transaction {
   fn to_bytes(&self) -> Vec<u8> {
