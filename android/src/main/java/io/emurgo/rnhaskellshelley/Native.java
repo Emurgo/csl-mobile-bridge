@@ -206,6 +206,8 @@ final class Native {
     public final native Result<Void> vkeywitnessesAdd(RPtr vkwitnesses, RPtr item);
 
     // BootstrapWitness
+    public final native Result<byte[]> bootstrapWitnessToBytes(RPtr bootstrapWitness);
+    public final native Result<RPtr> bootstrapWitnessFromBytes(byte[] bytes);
     public final native Result<RPtr> bootstrapWitnessNew(RPtr vkey, RPtr signature, byte[] chainCode, byte[] attributes);
 
     // BootstrapWitnesses

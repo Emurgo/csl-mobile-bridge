@@ -630,6 +630,17 @@ export default class App extends Component<{}> {
         'BootstrapWitness::new()',
       )
 
+      const _bootStrapWitnessToBytes = await _bootStrapWitness.to_bytes()
+      const _bootStrapWitnessFromBytes = await BootstrapWitness.from_bytes(
+        _bootStrapWitnessToBytes,
+      )
+      const _bootStrapWitnessFromBytesToBytes = await _bootStrapWitnessFromBytes.to_bytes()
+      assert(
+        Buffer.from(_bootStrapWitnessToBytes).toString('hex') ===
+          Buffer.from(_bootStrapWitnessFromBytesToBytes).toString('hex'),
+        'BootstrapWitness::from_bytes/to_bytes',
+      )
+
       // ------------------------------------------------
       // -------------- BootstrapWitnesses --------------
       const bootstrapWits = await BootstrapWitnesses.new()

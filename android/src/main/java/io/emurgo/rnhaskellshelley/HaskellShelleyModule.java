@@ -1096,6 +1096,22 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     // BootstrapWitness
 
     @ReactMethod
+    public final void bootstrapWitnessToBytes(String bootstrapWitness, Promise promise) {
+        Native.I
+                .bootstrapWitnessToBytes(new RPtr(bootstrapWitness))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void bootstrapWitnessFromBytes(String bytes, Promise promise) {
+        Native.I
+                .bootstrapWitnessFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void bootstrapWitnessNew(String vkey, String signature, String chainCode, String attributes, Promise promise) {
         Native.I
                 .bootstrapWitnessNew(new RPtr(vkey), new RPtr(signature), Base64.decode(chainCode, Base64.DEFAULT), Base64.decode(attributes, Base64.DEFAULT))

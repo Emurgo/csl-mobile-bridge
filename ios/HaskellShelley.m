@@ -1479,6 +1479,28 @@ RCT_EXPORT_METHOD(vkeywitnessesAdd:(nonnull NSString *)witnessesPtr withItem:(no
 
 // BootstrapWitness
 
+RCT_EXPORT_METHOD(bootstrapWitnessToBytes:(nonnull NSString *)bootstrapWitnessPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bootstrapWitnessPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr bootstrapWitness = [bootstrapWitnessPtr rPtr];
+        return bootstrap_witness_to_bytes(bootstrapWitness, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:bootstrapWitnessPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(bootstrapWitnessFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return bootstrap_witness_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(bootstrapWitnessNew:(nonnull NSString *)vkeyPtr withSignature:(nonnull NSString *)signaturePtr withChainCode:(nonnull NSString *)chainCodeStr withAttributes:(nonnull NSString *)attributesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {

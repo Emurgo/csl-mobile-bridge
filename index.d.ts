@@ -828,6 +828,17 @@ export class Vkeywitnesses extends Ptr {
 
 export class BootstrapWitness extends Ptr {
   /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<BootstrapWitness>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<BootstrapWitness>;
+
+  /**
   * @param {Vkey} vkey
   * @param {Ed25519Signature} signature
   * @param {Uint8Array} chainCode
