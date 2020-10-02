@@ -1,5 +1,5 @@
 {
-  "name": "react-native-haskell-shelley",
+  "name": "@emurgo/react-native-haskell-shelley",
   "title": "React Native Haskell Shelley",
   "version": "0.0.8",
   "description": "React-native bindings for Emurgo's cardano-serialization-lib (Cardano haskell Shelley)",
@@ -22,10 +22,7 @@
   "keywords": [
     "react-native"
   ],
-  "author": {
-    "name": "Your Name",
-    "email": "yourname@email.com"
-  },
+  "author": "EMURGO",
   "license": "MIT",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
