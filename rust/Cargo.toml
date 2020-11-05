@@ -8,7 +8,6 @@ edition = "2018"
 cbindgen = "=0.14.1"
 
 [dependencies]
-wasm-bindgen = { version = "0.2" }
 cardano-serialization-lib = { git = "https://github.com/Emurgo/cardano-serialization-lib.git" }
 # tag = "2.3.1"
 

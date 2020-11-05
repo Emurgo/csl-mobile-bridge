@@ -22,7 +22,9 @@
   "keywords": [
     "react-native"
   ],
-  "author": "EMURGO",
+  "author": {
+    "name": "EMURGO"
+  },
   "license": "MIT",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",

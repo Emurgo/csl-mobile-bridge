@@ -117,8 +117,8 @@ checksum = "08c48aae112d48ed9f069b33538ea9e3e90aa263cfa3d1c24309612b1f7472de"
 
 [[package]]
 name = "cardano-serialization-lib"
-version = "4.0.0"
-source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#3a1e02cee119a26a99b76abb6d00717463281676"
+version = "4.2.0"
+source = "git+https://github.com/Emurgo/cardano-serialization-lib.git#ee1d5ac29f59b6073e5edee7580085f59b1f45c8"
 dependencies = [
  "bech32",
  "cbor_event",
@@ -132,6 +132,7 @@ dependencies = [
  "hex",
  "js-sys",
  "linked-hash-map",
+ "noop_proc_macro",
  "rand_os",
  "serde_json",
  "sha2 0.8.2",
@@ -470,6 +471,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "noop_proc_macro"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0676bb32a98c1a483ce53e500a81ad9c3d5b3f7c920c28c24e9cb0980d0b5bc8"
+
+[[package]]
 name = "object"
 version = "0.20.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -593,12 +600,11 @@ dependencies = [
 
 [[package]]
 name = "react-native-haskell-shelley"
-version = "0.0.7"
+version = "0.0.8"
 dependencies = [
  "cardano-serialization-lib",
  "cbindgen",
  "jni",
- "wasm-bindgen",
 ]
 
 [[package]]
