@@ -1796,4 +1796,53 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // TransactionMetadatumLabels
+
+    @ReactMethod
+    public final void transactionMetadatumLabelsToBytes(String transactionMetadatumLabels, Promise promise) {
+        Native.I
+                .transactionMetadatumLabelsToBytes(new RPtr(transactionMetadatumLabels))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionMetadatumLabelsFromBytes(String bytes, Promise promise) {
+        Native.I
+                .transactionMetadatumLabelsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionMetadatumLabelsNew(Promise promise) {
+        Native.I
+                .transactionMetadatumLabelsNew()
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionMetadatumLabelsLen(String transactionMetadatumLabels, Promise promise) {
+        Native.I
+                .transactionMetadatumLabelsLen(new RPtr(transactionMetadatumLabels))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionMetadatumLabelsGet(String transactionMetadatumLabels, Integer index, Promise promise) {
+        Native.I
+                .transactionMetadatumLabelsGet(new RPtr(transactionMetadatumLabels), index)
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionMetadatumLabelsAdd(String transactionMetadatumLabels, String item, Promise promise) {
+        Native.I
+                .transactionMetadatumLabelsAdd(new RPtr(transactionMetadatumLabels), new RPtr(item))
+                .pour(promise);
+    }
+
 }

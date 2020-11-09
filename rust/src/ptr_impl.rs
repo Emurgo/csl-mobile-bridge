@@ -40,6 +40,7 @@ impl RPtrRepresentable for TransactionBuilder {}
 impl RPtrRepresentable for TransactionInput {}
 impl RPtrRepresentable for TransactionInputs {}
 impl RPtrRepresentable for TransactionMetadata {}
+impl RPtrRepresentable for TransactionMetadatumLabels {}
 impl RPtrRepresentable for TransactionOutput {}
 impl RPtrRepresentable for TransactionOutputs {}
 impl RPtrRepresentable for TransactionWitnessSet {}

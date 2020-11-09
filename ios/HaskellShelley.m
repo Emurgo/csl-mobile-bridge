@@ -2472,6 +2472,73 @@ RCT_EXPORT_METHOD(ptrFree:(NSString *)ptr withResolve:(RCTPromiseResolveBlock)re
     resolve(nil);
 }
 
+// TransactionMetadatumLabels
+
+RCT_EXPORT_METHOD(transactionMetadatumLabelsToBytes:(nonnull NSString *)transactionMetadatumLabelsPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* transactionMetadatumLabelsPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr transactionMetadatumLabels = [transactionMetadatumLabelsPtr rPtr];
+        return transaction_metadatum_labels_to_bytes(transactionMetadatumLabels, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:transactionMetadatumLabelsPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionMetadatumLabelsFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return transaction_metadatum_labels_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionMetadatumLabelsNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return transaction_metadatum_labels_new(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionMetadatumLabelsLen:(nonnull NSString *)transactionMetadatumLabelsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* transactionMetadatumLabelsPtr, CharPtr* error) {
+        uintptr_t result;
+        RPtr transactionMetadatumLabels = [transactionMetadatumLabelsPtr rPtr];
+        return transaction_metadatum_labels_len(transactionMetadatumLabels, &result, error)
+            ? [NSNumber numberWithUnsignedLong:result]
+            : nil;
+    }] exec:transactionMetadatumLabelsPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionMetadatumLabelsGet:(nonnull NSString *)transactionMetadatumLabelsPtr withIndex:(nonnull NSNumber *)index withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr transactionMetadatumLabels = [[params objectAtIndex:0] rPtr];
+        uintptr_t index = [[params objectAtIndex:1] unsignedIntegerValue];
+        return transaction_metadatum_labels_get(transactionMetadatumLabels, index, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[transactionMetadatumLabelsPtr, index] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionMetadatumLabelsAdd:(nonnull NSString *)transactionMetadatumLabelsPtr withItem:(nonnull NSString *)item withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr transactionMetadatumLabels = [[params objectAtIndex:0] rPtr];
+        RPtr item = [[params objectAtIndex:1] rPtr];
+        transaction_metadatum_labels_add(&transactionMetadatumLabels, item, error);
+        return nil;
+    }] exec:@[transactionMetadatumLabelsPtr, item] andResolve:resolve orReject:reject];
+}
+
 + (void)initialize
 {
     if (self == [HaskellShelley class]) {

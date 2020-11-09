@@ -1371,3 +1371,40 @@ export class Withdrawals extends Ptr {
   */
   keys(): Promise<RewardAddresses>;
 }
+
+export type TransactionMetadatumLabel = BigNum
+
+export class TransactionMetadatumLabels extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionMetadatumLabels>}
+  */
+  static from_bytes(bytes): Promise<TransactionMetadatumLabels>
+
+  /**
+  * @returns {Promise<TransactionMetadatumLabels>}
+  */
+  static new(): Promise<TransactionMetadatumLabels>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len(): Promise<number>;
+
+  /**
+  * @param {number} index
+  * @returns {Promise<TransactionMetadatumLabel>}
+  */
+  get(index): Promise<TransactionMetadatumLabel>;
+
+  /**
+  * @param {TransactionMetadatumLabel} item
+  * @returns {Promise<void>}
+  */
+  add(item): Promise<void>
+}

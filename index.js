@@ -2133,3 +2133,100 @@ export class Withdrawals extends Ptr {
     return Ptr._wrap(ret, RewardAddresses);
   }
 }
+
+/**
+ * note: uses same implementation than BigNum
+ */
+export class TransactionMetadatumLabel extends Ptr {
+
+  /**
+  * @param {string} string
+  * @returns {Promise<BigNum>}
+  */
+  static async from_str(string) {
+    const ret = await HaskellShelley.bigNumFromStr(string);
+    return Ptr._wrap(ret, TransactionMetadatumLabel);
+  }
+
+  /**
+  * String representation of the BigNum value for use from environments
+  * that don't support BigInt
+  * @returns {Promise<string>}
+  */
+  async to_str() {
+    return await HaskellShelley.bigNumToStr(this.ptr);
+  }
+
+  /**
+  * @param {TransactionMetadatumLabel} other
+  * @returns {Promise<TransactionMetadatumLabel>}
+  */
+  async checked_add(other) {
+    const otherPtr = Ptr._assertClass(other, TransactionMetadatumLabel);
+    const ret = await HaskellShelley.bigNumCheckedAdd(this.ptr, otherPtr);
+    return Ptr._wrap(ret, TransactionMetadatumLabel);
+  }
+
+  /**
+  * @param {TransactionMetadatumLabel} other
+  * @returns {Promise<TransactionMetadatumLabel>}
+  */
+  async checked_sub(other) {
+    const otherPtr = Ptr._assertClass(other, TransactionMetadatumLabel);
+    const ret = await HaskellShelley.bigNumCheckedSub(this.ptr, otherPtr);
+    return Ptr._wrap(ret, TransactionMetadatumLabel);
+  }
+}
+
+
+export class TransactionMetadatumLabels extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.transactionMetadatumLabelsToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionMetadatumLabels>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.transactionMetadatumLabelsFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, TransactionMetadatumLabels);
+  }
+
+  /**
+  * @returns {Promise<TransactionMetadatumLabels>}
+  */
+  static async new() {
+      const ret = await HaskellShelley.transactionMetadatumLabelsNew();
+      return Ptr._wrap(ret, TransactionMetadatumLabels);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.transactionMetadatumLabelsLen(this.ptr);
+  }
+
+  /**
+  * @param {number} index
+  * @returns {Promise<TransactionMetadatumLabel>}
+  */
+  async get(index) {
+    const ret = await HaskellShelley.transactionMetadatumLabelsGet(this.ptr, index);
+    return Ptr._wrap(ret, TransactionMetadatumLabel);
+  }
+
+  /**
+  * @param {TransactionMetadatumLabel} item
+  * @returns {Promise<void>}
+  */
+  add(item) {
+    const itemPtr = Ptr._assertClass(item, TransactionMetadatumLabel);
+    return HaskellShelley.transactionMetadatumLabelsAdd(this.ptr, itemPtr);
+  }
+}
