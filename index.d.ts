@@ -1122,8 +1122,6 @@ export class TransactionWitnessSet extends Ptr {
   set_vkeys(vkeywitnesses: Vkeywitnesses): Promise<void>
 }
 
-export class TransactionMetadata extends Ptr {}
-
 export class TransactionBody extends Ptr {
   /**
   * @param {Uint8Array} bytes
@@ -1407,4 +1405,47 @@ export class TransactionMetadatumLabels extends Ptr {
   * @returns {Promise<void>}
   */
   add(item): Promise<void>
+}
+
+export class TransactionMetadata extends Ptr {}
+
+export class TransactionMetadata extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionMetadata>}
+  */
+  static from_bytes(bytes): Promise<TransactionMetadata>
+
+  /**
+  * @returns {Promise<TransactionMetadata>}
+  */
+  static new(): Promise<TransactionMetadata>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len(): Promise<number>;
+
+  /**
+  * @param {TransactionMetadatumLabel} key
+  * @param {TransactionMetadatum} value
+  * @returns {Promise<TransactionMetadatum | undefined>}
+  */
+  insert(key, value): Promise<TransactionMetadatum | undefined>;
+
+  /**
+  * @param {TransactionMetadatumLabel} key
+  * @returns {Promise<TransactionMetadatum | undefined>}
+  */
+  get(key): Promise<TransactionMetadatum | undefined>;
+
+  /**
+  * @returns {Promise<TransactionMetadatumLabels>}
+  */
+  keys(): Promise<TransactionMetadatumLabels>;
 }
