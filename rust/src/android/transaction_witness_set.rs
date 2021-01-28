@@ -20,7 +20,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionWitne
 #[allow(non_snake_case)]
 #[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionWitnessSetSetVkeys(
-  env: JNIEnv, _: JObject, transaction_witness_set: JRPtr, vkeywitnesses: JRPtr, item: JRPtr
+  env: JNIEnv, _: JObject, transaction_witness_set: JRPtr, vkeywitnesses: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
     let transaction_witness_set = transaction_witness_set.rptr(&env)?;
@@ -37,7 +37,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionWitne
 #[allow(non_snake_case)]
 #[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionWitnessSetSetBootstraps(
-  env: JNIEnv, _: JObject, transaction_witness_set: JRPtr, bootstrap_witnesses: JRPtr, item: JRPtr
+  env: JNIEnv, _: JObject, transaction_witness_set: JRPtr, bootstrap_witnesses: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
     let transaction_witness_set = transaction_witness_set.rptr(&env)?;

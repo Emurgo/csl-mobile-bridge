@@ -23,6 +23,5 @@ module.exports = {
     ),
   },
   // quick workaround for another issue with symlinks
-  watchFolders: ['.', '..'],
-  // watchFolders: ['.'],
+  watchFolders: [path.resolve(__dirname, '..')],
 }

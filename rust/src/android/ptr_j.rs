@@ -17,7 +17,7 @@ impl RPtrRef {
     self.0.typed_ref::<T>()
   }
 
-  pub unsafe fn owned<T: RPtrRepresentable>(mut self) -> Result<T> {
+  pub unsafe fn owned<T: RPtrRepresentable>(self) -> Result<T> {
     self.0.owned::<T>()
   }
 

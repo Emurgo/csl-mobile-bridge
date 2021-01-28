@@ -49,7 +49,7 @@ import {
   Vkeywitness,
   Vkeywitnesses,
   Withdrawals,
-} from 'react-native-haskell-shelley'
+} from '@emurgo/react-native-haskell-shelley'
 
 const assert = (value: any, message: string, ...args: any) => {
   if (value) {
