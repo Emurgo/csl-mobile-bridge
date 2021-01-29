@@ -131,62 +131,62 @@ export class BigNum extends Ptr {
 * ED25519 key used as public key
 */
 export class PublicKey extends Ptr {
-    /**
-    * Get private key from its bech32 representation
-    * Example:
-    * ```javascript
-    * const pkey = PublicKey.from_bech32("ed25519_pk1dgaagyh470y66p899txcl3r0jaeaxu6yd7z2dxyk55qcycdml8gszkxze2");
-    * ```
-    * @param {string} bech32_str
-    * @returns {Promise<PublicKey>}
-    */
-    static async from_bech32(bech32_str) {
-      const ret = await HaskellShelley.publicKeyFromBech32(bech32_str);
-      return Ptr._wrap(ret, PublicKey);
-    }
+  /**
+  * Get private key from its bech32 representation
+  * Example:
+  * ```javascript
+  * const pkey = PublicKey.from_bech32("ed25519_pk1dgaagyh470y66p899txcl3r0jaeaxu6yd7z2dxyk55qcycdml8gszkxze2");
+  * ```
+  * @param {string} bech32_str
+  * @returns {Promise<PublicKey>}
+  */
+  static async from_bech32(bech32_str) {
+    const ret = await HaskellShelley.publicKeyFromBech32(bech32_str);
+    return Ptr._wrap(ret, PublicKey);
+  }
 
-    /**
-    * @returns {Promise<string>}
-    */
-    to_bech32() {
-      return HaskellShelley.publicKeyToBech32(this.ptr);
-    }
+  /**
+  * @returns {Promise<string>}
+  */
+  to_bech32() {
+    return HaskellShelley.publicKeyToBech32(this.ptr);
+  }
 
-    /**
-    * @param {Uint8Array} bytes
-    * @returns {Promise<PublicKey>}
-    */
-    static async from_bytes(bytes) {
-      const ret = await HaskellShelley.publicKeyFromBytes(b64FromUint8Array(bytes));
-      return Ptr._wrap(ret, PublicKey);
-    }
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<PublicKey>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.publicKeyFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, PublicKey);
+  }
 
-    /**
-    * @returns {Promise<Uint8Array>}
-    */
-    async as_bytes() {
-      const b64 = await HaskellShelley.publicKeyAsBytes(this.ptr);
-      return Uint8ArrayFromB64(b64);
-    }
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async as_bytes() {
+    const b64 = await HaskellShelley.publicKeyAsBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
 
-    // TODO
-    // /**
-    // * @param {Uint8Array} data
-    // * @param {Ed25519Signature} signature
-    // * @returns {Promise<boolean>}
-    // */
-    // static async verify(data, signature) {
-    //   const signaturePtr = Ptr._assertClass(signature, Ed25519Signature);
-    //   return HaskellShelley.publicKeyVerify(b64FromUint8Array(data), signaturePtr);
-    // }
+  // TODO
+  // /**
+  // * @param {Uint8Array} data
+  // * @param {Ed25519Signature} signature
+  // * @returns {Promise<boolean>}
+  // */
+  // static async verify(data, signature) {
+  //   const signaturePtr = Ptr._assertClass(signature, Ed25519Signature);
+  //   return HaskellShelley.publicKeyVerify(b64FromUint8Array(data), signaturePtr);
+  // }
 
-    /**
-    * @returns {Promise<Ed25519KeyHash>}
-    */
-    async hash() {
-      const ret = await HaskellShelley.publicKeyHash(this.ptr);
-      return Ptr._wrap(ret, Ed25519KeyHash);
-    }
+  /**
+  * @returns {Promise<Ed25519KeyHash>}
+  */
+  async hash() {
+    const ret = await HaskellShelley.publicKeyHash(this.ptr);
+    return Ptr._wrap(ret, Ed25519KeyHash);
+  }
 }
 
 export class PrivateKey extends Ptr {
@@ -855,8 +855,8 @@ export class Certificates extends Ptr {
   * @returns {Promise<Certificates>}
   */
   static async new() {
-      const ret = await HaskellShelley.certificatesNew();
-      return Ptr._wrap(ret, Certificates);
+    const ret = await HaskellShelley.certificatesNew();
+    return Ptr._wrap(ret, Certificates);
   }
 
   /**
@@ -978,8 +978,8 @@ export class RewardAddresses extends Ptr {
   * @returns {Promise<RewardAddresses>}
   */
   static async new() {
-      const ret = await HaskellShelley.rewardAddressesNew();
-      return Ptr._wrap(ret, RewardAddresses);
+    const ret = await HaskellShelley.rewardAddressesNew();
+    return Ptr._wrap(ret, RewardAddresses);
   }
 
   /**

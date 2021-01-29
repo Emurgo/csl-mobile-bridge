@@ -8,22 +8,22 @@ export class Ptr {
   free(): Promise<void>;
 }
 
-export type TransactionIndex = number
+export type TransactionIndex = number;
 
 export const make_icarus_bootstrap_witness: (
   txBodyHash: TransactionHash,
   addr: ByronAddress,
   key: Bip32PrivateKey,
-) => Promise<BootstrapWitness>
+) => Promise<BootstrapWitness>;
 
 export const make_vkey_witness: (
   txBodyHash: TransactionHash,
   sk: PrivateKey,
-) => Promise<Vkeywitness>
+) => Promise<Vkeywitness>;
 
 export const hash_transaction: (
   txBody: TransactionBody,
-) => Promise<TransactionHash>
+) => Promise<TransactionHash>;
 
 /**
 * Generic u64 wrapper for platforms that don't support u64 or BigInt/etc
@@ -66,7 +66,9 @@ export class PublicKey extends Ptr {
   * Get private key from its bech32 representation
   * Example:
   * ```javascript
-  * const pkey = PublicKey.from_bech32(&#39;ed25519_pk1dgaagyh470y66p899txcl3r0jaeaxu6yd7z2dxyk55qcycdml8gszkxze2&#39;);
+  * const pkey = PublicKey.from_bech32(
+  *   "ed25519_pk1dgaagyh470y66p899txcl3r0jaeaxu6yd7z2dxyk55qcycdml8gszkxze2"
+  * );
   * ```
   * @param {string} bech32_str
   * @returns {Promise<PublicKey>}
@@ -100,7 +102,7 @@ export class PublicKey extends Ptr {
   /**
   * @returns {Promise<Ed25519KeyHash>}
   */
-  hash(): Promise<Ed25519KeyHash>
+  hash(): Promise<Ed25519KeyHash>;
 }
 
 export class PrivateKey extends Ptr {
@@ -315,7 +317,7 @@ export class Address extends Ptr {
   * @param {string} string
   * @returns {Promise<Address>}
   */
-  static from_bech32(string) : Promise<Address>
+  static from_bech32(string) : Promise<Address>;
 
   /**
   * @returns {Promise<number>}
@@ -809,21 +811,21 @@ export class Vkeywitness extends Ptr {
 }
 
 export class Vkeywitnesses extends Ptr {
-    /**
-    * @returns {Promise<Vkeywitnesses>}
-    */
-    static new(): Promise<Vkeywitnesses>;
+  /**
+  * @returns {Promise<Vkeywitnesses>}
+  */
+  static new(): Promise<Vkeywitnesses>;
 
-    /**
-    * @returns {Promise<number>}
-    */
-    len(): Promise<number>;
+  /**
+  * @returns {Promise<number>}
+  */
+  len(): Promise<number>;
 
-    /**
-    * @param {Vkeywitness} item
-    * @returns {Promise<void>}
-    */
-    add(item: Vkeywitness): Promise<void>;
+  /**
+  * @param {Vkeywitness} item
+  * @returns {Promise<void>}
+  */
+  add(item: Vkeywitness): Promise<void>;
 }
 
 export class BootstrapWitness extends Ptr {
@@ -854,21 +856,21 @@ export class BootstrapWitness extends Ptr {
 }
 
 export class BootstrapWitnesses extends Ptr {
-    /**
-    * @returns {Promise<BootstrapWitnesses>}
-    */
-    static new(): Promise<BootstrapWitnesses>
+  /**
+  * @returns {Promise<BootstrapWitnesses>}
+  */
+  static new(): Promise<BootstrapWitnesses>
 
-    /**
-    * @returns {Promise<number>}
-    */
-    len(): Promise<number>
+  /**
+  * @returns {Promise<number>}
+  */
+  len(): Promise<number>
 
-    /**
-    * @param {BootstrapWitness} item
-    * @returns {Promise<void>}
-    */
-    add(item: BootstrapWitness): Promise<void>
+  /**
+  * @param {BootstrapWitness} item
+  * @returns {Promise<void>}
+  */
+  add(item: BootstrapWitness): Promise<void>
 }
 
 export class TransactionWitnessSet extends Ptr {
@@ -1079,7 +1081,7 @@ export class Withdrawals extends Ptr {
   /**
   * @returns {Promise<number>}
   */
-  len(): Promise<number>
+  len(): Promise<number>;
 
   /**
   * @param {RewardAddress} key
