@@ -18,6 +18,7 @@ module.exports = {
       },
     ],
     semi: ['error', 'never'],
+    'eslint-comments/no-unlimited-disable': 'off',
   },
   globals: {
     Buffer: false,

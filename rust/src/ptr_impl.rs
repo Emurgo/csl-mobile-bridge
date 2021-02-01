@@ -40,6 +40,7 @@ impl RPtrRepresentable for TransactionOutputs {}
 impl RPtrRepresentable for TransactionWitnessSet {}
 impl RPtrRepresentable for TransactionHash {}
 impl RPtrRepresentable for UnitInterval {}
+impl RPtrRepresentable for Value {}
 impl RPtrRepresentable for Vkey {}
 impl RPtrRepresentable for Vkeywitness {}
 impl RPtrRepresentable for Vkeywitnesses {}

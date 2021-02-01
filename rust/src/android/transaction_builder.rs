@@ -9,7 +9,7 @@ use jni::JNIEnv;
 use std::convert::TryFrom;
 use cardano_serialization_lib::tx_builder::{TransactionBuilder};
 use cardano_serialization_lib::fees::{LinearFee};
-use cardano_serialization_lib::utils::{Coin, BigNum};
+use cardano_serialization_lib::utils::{Coin, BigNum, Value};
 use cardano_serialization_lib::address::{Address, ByronAddress};
 use cardano_serialization_lib::crypto::{Ed25519KeyHash};
 use cardano_serialization_lib::{TransactionInput, TransactionOutput, Certificates, Withdrawals};
@@ -28,7 +28,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
       .typed_ref::<TransactionBuilder>()
       .zip(hash.typed_ref::<Ed25519KeyHash>())
       .zip(input.typed_ref::<TransactionInput>())
-      .zip(amount.typed_ref::<Coin>())
+      .zip(amount.typed_ref::<Value>())
       .map(|(((tx_builder, hash), input), amount)| tx_builder.add_key_input(hash, input, amount))
   })
   .map(|_| JObject::null())
@@ -49,7 +49,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
       .typed_ref::<TransactionBuilder>()
       .zip(hash.typed_ref::<ByronAddress>())
       .zip(input.typed_ref::<TransactionInput>())
-      .zip(amount.typed_ref::<Coin>())
+      .zip(amount.typed_ref::<Value>())
       .map(|(((tx_builder, hash), input), amount)| tx_builder.add_bootstrap_input(hash, input, amount))
   })
   .map(|_| JObject::null())

@@ -226,7 +226,7 @@ final class Native {
     public final native Result<RPtr> transactionBodyInputs(RPtr TransactionBody);
     public final native Result<RPtr> transactionBodyOutputs(RPtr TransactionBody);
     public final native Result<RPtr> transactionBodyFee(RPtr TransactionBody);
-    public final native Result<Integer> transactionBodyTtl(RPtr TransactionBody);
+    public final native Result<Long> transactionBodyTtl(RPtr TransactionBody);
     public final native Result<RPtr> transactionBodyWithdrawals(RPtr TransactionBody);
     public final native Result<RPtr> transactionBodyCerts(RPtr TransactionBody);
 

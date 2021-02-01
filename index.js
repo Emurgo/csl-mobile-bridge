@@ -1388,7 +1388,7 @@ export class TransactionBody extends Ptr {
   }
 
   /**
-  * @returns {Promise<TransactionOutputs>}
+  * @returns {Promise<TransactionInputs>}
   */
   async inputs() {
     const ret = await HaskellShelley.transactionBodyInputs(this.ptr);
@@ -1404,7 +1404,7 @@ export class TransactionBody extends Ptr {
   }
 
   /**
-  * @returns {Promise<number>}
+  * @returns {Promise<Optional<number>>}
   */
   async ttl() {
     return HaskellShelley.transactionBodyTtl(this.ptr);

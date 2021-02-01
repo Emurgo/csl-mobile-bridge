@@ -8,7 +8,7 @@ use crate::panic::{handle_exception_result, Zip};
 use cardano_serialization_lib::TransactionOutput;
 use cardano_serialization_lib::error::DeserializeError;
 use cardano_serialization_lib::address::Address;
-use cardano_serialization_lib::utils::BigNum;
+use cardano_serialization_lib::utils::{Value};
 
 impl ToFromBytes for TransactionOutput {
   fn to_bytes(&self) -> Vec<u8> {
@@ -43,7 +43,7 @@ pub unsafe extern "C" fn transaction_output_new(
     address
       .typed_ref::<Address>()
       .zip(
-        amount.typed_ref::<BigNum>()
+        amount.typed_ref::<Value>()
       )
       .map(|(address, amount)| {
         TransactionOutput::new(address, amount)

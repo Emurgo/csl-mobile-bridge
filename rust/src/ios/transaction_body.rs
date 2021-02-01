@@ -82,7 +82,7 @@ pub unsafe extern "C" fn transaction_body_ttl(
       .typed_ref::<TransactionBody>()
       .map(|tx_body| tx_body.ttl())
     })
-    .map(|ttl| ttl.into())
+    .map(|ttl| ttl.unwrap().into())
     .response(result, error)
 }
 
