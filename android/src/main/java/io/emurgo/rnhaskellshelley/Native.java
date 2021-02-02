@@ -26,6 +26,9 @@ final class Native {
     public final native Result<RPtr> bigNumCheckedAdd(RPtr bigNum, RPtr other);
     public final native Result<RPtr> bigNumCheckedSub(RPtr bigNum, RPtr other);
 
+    // AssetName
+    public final native Result<RPtr> assetNameNew(byte[] bytes);
+
     // PublicKey
     public final native Result<RPtr> publicKeyFromBech32(String bech32);
     public final native Result<String> publicKeyToBech32(RPtr pubKey);

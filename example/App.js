@@ -15,6 +15,7 @@ import {StyleSheet, Text, View} from 'react-native'
 
 import misc from './runtimeTests/misc'
 import bigNum from './runtimeTests/bigNum'
+import multiAsset from './runtimeTests/multiAsset'
 import linearFee from './runtimeTests/linearFee'
 import privateKey from './runtimeTests/privateKey'
 import publicKey from './runtimeTests/publicKey'
@@ -40,6 +41,7 @@ import transactionBuilder from './runtimeTests/transactionBuilder'
 const tests = [
   {name: 'misc', testFn: misc},
   {name: 'BigNum', testFn: bigNum},
+  {name: 'MultiAsset', testFn: multiAsset},
   {name: 'linearFee', testFn: linearFee},
   {name: 'PrivateKey', testFn: privateKey},
   {name: 'PublicKey', testFn: publicKey},

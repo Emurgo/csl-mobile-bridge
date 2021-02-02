@@ -127,6 +127,18 @@ export class BigNum extends Ptr {
   }
 }
 
+export class AssetName extends Ptr {
+
+  /**
+  * @param {Uint8Array} name
+  * @returns {Promise<AssetName>}
+  */
+  static async new(name) {
+    const ret = await HaskellShelley.assetNameNew(b64FromUint8Array(name));
+    return Ptr._wrap(ret, AssetName);
+  }
+}
+
 /**
 * ED25519 key used as public key
 */

@@ -1,4 +1,5 @@
 mod address;
+mod asset_name;
 mod base_address;
 mod big_num;
 mod bip32_private_key;

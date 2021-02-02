@@ -58,6 +58,14 @@ export class BigNum extends Ptr {
 
 }
 
+export class AssetName extends Ptr {
+  /**
+  * @param {Uint8Array} name
+  * @returns {Promise<AssetName>}
+  */
+  new(name: Uint8Array): Promise<AssetName>;
+}
+
 /**
 * ED25519 key used as public key
 */
@@ -91,7 +99,7 @@ export class PublicKey extends Ptr {
   */
   as_bytes(): Promise<Uint8Array>;
 
-  // TODO: cannot implement yet since Ed25519Signature is missing
+  // TODO
   // /**
   // * @param {Uint8Array} data
   // * @param {Ed25519Signature} signature
