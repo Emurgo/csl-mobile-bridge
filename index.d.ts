@@ -60,10 +60,45 @@ export class BigNum extends Ptr {
 
 export class AssetName extends Ptr {
   /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes(): Promise<Uint8Array>
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<AssetName>}
+  */
+  static async from_bytes(bytes): Promise<AssetName>
+
+  /**
   * @param {Uint8Array} name
   * @returns {Promise<AssetName>}
   */
-  new(name: Uint8Array): Promise<AssetName>;
+  static new(name: Uint8Array): Promise<AssetName>;
+}
+
+export class AssetNames extends Ptr {
+  /**
+  * @returns {Promise<AssetNames>}
+  */
+  static async new(): Promise<AssetNames>
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len(): Promise<number>;
+
+  /**
+  * @param {number} index
+  * @returns {Promise<AssetName>}
+  */
+  async get(index): Promise<AssetName>;
+
+  /**
+  * @param {AssetName} item
+  * @returns {Promise<void>}
+  */
+  add(item): Promise<void>;
 }
 
 /**

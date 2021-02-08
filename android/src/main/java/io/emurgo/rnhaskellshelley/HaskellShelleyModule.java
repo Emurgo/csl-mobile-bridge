@@ -92,6 +92,71 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void assetNameToBytes(String assetName, Promise promise) {
+        Native.I
+                .assetNameToBytes(new RPtr(assetName))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void assetNameFromBytes(String bytes, Promise promise) {
+        Native.I
+                .assetNameFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    // AssetNames
+
+    // @ReactMethod
+    // public final void assetNamesToBytes(String assetNames, Promise promise) {
+    //     Native.I
+    //             .assetNamesToBytes(new RPtr(assetNames))
+    //             .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+    //             .pour(promise);
+    // }
+    //
+    // @ReactMethod
+    // public final void assetNamesFromBytes(String bytes, Promise promise) {
+    //     Native.I
+    //             .assetNamesFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+    //             .map(RPtr::toJs)
+    //             .pour(promise);
+    // }
+
+    @ReactMethod
+    public final void assetNamesNew(Promise promise) {
+        Native.I
+                .assetNamesNew()
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void assetNamesLen(String assetNames, Promise promise) {
+        Native.I
+                .certificatesLen(new RPtr(assetNames))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void assetNamesGet(String assetNames, Integer index, Promise promise) {
+        Native.I
+                .assetNamesGet(new RPtr(assetNames), index)
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void assetNamesAdd(String assetNames, String item, Promise promise) {
+        Native.I
+                .assetNamesAdd(new RPtr(assetNames), new RPtr(item))
+                .pour(promise);
+    }
+
     // PublicKey
 
     @ReactMethod

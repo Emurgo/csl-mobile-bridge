@@ -93,6 +93,86 @@ RCT_EXPORT_METHOD(bigNumCheckedSub:(nonnull NSString *)ptr1 other:(nonnull NSStr
     }] exec:@[ptr1, ptr2] andResolve:resolve orReject:reject];
 }
 
+// AssetName
+
+RCT_EXPORT_METHOD(assetNameToBytes:(nonnull NSString *)assetNamePtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* assetNamePtr, CharPtr* error) {
+        DataPtr result;
+        RPtr assetName = [assetNamePtr rPtr];
+        return asset_name_to_bytes(assetName, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:assetNamePtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(assetNameFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return asset_name_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(assetNameNew:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return asset_name_new((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
+// AssetNames
+
+RCT_EXPORT_METHOD(assetNamesNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return asset_names_new(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(assetNamesLen:(nonnull NSString *)assetNamesPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* assetNamesPtr, CharPtr* error) {
+        uintptr_t result;
+        RPtr assetNames = [assetNamesPtr rPtr];
+        return asset_names_len(assetNames, &result, error)
+            ? [NSNumber numberWithUnsignedLong:result]
+            : nil;
+    }] exec:assetNamesPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(assetNamesGet:(nonnull NSString *)assetNamesPtr withIndex:(nonnull NSNumber *)index withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr assetNames = [[params objectAtIndex:0] rPtr];
+        uintptr_t index = [[params objectAtIndex:1] unsignedIntegerValue];
+        return asset_names_get(assetNames, index, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[assetNamesPtr, index] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(assetNamesAdd:(nonnull NSString *)assetNamesPtr withItem:(nonnull NSString *)item withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr assetNames = [[params objectAtIndex:0] rPtr];
+        RPtr item = [[params objectAtIndex:1] rPtr];
+        asset_names_add(&assetNames, item, error);
+        return nil;
+    }] exec:@[assetNamesPtr, item] andResolve:resolve orReject:reject];
+}
+
 // PrivateKey
 
 RCT_EXPORT_METHOD(privateKeyToPublic: (nonnull NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

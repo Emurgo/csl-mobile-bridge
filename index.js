@@ -128,6 +128,22 @@ export class BigNum extends Ptr {
 }
 
 export class AssetName extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.assetNameToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<AssetName>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.assetNameFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, AssetName);
+  }
 
   /**
   * @param {Uint8Array} name
@@ -138,6 +154,88 @@ export class AssetName extends Ptr {
     return Ptr._wrap(ret, AssetName);
   }
 }
+
+export class AssetNames extends Ptr {
+  /**
+  * @returns {Promise<AssetNames>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.assetNamesNew();
+    return Ptr._wrap(ret, AssetNames);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.assetNamesLen(this.ptr);
+  }
+
+  /**
+  * @param {number} index
+  * @returns {Promise<AssetName>}
+  */
+  async get(index) {
+    const ret = await HaskellShelley.assetNamesGet(this.ptr, index);
+    return Ptr._wrap(ret, AssetName);
+  }
+
+  /**
+  * @param {AssetName} item
+  * @returns {Promise<void>}
+  */
+  add(item) {
+    const itemPtr = Ptr._assertClass(item, AssetName);
+    return HaskellShelley.assetNamesAdd(this.ptr, itemPtr);
+  }
+}
+
+// export class MultiAsset extends Ptr {
+//   /**
+//   * @returns {Promise<MultiAsset>}
+//   */
+//   static async new() {
+//     const ret = await HaskellShelley.multiAssetNew();
+//     return Ptr._wrap(ret, MultiAsset);
+//   }
+//
+//   /**
+//   * @returns {Promise<number>}
+//   */
+//   async len() {
+//     return HaskellShelley.multiAssetLen(this.ptr);
+//   }
+//
+//   /**
+//   * @param {PolicyID} key
+//   * @param {Assets} value
+//   * @returns {Promise<Optional<Assets>>}
+//   */
+//   async insert(key, value) {
+//     const keyPtr = Ptr._assertClass(key, PolicyID);
+//     const valuePtr = Ptr._assertClass(value, Assets);
+//     const ret = await HaskellShelley.multiAssetInsert(this.ptr, keyPtr, valuePtr);
+//     return Ptr._wrap(ret, Assets);
+//   }
+//
+//   /**
+//   * @param {PolicyID} key
+//   * @returns {Promise<Optional<Assets>>}
+//   */
+//   async get(key) {
+//     const keyPtr = Ptr._assertClass(key, PolicyID);
+//     const ret = await HaskellShelley.multiAssetGet(this.ptr, keyPtr);
+//     return Ptr._wrap(ret, Assets);
+//   }
+//
+//   /**
+//   * @returns {Promise<PolicyIDs>}
+//   */
+//   async keys() {
+//     const ret = await HaskellShelley.multiAssetKeys(this.ptr);
+//     return Ptr._wrap(ret, PolicyIDs);
+//   }
+// }
 
 /**
 * ED25519 key used as public key

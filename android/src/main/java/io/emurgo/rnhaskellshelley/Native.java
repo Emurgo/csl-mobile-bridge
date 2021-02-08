@@ -27,7 +27,17 @@ final class Native {
     public final native Result<RPtr> bigNumCheckedSub(RPtr bigNum, RPtr other);
 
     // AssetName
+    public final native Result<byte[]> assetNameToBytes(RPtr assetName);
+    public final native Result<RPtr> assetNameFromBytes(byte[] bytes);
     public final native Result<RPtr> assetNameNew(byte[] bytes);
+
+    // AssetNames
+    // public final native Result<byte[]> assetNamesToBytes(RPtr assetNames);
+    // public final native Result<RPtr> assetNamesFromBytes(byte[] bytes);
+    public final native Result<RPtr> assetNamesNew();
+    public final native Result<Long> assetNamesLen(RPtr assetNames);
+    public final native Result<RPtr> assetNamesGet(RPtr assetNames, long index);
+    public final native Result<Void> assetNamesAdd(RPtr assetNames, RPtr item);
 
     // PublicKey
     public final native Result<RPtr> publicKeyFromBech32(String bech32);
