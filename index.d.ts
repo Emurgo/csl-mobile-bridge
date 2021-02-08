@@ -62,13 +62,13 @@ export class AssetName extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
   */
-  async to_bytes(): Promise<Uint8Array>
+  to_bytes(): Promise<Uint8Array>
 
   /**
   * @param {Uint8Array} bytes
   * @returns {Promise<AssetName>}
   */
-  static async from_bytes(bytes): Promise<AssetName>
+  static from_bytes(bytes): Promise<AssetName>
 
   /**
   * @param {Uint8Array} name
@@ -81,18 +81,18 @@ export class AssetNames extends Ptr {
   /**
   * @returns {Promise<AssetNames>}
   */
-  static async new(): Promise<AssetNames>
+  static new(): Promise<AssetNames>
 
   /**
   * @returns {Promise<number>}
   */
-  async len(): Promise<number>;
+  len(): Promise<number>;
 
   /**
   * @param {number} index
   * @returns {Promise<AssetName>}
   */
-  async get(index): Promise<AssetName>;
+  get(index): Promise<AssetName>;
 
   /**
   * @param {AssetName} item
@@ -335,7 +335,7 @@ export class ByronAddress extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
   */
-  async attributes(): Promise<Uint8Array>;
+  attributes(): Promise<Uint8Array>;
 }
 
 export class Address extends Ptr {
@@ -407,6 +407,45 @@ export class ScriptHash extends Ptr {
   */
   static from_bytes(bytes: Uint8Array): Promise<ScriptHash>;
 }
+
+export class ScriptHashes extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<ScriptHashes>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<ScriptHashes>;
+
+  /**
+  * @returns {Promise<ScriptHashes>}
+  */
+  static new(): Promise<ScriptHashes>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len(): Promise<number>;
+
+  /**
+  * @param {number} index
+  * @returns {Promise<ScriptHash>}
+  */
+  get(index: number): Promise<ScriptHash>;
+
+  /**
+  * @param {ScriptHash} item
+  * @returns {Promise<void>}
+  */
+  add(item: ScriptHash): Promise<void>;
+}
+
+export type PolicyID = ScriptHash;
+
+export type PolicyIDs = ScriptHashes;
 
 export class TransactionHash extends Ptr {
   /**

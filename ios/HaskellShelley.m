@@ -661,6 +661,73 @@ RCT_EXPORT_METHOD(scriptHashFromBytes:(nonnull NSString *)bytesStr  withResolve:
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
+// ScriptHashes
+
+RCT_EXPORT_METHOD(scriptHashesToBytes:(nonnull NSString *)scriptHashesPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* scriptHashesPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr scriptHashes = [scriptHashesPtr rPtr];
+        return script_hashes_to_bytes(scriptHashes, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:scriptHashesPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(scriptHashesFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return script_hashes_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(scriptHashesNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return script_hashes_new(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(scriptHashesLen:(nonnull NSString *)scriptHashesPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* scriptHashesPtr, CharPtr* error) {
+        uintptr_t result;
+        RPtr scriptHashes = [scriptHashesPtr rPtr];
+        return script_hashes_len(scriptHashes, &result, error)
+            ? [NSNumber numberWithUnsignedLong:result]
+            : nil;
+    }] exec:scriptHashesPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(scriptHashesGet:(nonnull NSString *)scriptHashesPtr withIndex:(nonnull NSNumber *)index withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr scriptHashes = [[params objectAtIndex:0] rPtr];
+        uintptr_t index = [[params objectAtIndex:1] unsignedIntegerValue];
+        return script_hashes_get(scriptHashes, index, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[scriptHashesPtr, index] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(scriptHashesAdd:(nonnull NSString *)scriptHashesPtr withItem:(nonnull NSString *)item withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr scriptHashes = [[params objectAtIndex:0] rPtr];
+        RPtr item = [[params objectAtIndex:1] rPtr];
+        script_hashes_add(&scriptHashes, item, error);
+        return nil;
+    }] exec:@[scriptHashesPtr, item] andResolve:resolve orReject:reject];
+}
+
 // TransactionHash
 
 RCT_EXPORT_METHOD(transactionHashToBytes:(nonnull NSString *)txHashPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

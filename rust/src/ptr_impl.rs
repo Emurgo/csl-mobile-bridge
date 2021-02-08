@@ -27,6 +27,7 @@ impl RPtrRepresentable for PublicKey {}
 impl RPtrRepresentable for RewardAddress {}
 impl RPtrRepresentable for RewardAddresses {}
 impl RPtrRepresentable for ScriptHash {}
+impl RPtrRepresentable for ScriptHashes {}
 impl RPtrRepresentable for StakeCredential {}
 impl RPtrRepresentable for StakeDelegation {}
 impl RPtrRepresentable for StakeDeregistration {}

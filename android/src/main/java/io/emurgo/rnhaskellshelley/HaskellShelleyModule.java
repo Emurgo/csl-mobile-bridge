@@ -137,7 +137,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void assetNamesLen(String assetNames, Promise promise) {
         Native.I
-                .certificatesLen(new RPtr(assetNames))
+                .assetNamesLen(new RPtr(assetNames))
                 .map(Long::intValue)
                 .pour(promise);
     }
@@ -515,6 +515,55 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
         Native.I
                 .scriptHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
                 .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    // ScriptHashes
+
+    @ReactMethod
+    public final void scriptHashesToBytes(String scriptHashes, Promise promise) {
+        Native.I
+                .scriptHashesToBytes(new RPtr(scriptHashes))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void scriptHashesFromBytes(String bytes, Promise promise) {
+        Native.I
+                .scriptHashesFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void scriptHashesNew(Promise promise) {
+        Native.I
+                .scriptHashesNew()
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void scriptHashesLen(String scriptHashes, Promise promise) {
+        Native.I
+                .scriptHashesLen(new RPtr(scriptHashes))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void scriptHashesGet(String scriptHashes, Integer index, Promise promise) {
+        Native.I
+                .scriptHashesGet(new RPtr(scriptHashes), index)
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void scriptHashesAdd(String scriptHashes, String item, Promise promise) {
+        Native.I
+                .scriptHashesAdd(new RPtr(scriptHashes), new RPtr(item))
                 .pour(promise);
     }
 

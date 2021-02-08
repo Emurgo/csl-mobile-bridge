@@ -102,6 +102,14 @@ final class Native {
     public final native Result<byte[]> scriptHashToBytes(RPtr scriptHash);
     public final native Result<RPtr> scriptHashFromBytes(byte[] bytes);
 
+    // ScriptHashes
+    public final native Result<byte[]> scriptHashesToBytes(RPtr scriptHashes);
+    public final native Result<RPtr> scriptHashesFromBytes(byte[] bytes);
+    public final native Result<RPtr> scriptHashesNew();
+    public final native Result<Long> scriptHashesLen(RPtr scriptHashes);
+    public final native Result<RPtr> scriptHashesGet(RPtr scriptHashes, long index);
+    public final native Result<Void> scriptHashesAdd(RPtr scriptHashes, RPtr item);
+
     // TransactionHash
     public final native Result<byte[]> transactionHashToBytes(RPtr transactionHash);
     public final native Result<RPtr> transactionHashFromBytes(byte[] bytes);

@@ -667,6 +667,67 @@ export class ScriptHash extends Ptr {
   }
 }
 
+export class ScriptHashes extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.scriptHashesToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<ScriptHashes>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.scriptHashesFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, ScriptHashes);
+  }
+
+  /**
+  * @returns {Promise<ScriptHashes>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.scriptHashesNew();
+    return Ptr._wrap(ret, ScriptHashes);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.scriptHashesLen(this.ptr);
+  }
+
+  /**
+  * @param {number} index
+  * @returns {Promise<ScriptHash>}
+  */
+  async get(index) {
+    const ret = await HaskellShelley.scriptHashesGet(this.ptr, index);
+    return Ptr._wrap(ret, ScriptHash);
+  }
+
+  /**
+  * @param {ScriptHash} item
+  * @returns {Promise<void>}
+  */
+  add(item) {
+    const itemPtr = Ptr._assertClass(item, ScriptHash);
+    return HaskellShelley.scriptHashesAdd(this.ptr, itemPtr);
+  }
+}
+
+/**
+ * PolicyID is defined in rust as:
+ *   pub type PolicyID = ScriptHash
+ * so we just expose a reference to ScriptHash
+ */
+export const PolicyID = ScriptHash;
+
+export const PolicyIDs = ScriptHashes;
+
 export class TransactionHash extends Ptr {
 
   /**
