@@ -10,6 +10,7 @@ use cardano_serialization_lib::*;
 impl RPtrRepresentable for Address {}
 impl RPtrRepresentable for AssetName {}
 impl RPtrRepresentable for AssetNames {}
+impl RPtrRepresentable for Assets {}
 impl RPtrRepresentable for BaseAddress {}
 impl RPtrRepresentable for BigNum {}
 impl RPtrRepresentable for Bip32PrivateKey {}

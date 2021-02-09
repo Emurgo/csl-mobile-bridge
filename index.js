@@ -728,6 +728,53 @@ export const PolicyID = ScriptHash;
 
 export const PolicyIDs = ScriptHashes;
 
+export class Assets extends Ptr {
+  /**
+  * @returns {Promise<Assets>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.assetsNew();
+    return Ptr._wrap(ret, Assets);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.assetsLen(this.ptr);
+  }
+
+  /**
+  * @param {AssetName} key
+  * @param {BigNum} value
+  * @returns {Promise<BigNum>}
+  */
+  async insert(key, value) {
+    const keyPtr = Ptr._assertClass(key, AssetName);
+    const valuePtr = Ptr._assertClass(value, BigNum);
+    const ret = await HaskellShelley.assetsInsert(this.ptr, keyPtr, valuePtr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  /**
+  * @param {AssetName} key
+  * @returns {Promise<BigNum | undefined>}
+  */
+  async get(key) {
+    const keyPtr = Ptr._assertClass(key, AssetName);
+    const ret = await HaskellShelley.assetsGet(this.ptr, keyPtr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  /**
+  * @returns {Promise<AssetNames>}
+  */
+  async keys() {
+    const ret = await HaskellShelley.assetsKeys(this.ptr);
+    return Ptr._wrap(ret, AssetNames);
+  }
+}
+
 export class TransactionHash extends Ptr {
 
   /**

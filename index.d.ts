@@ -447,6 +447,36 @@ export type PolicyID = ScriptHash;
 
 export type PolicyIDs = ScriptHashes;
 
+export class Assets extends Ptr {
+  /**
+  * @returns {Promise<Assets>}
+  */
+  static new(): Promise<Assets>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len(): Promise<number>;
+
+  /**
+  * @param {AssetName} key
+  * @param {BigNum} value
+  * @returns {Promise<BigNum>}
+  */
+  insert(key: AssetName, value: BigNum): Promise<BigNum>;
+
+  /**
+  * @param {AssetName} key
+  * @returns {Promise<BigNum | undefined>}
+  */
+  get(key: AssetName): Promise<BigNum | undefined>;
+
+  /**
+  * @returns {Promise<AssetNames>}
+  */
+  keys(): Promise<AssetNames>;
+}
+
 export class TransactionHash extends Ptr {
   /**
   * @param {Uint8Array} bytes

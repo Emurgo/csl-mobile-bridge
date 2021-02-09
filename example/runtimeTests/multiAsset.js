@@ -3,6 +3,8 @@
 import {
   AssetName,
   AssetNames,
+  Assets,
+  BigNum,
   PolicyID,
   PolicyIDs,
 } from '@emurgo/react-native-haskell-shelley'
@@ -52,6 +54,25 @@ const test: () => void = async () => {
    */
   const policyID = await PolicyID.from_bytes(Buffer.from(policyIDHex, 'hex'))
   await testVector(PolicyIDs, PolicyID, policyID)
+
+  /**
+   * Assets
+   */
+  const assets = await Assets.new()
+  assert((await assets.len()) === 0, 'Assets::len()')
+  let previousAmount = await assets.insert(
+    assetName,
+    await BigNum.from_str('10000000'),
+  )
+  assert(previousAmount == null, 'Assets::insert()')
+  assert((await assets.len()) === 1, 'Assets::len()')
+  const bal = await assets.get(assetName)
+  assert((await bal.to_str()) === '10000000', 'Assets::get()')
+  previousAmount = await assets.insert(
+    assetName,
+    await BigNum.from_str('10000000'),
+  )
+  assert((await previousAmount.to_str()) === '10000000', 'Assets::get()')
 }
 
 export default test

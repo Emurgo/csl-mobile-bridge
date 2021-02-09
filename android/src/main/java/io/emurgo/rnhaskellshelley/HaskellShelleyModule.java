@@ -567,6 +567,48 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // Assets
+
+    @ReactMethod
+    public final void assetsNew(Promise promise) {
+        Native.I
+                .assetsNew()
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void assetsLen(String assets, Promise promise) {
+        Native.I
+                .assetsLen(new RPtr(assets))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void assetsInsert(String assets, String key, String value, Promise promise) {
+        Native.I
+                .assetsInsert(new RPtr(assets), new RPtr(key), new RPtr(value))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void assetsGet(String assets, String key, Promise promise) {
+        Native.I
+                .assetsGet(new RPtr(assets), new RPtr(key))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void assetsKeys(String assets, Promise promise) {
+        Native.I
+                .assetsKeys(new RPtr(assets))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // TransactionHash
 
     @ReactMethod
@@ -1521,7 +1563,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
-    // Vkeywitnesses
+    // Withdrawals
 
     @ReactMethod
     public final void withdrawalsNew(Promise promise) {

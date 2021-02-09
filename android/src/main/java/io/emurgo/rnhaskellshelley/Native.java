@@ -110,6 +110,13 @@ final class Native {
     public final native Result<RPtr> scriptHashesGet(RPtr scriptHashes, long index);
     public final native Result<Void> scriptHashesAdd(RPtr scriptHashes, RPtr item);
 
+    // Assets
+    public final native Result<RPtr> assetsNew();
+    public final native Result<Long> assetsLen(RPtr assets);
+    public final native Result<RPtr> assetsInsert(RPtr assets, RPtr key, RPtr value);
+    public final native Result<RPtr> assetsGet(RPtr assets, RPtr key);
+    public final native Result<RPtr> assetsKeys(RPtr assets);
+
     // TransactionHash
     public final native Result<byte[]> transactionHashToBytes(RPtr transactionHash);
     public final native Result<RPtr> transactionHashFromBytes(byte[] bytes);

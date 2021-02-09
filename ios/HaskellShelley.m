@@ -728,6 +728,65 @@ RCT_EXPORT_METHOD(scriptHashesAdd:(nonnull NSString *)scriptHashesPtr withItem:(
     }] exec:@[scriptHashesPtr, item] andResolve:resolve orReject:reject];
 }
 
+// Assets
+
+RCT_EXPORT_METHOD(assetsNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return assets_new(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(assetsLen:(nonnull NSString *)assetsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* assetsPtr, CharPtr* error) {
+        uintptr_t result;
+        RPtr assets = [assetsPtr rPtr];
+        return assets_len(assets, &result, error)
+            ? [NSNumber numberWithUnsignedLong:result]
+            : nil;
+    }] exec:assetsPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(assetsInsert:(nonnull NSString *)assetsPtr withKey:(nonnull NSString *)keyPtr withValue:(nonnull NSString *)valuePtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr assets = [[params objectAtIndex:0] rPtr];
+        RPtr key = [[params objectAtIndex:1] rPtr];
+        RPtr value = [[params objectAtIndex:2] rPtr];
+        return assets_insert(assets, key, value, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[assetsPtr, keyPtr, valuePtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(assetsGet:(nonnull NSString *)assetsPtr withKey:(nonnull NSString *)keyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr assets = [[params objectAtIndex:0] rPtr];
+        RPtr key = [[params objectAtIndex:1] rPtr];
+        return assets_get(assets, key, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[assetsPtr, keyPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(assetsKeys:(nonnull NSString *)assetsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* assetsPtr, CharPtr* error) {
+        RPtr result;
+        RPtr assets = [assetsPtr rPtr];
+        return assets_keys(assets, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:assetsPtr andResolve:resolve orReject:reject];
+}
+
 // TransactionHash
 
 RCT_EXPORT_METHOD(transactionHashToBytes:(nonnull NSString *)txHashPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
