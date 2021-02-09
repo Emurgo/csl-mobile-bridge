@@ -23,6 +23,7 @@ impl RPtrRepresentable for Certificates {}
 impl RPtrRepresentable for Ed25519Signature {}
 impl RPtrRepresentable for Ed25519KeyHash {}
 impl RPtrRepresentable for LinearFee {}
+impl RPtrRepresentable for MultiAsset {}
 impl RPtrRepresentable for PrivateKey {}
 impl RPtrRepresentable for PublicKey {}
 impl RPtrRepresentable for RewardAddress {}

@@ -15,6 +15,7 @@ mod data;
 mod ed25519_key_hash;
 mod ed25519_signature;
 mod linear_fee;
+mod multi_asset;
 mod ptr_c;
 mod private_key;
 mod public_key;

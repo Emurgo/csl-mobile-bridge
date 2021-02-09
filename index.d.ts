@@ -477,6 +477,36 @@ export class Assets extends Ptr {
   keys(): Promise<AssetNames>;
 }
 
+export class MultiAsset extends Ptr {
+  /**
+  * @returns {Promise<MultiAsset>}
+  */
+  static new(): Promise<MultiAsset>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len(): Promise<number>;
+
+  /**
+  * @param {PolicyID} key
+  * @param {Assets} value
+  * @returns {Promise<Assets>}
+  */
+  insert(key: PolicyID, value: Assets): Promise<Assets>;
+
+  /**
+  * @param {PolicyID} key
+  * @returns {Promise<Assets | undefined>}
+  */
+  get(key: PolicyID): Promise<Assets | undefined>;
+
+  /**
+  * @returns {Promise<PolicyIDs>}
+  */
+  keys(): Promise<PolicyIDs>;
+}
+
 export class TransactionHash extends Ptr {
   /**
   * @param {Uint8Array} bytes

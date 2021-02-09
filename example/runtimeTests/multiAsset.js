@@ -7,9 +7,10 @@ import {
   BigNum,
   PolicyID,
   PolicyIDs,
+  MultiAsset,
 } from '@emurgo/react-native-haskell-shelley'
 
-import {assert, testHashToFromBytes, testVector} from '../util'
+import {assert, testHashToFromBytes, testVector, testDict} from '../util'
 
 /**
  * Tests for:
@@ -58,21 +59,38 @@ const test: () => void = async () => {
   /**
    * Assets
    */
-  const assets = await Assets.new()
-  assert((await assets.len()) === 0, 'Assets::len()')
-  let previousAmount = await assets.insert(
+  const assets = await testDict(
+    Assets,
+    AssetName,
     assetName,
+    BigNum,
     await BigNum.from_str('10000000'),
   )
-  assert(previousAmount == null, 'Assets::insert()')
-  assert((await assets.len()) === 1, 'Assets::len()')
-  const bal = await assets.get(assetName)
-  assert((await bal.to_str()) === '10000000', 'Assets::get()')
-  previousAmount = await assets.insert(
+  const _val = await assets.get(assetName)
+  assert((await _val.to_str()) === '10000000', 'Assets::get()')
+  const previousAmount = await assets.insert(
     assetName,
-    await BigNum.from_str('10000000'),
+    await BigNum.from_str('20000000'),
   )
   assert((await previousAmount.to_str()) === '10000000', 'Assets::get()')
+
+  /**
+   * MultiAsset
+   */
+  const multiAsset = await testDict(
+    MultiAsset,
+    PolicyID,
+    policyID,
+    Assets,
+    assets,
+  )
+  const _assets = await multiAsset.get(policyID)
+  assert(
+    _assets instanceof Assets,
+    'MultiAsset.get() should return instance of Assets',
+  )
+  const __val = await _assets.get(assetName)
+  assert((await __val.to_str()) === '20000000', 'MultiAsset::get()')
 }
 
 export default test

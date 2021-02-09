@@ -13,6 +13,7 @@ mod certificate;
 mod certificates;
 mod ed25519_signature;
 mod ed25519_key_hash;
+mod multi_asset;
 mod linear_fee;
 mod primitive;
 mod ptr_j;

@@ -117,6 +117,13 @@ final class Native {
     public final native Result<RPtr> assetsGet(RPtr assets, RPtr key);
     public final native Result<RPtr> assetsKeys(RPtr assets);
 
+    // MultiAsset
+    public final native Result<RPtr> multiAssetNew();
+    public final native Result<Long> multiAssetLen(RPtr multiAsset);
+    public final native Result<RPtr> multiAssetInsert(RPtr multiAsset, RPtr key, RPtr value);
+    public final native Result<RPtr> multiAssetGet(RPtr multiAsset, RPtr key);
+    public final native Result<RPtr> multiAssetKeys(RPtr multiAsset);
+
     // TransactionHash
     public final native Result<byte[]> transactionHashToBytes(RPtr transactionHash);
     public final native Result<RPtr> transactionHashFromBytes(byte[] bytes);

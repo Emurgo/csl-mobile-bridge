@@ -8,6 +8,9 @@ export const assert = (value: any, message: string, ...args: any) => {
   throw new Error(message)
 }
 
+/**
+ * a minimum test for hashes
+ */
 export const testHashToFromBytes = async (hashClass, inputStrHex) => {
   const obj = await hashClass.from_bytes(Buffer.from(inputStrHex, 'hex'))
   const objToBytes = Buffer.from(await obj.to_bytes(), 'hex').toString('hex')
@@ -16,12 +19,39 @@ export const testHashToFromBytes = async (hashClass, inputStrHex) => {
     `${hashClass.name}.to_bytes() should match original input value. ` +
       `Received: ${objToBytes}, expected: ${inputStrHex}`,
   )
+  return obj
 }
 
+/**
+ * a minimum test for vector-like structures
+ */
 export const testVector = async (vecClass, itemClass, item) => {
   const vec = await vecClass.new()
   assert((await vec.len()) === 0, `${vecClass.name}.len() should return 0`)
   await vec.add(item)
   assert((await vec.len()) === 1, `${vecClass.name}.len() should return 1`)
   assert((await vec.get(0)) instanceof itemClass, `${itemClass.name}::get()`)
+  return vec
+}
+
+/**
+ * a minimum test for dict-like structures
+ */
+export const testDict = async (
+  dictClass,
+  keyClass,
+  keyObj,
+  valueClass,
+  valueObj,
+) => {
+  const dictObj = await dictClass.new()
+  assert((await dictObj.len()) === 0, `${dictClass.name}.len() should return 0`)
+  const prevVal = await dictObj.insert(keyObj, valueObj)
+  assert(prevVal == null, `${dictClass.name}::insert()`)
+  assert((await dictObj.len()) === 1, `${dictClass.name}.len() should return 1`)
+  assert(
+    (await dictObj.get(keyObj)) instanceof valueClass,
+    `${dictClass.name}::get()`,
+  )
+  return dictObj
 }

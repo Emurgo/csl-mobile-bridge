@@ -609,6 +609,48 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // MultiAsset
+
+    @ReactMethod
+    public final void multiAssetNew(Promise promise) {
+        Native.I
+                .multiAssetNew()
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void multiAssetLen(String multiAsset, Promise promise) {
+        Native.I
+                .multiAssetLen(new RPtr(multiAsset))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void multiAssetInsert(String multiAsset, String key, String value, Promise promise) {
+        Native.I
+                .multiAssetInsert(new RPtr(multiAsset), new RPtr(key), new RPtr(value))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void multiAssetGet(String multiAsset, String key, Promise promise) {
+        Native.I
+                .multiAssetGet(new RPtr(multiAsset), new RPtr(key))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void multiAssetKeys(String multiAsset, Promise promise) {
+        Native.I
+                .multiAssetKeys(new RPtr(multiAsset))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // TransactionHash
 
     @ReactMethod

@@ -775,6 +775,54 @@ export class Assets extends Ptr {
   }
 }
 
+export class MultiAsset extends Ptr {
+  /**
+  * @returns {Promise<MultiAsset>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.multiAssetNew();
+    return Ptr._wrap(ret, MultiAsset);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.multiAssetLen(this.ptr);
+  }
+
+  /**
+  * @param {PolicyID} key
+  * @param {Assets} value
+  * @returns {Promise<Assets>}
+  */
+  async insert(key, value) {
+    // recall: PolicyID is a reference to ScriptHash
+    const keyPtr = Ptr._assertClass(key, ScriptHash);
+    const valuePtr = Ptr._assertClass(value, Assets);
+    const ret = await HaskellShelley.multiAssetInsert(this.ptr, keyPtr, valuePtr);
+    return Ptr._wrap(ret, Assets);
+  }
+
+  /**
+  * @param {PolicyID} key
+  * @returns {Promise<Assets | undefined>}
+  */
+  async get(key) {
+    const keyPtr = Ptr._assertClass(key, PolicyID);
+    const ret = await HaskellShelley.multiAssetGet(this.ptr, keyPtr);
+    return Ptr._wrap(ret, Assets);
+  }
+
+  /**
+  * @returns {Promise<PolicyIDs>}
+  */
+  async keys() {
+    const ret = await HaskellShelley.multiAssetKeys(this.ptr);
+    return Ptr._wrap(ret, PolicyIDs);
+  }
+}
+
 export class TransactionHash extends Ptr {
 
   /**

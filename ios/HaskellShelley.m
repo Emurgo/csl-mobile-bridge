@@ -787,6 +787,65 @@ RCT_EXPORT_METHOD(assetsKeys:(nonnull NSString *)assetsPtr withResolve:(RCTPromi
     }] exec:assetsPtr andResolve:resolve orReject:reject];
 }
 
+// MultiAsset
+
+RCT_EXPORT_METHOD(multiAssetNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return multi_asset_new(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(multiAssetLen:(nonnull NSString *)multiAssetPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* multiAssetPtr, CharPtr* error) {
+        uintptr_t result;
+        RPtr multiAsset = [multiAssetPtr rPtr];
+        return multi_asset_len(multiAsset, &result, error)
+            ? [NSNumber numberWithUnsignedLong:result]
+            : nil;
+    }] exec:multiAssetPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(multiAssetInsert:(nonnull NSString *)multiAssetPtr withKey:(nonnull NSString *)keyPtr withValue:(nonnull NSString *)valuePtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr multiAsset = [[params objectAtIndex:0] rPtr];
+        RPtr key = [[params objectAtIndex:1] rPtr];
+        RPtr value = [[params objectAtIndex:2] rPtr];
+        return multi_asset_insert(multiAsset, key, value, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[multiAssetPtr, keyPtr, valuePtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(multiAssetGet:(nonnull NSString *)multiAssetPtr withKey:(nonnull NSString *)keyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr multiAsset = [[params objectAtIndex:0] rPtr];
+        RPtr key = [[params objectAtIndex:1] rPtr];
+        return multi_asset_get(multiAsset, key, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[multiAssetPtr, keyPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(multiAssetKeys:(nonnull NSString *)multiAssetPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* multiAssetPtr, CharPtr* error) {
+        RPtr result;
+        RPtr multiAsset = [multiAssetPtr rPtr];
+        return multi_asset_keys(multiAsset, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:multiAssetPtr andResolve:resolve orReject:reject];
+}
+
 // TransactionHash
 
 RCT_EXPORT_METHOD(transactionHashToBytes:(nonnull NSString *)txHashPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
