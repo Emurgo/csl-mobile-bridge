@@ -127,6 +127,86 @@ export class BigNum extends Ptr {
   }
 }
 
+export const Coin = BigNum;
+
+export class Value extends Ptr {
+
+  /**
+  * @param {BigNum} coin
+  * @returns {Promise<Value>}
+  */
+  static async new(coin) {
+    const coinPtr = Ptr._assertClass(coin, BigNum);
+    const ret = await HaskellShelley.valueNew(coinPtr);
+    return Ptr._wrap(ret, Value);
+  }
+
+  /**
+  * TODO: should we return Coin instead?
+  * @returns {Promise<BigNum>}
+  */
+  async coin() {
+    const ret = await HaskellShelley.valueCoin(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  /**
+  * @param {BigNum} coin
+  * @returns {Promise<void>}
+  */
+  async set_coin(coin) {
+    // recall: we expose Coin as a reference to BigNum
+    const coinPtr = Ptr._assertClass(coin, BigNum);
+    return await HaskellShelley.valueSetCoin(this.ptr, coinPtr);
+  }
+
+  /**
+  * @returns {Promise<MultiAsset | undefined>}
+  */
+  async multiasset() {
+    const ret = await HaskellShelley.valueMultiasset(this.ptr);
+    return Ptr._wrap(ret, MultiAsset);
+  }
+
+  /**
+  * @param {MultiAsset} multiasset
+  * @returns {Promise<void>}
+  */
+  async set_multiasset(multiasset) {
+    const multiassetPtr = Ptr._assertClass(multiasset, MultiAsset);
+    return await HaskellShelley.valueSetMultiasset(this.ptr, multiassetPtr);
+  }
+
+  /**
+  * @param {Value} rhs
+  * @returns {Promise<Value>}
+  */
+  async checked_add(rhs) {
+    const rhsPtr = Ptr._assertClass(rhs, Value);
+    const ret = await HaskellShelley.valueCheckedAdd(this.ptr, rhsPtr);
+    return Ptr._wrap(ret, Value);
+  }
+
+  /**
+  * @param {Value} rhs
+  * @returns {Promise<Value>}
+  */
+  async checked_sub(rhs) {
+    const rhsPtr = Ptr._assertClass(rhs, Value);
+    const ret = await HaskellShelley.valueCheckedSub(this.ptr, rhsPtr);
+    return Ptr._wrap(ret, Value);
+  }
+
+  /**
+   * @param {Value} rhs
+   * @returns {Promise<number | undefined>}
+   */
+  async compare(rhs) {
+    const rhsPtr = Ptr._assertClass(rhs, Value);
+    return await HaskellShelley.valueCompare(this.ptr, rhsPtr);
+  }
+}
+
 export class AssetName extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -189,53 +269,6 @@ export class AssetNames extends Ptr {
     return HaskellShelley.assetNamesAdd(this.ptr, itemPtr);
   }
 }
-
-// export class MultiAsset extends Ptr {
-//   /**
-//   * @returns {Promise<MultiAsset>}
-//   */
-//   static async new() {
-//     const ret = await HaskellShelley.multiAssetNew();
-//     return Ptr._wrap(ret, MultiAsset);
-//   }
-//
-//   /**
-//   * @returns {Promise<number>}
-//   */
-//   async len() {
-//     return HaskellShelley.multiAssetLen(this.ptr);
-//   }
-//
-//   /**
-//   * @param {PolicyID} key
-//   * @param {Assets} value
-//   * @returns {Promise<Optional<Assets>>}
-//   */
-//   async insert(key, value) {
-//     const keyPtr = Ptr._assertClass(key, PolicyID);
-//     const valuePtr = Ptr._assertClass(value, Assets);
-//     const ret = await HaskellShelley.multiAssetInsert(this.ptr, keyPtr, valuePtr);
-//     return Ptr._wrap(ret, Assets);
-//   }
-//
-//   /**
-//   * @param {PolicyID} key
-//   * @returns {Promise<Optional<Assets>>}
-//   */
-//   async get(key) {
-//     const keyPtr = Ptr._assertClass(key, PolicyID);
-//     const ret = await HaskellShelley.multiAssetGet(this.ptr, keyPtr);
-//     return Ptr._wrap(ret, Assets);
-//   }
-//
-//   /**
-//   * @returns {Promise<PolicyIDs>}
-//   */
-//   async keys() {
-//     const ret = await HaskellShelley.multiAssetKeys(this.ptr);
-//     return Ptr._wrap(ret, PolicyIDs);
-//   }
-// }
 
 /**
 * ED25519 key used as public key

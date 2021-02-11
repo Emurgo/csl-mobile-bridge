@@ -28,7 +28,7 @@ pub unsafe extern "C" fn assets_insert(
       .typed_ref::<Assets>()
       .zip(key.typed_ref::<AssetName>())
       .zip(value.typed_ref::<BigNum>())
-      .map(|((assets, key), value)| assets.insert(key, *value))
+      .map(|((assets, key), value)| assets.insert(key, value))
   })
   .map(|coin| coin.rptr())
   .response(result, error)

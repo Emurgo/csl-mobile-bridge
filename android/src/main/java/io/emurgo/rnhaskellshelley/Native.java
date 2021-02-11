@@ -26,6 +26,16 @@ final class Native {
     public final native Result<RPtr> bigNumCheckedAdd(RPtr bigNum, RPtr other);
     public final native Result<RPtr> bigNumCheckedSub(RPtr bigNum, RPtr other);
 
+    // Value
+    public final native Result<RPtr> valueNew(RPtr coin);
+    public final native Result<RPtr> valueCoin(RPtr value);
+    public final native Result<RPtr> valueSetCoin(RPtr value, RPtr coin);
+    public final native Result<RPtr> valueMultiasset(RPtr value);
+    public final native Result<RPtr> valueSetMultiasset(RPtr value, RPtr multiasset);
+    public final native Result<RPtr> valueCheckedAdd(RPtr value, RPtr rhs);
+    public final native Result<RPtr> valueCheckedSub(RPtr value, RPtr rhs);
+    public final native Result<Integer> valueCompare(RPtr value, RPtr rhs);
+
     // AssetName
     public final native Result<byte[]> assetNameToBytes(RPtr assetName);
     public final native Result<RPtr> assetNameFromBytes(byte[] bytes);
@@ -60,7 +70,6 @@ final class Native {
     public final native Result<RPtr> bip32PublicKeyFromBech32(String bech32Str);
     public final native Result<String> bip32PublicKeyToBech32(RPtr bip32PublicKey);
     public final native Result<byte[]> bip32PublicKeyChaincode(RPtr bip32PublicKey);
-
 
     // Bip32PrivateKey
     public final native Result<RPtr> bip32PrivateKeyDerive(RPtr bip32PrivateKey, long index);

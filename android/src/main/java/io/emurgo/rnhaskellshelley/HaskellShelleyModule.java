@@ -82,6 +82,71 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // Value
+
+    @ReactMethod
+    public final void valueNew(String coin, Promise promise) {
+        Native.I
+                .valueNew(new RPtr(coin))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void valueCoin(String valuePtr, Promise promise) {
+        Native.I
+                .valueCoin(new RPtr(valuePtr))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void valueSetCoin(String valuePtr, String coinPtr, Promise promise) {
+        Native.I
+                .valueSetCoin(new RPtr(valuePtr), new RPtr(coinPtr))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void valueMultiasset(String valuePtr, Promise promise) {
+        Native.I
+                .valueMultiasset(new RPtr(valuePtr))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void valueSetMultiasset(String valuePtr, String multiassetPtr, Promise promise) {
+        Native.I
+                .valueSetMultiasset(new RPtr(valuePtr), new RPtr(multiassetPtr))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void valueCheckedAdd(String valuePtr, String rhsPtr, Promise promise) {
+        Native.I
+                .valueCheckedAdd(new RPtr(valuePtr), new RPtr(rhsPtr))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void valueCheckedSub(String valuePtr, String rhsPtr, Promise promise) {
+        Native.I
+                .valueCheckedSub(new RPtr(valuePtr), new RPtr(rhsPtr))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void valueCompare(String valuePtr, String rhsPtr, Promise promise) {
+        Native.I
+                .valueCompare(new RPtr(valuePtr), new RPtr(rhsPtr))
+                .pour(promise);
+    }
+
     // AssetName
 
     @ReactMethod

@@ -58,6 +58,56 @@ export class BigNum extends Ptr {
 
 }
 
+export class Value extends Ptr {
+
+  /**
+  * @param {BigNum} coin
+  * @returns {Promise<Value>}
+  */
+  static new(coin: BigNum): Promise<Value>;
+
+  /**
+  * TODO: should we return Coin instead?
+  * @returns {Promise<BigNum>}
+  */
+  coin(): Promise<BigNum>;
+
+  /**
+  * @param {BigNum} coin
+  * @returns {Promise<void>}
+  */
+  set_coin(coin: BigNum): Promise<void>;
+
+  /**
+  * @returns {Promise<MultiAsset | undefined>}
+  */
+  multiasset(): Promise<MultiAsset | undefined>;
+
+  /**
+  * @param {MultiAsset} multiasset
+  * @returns {Promise<void>}
+  */
+  set_multiasset(multiasset: MultiAsset): Promise<void>;
+
+  /**
+  * @param {Value} rhs
+  * @returns {Promise<Value>}
+  */
+  checked_add(rhs: Value): Promise<Value>;
+
+  /**
+  * @param {Value} rhs
+  * @returns {Promise<Value>}
+  */
+  checked_sub(rhs: Value): Promise<Value>;
+
+  /**
+   * @param {Value} rhs
+   * @returns {Promise<number>}
+   */
+  compare(rhs: Value): Promise<number>;
+}
+
 export class AssetName extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}

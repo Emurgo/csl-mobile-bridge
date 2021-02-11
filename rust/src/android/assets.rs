@@ -46,7 +46,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_assetsInsert(
       .typed_ref::<Assets>()
       .zip(key.typed_ref::<AssetName>())
       .zip(value.typed_ref::<BigNum>())
-      .map(|((assets, key), value)| assets.insert(key, *value))
+      .map(|((assets, key), value)| assets.insert(key, value))
       .and_then(|coin| coin.rptr().jptr(&env))
   })
   .jresult(&env)
