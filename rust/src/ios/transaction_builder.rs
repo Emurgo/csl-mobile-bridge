@@ -3,9 +3,10 @@ use super::string::{CharPtr};
 use crate::panic::{handle_exception_result, Zip, ToResult};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::tx_builder::{TransactionBuilder};
+use cardano_serialization_lib::metadata::{TransactionMetadata};
 use cardano_serialization_lib::fees::{LinearFee};
 use cardano_serialization_lib::utils::{Coin, BigNum, Value};
-use cardano_serialization_lib::crypto::{Ed25519KeyHash};
+use cardano_serialization_lib::crypto::{Ed25519KeyHash, ScriptHash};
 use cardano_serialization_lib::address::{Address, ByronAddress};
 use cardano_serialization_lib::{TransactionInput, TransactionOutput, Certificates, Withdrawals};
 
@@ -25,6 +26,21 @@ pub unsafe extern "C" fn transaction_builder_add_key_input(
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn transaction_builder_add_script_input(
+  tx_builder: RPtr, hash: RPtr, input: RPtr, amount: RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    tx_builder
+      .typed_ref::<TransactionBuilder>()
+      .zip(hash.typed_ref::<ScriptHash>())
+      .zip(input.typed_ref::<TransactionInput>())
+      .zip(amount.typed_ref::<Value>())
+      .map(|(((tx_builder, hash), input), amount)| tx_builder.add_script_input(hash, input, amount))
+  })
+  .response(&mut (), error)
+}
+
+#[no_mangle]
 pub unsafe extern "C" fn transaction_builder_add_bootstrap_input(
   tx_builder: RPtr, hash: RPtr, input: RPtr, amount: RPtr, error: &mut CharPtr
 ) -> bool {
@@ -37,6 +53,37 @@ pub unsafe extern "C" fn transaction_builder_add_bootstrap_input(
       .map(|(((tx_builder, hash), input), amount)| tx_builder.add_bootstrap_input(hash, input, amount))
   })
   .response(&mut (), error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_builder_add_input(
+  tx_builder: RPtr, address: RPtr, input: RPtr, amount: RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    tx_builder
+      .typed_ref::<TransactionBuilder>()
+      .zip(address.typed_ref::<Address>())
+      .zip(input.typed_ref::<TransactionInput>())
+      .zip(amount.typed_ref::<Value>())
+      .map(|(((tx_builder, address), input), amount)| tx_builder.add_input(address, input, amount))
+  })
+  .response(&mut (), error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_builder_fee_for_input(
+  tx_builder: RPtr, address: RPtr, input: RPtr, amount: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    tx_builder
+      .typed_ref::<TransactionBuilder>()
+      .zip(address.typed_ref::<Address>())
+      .zip(input.typed_ref::<TransactionInput>())
+      .zip(amount.typed_ref::<Value>())
+      .and_then(|(((tx_builder, address), input), amount)| tx_builder.fee_for_input(address, input, amount).into_result())
+  })
+  .map(|fee| fee.rptr())
+  .response(result, error)
 }
 
 #[no_mangle]
@@ -93,6 +140,18 @@ pub unsafe extern "C" fn transaction_builder_set_ttl(
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn transaction_builder_set_validity_start_interval(
+  tx_builder: RPtr, vst: u32, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    tx_builder
+      .typed_ref::<TransactionBuilder>()
+      .map(|tx_builder| tx_builder.set_validity_start_interval(vst))
+  })
+  .response(&mut (), error)
+}
+
+#[no_mangle]
 pub unsafe extern "C" fn transaction_builder_set_certs(
   tx_builder: RPtr, certs: RPtr, error: &mut CharPtr
 ) -> bool {
@@ -114,6 +173,19 @@ pub unsafe extern "C" fn transaction_builder_set_withdrawals(
       .typed_ref::<TransactionBuilder>()
       .zip(withdrawals.typed_ref::<Withdrawals>())
       .map(|(tx_builder, withdrawals)| tx_builder.set_withdrawals(withdrawals))
+  })
+  .response(&mut (), error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_builder_set_metadata(
+  tx_builder: RPtr, metadata: RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    tx_builder
+      .typed_ref::<TransactionBuilder>()
+      .zip(metadata.typed_ref::<TransactionMetadata>())
+      .map(|(tx_builder, metadata)| tx_builder.set_metadata(metadata))
   })
   .response(&mut (), error)
 }

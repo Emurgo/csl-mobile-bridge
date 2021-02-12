@@ -141,6 +141,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void valueClampedSub(String valuePtr, String rhsPtr, Promise promise) {
+        Native.I
+                .valueClampedSub(new RPtr(valuePtr), new RPtr(rhsPtr))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void valueCompare(String valuePtr, String rhsPtr, Promise promise) {
         Native.I
                 .valueCompare(new RPtr(valuePtr), new RPtr(rhsPtr))
@@ -1550,9 +1558,31 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionBuilderAddScriptInput(String txBuilder, String hash, String input, String amount, Promise promise) {
+        Native.I
+                .transactionBuilderAddScriptInput(new RPtr(txBuilder), new RPtr(hash), new RPtr(input), new RPtr(amount))
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBuilderAddBootstrapInput(String txBuilder, String hash, String input, String amount, Promise promise) {
         Native.I
                 .transactionBuilderAddBootstrapInput(new RPtr(txBuilder), new RPtr(hash), new RPtr(input), new RPtr(amount))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderAddInput(String txBuilder, String address, String input, String amount, Promise promise) {
+        Native.I
+                .transactionBuilderAddInput(new RPtr(txBuilder), new RPtr(address), new RPtr(input), new RPtr(amount))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderFeeForInput(String txBuilder, String address, String input, String amount, Promise promise) {
+        Native.I
+                .transactionBuilderFeeForInput(new RPtr(txBuilder), new RPtr(address), new RPtr(input), new RPtr(amount))
+                .map(RPtr::toJs)
                 .pour(promise);
     }
 
@@ -1586,6 +1616,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionBuilderSetValidityStartInterval(String txBuilder, Double vsi, Promise promise) {
+        Native.I
+                .transactionBuilderSetValidityStartInterval(new RPtr(txBuilder), vsi.longValue())
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBuilderSetCerts(String txBuilder, String certs, Promise promise) {
         Native.I
                 .transactionBuilderSetCerts(new RPtr(txBuilder), new RPtr(certs))
@@ -1596,6 +1633,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderSetWithdrawals(String txBuilder, String withdrawals, Promise promise) {
         Native.I
                 .transactionBuilderSetWithdrawals(new RPtr(txBuilder), new RPtr(withdrawals))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderSetMetadata(String txBuilder, String metadata, Promise promise) {
+        Native.I
+                .transactionBuilderSetMetadata(new RPtr(txBuilder), new RPtr(metadata))
                 .pour(promise);
     }
 

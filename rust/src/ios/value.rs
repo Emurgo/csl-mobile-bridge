@@ -12,7 +12,7 @@ pub unsafe extern "C" fn value_new(
 ) -> bool {
   handle_exception_result(|| {
     coin.typed_ref::<Coin>()
-      .map(|coin| Value::new(*coin))
+      .map(|coin| Value::new(coin))
   })
     .map(|val| val.rptr())
     .response(result, error)
@@ -38,7 +38,7 @@ pub unsafe extern "C" fn value_set_coin(
   handle_exception_result(|| {
     let coin = coin.typed_ref::<Coin>()?;
     value.typed_ref::<Value>()
-      .map(|value| value.set_coin(*coin))
+      .map(|value| value.set_coin(coin))
   })
     .response(&mut (), error)
 }
@@ -88,6 +88,18 @@ pub unsafe extern "C" fn value_checked_sub(
     let value = value.typed_ref::<Value>()?;
     let rhs = rhs.typed_ref::<Value>()?;
     value.checked_sub(rhs).map(|val| val.rptr()).into_result()
+  })
+  .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn value_clamped_sub(
+  value: RPtr, rhs: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    let value = value.typed_ref::<Value>()?;
+    let rhs = rhs.typed_ref::<Value>()?;
+    Ok(value.clamped_sub(rhs).rptr())
   })
   .response(result, error)
 }

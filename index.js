@@ -198,6 +198,16 @@ export class Value extends Ptr {
   }
 
   /**
+  * @param {Value} rhs
+  * @returns {Promise<Value>}
+  */
+  async clamped_sub(rhs) {
+    const rhsPtr = Ptr._assertClass(rhs, Value);
+    const ret = await HaskellShelley.valueClampedSub(this.ptr, rhsPtr);
+    return Ptr._wrap(ret, Value);
+  }
+
+  /**
    * @param {Value} rhs
    * @returns {Promise<number | undefined>}
    */
@@ -1784,13 +1794,13 @@ export class TransactionBuilder extends Ptr {
   /**
   * @param {Ed25519KeyHash} hash
   * @param {TransactionInput} input
-  * @param {BigNum} amount
+  * @param {Value} amount
   * @returns {Promise<void>}
   */
   async add_key_input(hash, input, amount) {
     const hashPtr = Ptr._assertClass(hash, Ed25519KeyHash);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const amountPtr = Ptr._assertClass(amount, BigNum);
+    const amountPtr = Ptr._assertClass(amount, Value);
     return HaskellShelley.transactionBuilderAddKeyInput(
       this.ptr,
       hashPtr,
@@ -1799,10 +1809,13 @@ export class TransactionBuilder extends Ptr {
     );
   }
 
+  // TODO
+  // async add_script_input()
+
   /**
   * @param {ByronAddress} hash
   * @param {TransactionInput} input
-  * @param {BigNum} amount
+  * @param {Value} amount
   * @returns {Promise<void>}
   */
   async add_bootstrap_input(
@@ -1812,13 +1825,55 @@ export class TransactionBuilder extends Ptr {
   ) {
     const hashPtr = Ptr._assertClass(hash, ByronAddress);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const amountPtr = Ptr._assertClass(amount, BigNum);
+    const amountPtr = Ptr._assertClass(amount, Value);
     return HaskellShelley.transactionBuilderAddBootstrapInput(
       this.ptr,
       hashPtr,
       inputPtr,
       amountPtr,
     );
+  }
+
+  /**
+  * @param {Address} address
+  * @param {TransactionInput} input
+  * @param {Value} amount
+  * @returns {Promise<void>}
+  */
+  async add_input(
+    address,
+    input,
+    amount,
+  ) {
+    const addressPtr = Ptr._assertClass(address, Address);
+    const inputPtr = Ptr._assertClass(input, TransactionInput);
+    const amountPtr = Ptr._assertClass(amount, Value);
+    return HaskellShelley.transactionBuilderAddBootstrapInput(
+      this.ptr,
+      addressPtr,
+      inputPtr,
+      amountPtr,
+    );
+  }
+
+  /**
+  * note: specs return Coin
+  * @param {Address} address
+  * @param {TransactionInput} input
+  * @param {Value} amount
+  * @returns {Promise<BigNum>}
+  */
+  async fee_for_input(input) {
+    const addressPtr = Ptr._assertClass(address, Address);
+    const inputPtr = Ptr._assertClass(input, TransactionInput);
+    const amountPtr = Ptr._assertClass(amount, Value);
+    const ret = await HaskellShelley.transactionBuilderFeeForOutput(
+      this.ptr,
+      addressPtr,
+      inputPtr,
+      amountPtr,
+    );
+    return Ptr._wrap(ret, BigNum);
   }
 
   /**
@@ -1831,6 +1886,7 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
+  * note: specs return Coin
   * @param {TransactionOutput} output
   * @returns {Promise<BigNum>}
   */
@@ -1858,6 +1914,14 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
+  * @param {number} validityStartInterval
+  * @returns {Promise<void>}
+  */
+  async set_validity_start_interval(validityStartInterval) {
+    return HaskellShelley.transactionBuilderSetValidityStartInterval(this.ptr, validityStartInterval);
+  }
+
+  /**
   * @param {Certificates} certs
   * @returns {Promise<void>}
   */
@@ -1867,12 +1931,22 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
-  * @param {Withdrawals} certs
+  * @param {Withdrawals} withdrawals
   * @returns {Promise<void>}
   */
   async set_withdrawals(withdrawals) {
     const withdrawalsPtr = Ptr._assertClass(withdrawals, Withdrawals);
     return HaskellShelley.transactionBuilderSetWithdrawals(this.ptr, withdrawalsPtr);
+  }
+
+  /**
+  * @param {TransactionMetadata} metadata
+  * @returns {Promise<void>}
+  */
+  async set_metadata(metadata) {
+    throw new Error(`${this.name}::set_metadata: method not implemented`)
+    // const metadataPtr = Ptr._assertClass(metadata, TransactionMetadata);
+    // return HaskellShelley.transactionBuilderSetWithdrawals(this.ptr, metadataPtr);
   }
 
   /**
@@ -1897,27 +1971,29 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
-  * @returns {Promise<BigNum>}
+  * @returns {Promise<Value>}
   */
   async get_explicit_input() {
     const ret = await HaskellShelley.transactionBuilderGetExplicitInput(this.ptr);
-    return Ptr._wrap(ret, BigNum);
+    return Ptr._wrap(ret, Value);
   }
 
   /**
-  * @returns {Promise<BigNum>}
+  * withdrawals and refunds
+  * @returns {Promise<Value>}
   */
   async get_implicit_input() {
     const ret = await HaskellShelley.transactionBuilderGetImplicitInput(this.ptr);
-    return Ptr._wrap(ret, BigNum);
+    return Ptr._wrap(ret, Value);
   }
 
   /**
-  * @returns {Promise<BigNum>}
+  * note: does not include fee
+  * @returns {Promise<Value>}
   */
   async get_explicit_output() {
     const ret = await HaskellShelley.transactionBuilderGetExplicitOutput(this.ptr);
-    return Ptr._wrap(ret, BigNum);
+    return Ptr._wrap(ret, Value);
   }
 
   /**
@@ -1929,7 +2005,7 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
-  * @returns {Promise<BigNum>}
+  * @returns {Promise<BigNum | undefined>}
   */
   async get_fee_if_set() {
     const ret = await HaskellShelley.transactionBuilderGetFeeIfSet(this.ptr);

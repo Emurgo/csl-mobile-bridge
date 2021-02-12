@@ -102,6 +102,12 @@ export class Value extends Ptr {
   checked_sub(rhs: Value): Promise<Value>;
 
   /**
+  * @param {Value} rhs
+  * @returns {Promise<Value>}
+  */
+  clamped_sub(rhs: Value): Promise<Value>;
+
+  /**
    * @param {Value} rhs
    * @returns {Promise<number>}
    */
@@ -1101,39 +1107,40 @@ export class TransactionBody extends Ptr {
   /**
   * @returns {Promise<TransactionInputs>}
   */
-  inputs(): Promise<TransactionInputs>
+  inputs(): Promise<TransactionInputs>;
 
   /**
   * @returns {Promise<TransactionOutputs>}
   */
-  outputs(): Promise<TransactionOutputs>
+  outputs(): Promise<TransactionOutputs>;
 
   /**
   * @returns {Promise<BigNum>}
   */
-  fee(): Promise<BigNum>
+  fee(): Promise<BigNum>;
 
   /**
   * @returns {Promise<Optional<number>>}
   */
-  ttl(): Promise<Optional<number>>
+  ttl(): Promise<Optional<number>>;
 
   /**
   * @returns {Promise<Certificates>}
   */
-  certs(): Promise<Certificates>
+  certs(): Promise<Certificates>;
 
   /**
   * @returns {Promise<Withdrawals>}
   */
-  withdrawals(): Promise<Withdrawals>
+  withdrawals(): Promise<Withdrawals>;
 }
 
 export class Transaction extends Ptr {
   /**
   * @returns {Promise<TransactionBody>}
   */
-  body(): Promise<TransactionBody>
+  body(): Promise<TransactionBody>;
+
   /**
   * @param {TransactionBody} body
   * @param {TransactionWitnessSet} witnessSet
@@ -1151,26 +1158,51 @@ export class TransactionBuilder extends Ptr {
   /**
   * @param {Ed25519KeyHash} hash
   * @param {TransactionInput} input
-  * @param {BigNum} amount
+  * @param {Value} amount
   * @returns {Promise<void>}
   */
   add_key_input(
     hash: Ed25519KeyHash,
     input: TransactionInput,
-    amount: BigNum,
+    amount: Value,
   ): Promise<void>;
 
   /**
   * @param {ByronAddress} hash
   * @param {TransactionInput} input
-  * @param {BigNum} amount
+  * @param {Value} amount
   * @returns {Promise<void>}
   */
-  add_key_input(
+  add_bootstrap_input(
     hash: ByronAddress,
     input: TransactionInput,
-    amount: BigNum,
+    amount: Value,
   ): Promise<void>;
+
+  /**
+  * @param {Address} address
+  * @param {TransactionInput} input
+  * @param {Value} amount
+  * @returns {Promise<void>}
+  */
+  add_input(
+    address: Address,
+    input: TransactionInput,
+    amount: Value,
+  ): Promise<void>;
+
+  /**
+  * note: specs return Coin
+  * @param {Address} address
+  * @param {TransactionInput} input
+  * @param {Value} amount
+  * @returns {Promise<BigNum>}
+  */
+  async fee_for_input(
+    address: Address,
+    input: TransactionInput,
+    amount: Value,
+  ): Promise<BigNum>;
 
   /**
   * @param {TransactionOutput} output
@@ -1197,6 +1229,14 @@ export class TransactionBuilder extends Ptr {
   set_ttl(ttl: number): Promise<void>;
 
   /**
+  * @param {number} validityStartInterval
+  * @returns {Promise<void>}
+  */
+  set_validity_start_interval(
+    validityStartInterval: number,
+  ): Promise<void>;
+
+  /**
   * @param {Certificates} certs
   * @returns {Promise<void>}
   */
@@ -1207,6 +1247,12 @@ export class TransactionBuilder extends Ptr {
   * @returns {Promise<void>}
   */
   set_withdrawals(withdrawals: Withdrawals): Promise<void>;
+
+  /**
+  * @param {TransactionMetadata} metadata
+  * @returns {Promise<void>}
+  */
+  set_metadata(metadata: TransactionMetadata): Promise<void>;
 
   /**
   * @param {LinearFee} linearFee
@@ -1223,19 +1269,19 @@ export class TransactionBuilder extends Ptr {
   ): Promise<TransactionBuilder>;
 
   /**
-  * @returns {Promise<BigNum>}
+  * @returns {Promise<Value>}
   */
-  get_explicit_input(): Promise<BigNum>;
+  get_explicit_input(): Promise<Value>;
 
   /**
-  * @returns {Promise<BigNum>}
+  * @returns {Promise<Value>}
   */
-  get_implicit_input(): Promise<BigNum>;
+  get_implicit_input(): Promise<Value>;
 
   /**
-  * @returns {Promise<BigNum>}
+  * @returns {Promise<Value>}
   */
-  get_explicit_output(): Promise<BigNum>;
+  get_explicit_output(): Promise<Value>;
 
   /**
   * @returns {Promise<BigNum>}

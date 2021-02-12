@@ -172,6 +172,18 @@ RCT_EXPORT_METHOD(valueCheckedSub:(nonnull NSString *)valuePtr other:(nonnull NS
     }] exec:@[valuePtr, rhsPtr] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(valueClampedSub:(nonnull NSString *)valuePtr other:(nonnull NSString *)rhsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray<NSString*>* ptrs, CharPtr* error) {
+        RPtr result;
+        return value_clamped_sub([[ptrs objectAtIndex:0] rPtr],
+                                 [[ptrs objectAtIndex:1] rPtr],
+                                 &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[valuePtr, rhsPtr] andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(valueCompare:(nonnull NSString *)valuePtr other:(nonnull NSString *)rhsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray<NSString*>* ptrs, CharPtr* error) {
@@ -2100,6 +2112,18 @@ RCT_EXPORT_METHOD(transactionBuilderAddKeyInput:(nonnull NSString *)txBuilderPtr
     }] exec:@[txBuilderPtr, hashPtr, inputPtr, amountPtr] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(transactionBuilderAddScriptInput:(nonnull NSString *)txBuilderPtr withHash:(nonnull NSString *)hashPtr withInput:(nonnull NSString *)inputPtr andAmount:(nonnull NSString *)amountPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr txBuilder = [[params objectAtIndex:0] rPtr];
+        RPtr hash = [[params objectAtIndex:1] rPtr];
+        RPtr input = [[params objectAtIndex:2] rPtr];
+        RPtr amount = [[params objectAtIndex:3] rPtr];
+        transaction_builder_add_script_input(txBuilder, hash, input, amount, error);
+        return nil;
+    }] exec:@[txBuilderPtr, hashPtr, inputPtr, amountPtr] andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(transactionBuilderAddBootstrapInput:(nonnull NSString *)txBuilderPtr withHash:(nonnull NSString *)hashPtr withInput:(nonnull NSString *)inputPtr andAmount:(nonnull NSString *)amountPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
@@ -2110,6 +2134,32 @@ RCT_EXPORT_METHOD(transactionBuilderAddBootstrapInput:(nonnull NSString *)txBuil
         transaction_builder_add_bootstrap_input(txBuilder, hash, input, amount, error);
         return nil;
     }] exec:@[txBuilderPtr, hashPtr, inputPtr, amountPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderAddInput:(nonnull NSString *)txBuilderPtr withAddress:(nonnull NSString *)addressPtr withInput:(nonnull NSString *)inputPtr andAmount:(nonnull NSString *)amountPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr txBuilder = [[params objectAtIndex:0] rPtr];
+        RPtr address = [[params objectAtIndex:1] rPtr];
+        RPtr input = [[params objectAtIndex:2] rPtr];
+        RPtr amount = [[params objectAtIndex:3] rPtr];
+        transaction_builder_add_input(txBuilder, address, input, amount, error);
+        return nil;
+    }] exec:@[txBuilderPtr, addressPtr, inputPtr, amountPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderFeeForInput:(nonnull NSString *)txBuilderPtr withAddress:(nonnull NSString *)addressPtr withInput:(nonnull NSString *)inputPtr andAmount:(nonnull NSString *)amountPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr txBuilder = [[params objectAtIndex:0] rPtr];
+        RPtr address = [[params objectAtIndex:1] rPtr];
+        RPtr input = [[params objectAtIndex:2] rPtr];
+        RPtr amount = [[params objectAtIndex:3] rPtr];
+        return transaction_builder_fee_for_input(txBuilder, address, input, amount, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[txBuilderPtr, addressPtr, inputPtr, amountPtr] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(transactionBuilderAddOutput:(nonnull NSString *)txBuilderPtr withOutput:(nonnull NSString *)outputPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -2154,6 +2204,16 @@ RCT_EXPORT_METHOD(transactionBuilderSetTtl:(nonnull NSString *)txBuilderPtr with
     }] exec:@[txBuilderPtr, ttl] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(transactionBuilderSetValidityStartInterval:(nonnull NSString *)txBuilderPtr withVsi:(nonnull NSNumber *)vsi withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr txBuilder = [[params objectAtIndex:0] rPtr];
+        uint32_t vsiU32 = [[params objectAtIndex:1] unsignedIntegerValue];
+        transaction_builder_set_validity_start_interval(txBuilder, vsiU32, error);
+        return nil;
+    }] exec:@[txBuilderPtr, vsi] andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(transactionBuilderSetCerts:(nonnull NSString *)txBuilderPtr withCerts:(nonnull NSString *)certsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
@@ -2172,6 +2232,16 @@ RCT_EXPORT_METHOD(transactionBuilderSetWithdrawals:(nonnull NSString *)txBuilder
         transaction_builder_set_withdrawals(txBuilder, withdrawals, error);
         return nil;
     }] exec:@[txBuilderPtr, withdrawalsPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderSetMetadata:(nonnull NSString *)txBuilderPtr withMetadata:(nonnull NSString *)metadataPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr txBuilder = [[params objectAtIndex:0] rPtr];
+        RPtr metadata = [[params objectAtIndex:1] rPtr];
+        transaction_builder_set_metadata(txBuilder, metadata, error);
+        return nil;
+    }] exec:@[txBuilderPtr, metadataPtr] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(transactionBuilderNew:(nonnull NSString *)linearFeePtr withMinUtxoVal:(nonnull NSString *)minimumUtxoValPtr withPoolDeposit:(nonnull NSString *)poolDepositPtr andKeyDeposit:(nonnull NSString *)keyDepositPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

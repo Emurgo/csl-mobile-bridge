@@ -17,7 +17,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_valueNew(
   handle_exception_result(|| {
     let coin = coin_ptr.rptr(&env)?;
     coin
-      .owned::<Coin>()
+      .typed_ref::<Coin>()
       .map(|coin| Value::new(coin))
       .and_then(|val| val.rptr().jptr(&env))
   })
@@ -50,7 +50,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_valueSetCoin(
     value
       .typed_ref::<Value>()
       .zip(coin.typed_ref::<Coin>())
-      .map(|(value, coin)| value.set_coin(*coin))
+      .map(|(value, coin)| value.set_coin(coin))
   })
   .map(|_| JObject::null())
   .jresult(&env)
@@ -115,6 +115,22 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_valueCheckedSub(
     let rhs = rhs.rptr(&env)?;
     let rhs_val = rhs.typed_ref::<Value>()?;
     let res = val.checked_sub(rhs_val).into_result()?;
+    res.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_valueClampedSub(
+  env: JNIEnv, _: JObject, ptr: JRPtr, rhs: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let ptr = ptr.rptr(&env)?;
+    let val = ptr.typed_ref::<Value>()?;
+    let rhs = rhs.rptr(&env)?;
+    let rhs_val = rhs.typed_ref::<Value>()?;
+    let res = val.clamped_sub(rhs_val);
     res.rptr().jptr(&env)
   })
   .jresult(&env)
