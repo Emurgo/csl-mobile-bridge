@@ -14,6 +14,11 @@ import {
   TransactionInput,
   Withdrawals,
   Certificates,
+  Value,
+  Coin,
+  StakeCredential,
+  StakeRegistration,
+  Certificate,
 } from '@emurgo/react-native-haskell-shelley'
 
 import {assert} from '../util'
@@ -38,6 +43,10 @@ const test: () => void = async () => {
   const keyHashBytes = Buffer.from(keyHashHex, 'hex')
   const ed25519KeyHash = await Ed25519KeyHash.from_bytes(keyHashBytes)
 
+  const stakeCred = await StakeCredential.from_keyhash(ed25519KeyHash)
+  const stakeReg = await StakeRegistration.new(stakeCred)
+  const cert = await Certificate.new_stake_registration(stakeReg)
+
   const hash32Hex =
     '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf3ce41cbf'
   const hash32Bytes = Buffer.from(hash32Hex, 'hex')
@@ -54,11 +63,12 @@ const test: () => void = async () => {
     '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf'
   const baseAddrBytes = Buffer.from(baseAddrHex, 'hex')
   const amountStr = '1000000'
-  const amount = await BigNum.from_str(amountStr)
+  const amount = await Value.new(await Coin.from_str(amountStr))
   const recipientAddr = await Address.from_bytes(baseAddrBytes)
   const txOutput = await TransactionOutput.new(recipientAddr, amount)
 
   const certs = await Certificates.new()
+  await certs.add(cert)
 
   /**
    * TransactionBuilder
@@ -72,12 +82,12 @@ const test: () => void = async () => {
   await txBuilder.add_key_input(
     ed25519KeyHash,
     txInput,
-    await BigNum.from_str('1000000'),
+    await Value.new(await Coin.from_str('1000000')),
   )
   await txBuilder.add_bootstrap_input(
     byronAddress,
     txInput,
-    await BigNum.from_str('1000000'),
+    await Value.new(await Coin.from_str('1000000')),
   )
   await txBuilder.add_output(txOutput)
   // commented out so that we can test add_change_if_needed(), which
@@ -85,16 +95,24 @@ const test: () => void = async () => {
   // await txBuilder.set_fee(await BigNum.from_str('500000'))
   const TTL = 10
   await txBuilder.set_ttl(TTL)
+  const explicitIn = await txBuilder.get_explicit_input()
+  const explicitInCoin = await explicitIn.coin()
   assert(
-    (await (await txBuilder.get_explicit_input()).to_str()) === '2000000',
+    (await explicitInCoin.to_str()) === '2000000',
     'TransactionBuilder::get_explicit_input()',
   )
+
+  const implicitIn = await txBuilder.get_implicit_input()
+  const implicitInCoin = await implicitIn.coin()
   assert(
-    parseInt(await (await txBuilder.get_implicit_input()).to_str(), 10) === 0,
+    parseInt(await implicitInCoin.to_str(), 10) === 0,
     'TransactionBuilder::get_implicit_input()',
   )
+
+  const explicitOut = await txBuilder.get_explicit_output()
+  const explicitOutCoin = await explicitOut.coin()
   assert(
-    (await (await txBuilder.get_explicit_output()).to_str()) === '1000000',
+    (await explicitOutCoin.to_str()) === '1000000',
     'TransactionBuilder::get_explicit_output()',
   )
   const changeAddrHex =
@@ -129,7 +147,7 @@ const test: () => void = async () => {
         await Address.from_bytes(baseAddrBytes),
         // largest possible CBOR value
         // note: this slightly over-estimates by a few bytes
-        await BigNum.from_str((0x100000000).toString()),
+        await Value.new(await Coin.from_str((0x100000000).toString())),
       ),
     )
   ).to_str()

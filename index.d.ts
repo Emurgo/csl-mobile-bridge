@@ -931,29 +931,29 @@ export class TransactionOutput extends Ptr {
   * @param {BigNum} amount
   * @returns {Promise<TransactionOutput>}
   */
-  static new(address: Address, amount: BigNum): Promise<TransactionOutput>;
+  static new(address: Address, amount: Value): Promise<TransactionOutput>;
 
   /**
   * @returns {Promise<Address>}
   */
-  address(): Promise<Address>
+  address(): Promise<Address>;
 
   /**
-  * @returns {Promise<BigNum>}
+  * @returns {Promise<Value>}
   */
-  amount(): Promise<BigNum>
+  amount(): Promise<Value>;
 }
 
 export class TransactionOutputs extends Ptr {
   /**
   * @returns {Promise<number>}
   */
-  len(): Promise<number>
+  len(): Promise<number>;
   /**
   * @param {number} index
   * @returns {Promise<TransactionOutput>}
   */
-  get(index: number): Promise<TransactionOutput>
+  get(index: number): Promise<TransactionOutput>;
 }
 
 export class LinearFee extends Ptr {
@@ -987,7 +987,7 @@ export class Vkeywitness extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
   */
-  to_bytes(): Promise<Uint8Array>
+  to_bytes(): Promise<Uint8Array>;
 
   /**
   * @param {Uint8Array} bytes

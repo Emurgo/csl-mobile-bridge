@@ -1436,7 +1436,7 @@ export class TransactionOutput extends Ptr {
   */
   static async new(address, amount) {
     const addrPtr = Ptr._assertClass(address, Address);
-    const amountPtr = Ptr._assertClass(amount, BigNum);
+    const amountPtr = Ptr._assertClass(amount, Value);
     const ret = await HaskellShelley.transactionOutputNew(addrPtr, amountPtr);
     return Ptr._wrap(ret, TransactionOutput);
   }
@@ -1454,7 +1454,7 @@ export class TransactionOutput extends Ptr {
   */
   async amount() {
     const ret = await HaskellShelley.transactionOutputAmount(this.ptr);
-    return Ptr._wrap(ret, BigNum);
+    return Ptr._wrap(ret, Value);
   }
 }
 

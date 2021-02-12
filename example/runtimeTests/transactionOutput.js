@@ -2,7 +2,8 @@
 
 import {
   TransactionOutput,
-  BigNum,
+  Value,
+  Coin,
   Address,
 } from '@emurgo/react-native-haskell-shelley'
 
@@ -22,7 +23,7 @@ const test: () => void = async () => {
   // ------------------------------------------------
   // -------------- TransactionOutput ---------------
   const amountStr = '1000000'
-  const amount = await BigNum.from_str(amountStr)
+  const amount = await Value.new(await Coin.from_str(amountStr))
   const recipientAddr = await Address.from_bytes(baseAddrBytes)
   const txOutput = await TransactionOutput.new(recipientAddr, amount)
   assert(
@@ -30,7 +31,7 @@ const test: () => void = async () => {
     'TransactionOutput.new should return instance of TransactionOutput',
   )
   assert(
-    (await (await txOutput.amount()).to_str()) === amountStr,
+    (await (await (await txOutput.amount()).coin()).to_str()) === amountStr,
     'TransactionOutput::amount()',
   )
   const outputAddrHex = Buffer.from(
