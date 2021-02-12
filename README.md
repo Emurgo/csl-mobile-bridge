@@ -16,7 +16,7 @@ See examples in [`App.js`](example/App.js).
 
 ## How to add new classes and functions
 
-The process is basically as follows: we start by writting a rust wrapper of some struct method from our target rust library. Both iOS and Android require specific rust wrappers, so there are separate folder (`rust/ios` and `rust/android`). When this project is compiled by the host react native app, all the wrappers are transformed into a native library. In Android, java can directly interact with the rust binaries (the instructions for compiling our rust library are in `build.gradle`), while in iOS there is an additional step in which the rust library is transformed into C, with which can we easily interact with through Objective-C. This intermediate step is contained in `ios/build.sh`, where we basically use `cbindgen` to automatically generate C binaries as well as C headers (which are written in `rust/include/react_native_haskell_shelley.h`).
+The process is basically as follows: we start by writting a rust wrapper of some struct method from our target rust library. Both iOS and Android require specific rust wrappers, so there are separate folders for each (`rust/ios` and `rust/android`). When this project is compiled by the host react native app, all the wrappers are transformed into a native library. In Android, java can directly interact with the rust binaries (the instructions for compiling our rust library are in `build.gradle`), while in iOS there is an additional step in which the rust library is transformed into C, with which can we easily interact with through Objective-C. This intermediate step is contained in `ios/build.sh`, where we basically use `cbindgen` to automatically generate C binaries as well as C headers (which are written in `rust/include/react_native_haskell_shelley.h`).
 After writing the corresponding iOS and Android wrappers, we finally just write a simple JS library in `index.js` and define its types in `index.d.ts`.
 
 ### Android
@@ -34,7 +34,7 @@ For every new function in the module:
 - Declare an equivalent java function to the target rust function in `android/src/main/java/io/emurgo/rnhaskellshelley/Native.java`. The function name must be in camelCase and
 corresponds to the last part (in camelCase) of the rust wrapper signature mentioned above.
 
-- Add the implementation of the java function that will be exposed to react native in `android/src/main/java/io/emurgo/rnhaskellshelley/HaskellShelleyModule.java`. Note that the types and signatures in `HaskellShelleyModule.java` are different from `Native.jave`. In the former, we use java types while in the later we use rust types, ie., we match the signatures of the corresponding rust wrappers.
+- Add the implementation of the java function that will be exposed to react native in `android/src/main/java/io/emurgo/rnhaskellshelley/HaskellShelleyModule.java`. Note that the types and signatures in `HaskellShelleyModule.java` are different from `Native.java`. In the former, we use java types while in the later we use rust types, ie., we match the signatures of the corresponding rust wrappers.
 
 ### iOS
 
@@ -59,4 +59,4 @@ For every new function in the module:
 For new classes and methods:
 
 1. Add the javascript class signature in `index.d.ts`
-2. Add the javascript class implementation `index.js`
+2. Add the javascript class implementation in `index.js`

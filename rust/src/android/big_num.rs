@@ -35,18 +35,6 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_bigNumToStr(
   .jresult(&env)
 }
 
-// #[allow(non_snake_case)]
-// #[no_mangle]
-// pub extern "C" fn Java_io_emurgo_chainlibs_Native_valueFromU64(
-//   env: JNIEnv, _: JObject, long: jlong
-// ) -> jobject {
-//   handle_exception_result(|| {
-//     let r_u64 = u64::from_jlong(long);
-//     Value::from(r_u64).rptr().jptr(&env)
-//   })
-//   .jresult(&env)
-// }
-
 #[allow(non_snake_case)]
 #[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_bigNumCheckedAdd(

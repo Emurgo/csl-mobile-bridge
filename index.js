@@ -127,6 +127,159 @@ export class BigNum extends Ptr {
   }
 }
 
+export const Coin = BigNum;
+
+export class Value extends Ptr {
+
+  /**
+  * @param {BigNum} coin
+  * @returns {Promise<Value>}
+  */
+  static async new(coin) {
+    const coinPtr = Ptr._assertClass(coin, BigNum);
+    const ret = await HaskellShelley.valueNew(coinPtr);
+    return Ptr._wrap(ret, Value);
+  }
+
+  /**
+  * TODO: should we return Coin instead?
+  * @returns {Promise<BigNum>}
+  */
+  async coin() {
+    const ret = await HaskellShelley.valueCoin(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  /**
+  * @param {BigNum} coin
+  * @returns {Promise<void>}
+  */
+  async set_coin(coin) {
+    // recall: we expose Coin as a reference to BigNum
+    const coinPtr = Ptr._assertClass(coin, BigNum);
+    return await HaskellShelley.valueSetCoin(this.ptr, coinPtr);
+  }
+
+  /**
+  * @returns {Promise<MultiAsset | undefined>}
+  */
+  async multiasset() {
+    const ret = await HaskellShelley.valueMultiasset(this.ptr);
+    return Ptr._wrap(ret, MultiAsset);
+  }
+
+  /**
+  * @param {MultiAsset} multiasset
+  * @returns {Promise<void>}
+  */
+  async set_multiasset(multiasset) {
+    const multiassetPtr = Ptr._assertClass(multiasset, MultiAsset);
+    return await HaskellShelley.valueSetMultiasset(this.ptr, multiassetPtr);
+  }
+
+  /**
+  * @param {Value} rhs
+  * @returns {Promise<Value>}
+  */
+  async checked_add(rhs) {
+    const rhsPtr = Ptr._assertClass(rhs, Value);
+    const ret = await HaskellShelley.valueCheckedAdd(this.ptr, rhsPtr);
+    return Ptr._wrap(ret, Value);
+  }
+
+  /**
+  * @param {Value} rhs
+  * @returns {Promise<Value>}
+  */
+  async checked_sub(rhs) {
+    const rhsPtr = Ptr._assertClass(rhs, Value);
+    const ret = await HaskellShelley.valueCheckedSub(this.ptr, rhsPtr);
+    return Ptr._wrap(ret, Value);
+  }
+
+  /**
+  * @param {Value} rhs
+  * @returns {Promise<Value>}
+  */
+  async clamped_sub(rhs) {
+    const rhsPtr = Ptr._assertClass(rhs, Value);
+    const ret = await HaskellShelley.valueClampedSub(this.ptr, rhsPtr);
+    return Ptr._wrap(ret, Value);
+  }
+
+  /**
+   * @param {Value} rhs
+   * @returns {Promise<number | undefined>}
+   */
+  async compare(rhs) {
+    const rhsPtr = Ptr._assertClass(rhs, Value);
+    return await HaskellShelley.valueCompare(this.ptr, rhsPtr);
+  }
+}
+
+export class AssetName extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.assetNameToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<AssetName>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.assetNameFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, AssetName);
+  }
+
+  /**
+  * @param {Uint8Array} name
+  * @returns {Promise<AssetName>}
+  */
+  static async new(name) {
+    const ret = await HaskellShelley.assetNameNew(b64FromUint8Array(name));
+    return Ptr._wrap(ret, AssetName);
+  }
+}
+
+export class AssetNames extends Ptr {
+  /**
+  * @returns {Promise<AssetNames>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.assetNamesNew();
+    return Ptr._wrap(ret, AssetNames);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.assetNamesLen(this.ptr);
+  }
+
+  /**
+  * @param {number} index
+  * @returns {Promise<AssetName>}
+  */
+  async get(index) {
+    const ret = await HaskellShelley.assetNamesGet(this.ptr, index);
+    return Ptr._wrap(ret, AssetName);
+  }
+
+  /**
+  * @param {AssetName} item
+  * @returns {Promise<void>}
+  */
+  add(item) {
+    const itemPtr = Ptr._assertClass(item, AssetName);
+    return HaskellShelley.assetNamesAdd(this.ptr, itemPtr);
+  }
+}
+
 /**
 * ED25519 key used as public key
 */
@@ -554,6 +707,162 @@ export class ScriptHash extends Ptr {
   static async from_bytes(bytes) {
     const ret = await HaskellShelley.scriptHashFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ScriptHash);
+  }
+}
+
+export class ScriptHashes extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.scriptHashesToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<ScriptHashes>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.scriptHashesFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, ScriptHashes);
+  }
+
+  /**
+  * @returns {Promise<ScriptHashes>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.scriptHashesNew();
+    return Ptr._wrap(ret, ScriptHashes);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.scriptHashesLen(this.ptr);
+  }
+
+  /**
+  * @param {number} index
+  * @returns {Promise<ScriptHash>}
+  */
+  async get(index) {
+    const ret = await HaskellShelley.scriptHashesGet(this.ptr, index);
+    return Ptr._wrap(ret, ScriptHash);
+  }
+
+  /**
+  * @param {ScriptHash} item
+  * @returns {Promise<void>}
+  */
+  add(item) {
+    const itemPtr = Ptr._assertClass(item, ScriptHash);
+    return HaskellShelley.scriptHashesAdd(this.ptr, itemPtr);
+  }
+}
+
+/**
+ * PolicyID is defined in rust as:
+ *   pub type PolicyID = ScriptHash
+ * so we just expose a reference to ScriptHash
+ */
+export const PolicyID = ScriptHash;
+
+export const PolicyIDs = ScriptHashes;
+
+export class Assets extends Ptr {
+  /**
+  * @returns {Promise<Assets>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.assetsNew();
+    return Ptr._wrap(ret, Assets);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.assetsLen(this.ptr);
+  }
+
+  /**
+  * @param {AssetName} key
+  * @param {BigNum} value
+  * @returns {Promise<BigNum>}
+  */
+  async insert(key, value) {
+    const keyPtr = Ptr._assertClass(key, AssetName);
+    const valuePtr = Ptr._assertClass(value, BigNum);
+    const ret = await HaskellShelley.assetsInsert(this.ptr, keyPtr, valuePtr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  /**
+  * @param {AssetName} key
+  * @returns {Promise<BigNum | undefined>}
+  */
+  async get(key) {
+    const keyPtr = Ptr._assertClass(key, AssetName);
+    const ret = await HaskellShelley.assetsGet(this.ptr, keyPtr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  /**
+  * @returns {Promise<AssetNames>}
+  */
+  async keys() {
+    const ret = await HaskellShelley.assetsKeys(this.ptr);
+    return Ptr._wrap(ret, AssetNames);
+  }
+}
+
+export class MultiAsset extends Ptr {
+  /**
+  * @returns {Promise<MultiAsset>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.multiAssetNew();
+    return Ptr._wrap(ret, MultiAsset);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.multiAssetLen(this.ptr);
+  }
+
+  /**
+  * @param {PolicyID} key
+  * @param {Assets} value
+  * @returns {Promise<Assets>}
+  */
+  async insert(key, value) {
+    // recall: PolicyID is a reference to ScriptHash
+    const keyPtr = Ptr._assertClass(key, ScriptHash);
+    const valuePtr = Ptr._assertClass(value, Assets);
+    const ret = await HaskellShelley.multiAssetInsert(this.ptr, keyPtr, valuePtr);
+    return Ptr._wrap(ret, Assets);
+  }
+
+  /**
+  * @param {PolicyID} key
+  * @returns {Promise<Assets | undefined>}
+  */
+  async get(key) {
+    const keyPtr = Ptr._assertClass(key, PolicyID);
+    const ret = await HaskellShelley.multiAssetGet(this.ptr, keyPtr);
+    return Ptr._wrap(ret, Assets);
+  }
+
+  /**
+  * @returns {Promise<PolicyIDs>}
+  */
+  async keys() {
+    const ret = await HaskellShelley.multiAssetKeys(this.ptr);
+    return Ptr._wrap(ret, PolicyIDs);
   }
 }
 
@@ -1127,7 +1436,7 @@ export class TransactionOutput extends Ptr {
   */
   static async new(address, amount) {
     const addrPtr = Ptr._assertClass(address, Address);
-    const amountPtr = Ptr._assertClass(amount, BigNum);
+    const amountPtr = Ptr._assertClass(amount, Value);
     const ret = await HaskellShelley.transactionOutputNew(addrPtr, amountPtr);
     return Ptr._wrap(ret, TransactionOutput);
   }
@@ -1145,7 +1454,7 @@ export class TransactionOutput extends Ptr {
   */
   async amount() {
     const ret = await HaskellShelley.transactionOutputAmount(this.ptr);
-    return Ptr._wrap(ret, BigNum);
+    return Ptr._wrap(ret, Value);
   }
 }
 
@@ -1388,7 +1697,7 @@ export class TransactionBody extends Ptr {
   }
 
   /**
-  * @returns {Promise<TransactionOutputs>}
+  * @returns {Promise<TransactionInputs>}
   */
   async inputs() {
     const ret = await HaskellShelley.transactionBodyInputs(this.ptr);
@@ -1404,7 +1713,7 @@ export class TransactionBody extends Ptr {
   }
 
   /**
-  * @returns {Promise<number>}
+  * @returns {Promise<Optional<number>>}
   */
   async ttl() {
     return HaskellShelley.transactionBodyTtl(this.ptr);
@@ -1485,13 +1794,13 @@ export class TransactionBuilder extends Ptr {
   /**
   * @param {Ed25519KeyHash} hash
   * @param {TransactionInput} input
-  * @param {BigNum} amount
+  * @param {Value} amount
   * @returns {Promise<void>}
   */
   async add_key_input(hash, input, amount) {
     const hashPtr = Ptr._assertClass(hash, Ed25519KeyHash);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const amountPtr = Ptr._assertClass(amount, BigNum);
+    const amountPtr = Ptr._assertClass(amount, Value);
     return HaskellShelley.transactionBuilderAddKeyInput(
       this.ptr,
       hashPtr,
@@ -1500,10 +1809,13 @@ export class TransactionBuilder extends Ptr {
     );
   }
 
+  // TODO
+  // async add_script_input()
+
   /**
   * @param {ByronAddress} hash
   * @param {TransactionInput} input
-  * @param {BigNum} amount
+  * @param {Value} amount
   * @returns {Promise<void>}
   */
   async add_bootstrap_input(
@@ -1513,13 +1825,55 @@ export class TransactionBuilder extends Ptr {
   ) {
     const hashPtr = Ptr._assertClass(hash, ByronAddress);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const amountPtr = Ptr._assertClass(amount, BigNum);
+    const amountPtr = Ptr._assertClass(amount, Value);
     return HaskellShelley.transactionBuilderAddBootstrapInput(
       this.ptr,
       hashPtr,
       inputPtr,
       amountPtr,
     );
+  }
+
+  /**
+  * @param {Address} address
+  * @param {TransactionInput} input
+  * @param {Value} amount
+  * @returns {Promise<void>}
+  */
+  async add_input(
+    address,
+    input,
+    amount,
+  ) {
+    const addressPtr = Ptr._assertClass(address, Address);
+    const inputPtr = Ptr._assertClass(input, TransactionInput);
+    const amountPtr = Ptr._assertClass(amount, Value);
+    return HaskellShelley.transactionBuilderAddBootstrapInput(
+      this.ptr,
+      addressPtr,
+      inputPtr,
+      amountPtr,
+    );
+  }
+
+  /**
+  * note: specs return Coin
+  * @param {Address} address
+  * @param {TransactionInput} input
+  * @param {Value} amount
+  * @returns {Promise<BigNum>}
+  */
+  async fee_for_input(input) {
+    const addressPtr = Ptr._assertClass(address, Address);
+    const inputPtr = Ptr._assertClass(input, TransactionInput);
+    const amountPtr = Ptr._assertClass(amount, Value);
+    const ret = await HaskellShelley.transactionBuilderFeeForOutput(
+      this.ptr,
+      addressPtr,
+      inputPtr,
+      amountPtr,
+    );
+    return Ptr._wrap(ret, BigNum);
   }
 
   /**
@@ -1532,6 +1886,7 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
+  * note: specs return Coin
   * @param {TransactionOutput} output
   * @returns {Promise<BigNum>}
   */
@@ -1559,6 +1914,14 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
+  * @param {number} validityStartInterval
+  * @returns {Promise<void>}
+  */
+  async set_validity_start_interval(validityStartInterval) {
+    return HaskellShelley.transactionBuilderSetValidityStartInterval(this.ptr, validityStartInterval);
+  }
+
+  /**
   * @param {Certificates} certs
   * @returns {Promise<void>}
   */
@@ -1568,12 +1931,22 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
-  * @param {Withdrawals} certs
+  * @param {Withdrawals} withdrawals
   * @returns {Promise<void>}
   */
   async set_withdrawals(withdrawals) {
     const withdrawalsPtr = Ptr._assertClass(withdrawals, Withdrawals);
     return HaskellShelley.transactionBuilderSetWithdrawals(this.ptr, withdrawalsPtr);
+  }
+
+  /**
+  * @param {TransactionMetadata} metadata
+  * @returns {Promise<void>}
+  */
+  async set_metadata(metadata) {
+    throw new Error(`${this.name}::set_metadata: method not implemented`)
+    // const metadataPtr = Ptr._assertClass(metadata, TransactionMetadata);
+    // return HaskellShelley.transactionBuilderSetWithdrawals(this.ptr, metadataPtr);
   }
 
   /**
@@ -1598,27 +1971,29 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
-  * @returns {Promise<BigNum>}
+  * @returns {Promise<Value>}
   */
   async get_explicit_input() {
     const ret = await HaskellShelley.transactionBuilderGetExplicitInput(this.ptr);
-    return Ptr._wrap(ret, BigNum);
+    return Ptr._wrap(ret, Value);
   }
 
   /**
-  * @returns {Promise<BigNum>}
+  * withdrawals and refunds
+  * @returns {Promise<Value>}
   */
   async get_implicit_input() {
     const ret = await HaskellShelley.transactionBuilderGetImplicitInput(this.ptr);
-    return Ptr._wrap(ret, BigNum);
+    return Ptr._wrap(ret, Value);
   }
 
   /**
-  * @returns {Promise<BigNum>}
+  * note: does not include fee
+  * @returns {Promise<Value>}
   */
   async get_explicit_output() {
     const ret = await HaskellShelley.transactionBuilderGetExplicitOutput(this.ptr);
-    return Ptr._wrap(ret, BigNum);
+    return Ptr._wrap(ret, Value);
   }
 
   /**
@@ -1630,7 +2005,7 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
-  * @returns {Promise<BigNum>}
+  * @returns {Promise<BigNum | undefined>}
   */
   async get_fee_if_set() {
     const ret = await HaskellShelley.transactionBuilderGetFeeIfSet(this.ptr);

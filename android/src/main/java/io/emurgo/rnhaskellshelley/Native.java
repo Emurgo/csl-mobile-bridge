@@ -26,6 +26,30 @@ final class Native {
     public final native Result<RPtr> bigNumCheckedAdd(RPtr bigNum, RPtr other);
     public final native Result<RPtr> bigNumCheckedSub(RPtr bigNum, RPtr other);
 
+    // Value
+    public final native Result<RPtr> valueNew(RPtr coin);
+    public final native Result<RPtr> valueCoin(RPtr value);
+    public final native Result<RPtr> valueSetCoin(RPtr value, RPtr coin);
+    public final native Result<RPtr> valueMultiasset(RPtr value);
+    public final native Result<RPtr> valueSetMultiasset(RPtr value, RPtr multiasset);
+    public final native Result<RPtr> valueCheckedAdd(RPtr value, RPtr rhs);
+    public final native Result<RPtr> valueCheckedSub(RPtr value, RPtr rhs);
+    public final native Result<RPtr> valueClampedSub(RPtr value, RPtr rhs);
+    public final native Result<Integer> valueCompare(RPtr value, RPtr rhs);
+
+    // AssetName
+    public final native Result<byte[]> assetNameToBytes(RPtr assetName);
+    public final native Result<RPtr> assetNameFromBytes(byte[] bytes);
+    public final native Result<RPtr> assetNameNew(byte[] bytes);
+
+    // AssetNames
+    // public final native Result<byte[]> assetNamesToBytes(RPtr assetNames);
+    // public final native Result<RPtr> assetNamesFromBytes(byte[] bytes);
+    public final native Result<RPtr> assetNamesNew();
+    public final native Result<Long> assetNamesLen(RPtr assetNames);
+    public final native Result<RPtr> assetNamesGet(RPtr assetNames, long index);
+    public final native Result<Void> assetNamesAdd(RPtr assetNames, RPtr item);
+
     // PublicKey
     public final native Result<RPtr> publicKeyFromBech32(String bech32);
     public final native Result<String> publicKeyToBech32(RPtr pubKey);
@@ -47,7 +71,6 @@ final class Native {
     public final native Result<RPtr> bip32PublicKeyFromBech32(String bech32Str);
     public final native Result<String> bip32PublicKeyToBech32(RPtr bip32PublicKey);
     public final native Result<byte[]> bip32PublicKeyChaincode(RPtr bip32PublicKey);
-
 
     // Bip32PrivateKey
     public final native Result<RPtr> bip32PrivateKeyDerive(RPtr bip32PrivateKey, long index);
@@ -88,6 +111,28 @@ final class Native {
     // ScriptHash
     public final native Result<byte[]> scriptHashToBytes(RPtr scriptHash);
     public final native Result<RPtr> scriptHashFromBytes(byte[] bytes);
+
+    // ScriptHashes
+    public final native Result<byte[]> scriptHashesToBytes(RPtr scriptHashes);
+    public final native Result<RPtr> scriptHashesFromBytes(byte[] bytes);
+    public final native Result<RPtr> scriptHashesNew();
+    public final native Result<Long> scriptHashesLen(RPtr scriptHashes);
+    public final native Result<RPtr> scriptHashesGet(RPtr scriptHashes, long index);
+    public final native Result<Void> scriptHashesAdd(RPtr scriptHashes, RPtr item);
+
+    // Assets
+    public final native Result<RPtr> assetsNew();
+    public final native Result<Long> assetsLen(RPtr assets);
+    public final native Result<RPtr> assetsInsert(RPtr assets, RPtr key, RPtr value);
+    public final native Result<RPtr> assetsGet(RPtr assets, RPtr key);
+    public final native Result<RPtr> assetsKeys(RPtr assets);
+
+    // MultiAsset
+    public final native Result<RPtr> multiAssetNew();
+    public final native Result<Long> multiAssetLen(RPtr multiAsset);
+    public final native Result<RPtr> multiAssetInsert(RPtr multiAsset, RPtr key, RPtr value);
+    public final native Result<RPtr> multiAssetGet(RPtr multiAsset, RPtr key);
+    public final native Result<RPtr> multiAssetKeys(RPtr multiAsset);
 
     // TransactionHash
     public final native Result<byte[]> transactionHashToBytes(RPtr transactionHash);
@@ -226,7 +271,7 @@ final class Native {
     public final native Result<RPtr> transactionBodyInputs(RPtr TransactionBody);
     public final native Result<RPtr> transactionBodyOutputs(RPtr TransactionBody);
     public final native Result<RPtr> transactionBodyFee(RPtr TransactionBody);
-    public final native Result<Integer> transactionBodyTtl(RPtr TransactionBody);
+    public final native Result<Long> transactionBodyTtl(RPtr TransactionBody);
     public final native Result<RPtr> transactionBodyWithdrawals(RPtr TransactionBody);
     public final native Result<RPtr> transactionBodyCerts(RPtr TransactionBody);
 
@@ -238,13 +283,18 @@ final class Native {
 
     // TransactionBuilder
     public final native Result<Void> transactionBuilderAddKeyInput(RPtr txBuilder, RPtr hash, RPtr input, RPtr value);
+    public final native Result<Void> transactionBuilderAddScriptInput(RPtr txBuilder, RPtr hash, RPtr input, RPtr value);
     public final native Result<Void> transactionBuilderAddBootstrapInput(RPtr txBuilder, RPtr hash, RPtr input, RPtr value);
+    public final native Result<Void> transactionBuilderAddInput(RPtr txBuilder, RPtr address, RPtr input, RPtr value);
+    public final native Result<RPtr> transactionBuilderFeeForInput(RPtr txBuilder, RPtr address, RPtr input, RPtr value);
     public final native Result<Void> transactionBuilderAddOutput(RPtr txBuilder, RPtr output);
     public final native Result<RPtr> transactionBuilderFeeForOutput(RPtr txBuilder, RPtr output);
     public final native Result<Void> transactionBuilderSetFee(RPtr txBuilder, RPtr fee);
     public final native Result<Void> transactionBuilderSetTtl(RPtr txBuilder, long ttl);
+    public final native Result<Void> transactionBuilderSetValidityStartInterval(RPtr txBuilder, long vsi);
     public final native Result<Void> transactionBuilderSetCerts(RPtr txBuilder, RPtr certs);
     public final native Result<Void> transactionBuilderSetWithdrawals(RPtr txBuilder, RPtr withdrawals);
+    public final native Result<Void> transactionBuilderSetMetadata(RPtr txBuilder, RPtr metadata);
     public final native Result<RPtr> transactionBuilderNew(RPtr linearFee, RPtr minimumUtxoVal, RPtr poolDeposit, RPtr keyDeposit);
     public final native Result<RPtr> transactionBuilderGetExplicitInput(RPtr txBuilder);
     public final native Result<RPtr> transactionBuilderGetImplicitInput(RPtr txBuilder);

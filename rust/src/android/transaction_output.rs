@@ -7,7 +7,7 @@ use jni::sys::{jbyteArray, jobject};
 use jni::JNIEnv;
 use cardano_serialization_lib::address::{Address};
 use cardano_serialization_lib::TransactionOutput;
-use cardano_serialization_lib::utils::{BigNum};
+use cardano_serialization_lib::utils::{Value};
 
 #[allow(non_snake_case)]
 #[no_mangle]
@@ -48,7 +48,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionOutpu
   handle_exception_result(|| {
     let address = address.rptr(&env)?;
     let amount = amount.rptr(&env)?;
-    address.typed_ref::<Address>().zip(amount.typed_ref::<BigNum>()).and_then(
+    address.typed_ref::<Address>().zip(amount.typed_ref::<Value>()).and_then(
       |(address, amount)| {
         TransactionOutput::new(address, amount).rptr().jptr(&env)
       }

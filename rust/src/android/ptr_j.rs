@@ -80,14 +80,14 @@ impl JLongConvertible for u64 {
 }
 
 // TODO(v-almonacid): not sure about this casting. Currently not used.
-impl JLongConvertible for u8 {
-fn from_jlong(long: jlong) -> Self {
-    long as u8
-  }
-  fn into_jlong(self) -> jlong {
-    (self as u64).into_jlong()
-  }
-}
+// impl JLongConvertible for u8 {
+// fn from_jlong(long: jlong) -> Self {
+//     long as u8
+//   }
+//   fn into_jlong(self) -> jlong {
+//     (self as u64).into_jlong()
+//   }
+// }
 
 impl<'a> FromJniPtr for JRPtr<'a> {
   fn rptr(self, env: &JNIEnv) -> Result<RPtrRef> {
