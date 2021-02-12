@@ -108,11 +108,32 @@ pub unsafe extern "C" fn value_clamped_sub(
 pub unsafe extern "C" fn value_compare(
   value: RPtr, rhs: RPtr, result: &mut i8, error: &mut CharPtr
 ) -> bool {
-  handle_exception_result(|| {
+  // handle_exception_result(|| {
+  //   let value = value.typed_ref::<Value>()?;
+  //   rhs.typed_ref::<Value>()
+  //     .map(|rhs| value.compare(rhs).unwrap())
+  // })
+  // .response(result, error)
+  let res = handle_exception_result(|| {
     let value = value.typed_ref::<Value>()?;
     rhs.typed_ref::<Value>()
       .map(|rhs| value.compare(rhs))
-  })
-  .map(|res| res.unwrap().into())
-  .response(result, error)
+  });
+  match res {
+    Err(err) => {
+      *error = err.into_cstr();
+      false
+    }
+    Ok(value) => {
+      match value {
+        Some(value) => {
+          *result = value;
+          true
+        }
+        None => {
+          false
+        }
+      }
+    }
+  }
 }

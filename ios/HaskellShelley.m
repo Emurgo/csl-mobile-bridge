@@ -186,7 +186,7 @@ RCT_EXPORT_METHOD(valueClampedSub:(nonnull NSString *)valuePtr other:(nonnull NS
 
 RCT_EXPORT_METHOD(valueCompare:(nonnull NSString *)valuePtr other:(nonnull NSString *)rhsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
-    [[CSafeOperation new:^NSString*(NSArray<NSString*>* ptrs, CharPtr* error) {
+    [[CSafeOperation new:^NSNumber*(NSArray<NSString*>* ptrs, CharPtr* error) {
         int8_t result;
         return value_compare([[ptrs objectAtIndex:0] rPtr],
                              [[ptrs objectAtIndex:1] rPtr],

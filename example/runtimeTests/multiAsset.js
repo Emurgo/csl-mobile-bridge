@@ -106,8 +106,6 @@ const test: () => void = async () => {
   await value.set_multiasset(multiAsset)
   // since otherValue does not contain multiasset, all the corresponding
   // asset values are assumed to be 0. so value > otherValue
-  // TODO: check
-  // assert(false, 'FIX ME')
   assert((await value.compare(otherValue)) === 1, 'Value::compare()')
 
   const otherValueAssets = await Assets.new()
@@ -125,8 +123,7 @@ const test: () => void = async () => {
   // await otherValueMultiAsset.insert(policyID, assets) // same asset that value has
   await otherValueMultiAsset.insert(otherPolicyID, otherValueAssets)
   await otherValue.set_multiasset(otherValueMultiAsset)
-  console.log((await value.compare(otherValue)));
-
+  assert((await value.compare(otherValue)) == null, 'Value::compare()')
 }
 
 export default test
