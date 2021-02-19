@@ -20,6 +20,7 @@ const bigNum: () => void = async () => {
     (await (await bigNumPtr.checked_sub(bigNum2)).to_str()) === '999500',
     'BigNum.checked_sub()',
   )
+  assert((await bigNumPtr.compare(bigNum2)) === 1, 'BigNum.compare()')
 }
 
 export default bigNum

@@ -49,3 +49,15 @@ pub unsafe extern "C" fn big_num_checked_sub(
   })
   .response(result, error)
 }
+
+#[no_mangle]
+pub unsafe extern "C" fn big_num_compare(
+  big_num: RPtr, rhs: RPtr, result: &mut i8, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    let big_num = big_num.typed_ref::<BigNum>()?;
+    rhs.typed_ref::<BigNum>()
+      .map(|rhs| value.compare(rhs))
+  })
+  .response(result, error)
+}

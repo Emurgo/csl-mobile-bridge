@@ -90,6 +90,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void bigNumCompare(String bigNumPtr, String rhsPtr, Promise promise) {
+        Native.I
+                .bigNumCompare(new RPtr(bigNumPtr), new RPtr(rhsPtr))
+                .pour(promise);
+    }
+
     // Value
 
     @ReactMethod

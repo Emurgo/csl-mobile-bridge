@@ -1,10 +1,11 @@
 use jni::objects::{JObject, JString};
-use jni::sys::{jobject};
+use jni::sys::{jobject, jint};
 use jni::JNIEnv;
 use super::ptr_j::*;
 use super::result::ToJniResult;
 use super::string::*;
-use crate::panic::{handle_exception_result, ToResult};
+use super::primitive::ToPrimitiveObject;
+use crate::panic::{handle_exception_result, ToResult, Zip};
 use crate::ptr::RPtrRepresentable;
 
 use cardano_serialization_lib::utils::{BigNum};
@@ -63,6 +64,25 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_bigNumCheckedSub
     let otherval = rother.typed_ref::<BigNum>()?;
     let res = val.checked_sub(otherval).into_result()?;
     res.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_bigNumCompare(
+  env: JNIEnv, _: JObject, value_ptr: JRPtr, rhs_value_ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let value_ptr = value_ptr.rptr(&env)?;
+    let rhs_value_ptr = rhs_value_ptr.rptr(&env)?;
+    value_ptr
+      .typed_ref::<BigNum>()
+      .zip(rhs_value_ptr.typed_ref::<BigNum>())
+      .map(|(value, rhs_value)| value.compare(rhs_value))
+      .and_then(|res| {
+        (res as jint).jobject(&env)
+      })
   })
   .jresult(&env)
 }

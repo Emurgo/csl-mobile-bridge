@@ -137,6 +137,15 @@ export class BigNum extends Ptr {
     const ret = await HaskellShelley.bigNumCheckedSub(this.ptr, otherPtr);
     return Ptr._wrap(ret, BigNum);
   }
+
+  /**
+   * @param {BigNum} rhs
+   * @returns {Promise<number | undefined>}
+   */
+  async compare(rhs) {
+    const rhsPtr = Ptr._assertClass(rhs, BigNum);
+    return await HaskellShelley.bigNumCompare(this.ptr, rhsPtr);
+  }
 }
 
 export const Coin = BigNum;

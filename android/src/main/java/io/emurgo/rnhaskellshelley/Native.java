@@ -26,6 +26,7 @@ final class Native {
     public final native Result<String> bigNumToStr(RPtr bigNum);
     public final native Result<RPtr> bigNumCheckedAdd(RPtr bigNum, RPtr other);
     public final native Result<RPtr> bigNumCheckedSub(RPtr bigNum, RPtr other);
+    public final native Result<Integer> bigNumCompare(RPtr bigNum, RPtr rhs);
 
     // Value
     public final native Result<RPtr> valueNew(RPtr coin);

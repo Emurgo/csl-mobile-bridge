@@ -33,7 +33,7 @@ export const hash_transaction: (
 export const min_ada_required: (
   assets: Value,
   minUtxoVal: BigNum,
-) => Promise<BigNum>
+) => Promise<BigNum>;
 
 /**
 * Generic u64 wrapper for platforms that don't support u64 or BigInt/etc
@@ -66,6 +66,11 @@ export class BigNum extends Ptr {
   */
   checked_sub(other): Promise<BigNum>;
 
+  /**
+   * @param {BigNum} rhs
+   * @returns {Promise<number>}
+   */
+  compare(rhs: BigNum): Promise<number>;
 }
 
 export class Value extends Ptr {

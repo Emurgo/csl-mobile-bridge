@@ -105,6 +105,18 @@ RCT_EXPORT_METHOD(bigNumCheckedSub:(nonnull NSString *)ptr1 other:(nonnull NSStr
     }] exec:@[ptr1, ptr2] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(bigNumCompare:(nonnull NSString *)bigNumPtr other:(nonnull NSString *)rhsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSArray<NSString*>* ptrs, CharPtr* error) {
+        int8_t result;
+        return big_num_compare([[ptrs objectAtIndex:0] rPtr],
+                             [[ptrs objectAtIndex:1] rPtr],
+                             &result, error)
+            ? [NSNumber numberWithInt:result]
+            : nil;
+    }] exec:@[bigNumPtr, rhsPtr] andResolve:resolve orReject:reject];
+}
+
 // Value
 
 RCT_EXPORT_METHOD(valueNew:(nonnull NSString *)coinPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
