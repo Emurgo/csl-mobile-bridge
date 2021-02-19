@@ -47,6 +47,18 @@ RCT_EXPORT_METHOD(hashTransaction:(nonnull NSString *)txBodyPtr withResolve:(RCT
     }] exec:txBodyPtr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(minAdaRequired:(nonnull NSString *)assetsPtr withMinUtxoVal:(nonnull NSString *)minUtxoValPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr assets = [[params objectAtIndex:0] rPtr];
+        RPtr minUtxoVal = [[params objectAtIndex:1] rPtr];
+        RPtr result;
+        return utils_min_ada_required(assets, minUtxoVal, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[assetsPtr, minUtxoValPtr] andResolve:resolve orReject:reject];
+}
+
 // BigNum
 
 RCT_EXPORT_METHOD(bigNumFromStr:(nonnull NSString *)string withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

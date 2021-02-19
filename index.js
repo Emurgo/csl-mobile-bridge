@@ -77,6 +77,18 @@ export const make_vkey_witness = async (txBodyHash, sk) => {
 };
 
 /**
+* @param {Value} assets
+* @param {BigNum} minUtxoVal
+* @returns {Promise<BigNum>}
+*/
+export const min_ada_required = async (assets, minUtxoVal) => {
+  const assetsPtr = Ptr._assertClass(assets, Value);
+  const minUtxoValPtr = Ptr._assertClass(minUtxoVal, BigNum);
+  const ret = await HaskellShelley.minAdaRequired(assetsPtr, minUtxoValPtr);
+  return Ptr._wrap(ret, BigNum);
+};
+
+/**
 * @param {TransactionBody} txBody
 * @returns {Promise<TransactionHash>}
 */

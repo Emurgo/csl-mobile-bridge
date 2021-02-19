@@ -26,6 +26,16 @@ export const hash_transaction: (
 ) => Promise<TransactionHash>;
 
 /**
+* @param {Value} assets
+* @param {BigNum} minUtxoVal
+* @returns {Promise<BigNum>}
+*/
+export const min_ada_required: (
+  assets: Value,
+  minUtxoVal: BigNum,
+) => Promise<BigNum>
+
+/**
 * Generic u64 wrapper for platforms that don't support u64 or BigInt/etc
 * This is an unsigned type - no negative numbers.
 * Can be converted to/from plain rust

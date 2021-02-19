@@ -4,12 +4,16 @@ import {
   make_icarus_bootstrap_witness,
   make_vkey_witness,
   hash_transaction,
+  min_ada_required,
   BootstrapWitness,
   TransactionHash,
   ByronAddress,
   Bip32PrivateKey,
   Vkeywitness,
   TransactionBody,
+  Value,
+  Coin,
+  BigNum,
 } from '@emurgo/react-native-haskell-shelley'
 
 import {assert} from '../util'
@@ -83,6 +87,18 @@ const test: () => void = async () => {
     'hash_transaction should return instance of TransactionHash',
   )
   assert(hash.ptr !== undefined, 'hash_transaction:: returns non-undefined')
+
+  /**
+   * min_ada_required
+   */
+  const value = await Value.new(await Coin.from_str('200'))
+  const minUtxoVal = await Coin.from_str('1000000')
+  const minAda = await min_ada_required(value, minUtxoVal)
+  assert(
+    minAda instanceof BigNum,
+    'min_ada_required should return instance of BigNum',
+  )
+  assert(minAda.ptr !== undefined, 'min_ada_required:: returns non-undefined')
 }
 
 export default test
