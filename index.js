@@ -1879,7 +1879,7 @@ export class TransactionBuilder extends Ptr {
     const addressPtr = Ptr._assertClass(address, Address);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    return HaskellShelley.transactionBuilderAddBootstrapInput(
+    return HaskellShelley.transactionBuilderAddInput(
       this.ptr,
       addressPtr,
       inputPtr,
@@ -1894,11 +1894,11 @@ export class TransactionBuilder extends Ptr {
   * @param {Value} amount
   * @returns {Promise<BigNum>}
   */
-  async fee_for_input(input) {
+  async fee_for_input(address, input, amount) {
     const addressPtr = Ptr._assertClass(address, Address);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = await HaskellShelley.transactionBuilderFeeForOutput(
+    const ret = await HaskellShelley.transactionBuilderFeeForInput(
       this.ptr,
       addressPtr,
       inputPtr,
