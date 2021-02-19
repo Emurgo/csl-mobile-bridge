@@ -67,6 +67,12 @@ export class BigNum extends Ptr {
   checked_sub(other): Promise<BigNum>;
 
   /**
+  * @param {BigNum} other
+  * @returns {Promise<BigNum>}
+  */
+  clamped_sub(other: BigNum): Promise<BigNum>;
+
+  /**
    * @param {BigNum} rhs
    * @returns {Promise<number>}
    */

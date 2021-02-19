@@ -70,6 +70,26 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_bigNumCheckedSub
 
 #[allow(non_snake_case)]
 #[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_bigNumClampedSub(
+  env: JNIEnv, _: JObject, ptr: JObject, other: JObject
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    let rptr_other = other.rptr(&env)?;
+    rptr
+      .typed_ref::<BigNum>()
+      .zip(rptr_other.typed_ref::<BigNum>())
+      .map(|(val, other)| val.clamped_sub(other))
+      .and_then(|res| {
+        res.rptr().jptr(&env)
+      })
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_bigNumCompare(
   env: JNIEnv, _: JObject, value_ptr: JRPtr, rhs_value_ptr: JRPtr
 ) -> jobject {

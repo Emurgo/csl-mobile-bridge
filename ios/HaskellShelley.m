@@ -105,6 +105,18 @@ RCT_EXPORT_METHOD(bigNumCheckedSub:(nonnull NSString *)ptr1 other:(nonnull NSStr
     }] exec:@[ptr1, ptr2] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(bigNumClampedSub:(nonnull NSString *)ptr1 other:(nonnull NSString *)ptr2 withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray<NSString*>* ptrs, CharPtr* error) {
+        RPtr result;
+        return big_num_clamped_sub([[ptrs objectAtIndex:0] rPtr],
+                                 [[ptrs objectAtIndex:1] rPtr],
+                                 &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[ptr1, ptr2] andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(bigNumCompare:(nonnull NSString *)bigNumPtr other:(nonnull NSString *)rhsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSNumber*(NSArray<NSString*>* ptrs, CharPtr* error) {

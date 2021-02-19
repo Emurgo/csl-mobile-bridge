@@ -139,6 +139,16 @@ export class BigNum extends Ptr {
   }
 
   /**
+  * @param {BigNum} other
+  * @returns {Promise<BigNum>}
+  */
+  async clamped_sub(other) {
+    const otherPtr = Ptr._assertClass(other, BigNum);
+    const ret = await HaskellShelley.bigNumClampedSub(this.ptr, otherPtr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  /**
    * @param {BigNum} rhs
    * @returns {Promise<number | undefined>}
    */

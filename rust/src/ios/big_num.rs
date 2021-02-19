@@ -51,13 +51,26 @@ pub unsafe extern "C" fn big_num_checked_sub(
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn big_num_clamped_sub(
+  big_num: RPtr, other: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    let val = big_num.typed_ref::<BigNum>()?;
+    other.typed_ref::<BigNum>()
+      .map(|other| val.clamped_sub(other))
+      .map(|val| val.rptr())
+  })
+  .response(result, error)
+}
+
+#[no_mangle]
 pub unsafe extern "C" fn big_num_compare(
   big_num: RPtr, rhs: RPtr, result: &mut i8, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
     let big_num = big_num.typed_ref::<BigNum>()?;
     rhs.typed_ref::<BigNum>()
-      .map(|rhs| value.compare(rhs))
+      .map(|rhs| big_num.compare(rhs))
   })
   .response(result, error)
 }

@@ -91,6 +91,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void bigNumClampedSub(String bigNumPtr, String otherPtr, Promise promise) {
+        Native.I
+                .bigNumClampedSub(new RPtr(bigNumPtr), new RPtr(otherPtr))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void bigNumCompare(String bigNumPtr, String rhsPtr, Promise promise) {
         Native.I
                 .bigNumCompare(new RPtr(bigNumPtr), new RPtr(rhsPtr))
