@@ -5,7 +5,7 @@ use crate::utils::ToFromBytes;
 use crate::panic::*;
 use crate::ptr::{RPtr, RPtrRepresentable};
 
-use cardano_serialization_lib::utils::{hash_transaction, make_vkey_witness, make_icarus_bootstrap_witness};
+use cardano_serialization_lib::utils::{hash_transaction, make_vkey_witness, make_icarus_bootstrap_witness, min_ada_required, Value, BigNum};
 use cardano_serialization_lib::{TransactionBody};
 use cardano_serialization_lib::crypto::{Bip32PrivateKey, PrivateKey, TransactionHash};
 use cardano_serialization_lib::address::ByronAddress;
@@ -74,5 +74,20 @@ pub unsafe extern "C" fn utils_hash_transaction(
       })
     })
     .map(|hash| hash.rptr())
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn utils_min_ada_required(
+  assets: RPtr, min_utxo_val: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    assets.typed_ref::<Value>()
+      .zip(min_utxo_val.typed_ref::<BigNum>())
+      .map(|(assets, min_utxo_val)| {
+        make_vkey_witness(assets, min_utxo_val)
+      })
+    })
+    .map(|min_ada| min_ada.rptr())
     .response(result, error)
 }

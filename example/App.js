@@ -96,6 +96,7 @@ export default class App extends Component<{}> {
       this.setState({
         status: 'tests finished',
       })
+      console.log('test finished successfully')
       mounted = true
     }
   }

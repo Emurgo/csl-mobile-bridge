@@ -7,7 +7,14 @@ use jni::sys::{jbyteArray, jobject};
 use jni::JNIEnv;
 use crate::utils::ToFromBytes;
 
-use cardano_serialization_lib::utils::{hash_transaction, make_vkey_witness, make_icarus_bootstrap_witness};
+use cardano_serialization_lib::utils::{
+  hash_transaction,
+  make_vkey_witness,
+  make_icarus_bootstrap_witness,
+  min_ada_required,
+  Value,
+  BigNum
+};
 use cardano_serialization_lib::{TransactionBody};
 use cardano_serialization_lib::crypto::{Bip32PrivateKey, PrivateKey, TransactionHash};
 use cardano_serialization_lib::address::ByronAddress;
@@ -91,6 +98,23 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_hashTransaction(
     tx_body
       .typed_ref::<TransactionBody>()
       .and_then(|tx_body| hash_transaction(tx_body).rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_minAdaRequired(
+  env: JNIEnv, _: JObject, assets: JRPtr, minimum_utxo_val: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let assets = assets.rptr(&env)?;
+    let minimum_utxo_val = minimum_utxo_val.rptr(&env)?;
+    assets.typed_ref::<Value>().zip(minimum_utxo_val.typed_ref::<BigNum>()).and_then(
+      |(assets, minimum_utxo_val)| {
+        min_ada_required(assets, minimum_utxo_val).rptr().jptr(&env)
+      }
+    )
   })
   .jresult(&env)
 }

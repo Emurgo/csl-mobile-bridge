@@ -49,6 +49,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void minAdaRequired(String assets, String minimumUtxoVal, Promise promise) {
+        Native.I
+                .minAdaRequired(new RPtr(assets), new RPtr(minimumUtxoVal))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // BigNum
 
     @ReactMethod
@@ -1495,6 +1503,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBodyTtl(String txBody, Promise promise) {
         Native.I
                 .transactionBodyTtl(new RPtr(txBody))
+                .map(Long::intValue)
                 .pour(promise);
     }
 

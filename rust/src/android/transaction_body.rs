@@ -83,10 +83,12 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBodyT
     let rptr = ptr.rptr(&env)?;
     rptr
       .typed_ref::<TransactionBody>()
-      .map(|tx_body| tx_body.ttl())
+      .map(|tx_body| tx_body.ttl().map(|ttl| (ttl as jlong)))
       .and_then(|ttl| {
-        let ttl_jint: jlong = ttl.unwrap().into();
-        ttl_jint.jobject(&env)
+        match ttl {
+          Some(ttl) => ttl.jobject(&env),
+          None => Ok(JObject::null())
+        }
       })
   })
   .jresult(&env)
