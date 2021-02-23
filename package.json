@@ -8,8 +8,12 @@
     "README.md",
     "android",
     "index.js",
+    "index.d.ts",
     "ios",
-    "react-native-haskell-shelley.podspec"
+    "react-native.config.js",
+    "react-native-haskell-shelley.podspec",
+    "rust",
+    "yarn.lock"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
