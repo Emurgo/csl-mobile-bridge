@@ -1,6 +1,6 @@
 [package]
 name = "react-native-haskell-shelley"
-version = "1.0.2"
+version = "1.0.3"
 authors = ["EMURGO R&D"]
 edition = "2018"
 

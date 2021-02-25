@@ -600,7 +600,7 @@ dependencies = [
 
 [[package]]
 name = "react-native-haskell-shelley"
-version = "1.0.2"
+version = "1.0.3"
 dependencies = [
  "cardano-serialization-lib",
  "cbindgen",
