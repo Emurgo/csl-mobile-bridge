@@ -17,7 +17,9 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint index.js index.d.ts"
+    "lint": "eslint index.js index.d.ts",
+    "js:flowgen": "flowgen ./index.d.ts -o ./index.js.flow --add-flow-header",
+    "publish": "yarn js:flowgen && npm publish --access public"
   },
   "repository": {
     "type": "git",
@@ -41,6 +43,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
     "eslint": "7.8.1",
+    "flowgen": "1.13.0",
     "react": "^16.9.0",
     "react-native": "^0.60.0",
     "typescript": "^4.1.3"
