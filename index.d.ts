@@ -587,6 +587,12 @@ export class MultiAsset extends Ptr {
   * @returns {Promise<PolicyIDs>}
   */
   keys(): Promise<PolicyIDs>;
+
+  /**
+  * @param {MultiAsset} rhs
+  * @returns {Promise<MultiAsset>}
+  */
+  sub(rhs: MultiAsset): Promise<MultiAsset>;
 }
 
 export class TransactionHash extends Ptr {

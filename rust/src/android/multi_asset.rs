@@ -80,3 +80,22 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_multiAssetKeys(
   })
   .jresult(&env)
 }
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_multiAssetSub(
+  env: JNIEnv, _: JObject, ptr: JObject, other: JObject
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = ptr.rptr(&env)?;
+    let rptr_other = other.rptr(&env)?;
+    rptr
+      .typed_ref::<MultiAsset>()
+      .zip(rptr_other.typed_ref::<MultiAsset>())
+      .map(|(val, other)| val.sub(other))
+      .and_then(|res| {
+        res.rptr().jptr(&env)
+      })
+  })
+  .jresult(&env)
+}

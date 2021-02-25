@@ -137,6 +137,7 @@ final class Native {
     public final native Result<RPtr> multiAssetInsert(RPtr multiAsset, RPtr key, RPtr value);
     public final native Result<RPtr> multiAssetGet(RPtr multiAsset, RPtr key);
     public final native Result<RPtr> multiAssetKeys(RPtr multiAsset);
+    public final native Result<RPtr> multiAssetSub(RPtr multiAsset, RPtr other);
 
     // TransactionHash
     public final native Result<byte[]> transactionHashToBytes(RPtr transactionHash);

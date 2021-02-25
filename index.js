@@ -903,6 +903,16 @@ export class MultiAsset extends Ptr {
     const ret = await HaskellShelley.multiAssetKeys(this.ptr);
     return Ptr._wrap(ret, PolicyIDs);
   }
+
+  /**
+  * @param {MultiAsset} rhs
+  * @returns {Promise<MultiAsset>}
+  */
+  async sub(rhs) {
+    const rhsPtr = Ptr._assertClass(rhs, MultiAsset);
+    const ret = await HaskellShelley.multiAssetSub(this.ptr, rhsPtr);
+    return Ptr._wrap(ret, MultiAsset);
+  }
 }
 
 export class TransactionHash extends Ptr {

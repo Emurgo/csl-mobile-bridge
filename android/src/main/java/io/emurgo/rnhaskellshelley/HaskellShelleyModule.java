@@ -755,6 +755,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void multiAssetSub(String multiAsset, String other, Promise promise) {
+        Native.I
+                .multiAssetSub(new RPtr(multiAsset), new RPtr(other))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // TransactionHash
 
     @ReactMethod

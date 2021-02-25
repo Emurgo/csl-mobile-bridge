@@ -59,3 +59,16 @@ pub unsafe extern "C" fn multi_asset_keys(
     .map(|policy_ids| policy_ids.rptr())
     .response(result, error)
 }
+
+#[no_mangle]
+pub unsafe extern "C" fn multi_asset_sub(
+  multi_asset: RPtr, other: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    let val = multi_asset.typed_ref::<MultiAsset>()?;
+    other.typed_ref::<MultiAsset>()
+      .map(|other| val.sub(other))
+      .map(|val| val.rptr())
+  })
+  .response(result, error)
+}

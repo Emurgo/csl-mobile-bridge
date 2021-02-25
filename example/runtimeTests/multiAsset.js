@@ -94,6 +94,15 @@ const test: () => void = async () => {
   const __val = await _assets.get(assetName)
   assert((await __val.to_str()) === '200', 'MultiAsset::get()')
 
+  const otherMa = await MultiAsset.new()
+  const otherAssets = await Assets.new()
+  await otherAssets.insert(assetName, await BigNum.from_str('200'))
+  await otherMa.insert(policyID, otherAssets)
+
+  const subResult = await multiAsset.sub(otherMa)
+  const subResultAssets = await subResult.get(policyID)
+  assert(subResultAssets == null, 'MultiAsset::sub()')
+
   /**
    * Value
    */
