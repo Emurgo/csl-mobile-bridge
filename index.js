@@ -274,6 +274,14 @@ export class AssetName extends Ptr {
     const ret = await HaskellShelley.assetNameNew(b64FromUint8Array(name));
     return Ptr._wrap(ret, AssetName);
   }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async name() {
+    const b64 = await HaskellShelley.assetNameName(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
 }
 
 export class AssetNames extends Ptr {

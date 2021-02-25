@@ -44,6 +44,7 @@ final class Native {
     public final native Result<byte[]> assetNameToBytes(RPtr assetName);
     public final native Result<RPtr> assetNameFromBytes(byte[] bytes);
     public final native Result<RPtr> assetNameNew(byte[] bytes);
+    public final native Result<byte[]> assetNameName(RPtr assetName);
 
     // AssetNames
     // public final native Result<byte[]> assetNamesToBytes(RPtr assetNames);

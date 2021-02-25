@@ -267,6 +267,17 @@ RCT_EXPORT_METHOD(assetNameNew:(nonnull NSString *)bytesStr  withResolve:(RCTPro
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(assetNameName:(nonnull NSString *)assetNamePtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* assetNamePtr, CharPtr* error) {
+        DataPtr result;
+        RPtr assetName = [assetNamePtr rPtr];
+        return asset_name_name(assetName, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:assetNamePtr andResolve:resolve orReject:reject];
+}
+
 // AssetNames
 
 RCT_EXPORT_METHOD(assetNamesNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

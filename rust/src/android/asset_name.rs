@@ -54,3 +54,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_assetNameNew(
   })
   .jresult(&env)
 }
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_assetNameName(
+  env: JNIEnv, _: JObject, asset_name: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let obj = asset_name.rptr(&env)?;
+    obj
+      .typed_ref::<AssetName>()
+      .map(|obj| obj.name())
+      .and_then(|bytes| env.byte_array_from_slice(&bytes).into_result())
+      .map(|arr| JObject::from(arr))
+  })
+  .jresult(&env)
+}

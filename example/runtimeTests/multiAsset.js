@@ -30,16 +30,16 @@ const test: () => void = async () => {
     assetName instanceof AssetName,
     'AssetName.new should return instance of AssetName',
   )
-  const assetNameToBytes = Buffer.from(
-    await assetName.to_bytes(),
+  const assetNameFromRust = Buffer.from(
+    await assetName.name(),
     'hex',
   ).toString('hex')
-  // TODO: fix
-  // assert(
-  //   assetNameToBytes === nameHex,
-  //   'AssetName.to_bytes() should match original input value. ' +
-  //     `Received: ${assetNameToBytes}, expected: ${nameHex}`,
-  // )
+
+  assert(
+    assetNameFromRust === nameHex,
+    'AssetName.name() should match original input value. ' +
+      `Received: ${assetNameFromRust}, expected: ${nameHex}`,
+  )
 
   /**
    * AssetNames

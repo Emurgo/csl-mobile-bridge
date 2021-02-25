@@ -204,6 +204,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void assetNameName(String assetName, Promise promise) {
+        Native.I
+                .assetNameName(new RPtr(assetName))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
     // AssetNames
 
     // @ReactMethod

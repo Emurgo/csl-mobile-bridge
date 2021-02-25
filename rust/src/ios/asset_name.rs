@@ -46,3 +46,14 @@ pub unsafe extern "C" fn asset_name_new(
   .map(|asset_name| asset_name.rptr())
   .response(result, error)
 }
+
+#[no_mangle]
+pub unsafe extern "C" fn asset_name_name(
+  asset_name: RPtr, result: &mut DataPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    asset_name.typed_ref::<AssetName>().map(|asset_name| asset_name.name())
+  })
+  .map(|bytes| bytes.into())
+  .response(result, error)
+}

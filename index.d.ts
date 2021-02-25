@@ -139,19 +139,24 @@ export class AssetName extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
   */
-  to_bytes(): Promise<Uint8Array>
+  to_bytes(): Promise<Uint8Array>;
 
   /**
   * @param {Uint8Array} bytes
   * @returns {Promise<AssetName>}
   */
-  static from_bytes(bytes): Promise<AssetName>
+  static from_bytes(bytes): Promise<AssetName>;
 
   /**
   * @param {Uint8Array} name
   * @returns {Promise<AssetName>}
   */
   static new(name: Uint8Array): Promise<AssetName>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  name(): Promise<Uint8Array>;
 }
 
 export class AssetNames extends Ptr {
