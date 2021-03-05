@@ -1845,60 +1845,60 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
-    // TransactionMetadata
+    // GeneralTransactionMetadata
 
     @ReactMethod
-    public final void transactionMetadataToBytes(String transactionMetadata, Promise promise) {
+    public final void generalTransactionMetadataToBytes(String generalTransactionMetadata, Promise promise) {
         Native.I
-                .transactionMetadataToBytes(new RPtr(transactionMetadata))
+                .generalTransactionMetadataToBytes(new RPtr(generalTransactionMetadata))
                 .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
                 .pour(promise);
     }
 
     @ReactMethod
-    public final void transactionMetadataFromBytes(String bytes, Promise promise) {
+    public final void generalTransactionMetadataFromBytes(String bytes, Promise promise) {
         Native.I
-                .transactionMetadataFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .generalTransactionMetadataFromBytes(Base64.decode(bytes, Base64.DEFAULT))
                 .map(RPtr::toJs)
                 .pour(promise);
     }
 
     @ReactMethod
-    public final void transactionMetadataNew(Promise promise) {
+    public final void generalTransactionMetadataNew(Promise promise) {
         Native.I
-                .transactionMetadataNew()
+                .generalTransactionMetadataNew()
                 .map(RPtr::toJs)
                 .pour(promise);
     }
 
     @ReactMethod
-    public final void transactionMetadataLen(String transactionMetadata, Promise promise) {
+    public final void generalTransactionMetadataLen(String generalTransactionMetadata, Promise promise) {
         Native.I
-                .transactionMetadataLen(new RPtr(transactionMetadata))
+                .generalTransactionMetadataLen(new RPtr(generalTransactionMetadata))
                 .map(Long::intValue)
                 .pour(promise);
     }
 
     @ReactMethod
-    public final void transactionMetadataInsert(String transactionMetadata, String key, String value, Promise promise) {
+    public final void generalTransactionMetadataInsert(String generalTransactionMetadata, String key, String value, Promise promise) {
         Native.I
-                .transactionMetadataInsert(new RPtr(transactionMetadata), new RPtr(key), new RPtr(value))
+                .generalTransactionMetadataInsert(new RPtr(generalTransactionMetadata), new RPtr(key), new RPtr(value))
                 .map(RPtr::toJs)
                 .pour(promise);
     }
 
     @ReactMethod
-    public final void transactionMetadataGet(String transactionMetadata, String key, Promise promise) {
+    public final void generalTransactionMetadataGet(String generalTransactionMetadata, String key, Promise promise) {
         Native.I
-                .transactionMetadataGet(new RPtr(transactionMetadata), new RPtr(key))
+                .generalTransactionMetadataGet(new RPtr(generalTransactionMetadata), new RPtr(key))
                 .map(RPtr::toJs)
                 .pour(promise);
     }
 
     @ReactMethod
-    public final void transactionMetadataKeys(String transactionMetadata, Promise promise) {
+    public final void generalTransactionMetadataKeys(String generalTransactionMetadata, Promise promise) {
         Native.I
-                .transactionMetadataKeys(new RPtr(transactionMetadata))
+                .generalTransactionMetadataKeys(new RPtr(generalTransactionMetadata))
                 .map(RPtr::toJs)
                 .pour(promise);
     }

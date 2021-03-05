@@ -14,6 +14,7 @@ mod certificates;
 mod data;
 mod ed25519_key_hash;
 mod ed25519_signature;
+mod general_transaction_metadata;
 mod linear_fee;
 mod multi_asset;
 mod ptr_c;

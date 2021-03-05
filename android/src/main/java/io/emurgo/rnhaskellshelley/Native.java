@@ -325,15 +325,14 @@ final class Native {
     public final native Result<RPtr> transactionMetadatumLabelsGet(RPtr transactionMetadatumLabels, long index);
     public final native Result<Void> transactionMetadatumLabelsAdd(RPtr transactionMetadatumLabels, RPtr item);
 
-    // TransactionMetadata
-    public final native Result<byte[]> transactionMetadataToBytes(RPtr transactionMetadata);
-    public final native Result<RPtr> transactionMetadataFromBytes(byte[] bytes);
-    public final native Result<RPtr> transactionMetadataNew();
-    public final native Result<Long> transactionMetadataLen(RPtr transactionMetadata);
-    public final native Result<RPtr> transactionMetadataInsert(RPtr transactionMetadata, RPtr key, RPtr value);
-    public final native Result<RPtr> transactionMetadataGet(RPtr transactionMetadata, RPtr key);
-    public final native Result<RPtr> transactionMetadataKeys(RPtr transactionMetadata);
-
+    // GeneralTransactionMetadata
+    public final native Result<byte[]> generalTransactionMetadataToBytes(RPtr generalTransactionMetadata);
+    public final native Result<RPtr> generalTransactionMetadataFromBytes(byte[] bytes);
+    public final native Result<RPtr> generalTransactionMetadataNew();
+    public final native Result<Long> generalTransactionMetadataLen(RPtr generalTransactionMetadata);
+    public final native Result<RPtr> generalTransactionMetadataInsert(RPtr generalTransactionMetadata, RPtr key, RPtr value);
+    public final native Result<RPtr> generalTransactionMetadataGet(RPtr generalTransactionMetadata, RPtr key);
+    public final native Result<RPtr> generalTransactionMetadataKeys(RPtr generalTransactionMetadata);
 
     public final native void ptrFree(RPtr ptr);
 }

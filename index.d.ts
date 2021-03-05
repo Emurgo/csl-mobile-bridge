@@ -1370,7 +1370,7 @@ export class Withdrawals extends Ptr {
   keys(): Promise<RewardAddresses>;
 }
 
-export type TransactionMetadatumLabel = BigNum
+export type TransactionMetadatumLabel = BigNum;
 
 export class TransactionMetadatumLabels extends Ptr {
   /**
@@ -1382,7 +1382,7 @@ export class TransactionMetadatumLabels extends Ptr {
   * @param {Uint8Array} bytes
   * @returns {Promise<TransactionMetadatumLabels>}
   */
-  static from_bytes(bytes): Promise<TransactionMetadatumLabels>
+  static from_bytes(bytes: Uint8Array): Promise<TransactionMetadatumLabels>;
 
   /**
   * @returns {Promise<TransactionMetadatumLabels>}
@@ -1398,33 +1398,31 @@ export class TransactionMetadatumLabels extends Ptr {
   * @param {number} index
   * @returns {Promise<TransactionMetadatumLabel>}
   */
-  get(index): Promise<TransactionMetadatumLabel>;
+  get(index: number): Promise<TransactionMetadatumLabel>;
 
   /**
   * @param {TransactionMetadatumLabel} item
   * @returns {Promise<void>}
   */
-  add(item): Promise<void>
+  add(item: TransactionMetadatumLabel): Promise<void>;
 }
 
-export class TransactionMetadata extends Ptr {}
-
-export class TransactionMetadata extends Ptr {
+export class GeneralTransactionMetadata extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
   */
-  to_bytes(): Promise<Uint8Array>;
+  to_bytes(): Promise<Uint8Array>
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<TransactionMetadata>}
+  * @returns {Promise<GeneralTransactionMetadata>}
   */
-  static from_bytes(bytes): Promise<TransactionMetadata>
+  static from_bytes(bytes: Uint8Array): Promise<GeneralTransactionMetadata>;
 
   /**
-  * @returns {Promise<TransactionMetadata>}
+  * @returns {Promise<GeneralTransactionMetadata>}
   */
-  static new(): Promise<TransactionMetadata>;
+  static new(): Promise<GeneralTransactionMetadata>;
 
   /**
   * @returns {Promise<number>}
@@ -1436,16 +1434,21 @@ export class TransactionMetadata extends Ptr {
   * @param {TransactionMetadatum} value
   * @returns {Promise<TransactionMetadatum | undefined>}
   */
-  insert(key, value): Promise<TransactionMetadatum | undefined>;
+  insert(
+    key: TransactionMetadatumLabel,
+    value: TransactionMetadatum,
+  ): Promise<TransactionMetadatum | undefined>;
 
   /**
   * @param {TransactionMetadatumLabel} key
   * @returns {Promise<TransactionMetadatum | undefined>}
   */
-  get(key): Promise<TransactionMetadatum | undefined>;
+  get(key: TransactionMetadatumLabel): Promise<TransactionMetadatum | undefined>;
 
   /**
   * @returns {Promise<TransactionMetadatumLabels>}
   */
   keys(): Promise<TransactionMetadatumLabels>;
 }
+
+export class TransactionMetadata extends Ptr {}
