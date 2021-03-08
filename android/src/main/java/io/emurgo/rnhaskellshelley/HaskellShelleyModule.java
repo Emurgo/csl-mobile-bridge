@@ -1796,6 +1796,39 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // MetadataList
+
+    @ReactMethod
+    public final void metadataListNew(Promise promise) {
+        Native.I
+                .metadataListNew()
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void metadataListLen(String metadataList, Promise promise) {
+        Native.I
+                .metadataListLen(new RPtr(metadataList))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void metadataListGet(String metadataList, Integer index, Promise promise) {
+        Native.I
+                .metadataListGet(new RPtr(metadataList), index)
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void metadataListAdd(String metadataList, String item, Promise promise) {
+        Native.I
+                .metadataListAdd(new RPtr(metadataList), new RPtr(item))
+                .pour(promise);
+    }
+
     // TransactionMetadatumLabels
 
     @ReactMethod

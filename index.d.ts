@@ -1370,6 +1370,30 @@ export class Withdrawals extends Ptr {
   keys(): Promise<RewardAddresses>;
 }
 
+export class MetadataList extends Ptr {
+  /**
+  * @returns {Promise<MetadataList>}
+  */
+  static new(): Promise<MetadataList>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len(): Promise<number>;
+
+  /**
+  * @param {number} index
+  * @returns {Promise<TransactionMetadatum>}
+  */
+  get(index: number): Promise<TransactionMetadatum>;
+
+  /**
+  * @param {TransactionMetadatum} item
+  * @returns {Promise<void>}
+  */
+  add(item: TransactionMetadatum): Promise<void>;
+}
+
 export type TransactionMetadatumLabel = BigNum;
 
 export class TransactionMetadatumLabels extends Ptr {

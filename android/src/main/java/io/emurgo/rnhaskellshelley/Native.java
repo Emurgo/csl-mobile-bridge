@@ -317,6 +317,12 @@ final class Native {
     public final native Result<RPtr> withdrawalsGet(RPtr withdrawals, RPtr key);
     public final native Result<RPtr> withdrawalsKeys(RPtr withdrawals);
 
+    // MetadataList
+    public final native Result<RPtr> metadataListNew();
+    public final native Result<Long> metadataListLen(RPtr metadataList);
+    public final native Result<RPtr> metadataListGet(RPtr metadataList, long index);
+    public final native Result<Void> metadataListAdd(RPtr metadataList, RPtr item);
+
     // TransactionMetadatumLabels
     public final native Result<byte[]> transactionMetadatumLabelsToBytes(RPtr transactionMetadatumLabels);
     public final native Result<RPtr> transactionMetadatumLabelsFromBytes(byte[] bytes);

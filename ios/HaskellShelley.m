@@ -2465,6 +2465,51 @@ RCT_EXPORT_METHOD(withdrawalsKeys:(nonnull NSString *)withdrawalsPtr withResolve
     }] exec:withdrawalsPtr andResolve:resolve orReject:reject];
 }
 
+// MetadataList
+
+RCT_EXPORT_METHOD(metadataListNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return metadata_list_new(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(metadataListLen:(nonnull NSString *)metadataListPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* metadataListPtr, CharPtr* error) {
+        uintptr_t result;
+        RPtr metadataList = [metadataListPtr rPtr];
+        return metadata_list_len(metadataList, &result, error)
+            ? [NSNumber numberWithUnsignedLong:result]
+            : nil;
+    }] exec:metadataListPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(metadataListGet:(nonnull NSString *)metadataListPtr withIndex:(nonnull NSNumber *)index withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr metadataList = [[params objectAtIndex:0] rPtr];
+        uintptr_t index = [[params objectAtIndex:1] unsignedIntegerValue];
+        return metadata_list_get(metadataList, index, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[metadataListPtr, index] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(metadataListAdd:(nonnull NSString *)metadataListPtr withItem:(nonnull NSString *)item withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr metadataList = [[params objectAtIndex:0] rPtr];
+        RPtr item = [[params objectAtIndex:1] rPtr];
+        metadata_list_add(&metadataList, item, error);
+        return nil;
+    }] exec:@[metadataListPtr, item] andResolve:resolve orReject:reject];
+}
+
 // TransactionMetadatumLabels
 
 RCT_EXPORT_METHOD(transactionMetadatumLabelsToBytes:(nonnull NSString *)transactionMetadatumLabelsPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

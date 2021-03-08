@@ -2131,9 +2131,41 @@ export class Withdrawals extends Ptr {
   }
 }
 
-/**
- * note: uses same implementation than BigNum
- */
+export class MetadataList extends Ptr {
+  /**
+  * @returns {Promise<MetadataList>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.metadataListNew();
+    return Ptr._wrap(ret, MetadataList);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.metadataListLen(this.ptr);
+  }
+
+  /**
+  * @param {number} index
+  * @returns {Promise<TransactionMetadatum>}
+  */
+  async get(index) {
+    const ret = await HaskellShelley.metadataListGet(this.ptr, index);
+    return Ptr._wrap(ret, TransactionMetadatum);
+  }
+
+  /**
+  * @param {TransactionMetadatum} item
+  * @returns {Promise<void>}
+  */
+  async add(item) {
+    const itemPtr = Ptr._assertClass(item, TransactionMetadatum);
+    return HaskellShelley.metadataListAdd(this.ptr, itemPtr);
+  }
+}
+
 export const TransactionMetadatumLabel = BigNum;
 
 export class TransactionMetadatumLabels extends Ptr {
