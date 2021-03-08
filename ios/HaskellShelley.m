@@ -2489,6 +2489,65 @@ RCT_EXPORT_METHOD(withdrawalsKeys:(nonnull NSString *)withdrawalsPtr withResolve
     }] exec:withdrawalsPtr andResolve:resolve orReject:reject];
 }
 
+// MetadataMap
+
+RCT_EXPORT_METHOD(metadataMapNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return metadata_map_new(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(metadataMapLen:(nonnull NSString *)metadataMapPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* metadataMapPtr, CharPtr* error) {
+        uintptr_t result;
+        RPtr metadataMap = [metadataMapPtr rPtr];
+        return metadata_map_len(metadataMap, &result, error)
+            ? [NSNumber numberWithUnsignedLong:result]
+            : nil;
+    }] exec:metadataMapPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(metadataMapInsert:(nonnull NSString *)metadataMapPtr withKey:(nonnull NSString *)keyPtr withValue:(nonnull NSString *)valuePtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr metadataMap = [[params objectAtIndex:0] rPtr];
+        RPtr key = [[params objectAtIndex:1] rPtr];
+        RPtr value = [[params objectAtIndex:2] rPtr];
+        return metadata_map_insert(metadataMap, key, value, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[metadataMapPtr, keyPtr, valuePtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(metadataMapGet:(nonnull NSString *)metadataMapPtr withKey:(nonnull NSString *)keyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr metadataMap = [[params objectAtIndex:0] rPtr];
+        RPtr key = [[params objectAtIndex:1] rPtr];
+        return metadata_map_get(metadataMap, key, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[metadataMapPtr, keyPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(metadataMapKeys:(nonnull NSString *)metadataMapPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* metadataMapPtr, CharPtr* error) {
+        RPtr result;
+        RPtr metadataMap = [metadataMapPtr rPtr];
+        return metadataMap_keys(metadataMap, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:metadataMapPtr andResolve:resolve orReject:reject];
+}
+
 // MetadataList
 
 RCT_EXPORT_METHOD(metadataListNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

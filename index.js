@@ -2150,6 +2150,53 @@ export class Withdrawals extends Ptr {
   }
 }
 
+export class MetadataMap extends Ptr {
+  /**
+  * @returns {Promise<MetadataMap>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.metadataMapNew();
+    return Ptr._wrap(ret, MetadataMap);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.metadataMapLen(this.ptr);
+  }
+
+  /**
+  * @param {TransactionMetadatum} key
+  * @param {TransactionMetadatum} value
+  * @returns {Promise<TransactionMetadatum>}
+  */
+  async insert(key, value) {
+    const keyPtr = Ptr._assertClass(key, TransactionMetadatum);
+    const valuePtr = Ptr._assertClass(value, TransactionMetadatum);
+    const ret = await HaskellShelley.metadataMapInsert(this.ptr, keyPtr, valuePtr);
+    return Ptr._wrap(ret, TransactionMetadatum);
+  }
+
+  /**
+  * @param {TransactionMetadatum} key
+  * @returns {Promise<TransactionMetadatum | undefined>}
+  */
+  async get(key) {
+    const keyPtr = Ptr._assertClass(key, TransactionMetadatum);
+    const ret = await HaskellShelley.metadataMapGet(this.ptr, keyPtr);
+    return Ptr._wrap(ret, TransactionMetadatum);
+  }
+
+  /**
+  * @returns {Promise<MetadataList>}
+  */
+  async keys() {
+    const ret = await HaskellShelley.metadataMapKeys(this.ptr);
+    return Ptr._wrap(ret, MetadataList);
+  }
+}
+
 export class MetadataList extends Ptr {
   /**
   * @returns {Promise<MetadataList>}

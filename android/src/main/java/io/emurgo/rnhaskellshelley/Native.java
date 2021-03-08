@@ -321,6 +321,13 @@ final class Native {
     public final native Result<RPtr> withdrawalsGet(RPtr withdrawals, RPtr key);
     public final native Result<RPtr> withdrawalsKeys(RPtr withdrawals);
 
+    // MetadataMap
+    public final native Result<RPtr> metadataMapNew();
+    public final native Result<Long> metadataMapLen(RPtr metadataMap);
+    public final native Result<RPtr> metadataMapInsert(RPtr metadataMap, RPtr key, RPtr value);
+    public final native Result<RPtr> metadataMapGet(RPtr metadataMap, RPtr key);
+    public final native Result<RPtr> metadataMapKeys(RPtr metadataMap);
+
     // MetadataList
     public final native Result<RPtr> metadataListNew();
     public final native Result<Long> metadataListLen(RPtr metadataList);

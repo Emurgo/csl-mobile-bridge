@@ -26,6 +26,7 @@ impl RPtrRepresentable for GeneralTransactionMetadata {}
 impl RPtrRepresentable for Int {}
 impl RPtrRepresentable for LinearFee {}
 impl RPtrRepresentable for MetadataList {}
+impl RPtrRepresentable for MetadataMap {}
 impl RPtrRepresentable for MultiAsset {}
 impl RPtrRepresentable for PrivateKey {}
 impl RPtrRepresentable for PublicKey {}

@@ -1813,6 +1813,48 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // MetadataMap
+
+    @ReactMethod
+    public final void metadataMapNew(Promise promise) {
+        Native.I
+                .metadataMapNew()
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void metadataMapLen(String metadataMap, Promise promise) {
+        Native.I
+                .metadataMapLen(new RPtr(metadataMap))
+                .map(Long::intValue)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void metadataMapInsert(String metadataMap, String key, String value, Promise promise) {
+        Native.I
+                .metadataMapInsert(new RPtr(metadataMap), new RPtr(key), new RPtr(value))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void metadataMapGet(String metadataMap, String key, Promise promise) {
+        Native.I
+                .metadataMapGet(new RPtr(metadataMap), new RPtr(key))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void metadataMapKeys(String metadataMap, Promise promise) {
+        Native.I
+                .metadataMapKeys(new RPtr(metadataMap))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // MetadataList
 
     @ReactMethod

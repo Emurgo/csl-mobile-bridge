@@ -18,6 +18,7 @@ mod general_transaction_metadata;
 mod int;
 mod linear_fee;
 mod metadata_list;
+mod metadata_map;
 mod multi_asset;
 mod ptr_c;
 mod private_key;

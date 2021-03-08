@@ -1383,6 +1383,40 @@ export class Withdrawals extends Ptr {
   keys(): Promise<RewardAddresses>;
 }
 
+export class MetadataMap extends Ptr {
+  /**
+  * @returns {Promise<MetadataMap>}
+  */
+  static new(): Promise<MetadataMap>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len(): Promise<number>;
+
+  /**
+  * @param {TransactionMetadatum} key
+  * @param {TransactionMetadatum} value
+  * @returns {Promise<TransactionMetadatum>}
+  */
+  insert(
+    key: TransactionMetadatum,
+    value: TransactionMetadatum,
+  ): Promise<TransactionMetadatum>;
+
+  /**
+  * @param {TransactionMetadatum} key
+  * @returns {Promise<TransactionMetadatum | undefined>}
+  */
+  get(key: TransactionMetadatum): Promise<TransactionMetadatum | undefined>;
+
+  /**
+  * @returns {Promise<MetadataList>}
+  */
+  keys(): Promise<MetadataList>;
+}
+
+
 export class MetadataList extends Ptr {
   /**
   * @returns {Promise<MetadataList>}
