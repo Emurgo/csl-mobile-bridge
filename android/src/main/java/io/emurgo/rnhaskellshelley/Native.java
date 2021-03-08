@@ -40,6 +40,10 @@ final class Native {
     public final native Result<RPtr> valueClampedSub(RPtr value, RPtr rhs);
     public final native Result<Integer> valueCompare(RPtr value, RPtr rhs);
 
+    // Int
+    public final native Result<RPtr> intNew(RPtr x);
+    public final native Result<Integer> intAsi32(RPtr intRptr);
+
     // AssetName
     public final native Result<byte[]> assetNameToBytes(RPtr assetName);
     public final native Result<RPtr> assetNameFromBytes(byte[] bytes);

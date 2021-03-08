@@ -248,6 +248,25 @@ export class Value extends Ptr {
   }
 }
 
+export class Int extends Ptr {
+  /**
+  * @param {BigNum} x
+  * @returns {Promise<Int>}
+  */
+  static async new(x) {
+    const ptr = Ptr._assertClass(x, BigNum);
+    const ret = await HaskellShelley.intNew(ptr);
+    return Ptr._wrap(ret, Int);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async as_i32() {
+    return await HaskellShelley.intAsi32(this.ptr);
+  }
+}
+
 export class AssetName extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}

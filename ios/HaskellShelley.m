@@ -232,6 +232,30 @@ RCT_EXPORT_METHOD(valueCompare:(nonnull NSString *)valuePtr other:(nonnull NSStr
     }] exec:@[valuePtr, rhsPtr] andResolve:resolve orReject:reject];
 }
 
+// Int
+
+RCT_EXPORT_METHOD(intNew:(nonnull NSString *)bigNumPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bigNumPtr, CharPtr* error) {
+        RPtr result;
+        RPtr bigNum = [bigNumPtr rPtr];
+        return int_new(bigNum, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bigNumPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(intAsi32:(nonnull NSString *)intPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* intPtr, CharPtr* error) {
+        int32_t result;
+        RPtr intRptr = [intPtr rPtr];
+        return int_new(intRptr, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:intPtr andResolve:resolve orReject:reject];
+}
+
 // AssetName
 
 RCT_EXPORT_METHOD(assetNameToBytes:(nonnull NSString *)assetNamePtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

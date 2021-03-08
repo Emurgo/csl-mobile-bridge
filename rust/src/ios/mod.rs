@@ -15,6 +15,7 @@ mod data;
 mod ed25519_key_hash;
 mod ed25519_signature;
 mod general_transaction_metadata;
+mod int;
 mod linear_fee;
 mod metadata_list;
 mod multi_asset;

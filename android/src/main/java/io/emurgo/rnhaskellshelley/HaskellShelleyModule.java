@@ -178,6 +178,23 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // Int
+
+    @ReactMethod
+    public final void intNew(String x, Promise promise) {
+        Native.I
+                .intNew(new RPtr(x))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void intAsi32(String intPtr, Promise promise) {
+        Native.I
+                .intAsi32(new RPtr(intPtr))
+                .pour(promise);
+    }
+
     // AssetName
 
     @ReactMethod

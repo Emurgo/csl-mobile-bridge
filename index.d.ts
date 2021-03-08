@@ -135,6 +135,19 @@ export class Value extends Ptr {
   compare(rhs: Value): Promise<number>;
 }
 
+export class Int extends Ptr {
+  /**
+  * @param {BigNum} x
+  * @returns {Promise<Int>}
+  */
+  static async new(x: BigNum): Promise<Int>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  as_i32(): Promise<number>;
+}
+
 export class AssetName extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
