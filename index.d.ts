@@ -36,6 +36,25 @@ export const min_ada_required: (
 ) => Promise<BigNum>;
 
 /**
+* @param {string} json
+* @returns {Promise<TransactionMetadatum>}
+*/
+export const encode_json_str_to_metadatum: (
+  json: string,
+  schema: MetadataJsonSchema,
+) => Promise<TransactionMetadatum>;
+
+/**
+* @param {TransactionMetadatum} metadatum
+* @param {MetadataJsonSchema} schema
+* @returns {Promise<string>}
+*/
+export const decode_metadatum_to_json_str: (
+  metadatum: TransactionMetadatum,
+  schema: MetadataJsonSchema,
+) => Promise<string>;
+
+/**
 * Generic u64 wrapper for platforms that don't support u64 or BigInt/etc
 * This is an unsigned type - no negative numbers.
 * Can be converted to/from plain rust

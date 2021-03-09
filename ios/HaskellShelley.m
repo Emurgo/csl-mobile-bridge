@@ -59,6 +59,30 @@ RCT_EXPORT_METHOD(minAdaRequired:(nonnull NSString *)assetsPtr withMinUtxoVal:(n
     }] exec:@[assetsPtr, minUtxoValPtr] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(encodeJsonStrToMetadatum:(nonnull NSString *)json withSchema:(nonnull NSNumber *)schema withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        CharPtr jsonCharPtr = [[params objectAtIndex:0] charPtr];
+        int32_t schemaI32 = [[params objectAtIndex:1] integerValue];
+        RPtr result;
+        return utils_encode_json_str_to_metadatum(jsonCharPtr, schemaI32, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[json, schema] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(decodeMetadatumToJsonStr:(nonnull NSString *)metadatumPtr withSchema:(nonnull NSNumber *)schema withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr metadatum = [[params objectAtIndex:0] rPtr];
+        int32_t schemaI32 = [[params objectAtIndex:1] integerValue];
+        CharPtr result;
+        return utils_decode_metadatum_to_json_str(metadatum, schemaI32, &result, error)
+            ? [NSString stringFromCharPtr:&result]
+            : nil;
+    }] exec:@[metadatumPtr, schema] andResolve:resolve orReject:reject];
+}
+
 // BigNum
 
 RCT_EXPORT_METHOD(bigNumFromStr:(nonnull NSString *)string withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

@@ -20,6 +20,8 @@ final class Native {
     public final native Result<RPtr> makeVkeyWitness(RPtr txBodyHash, RPtr sk);
     public final native Result<RPtr> hashTransaction(RPtr txBody);
     public final native Result<RPtr> minAdaRequired(RPtr assets, RPtr minUtxoVal);
+    public final native Result<RPtr> encodeJsonStrToMetadatum(String json, int schema);
+    public final native Result<String> decodeMetadatumToJsonStr(RPtr metadatum, int schema);
 
     // BigNum
     public final native Result<RPtr> bigNumFromStr(String str);

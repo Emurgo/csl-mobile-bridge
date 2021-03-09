@@ -16,6 +16,12 @@ use cardano_serialization_lib::utils::{
 use cardano_serialization_lib::{TransactionBody};
 use cardano_serialization_lib::crypto::{Bip32PrivateKey, PrivateKey, TransactionHash};
 use cardano_serialization_lib::address::ByronAddress;
+use cardano_serialization_lib::metadata::{
+  TransactionMetadatum,
+  MetadataJsonSchema,
+  encode_json_str_to_metadatum,
+  decode_metadatum_to_json_str
+};
 
 pub unsafe fn to_bytes<T: RPtrRepresentable + ToFromBytes>(
   obj: RPtr, result: &mut DataPtr, error: &mut CharPtr
@@ -97,4 +103,46 @@ pub unsafe extern "C" fn utils_min_ada_required(
     })
     .map(|min_ada| min_ada.rptr())
     .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn utils_encode_json_str_to_metadatum(
+  json: CharPtr, schema: i32, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+
+    let schema_enum: MetadataJsonSchema;
+    match schema {
+      0 => schema_enum = MetadataJsonSchema::NoConversions,
+      1 => schema_enum = MetadataJsonSchema::BasicConversions,
+      2 => schema_enum = MetadataJsonSchema::DetailedSchema,
+      _ => schema_enum = MetadataJsonSchema::BasicConversions,
+    }
+    encode_json_str_to_metadatum(json.into_str().to_string(), schema_enum)
+      .into_result()
+      .map(|tx_metadatum| tx_metadatum.rptr())
+  })
+    .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn utils_decode_metadatum_to_json_str(
+  metadatum: RPtr, schema: i32, result: &mut CharPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+
+    let schema_enum: MetadataJsonSchema;
+    match schema {
+      0 => schema_enum = MetadataJsonSchema::NoConversions,
+      1 => schema_enum = MetadataJsonSchema::BasicConversions,
+      2 => schema_enum = MetadataJsonSchema::DetailedSchema,
+      _ => schema_enum = MetadataJsonSchema::BasicConversions,
+    }
+    metadatum.typed_ref::<TransactionMetadatum>()
+      .and_then(|metadatum| {
+        decode_metadatum_to_json_str(metadatum, schema_enum).into_result()
+      })
+      .map(|string| string.into_cstr())
+  })
+  .response(result, error)
 }

@@ -4,7 +4,7 @@ use jni::JNIEnv;
 use super::primitive::ToPrimitiveObject;
 use super::ptr_j::*;
 use super::result::ToJniResult;
-use crate::panic::{handle_exception_result, ToResult};
+use crate::panic::{handle_exception_result};
 use crate::ptr::RPtrRepresentable;
 use cardano_serialization_lib::utils::{Int, BigNum};
 

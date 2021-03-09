@@ -57,6 +57,21 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void encodeJsonStrToMetadatum(String json, Integer schema, Promise promise) {
+        Native.I
+                .encodeJsonStrToMetadatum(json, schema)
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void decodeMetadatumToJsonStr(String metadatum, Integer schema, Promise promise) {
+        Native.I
+                .decodeMetadatumToJsonStr(new RPtr(metadatum), schema)
+                .pour(promise);
+    }
+
     // BigNum
 
     @ReactMethod

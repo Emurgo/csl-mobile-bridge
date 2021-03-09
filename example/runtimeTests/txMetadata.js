@@ -3,6 +3,9 @@
 import {
   MetadataList,
   TransactionMetadatum,
+  MetadataJsonSchema,
+  encode_json_str_to_metadatum,
+  decode_metadatum_to_json_str,
 } from '@emurgo/react-native-haskell-shelley'
 
 import {testVector, assert} from '../util'
@@ -23,6 +26,28 @@ const test: () => void = async () => {
   )
 
   await testVector(MetadataList, TransactionMetadatum, metadatumPtr)
+
+  const pubKey =
+    '42cfdc53da2220ba52ce62f8e20ab9bb99857a3fceacf43d676d7987ad9' +
+    '09b53ed75534e0d0ee8fce835eb2e7c67c5caec18a9c894388d9a046380edebbfc46d'
+  // prettier-ignore
+  const payload = JSON.stringify({
+    // eslint-disable-next-line quotes
+    "1": `0x${pubKey}`,
+  })
+  const metadatumFromJson = await encode_json_str_to_metadatum(
+    payload,
+    MetadataJsonSchema.BasicConversions,
+  )
+  const jsonFromMetadatum = await decode_metadatum_to_json_str(
+    metadatumFromJson,
+    MetadataJsonSchema.BasicConversions,
+  )
+  const payloadFromRust = JSON.parse(jsonFromMetadatum)
+  assert(
+    payloadFromRust['1'].substr(2) === pubKey,
+    'decode_metadatum_to_json_str error',
+  )
 }
 
 export default test
