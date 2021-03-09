@@ -250,8 +250,8 @@ RCT_EXPORT_METHOD(intAsi32:(nonnull NSString *)intPtr  withResolve:(RCTPromiseRe
     [[CSafeOperation new:^NSString*(NSString* intPtr, CharPtr* error) {
         int32_t result;
         RPtr intRptr = [intPtr rPtr];
-        return int_new(intRptr, &result, error)
-            ? [NSString stringFromPtr:result]
+        return int_as_i32(intRptr, &result, error)
+            ? [NSNumber numberWithInt:result]
             : nil;
     }] exec:intPtr andResolve:resolve orReject:reject];
 }
@@ -2542,7 +2542,7 @@ RCT_EXPORT_METHOD(metadataMapKeys:(nonnull NSString *)metadataMapPtr withResolve
     [[CSafeOperation new:^NSNumber*(NSString* metadataMapPtr, CharPtr* error) {
         RPtr result;
         RPtr metadataMap = [metadataMapPtr rPtr];
-        return metadataMap_keys(metadataMap, &result, error)
+        return metadata_map_keys(metadataMap, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:metadataMapPtr andResolve:resolve orReject:reject];
@@ -2591,6 +2591,30 @@ RCT_EXPORT_METHOD(metadataListAdd:(nonnull NSString *)metadataListPtr withItem:(
         metadata_list_add(&metadataList, item, error);
         return nil;
     }] exec:@[metadataListPtr, item] andResolve:resolve orReject:reject];
+}
+
+// TransactionMetadatum
+
+RCT_EXPORT_METHOD(transactionMetadatumToBytes:(nonnull NSString *)transactionMetadatumPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* transactionMetadatumPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr transactionMetadatum = [transactionMetadatumPtr rPtr];
+        return transaction_metadatum_to_bytes(transactionMetadatum, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:transactionMetadatumPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionMetadatumFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return transaction_metadatum_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
 // TransactionMetadatumLabels

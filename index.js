@@ -2232,6 +2232,25 @@ export class MetadataList extends Ptr {
   }
 }
 
+export class TransactionMetadatum extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.transactionMetadatumToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionMetadatum>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.transactionMetadatumFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, TransactionMetadatum);
+  }
+}
+
 export const TransactionMetadatumLabel = BigNum;
 
 export class TransactionMetadatumLabels extends Ptr {
@@ -2285,8 +2304,6 @@ export class TransactionMetadatumLabels extends Ptr {
     return HaskellShelley.transactionMetadatumLabelsAdd(this.ptr, itemPtr);
   }
 }
-
-export class TransactionMetadatum extends Ptr {}
 
 export class GeneralTransactionMetadata extends Ptr {
   /**

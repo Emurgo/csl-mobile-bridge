@@ -38,6 +38,7 @@ mod transaction_body;
 mod transaction_builder;
 mod transaction_hash;
 mod transaction_metadata;
+mod transaction_metadatum;
 mod transaction_metadatum_labels;
 mod transaction_input;
 mod transaction_inputs;

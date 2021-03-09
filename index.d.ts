@@ -1441,6 +1441,19 @@ export class MetadataList extends Ptr {
   add(item: TransactionMetadatum): Promise<void>;
 }
 
+export class TransactionMetadatum extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionMetadatum>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<TransactionMetadatum>;
+}
+
 export type TransactionMetadatumLabel = BigNum;
 
 export class TransactionMetadatumLabels extends Ptr {

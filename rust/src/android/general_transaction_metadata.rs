@@ -6,7 +6,7 @@ use crate::ptr::RPtrRepresentable;
 use crate::utils::ToFromBytes;
 use super::utils::{to_bytes, from_bytes};
 use jni::objects::JObject;
-use jni::sys::{jobject, jbyteArray, jlong};
+use jni::sys::{jobject, jbyteArray};
 use jni::JNIEnv;
 use cardano_serialization_lib::error::{DeserializeError};
 use cardano_serialization_lib::metadata::{GeneralTransactionMetadata, TransactionMetadatum};

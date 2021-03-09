@@ -1888,6 +1888,24 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // TransactionMetadatum
+
+    @ReactMethod
+    public final void transactionMetadatumToBytes(String transactionMetadatum, Promise promise) {
+        Native.I
+                .transactionMetadatumToBytes(new RPtr(transactionMetadatum))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionMetadatumFromBytes(String bytes, Promise promise) {
+        Native.I
+                .transactionMetadatumFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // TransactionMetadatumLabels
 
     @ReactMethod

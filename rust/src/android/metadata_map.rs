@@ -1,7 +1,7 @@
 use super::primitive::ToPrimitiveObject;
 use super::ptr_j::*;
 use super::result::ToJniResult;
-use crate::panic::{handle_exception_result, Zip};
+use crate::panic::{handle_exception_result, Zip, ToResult};
 use crate::ptr::RPtrRepresentable;
 use jni::objects::JObject;
 use jni::sys::{jobject};
@@ -62,7 +62,8 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_metadataMapGet(
     metadata_map
       .typed_ref::<MetadataMap>()
       .zip(key.typed_ref::<TransactionMetadatum>())
-      .and_then(|(metadata_map, key)| metadata_map.get(key).rptr().jptr(&env))
+      .and_then(|(metadata_map, key)| metadata_map.get(key).into_result())
+      .and_then(|tx_metadatum| tx_metadatum.rptr().jptr(&env))
   })
   .jresult(&env)
 }
