@@ -1,9 +1,10 @@
 use super::ptr_j::*;
 use super::result::ToJniResult;
+use super::string::*;
 use crate::panic::{handle_exception_result, ToResult, Zip};
 use crate::ptr::RPtrRepresentable;
-use jni::objects::JObject;
-use jni::sys::{jbyteArray, jobject};
+use jni::objects::{JObject, JString};
+use jni::sys::{jbyteArray, jobject, jint};
 use jni::JNIEnv;
 use crate::utils::ToFromBytes;
 
@@ -18,6 +19,13 @@ use cardano_serialization_lib::utils::{
 use cardano_serialization_lib::{TransactionBody};
 use cardano_serialization_lib::crypto::{Bip32PrivateKey, PrivateKey, TransactionHash};
 use cardano_serialization_lib::address::ByronAddress;
+use cardano_serialization_lib::metadata::{
+  TransactionMetadatum,
+  MetadataJsonSchema,
+  encode_json_str_to_metadatum,
+  decode_metadatum_to_json_str
+};
+
 
 // to/from bytes
 
@@ -115,6 +123,51 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_minAdaRequired(
         min_ada_required(assets, minimum_utxo_val).rptr().jptr(&env)
       }
     )
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_encodeJsonStrToMetadatum(
+  env: JNIEnv, _: JObject, json: JString, schema: jint
+) -> jobject {
+  handle_exception_result(|| {
+    let rstr = json.string(&env)?;
+    let schema = schema as i32;
+    let schema_enum: MetadataJsonSchema;
+    match schema {
+      0 => schema_enum = MetadataJsonSchema::NoConversions,
+      1 => schema_enum = MetadataJsonSchema::BasicConversions,
+      2 => schema_enum = MetadataJsonSchema::DetailedSchema,
+      _ => schema_enum = MetadataJsonSchema::BasicConversions,
+    }
+    let tx_metadatum = encode_json_str_to_metadatum(rstr, schema_enum).into_result()?;
+    tx_metadatum.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_decodeMetadatumToJsonStr(
+  env: JNIEnv, _: JObject, metadatum: JRPtr, schema: jint
+) -> jobject {
+  handle_exception_result(|| {
+    let metadatum = metadatum.rptr(&env)?;
+    let schema = schema as i32;
+    let schema_enum: MetadataJsonSchema;
+    match schema {
+      0 => schema_enum = MetadataJsonSchema::NoConversions,
+      1 => schema_enum = MetadataJsonSchema::BasicConversions,
+      2 => schema_enum = MetadataJsonSchema::DetailedSchema,
+      _ => schema_enum = MetadataJsonSchema::BasicConversions,
+    }
+    metadatum.typed_ref::<TransactionMetadatum>()
+      .and_then(|metadatum| {
+        decode_metadatum_to_json_str(metadatum, schema_enum).into_result()
+      })
+      .and_then(|json| json.jstring(&env))
   })
   .jresult(&env)
 }

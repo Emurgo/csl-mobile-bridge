@@ -89,6 +89,26 @@ export const min_ada_required = async (assets, minUtxoVal) => {
 };
 
 /**
+* @param {string} json
+* @param {MetadataJsonSchema} schema
+* @returns {Promise<TransactionMetadatum>}
+*/
+export const encode_json_str_to_metadatum = async (json, schema) => {
+  const ret = await HaskellShelley.encodeJsonStrToMetadatum(json, schema);
+  return Ptr._wrap(ret, TransactionMetadatum);
+};
+
+/**
+* @param {TransactionMetadatum} metadatum
+* @param {MetadataJsonSchema} schema
+* @returns {Promise<string>}
+*/
+export const decode_metadatum_to_json_str = async (metadatum, schema) => {
+  const metadatumPtr = Ptr._assertClass(metadatum, TransactionMetadatum);
+  return await HaskellShelley.decodeMetadatumToJsonStr(metadatumPtr, schema);
+};
+
+/**
 * @param {TransactionBody} txBody
 * @returns {Promise<TransactionHash>}
 */
@@ -245,6 +265,25 @@ export class Value extends Ptr {
   async compare(rhs) {
     const rhsPtr = Ptr._assertClass(rhs, Value);
     return await HaskellShelley.valueCompare(this.ptr, rhsPtr);
+  }
+}
+
+export class Int extends Ptr {
+  /**
+  * @param {BigNum} x
+  * @returns {Promise<Int>}
+  */
+  static async new(x) {
+    const ptr = Ptr._assertClass(x, BigNum);
+    const ret = await HaskellShelley.intNew(ptr);
+    return Ptr._wrap(ret, Int);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async as_i32() {
+    return await HaskellShelley.intAsi32(this.ptr);
   }
 }
 
@@ -1724,9 +1763,6 @@ export class TransactionWitnessSet extends Ptr {
   }
 }
 
-// TODO
-export class TransactionMetadata extends Ptr {}
-
 export class TransactionBody extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -1993,7 +2029,7 @@ export class TransactionBuilder extends Ptr {
   * @returns {Promise<void>}
   */
   async set_metadata(metadata) {
-    throw new Error(`${this.name}::set_metadata: method not implemented`)
+    throw new Error(`${this.name}::set_metadata: method not implemented`);
     // const metadataPtr = Ptr._assertClass(metadata, TransactionMetadata);
     // return HaskellShelley.transactionBuilderSetWithdrawals(this.ptr, metadataPtr);
   }
@@ -2133,3 +2169,248 @@ export class Withdrawals extends Ptr {
     return Ptr._wrap(ret, RewardAddresses);
   }
 }
+
+export class MetadataMap extends Ptr {
+  /**
+  * @returns {Promise<MetadataMap>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.metadataMapNew();
+    return Ptr._wrap(ret, MetadataMap);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.metadataMapLen(this.ptr);
+  }
+
+  /**
+  * @param {TransactionMetadatum} key
+  * @param {TransactionMetadatum} value
+  * @returns {Promise<TransactionMetadatum>}
+  */
+  async insert(key, value) {
+    const keyPtr = Ptr._assertClass(key, TransactionMetadatum);
+    const valuePtr = Ptr._assertClass(value, TransactionMetadatum);
+    const ret = await HaskellShelley.metadataMapInsert(this.ptr, keyPtr, valuePtr);
+    return Ptr._wrap(ret, TransactionMetadatum);
+  }
+
+  /**
+  * @param {TransactionMetadatum} key
+  * @returns {Promise<TransactionMetadatum | undefined>}
+  */
+  async get(key) {
+    const keyPtr = Ptr._assertClass(key, TransactionMetadatum);
+    const ret = await HaskellShelley.metadataMapGet(this.ptr, keyPtr);
+    return Ptr._wrap(ret, TransactionMetadatum);
+  }
+
+  /**
+  * @returns {Promise<MetadataList>}
+  */
+  async keys() {
+    const ret = await HaskellShelley.metadataMapKeys(this.ptr);
+    return Ptr._wrap(ret, MetadataList);
+  }
+}
+
+export class MetadataList extends Ptr {
+  /**
+  * @returns {Promise<MetadataList>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.metadataListNew();
+    return Ptr._wrap(ret, MetadataList);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.metadataListLen(this.ptr);
+  }
+
+  /**
+  * @param {number} index
+  * @returns {Promise<TransactionMetadatum>}
+  */
+  async get(index) {
+    const ret = await HaskellShelley.metadataListGet(this.ptr, index);
+    return Ptr._wrap(ret, TransactionMetadatum);
+  }
+
+  /**
+  * @param {TransactionMetadatum} item
+  * @returns {Promise<void>}
+  */
+  async add(item) {
+    const itemPtr = Ptr._assertClass(item, TransactionMetadatum);
+    return HaskellShelley.metadataListAdd(this.ptr, itemPtr);
+  }
+}
+
+export const TransactionMetadatumKind = Object.freeze({
+  MetadataMap: 0,
+  MetadataList: 1,
+  Int:2,
+  Bytes: 3,
+  Text: 4,
+});
+
+export class TransactionMetadatum extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.transactionMetadatumToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionMetadatum>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.transactionMetadatumFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, TransactionMetadatum);
+  }
+}
+
+export const TransactionMetadatumLabel = BigNum;
+
+export class TransactionMetadatumLabels extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.transactionMetadatumLabelsToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionMetadatumLabels>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.transactionMetadatumLabelsFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, TransactionMetadatumLabels);
+  }
+
+  /**
+  * @returns {Promise<TransactionMetadatumLabels>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.transactionMetadatumLabelsNew();
+    return Ptr._wrap(ret, TransactionMetadatumLabels);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.transactionMetadatumLabelsLen(this.ptr);
+  }
+
+  /**
+  * @param {number} index
+  * @returns {Promise<TransactionMetadatumLabel>}
+  */
+  async get(index) {
+    const ret = await HaskellShelley.transactionMetadatumLabelsGet(this.ptr, index);
+    return Ptr._wrap(ret, TransactionMetadatumLabel);
+  }
+
+  /**
+  * @param {TransactionMetadatumLabel} item
+  * @returns {Promise<void>}
+  */
+  add(item) {
+    const itemPtr = Ptr._assertClass(item, BigNum);
+    return HaskellShelley.transactionMetadatumLabelsAdd(this.ptr, itemPtr);
+  }
+}
+
+export class GeneralTransactionMetadata extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.generalTransactionMetadataToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<GeneralTransactionMetadata>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.generalTransactionMetadataFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, GeneralTransactionMetadata);
+  }
+
+  /**
+  * @returns {Promise<GeneralTransactionMetadata>}
+  */
+  static async new() {
+    const ret = await HaskellShelley.generalTransactionMetadataNew();
+    return Ptr._wrap(ret, GeneralTransactionMetadata);
+  }
+
+  /**
+  * @returns {Promise<number>}
+  */
+  async len() {
+    return HaskellShelley.generalTransactionMetadataLen(this.ptr);
+  }
+
+  /**
+  * @param {TransactionMetadatumLabel} key
+  * @param {TransactionMetadatum} value
+  * @returns {Promise<TransactionMetadatum | undefined>}
+  */
+  async insert(key, value) {
+    const keyPtr = Ptr._assertClass(key, TransactionMetadatumLabel);
+    const valuePtr = Ptr._assertClass(value, TransactionMetadatum);
+    const ret = await HaskellShelley.generalTransactionMetadataInsert(this.ptr, keyPtr, valuePtr);
+    return Ptr._wrap(ret, TransactionMetadatum);
+  }
+
+  /**
+  * @param {TransactionMetadatumLabel} key
+  * @returns {Promise<TransactionMetadatum | undefined>}
+  */
+  async get(key) {
+    const keyPtr = Ptr._assertClass(key, TransactionMetadatumLabel);
+    const ret = await HaskellShelley.generalTransactionMetadataGet(this.ptr, keyPtr);
+    return Ptr._wrap(ret, TransactionMetadatum);
+  }
+
+  /**
+  * @returns {Promise<TransactionMetadatumLabels>}
+  */
+  async keys() {
+    const ret = await HaskellShelley.generalTransactionMetadataKeys(this.ptr);
+    return Ptr._wrap(ret, TransactionMetadatumLabels);
+  }
+}
+
+export class TransactionMetadata extends Ptr {
+  /**
+  * @param {GeneralTransactionMetadata} general
+  * @returns {Promise<TransactionMetadata>}
+  */
+  static async new(general) {
+    const generalPtr = Ptr._assertClass(general, GeneralTransactionMetadata);
+    const ret = await HaskellShelley.transactionMetadataNew(generalPtr);
+    return Ptr._wrap(ret, TransactionMetadata);
+  }
+}
+
+export const MetadataJsonSchema = Object.freeze({
+  NoConversions: 0,
+  BasicConversions: 1,
+  DetailedSchema: 2,
+});

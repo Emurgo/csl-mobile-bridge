@@ -15,6 +15,7 @@ import {StyleSheet, Text, View} from 'react-native'
 
 import misc from './runtimeTests/misc'
 import bigNum from './runtimeTests/bigNum'
+import int from './runtimeTests/int'
 import multiAsset from './runtimeTests/multiAsset'
 import linearFee from './runtimeTests/linearFee'
 import privateKey from './runtimeTests/privateKey'
@@ -37,10 +38,12 @@ import transactionBody from './runtimeTests/transactionBody'
 import utils from './runtimeTests/utils'
 import transaction from './runtimeTests/transaction'
 import transactionBuilder from './runtimeTests/transactionBuilder'
+import txMetadata from './runtimeTests/txMetadata'
 
 const tests = [
   {name: 'misc', testFn: misc},
   {name: 'BigNum', testFn: bigNum},
+  {name: 'Int', testFn: int},
   {name: 'MultiAsset', testFn: multiAsset},
   {name: 'linearFee', testFn: linearFee},
   {name: 'PrivateKey', testFn: privateKey},
@@ -63,6 +66,7 @@ const tests = [
   {name: 'utils', testFn: utils},
   {name: 'transaction', testFn: transaction},
   {name: 'transactionBuilder', testFn: transactionBuilder},
+  {name: 'txMetadata', testFn: txMetadata},
 ]
 
 let failed = 0

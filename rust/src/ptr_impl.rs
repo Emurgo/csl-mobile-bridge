@@ -22,7 +22,11 @@ impl RPtrRepresentable for Certificate {}
 impl RPtrRepresentable for Certificates {}
 impl RPtrRepresentable for Ed25519Signature {}
 impl RPtrRepresentable for Ed25519KeyHash {}
+impl RPtrRepresentable for GeneralTransactionMetadata {}
+impl RPtrRepresentable for Int {}
 impl RPtrRepresentable for LinearFee {}
+impl RPtrRepresentable for MetadataList {}
+impl RPtrRepresentable for MetadataMap {}
 impl RPtrRepresentable for MultiAsset {}
 impl RPtrRepresentable for PrivateKey {}
 impl RPtrRepresentable for PublicKey {}
@@ -40,6 +44,8 @@ impl RPtrRepresentable for TransactionBuilder {}
 impl RPtrRepresentable for TransactionInput {}
 impl RPtrRepresentable for TransactionInputs {}
 impl RPtrRepresentable for TransactionMetadata {}
+impl RPtrRepresentable for TransactionMetadatum {}
+impl RPtrRepresentable for TransactionMetadatumLabels {}
 impl RPtrRepresentable for TransactionOutput {}
 impl RPtrRepresentable for TransactionOutputs {}
 impl RPtrRepresentable for TransactionWitnessSet {}

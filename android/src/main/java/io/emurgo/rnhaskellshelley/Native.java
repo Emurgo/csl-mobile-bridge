@@ -20,6 +20,8 @@ final class Native {
     public final native Result<RPtr> makeVkeyWitness(RPtr txBodyHash, RPtr sk);
     public final native Result<RPtr> hashTransaction(RPtr txBody);
     public final native Result<RPtr> minAdaRequired(RPtr assets, RPtr minUtxoVal);
+    public final native Result<RPtr> encodeJsonStrToMetadatum(String json, int schema);
+    public final native Result<String> decodeMetadatumToJsonStr(RPtr metadatum, int schema);
 
     // BigNum
     public final native Result<RPtr> bigNumFromStr(String str);
@@ -39,6 +41,10 @@ final class Native {
     public final native Result<RPtr> valueCheckedSub(RPtr value, RPtr rhs);
     public final native Result<RPtr> valueClampedSub(RPtr value, RPtr rhs);
     public final native Result<Integer> valueCompare(RPtr value, RPtr rhs);
+
+    // Int
+    public final native Result<RPtr> intNew(RPtr x);
+    public final native Result<Integer> intAsi32(RPtr intRptr);
 
     // AssetName
     public final native Result<byte[]> assetNameToBytes(RPtr assetName);
@@ -317,6 +323,42 @@ final class Native {
     public final native Result<RPtr> withdrawalsGet(RPtr withdrawals, RPtr key);
     public final native Result<RPtr> withdrawalsKeys(RPtr withdrawals);
 
+    // MetadataMap
+    public final native Result<RPtr> metadataMapNew();
+    public final native Result<Long> metadataMapLen(RPtr metadataMap);
+    public final native Result<RPtr> metadataMapInsert(RPtr metadataMap, RPtr key, RPtr value);
+    public final native Result<RPtr> metadataMapGet(RPtr metadataMap, RPtr key);
+    public final native Result<RPtr> metadataMapKeys(RPtr metadataMap);
+
+    // MetadataList
+    public final native Result<RPtr> metadataListNew();
+    public final native Result<Long> metadataListLen(RPtr metadataList);
+    public final native Result<RPtr> metadataListGet(RPtr metadataList, long index);
+    public final native Result<Void> metadataListAdd(RPtr metadataList, RPtr item);
+
+    // TransactionMetadatum
+    public final native Result<byte[]> transactionMetadatumToBytes(RPtr transactionMetadatum);
+    public final native Result<RPtr> transactionMetadatumFromBytes(byte[] bytes);
+
+    // TransactionMetadatumLabels
+    public final native Result<byte[]> transactionMetadatumLabelsToBytes(RPtr transactionMetadatumLabels);
+    public final native Result<RPtr> transactionMetadatumLabelsFromBytes(byte[] bytes);
+    public final native Result<RPtr> transactionMetadatumLabelsNew();
+    public final native Result<Long> transactionMetadatumLabelsLen(RPtr transactionMetadatumLabels);
+    public final native Result<RPtr> transactionMetadatumLabelsGet(RPtr transactionMetadatumLabels, long index);
+    public final native Result<Void> transactionMetadatumLabelsAdd(RPtr transactionMetadatumLabels, RPtr item);
+
+    // GeneralTransactionMetadata
+    public final native Result<byte[]> generalTransactionMetadataToBytes(RPtr generalTransactionMetadata);
+    public final native Result<RPtr> generalTransactionMetadataFromBytes(byte[] bytes);
+    public final native Result<RPtr> generalTransactionMetadataNew();
+    public final native Result<Long> generalTransactionMetadataLen(RPtr generalTransactionMetadata);
+    public final native Result<RPtr> generalTransactionMetadataInsert(RPtr generalTransactionMetadata, RPtr key, RPtr value);
+    public final native Result<RPtr> generalTransactionMetadataGet(RPtr generalTransactionMetadata, RPtr key);
+    public final native Result<RPtr> generalTransactionMetadataKeys(RPtr generalTransactionMetadata);
+
+    // TransactionMetadata
+    public final native Result<RPtr> transactionMetadataNew(RPtr general);
 
     public final native void ptrFree(RPtr ptr);
 }

@@ -19,3 +19,25 @@ impl<T: Copy> CResult<T> for Result<T> {
     }
   }
 }
+
+impl CResult<i32> for Result<Option<i32>> {
+  fn response(&self, val: &mut i32, error: &mut CharPtr) -> bool {
+    match self {
+      Err(err) => {
+        *error = err.into_cstr();
+        false
+      }
+      Ok(value) => {
+        match value {
+          Some(value) => {
+            *val = *value;
+            true
+          }
+          None => {
+            false
+          }
+        }
+      }
+    }
+  }
+}
