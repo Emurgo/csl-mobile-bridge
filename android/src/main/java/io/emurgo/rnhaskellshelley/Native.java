@@ -357,5 +357,8 @@ final class Native {
     public final native Result<RPtr> generalTransactionMetadataGet(RPtr generalTransactionMetadata, RPtr key);
     public final native Result<RPtr> generalTransactionMetadataKeys(RPtr generalTransactionMetadata);
 
+    // TransactionMetadata
+    public final native Result<RPtr> transactionMetadataNew(RPtr general);
+
     public final native void ptrFree(RPtr ptr);
 }

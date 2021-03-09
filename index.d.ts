@@ -1460,6 +1460,14 @@ export class MetadataList extends Ptr {
   add(item: TransactionMetadatum): Promise<void>;
 }
 
+export enum TransactionMetadatumKind {
+  MetadataMap,
+  MetadataList,
+  Int,
+  Bytes,
+  Text,
+}
+
 export class TransactionMetadatum extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -1554,4 +1562,16 @@ export class GeneralTransactionMetadata extends Ptr {
   keys(): Promise<TransactionMetadatumLabels>;
 }
 
-export class TransactionMetadata extends Ptr {}
+export class TransactionMetadata extends Ptr {
+  /**
+  * @param {GeneralTransactionMetadata} general
+  * @returns {Promise<TransactionMetadata>}
+  */
+  static new(general: GeneralTransactionMetadata): Promise<TransactionMetadata>;
+}
+
+export enum MetadataJsonSchema {
+  NoConversions,
+  BasicConversions,
+  DetailedSchema,
+}

@@ -1,9 +1,12 @@
 // @flow
 
 import {
+  BigNum,
   MetadataList,
   TransactionMetadatum,
   MetadataJsonSchema,
+  GeneralTransactionMetadata,
+  TransactionMetadata,
   encode_json_str_to_metadatum,
   decode_metadatum_to_json_str,
 } from '@emurgo/react-native-haskell-shelley'
@@ -48,6 +51,13 @@ const test: () => void = async () => {
     payloadFromRust['1'].substr(2) === pubKey,
     'decode_metadatum_to_json_str error',
   )
+
+  const generalTxMetaPtr = await GeneralTransactionMetadata.new()
+  await generalTxMetaPtr.insert(await BigNum.from_str('1'), metadatumFromJson)
+
+  const txMetaPtr = await TransactionMetadata.new(generalTxMetaPtr)
+  console.log(txMetaPtr)
+  await txMetaPtr.free()
 }
 
 export default test

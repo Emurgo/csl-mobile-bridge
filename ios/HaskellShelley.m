@@ -2789,6 +2789,19 @@ RCT_EXPORT_METHOD(generalTransactionMetadataKeys:(nonnull NSString *)generalTran
     }] exec:generalTransactionMetadataPtr andResolve:resolve orReject:reject];
 }
 
+// TransactionMetadata
+
+RCT_EXPORT_METHOD(transactionMetadataNew:(nonnull NSString *)generalPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* generalPtr, CharPtr* error) {
+        RPtr result;
+        RPtr general = [generalPtr rPtr];
+        return transaction_metadata_new(general, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:generalPtr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(ptrFree:(NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     RPtr rPtr = [ptr rPtr];

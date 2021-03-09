@@ -2028,4 +2028,26 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // TransactionMetadata
+
+    @ReactMethod
+    public final void transactionMetadataNew(String general, Promise promise) {
+        Native.I
+                .transactionMetadataNew(new RPtr(general))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    // misc
+
+    @ReactMethod
+    public final void ptrFree(String ptr, Promise promise) {
+        try {
+            (new RPtr(ptr)).free();
+            promise.resolve(null);
+        } catch (Throwable err) {
+            promise.reject(err);
+        }
+    }
+
 }

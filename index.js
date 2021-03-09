@@ -96,7 +96,7 @@ export const min_ada_required = async (assets, minUtxoVal) => {
 export const encode_json_str_to_metadatum = async (json, schema) => {
   const ret = await HaskellShelley.encodeJsonStrToMetadatum(json, schema);
   return Ptr._wrap(ret, TransactionMetadatum);
-}
+};
 
 /**
 * @param {TransactionMetadatum} metadatum
@@ -106,7 +106,7 @@ export const encode_json_str_to_metadatum = async (json, schema) => {
 export const decode_metadatum_to_json_str = async (metadatum, schema) => {
   const metadatumPtr = Ptr._assertClass(metadatum, TransactionMetadatum);
   return await HaskellShelley.decodeMetadatumToJsonStr(metadatumPtr, schema);
-}
+};
 
 /**
 * @param {TransactionBody} txBody
@@ -2397,7 +2397,17 @@ export class GeneralTransactionMetadata extends Ptr {
   }
 }
 
-export class TransactionMetadata extends Ptr {}
+export class TransactionMetadata extends Ptr {
+  /**
+  * @param {GeneralTransactionMetadata} general
+  * @returns {Promise<TransactionMetadata>}
+  */
+  static async new(general) {
+    const generalPtr = Ptr._assertClass(general, GeneralTransactionMetadata);
+    const ret = await HaskellShelley.transactionMetadataNew(generalPtr);
+    return Ptr._wrap(ret, TransactionMetadata);
+  }
+}
 
 export const MetadataJsonSchema = Object.freeze({
   NoConversions: 0,
