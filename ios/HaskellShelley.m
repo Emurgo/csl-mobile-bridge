@@ -404,6 +404,18 @@ RCT_EXPORT_METHOD(privateKeyFromExtendedBytes:(nonnull NSString *)bytesStr  with
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(privateKeySign:(nonnull NSString *)ptr withMessage: (nonnull NSString *)messageStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* messageStr, CharPtr* error) {
+        RPtr result;
+        RPtr privateKey = [ptr rPtr];
+        NSData* data = [NSData fromBase64:messageStr];
+        return private_key_sign(privateKey, (uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:messageStr andResolve:resolve orReject:reject];
+}
+
 // PublicKey
 
 RCT_EXPORT_METHOD(publicKeyFromBech32:(nonnull NSString *)bech32_str withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

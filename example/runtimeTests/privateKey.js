@@ -1,6 +1,9 @@
 // @flow
 
-import {Bip32PrivateKey} from '@emurgo/react-native-haskell-shelley'
+import {
+  Bip32PrivateKey,
+  Ed25519Signature,
+} from '@emurgo/react-native-haskell-shelley'
 
 import {assert} from '../util'
 
@@ -23,6 +26,10 @@ const test: () => void = async () => {
     (await (await privateKey.to_public()).as_bytes()).length === 32,
     'PrivateKey::to_public()',
   )
+
+  const message = 'df89a15e8c'
+  const signature = await privateKey.sign(Buffer.from(message, 'hex'))
+  assert(signature instanceof Ed25519Signature)
 }
 
 export default test

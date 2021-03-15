@@ -34,7 +34,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_privateKeyAsByte
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_privateKeyFromExtendedBytes(
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_privateKeyFromExtendedBytes(
   env: JNIEnv, _: JObject, bytes: jbyteArray
 ) -> jobject {
   handle_exception_result(|| {
@@ -43,6 +43,23 @@ pub extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_privateKeyFromExtendedB
       .into_result()
       .and_then(|bytes| PrivateKey::from_extended_bytes(&bytes).into_result())
       .and_then(|private_key| private_key.rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_privateKeySign(
+  env: JNIEnv, _: JObject, private_key: JRPtr, message: jbyteArray
+) -> jobject {
+  handle_exception_result(|| {
+    let rptr = private_key.rptr(&env)?;
+    let key = rptr.typed_ref::<PrivateKey>()?;
+    env
+      .convert_byte_array(message)
+      .into_result()
+      .map(|message| key.sign(&message))
+      .and_then(|signature| signature.rptr().jptr(&env))
   })
   .jresult(&env)
 }

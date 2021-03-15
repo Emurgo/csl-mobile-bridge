@@ -72,6 +72,7 @@ final class Native {
     public final native Result<RPtr> privateKeyToPublic(RPtr privateKey);
     public final native Result<byte[]> privateKeyAsBytes(RPtr privateKey);
     public final native Result<RPtr> privateKeyFromExtendedBytes(byte[] bytes);
+    public final native Result<RPtr> privateKeySign(RPtr privateKey, byte[] message);
 
     // Bip32PublicKey
     public final native Result<RPtr> bip32PublicKeyDerive(RPtr bip32PublicKey, long index);

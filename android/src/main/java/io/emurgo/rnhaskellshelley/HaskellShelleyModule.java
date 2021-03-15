@@ -366,6 +366,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void privateKeySign(String prvPtr, String message, Promise promise) {
+        Native.I
+                .privateKeySign(new RPtr(prvPtr), Base64.decode(message, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // Bip32PublicKey
 
     @ReactMethod

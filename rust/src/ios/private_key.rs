@@ -33,3 +33,15 @@ pub unsafe extern "C" fn private_key_from_extended_bytes(
   .map(|private_key| private_key.rptr())
   .response(result, error)
 }
+
+#[no_mangle]
+pub unsafe extern "C" fn private_key_sign(
+  private_key: RPtr, message: *const u8, len: usize, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    private_key.typed_ref::<PrivateKey>()
+      .map(|pvkey| pvkey.sign(std::slice::from_raw_parts(message, len)))
+  })
+  .map(|signature| signature.rptr())
+  .response(result, error)
+}

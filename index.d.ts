@@ -278,6 +278,12 @@ export class PrivateKey extends Ptr {
   * @returns {Promise<PrivateKey>}
   */
   static from_extended_bytes(bytes): Promise<PublicKey>;
+
+  /**
+  * @param {Uint8Array} message
+  * @returns {Promise<Ed25519Signature>}
+  */
+  sign(message: Uint8Array): Promise<Ed25519Signature>;
 }
 
 /**

@@ -445,6 +445,15 @@ export class PrivateKey extends Ptr {
     const ret = await HaskellShelley.privateKeyFromExtendedBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PrivateKey);
   }
+
+  /**
+  * @param {Uint8Array} message
+  * @returns {Promise<Ed25519Signature>}
+  */
+  async sign(message) {
+    const ret = await HaskellShelley.privateKeySign(this.ptr, b64FromUint8Array(message));
+    return Ptr._wrap(ret, Ed25519Signature);
+  }
 }
 
 export class Bip32PublicKey extends Ptr {
