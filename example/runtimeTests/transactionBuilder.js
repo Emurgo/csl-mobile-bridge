@@ -19,6 +19,8 @@ import {
   StakeCredential,
   StakeRegistration,
   Certificate,
+  GeneralTransactionMetadata,
+  TransactionMetadata,
 } from '@emurgo/react-native-haskell-shelley'
 
 import {assert} from '../util'
@@ -95,6 +97,12 @@ const test: () => void = async () => {
   // await txBuilder.set_fee(await BigNum.from_str('500000'))
   const TTL = 10
   await txBuilder.set_ttl(TTL)
+
+  // add an empty metadata object
+  const generalTxMeta = await GeneralTransactionMetadata.new()
+  const txMeta = await TransactionMetadata.new(generalTxMeta)
+  await txBuilder.set_metadata(txMeta)
+
   const explicitIn = await txBuilder.get_explicit_input()
   const explicitInCoin = await explicitIn.coin()
   assert(
@@ -128,7 +136,7 @@ const test: () => void = async () => {
   let txBodyFromBuilder = await txBuilder.build()
 
   assert(
-    (await (await txBuilder.min_fee()).to_str()) === '172937',
+    (await (await txBuilder.min_fee()).to_str()) === '174477',
     'TransactionBuilder::min_fee()',
   )
   assert(

@@ -2038,9 +2038,8 @@ export class TransactionBuilder extends Ptr {
   * @returns {Promise<void>}
   */
   async set_metadata(metadata) {
-    throw new Error(`${this.name}::set_metadata: method not implemented`);
-    // const metadataPtr = Ptr._assertClass(metadata, TransactionMetadata);
-    // return HaskellShelley.transactionBuilderSetWithdrawals(this.ptr, metadataPtr);
+    const metadataPtr = Ptr._assertClass(metadata, TransactionMetadata);
+    return HaskellShelley.transactionBuilderSetMetadata(this.ptr, metadataPtr);
   }
 
   /**

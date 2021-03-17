@@ -56,7 +56,6 @@ const test: () => void = async () => {
   await generalTxMetaPtr.insert(await BigNum.from_str('1'), metadatumFromJson)
 
   const txMetaPtr = await TransactionMetadata.new(generalTxMetaPtr)
-  console.log(txMetaPtr)
   await txMetaPtr.free()
 }
 
