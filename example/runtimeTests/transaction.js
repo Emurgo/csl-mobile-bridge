@@ -4,6 +4,8 @@ import {
   Transaction,
   TransactionWitnessSet,
   TransactionBody,
+  GeneralTransactionMetadata,
+  TransactionMetadata,
 } from '@emurgo/react-native-haskell-shelley'
 
 import {assert} from '../util'
@@ -47,6 +49,15 @@ const test: () => void = async () => {
     Buffer.from(await txFromBytes.to_bytes()).toString('hex') === txHex,
     'Transaction:: -> from_bytes -> to_bytes should match original input',
   )
+
+  /**
+   * with metadata
+   */
+  // add an empty metadata object
+  const generalTxMeta = await GeneralTransactionMetadata.new()
+  const txMeta = await TransactionMetadata.new(generalTxMeta)
+  const txWithMetadata = await Transaction.new(txBody, witSet, txMeta)
+  assert(txWithMetadata instanceof Transaction, 'Transaction::new()')
 }
 
 export default test
