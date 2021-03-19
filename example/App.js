@@ -83,10 +83,10 @@ export default class App extends Component<{}> {
     if (!mounted) {
       for (const test of tests) {
         try {
-          console.log(`Testing ${test.name}`)
           await test.testFn()
+          console.log(`${test.name} tests completed ✅`)
         } catch (e) {
-          console.log(`Test ${test.name} failed`)
+          console.log(`${test.name} tests failed ❌`)
           console.log(e)
           failed++
           this.setState({
@@ -100,7 +100,7 @@ export default class App extends Component<{}> {
       this.setState({
         status: 'tests finished',
       })
-      console.log('test finished successfully')
+      console.log('Tests finished')
       mounted = true
     }
   }

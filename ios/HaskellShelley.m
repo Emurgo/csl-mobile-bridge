@@ -2189,10 +2189,10 @@ RCT_EXPORT_METHOD(transactionNewWithMetadata:(nonnull NSString *)bodyPtr withWit
         RPtr body = [[params objectAtIndex:0] rPtr];
         RPtr witnesses = [[params objectAtIndex:1] rPtr];
         RPtr metadata = [[params objectAtIndex:2] rPtr];
-        return transaction_new_with_metadata(body, witnesses, &metadata, &result, error)
+        return transaction_new_with_metadata(body, witnesses, metadata, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
-    }] exec:@[bodyPtr, witnessSetPtr] andResolve:resolve orReject:reject];
+    }] exec:@[bodyPtr, witnessSetPtr, metadataPtr] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(transactionToBytes:(nonnull NSString *)txPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

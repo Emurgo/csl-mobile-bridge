@@ -67,7 +67,7 @@ pub unsafe extern "C" fn transaction_new(
 
 #[no_mangle]
 pub unsafe extern "C" fn transaction_new_with_metadata(
-  body: RPtr, witness_set: RPtr, metadata: &mut RPtr, result: &mut RPtr, error: &mut CharPtr
+  body: RPtr, witness_set: RPtr, metadata: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
     let metadata = metadata.owned::<TransactionMetadata>()?;
