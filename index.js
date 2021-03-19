@@ -1859,7 +1859,6 @@ export class Transaction extends Ptr {
     if (metadata == null) {
       ret = await HaskellShelley.transactionNew(bodyPtr, witnessSetPtr);
     } else {
-      // assert should fail. TODO
       const metadataPtr = Ptr._assertClass(metadata, TransactionMetadata);
       ret = await HaskellShelley.transactionNewWithMetadata(bodyPtr, witnessSetPtr, metadataPtr);
     }

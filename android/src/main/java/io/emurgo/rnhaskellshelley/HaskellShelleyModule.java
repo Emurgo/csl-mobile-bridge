@@ -1613,6 +1613,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionNewWithMetadata(String body, String witnessSet, String metadata, Promise promise) {
+        Native.I
+                .transactionNewWithMetadata(new RPtr(body), new RPtr(witnessSet), new RPtr(metadata))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionToBytes(String transaction, Promise promise) {
         Native.I
                 .transactionToBytes(new RPtr(transaction))

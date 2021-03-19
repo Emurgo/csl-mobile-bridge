@@ -290,6 +290,7 @@ final class Native {
     // Transaction
     public final native Result<RPtr> transactionBody(RPtr tx);
     public final native Result<RPtr> transactionNew(RPtr body, RPtr witnessSet);
+    public final native Result<RPtr> transactionNewWithMetadata(RPtr body, RPtr witnessSet, RPtr metadata);
     public final native Result<byte[]> transactionToBytes(RPtr Transaction);
     public final native Result<RPtr> transactionFromBytes(byte[] bytes);
 
