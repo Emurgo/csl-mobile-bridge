@@ -20,6 +20,10 @@ const test: () => void = async () => {
     Buffer.from(ed25519SignatureToBytes).toString('hex') === signatureHex,
     'Ed25519Signature from_bytes/to_bytes',
   )
+  assert(
+    (await ed25519Signature.to_hex()) === signatureHex,
+    'Ed25519Signature::to_hex()',
+  )
 }
 
 export default test

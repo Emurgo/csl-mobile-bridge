@@ -499,6 +499,11 @@ export class Ed25519Signature extends Ptr {
   * @returns {Promise<Ed25519Signature>}
   */
   static from_bytes(bytes: Uint8Array): Promise<Ed25519Signature>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex(): Promise<string>;
 }
 
 export class Ed25519KeyHash extends Ptr {

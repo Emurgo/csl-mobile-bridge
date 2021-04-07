@@ -1,6 +1,6 @@
 use super::data::DataPtr;
 use super::result::CResult;
-use super::string::{CharPtr};
+use super::string::{CharPtr, IntoCString};
 use crate::panic::{handle_exception_result, ToResult};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::crypto::{Ed25519Signature};
@@ -25,4 +25,12 @@ pub unsafe extern "C" fn ed25519_signature_from_bytes(
   })
   .map(|ed25519_signature| ed25519_signature.rptr())
   .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn ed25519_signature_to_hex(
+  ed25519_signature: RPtr, result: &mut CharPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| ed25519_signature.typed_ref::<Ed25519Signature>().map(|sig| sig.to_hex().into_cstr()))
+    .response(result, error)
 }

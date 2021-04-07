@@ -755,6 +755,13 @@ export class Ed25519Signature extends Ptr {
     const ret = await HaskellShelley.ed25519SignatureFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Ed25519Signature);
   }
+
+  /**
+  * @returns {Promise<string>}
+  */
+  async to_hex() {
+    return await HaskellShelley.ed25519SignatureToHex(this.ptr);
+  }
 }
 
 export class Ed25519KeyHash extends Ptr {

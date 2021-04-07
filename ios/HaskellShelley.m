@@ -823,6 +823,16 @@ RCT_EXPORT_METHOD(ed25519SignatureFromBytes:(nonnull NSString *)bytesStr  withRe
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(ed25519SignatureToHex:(nonnull NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        CharPtr result;
+        return ed25519_signature_to_hex([ptr rPtr], &result, error)
+            ? [NSString stringFromCharPtr:&result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
 // Ed25519KeyHash
 
 RCT_EXPORT_METHOD(ed25519KeyHashToBytes:(nonnull NSString *)keyHashPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

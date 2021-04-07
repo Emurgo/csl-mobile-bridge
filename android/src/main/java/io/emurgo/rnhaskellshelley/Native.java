@@ -114,6 +114,7 @@ final class Native {
     // Ed25519Signature
     public final native Result<byte[]> ed25519SignatureToBytes(RPtr ed25519Signature);
     public final native Result<RPtr> ed25519SignatureFromBytes(byte[] bytes);
+    public final native Result<String> ed25519SignatureToHex(RPtr ed25519Signature);
 
     // Ed25519KeyHash
     public final native Result<byte[]> ed25519KeyHashToBytes(RPtr ed25519KeyHash);

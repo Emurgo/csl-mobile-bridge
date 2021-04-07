@@ -626,6 +626,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void ed25519SignatureToHex(String ed25519Signature, Promise promise) {
+        Native.I
+                .ed25519SignatureToHex(new RPtr(ed25519Signature))
+                .pour(promise);
+    }
+
     // Ed25519KeyHash
 
     @ReactMethod
