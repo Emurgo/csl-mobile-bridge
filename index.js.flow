@@ -36,6 +36,23 @@ declare export var min_ada_required: (
   minUtxoVal: BigNum
 ) => Promise<BigNum>;
 /**
+ * @param {string} json
+ * @returns {Promise<TransactionMetadatum>}
+ */
+declare export var encode_json_str_to_metadatum: (
+  json: string,
+  schema: $Values<typeof MetadataJsonSchema>
+) => Promise<TransactionMetadatum>;
+/**
+ * @param {TransactionMetadatum} metadatum
+ * @param {$Values<typeof MetadataJsonSchema>} schema
+ * @returns {Promise<string>}
+ */
+declare export var decode_metadatum_to_json_str: (
+  metadatum: TransactionMetadatum,
+  schema: $Values<typeof MetadataJsonSchema>
+) => Promise<string>;
+/**
  * Generic u64 wrapper for platforms that don't support u64 or BigInt/etc
  * This is an unsigned type - no negative numbers.
  * Can be converted to/from plain rust
@@ -58,13 +75,13 @@ declare export class BigNum mixins Ptr {
    * @param {BigNum} other
    * @returns {Promise<BigNum>}
    */
-  checked_add(other: any): Promise<BigNum>;
+  checked_add(other: BigNum): Promise<BigNum>;
 
   /**
    * @param {BigNum} other
    * @returns {Promise<BigNum>}
    */
-  checked_sub(other: any): Promise<BigNum>;
+  checked_sub(other: BigNum): Promise<BigNum>;
 
   /**
    * @param {BigNum} other
@@ -132,6 +149,18 @@ declare export class Value mixins Ptr {
    */
   compare(rhs: Value): Promise<number>;
 }
+declare export class Int mixins Ptr {
+  /**
+   * @param {BigNum} x
+   * @returns {Promise<Int>}
+   */
+  static new(x: BigNum): Promise<Int>;
+
+  /**
+   * @returns {Promise<number>}
+   */
+  as_i32(): Promise<number>;
+}
 declare export class AssetName mixins Ptr {
   /**
    * @returns {Promise<Uint8Array>}
@@ -142,7 +171,7 @@ declare export class AssetName mixins Ptr {
    * @param {Uint8Array} bytes
    * @returns {Promise<AssetName>}
    */
-  static from_bytes(bytes: any): Promise<AssetName>;
+  static from_bytes(bytes: Uint8Array): Promise<AssetName>;
 
   /**
    * @param {Uint8Array} name
@@ -170,13 +199,13 @@ declare export class AssetNames mixins Ptr {
    * @param {number} index
    * @returns {Promise<AssetName>}
    */
-  get(index: any): Promise<AssetName>;
+  get(index: number): Promise<AssetName>;
 
   /**
    * @param {AssetName} item
    * @returns {Promise<void>}
    */
-  add(item: any): Promise<void>;
+  add(item: AssetName): Promise<void>;
 }
 /**
  * ED25519 key used as public key
@@ -204,7 +233,7 @@ declare export class PublicKey mixins Ptr {
    * @param {Uint8Array} bytes
    * @returns {Promise<PublicKey>}
    */
-  static from_bytes(bytes: any): Promise<PublicKey>;
+  static from_bytes(bytes: Uint8Array): Promise<PublicKey>;
 
   /**
    * @returns {Promise<Uint8Array>}
@@ -231,7 +260,13 @@ declare export class PrivateKey mixins Ptr {
    * @param {Uint8Array} bytes
    * @returns {Promise<PrivateKey>}
    */
-  static from_extended_bytes(bytes: any): Promise<PublicKey>;
+  static from_extended_bytes(bytes: Uint8Array): Promise<PublicKey>;
+
+  /**
+   * @param {Uint8Array} message
+   * @returns {Promise<Ed25519Signature>}
+   */
+  sign(message: Uint8Array): Promise<Ed25519Signature>;
 }
 /**
  */
@@ -382,7 +417,7 @@ declare export class ByronAddress mixins Ptr {
    * @param {string} string
    * @returns {Promise<boolean>}
    */
-  static is_valid(string: any): Promise<boolean>;
+  static is_valid(string: string): Promise<boolean>;
 
   /**
    * @returns {Promise<Address>}
@@ -393,7 +428,7 @@ declare export class ByronAddress mixins Ptr {
    * @param {Address} addr
    * @returns {Promise<ByronAddress | void>}
    */
-  static from_address(addr: any): Promise<ByronAddress | void>;
+  static from_address(addr: Address): Promise<ByronAddress | void>;
 
   /**
    * @returns {Promise<number>}
@@ -427,7 +462,7 @@ declare export class Address mixins Ptr {
    * @param {string} string
    * @returns {Promise<Address>}
    */
-  static from_bech32(string: any): Promise<Address>;
+  static from_bech32(string: string): Promise<Address>;
 
   /**
    * @returns {Promise<number>}
@@ -445,6 +480,11 @@ declare export class Ed25519Signature mixins Ptr {
    * @returns {Promise<Ed25519Signature>}
    */
   static from_bytes(bytes: Uint8Array): Promise<Ed25519Signature>;
+
+  /**
+   * @returns {Promise<string>}
+   */
+  to_hex(): Promise<string>;
 }
 declare export class Ed25519KeyHash mixins Ptr {
   /**
@@ -642,7 +682,7 @@ declare export class StakeRegistration mixins Ptr {
    * @param {StakeCredential} stakeCredential
    * @returns {Promise<StakeRegistration>}
    */
-  static new(stakeCredential: any): Promise<StakeRegistration>;
+  static new(stakeCredential: StakeCredential): Promise<StakeRegistration>;
 }
 declare export class StakeDeregistration mixins Ptr {
   /**
@@ -665,7 +705,7 @@ declare export class StakeDeregistration mixins Ptr {
    * @param {StakeCredential} stakeCredential
    * @returns {Promise<StakeDeregistration>}
    */
-  static new(stakeCredential: any): Promise<StakeDeregistration>;
+  static new(stakeCredential: StakeCredential): Promise<StakeDeregistration>;
 }
 declare export class StakeDelegation mixins Ptr {
   /**
@@ -677,7 +717,7 @@ declare export class StakeDelegation mixins Ptr {
    * @param {Uint8Array} bytes
    * @returns {Promise<StakeDelegation>}
    */
-  static from_bytes(bytes: any): Promise<StakeDelegation>;
+  static from_bytes(bytes: Uint8Array): Promise<StakeDelegation>;
 
   /**
    * @returns {Promise<StakeCredential>}
@@ -694,7 +734,10 @@ declare export class StakeDelegation mixins Ptr {
    * @param {Ed25519KeyHash} poolKeyHash
    * @returns {Promise<StakeDelegation>}
    */
-  static new(stakeCredential: any, poolKeyHash: any): Promise<StakeDelegation>;
+  static new(
+    stakeCredential: StakeCredential,
+    poolKeyHash: Ed25519KeyHash
+  ): Promise<StakeDelegation>;
 }
 declare export class Certificate mixins Ptr {
   /**
@@ -706,27 +749,31 @@ declare export class Certificate mixins Ptr {
    * @param {Uint8Array} bytes
    * @returns {Promise<Certificate>}
    */
-  static from_bytes(bytes: any): Promise<Certificate>;
+  static from_bytes(bytes: Uint8Array): Promise<Certificate>;
 
   /**
    * @param {StakeRegistration} stakeRegistration
    * @returns {Promise<Certificate>}
    */
-  static new_stake_registration(stakeRegistration: any): Promise<Certificate>;
+  static new_stake_registration(
+    stakeRegistration: StakeRegistration
+  ): Promise<Certificate>;
 
   /**
    * @param {StakeDeregistration} stakeDeregistration
    * @returns {Promise<Certificate>}
    */
   static new_stake_deregistration(
-    stakeDeregistration: any
+    stakeDeregistration: StakeDeregistration
   ): Promise<Certificate>;
 
   /**
    * @param {StakeDelegation} stakeDelegation
    * @returns {Promise<Certificate>}
    */
-  static new_stake_delegation(stakeDelegation: any): Promise<Certificate>;
+  static new_stake_delegation(
+    stakeDelegation: StakeDelegation
+  ): Promise<Certificate>;
 
   /**
    * @returns {Promise<StakeRegistration | void>}
@@ -753,7 +800,7 @@ declare export class Certificates mixins Ptr {
    * @param {Uint8Array} bytes
    * @returns {Promise<Certificates>}
    */
-  static from_bytes(bytes: any): Promise<Certificates>;
+  static from_bytes(bytes: Uint8Array): Promise<Certificates>;
 
   /**
    * @returns {Promise<Certificates>}
@@ -784,7 +831,11 @@ declare export class BaseAddress mixins Ptr {
    * @param {StakeCredential} stake
    * @returns {Promise<BaseAddress>}
    */
-  static new(network: any, payment: any, stake: any): Promise<BaseAddress>;
+  static new(
+    network: number,
+    payment: StakeCredential,
+    stake: StakeCredential
+  ): Promise<BaseAddress>;
 
   /**
    * @returns {Promise<StakeCredential>}
@@ -805,7 +856,7 @@ declare export class BaseAddress mixins Ptr {
    * @param {Address} addr
    * @returns {Promise<BaseAddress | void>}
    */
-  static from_address(addr: any): Promise<BaseAddress | void>;
+  static from_address(addr: Address): Promise<BaseAddress | void>;
 }
 declare export class RewardAddress mixins Ptr {
   /**
@@ -866,7 +917,7 @@ declare export class UnitInterval mixins Ptr {
    * @param {BigNum} denominator
    * @returns {Promise<UnitInterval>}
    */
-  static new(numerator: any, denominator: any): Promise<UnitInterval>;
+  static new(numerator: BigNum, denominator: BigNum): Promise<UnitInterval>;
 }
 declare export class TransactionInput mixins Ptr {
   /**
@@ -976,7 +1027,7 @@ declare export class Vkey mixins Ptr {
    * @param {PublicKey} pk
    * @returns {Promise<Vkey>}
    */
-  static new(pk: any): Promise<Vkey>;
+  static new(pk: PublicKey): Promise<Vkey>;
 }
 declare export class Vkeywitness mixins Ptr {
   /**
@@ -995,7 +1046,7 @@ declare export class Vkeywitness mixins Ptr {
    * @param {Ed25519Signature} signature
    * @returns {Promise<Vkeywitness>}
    */
-  static new(vkey: any, signature: any): Promise<Vkeywitness>;
+  static new(vkey: Vkey, signature: Ed25519Signature): Promise<Vkeywitness>;
 
   /**
    * @returns {Promise<Ed25519Signature>}
@@ -1080,7 +1131,18 @@ declare export class TransactionWitnessSet mixins Ptr {
    */
   set_vkeys(vkeywitnesses: Vkeywitnesses): Promise<void>;
 }
-declare export class TransactionMetadata mixins Ptr {}
+declare export class ScriptPubkey mixins Ptr {
+  /**
+   * @returns {Promise<Ed25519KeyHash>}
+   */
+  addr_keyhash(): Promise<Ed25519KeyHash>;
+
+  /**
+   * @param {Ed25519KeyHash} addrKeyhash
+   * @returns {Promise<ScriptPubkey>}
+   */
+  static new(addrKeyhash: Ed25519KeyHash): Promise<ScriptPubkey>;
+}
 declare export class TransactionBody mixins Ptr {
   /**
    * @param {Uint8Array} bytes
@@ -1282,7 +1344,7 @@ declare export class TransactionBuilder mixins Ptr {
    * @param {Address} address
    * @returns {Promise<boolean>}
    */
-  add_change_if_needed(address: Address): void;
+  add_change_if_needed(address: Address): Promise<boolean>;
 
   /**
    * @returns {Promise<TransactionBody>}
@@ -1310,7 +1372,7 @@ declare export class Withdrawals mixins Ptr {
    * @param {BigNum} value
    * @returns {Promise<BigNum>}
    */
-  insert(key: any, value: any): Promise<BigNum>;
+  insert(key: RewardAddress, value: BigNum): Promise<BigNum>;
 
   /**
    * @param {RewardAddress} key
@@ -1323,3 +1385,167 @@ declare export class Withdrawals mixins Ptr {
    */
   keys(): Promise<RewardAddresses>;
 }
+declare export class MetadataMap mixins Ptr {
+  /**
+   * @returns {Promise<MetadataMap>}
+   */
+  static new(): Promise<MetadataMap>;
+
+  /**
+   * @returns {Promise<number>}
+   */
+  len(): Promise<number>;
+
+  /**
+   * @param {TransactionMetadatum} key
+   * @param {TransactionMetadatum} value
+   * @returns {Promise<TransactionMetadatum>}
+   */
+  insert(
+    key: TransactionMetadatum,
+    value: TransactionMetadatum
+  ): Promise<TransactionMetadatum>;
+
+  /**
+   * @param {TransactionMetadatum} key
+   * @returns {Promise<TransactionMetadatum | void>}
+   */
+  get(key: TransactionMetadatum): Promise<TransactionMetadatum | void>;
+
+  /**
+   * @returns {Promise<MetadataList>}
+   */
+  keys(): Promise<MetadataList>;
+}
+declare export class MetadataList mixins Ptr {
+  /**
+   * @returns {Promise<MetadataList>}
+   */
+  static new(): Promise<MetadataList>;
+
+  /**
+   * @returns {Promise<number>}
+   */
+  len(): Promise<number>;
+
+  /**
+   * @param {number} index
+   * @returns {Promise<TransactionMetadatum>}
+   */
+  get(index: number): Promise<TransactionMetadatum>;
+
+  /**
+   * @param {TransactionMetadatum} item
+   * @returns {Promise<void>}
+   */
+  add(item: TransactionMetadatum): Promise<void>;
+}
+declare export var TransactionMetadatumKind: {|
+  +MetadataMap: 0, // 0
+  +MetadataList: 1, // 1
+  +Int: 2, // 2
+  +Bytes: 3, // 3
+  +Text: 4, // 4
+|};
+declare export class TransactionMetadatum mixins Ptr {
+  /**
+   * @returns {Promise<Uint8Array>}
+   */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+   * @param {Uint8Array} bytes
+   * @returns {Promise<TransactionMetadatum>}
+   */
+  static from_bytes(bytes: Uint8Array): Promise<TransactionMetadatum>;
+}
+export type TransactionMetadatumLabel = BigNum;
+declare export class TransactionMetadatumLabels mixins Ptr {
+  /**
+   * @returns {Promise<Uint8Array>}
+   */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+   * @param {Uint8Array} bytes
+   * @returns {Promise<TransactionMetadatumLabels>}
+   */
+  static from_bytes(bytes: Uint8Array): Promise<TransactionMetadatumLabels>;
+
+  /**
+   * @returns {Promise<TransactionMetadatumLabels>}
+   */
+  static new(): Promise<TransactionMetadatumLabels>;
+
+  /**
+   * @returns {Promise<number>}
+   */
+  len(): Promise<number>;
+
+  /**
+   * @param {number} index
+   * @returns {Promise<TransactionMetadatumLabel>}
+   */
+  get(index: number): Promise<TransactionMetadatumLabel>;
+
+  /**
+   * @param {TransactionMetadatumLabel} item
+   * @returns {Promise<void>}
+   */
+  add(item: TransactionMetadatumLabel): Promise<void>;
+}
+declare export class GeneralTransactionMetadata mixins Ptr {
+  /**
+   * @returns {Promise<Uint8Array>}
+   */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+   * @param {Uint8Array} bytes
+   * @returns {Promise<GeneralTransactionMetadata>}
+   */
+  static from_bytes(bytes: Uint8Array): Promise<GeneralTransactionMetadata>;
+
+  /**
+   * @returns {Promise<GeneralTransactionMetadata>}
+   */
+  static new(): Promise<GeneralTransactionMetadata>;
+
+  /**
+   * @returns {Promise<number>}
+   */
+  len(): Promise<number>;
+
+  /**
+   * @param {TransactionMetadatumLabel} key
+   * @param {TransactionMetadatum} value
+   * @returns {Promise<TransactionMetadatum | void>}
+   */
+  insert(
+    key: TransactionMetadatumLabel,
+    value: TransactionMetadatum
+  ): Promise<TransactionMetadatum | void>;
+
+  /**
+   * @param {TransactionMetadatumLabel} key
+   * @returns {Promise<TransactionMetadatum | void>}
+   */
+  get(key: TransactionMetadatumLabel): Promise<TransactionMetadatum | void>;
+
+  /**
+   * @returns {Promise<TransactionMetadatumLabels>}
+   */
+  keys(): Promise<TransactionMetadatumLabels>;
+}
+declare export class TransactionMetadata mixins Ptr {
+  /**
+   * @param {GeneralTransactionMetadata} general
+   * @returns {Promise<TransactionMetadata>}
+   */
+  static new(general: GeneralTransactionMetadata): Promise<TransactionMetadata>;
+}
+declare export var MetadataJsonSchema: {|
+  +NoConversions: 0, // 0
+  +BasicConversions: 1, // 1
+  +DetailedSchema: 2, // 2
+|};

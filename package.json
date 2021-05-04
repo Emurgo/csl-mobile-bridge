@@ -6,20 +6,22 @@
   "main": "index.js",
   "files": [
     "README.md",
-    "android",
+    "LICENSE",
+    "/android",
     "index.js",
     "index.d.ts",
-    "ios",
+    "index.js.flow",
+    "/ios",
     "react-native.config.js",
     "react-native-haskell-shelley.podspec",
-    "rust",
+    "/rust",
     "yarn.lock"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint index.js index.d.ts",
     "js:flowgen": "flowgen ./index.d.ts -o ./index.js.flow --add-flow-header",
-    "publish": "yarn js:flowgen && npm publish --access public"
+    "release": "yarn js:flowgen && npm publish --access public"
   },
   "repository": {
     "type": "git",
