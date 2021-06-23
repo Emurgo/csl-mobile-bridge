@@ -16,6 +16,17 @@ pub unsafe extern "C" fn private_key_to_public(
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn private_key_from_normal_bytes(
+  data: *const u8, len: usize, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    PrivateKey::from_normal_bytes(std::slice::from_raw_parts(data, len)).into_result()
+  })
+  .map(|private_key| private_key.rptr())
+  .response(result, error)
+}
+
+#[no_mangle]
 pub unsafe extern "C" fn private_key_as_bytes(
   key: RPtr, result: &mut DataPtr, error: &mut CharPtr
 ) -> bool {

@@ -269,6 +269,12 @@ export class PrivateKey extends Ptr {
   to_public(): Promise<PublicKey>;
 
   /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<PrivateKey>}
+  */
+  static from_normal_bytes(bytes: Uint8Array): Promise<PublicKey>;
+
+  /**
   * @returns {Promise<Uint8Array>}
   */
   as_bytes(): Promise<Uint8Array>;
@@ -1479,6 +1485,17 @@ export class MetadataList extends Ptr {
   * @returns {Promise<void>}
   */
   add(item: TransactionMetadatum): Promise<void>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<MetadataList>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<MetadataList>;
 }
 
 export enum TransactionMetadatumKind {
@@ -1490,6 +1507,12 @@ export enum TransactionMetadatumKind {
 }
 
 export class TransactionMetadatum extends Ptr {
+  /**
+  * @param {MetadataList} hash
+  * @returns {Promise<TransactionMetadatum>}
+  */
+  static new_list(metadataList: MetadataList): Promise<TransactionMetadatum>;
+
   /**
   * @returns {Promise<Uint8Array>}
   */
@@ -1585,10 +1608,25 @@ export class GeneralTransactionMetadata extends Ptr {
 
 export class TransactionMetadata extends Ptr {
   /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionMetadata>}
+  */
+  static from_bytes(bytes): Promise<TransactionMetadata>;
+  /**
   * @param {GeneralTransactionMetadata} general
   * @returns {Promise<TransactionMetadata>}
   */
   static new(general: GeneralTransactionMetadata): Promise<TransactionMetadata>;
+
+  /**
+  * @returns {Promise<GeneralTransactionMetadata>}
+  */
+  general(): Promise<GeneralTransactionMetadata>;
 }
 
 export enum MetadataJsonSchema {

@@ -351,6 +351,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void privateKeyFromNormalBytes(String bytes, Promise promise) {
+        Native.I
+                .privateKeyFromNormalBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void privateKeyAsBytes(String prvPtr, Promise promise) {
         Native.I
                 .privateKeyAsBytes(new RPtr(prvPtr))
@@ -1926,7 +1934,31 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void metadataListToBytes(String metadataList, Promise promise) {
+        Native.I
+                .metadataListToBytes(new RPtr(metadataList))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void metadataListFromBytes(String bytes, Promise promise) {
+        Native.I
+                .metadataListFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // TransactionMetadatum
+
+    @ReactMethod
+    public final void transactionMetadatumNewList(String metadataList, Promise promise) {
+        Native.I
+                .transactionMetadatumNewList(new RPtr(metadataList))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
 
     @ReactMethod
     public final void transactionMetadatumToBytes(String transactionMetadatum, Promise promise) {
@@ -2054,9 +2086,33 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     // TransactionMetadata
 
     @ReactMethod
+    public final void transactionMetadataToBytes(String transactionMetadata, Promise promise) {
+        Native.I
+                .transactionMetadataToBytes(new RPtr(transactionMetadata))
+                .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionMetadataFromBytes(String bytes, Promise promise) {
+        Native.I
+                .transactionMetadataFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionMetadataNew(String general, Promise promise) {
         Native.I
                 .transactionMetadataNew(new RPtr(general))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionMetadataGeneral(String transactionMetadata, Promise promise) {
+        Native.I
+                .transactionMetadataGeneral(new RPtr(transactionMetadata))
                 .map(RPtr::toJs)
                 .pour(promise);
     }

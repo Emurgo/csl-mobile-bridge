@@ -430,6 +430,15 @@ export class PrivateKey extends Ptr {
   }
 
   /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<PrivateKey>}
+  */
+  static async from_normal_bytes(bytes) {
+    const ret = await HaskellShelley.privateKeyFromNormalBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, PrivateKey);
+  }
+
+  /**
   * @returns {Promise<Uint8Array>}
   */
   async as_bytes() {
@@ -2176,7 +2185,7 @@ export class Withdrawals extends Ptr {
   }
 
   /**
-  * @returns {Promise<RewardAddress>}
+  * @returns {Promise<RewardAddresses>}
   */
   async keys() {
     const ret = await HaskellShelley.withdrawalsKeys(this.ptr);
@@ -2264,6 +2273,23 @@ export class MetadataList extends Ptr {
     const itemPtr = Ptr._assertClass(item, TransactionMetadatum);
     return HaskellShelley.metadataListAdd(this.ptr, itemPtr);
   }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.metadataListToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<MetadataList>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.metadataListFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, MetadataList);
+  }
 }
 
 export const TransactionMetadatumKind = Object.freeze({
@@ -2275,6 +2301,16 @@ export const TransactionMetadatumKind = Object.freeze({
 });
 
 export class TransactionMetadatum extends Ptr {
+  /**
+  * @param {MetadataList} hash
+  * @returns {Promise<TransactionMetadatum>}
+  */
+  static async new_list(metadataList) {
+    const metadataListPtr = Ptr._assertClass(metadataList, MetadataList);
+    const ret = await HaskellShelley.transactionMetadatumNewList(metadataListPtr);
+    return Ptr._wrap(ret, TransactionMetadatum);
+  }
+
   /**
   * @returns {Promise<Uint8Array>}
   */
@@ -2413,6 +2449,23 @@ export class GeneralTransactionMetadata extends Ptr {
 
 export class TransactionMetadata extends Ptr {
   /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.transactionMetadataToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionMetadata>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.transactionMetadataFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, TransactionMetadata);
+  }
+
+  /**
   * @param {GeneralTransactionMetadata} general
   * @returns {Promise<TransactionMetadata>}
   */
@@ -2420,6 +2473,14 @@ export class TransactionMetadata extends Ptr {
     const generalPtr = Ptr._assertClass(general, GeneralTransactionMetadata);
     const ret = await HaskellShelley.transactionMetadataNew(generalPtr);
     return Ptr._wrap(ret, TransactionMetadata);
+  }
+
+  /**
+  * @returns {Promise<GeneralTransactionMetadata>}
+  */
+  async general() {
+    const ret = await HaskellShelley.transactionMetadataGeneral(this.ptr);
+    return Ptr._wrap(ret, GeneralTransactionMetadata);
   }
 }
 

@@ -1,9 +1,34 @@
 use super::result::CResult;
 use super::string::CharPtr;
+use super::utils::{to_bytes, from_bytes};
+use crate::utils::ToFromBytes;
 use crate::panic::{handle_exception, handle_exception_result, Zip};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::metadata::{MetadataList, TransactionMetadatum};
 
+impl ToFromBytes for MetadataList {
+  fn to_bytes(&self) -> Vec<u8> {
+    self.to_bytes()
+  }
+
+  fn from_bytes(bytes: Vec<u8>) -> Result<MetadataList, DeserializeError> {
+    MetadataList::from_bytes(bytes)
+  }
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn metadata_list_to_bytes(
+  metadata_list: RPtr, result: &mut DataPtr, error: &mut CharPtr
+) -> bool {
+  to_bytes::<MetadataList>(metadata_list, result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn metadata_list_from_bytes(
+  data: *const u8, len: usize, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  from_bytes::<MetadataList>(data, len, result, error)
+}
 
 #[no_mangle]
 pub extern "C" fn metadata_list_new(result: &mut RPtr, error: &mut CharPtr) -> bool {

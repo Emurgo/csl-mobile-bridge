@@ -21,6 +21,21 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_privateKeyToPubl
 
 #[allow(non_snake_case)]
 #[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_privateKeyFromNormalBytes(
+  env: JNIEnv, _: JObject, bytes: jbyteArray
+) -> jobject {
+  handle_exception_result(|| {
+    env
+      .convert_byte_array(bytes)
+      .into_result()
+      .and_then(|bytes| PrivateKey::from_normal_bytes(&bytes).into_result())
+      .and_then(|private_key| private_key.rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_privateKeyAsBytes(
   env: JNIEnv, _: JObject, ptr: JRPtr
 ) -> jobject {

@@ -6,7 +6,7 @@ use crate::utils::ToFromBytes;
 use super::utils::{to_bytes, from_bytes};
 use super::data::DataPtr;
 use cardano_serialization_lib::error::{DeserializeError};
-use cardano_serialization_lib::metadata::{TransactionMetadatum};
+use cardano_serialization_lib::metadata::{TransactionMetadatum, MetadataList};
 
 impl ToFromBytes for TransactionMetadatum {
   fn to_bytes(&self) -> Vec<u8> {
@@ -30,4 +30,17 @@ pub unsafe extern "C" fn transaction_metadatum_from_bytes(
   data: *const u8, len: usize, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   from_bytes::<TransactionMetadatum>(data, len, result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_metadatum_new_list(
+  metadata_list: RPtr, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    metadata_list
+      .typed_ref::<MetadataList>()
+      .map(|metadata_list| TransactionMetadatum::new_list(metadata_list))
+  })
+    .map(|transaction_metadatum| transaction_metadatum.rptr())
+    .response(result, error)
 }
