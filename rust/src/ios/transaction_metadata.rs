@@ -45,6 +45,16 @@ pub unsafe extern "C" fn transaction_metadata_new(general: RPtr, result: &mut RP
     .response(result, error)
 }
 
+#[no_mangle]
+pub unsafe extern "C" fn transaction_metadata_general(transaction_metadata: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| {
+    transaction_metadata.typed_ref::<TransactionMetadata>()
+      .map(|transaction_metadata| transaction_metadata.general())
+  })
+    .map(|general_tx_meta| general_tx_meta.rptr())
+    .response(result, error)
+}
+
 // #[no_mangle]
 // pub unsafe extern "C" fn transaction_metadata_len(
 //   transaction_metadata: RPtr, result: &mut usize, error: &mut CharPtr

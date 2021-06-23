@@ -2185,7 +2185,7 @@ export class Withdrawals extends Ptr {
   }
 
   /**
-  * @returns {Promise<RewardAddress>}
+  * @returns {Promise<RewardAddresses>}
   */
   async keys() {
     const ret = await HaskellShelley.withdrawalsKeys(this.ptr);
@@ -2449,6 +2449,23 @@ export class GeneralTransactionMetadata extends Ptr {
 
 export class TransactionMetadata extends Ptr {
   /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.transactionMetadataToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionMetadata>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.transactionMetadataFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, TransactionMetadata);
+  }
+
+  /**
   * @param {GeneralTransactionMetadata} general
   * @returns {Promise<TransactionMetadata>}
   */
@@ -2456,6 +2473,14 @@ export class TransactionMetadata extends Ptr {
     const generalPtr = Ptr._assertClass(general, GeneralTransactionMetadata);
     const ret = await HaskellShelley.transactionMetadataNew(generalPtr);
     return Ptr._wrap(ret, TransactionMetadata);
+  }
+
+  /**
+  * @returns {Promise<GeneralTransactionMetadata>}
+  */
+  async general() {
+    const ret = await HaskellShelley.transactionMetadataGeneral(this.ptr);
+    return Ptr._wrap(ret, GeneralTransactionMetadata);
   }
 }
 

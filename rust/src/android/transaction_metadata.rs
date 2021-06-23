@@ -39,7 +39,6 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionMetad
   from_bytes::<TransactionMetadata>(env, bytes)
 }
 
-//
 #[allow(non_snake_case)]
 #[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionMetadataNew(
@@ -51,6 +50,21 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionMetad
       .typed_ref::<GeneralTransactionMetadata>()
       .map(|general| TransactionMetadata::new(general))
       .and_then(|metadata| metadata.rptr().jptr(&env))
+  })
+  .jresult(&env)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionMetadataGeneral(
+  env: JNIEnv, _: JObject, ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let tx_metadata = ptr.rptr(&env)?;
+    tx_metadata
+      .typed_ref::<TransactionMetadata>()
+      .map(|tx_metadata| tx_metadata.general())
+      .and_then(|general| general.rptr().jptr(&env))
   })
   .jresult(&env)
 }

@@ -365,7 +365,10 @@ final class Native {
     public final native Result<RPtr> generalTransactionMetadataKeys(RPtr generalTransactionMetadata);
 
     // TransactionMetadata
+    public final native Result<byte[]> transactionMetadataToBytes(RPtr transactionMetadata);
+    public final native Result<RPtr> transactionMetadataFromBytes(byte[] bytes);
     public final native Result<RPtr> transactionMetadataNew(RPtr general);
+    public final native Result<RPtr> transactionMetadataGeneral(RPtr transactionMetadata);
 
     public final native void ptrFree(RPtr ptr);
 }

@@ -1608,10 +1608,25 @@ export class GeneralTransactionMetadata extends Ptr {
 
 export class TransactionMetadata extends Ptr {
   /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<TransactionMetadata>}
+  */
+  static from_bytes(bytes): Promise<TransactionMetadata>;
+  /**
   * @param {GeneralTransactionMetadata} general
   * @returns {Promise<TransactionMetadata>}
   */
   static new(general: GeneralTransactionMetadata): Promise<TransactionMetadata>;
+
+  /**
+  * @returns {Promise<GeneralTransactionMetadata>}
+  */
+  general(): Promise<GeneralTransactionMetadata>;
 }
 
 export enum MetadataJsonSchema {
