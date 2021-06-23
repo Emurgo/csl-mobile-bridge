@@ -252,6 +252,12 @@ declare export class PrivateKey mixins Ptr {
   to_public(): Promise<PublicKey>;
 
   /**
+   * @param {Uint8Array} bytes
+   * @returns {Promise<PrivateKey>}
+   */
+  static from_normal_bytes(bytes: Uint8Array): Promise<PublicKey>;
+
+  /**
    * @returns {Promise<Uint8Array>}
    */
   as_bytes(): Promise<Uint8Array>;
@@ -1131,18 +1137,6 @@ declare export class TransactionWitnessSet mixins Ptr {
    */
   set_vkeys(vkeywitnesses: Vkeywitnesses): Promise<void>;
 }
-declare export class ScriptPubkey mixins Ptr {
-  /**
-   * @returns {Promise<Ed25519KeyHash>}
-   */
-  addr_keyhash(): Promise<Ed25519KeyHash>;
-
-  /**
-   * @param {Ed25519KeyHash} addrKeyhash
-   * @returns {Promise<ScriptPubkey>}
-   */
-  static new(addrKeyhash: Ed25519KeyHash): Promise<ScriptPubkey>;
-}
 declare export class TransactionBody mixins Ptr {
   /**
    * @param {Uint8Array} bytes
@@ -1439,6 +1433,17 @@ declare export class MetadataList mixins Ptr {
    * @returns {Promise<void>}
    */
   add(item: TransactionMetadatum): Promise<void>;
+
+  /**
+   * @returns {Promise<Uint8Array>}
+   */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+   * @param {Uint8Array} bytes
+   * @returns {Promise<MetadataList>}
+   */
+  static from_bytes(bytes: Uint8Array): Promise<MetadataList>;
 }
 declare export var TransactionMetadatumKind: {|
   +MetadataMap: 0, // 0
@@ -1448,6 +1453,12 @@ declare export var TransactionMetadatumKind: {|
   +Text: 4, // 4
 |};
 declare export class TransactionMetadatum mixins Ptr {
+  /**
+   * @param {MetadataList} hash
+   * @returns {Promise<TransactionMetadatum>}
+   */
+  static new_list(metadataList: MetadataList): Promise<TransactionMetadatum>;
+
   /**
    * @returns {Promise<Uint8Array>}
    */
@@ -1539,10 +1550,26 @@ declare export class GeneralTransactionMetadata mixins Ptr {
 }
 declare export class TransactionMetadata mixins Ptr {
   /**
+   * @returns {Promise<Uint8Array>}
+   */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+   * @param {Uint8Array} bytes
+   * @returns {Promise<TransactionMetadata>}
+   */
+  static from_bytes(bytes: any): Promise<TransactionMetadata>;
+
+  /**
    * @param {GeneralTransactionMetadata} general
    * @returns {Promise<TransactionMetadata>}
    */
   static new(general: GeneralTransactionMetadata): Promise<TransactionMetadata>;
+
+  /**
+   * @returns {Promise<GeneralTransactionMetadata>}
+   */
+  general(): Promise<GeneralTransactionMetadata>;
 }
 declare export var MetadataJsonSchema: {|
   +NoConversions: 0, // 0
