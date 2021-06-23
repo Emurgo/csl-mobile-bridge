@@ -39,6 +39,7 @@ import utils from './runtimeTests/utils'
 import transaction from './runtimeTests/transaction'
 import transactionBuilder from './runtimeTests/transactionBuilder'
 import txMetadata from './runtimeTests/txMetadata'
+import catalyst from './runtimeTests/catalyst'
 
 const tests = [
   {name: 'misc', testFn: misc},
@@ -67,6 +68,7 @@ const tests = [
   {name: 'transaction', testFn: transaction},
   {name: 'transactionBuilder', testFn: transactionBuilder},
   {name: 'txMetadata', testFn: txMetadata},
+  {name: 'catalyst', testFn: catalyst},
 ]
 
 let failed = 0
