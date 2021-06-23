@@ -2264,6 +2264,23 @@ export class MetadataList extends Ptr {
     const itemPtr = Ptr._assertClass(item, TransactionMetadatum);
     return HaskellShelley.metadataListAdd(this.ptr, itemPtr);
   }
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  async to_bytes() {
+    const b64 = await HaskellShelley.metadataListToBytes(this.ptr);
+    return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<MetadataList>}
+  */
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.metadataListFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, MetadataList);
+  }
 }
 
 export const TransactionMetadatumKind = Object.freeze({
@@ -2275,6 +2292,16 @@ export const TransactionMetadatumKind = Object.freeze({
 });
 
 export class TransactionMetadatum extends Ptr {
+  /**
+  * @param {MetadataList} hash
+  * @returns {Promise<TransactionMetadatum>}
+  */
+  static async new_list(metadataList) {
+    const metadataListPtr = Ptr._assertClass(metadataList, MetadataList);
+    const ret = await HaskellShelley.transactionMetadatumNewList(metadataListPtr);
+    return Ptr._wrap(ret, TransactionMetadatum);
+  }
+
   /**
   * @returns {Promise<Uint8Array>}
   */

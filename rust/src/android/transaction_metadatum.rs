@@ -7,7 +7,7 @@ use jni::objects::JObject;
 use jni::sys::{jobject, jbyteArray};
 use jni::JNIEnv;
 use cardano_serialization_lib::error::{DeserializeError};
-use cardano_serialization_lib::metadata::{TransactionMetadatum};
+use cardano_serialization_lib::metadata::{TransactionMetadatum, MetadataList};
 
 impl ToFromBytes for TransactionMetadatum {
   fn to_bytes(&self) -> Vec<u8> {
@@ -33,4 +33,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionMetad
   env: JNIEnv, _: JObject, bytes: jbyteArray
 ) -> jobject {
   from_bytes::<TransactionMetadatum>(env, bytes)
+}
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionMetadatumNewList(
+  env: JNIEnv, _: JObject, metadata_list_ptr: JRPtr
+) -> jobject {
+  handle_exception_result(|| {
+    let metadata_list = metadata_list_ptr.rptr(&env)?;
+    metadata_list
+      .typed_ref::<MetadataList>()
+      .map(|metadata_list| TransactionMetadatum::new_list(metadata_list))
+      .and_then(|transaction_metadatum| transaction_metadatum.rptr().jptr(&env))
+  })
+  .jresult(&env)
 }

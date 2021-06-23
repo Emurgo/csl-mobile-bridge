@@ -338,8 +338,11 @@ final class Native {
     public final native Result<Long> metadataListLen(RPtr metadataList);
     public final native Result<RPtr> metadataListGet(RPtr metadataList, long index);
     public final native Result<Void> metadataListAdd(RPtr metadataList, RPtr item);
+    public final native Result<byte[]> metadataListToBytes(RPtr metadataList);
+    public final native Result<RPtr> metadataListFromBytes(byte[] bytes);
 
     // TransactionMetadatum
+    public final native Result<RPtr> transactionMetadatumNewList(RPtr metadataList);
     public final native Result<byte[]> transactionMetadatumToBytes(RPtr transactionMetadatum);
     public final native Result<RPtr> transactionMetadatumFromBytes(byte[] bytes);
 

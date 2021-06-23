@@ -2639,7 +2639,40 @@ RCT_EXPORT_METHOD(metadataListAdd:(nonnull NSString *)metadataListPtr withItem:(
     }] exec:@[metadataListPtr, item] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(metadataListToBytes:(nonnull NSString *)metadataListPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* metadataListPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr metadataList = [metadataListPtr rPtr];
+        return metadata_list_to_bytes(tx, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:metadataListPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(metadataListFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
+        RPtr result;
+        NSData* data = [NSData fromBase64:bytesStr];
+        return metadata_list_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:bytesStr andResolve:resolve orReject:reject];
+}
+
 // TransactionMetadatum
+
+RCT_EXPORT_METHOD(transactionMetadatumNewList:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr metadata_list = [ptr rPtr];
+        return transaction_metadatum_new_list(metadata_list, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
 
 RCT_EXPORT_METHOD(transactionMetadatumToBytes:(nonnull NSString *)transactionMetadatumPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {

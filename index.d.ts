@@ -1479,6 +1479,17 @@ export class MetadataList extends Ptr {
   * @returns {Promise<void>}
   */
   add(item: TransactionMetadatum): Promise<void>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<MetadataList>}
+  */
+  static from_bytes(bytes: Uint8Array): Promise<MetadataList>;
 }
 
 export enum TransactionMetadatumKind {
@@ -1490,6 +1501,12 @@ export enum TransactionMetadatumKind {
 }
 
 export class TransactionMetadatum extends Ptr {
+  /**
+  * @param {MetadataList} hash
+  * @returns {Promise<TransactionMetadatum>}
+  */
+  static new_list(metadataList: MetadataList): Promise<TransactionMetadatum>;
+
   /**
   * @returns {Promise<Uint8Array>}
   */
