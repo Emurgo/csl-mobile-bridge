@@ -1,8 +1,9 @@
 use super::ptr_j::*;
 use super::utils::{to_bytes, from_bytes};
 use crate::utils::ToFromBytes;
-// use crate::panic::{handle_exception_result};
+use crate::panic::{handle_exception_result};
 use crate::ptr::RPtrRepresentable;
+use super::result::ToJniResult;
 use jni::objects::JObject;
 use jni::sys::{jobject, jbyteArray};
 use jni::JNIEnv;

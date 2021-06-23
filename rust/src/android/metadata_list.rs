@@ -1,13 +1,15 @@
 use super::primitive::ToPrimitiveObject;
 use super::ptr_j::*;
 use super::result::ToJniResult;
+use crate::utils::ToFromBytes;
 use super::utils::{to_bytes, from_bytes};
 use crate::panic::{handle_exception_result, Zip};
 use crate::ptr::RPtrRepresentable;
 use jni::objects::JObject;
-use jni::sys::{jobject, jlong};
+use jni::sys::{jobject, jlong, jbyteArray};
 use jni::JNIEnv;
 use cardano_serialization_lib::metadata::{MetadataList, TransactionMetadatum};
+use cardano_serialization_lib::error::{DeserializeError};
 
 impl ToFromBytes for MetadataList {
   fn to_bytes(&self) -> Vec<u8> {

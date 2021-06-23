@@ -1,6 +1,7 @@
 use super::result::CResult;
 use super::string::CharPtr;
 use super::utils::{to_bytes, from_bytes};
+use crate::utils::ToFromBytes;
 use crate::panic::{handle_exception, handle_exception_result, Zip};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::metadata::{MetadataList, TransactionMetadatum};

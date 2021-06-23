@@ -351,6 +351,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void privateKeyFromNormalBytes(String bytes, Promise promise) {
+        Native.I
+                .privateKeyFromNormalBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
+    @ReactMethod
     public final void privateKeyAsBytes(String prvPtr, Promise promise) {
         Native.I
                 .privateKeyAsBytes(new RPtr(prvPtr))

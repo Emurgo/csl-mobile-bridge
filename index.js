@@ -430,6 +430,15 @@ export class PrivateKey extends Ptr {
   }
 
   /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<PrivateKey>}
+  */
+  static async from_normal_bytes(bytes) {
+    const ret = await HaskellShelley.privateKeyFromNormalBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, PrivateKey);
+  }
+
+  /**
   * @returns {Promise<Uint8Array>}
   */
   async as_bytes() {

@@ -70,6 +70,7 @@ final class Native {
 
     // PrivateKey
     public final native Result<RPtr> privateKeyToPublic(RPtr privateKey);
+    public final native Result<RPtr> privateKeyFromNormalBytes(byte[] bytes);
     public final native Result<byte[]> privateKeyAsBytes(RPtr privateKey);
     public final native Result<RPtr> privateKeyFromExtendedBytes(byte[] bytes);
     public final native Result<RPtr> privateKeySign(RPtr privateKey, byte[] message);

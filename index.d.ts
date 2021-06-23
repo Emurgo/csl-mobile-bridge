@@ -269,6 +269,12 @@ export class PrivateKey extends Ptr {
   to_public(): Promise<PublicKey>;
 
   /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<PrivateKey>}
+  */
+  static from_normal_bytes(bytes: Uint8Array): Promise<PublicKey>;
+
+  /**
   * @returns {Promise<Uint8Array>}
   */
   as_bytes(): Promise<Uint8Array>;
