@@ -729,14 +729,8 @@
     minimist "^1.2.0"
 
 "@emurgo/react-native-haskell-shelley@link:..":
-<<<<<<< HEAD
-  version "1.1.4"
-  dependencies:
-    base-64 "0.1.0"
-=======
   version "0.0.0"
   uid ""
->>>>>>> fcfe197... add tests for Catalyst-related functions
 
 "@hapi/address@2.x.x":
   version "2.1.4"
