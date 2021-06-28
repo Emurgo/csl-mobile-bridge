@@ -1,6 +1,7 @@
-// use super::result::CResult;
+use super::result::CResult;
 use super::string::CharPtr;
-// use crate::panic::{handle_exception, handle_exception_result};
+use crate::panic::{handle_exception_result};
+use crate::ptr::RPtrRepresentable;
 use crate::ptr::{RPtr};
 use crate::utils::ToFromBytes;
 use super::utils::{to_bytes, from_bytes};
