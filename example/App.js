@@ -30,6 +30,7 @@ import stakeCertificates from './runtimeTests/stakeCertificates'
 import certificate from './runtimeTests/certificate'
 import baseAddress from './runtimeTests/baseAddress'
 import rewardAddress from './runtimeTests/rewardAddress'
+import enterpriseAddress from './runtimeTests/enterpriseAddress'
 import transactionInput from './runtimeTests/transactionInput'
 import transactionOutput from './runtimeTests/transactionOutput'
 import bootstrapWitness from './runtimeTests/bootstrapWitness'
@@ -58,6 +59,7 @@ const tests = [
   {name: 'stakeCertificates', testFn: stakeCertificates},
   {name: 'certificate', testFn: certificate},
   {name: 'baseAddress', testFn: baseAddress},
+  {name: 'enterpriseAddress', testFn: enterpriseAddress},
   {name: 'rewardAddress', testFn: rewardAddress},
   {name: 'transactionInput', testFn: transactionInput},
   {name: 'transactionOutput', testFn: transactionOutput},
