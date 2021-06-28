@@ -1559,6 +1559,20 @@ RCT_EXPORT_METHOD(baseAddressFromAddress:(nonnull NSString *)addrPtr withResolve
     }] exec:addrPtr andResolve:resolve orReject:reject];
 }
 
+// EnterpriseAddress
+
+RCT_EXPORT_METHOD(enterpriseAddressNew:(nonnull NSNumber *)network withPaymentCredential:(nonnull NSString *)payment withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        uintptr_t network = [[params objectAtIndex:0] unsignedIntegerValue];
+        RPtr payment = [[params objectAtIndex:1] rPtr];
+        return enterprise_address_new(network, payment, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[network, payment] andResolve:resolve orReject:reject];
+}
+
 // RewardAddress
 
 RCT_EXPORT_METHOD(rewardAddressNew:(nonnull NSNumber *)network withPaymentCredential:(nonnull NSString *)payment withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -2655,7 +2669,7 @@ RCT_EXPORT_METHOD(metadataListToBytes:(nonnull NSString *)metadataListPtr  withR
     [[CSafeOperation new:^NSString*(NSString* metadataListPtr, CharPtr* error) {
         DataPtr result;
         RPtr metadataList = [metadataListPtr rPtr];
-        return metadata_list_to_bytes(tx, &result, error)
+        return metadata_list_to_bytes(metadataList, &result, error)
             ? [[NSData fromDataPtr:&result] base64]
             : nil;
     }] exec:metadataListPtr andResolve:resolve orReject:reject];
