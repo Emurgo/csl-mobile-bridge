@@ -205,6 +205,9 @@ final class Native {
     public final native Result<RPtr> baseAddressToAddress(RPtr baseAddress);
     public final native Result<RPtr> baseAddressFromAddress(RPtr address);
 
+    // EnterpriseAddress
+    public final native Result<RPtr> enterpriseAddressNew(int network, RPtr payment);
+
     // RewardAddress
     public final native Result<RPtr> rewardAddressNew(int network, RPtr payment);
     public final native Result<RPtr> rewardAddressPaymentCred(RPtr baseAddress);

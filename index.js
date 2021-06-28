@@ -1356,6 +1356,19 @@ export class BaseAddress extends Ptr {
   }
 }
 
+export class EnterpriseAddress extends Ptr {
+  /**
+  * @param {number} network
+  * @param {StakeCredential} payment
+  * @returns {Promise<EnterpriseAddress>}
+  */
+  static async new(network, payment) {
+    const paymentPtr = Ptr._assertClass(payment, StakeCredential);
+    const ret = await HaskellShelley.enterpriseAddressNew(network, paymentPtr);
+    return Ptr._wrap(ret, EnterpriseAddress);
+  }
+}
+
 export class RewardAddress extends Ptr {
   /**
   * @param {number} network

@@ -1160,6 +1160,16 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // EnterpriseAddress
+
+    @ReactMethod
+    public final void enterpriseAddressNew(Integer network, String payment, Promise promise) {
+        Native.I
+                .enterpriseAddressNew(network, new RPtr(payment))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // RewardAddress
 
     @ReactMethod

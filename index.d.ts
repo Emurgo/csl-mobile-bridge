@@ -896,6 +896,15 @@ export class BaseAddress extends Ptr {
   static from_address(addr: Address): Promise<BaseAddress | undefined>;
 }
 
+export class EnterpriseAddress extends Ptr {
+  /**
+  * @param {number} network
+  * @param {StakeCredential} payment
+  * @returns {Promise<EnterpriseAddress>}
+  */
+  static new(network: number, payment: StakeCredential): Promise<EnterpriseAddress>;
+}
+
 export class RewardAddress extends Ptr {
   /**
   * @param {number} network

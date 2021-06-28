@@ -22,6 +22,7 @@ impl RPtrRepresentable for Certificate {}
 impl RPtrRepresentable for Certificates {}
 impl RPtrRepresentable for Ed25519Signature {}
 impl RPtrRepresentable for Ed25519KeyHash {}
+impl RPtrRepresentable for EnterpriseAddress {}
 impl RPtrRepresentable for GeneralTransactionMetadata {}
 impl RPtrRepresentable for Int {}
 impl RPtrRepresentable for LinearFee {}
