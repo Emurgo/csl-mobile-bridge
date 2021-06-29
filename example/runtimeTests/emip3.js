@@ -13,7 +13,8 @@ import {assert} from '../util'
 
 const test: () => void = async () => {
   const password = '70617373776f7264'
-  const salt = '50515253c0c1c2c3c4c5c6c750515253c0c1c2c3c4c5c6c750515253c0c1c2c3'
+  const salt =
+    '50515253c0c1c2c3c4c5c6c750515253c0c1c2c3c4c5c6c750515253c0c1c2c3'
   const nonce = '50515253c0c1c2c3c4c5c6c7'
   const data = '736f6d65206461746120746f20656e6372797074'
 
