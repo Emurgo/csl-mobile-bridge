@@ -23,6 +23,22 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
         return "HaskellShelley";
     }
 
+    // emip3
+
+    @ReactMethod
+    public final void encryptWithPassword(String password, String salt, String nonce, String data, Promise promise) {
+        Native.I
+                .encryptWithPassword(password, salt, nonce, data)
+                .pour(promise);
+    }
+
+    @ReactMethod
+    public final void decryptWithPassword(String password, String data, Promise promise) {
+        Native.I
+                .decryptWithPassword(password, data)
+                .pour(promise);
+    }
+
     // Utils
 
     @ReactMethod
