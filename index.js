@@ -51,6 +51,31 @@ class Ptr {
 }
 
 /**
+* @param {string} password
+* @param {string} salt
+* @param {string} nonce
+* @param {string} data
+* @returns {Promise<string>}
+*/
+export const encrypt_with_password = async (
+  password,
+  salt,
+  nonce,
+  data,
+) => {
+  return await HaskellShelley.encryptWithPassword(password, salt, nonce, data);
+};
+
+/**
+* @param {string} password
+* @param {string} data
+* @returns {Promise<string>}
+*/
+export const decrypt_with_password = async (password, data) => {
+  return await HaskellShelley.decryptWithPassword(password, data);
+};
+
+/**
 * @param {TransactionHash} txBodyHash
 * @param {ByronAddress} addr
 * @param {Bip32PrivateKey} key

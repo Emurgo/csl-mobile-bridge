@@ -9,6 +9,34 @@
 
 RCT_EXPORT_MODULE()
 
+// emip3
+
+RCT_EXPORT_METHOD(encryptWithPassword:(nonnull NSString *)password withSalt:(nonnull NSString *)salt withNonce:(nonnull NSString *)nonce andData:(nonnull NSString *)data withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        CharPtr passwordCharPtr = [[params objectAtIndex:0] charPtr];
+        CharPtr saltCharPtr = [[params objectAtIndex:1] charPtr];
+        CharPtr nonceCharPtr = [[params objectAtIndex:2] charPtr];
+        CharPtr dataCharPtr = [[params objectAtIndex:3] charPtr];
+        CharPtr result;
+        return emip3_encrypt_with_password(passwordCharPtr, saltCharPtr, nonceCharPtr, dataCharPtr, &result, error)
+            ? [NSString stringFromCharPtr:&result]
+            : nil;
+    }] exec:@[password, salt, nonce, data] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(decryptWithPassword:(nonnull NSString *)password withData:(nonnull NSString *)data withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        CharPtr passwordCharPtr = [[params objectAtIndex:0] charPtr];
+        CharPtr dataCharPtr = [[params objectAtIndex:1] charPtr];
+        CharPtr result;
+        return emip3_decrypt_with_password(passwordCharPtr, dataCharPtr, &result, error)
+            ? [NSString stringFromCharPtr:&result]
+            : nil;
+    }] exec:@[password, data] andResolve:resolve orReject:reject];
+}
+
 // Utils
 
 RCT_EXPORT_METHOD(makeIcarusBootstrapWitness:(nonnull NSString *)txBodyHashPtr withAddr:(nonnull NSString *)addrPtr andKey:(nonnull NSString *)keyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

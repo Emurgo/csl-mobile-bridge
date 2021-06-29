@@ -8,6 +8,28 @@ export class Ptr {
   free(): Promise<void>;
 }
 
+/**
+* @param {string} password
+* @param {string} salt
+* @param {string} nonce
+* @param {string} data
+* @returns {Promise<string>}
+*/
+export const encrypt_with_password: (
+  password: string,
+  salt: string,
+  nonce: string,
+  data: string,
+) => Promise<string>;
+
+/**
+* @param {string} password
+* @param {string} data
+* @returns {Promise<string>}
+*/
+export const decrypt_with_password: (password: string, data: string) =>
+  Promise<string>;
+
 export type TransactionIndex = number;
 
 export const make_icarus_bootstrap_witness: (

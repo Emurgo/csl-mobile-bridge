@@ -15,6 +15,10 @@ final class Native {
 
     private native void initLibrary();
 
+    // emip3
+    public final native Result<String> encryptWithPassword(String password, String salt, String nonce, String data);
+    public final native Result<String> decryptWithPassword(String password, String data);
+
     // Utils
     public final native Result<RPtr> makeIcarusBootstrapWitness(RPtr txBodyHash, RPtr addr, RPtr key);
     public final native Result<RPtr> makeVkeyWitness(RPtr txBodyHash, RPtr sk);

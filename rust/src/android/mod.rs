@@ -13,6 +13,7 @@ mod certificate;
 mod certificates;
 mod ed25519_signature;
 mod ed25519_key_hash;
+mod emip3;
 mod enterprise_address;
 mod general_transaction_metadata;
 mod int;

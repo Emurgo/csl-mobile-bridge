@@ -41,6 +41,7 @@ import transaction from './runtimeTests/transaction'
 import transactionBuilder from './runtimeTests/transactionBuilder'
 import txMetadata from './runtimeTests/txMetadata'
 import catalyst from './runtimeTests/catalyst'
+import emip3 from './runtimeTests/emip3'
 
 const tests = [
   {name: 'misc', testFn: misc},
@@ -71,6 +72,7 @@ const tests = [
   {name: 'transactionBuilder', testFn: transactionBuilder},
   {name: 'txMetadata', testFn: txMetadata},
   {name: 'catalyst', testFn: catalyst},
+  {name: 'emip3', testFn: emip3},
 ]
 
 let failed = 0
