@@ -13,6 +13,28 @@ declare export class Ptr {
    */
   free(): Promise<void>;
 }
+/**
+ * @param {string} password
+ * @param {string} salt
+ * @param {string} nonce
+ * @param {string} data
+ * @returns {Promise<string>}
+ */
+declare export var encrypt_with_password: (
+  password: string,
+  salt: string,
+  nonce: string,
+  data: string
+) => Promise<string>;
+/**
+ * @param {string} password
+ * @param {string} data
+ * @returns {Promise<string>}
+ */
+declare export var decrypt_with_password: (
+  password: string,
+  data: string
+) => Promise<string>;
 export type TransactionIndex = number;
 declare export var make_icarus_bootstrap_witness: (
   txBodyHash: TransactionHash,
@@ -863,6 +885,17 @@ declare export class BaseAddress mixins Ptr {
    * @returns {Promise<BaseAddress | void>}
    */
   static from_address(addr: Address): Promise<BaseAddress | void>;
+}
+declare export class EnterpriseAddress mixins Ptr {
+  /**
+   * @param {number} network
+   * @param {StakeCredential} payment
+   * @returns {Promise<EnterpriseAddress>}
+   */
+  static new(
+    network: number,
+    payment: StakeCredential
+  ): Promise<EnterpriseAddress>;
 }
 declare export class RewardAddress mixins Ptr {
   /**
