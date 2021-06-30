@@ -771,6 +771,18 @@ RCT_EXPORT_METHOD(byronAddressAttributes:(nonnull NSString *)ptr withResolve:(RC
     }] exec:ptr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(byronAddressIcarusFromKey:(nonnull NSString *)keyPtr withMagic:(nonnull NSNumber *)protocolMagic withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr key = [[params objectAtIndex:0] rPtr];
+        int64_t magic = [[params objectAtIndex:1] longLongValue];
+        return byron_address_icarus_from_key(key, magic, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[keyPtr, protocolMagic] andResolve:resolve orReject:reject];
+}
+
 // Address
 
 RCT_EXPORT_METHOD(addressToBytes:(nonnull NSString *)addressPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

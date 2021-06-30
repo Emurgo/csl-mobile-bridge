@@ -1,6 +1,10 @@
 // @flow
 
-import {ByronAddress, Address} from '@emurgo/react-native-haskell-shelley'
+import {
+  ByronAddress,
+  Address,
+  Bip32PublicKey,
+} from '@emurgo/react-native-haskell-shelley'
 
 import {assert} from '../util'
 
@@ -53,6 +57,25 @@ const test: () => void = async () => {
     byronAddressAttributesHex instanceof String ||
       typeof byronAddressAttributesHex === 'string',
     'ByronAddress::attributes()',
+  )
+
+  // icarus from key
+  const bip32AccountKey = await Bip32PublicKey.from_bytes(
+    Buffer.from(
+      'fd5f660313245449df2c6d44e7276285cf1e2c5ba0bc8b4deda538cea2854684' +
+        '659478fd609f99c5aa9a35db48de3a6b7a1f0c2561023e01a0e0e2877aa14ead',
+      'hex',
+    ),
+  )
+  const addrKey = await (await bip32AccountKey.derive(0)).derive(0)
+  const byronAddrFromKey = await ByronAddress.icarus_from_key(
+    addrKey,
+    764824073,
+  )
+  assert(
+    (await byronAddrFromKey.to_base58()) ===
+      'Ae2tdPwUPEZG1E5qPwzH4XZqc9ToVzBC8n1YXwyojGSYbNnfAAZxx5Ckw25',
+    'ByronAddress::icarus_from_key()',
   )
 }
 

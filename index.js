@@ -14,7 +14,6 @@ function b64FromUint8Array(uint8Array) {
   return base64_encode(String.fromCharCode.apply(null, uint8Array));
 }
 
-
 class Ptr {
   static _wrap(ptr, klass) {
     if (ptr === '0') {
@@ -723,6 +722,17 @@ export class ByronAddress extends Ptr {
   async attributes() {
     const b64 = await  HaskellShelley.byronAddressAttributes(this.ptr);
     return Uint8ArrayFromB64(b64);
+  }
+
+  /**
+   * @param {Bip32PublicKey} key
+   * @param {number} protocolMagic
+   * @returns {Promise<ByronAddress>}
+   */
+  static async icarus_from_key(key, protocolMagic) {
+    const keyPtr = Ptr._assertClass(key, Bip32PublicKey);
+    const ret = await HaskellShelley.byronAddressIcarusFromKey(keyPtr, protocolMagic);
+    return Ptr._wrap(ret, ByronAddress);
   }
 }
 

@@ -585,6 +585,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    @ReactMethod
+    public final void byronAddressIcarusFromKey(String key, Double protocolMagic, Promise promise) {
+        Native.I
+                .byronAddressIcarusFromKey(new RPtr(key), protocolMagic.longValue())
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // Address
 
     @ReactMethod

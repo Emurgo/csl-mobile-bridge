@@ -1,9 +1,11 @@
+use std::convert::TryFrom;
 use super::result::CResult;
 use super::data::DataPtr;
 use super::string::*;
 use crate::panic::*;
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::address::{Address, ByronAddress};
+use cardano_serialization_lib::crypto::Bip32PublicKey;
 
 #[no_mangle]
 pub unsafe extern "C" fn byron_address_to_base58(
@@ -77,4 +79,18 @@ pub unsafe extern "C" fn byron_address_attributes(
   handle_exception_result(|| rptr.typed_ref::<ByronAddress>().map(|byron_addr| byron_addr.attributes()))
   .map(|bytes| bytes.into())
   .response(result, error)
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn byron_address_icarus_from_key(
+  key_rptr: RPtr, protocol_magic: i64, result: &mut RPtr, error: &mut CharPtr
+) -> bool {
+  handle_exception_result(|| {
+    let magic_u32 = u32::try_from(protocol_magic).map_err(|err| err.to_string())?;
+    key_rptr
+      .typed_ref::<Bip32PublicKey>()
+      .map(|key| ByronAddress::icarus_from_key(key, magic_u32))
+    })
+    .map(|byron_address| byron_address.rptr())
+    .response(result, error)
 }

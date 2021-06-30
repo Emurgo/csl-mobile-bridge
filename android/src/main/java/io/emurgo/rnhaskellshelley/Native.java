@@ -107,6 +107,7 @@ final class Native {
     public final native Result<RPtr> byronAddressToAddress(RPtr byronAddress);
     public final native Result<Long> byronAddressByronProtocolMagic(RPtr byronAddress);
     public final native Result<byte[]> byronAddressAttributes(RPtr byronAddress);
+    public final native Result<RPtr> byronAddressIcarusFromKey(RPtr key, long protocolMagic);
 
     // Address
     public final native Result<byte[]> addressToBytes(RPtr address);

@@ -484,6 +484,13 @@ export class ByronAddress extends Ptr {
   * @returns {Promise<Uint8Array>}
   */
   attributes(): Promise<Uint8Array>;
+
+  /**
+   * @param {Bip32PublicKey} key
+   * @param {number} protocolMagic
+   * @returns {Promise<ByronAddress>}
+   */
+  icarus_from_key(key: Bip32PublicKey, protocolMagic: number): Promise<ByronAddress>;
 }
 
 export class Address extends Ptr {
