@@ -9,17 +9,20 @@ use jni::sys::{jobject, jbyteArray};
 use jni::JNIEnv;
 use cardano_serialization_lib::error::{DeserializeError};
 use cardano_serialization_lib::utils::{BigNum};
-use cardano_serialization_lib::metadata::{TransactionMetadata, GeneralTransactionMetadata};
+use cardano_serialization_lib::metadata::{
+  GeneralTransactionMetadata,
+  AuxiliaryData,
+};
 
 pub type TransactionMetadatumLabel = BigNum;
 
-impl ToFromBytes for TransactionMetadata {
+impl ToFromBytes for AuxiliaryData {
   fn to_bytes(&self) -> Vec<u8> {
     self.to_bytes()
   }
 
-  fn from_bytes(bytes: Vec<u8>) -> Result<TransactionMetadata, DeserializeError> {
-    TransactionMetadata::from_bytes(bytes)
+  fn from_bytes(bytes: Vec<u8>) -> Result<AuxiliaryData, DeserializeError> {
+    AuxiliaryData::from_bytes(bytes)
   }
 }
 
@@ -41,30 +44,34 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionMetad
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionMetadataNew(
-  env: JNIEnv, _: JObject, general_ptr: JRPtr
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_txAuxiliaryDataNew(
+  env: JNIEnv, _: JObject, metadata_ptr: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
-    let general = general_ptr.rptr(&env)?;
-    general
+    let metadata = metadata_ptr.rptr(&env)?;
+    metadata
       .typed_ref::<GeneralTransactionMetadata>()
-      .map(|general| TransactionMetadata::new(general))
-      .and_then(|metadata| metadata.rptr().jptr(&env))
+      .map(|metadata| { 
+        let tx_aux_data = AuxiliaryData::new();
+        tx_aux_data::set_metadata(&metadata);
+        tx_aux_data 
+      })
+      .and_then(|tx_aux_data| tx_aux_data.rptr().jptr(&env))
   })
   .jresult(&env)
 }
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionMetadataGeneral(
-  env: JNIEnv, _: JObject, ptr: JRPtr
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_txAuxiliaryDataMetadata(
+  env: JNIEnv, _: JObject, tx_aux_data_ptr: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
-    let tx_metadata = ptr.rptr(&env)?;
-    tx_metadata
-      .typed_ref::<TransactionMetadata>()
-      .map(|tx_metadata| tx_metadata.general())
-      .and_then(|general| general.rptr().jptr(&env))
+    let tx_aux_data = tx_aux_data_ptr.rptr(&env)?;
+    tx_aux_data
+      .typed_ref::<AuxiliaryData>()
+      .map(|tx_aux_data| tx_aux_data.metadata())
+      .and_then(|metadata| metadata.rptr().jptr(&env))
   })
   .jresult(&env)
 }
