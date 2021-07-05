@@ -118,3 +118,12 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBodyW
   })
   .jresult(&env)
 }
+
+// TODO: implement for alonzo
+// updates
+// metadata_hash
+// validity_start_interval
+// multiassets
+// collateral
+// required_signers
+// network_id

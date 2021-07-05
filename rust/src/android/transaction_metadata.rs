@@ -28,23 +28,23 @@ impl ToFromBytes for AuxiliaryData {
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionMetadataToBytes(
-  env: JNIEnv, _: JObject, transaction_metadata: JRPtr
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_auxiliaryDataToBytes(
+  env: JNIEnv, _: JObject, auxiliary_data: JRPtr
 ) -> jobject {
-  to_bytes::<TransactionMetadata>(env, transaction_metadata)
+  to_bytes::<AuxiliaryData>(env, auxiliary_data)
 }
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionMetadataFromBytes(
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_auxiliaryDataFromBytes(
   env: JNIEnv, _: JObject, bytes: jbyteArray
 ) -> jobject {
-  from_bytes::<TransactionMetadata>(env, bytes)
+  from_bytes::<AuxiliaryData>(env, bytes)
 }
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_txAuxiliaryDataNew(
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_auxiliaryDataNew(
   env: JNIEnv, _: JObject, metadata_ptr: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
@@ -63,7 +63,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_txAuxiliaryDataN
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_txAuxiliaryDataMetadata(
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_auxiliaryDataMetadata(
   env: JNIEnv, _: JObject, tx_aux_data_ptr: JRPtr
 ) -> jobject {
   handle_exception_result(|| {

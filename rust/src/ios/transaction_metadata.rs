@@ -22,21 +22,21 @@ impl ToFromBytes for AuxiliaryData {
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn tx_auxiliary_data_to_bytes(
+pub unsafe extern "C" fn auxiliary_data_to_bytes(
   tx_auxiliary_data: RPtr, result: &mut DataPtr, error: &mut CharPtr
 ) -> bool {
   to_bytes::<AuxiliaryData>(tx_auxiliary_data, result, error)
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn tx_auxiliary_data_from_bytes(
+pub unsafe extern "C" fn auxiliary_data_from_bytes(
   data: *const u8, len: usize, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   from_bytes::<AuxiliaryData>(data, len, result, error)
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn tx_auxiliary_data_new(metadata: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn auxiliary_data_new(metadata: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| {
     metadata
     .typed_ref::<GeneralTransactionMetadata>()
@@ -51,7 +51,7 @@ pub unsafe extern "C" fn tx_auxiliary_data_new(metadata: RPtr, result: &mut RPtr
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn tx_auxiliary_data_metadata(tx_aux_data: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn auxiliary_data_metadata(tx_aux_data: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| {
     tx_aux_data.typed_ref::<AuxiliaryData>()
       .map(|tx_aux_data| tx_aux_data.metadata())

@@ -8,7 +8,7 @@ use jni::objects::JObject;
 use jni::sys::{jobject, jbyteArray};
 use jni::JNIEnv;
 use cardano_serialization_lib::{Transaction, TransactionBody, TransactionWitnessSet};
-use cardano_serialization_lib::metadata::TransactionMetadata;
+use cardano_serialization_lib::metadata::AuxiliaryData;
 use cardano_serialization_lib::error::{DeserializeError};
 
 impl ToFromBytes for Transaction {
@@ -69,18 +69,18 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionNew(
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionNewWithMetadata(
-  env: JNIEnv, _: JObject, body: JRPtr, witness_set: JRPtr, metadata: JRPtr
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionNewWithAuxiliaryData(
+  env: JNIEnv, _: JObject, body: JRPtr, witness_set: JRPtr, auxiliary_data: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
     let body = body.rptr(&env)?;
     let witness_set = witness_set.rptr(&env)?;
-    let metadata = metadata.owned::<TransactionMetadata>(&env);
+    let auxiliary_data = auxiliary_data.owned::<AuxiliaryData>(&env);
     body.typed_ref::<TransactionBody>()
     .zip(witness_set.typed_ref::<TransactionWitnessSet>())
     .and_then(
       |(body, witness_set)| {
-        Transaction::new(body, witness_set, Some(metadata?)).rptr().jptr(&env)
+        Transaction::new(body, witness_set, Some(auxiliary_data?)).rptr().jptr(&env)
       }
     )
   })
