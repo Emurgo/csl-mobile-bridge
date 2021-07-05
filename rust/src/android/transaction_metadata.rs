@@ -52,11 +52,11 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_auxiliaryDataNew
     metadata
       .typed_ref::<GeneralTransactionMetadata>()
       .map(|metadata| { 
-        let tx_aux_data = AuxiliaryData::new();
-        tx_aux_data::set_metadata(&metadata);
-        tx_aux_data 
+        let auxiliary_data = AuxiliaryData::new();
+        auxiliary_data::set_metadata(&metadata);
+        auxiliary_data 
       })
-      .and_then(|tx_aux_data| tx_aux_data.rptr().jptr(&env))
+      .and_then(|auxiliary_data| auxiliary_data.rptr().jptr(&env))
   })
   .jresult(&env)
 }
@@ -64,13 +64,13 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_auxiliaryDataNew
 #[allow(non_snake_case)]
 #[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_auxiliaryDataMetadata(
-  env: JNIEnv, _: JObject, tx_aux_data_ptr: JRPtr
+  env: JNIEnv, _: JObject, auxiliary_data_ptr: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
-    let tx_aux_data = tx_aux_data_ptr.rptr(&env)?;
-    tx_aux_data
+    let auxiliary_data = auxiliary_data_ptr.rptr(&env)?;
+    auxiliary_data
       .typed_ref::<AuxiliaryData>()
-      .map(|tx_aux_data| tx_aux_data.metadata())
+      .map(|auxiliary_data| auxiliary_data.metadata())
       .and_then(|metadata| metadata.rptr().jptr(&env))
   })
   .jresult(&env)
