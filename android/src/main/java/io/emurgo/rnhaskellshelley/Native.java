@@ -300,7 +300,7 @@ final class Native {
     // Transaction
     public final native Result<RPtr> transactionBody(RPtr tx);
     public final native Result<RPtr> transactionNew(RPtr body, RPtr witnessSet);
-    public final native Result<RPtr> transactionNewWithMetadata(RPtr body, RPtr witnessSet, RPtr metadata);
+    public final native Result<RPtr> transactionNewWithAuxiliaryData(RPtr body, RPtr witnessSet, RPtr auxiliary);
     public final native Result<byte[]> transactionToBytes(RPtr Transaction);
     public final native Result<RPtr> transactionFromBytes(byte[] bytes);
 
@@ -317,7 +317,7 @@ final class Native {
     public final native Result<Void> transactionBuilderSetValidityStartInterval(RPtr txBuilder, long vsi);
     public final native Result<Void> transactionBuilderSetCerts(RPtr txBuilder, RPtr certs);
     public final native Result<Void> transactionBuilderSetWithdrawals(RPtr txBuilder, RPtr withdrawals);
-    public final native Result<Void> transactionBuilderSetMetadata(RPtr txBuilder, RPtr metadata);
+    public final native Result<Void> transactionBuilderSetAuxiliaryData(RPtr txBuilder, RPtr auxiliary);
     public final native Result<RPtr> transactionBuilderNew(RPtr linearFee, RPtr minimumUtxoVal, RPtr poolDeposit, RPtr keyDeposit);
     public final native Result<RPtr> transactionBuilderGetExplicitInput(RPtr txBuilder);
     public final native Result<RPtr> transactionBuilderGetImplicitInput(RPtr txBuilder);
@@ -372,11 +372,11 @@ final class Native {
     public final native Result<RPtr> generalTransactionMetadataGet(RPtr generalTransactionMetadata, RPtr key);
     public final native Result<RPtr> generalTransactionMetadataKeys(RPtr generalTransactionMetadata);
 
-    // TransactionMetadata
-    public final native Result<byte[]> transactionMetadataToBytes(RPtr transactionMetadata);
-    public final native Result<RPtr> transactionMetadataFromBytes(byte[] bytes);
-    public final native Result<RPtr> transactionMetadataNew(RPtr general);
-    public final native Result<RPtr> transactionMetadataGeneral(RPtr transactionMetadata);
+    // AuxiliaryData
+    public final native Result<byte[]> auxiliaryDataToBytes(RPtr auxiliary);
+    public final native Result<RPtr> auxiliaryDataFromBytes(byte[] bytes);
+    public final native Result<RPtr> auxiliaryDataNew(RPtr metadata);
+    public final native Result<RPtr> auxiliaryDataMetadata(RPtr auxiliary);
 
     public final native void ptrFree(RPtr ptr);
 }
