@@ -1913,18 +1913,18 @@ export class Transaction extends Ptr {
   /**
   * @param {TransactionBody} body
   * @param {TransactionWitnessSet} witnessSet
-  * @param {TransactionMetadata | void} metadata
+  * @param {AuxiliaryData | void} auxiliary
   * @returns {Promise<Transaction>}
   */
-  static async new(body, witnessSet, metadata) {
+  static async new(body, witnessSet, auxiliary) {
     const bodyPtr = Ptr._assertClass(body, TransactionBody);
     const witnessSetPtr = Ptr._assertClass(witnessSet, TransactionWitnessSet);
     let ret;
-    if (metadata == null) {
+    if (auxiliary == null) {
       ret = await HaskellShelley.transactionNew(bodyPtr, witnessSetPtr);
     } else {
-      const metadataPtr = Ptr._assertClass(metadata, TransactionMetadata);
-      ret = await HaskellShelley.transactionNewWithMetadata(bodyPtr, witnessSetPtr, metadataPtr);
+      const auxiliaryPtr = Ptr._assertClass(auxiliary, AuxiliaryData);
+      ret = await HaskellShelley.transactionNewWithAuxiliaryData(bodyPtr, witnessSetPtr, auxiliaryPtr);
     }
     return Ptr._wrap(ret, Transaction);
   }
@@ -2097,12 +2097,12 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
-  * @param {TransactionMetadata} metadata
+  * @param {AuxiliaryData} auxiliary
   * @returns {Promise<void>}
   */
-  async set_metadata(metadata) {
-    const metadataPtr = Ptr._assertClass(metadata, TransactionMetadata);
-    return HaskellShelley.transactionBuilderSetMetadata(this.ptr, metadataPtr);
+  async set_auxiliary_data(auxiliary) {
+    const auxiliaryPtr = Ptr._assertClass(auxiliary, AuxiliaryData);
+    return HaskellShelley.transactionBuilderSetAuxiliaryData(this.ptr, auxiliaryPtr);
   }
 
   /**
@@ -2495,39 +2495,39 @@ export class GeneralTransactionMetadata extends Ptr {
   }
 }
 
-export class TransactionMetadata extends Ptr {
+export class AuxiliaryData extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
   */
   async to_bytes() {
-    const b64 = await HaskellShelley.transactionMetadataToBytes(this.ptr);
+    const b64 = await HaskellShelley.auxiliaryDataToBytes(this.ptr);
     return Uint8ArrayFromB64(b64);
   }
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<TransactionMetadata>}
+  * @returns {Promise<AuxiliaryData>}
   */
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.transactionMetadataFromBytes(b64FromUint8Array(bytes));
-    return Ptr._wrap(ret, TransactionMetadata);
+    const ret = await HaskellShelley.auxiliaryDataFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, AuxiliaryData);
   }
 
   /**
   * @param {GeneralTransactionMetadata} general
-  * @returns {Promise<TransactionMetadata>}
+  * @returns {Promise<AuxiliaryData>}
   */
-  static async new(general) {
-    const generalPtr = Ptr._assertClass(general, GeneralTransactionMetadata);
-    const ret = await HaskellShelley.transactionMetadataNew(generalPtr);
-    return Ptr._wrap(ret, TransactionMetadata);
+  static async new(metadata) {
+    const metadataPtr = Ptr._assertClass(metadata, GeneralTransactionMetadata);
+    const ret = await HaskellShelley.auxiliaryDataNew(metadataPtr);
+    return Ptr._wrap(ret, AuxiliaryData);
   }
 
   /**
   * @returns {Promise<GeneralTransactionMetadata>}
   */
-  async general() {
-    const ret = await HaskellShelley.transactionMetadataGeneral(this.ptr);
+  async metadata() {
+    const ret = await HaskellShelley.auxiliaryDataMetadata(this.ptr);
     return Ptr._wrap(ret, GeneralTransactionMetadata);
   }
 }
