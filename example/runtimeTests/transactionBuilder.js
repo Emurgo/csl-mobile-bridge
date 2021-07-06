@@ -20,7 +20,7 @@ import {
   StakeRegistration,
   Certificate,
   GeneralTransactionMetadata,
-  TransactionMetadata,
+  AuxiliaryData,
 } from '@emurgo/react-native-haskell-shelley'
 
 import {assert} from '../util'
@@ -99,9 +99,9 @@ const test: () => void = async () => {
   await txBuilder.set_ttl(TTL)
 
   // add an empty metadata object
-  const generalTxMeta = await GeneralTransactionMetadata.new()
-  const txMeta = await TransactionMetadata.new(generalTxMeta)
-  await txBuilder.set_metadata(txMeta)
+  const metadata = await GeneralTransactionMetadata.new()
+  const auxiliaryData = await AuxiliaryData.new(metadata)
+  await txBuilder.set_auxiliary_data(auxiliaryData)
 
   const explicitIn = await txBuilder.get_explicit_input()
   const explicitInCoin = await explicitIn.coin()
