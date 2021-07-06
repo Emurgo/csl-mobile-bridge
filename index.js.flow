@@ -467,6 +467,16 @@ declare export class ByronAddress mixins Ptr {
    * @returns {Promise<Uint8Array>}
    */
   attributes(): Promise<Uint8Array>;
+
+  /**
+   * @param {Bip32PublicKey} key
+   * @param {number} protocolMagic
+   * @returns {Promise<ByronAddress>}
+   */
+  icarus_from_key(
+    key: Bip32PublicKey,
+    protocolMagic: number
+  ): Promise<ByronAddress>;
 }
 declare export class Address mixins Ptr {
   /**
@@ -1221,13 +1231,13 @@ declare export class Transaction mixins Ptr {
   /**
    * @param {TransactionBody} body
    * @param {TransactionWitnessSet} witnessSet
-   * @param {TransactionMetadata | void} metadata
+   * @param {AuxiliaryData | void} auxiliary
    * @returns {Promise<Transaction>}
    */
   static new(
     body: TransactionBody,
     witnessSet: TransactionWitnessSet,
-    metadata?: TransactionMetadata
+    auxiliary?: AuxiliaryData
   ): Promise<Transaction>;
 }
 declare export class TransactionBuilder mixins Ptr {
@@ -1323,10 +1333,10 @@ declare export class TransactionBuilder mixins Ptr {
   set_withdrawals(withdrawals: Withdrawals): Promise<void>;
 
   /**
-   * @param {TransactionMetadata} metadata
+   * @param {AuxiliaryData} auxiliary
    * @returns {Promise<void>}
    */
-  set_metadata(metadata: TransactionMetadata): Promise<void>;
+  set_auxiliary_data(auxiliary: AuxiliaryData): Promise<void>;
 
   /**
    * @param {LinearFee} linearFee
@@ -1581,7 +1591,7 @@ declare export class GeneralTransactionMetadata mixins Ptr {
    */
   keys(): Promise<TransactionMetadatumLabels>;
 }
-declare export class TransactionMetadata mixins Ptr {
+declare export class AuxiliaryData mixins Ptr {
   /**
    * @returns {Promise<Uint8Array>}
    */
@@ -1589,20 +1599,20 @@ declare export class TransactionMetadata mixins Ptr {
 
   /**
    * @param {Uint8Array} bytes
-   * @returns {Promise<TransactionMetadata>}
+   * @returns {Promise<AuxiliaryData>}
    */
-  static from_bytes(bytes: any): Promise<TransactionMetadata>;
+  static from_bytes(bytes: any): Promise<AuxiliaryData>;
 
   /**
    * @param {GeneralTransactionMetadata} general
-   * @returns {Promise<TransactionMetadata>}
+   * @returns {Promise<AuxiliaryData>}
    */
-  static new(general: GeneralTransactionMetadata): Promise<TransactionMetadata>;
+  static new(metadata: GeneralTransactionMetadata): Promise<AuxiliaryData>;
 
   /**
    * @returns {Promise<GeneralTransactionMetadata>}
    */
-  general(): Promise<GeneralTransactionMetadata>;
+  metadata(): Promise<GeneralTransactionMetadata>;
 }
 declare export var MetadataJsonSchema: {|
   +NoConversions: 0, // 0
