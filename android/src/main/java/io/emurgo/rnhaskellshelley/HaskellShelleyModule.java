@@ -1662,9 +1662,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionNewWithMetadata(String body, String witnessSet, String metadata, Promise promise) {
+    public final void transactionNewWithAuxiliaryData(String body, String witnessSet, String auxiliary, Promise promise) {
         Native.I
-                .transactionNewWithMetadata(new RPtr(body), new RPtr(witnessSet), new RPtr(metadata))
+                .transactionNewWithAuxiliaryData(new RPtr(body), new RPtr(witnessSet), new RPtr(auxiliary))
                 .map(RPtr::toJs)
                 .pour(promise);
     }
@@ -1774,9 +1774,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionBuilderSetMetadata(String txBuilder, String metadata, Promise promise) {
+    public final void transactionBuilderSetAuxiliaryData(String txBuilder, String auxiliary, Promise promise) {
         Native.I
-                .transactionBuilderSetMetadata(new RPtr(txBuilder), new RPtr(metadata))
+                .transactionBuilderSetAuxiliaryData(new RPtr(txBuilder), new RPtr(auxiliary))
                 .pour(promise);
     }
 
@@ -2117,36 +2117,36 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
-    // TransactionMetadata
+    // AuxiliaryData
 
     @ReactMethod
-    public final void transactionMetadataToBytes(String transactionMetadata, Promise promise) {
+    public final void auxiliaryDataToBytes(String auxiliary, Promise promise) {
         Native.I
-                .transactionMetadataToBytes(new RPtr(transactionMetadata))
+                .auxiliaryDataToBytes(new RPtr(auxiliary))
                 .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
                 .pour(promise);
     }
 
     @ReactMethod
-    public final void transactionMetadataFromBytes(String bytes, Promise promise) {
+    public final void auxiliaryDataFromBytes(String bytes, Promise promise) {
         Native.I
-                .transactionMetadataFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+                .auxiliaryDataFromBytes(Base64.decode(bytes, Base64.DEFAULT))
                 .map(RPtr::toJs)
                 .pour(promise);
     }
 
     @ReactMethod
-    public final void transactionMetadataNew(String general, Promise promise) {
+    public final void auxiliaryDataNew(String metadata, Promise promise) {
         Native.I
-                .transactionMetadataNew(new RPtr(general))
+                .auxiliaryDataNew(new RPtr(metadata))
                 .map(RPtr::toJs)
                 .pour(promise);
     }
 
     @ReactMethod
-    public final void transactionMetadataGeneral(String transactionMetadata, Promise promise) {
+    public final void auxiliaryDataMetadata(String auxiliary, Promise promise) {
         Native.I
-                .transactionMetadataGeneral(new RPtr(transactionMetadata))
+                .auxiliaryDataMetadata(new RPtr(auxiliary))
                 .map(RPtr::toJs)
                 .pour(promise);
     }

@@ -1271,13 +1271,13 @@ export class Transaction extends Ptr {
   /**
   * @param {TransactionBody} body
   * @param {TransactionWitnessSet} witnessSet
-  * @param {TransactionMetadata | void} metadata
+  * @param {AuxiliaryData | void} auxiliary
   * @returns {Promise<Transaction>}
   */
   static new(
     body: TransactionBody,
     witnessSet: TransactionWitnessSet,
-    metadata?: TransactionMetadata,
+    auxiliary?: AuxiliaryData,
   ): Promise<Transaction>;
 }
 
@@ -1376,10 +1376,10 @@ export class TransactionBuilder extends Ptr {
   set_withdrawals(withdrawals: Withdrawals): Promise<void>;
 
   /**
-  * @param {TransactionMetadata} metadata
+  * @param {AuxiliaryData} auxiliary
   * @returns {Promise<void>}
   */
-  set_metadata(metadata: TransactionMetadata): Promise<void>;
+  set_auxiliary_data(auxiliary: AuxiliaryData): Promise<void>;
 
   /**
   * @param {LinearFee} linearFee
@@ -1644,7 +1644,7 @@ export class GeneralTransactionMetadata extends Ptr {
   keys(): Promise<TransactionMetadatumLabels>;
 }
 
-export class TransactionMetadata extends Ptr {
+export class AuxiliaryData extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
   */
@@ -1652,19 +1652,19 @@ export class TransactionMetadata extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<TransactionMetadata>}
+  * @returns {Promise<AuxiliaryData>}
   */
-  static from_bytes(bytes): Promise<TransactionMetadata>;
+  static from_bytes(bytes): Promise<AuxiliaryData>;
   /**
   * @param {GeneralTransactionMetadata} general
-  * @returns {Promise<TransactionMetadata>}
+  * @returns {Promise<AuxiliaryData>}
   */
-  static new(general: GeneralTransactionMetadata): Promise<TransactionMetadata>;
+  static new(metadata: GeneralTransactionMetadata): Promise<AuxiliaryData>;
 
   /**
   * @returns {Promise<GeneralTransactionMetadata>}
   */
-  general(): Promise<GeneralTransactionMetadata>;
+  metadata(): Promise<GeneralTransactionMetadata>;
 }
 
 export enum MetadataJsonSchema {

@@ -111,3 +111,12 @@ pub unsafe extern "C" fn transaction_body_withdrawals(
     .map(|withdrawals| withdrawals.rptr())
     .response(result, error)
 }
+
+// TODO: implement for alonzo
+// updates
+// metadata_hash
+// validity_start_interval
+// multiassets
+// collateral
+// required_signers
+// network_id

@@ -8,7 +8,7 @@ use jni::sys::{jlong, jobject, jboolean};
 use jni::JNIEnv;
 use std::convert::TryFrom;
 use cardano_serialization_lib::tx_builder::{TransactionBuilder};
-use cardano_serialization_lib::metadata::{TransactionMetadata};
+use cardano_serialization_lib::metadata::{AuxiliaryData};
 use cardano_serialization_lib::fees::{LinearFee};
 use cardano_serialization_lib::utils::{Coin, BigNum, Value};
 use cardano_serialization_lib::address::{Address, ByronAddress};
@@ -239,16 +239,16 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderSetMetadata(
-  env: JNIEnv, _: JObject, tx_builder: JRPtr, metadata: JRPtr
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderSetAuxiliaryData(
+  env: JNIEnv, _: JObject, tx_builder: JRPtr, auxiliary_data: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
     let tx_builder = tx_builder.rptr(&env)?;
-    let metadata = metadata.rptr(&env)?;
+    let auxiliary_data = auxiliary_data.rptr(&env)?;
     tx_builder
       .typed_ref::<TransactionBuilder>()
-      .zip(metadata.typed_ref::<TransactionMetadata>())
-      .map(|(tx_builder, metadata)| tx_builder.set_metadata(metadata))
+      .zip(auxiliary_data.typed_ref::<AuxiliaryData>())
+      .map(|(tx_builder, auxiliary_data)| tx_builder.set_auxiliary_data(auxiliary_data))
   })
   .map(|_| JObject::null())
   .jresult(&env)

@@ -7,7 +7,7 @@ use crate::panic::{handle_exception_result, Zip};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::error::{DeserializeError};
 use cardano_serialization_lib::{Transaction, TransactionBody, TransactionWitnessSet};
-use cardano_serialization_lib::metadata::TransactionMetadata;
+use cardano_serialization_lib::metadata::AuxiliaryData;
 
 impl ToFromBytes for Transaction {
   fn to_bytes(&self) -> Vec<u8> {
@@ -66,18 +66,18 @@ pub unsafe extern "C" fn transaction_new(
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn transaction_new_with_metadata(
-  body: RPtr, witness_set: RPtr, metadata: RPtr, result: &mut RPtr, error: &mut CharPtr
+pub unsafe extern "C" fn transaction_new_with_auxiliary_data(
+  body: RPtr, witness_set: RPtr, auxiliary_data: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
-    let metadata = metadata.owned::<TransactionMetadata>()?;
+    let auxiliary_data = auxiliary_data.owned::<AuxiliaryData>()?;
     body
       .typed_ref::<TransactionBody>()
       .zip(
         witness_set.typed_ref::<TransactionWitnessSet>()
       )
       .map(|(body, witness_set)| {
-        Transaction::new(body, witness_set, Some(metadata))
+        Transaction::new(body, witness_set, Some(auxiliary_data))
       })
     })
     .map(|tx| tx.rptr())

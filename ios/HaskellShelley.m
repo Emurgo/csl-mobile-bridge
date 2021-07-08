@@ -2257,17 +2257,17 @@ RCT_EXPORT_METHOD(transactionNew:(nonnull NSString *)bodyPtr withWitnessSet:(non
     }] exec:@[bodyPtr, witnessSetPtr] andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(transactionNewWithMetadata:(nonnull NSString *)bodyPtr withWitnessSet:(nonnull NSString *)witnessSetPtr andMetadata:(nonnull NSString *)metadataPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(transactionNewWithAuxiliaryData:(nonnull NSString *)bodyPtr withWitnessSet:(nonnull NSString *)witnessSetPtr andAuxiliaryData:(nonnull NSString *)auxiliaryDataPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr result;
         RPtr body = [[params objectAtIndex:0] rPtr];
         RPtr witnesses = [[params objectAtIndex:1] rPtr];
-        RPtr metadata = [[params objectAtIndex:2] rPtr];
-        return transaction_new_with_metadata(body, witnesses, metadata, &result, error)
+        RPtr auxiliary = [[params objectAtIndex:2] rPtr];
+        return transaction_new_with_auxiliary_data(body, witnesses, auxiliary, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
-    }] exec:@[bodyPtr, witnessSetPtr, metadataPtr] andResolve:resolve orReject:reject];
+    }] exec:@[bodyPtr, witnessSetPtr, auxiliaryDataPtr] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(transactionToBytes:(nonnull NSString *)txPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -2428,14 +2428,14 @@ RCT_EXPORT_METHOD(transactionBuilderSetWithdrawals:(nonnull NSString *)txBuilder
     }] exec:@[txBuilderPtr, withdrawalsPtr] andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(transactionBuilderSetMetadata:(nonnull NSString *)txBuilderPtr withMetadata:(nonnull NSString *)metadataPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(transactionBuilderSetAuxiliaryData:(nonnull NSString *)txBuilderPtr withAuxiliaryData:(nonnull NSString *)auxiliaryDataPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr txBuilder = [[params objectAtIndex:0] rPtr];
-        RPtr metadata = [[params objectAtIndex:1] rPtr];
-        transaction_builder_set_metadata(txBuilder, metadata, error);
+        RPtr auxiliary = [[params objectAtIndex:1] rPtr];
+        transaction_builder_set_auxiliary_data(txBuilder, auxiliary, error);
         return nil;
-    }] exec:@[txBuilderPtr, metadataPtr] andResolve:resolve orReject:reject];
+    }] exec:@[txBuilderPtr, auxiliaryDataPtr] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(transactionBuilderNew:(nonnull NSString *)linearFeePtr withMinUtxoVal:(nonnull NSString *)minimumUtxoValPtr withPoolDeposit:(nonnull NSString *)poolDepositPtr andKeyDeposit:(nonnull NSString *)keyDepositPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -2909,50 +2909,50 @@ RCT_EXPORT_METHOD(generalTransactionMetadataKeys:(nonnull NSString *)generalTran
     }] exec:generalTransactionMetadataPtr andResolve:resolve orReject:reject];
 }
 
-// TransactionMetadata
+// AuxiliaryData
 
-RCT_EXPORT_METHOD(transactionMetadataToBytes:(nonnull NSString *)transactionMetadataPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(auxiliaryDataToBytes:(nonnull NSString *)auxiliaryDataPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
-    [[CSafeOperation new:^NSString*(NSString* transactionMetadataPtr, CharPtr* error) {
+    [[CSafeOperation new:^NSString*(NSString* auxiliaryDataPtr, CharPtr* error) {
         DataPtr result;
-        RPtr transactionMetadata = [transactionMetadataPtr rPtr];
-        return transaction_metadata_to_bytes(transactionMetadata, &result, error)
+        RPtr auxiliaryData = [auxiliaryDataPtr rPtr];
+        return auxiliary_data_to_bytes(auxiliaryData, &result, error)
             ? [[NSData fromDataPtr:&result] base64]
             : nil;
-    }] exec:transactionMetadataPtr andResolve:resolve orReject:reject];
+    }] exec:auxiliaryDataPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(transactionMetadataFromBytes:(nonnull NSString *)bytesStr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(auxiliaryDataFromBytes:(nonnull NSString *)bytesStr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* bytesStr, CharPtr* error) {
         RPtr result;
         NSData* data = [NSData fromBase64:bytesStr];
-        return transaction_metadata_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
+        return auxiliary_data_from_bytes((uint8_t*)data.bytes, data.length, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(transactionMetadataNew:(nonnull NSString *)generalPtr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(auxiliaryDataNew:(nonnull NSString *)metadataPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
-    [[CSafeOperation new:^NSString*(NSString* generalPtr, CharPtr* error) {
+    [[CSafeOperation new:^NSString*(NSString* metadataPtr, CharPtr* error) {
         RPtr result;
-        RPtr general = [generalPtr rPtr];
-        return transaction_metadata_new(general, &result, error)
+        RPtr metadata = [metadataPtr rPtr];
+        return auxiliary_data_new(metadata, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
-    }] exec:generalPtr andResolve:resolve orReject:reject];
+    }] exec:metadataPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(transactionMetadataGeneral:(nonnull NSString *)transactionMetadataPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(auxiliaryDataMetadata:(nonnull NSString *)auxiliaryDataPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
-    [[CSafeOperation new:^NSString*(NSString* transactionMetadataPtr, CharPtr* error) {
+    [[CSafeOperation new:^NSString*(NSString* auxiliaryDataPtr, CharPtr* error) {
         RPtr result;
-        RPtr transactionMetadata = [transactionMetadataPtr rPtr];
-        return transaction_metadata_general(transactionMetadata, &result, error)
+        RPtr auxiliaryData = [auxiliaryDataPtr rPtr];
+        return auxiliary_data_metadata(auxiliaryData, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
-    }] exec:transactionMetadataPtr andResolve:resolve orReject:reject];
+    }] exec:auxiliaryDataPtr andResolve:resolve orReject:reject];
 }
 
 // ptr
