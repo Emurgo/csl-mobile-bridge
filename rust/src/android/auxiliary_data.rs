@@ -52,8 +52,8 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_auxiliaryDataNew
     metadata
       .typed_ref::<GeneralTransactionMetadata>()
       .map(|metadata| { 
-        let auxiliary_data = AuxiliaryData::new();
-        auxiliary_data::set_metadata(&metadata);
+        let mut auxiliary_data = AuxiliaryData::new();
+        auxiliary_data.set_metadata(&metadata);
         auxiliary_data 
       })
       .and_then(|auxiliary_data| auxiliary_data.rptr().jptr(&env))
