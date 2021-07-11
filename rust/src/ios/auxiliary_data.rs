@@ -41,8 +41,8 @@ pub unsafe extern "C" fn auxiliary_data_new(metadata: RPtr, result: &mut RPtr, e
     metadata
     .typed_ref::<GeneralTransactionMetadata>()
       .map(|metadata| { 
-        let auxiliary_data = AuxiliaryData::new();
-        auxiliary_data::set_metadata(&metadata);
+        let mut auxiliary_data = AuxiliaryData::new();
+        auxiliary_data.set_metadata(&metadata);
         auxiliary_data 
       })
   })
