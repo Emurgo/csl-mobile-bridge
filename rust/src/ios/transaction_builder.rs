@@ -185,7 +185,7 @@ pub unsafe extern "C" fn transaction_builder_set_auxiliary_data(
     tx_builder
       .typed_ref::<TransactionBuilder>()
       .zip(auxiliary_data.typed_ref::<AuxiliaryData>())
-      .map(|(tx_builder, auxiliary_data)| tx_builder.set_auxiliary_metadata(auxiliary_data))
+      .map(|(tx_builder, auxiliary_data)| tx_builder.set_auxiliary_data(auxiliary_data))
   })
   .response(&mut (), error)
 }
