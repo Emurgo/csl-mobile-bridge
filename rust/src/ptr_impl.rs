@@ -11,6 +11,7 @@ impl RPtrRepresentable for Address {}
 impl RPtrRepresentable for AssetName {}
 impl RPtrRepresentable for AssetNames {}
 impl RPtrRepresentable for Assets {}
+impl RPtrRepresentable for AuxiliaryData {}
 impl RPtrRepresentable for BaseAddress {}
 impl RPtrRepresentable for BigNum {}
 impl RPtrRepresentable for Bip32PrivateKey {}
@@ -44,7 +45,6 @@ impl RPtrRepresentable for TransactionBody {}
 impl RPtrRepresentable for TransactionBuilder {}
 impl RPtrRepresentable for TransactionInput {}
 impl RPtrRepresentable for TransactionInputs {}
-impl RPtrRepresentable for TransactionMetadata {}
 impl RPtrRepresentable for TransactionMetadatum {}
 impl RPtrRepresentable for TransactionMetadatumLabels {}
 impl RPtrRepresentable for TransactionOutput {}

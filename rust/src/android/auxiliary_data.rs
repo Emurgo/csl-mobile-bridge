@@ -9,62 +9,69 @@ use jni::sys::{jobject, jbyteArray};
 use jni::JNIEnv;
 use cardano_serialization_lib::error::{DeserializeError};
 use cardano_serialization_lib::utils::{BigNum};
-use cardano_serialization_lib::metadata::{TransactionMetadata, GeneralTransactionMetadata};
+use cardano_serialization_lib::metadata::{
+  GeneralTransactionMetadata,
+  AuxiliaryData,
+};
 
 pub type TransactionMetadatumLabel = BigNum;
 
-impl ToFromBytes for TransactionMetadata {
+impl ToFromBytes for AuxiliaryData {
   fn to_bytes(&self) -> Vec<u8> {
     self.to_bytes()
   }
 
-  fn from_bytes(bytes: Vec<u8>) -> Result<TransactionMetadata, DeserializeError> {
-    TransactionMetadata::from_bytes(bytes)
+  fn from_bytes(bytes: Vec<u8>) -> Result<AuxiliaryData, DeserializeError> {
+    AuxiliaryData::from_bytes(bytes)
   }
 }
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionMetadataToBytes(
-  env: JNIEnv, _: JObject, transaction_metadata: JRPtr
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_auxiliaryDataToBytes(
+  env: JNIEnv, _: JObject, auxiliary_data: JRPtr
 ) -> jobject {
-  to_bytes::<TransactionMetadata>(env, transaction_metadata)
+  to_bytes::<AuxiliaryData>(env, auxiliary_data)
 }
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionMetadataFromBytes(
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_auxiliaryDataFromBytes(
   env: JNIEnv, _: JObject, bytes: jbyteArray
 ) -> jobject {
-  from_bytes::<TransactionMetadata>(env, bytes)
+  from_bytes::<AuxiliaryData>(env, bytes)
 }
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionMetadataNew(
-  env: JNIEnv, _: JObject, general_ptr: JRPtr
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_auxiliaryDataNew(
+  env: JNIEnv, _: JObject, metadata_ptr: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
-    let general = general_ptr.rptr(&env)?;
-    general
+    let metadata = metadata_ptr.rptr(&env)?;
+    metadata
       .typed_ref::<GeneralTransactionMetadata>()
-      .map(|general| TransactionMetadata::new(general))
-      .and_then(|metadata| metadata.rptr().jptr(&env))
+      .map(|metadata| { 
+        let mut auxiliary_data = AuxiliaryData::new();
+        auxiliary_data.set_metadata(&metadata);
+        auxiliary_data 
+      })
+      .and_then(|auxiliary_data| auxiliary_data.rptr().jptr(&env))
   })
   .jresult(&env)
 }
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionMetadataGeneral(
-  env: JNIEnv, _: JObject, ptr: JRPtr
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_auxiliaryDataMetadata(
+  env: JNIEnv, _: JObject, auxiliary_data_ptr: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
-    let tx_metadata = ptr.rptr(&env)?;
-    tx_metadata
-      .typed_ref::<TransactionMetadata>()
-      .map(|tx_metadata| tx_metadata.general())
-      .and_then(|general| general.rptr().jptr(&env))
+    let auxiliary_data = auxiliary_data_ptr.rptr(&env)?;
+    auxiliary_data
+      .typed_ref::<AuxiliaryData>()
+      .map(|auxiliary_data| auxiliary_data.metadata())
+      .and_then(|metadata| metadata.rptr().jptr(&env))
   })
   .jresult(&env)
 }

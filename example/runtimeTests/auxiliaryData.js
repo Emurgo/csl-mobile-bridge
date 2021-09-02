@@ -6,7 +6,7 @@ import {
   TransactionMetadatum,
   MetadataJsonSchema,
   GeneralTransactionMetadata,
-  TransactionMetadata,
+  AuxiliaryData,
   encode_json_str_to_metadatum,
   decode_metadatum_to_json_str,
 } from '@emurgo/react-native-haskell-shelley'
@@ -14,7 +14,7 @@ import {
 import {testVector, assert} from '../util'
 
 /**
- * Tests for TransactionMetadata and related structs
+ * Tests for AuxiliaryData and related structs
  */
 
 const test: () => void = async () => {
@@ -52,11 +52,11 @@ const test: () => void = async () => {
     'decode_metadatum_to_json_str error',
   )
 
-  const generalTxMetaPtr = await GeneralTransactionMetadata.new()
-  await generalTxMetaPtr.insert(await BigNum.from_str('1'), metadatumFromJson)
+  const metadataPtr = await GeneralTransactionMetadata.new()
+  await metadataPtr.insert(await BigNum.from_str('1'), metadatumFromJson)
 
-  const txMetaPtr = await TransactionMetadata.new(generalTxMetaPtr)
-  await txMetaPtr.free()
+  const auxiliaryDataPtr = await AuxiliaryData.new(metadataPtr)
+  await auxiliaryDataPtr.free()
 }
 
 export default test

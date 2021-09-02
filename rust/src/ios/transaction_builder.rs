@@ -3,7 +3,7 @@ use super::string::{CharPtr};
 use crate::panic::{handle_exception_result, Zip, ToResult};
 use crate::ptr::{RPtr, RPtrRepresentable};
 use cardano_serialization_lib::tx_builder::{TransactionBuilder};
-use cardano_serialization_lib::metadata::{TransactionMetadata};
+use cardano_serialization_lib::metadata::{AuxiliaryData};
 use cardano_serialization_lib::fees::{LinearFee};
 use cardano_serialization_lib::utils::{Coin, BigNum, Value};
 use cardano_serialization_lib::crypto::{Ed25519KeyHash, ScriptHash};
@@ -178,14 +178,14 @@ pub unsafe extern "C" fn transaction_builder_set_withdrawals(
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn transaction_builder_set_metadata(
-  tx_builder: RPtr, metadata: RPtr, error: &mut CharPtr
+pub unsafe extern "C" fn transaction_builder_set_auxiliary_data(
+  tx_builder: RPtr, auxiliary_data: RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
     tx_builder
       .typed_ref::<TransactionBuilder>()
-      .zip(metadata.typed_ref::<TransactionMetadata>())
-      .map(|(tx_builder, metadata)| tx_builder.set_metadata(metadata))
+      .zip(auxiliary_data.typed_ref::<AuxiliaryData>())
+      .map(|(tx_builder, auxiliary_data)| tx_builder.set_auxiliary_data(auxiliary_data))
   })
   .response(&mut (), error)
 }

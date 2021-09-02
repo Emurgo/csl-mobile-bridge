@@ -5,7 +5,7 @@ import {
   TransactionWitnessSet,
   TransactionBody,
   GeneralTransactionMetadata,
-  TransactionMetadata,
+  AuxiliaryData,
 } from '@emurgo/react-native-haskell-shelley'
 
 import {assert} from '../util'
@@ -54,10 +54,14 @@ const test: () => void = async () => {
    * with metadata
    */
   // add an empty metadata object
-  const generalTxMeta = await GeneralTransactionMetadata.new()
-  const txMeta = await TransactionMetadata.new(generalTxMeta)
-  const txWithMetadata = await Transaction.new(txBody, witSet, txMeta)
-  assert(txWithMetadata instanceof Transaction, 'Transaction::new()')
+  const metadata = await GeneralTransactionMetadata.new()
+  const auxiliaryData = await AuxiliaryData.new(metadata)
+  const txWithAuxiliaryData = await Transaction.new(
+    txBody,
+    witSet,
+    auxiliaryData,
+  )
+  assert(txWithAuxiliaryData instanceof Transaction, 'Transaction::new()')
 }
 
 export default test

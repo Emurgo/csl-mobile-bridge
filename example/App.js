@@ -39,7 +39,7 @@ import transactionBody from './runtimeTests/transactionBody'
 import utils from './runtimeTests/utils'
 import transaction from './runtimeTests/transaction'
 import transactionBuilder from './runtimeTests/transactionBuilder'
-import txMetadata from './runtimeTests/txMetadata'
+import auxiliaryData from './runtimeTests/auxiliaryData'
 import catalyst from './runtimeTests/catalyst'
 import emip3 from './runtimeTests/emip3'
 
@@ -70,7 +70,7 @@ const tests = [
   {name: 'utils', testFn: utils},
   {name: 'transaction', testFn: transaction},
   {name: 'transactionBuilder', testFn: transactionBuilder},
-  {name: 'txMetadata', testFn: txMetadata},
+  {name: 'auxiliaryData', testFn: auxiliaryData},
   {name: 'catalyst', testFn: catalyst},
   {name: 'emip3', testFn: emip3},
 ]

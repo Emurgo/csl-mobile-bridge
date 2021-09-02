@@ -8,50 +8,55 @@ use super::data::DataPtr;
 use cardano_serialization_lib::error::{DeserializeError};
 use cardano_serialization_lib::metadata::{
   GeneralTransactionMetadata,
-  TransactionMetadata,
+  AuxiliaryData,
 };
 
-impl ToFromBytes for TransactionMetadata {
+impl ToFromBytes for AuxiliaryData {
   fn to_bytes(&self) -> Vec<u8> {
     self.to_bytes()
   }
 
-  fn from_bytes(bytes: Vec<u8>) -> Result<TransactionMetadata, DeserializeError> {
-    TransactionMetadata::from_bytes(bytes)
+  fn from_bytes(bytes: Vec<u8>) -> Result<AuxiliaryData, DeserializeError> {
+    AuxiliaryData::from_bytes(bytes)
   }
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn transaction_metadata_to_bytes(
-  transaction_metadata: RPtr, result: &mut DataPtr, error: &mut CharPtr
+pub unsafe extern "C" fn auxiliary_data_to_bytes(
+  auxiliary_data: RPtr, result: &mut DataPtr, error: &mut CharPtr
 ) -> bool {
-  to_bytes::<TransactionMetadata>(transaction_metadata, result, error)
+  to_bytes::<AuxiliaryData>(auxiliary_data, result, error)
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn transaction_metadata_from_bytes(
+pub unsafe extern "C" fn auxiliary_data_from_bytes(
   data: *const u8, len: usize, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
-  from_bytes::<TransactionMetadata>(data, len, result, error)
+  from_bytes::<AuxiliaryData>(data, len, result, error)
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn transaction_metadata_new(general: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn auxiliary_data_new(metadata: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| {
-    general.typed_ref::<GeneralTransactionMetadata>()
-      .map(|general| TransactionMetadata::new(general))
+    metadata
+    .typed_ref::<GeneralTransactionMetadata>()
+      .map(|metadata| { 
+        let mut auxiliary_data = AuxiliaryData::new();
+        auxiliary_data.set_metadata(&metadata);
+        auxiliary_data 
+      })
   })
-    .map(|tx_meta| tx_meta.rptr())
+    .map(|auxiliary_data| auxiliary_data.rptr())
     .response(result, error)
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn transaction_metadata_general(transaction_metadata: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn auxiliary_data_metadata(auxiliary_data: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| {
-    transaction_metadata.typed_ref::<TransactionMetadata>()
-      .map(|transaction_metadata| transaction_metadata.general())
+    auxiliary_data.typed_ref::<AuxiliaryData>()
+      .map(|auxiliary_data| auxiliary_data.metadata())
   })
-    .map(|general_tx_meta| general_tx_meta.rptr())
+    .map(|metadata| metadata.rptr())
     .response(result, error)
 }
 
