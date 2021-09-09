@@ -2,13 +2,15 @@
 
 # react-native-haskell-shelley
 
+https://www.npmjs.com/package/@emurgo/react-native-haskell-shelley
+
 ## Getting started
 
-`$ npm install react-native-haskell-shelley --save`
+`$ npm install @emurgo/react-native-haskell-shelley --save`
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-haskell-shelley`
+`$ react-native link @emurgo/react-native-haskell-shelley`
 
 ## Usage
 
