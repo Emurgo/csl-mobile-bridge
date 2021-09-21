@@ -318,7 +318,7 @@ final class Native {
     public final native Result<Void> transactionBuilderSetCerts(RPtr txBuilder, RPtr certs);
     public final native Result<Void> transactionBuilderSetWithdrawals(RPtr txBuilder, RPtr withdrawals);
     public final native Result<Void> transactionBuilderSetAuxiliaryData(RPtr txBuilder, RPtr auxiliary);
-    public final native Result<RPtr> transactionBuilderNew(RPtr linearFee, RPtr minimumUtxoVal, RPtr poolDeposit, RPtr keyDeposit);
+    public final native Result<RPtr> transactionBuilderNew(RPtr linearFee, RPtr minimumUtxoVal, RPtr poolDeposit, RPtr keyDeposit, int maxOutputSize, int maxTxSize);
     public final native Result<RPtr> transactionBuilderGetExplicitInput(RPtr txBuilder);
     public final native Result<RPtr> transactionBuilderGetImplicitInput(RPtr txBuilder);
     public final native Result<RPtr> transactionBuilderGetExplicitOutput(RPtr txBuilder);

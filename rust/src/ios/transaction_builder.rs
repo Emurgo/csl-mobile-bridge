@@ -192,7 +192,7 @@ pub unsafe extern "C" fn transaction_builder_set_auxiliary_data(
 
 #[no_mangle]
 pub unsafe extern "C" fn transaction_builder_new(
-  linear_fee: RPtr, minimum_utxo_val: RPtr, pool_deposit: RPtr, key_deposit: RPtr, result: &mut RPtr, error: &mut CharPtr
+  linear_fee: RPtr, minimum_utxo_val: RPtr, pool_deposit: RPtr, key_deposit: RPtr, max_output_size: u32, max_tx_size: u32, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
     linear_fee
@@ -201,7 +201,7 @@ pub unsafe extern "C" fn transaction_builder_new(
       .zip(pool_deposit.typed_ref::<BigNum>())
       .zip(key_deposit.typed_ref::<BigNum>())
       .map(|(((linear_fee, minimum_utxo_val), pool_deposit), key_deposit)| {
-        TransactionBuilder::new(linear_fee, minimum_utxo_val, pool_deposit, key_deposit)
+        TransactionBuilder::new(linear_fee, minimum_utxo_val, pool_deposit, key_deposit, max_output_size, max_tx_size)
       })
     })
     .map(|tx_builder| tx_builder.rptr())

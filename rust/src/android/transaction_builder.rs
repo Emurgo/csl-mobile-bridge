@@ -257,20 +257,22 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
 #[allow(non_snake_case)]
 #[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderNew(
-  env: JNIEnv, _: JObject, linear_fee: JRPtr, minimum_utxo_val: JRPtr, pool_deposit: JRPtr, key_deposit: JRPtr
+  env: JNIEnv, _: JObject, linear_fee: JRPtr, minimum_utxo_val: JRPtr, pool_deposit: JRPtr, key_deposit: JRPtr, max_output_size: jlong, max_tx_size: jlong
 ) -> jobject {
   handle_exception_result(|| {
     let linear_fee = linear_fee.rptr(&env)?;
     let minimum_utxo_val = minimum_utxo_val.rptr(&env)?;
     let pool_deposit = pool_deposit.rptr(&env)?;
     let key_deposit = key_deposit.rptr(&env)?;
+    let max_output_size_u32 = u32::try_from(max_output_size).map_err(|err| err.to_string())?;
+    let max_tx_size_u32 = u32::try_from(max_tx_size).map_err(|err| err.to_string())?;
     linear_fee
       .typed_ref::<LinearFee>()
       .zip(minimum_utxo_val.typed_ref::<Coin>())
       .zip(pool_deposit.typed_ref::<BigNum>())
       .zip(key_deposit.typed_ref::<BigNum>())
       .map(|(((linear_fee, minimum_utxo_val), pool_deposit), key_deposit)| {
-        TransactionBuilder::new(linear_fee, minimum_utxo_val, pool_deposit, key_deposit)
+        TransactionBuilder::new(linear_fee, minimum_utxo_val, pool_deposit, key_deposit, max_output_size_u32, max_tx_size_u32)
       })
       .and_then(|tx_builder| tx_builder.rptr().jptr(&env))
   })

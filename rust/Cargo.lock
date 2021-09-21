@@ -96,8 +96,8 @@ checksum = "08c48aae112d48ed9f069b33538ea9e3e90aa263cfa3d1c24309612b1f7472de"
 
 [[package]]
 name = "cardano-serialization-lib"
-version = "8.1.0"
-source = "git+https://github.com/Emurgo/cardano-serialization-lib.git?tag=8.1.0#58efd6f8aa930ee634191dccd1fd773769834c8b"
+version = "9.0.0"
+source = "git+https://github.com/Emurgo/cardano-serialization-lib.git?tag=9.0.0#f98f2b24da1edafe1ddeeb34abe1df8e9f85fc6d"
 dependencies = [
  "bech32",
  "cbor_event",
