@@ -2438,7 +2438,7 @@ RCT_EXPORT_METHOD(transactionBuilderSetAuxiliaryData:(nonnull NSString *)txBuild
     }] exec:@[txBuilderPtr, auxiliaryDataPtr] andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(transactionBuilderNew:(nonnull NSString *)linearFeePtr withMinUtxoVal:(nonnull NSString *)minimumUtxoValPtr withPoolDeposit:(nonnull NSString *)poolDepositPtr andKeyDeposit:(nonnull NSString *)keyDepositPtr withMaxOutpuSize:(nonnull NSNumber *)maxOutputSize withMaxTxSize:(nonnull NSNumber *)maxTxSize withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(transactionBuilderNew:(nonnull NSString *)linearFeePtr withMinUtxoVal:(nonnull NSString *)minimumUtxoValPtr withPoolDeposit:(nonnull NSString *)poolDepositPtr andKeyDeposit:(nonnull NSString *)keyDepositPtr withMaxValueSize:(nonnull NSNumber *)maxValueSize withMaxTxSize:(nonnull NSNumber *)maxTxSize withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr result;
@@ -2446,12 +2446,12 @@ RCT_EXPORT_METHOD(transactionBuilderNew:(nonnull NSString *)linearFeePtr withMin
         RPtr minUtxoVal = [[params objectAtIndex:1] rPtr];
         RPtr poolDeposit = [[params objectAtIndex:2] rPtr];
         RPtr keyDeposit = [[params objectAtIndex:3] rPtr];
-        uint32_t maxOutputSizeU32 = [[params objectAtIndex:4] unsignedIntegerValue];
+        uint32_t maxValueSizeU32 = [[params objectAtIndex:4] unsignedIntegerValue];
         uint32_t maxTxSizeU32 = [[params objectAtIndex:5] unsignedIntegerValue];
-        return transaction_builder_new(linearFee, minUtxoVal, poolDeposit, keyDeposit, maxOutputSizeU32, maxTxSizeU32, &result, error)
+        return transaction_builder_new(linearFee, minUtxoVal, poolDeposit, keyDeposit, maxValueSizeU32, maxTxSizeU32, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
-    }] exec:@[linearFeePtr, minimumUtxoValPtr, poolDepositPtr, keyDepositPtr, maxOutputSize, maxTxSize] andResolve:resolve orReject:reject];
+    }] exec:@[linearFeePtr, minimumUtxoValPtr, poolDepositPtr, keyDepositPtr, maxValueSize, maxTxSize] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(transactionBuilderGetExplicitInput:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

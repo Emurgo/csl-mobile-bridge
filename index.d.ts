@@ -1386,7 +1386,7 @@ export class TransactionBuilder extends Ptr {
   * @param {BigNum} minimumUtxoVal
   * @param {BigNum} poolDeposit
   * @param {BigNum} keyDeposit
-  * @param {number} maxOutputSize
+  * @param {number} maxValueSize
   * @param {number} maxTxSize
   * @returns {Promise<TransactionBuilder>}
   */
@@ -1395,7 +1395,7 @@ export class TransactionBuilder extends Ptr {
     minimumUtxoVal: BigNum,
     poolDeposit: BigNum,
     keyDeposit: BigNum,
-    maxOutputSize: number,
+    maxValueSize: number,
     maxTxSize: number,
   ): Promise<TransactionBuilder>;
 

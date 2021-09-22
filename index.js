@@ -2110,11 +2110,11 @@ export class TransactionBuilder extends Ptr {
   * @param {BigNum} minimumUtxoVal
   * @param {BigNum} poolDeposit
   * @param {BigNum} keyDeposit
-  * @param {number} maxOutputSize
+  * @param {number} maxValueSize
   * @param {number} maxTxSize
   * @returns {Promise<TransactionBuilder>}
   */
-  static async new(linearFee, minimumUtxoVal, poolDeposit, keyDeposit, maxOutputSize, maxTxSize) {
+  static async new(linearFee, minimumUtxoVal, poolDeposit, keyDeposit, maxValueSize, maxTxSize) {
     const linearFeePtr = Ptr._assertClass(linearFee, LinearFee);
     const minimumUtxoValPtr = Ptr._assertClass(minimumUtxoVal, BigNum);
     const poolDepositPtr = Ptr._assertClass(poolDeposit, BigNum);
@@ -2124,7 +2124,7 @@ export class TransactionBuilder extends Ptr {
       minimumUtxoValPtr,
       poolDepositPtr,
       keyDepositPtr,
-      maxOutputSize,
+      maxValueSize,
       maxTxSize,
     );
     return Ptr._wrap(ret, TransactionBuilder);
