@@ -294,7 +294,7 @@ export class PrivateKey extends Ptr {
   * @param {Uint8Array} bytes
   * @returns {Promise<PrivateKey>}
   */
-  static from_normal_bytes(bytes: Uint8Array): Promise<PublicKey>;
+  static from_normal_bytes(bytes: Uint8Array): Promise<PrivateKey>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -305,7 +305,7 @@ export class PrivateKey extends Ptr {
   * @param {Uint8Array} bytes
   * @returns {Promise<PrivateKey>}
   */
-  static from_extended_bytes(bytes: Uint8Array): Promise<PublicKey>;
+  static from_extended_bytes(bytes: Uint8Array): Promise<PrivateKey>;
 
   /**
   * @param {Uint8Array} message
