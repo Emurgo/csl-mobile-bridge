@@ -21,7 +21,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint index.js index.d.ts",
     "js:flowgen": "flowgen ./index.d.ts -o ./index.js.flow --add-flow-header",
-    "release": "yarn js:flowgen && npm publish --access public"
+    "release:prod": "yarn js:flowgen && npm publish --access public",
+    "release:beta": "yarn js:flowgen && npm publish --tag beta --access public"
   },
   "repository": {
     "type": "git",
