@@ -1279,6 +1279,17 @@ export class Transaction extends Ptr {
     witnessSet: TransactionWitnessSet,
     auxiliary?: AuxiliaryData,
   ): Promise<Transaction>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes(): Promise<Uint8Array>;
+
+  /**
+   * @param {Uint8Array} bytes
+   * @returns {Promise<Transaction>}
+   */
+  static from_bytes(bytes: Uint8Array): Promise<Transaction>;   
 }
 
 export class TransactionBuilder extends Ptr {
