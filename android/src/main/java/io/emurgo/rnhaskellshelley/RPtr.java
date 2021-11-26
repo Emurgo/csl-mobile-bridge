@@ -1,5 +1,7 @@
 package io.emurgo.rnhaskellshelley;
 
+import java.math.BigInteger;
+
 public final class RPtr {
     private long ptr;
 
@@ -20,6 +22,6 @@ public final class RPtr {
     }
 
     RPtr(String str) {
-        this(Long.parseLong(str, 16));
+        this(new BigInteger(str, 16).longValue());
     }
 }
