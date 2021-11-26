@@ -1,7 +1,7 @@
 {
   "name": "@emurgo/react-native-haskell-shelley",
   "title": "React Native Haskell Shelley",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "React-native bindings for Emurgo's cardano-serialization-lib (Cardano haskell Shelley)",
   "main": "index.js",
   "files": [
