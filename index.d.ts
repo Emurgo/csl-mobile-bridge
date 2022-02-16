@@ -49,12 +49,14 @@ export const hash_transaction: (
 
 /**
 * @param {Value} assets
-* @param {BigNum} minUtxoVal
+* @param {number} hashDataHash
+* @param {BigNum} coinsPerUtxoWord
 * @returns {Promise<BigNum>}
 */
 export const min_ada_required: (
   assets: Value,
-  minUtxoVal: BigNum,
+  hasDataHash: number,
+  coinsPerUtxoWord: BigNum, // Coin
 ) => Promise<BigNum>;
 
 /**
@@ -1292,6 +1294,30 @@ export class Transaction extends Ptr {
   static from_bytes(bytes: Uint8Array): Promise<Transaction>;   
 }
 
+export class TransactionBuilderConfigBuilder extends Ptr {
+  /**
+  * @param {LinearFee} linearFee
+  * @param {BigNum} poolDeposit
+  * @param {BigNum} keyDeposit
+  * @param {number} maxValueSize
+  * @param {number} maxTxSize
+  * @param {BigNum} coinsPerUtxoWord
+  * @param {number} preferPureChange
+  * @returns {Promise<TransactionBuilderConfigBuilder>}
+  */
+  static new(
+    linearFee: LinearFee,
+    poolDeposit: BigNum,
+    keyDeposit: BigNum,
+    maxValueSize: number,
+    maxTxSize: number,
+    coinsPerUtxoWord: BigNum, // Coin
+    preferPureChange: number
+  ): Promise<TransactionBuilderConfigBuilder>;
+
+  build(): Promise<TransactionBuilderConfig>;
+}
+
 export class TransactionBuilder extends Ptr {
   /**
   * @param {Ed25519KeyHash} hash
@@ -1393,21 +1419,11 @@ export class TransactionBuilder extends Ptr {
   set_auxiliary_data(auxiliary: AuxiliaryData): Promise<void>;
 
   /**
-  * @param {LinearFee} linearFee
-  * @param {BigNum} minimumUtxoVal
-  * @param {BigNum} poolDeposit
-  * @param {BigNum} keyDeposit
-  * @param {number} maxValueSize
-  * @param {number} maxTxSize
+  * @param {TransactionBuilderConfig} config
   * @returns {Promise<TransactionBuilder>}
   */
   static new(
-    linearFee: LinearFee,
-    minimumUtxoVal: BigNum,
-    poolDeposit: BigNum,
-    keyDeposit: BigNum,
-    maxValueSize: number,
-    maxTxSize: number,
+    config: TransactionBuilderConfig,
   ): Promise<TransactionBuilder>;
 
   /**

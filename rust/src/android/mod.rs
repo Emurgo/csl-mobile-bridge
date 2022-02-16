@@ -39,6 +39,7 @@ mod string;
 mod transaction;
 mod transaction_body;
 mod transaction_builder;
+mod transaction_builder_config_builder;
 mod transaction_hash;
 mod transaction_metadatum;
 mod transaction_metadatum_labels;

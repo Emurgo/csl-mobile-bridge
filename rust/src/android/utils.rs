@@ -113,14 +113,14 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_hashTransaction(
 #[allow(non_snake_case)]
 #[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_minAdaRequired(
-  env: JNIEnv, _: JObject, assets: JRPtr, minimum_utxo_val: JRPtr
+  env: JNIEnv, _: JObject, assets: JRPtr, has_data_hash: jint, coins_per_utxo_word: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
     let assets = assets.rptr(&env)?;
-    let minimum_utxo_val = minimum_utxo_val.rptr(&env)?;
-    assets.typed_ref::<Value>().zip(minimum_utxo_val.typed_ref::<BigNum>()).and_then(
-      |(assets, minimum_utxo_val)| {
-        min_ada_required(assets, minimum_utxo_val).rptr().jptr(&env)
+    let coins_per_utxo_word = coins_per_utxo_word.rptr(&env)?;
+    assets.typed_ref::<Value>().zip(coins_per_utxo_word.typed_ref::<BigNum>()).and_then(
+      |(assets, coins_per_utxo_word)| {
+        min_ada_required(assets, hash_data_hash != 0, coins_per_utxo_word).rptr().jptr(&env)
       }
     )
   })

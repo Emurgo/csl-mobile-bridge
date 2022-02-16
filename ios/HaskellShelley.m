@@ -75,16 +75,17 @@ RCT_EXPORT_METHOD(hashTransaction:(nonnull NSString *)txBodyPtr withResolve:(RCT
     }] exec:txBodyPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(minAdaRequired:(nonnull NSString *)assetsPtr withMinUtxoVal:(nonnull NSString *)minUtxoValPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(minAdaRequired:(nonnull NSString *)assetsPtr withHasDataHash:(nonnull NSNumber *)hasDataHash withCoinsPerUtxoWord:(nonnull NSString *)coinsPerUtxoWordPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr assets = [[params objectAtIndex:0] rPtr];
-        RPtr minUtxoVal = [[params objectAtIndex:1] rPtr];
+        uintptr_t hasDataHash = [[params objectAtIndex:1] unsignedIntegerValue];
+        RPtr coinsPerUtxoWord = [[params objectAtIndex:2] rPtr];
         RPtr result;
-        return utils_min_ada_required(assets, minUtxoVal, &result, error)
+        return utils_min_ada_required(assets, hasDataHash, coinsPerUtxoWord, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
-    }] exec:@[assetsPtr, minUtxoValPtr] andResolve:resolve orReject:reject];
+    }] exec:@[assetsPtr, hasDataHash, coinsPerUtxoWordPtr] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(encodeJsonStrToMetadatum:(nonnull NSString *)json withSchema:(nonnull NSNumber *)schema withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -2292,6 +2293,45 @@ RCT_EXPORT_METHOD(transactionFromBytes:(nonnull NSString *)bytesStr  withResolve
     }] exec:bytesStr andResolve:resolve orReject:reject];
 }
 
+// TransactionBuilderConfigBuilder
+
+RCT_EXPORT_METHOD(
+    transactionBuilderConfigBuilderNew:(nonnull NSString *)linearFeePtr 
+    withPoolDeposit:(nonnull NSString *)poolDepositPtr 
+    withKeyDeposit:(nonnull NSString *)keyDepositPtr 
+    withMaxValueSize:(nonnull NSNumber *)maxValueSize 
+    withMaxTxSize:(nonnull NSNumber *)maxTxSize 
+    withCoinsPerUtxoWord:(nonnull NSString *)coinsPerUtxoWordPtr 
+    withPreferPureChange:(nonnull NSNumber *)preferePureChange 
+    withResolve:(RCTPromiseResolveBlock)resolve 
+    andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr linearFee = [[params objectAtIndex:0] rPtr];
+        RPtr poolDeposit = [[params objectAtIndex:1] rPtr];
+        RPtr keyDeposit = [[params objectAtIndex:2] rPtr];
+        uint32_t maxValueSizeU32 = [[params objectAtIndex:3] unsignedIntegerValue];
+        uint32_t maxTxSizeU32 = [[params objectAtIndex:4] unsignedIntegerValue];
+        RPtr coinsPerUtxoWord = [[params objectAtIndex:5] rPtr];
+        uintptr_t preferePureChangeU8 = [[params objectAtIndex:6] unsignedIntegerValue];
+        return transaction_builder_config_builder_new(linearFee, poolDeposit, keyDeposit, maxValueSizeU32, maxTxSizeU32, coinsPerUtxoWord, preferePureChangeU8, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[linearFeePtr, poolDepositPtr, keyDepositPtr, maxValueSize, maxTxSize, coinsPerUtxoWordPtr, preferePureChange] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderConfigBuilderBuild:(nonnull NSString *)ptr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* ptr, CharPtr* error) {
+        RPtr result;
+        RPtr txBuilderConfigBuilder = [ptr rPtr];
+        return transaction_builder_config_builder_build(txBuilderConfigBuilder, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:ptr andResolve:resolve orReject:reject];
+}
+
 // TransactionBuilder
 
 RCT_EXPORT_METHOD(transactionBuilderAddKeyInput:(nonnull NSString *)txBuilderPtr withHash:(nonnull NSString *)hashPtr withInput:(nonnull NSString *)inputPtr andAmount:(nonnull NSString *)amountPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -2438,20 +2478,15 @@ RCT_EXPORT_METHOD(transactionBuilderSetAuxiliaryData:(nonnull NSString *)txBuild
     }] exec:@[txBuilderPtr, auxiliaryDataPtr] andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(transactionBuilderNew:(nonnull NSString *)linearFeePtr withMinUtxoVal:(nonnull NSString *)minimumUtxoValPtr withPoolDeposit:(nonnull NSString *)poolDepositPtr andKeyDeposit:(nonnull NSString *)keyDepositPtr withMaxValueSize:(nonnull NSNumber *)maxValueSize withMaxTxSize:(nonnull NSNumber *)maxTxSize withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(transactionBuilderNew:(nonnull NSString *)configPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr result;
-        RPtr linearFee = [[params objectAtIndex:0] rPtr];
-        RPtr minUtxoVal = [[params objectAtIndex:1] rPtr];
-        RPtr poolDeposit = [[params objectAtIndex:2] rPtr];
-        RPtr keyDeposit = [[params objectAtIndex:3] rPtr];
-        uint32_t maxValueSizeU32 = [[params objectAtIndex:4] unsignedIntegerValue];
-        uint32_t maxTxSizeU32 = [[params objectAtIndex:5] unsignedIntegerValue];
-        return transaction_builder_new(linearFee, minUtxoVal, poolDeposit, keyDeposit, maxValueSizeU32, maxTxSizeU32, &result, error)
+        RPtr config = [[params objectAtIndex:0] rPtr];
+        return transaction_builder_new(config, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
-    }] exec:@[linearFeePtr, minimumUtxoValPtr, poolDepositPtr, keyDepositPtr, maxValueSize, maxTxSize] andResolve:resolve orReject:reject];
+    }] exec:@[configPtr] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(transactionBuilderGetExplicitInput:(nonnull NSString *)ptr  withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

@@ -66,9 +66,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void minAdaRequired(String assets, String minimumUtxoVal, Promise promise) {
+    public final void minAdaRequired(String assets, Integer hasDataHash, String coinsPerUtxoWord, Promise promise) {
         Native.I
-                .minAdaRequired(new RPtr(assets), new RPtr(minimumUtxoVal))
+                .minAdaRequired(new RPtr(assets), hasDataHash, new RPtr(coinsPerUtxoWord))
                 .map(RPtr::toJs)
                 .pour(promise);
     }
@@ -1685,6 +1685,24 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
                 .pour(promise);
     }
 
+    // TransactionBuilderConfigBuilder
+    
+    @ReactMethod
+    public final void transactionBuilderConfigBuilderNew(String linearFee, String poolDeposit, String keyDeposit, Double maxValueSize, Double maxTxSize, String coinsPerUtxoWord, Integer preferPureChange, Promise promise) {
+        Native.I
+                .transactionBuilderConfigBuilderNew(new RPtr(linearFee), new RPtr(poolDeposit), new RPtr(keyDeposit), maxValueSize.longValue(), maxTxSize.longValue(), new RPtr(coinsPerUtxoWord), preferPureChange)
+                .map(RPtr::toJs)
+                .pour(promise);
+    }    
+
+    @ReactMethod
+    public final void transactionBuilderConfigBuilderBuild(String txBuilderConfigBuilder, Promise promise) {
+        Native.I
+                .transactionBuilderConfigBuilderBuild(new RPtr(txBuilderConfigBuilder))
+                .map(RPtr::toJs)
+                .pour(promise);
+    }
+
     // TransactionBuilder
 
     @ReactMethod
@@ -1781,9 +1799,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionBuilderNew(String linearFee, String minimumUtxoVal, String poolDeposit, String keyDeposit, Double maxValueSize, Double maxTxSize, Promise promise) {
+    public final void transactionBuilderNew(String config, Promise promise) {
         Native.I
-                .transactionBuilderNew(new RPtr(linearFee), new RPtr(minimumUtxoVal), new RPtr(poolDeposit), new RPtr(keyDeposit), maxValueSize.longValue(), maxTxSize.longValue())
+                .transactionBuilderNew(new RPtr(config))
                 .map(RPtr::toJs)
                 .pour(promise);
     }

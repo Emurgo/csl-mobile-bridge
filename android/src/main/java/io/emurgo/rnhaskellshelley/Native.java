@@ -23,7 +23,7 @@ final class Native {
     public final native Result<RPtr> makeIcarusBootstrapWitness(RPtr txBodyHash, RPtr addr, RPtr key);
     public final native Result<RPtr> makeVkeyWitness(RPtr txBodyHash, RPtr sk);
     public final native Result<RPtr> hashTransaction(RPtr txBody);
-    public final native Result<RPtr> minAdaRequired(RPtr assets, RPtr minUtxoVal);
+    public final native Result<RPtr> minAdaRequired(RPtr assets, int hasDataHash, RPtr coinsPerUtxoWord);
     public final native Result<RPtr> encodeJsonStrToMetadatum(String json, int schema);
     public final native Result<String> decodeMetadatumToJsonStr(RPtr metadatum, int schema);
 
@@ -304,6 +304,10 @@ final class Native {
     public final native Result<byte[]> transactionToBytes(RPtr Transaction);
     public final native Result<RPtr> transactionFromBytes(byte[] bytes);
 
+    // TransactionBuilderConfigBuilder
+    public final native Result<RPtr> transactionBuilderConfigBuilderNew(RPtr linearFee, RPtr poolDeposit, RPtr keyDeposit, long maxValueSize, long maxTxSize, RPtr coinsPerUtxoWord, int preferPureChange);
+    public final native Result<RPtr> transactionBuilderConfigBuilderBuild(RPtr txConfigBuilder);
+
     // TransactionBuilder
     public final native Result<Void> transactionBuilderAddKeyInput(RPtr txBuilder, RPtr hash, RPtr input, RPtr value);
     public final native Result<Void> transactionBuilderAddScriptInput(RPtr txBuilder, RPtr hash, RPtr input, RPtr value);
@@ -318,7 +322,7 @@ final class Native {
     public final native Result<Void> transactionBuilderSetCerts(RPtr txBuilder, RPtr certs);
     public final native Result<Void> transactionBuilderSetWithdrawals(RPtr txBuilder, RPtr withdrawals);
     public final native Result<Void> transactionBuilderSetAuxiliaryData(RPtr txBuilder, RPtr auxiliary);
-    public final native Result<RPtr> transactionBuilderNew(RPtr linearFee, RPtr minimumUtxoVal, RPtr poolDeposit, RPtr keyDeposit, long maxValueSize, long maxTxSize);
+    public final native Result<RPtr> transactionBuilderNew(RPtr config);
     public final native Result<RPtr> transactionBuilderGetExplicitInput(RPtr txBuilder);
     public final native Result<RPtr> transactionBuilderGetImplicitInput(RPtr txBuilder);
     public final native Result<RPtr> transactionBuilderGetExplicitOutput(RPtr txBuilder);

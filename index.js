@@ -102,13 +102,14 @@ export const make_vkey_witness = async (txBodyHash, sk) => {
 
 /**
 * @param {Value} assets
-* @param {BigNum} minUtxoVal
+* @param {number} hasDataHash
+* @param {BigNum} coinsPerUtxoWord
 * @returns {Promise<BigNum>}
 */
-export const min_ada_required = async (assets, minUtxoVal) => {
+export const min_ada_required = async (assets, hasDataHash, coinsPerUtxoWord) => {
   const assetsPtr = Ptr._assertClass(assets, Value);
-  const minUtxoValPtr = Ptr._assertClass(minUtxoVal, BigNum);
-  const ret = await HaskellShelley.minAdaRequired(assetsPtr, minUtxoValPtr);
+  const coinsPerUtxoWordPtr = Ptr._assertClass(coinsPerUtxoWord, BigNum);
+  const ret = await HaskellShelley.minAdaRequired(assetsPtr, hasDataHash, coinsPerUtxoWordPtr);
   return Ptr._wrap(ret, BigNum);
 };
 
@@ -1947,6 +1948,53 @@ export class Transaction extends Ptr {
   }
 }
 
+export class TransactionBuilderConfig extends Ptr {
+  // struct
+}
+
+export class TransactionBuilderConfigBuilder extends Ptr {
+  /**
+  * @param {LinearFee} linearFee
+  * @param {BigNum} poolDeposit
+  * @param {BigNum} keyDeposit
+  * @param {UInt32} maxValueSize
+  * @param {UInt32} maxTxSize
+  * @param {BigNum} coinsPerUtxoWord // Coin
+  * @param {UInt8} preferPureChange
+  * @returns {Promise<TransactionBuilderConfigBuilder>}
+  */
+  static async new(
+    linearFee,
+    poolDeposit,
+    keyDeposit,
+    maxValueSize,
+    maxTxSize,
+    coinsPerUtxoWord, // Coin
+    preferPureChange
+  ) {
+    const linearFeePtr = Ptr._assertClass(linearFee, LinearFee);
+    const poolDepositPtr = Ptr._assertClass(poolDeposit, BigNum);
+    const keyDepositPtr = Ptr._assertClass(keyDeposit, BigNum);
+    const coinsPerUtxoWordPtr = Ptr._assertClass(coinsPerUtxoWord, BigNum);
+
+    const ret = await HaskellShelley.transactionBuilderConfigBuilderNew(
+      linearFeePtr,
+      poolDepositPtr,
+      keyDepositPtr,
+      maxValueSize,
+      maxTxSize,
+      coinsPerUtxoWordPtr,
+      preferPureChange
+    );
+    
+    return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
+  }
+
+  async build() {
+    return HaskellShelley.transactionBuilderConfigBuilderBuild(this.ptr);
+  }
+}
+
 export class TransactionBuilder extends Ptr {
   /**
   * @param {Ed25519KeyHash} hash
@@ -2106,26 +2154,13 @@ export class TransactionBuilder extends Ptr {
   }
 
   /**
-  * @param {LinearFee} linearFee
-  * @param {BigNum} minimumUtxoVal
-  * @param {BigNum} poolDeposit
-  * @param {BigNum} keyDeposit
-  * @param {number} maxValueSize
-  * @param {number} maxTxSize
+  * @param {TransactionBuilderConfig} config
   * @returns {Promise<TransactionBuilder>}
   */
-  static async new(linearFee, minimumUtxoVal, poolDeposit, keyDeposit, maxValueSize, maxTxSize) {
-    const linearFeePtr = Ptr._assertClass(linearFee, LinearFee);
-    const minimumUtxoValPtr = Ptr._assertClass(minimumUtxoVal, BigNum);
-    const poolDepositPtr = Ptr._assertClass(poolDeposit, BigNum);
-    const keyDepositPtr = Ptr._assertClass(keyDeposit, BigNum);
+  static async new(config) {
+    const configPtr = Ptr._assertClass(config, TransactionBuilderConfig);
     const ret = await HaskellShelley.transactionBuilderNew(
-      linearFeePtr,
-      minimumUtxoValPtr,
-      poolDepositPtr,
-      keyDepositPtr,
-      maxValueSize,
-      maxTxSize,
+      configPtr,
     );
     return Ptr._wrap(ret, TransactionBuilder);
   }

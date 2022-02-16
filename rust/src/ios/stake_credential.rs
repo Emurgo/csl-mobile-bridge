@@ -76,7 +76,7 @@ pub unsafe extern "C" fn stake_credential_to_kind(
   stake_credential: RPtr, result: &mut u8, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
-    stake_credential.typed_ref::<StakeCredential>().map(|stake_credential| stake_credential.kind())
+    stake_credential.typed_ref::<StakeCredential>().map(|stake_credential| stake_credential.kind() as u8)
   })
   .map(|stake_credential_kind| stake_credential_kind.into())
   .response(result, error)

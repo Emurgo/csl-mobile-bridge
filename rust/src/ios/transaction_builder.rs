@@ -2,10 +2,9 @@ use super::result::CResult;
 use super::string::{CharPtr};
 use crate::panic::{handle_exception_result, Zip, ToResult};
 use crate::ptr::{RPtr, RPtrRepresentable};
-use cardano_serialization_lib::tx_builder::{TransactionBuilder};
+use cardano_serialization_lib::tx_builder::{TransactionBuilder, TransactionBuilderConfig};
 use cardano_serialization_lib::metadata::{AuxiliaryData};
-use cardano_serialization_lib::fees::{LinearFee};
-use cardano_serialization_lib::utils::{Coin, BigNum, Value};
+use cardano_serialization_lib::utils::{Coin, Value};
 use cardano_serialization_lib::crypto::{Ed25519KeyHash, ScriptHash};
 use cardano_serialization_lib::address::{Address, ByronAddress};
 use cardano_serialization_lib::{TransactionInput, TransactionOutput, Certificates, Withdrawals};
@@ -192,17 +191,12 @@ pub unsafe extern "C" fn transaction_builder_set_auxiliary_data(
 
 #[no_mangle]
 pub unsafe extern "C" fn transaction_builder_new(
-  linear_fee: RPtr, minimum_utxo_val: RPtr, pool_deposit: RPtr, key_deposit: RPtr, max_value_size: u32, max_tx_size: u32, result: &mut RPtr, error: &mut CharPtr
+  config: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
-    linear_fee
-      .typed_ref::<LinearFee>()
-      .zip(minimum_utxo_val.typed_ref::<Coin>())
-      .zip(pool_deposit.typed_ref::<BigNum>())
-      .zip(key_deposit.typed_ref::<BigNum>())
-      .map(|(((linear_fee, minimum_utxo_val), pool_deposit), key_deposit)| {
-        TransactionBuilder::new(linear_fee, minimum_utxo_val, pool_deposit, key_deposit, max_value_size, max_tx_size)
-      })
+    config
+      .typed_ref::<TransactionBuilderConfig>()
+      .map(|config| TransactionBuilder::new(config))
     })
     .map(|tx_builder| tx_builder.rptr())
     .response(result, error)

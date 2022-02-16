@@ -23,6 +23,6 @@ pub unsafe extern "C" fn int_as_i32(
 ) -> bool {
   handle_exception_result(|| {
     int.typed_ref::<Int>()
-      .map(|int| int.as_i32())
+      .map(|int| int.as_i32_or_nothing())
   }).response(result, error)
 }

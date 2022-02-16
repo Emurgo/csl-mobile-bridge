@@ -92,13 +92,13 @@ pub unsafe extern "C" fn utils_hash_transaction(
 
 #[no_mangle]
 pub unsafe extern "C" fn utils_min_ada_required(
-  assets: RPtr, min_utxo_val: RPtr, result: &mut RPtr, error: &mut CharPtr
+  assets: RPtr, has_data_hash: u8, coins_per_utxo_word: RPtr, result: &mut RPtr, error: &mut CharPtr
 ) -> bool {
   handle_exception_result(|| {
     assets.typed_ref::<Value>()
-      .zip(min_utxo_val.typed_ref::<BigNum>())
-      .map(|(assets, min_utxo_val)| {
-        min_ada_required(assets, min_utxo_val)
+      .zip(coins_per_utxo_word.typed_ref::<BigNum>())
+      .map(|(assets, coins_per_utxo_word)| {
+        min_ada_required(assets, has_data_hash != 0, coins_per_utxo_word).unwrap()
       })
     })
     .map(|min_ada| min_ada.rptr())
