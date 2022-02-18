@@ -1294,6 +1294,9 @@ export class Transaction extends Ptr {
   static from_bytes(bytes: Uint8Array): Promise<Transaction>;   
 }
 
+export class TransactionBuilderConfig extends Ptr {
+}
+
 export class TransactionBuilderConfigBuilder extends Ptr {
   /**
   * @param {LinearFee} linearFee

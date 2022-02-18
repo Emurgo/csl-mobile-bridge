@@ -3,7 +3,7 @@ use super::result::ToJniResult;
 use super::string::*;
 use crate::panic::{handle_exception_result, ToResult};
 use crate::ptr::RPtrRepresentable;
-use jni::objects::{JObject, JString};
+use jni::objects::{JObject};
 use jni::sys::{jbyteArray, jobject};
 use jni::JNIEnv;
 use cardano_serialization_lib::crypto::{Ed25519Signature};

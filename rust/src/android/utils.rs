@@ -120,7 +120,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_minAdaRequired(
     let coins_per_utxo_word = coins_per_utxo_word.rptr(&env)?;
     assets.typed_ref::<Value>().zip(coins_per_utxo_word.typed_ref::<BigNum>()).and_then(
       |(assets, coins_per_utxo_word)| {
-        min_ada_required(assets, hash_data_hash != 0, coins_per_utxo_word).rptr().jptr(&env)
+        min_ada_required(assets, has_data_hash != 0, coins_per_utxo_word).unwrap().rptr().jptr(&env)
       }
     )
   })

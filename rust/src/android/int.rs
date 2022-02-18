@@ -32,7 +32,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_intAsi32(
     let rptr = ptr.rptr(&env)?;
     rptr
       .typed_ref::<Int>()
-      .map(|int| int.as_i32().map(|res| (res as jint)))
+      .map(|int| int.as_i32_or_nothing().map(|res| (res as jint)))
       .and_then(|res| {
         match res {
           Some(res) => res.jobject(&env),

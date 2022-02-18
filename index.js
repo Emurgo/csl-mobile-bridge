@@ -1990,8 +1990,12 @@ export class TransactionBuilderConfigBuilder extends Ptr {
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
+  /**
+   * @returns {Promise<TransactionBuilderConfig>}
+   */
   async build() {
-    return HaskellShelley.transactionBuilderConfigBuilderBuild(this.ptr);
+    const ret = await HaskellShelley.transactionBuilderConfigBuilderBuild(this.ptr);
+    return Ptr._wrap(ret, TransactionBuilderConfig);
   }
 }
 

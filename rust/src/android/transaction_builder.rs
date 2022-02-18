@@ -9,8 +9,7 @@ use jni::JNIEnv;
 use std::convert::TryFrom;
 use cardano_serialization_lib::tx_builder::{TransactionBuilder, TransactionBuilderConfig};
 use cardano_serialization_lib::metadata::{AuxiliaryData};
-use cardano_serialization_lib::fees::{LinearFee};
-use cardano_serialization_lib::utils::{Coin, BigNum, Value};
+use cardano_serialization_lib::utils::{Coin, Value};
 use cardano_serialization_lib::address::{Address, ByronAddress};
 use cardano_serialization_lib::crypto::{Ed25519KeyHash, ScriptHash};
 use cardano_serialization_lib::{TransactionInput, TransactionOutput, Certificates, Withdrawals};
@@ -260,6 +259,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
   env: JNIEnv, _: JObject, tx_builder_config: JRPtr
 ) -> jobject {
   handle_exception_result(|| {
+    let tx_builder_config = tx_builder_config.rptr(&env)?;
     tx_builder_config
       .typed_ref::<TransactionBuilderConfig>()
       .map(|tx_builder_config| TransactionBuilder::new(tx_builder_config))
