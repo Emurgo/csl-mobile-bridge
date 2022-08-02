@@ -490,7 +490,7 @@ export class ByronAddress extends Ptr {
    * @param {number} protocolMagic
    * @returns {Promise<ByronAddress>}
    */
-  icarus_from_key(key: Bip32PublicKey, protocolMagic: number): Promise<ByronAddress>;
+  static icarus_from_key(key: Bip32PublicKey, protocolMagic: number): Promise<ByronAddress>;
 }
 
 export class Address extends Ptr {
