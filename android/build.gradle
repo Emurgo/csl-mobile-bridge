@@ -22,7 +22,6 @@ def safeExtGet(prop, fallback) {
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
-apply plugin: "com.android.library"
 apply plugin: 'org.mozilla.rust-android-gradle.rust-android'
 
 def REACT_NATIVE_VERSION = new File(['node', '--print',"JSON.parse(require('fs').readFileSync(require.resolve('react-native/package.json'), 'utf-8')).version"].execute(null, rootDir).text.trim())
