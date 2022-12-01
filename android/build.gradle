@@ -14,7 +14,14 @@ def DEFAULT_COMPILE_SDK_VERSION = 30
 def DEFAULT_BUILD_TOOLS_VERSION = '30.0.3'
 def DEFAULT_MIN_SDK_VERSION = 21
 def DEFAULT_TARGET_SDK_VERSION = 29
-def DEFAULT_NDK_API_LEVEL = 24
+
+if (System.properties['os.arch'] == "aarch64") {
+    // For M1 Users we need to use the NDK 24 which added support for aarch64
+    def DEFAULT_NDK_API_LEVEL = "24.0.8215888"
+} else {
+    // Otherwise we default to the side-by-side NDK version from AGP.
+    def DEFAULT_NDK_API_LEVEL = "21.4.7075529" 
+}
 
 def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
