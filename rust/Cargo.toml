@@ -8,11 +8,13 @@ edition = "2018"
 cbindgen = "=0.14.1"
 
 [dependencies]
-cardano-serialization-lib = { git = "https://github.com/Emurgo/cardano-serialization-lib.git", tag="9.1.4" }
+cardano-serialization-lib = { git = "https://github.com/Emurgo/cardano-serialization-lib.git", tag="11.2.0" }
+byteorder = "1.4.3"
+base64 = "0.20.0"
 # tag = "2.3.1"
 
 [target.'cfg(target_os="android")'.dependencies]
-jni = "0.13.1"
+jni = "0.20.0"
 
 [lib]
 name = "react_native_haskell_shelley"
