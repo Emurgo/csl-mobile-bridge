@@ -5,6 +5,7 @@ mod panic;
 mod ptr;
 mod ptr_impl;
 mod utils;
+mod enum_maps;
 
 pub use ptr::*;
 
