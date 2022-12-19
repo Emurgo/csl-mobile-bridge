@@ -5,6 +5,7 @@ use jni::JNIEnv;
 use std::mem;
 
 use super::string::ToString;
+use super::primitives::*;
 use crate::panic::{Result, ToResult};
 use crate::ptr::{RPtr, RPtrRepresentable};
 
@@ -15,6 +16,10 @@ pub struct RPtrRef(RPtr);
 impl RPtrRef {
   pub unsafe fn typed_ref<T: RPtrRepresentable>(&self) -> Result<&mut T> {
     self.0.typed_ref::<T>()
+  }
+
+  pub unsafe fn option_typed_ref<T: RPtrRepresentable>(&self) -> Result<Option<&mut T>> {
+    self.0.option_typed_ref::<T>()
   }
 
   pub unsafe fn owned<T: RPtrRepresentable>(self) -> Result<T> {
@@ -40,54 +45,7 @@ pub trait FromJniPtr {
   unsafe fn free<'a>(self, env: &'a JNIEnv) -> Result<()>;
 }
 
-pub trait JLongConvertible {
-  fn from_jlong(long: jlong) -> Self;
-  fn into_jlong(self) -> jlong;
-}
 
-impl JLongConvertible for usize {
-  fn from_jlong(long: jlong) -> Self {
-    #[cfg(target_pointer_width = "32")]
-    {
-      long as usize
-    }
-    #[cfg(target_pointer_width = "64")]
-    {
-      u64::from_jlong(long) as usize
-    }
-  }
-
-  fn into_jlong(self) -> jlong {
-    #[cfg(target_pointer_width = "32")]
-    {
-      self as jlong
-    }
-    #[cfg(target_pointer_width = "64")]
-    {
-      (self as u64).into_jlong()
-    }
-  }
-}
-
-impl JLongConvertible for u64 {
-  fn from_jlong(long: jlong) -> Self {
-    unsafe { mem::transmute::<jlong, u64>(long) }
-  }
-
-  fn into_jlong(self) -> jlong {
-    unsafe { mem::transmute::<u64, jlong>(self) }
-  }
-}
-
-// TODO(v-almonacid): not sure about this casting. Currently not used.
-// impl JLongConvertible for u8 {
-// fn from_jlong(long: jlong) -> Self {
-//     long as u8
-//   }
-//   fn into_jlong(self) -> jlong {
-//     (self as u64).into_jlong()
-//   }
-// }
 
 impl<'a> FromJniPtr for JRPtr<'a> {
   fn rptr(self, env: &JNIEnv) -> Result<RPtrRef> {
@@ -140,4 +98,11 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_ptrFree(
   env: JNIEnv, _: JObject, ptr: JRPtr
 ) {
   ptr.free(&env).unwrap();
+}
+
+pub fn clone_optional<T: Clone>(optional_ref: Option<&mut T>) -> Option<T> where T: Clone {
+  match optional_ref {
+    Some(val) => Some(val.clone()),
+    None => None
+  }
 }

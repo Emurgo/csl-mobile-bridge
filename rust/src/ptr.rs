@@ -40,6 +40,13 @@ impl RPtr {
       .ok_or_else(|| format!("Bad pointer: 0x{:x}", self.0 as usize))
   }
 
+  pub unsafe fn option_typed_ref<T: RPtrRepresentable>(&self) -> Result<Option<&mut T>> {
+    if self.0.is_null() {
+      return Ok(None)
+    }
+    self.typed_ref().map(|val| Some(val))
+  }
+
   pub unsafe fn owned<T: RPtrRepresentable>(mut self) -> Result<T> {
     if self.0.is_null() {
       return Err(String::from("Pointer is NULL"));

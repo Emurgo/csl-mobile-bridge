@@ -39,6 +39,12 @@ impl<T> ToResult<T> for std::result::Result<T, Box<dyn Any + 'static>> {
   }
 }
 
+impl<T> ToResult<T> for std::result::Result<T, base64::DecodeError> {
+  fn into_result(self) -> Result<T> {
+    self.map_err(|e| e.to_string())
+  }
+}
+
 #[allow(dead_code)]
 pub fn handle_exception<F: FnOnce() -> R + panic::UnwindSafe, R>(func: F) -> Result<R> {
   handle_exception_result(|| Ok(func()))

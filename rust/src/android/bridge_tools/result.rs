@@ -29,14 +29,14 @@ where
         env
           .new_object(class, CONSTRUCTOR, &[jobj.into(), JObject::null().into()])
           .unwrap()
-          .into_inner()
+          .into_raw()
       }
       Err(error) => {
         let jstr = *error.jstring(env).expect("Couldn't create java string!");
         env
           .new_object(class, CONSTRUCTOR, &[JObject::null().into(), jstr.into()])
           .unwrap()
-          .into_inner()
+          .into_raw()
       }
     }
   }
