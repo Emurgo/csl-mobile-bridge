@@ -49,7 +49,7 @@ def get_rn_java_fn_arg(arg):
         return "String " + name
     elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u8":
         return "String " + name
-    elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u32":
+    elif (arg.is_vec or arg.is_slice) and (arg.struct_name == "u32" or arg.struct_name == "usize"):
         return "String " + name
     elif arg.is_primitive and not (arg.is_vec or arg.is_slice):
         if arg.struct_name == "bool":
@@ -80,7 +80,7 @@ def get_rn_java_fn_map_res(arg):
         return ""
     elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u8":
         return ".map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))\r\n"
-    elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u32":
+    elif (arg.is_vec or arg.is_slice) and (arg.struct_name == "u32" or arg.struct_name == "usize"):
         return ""
     elif arg.is_primitive and not (arg.is_vec or arg.is_slice):
         if arg.struct_name == "bool":
@@ -105,7 +105,7 @@ def get_rn_java_fn_call_arg(arg):
         return name
     elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u8":
         return "Base64.encodeToString(" + name + ")"
-    elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u32":
+    elif (arg.is_vec or arg.is_slice) and (arg.struct_name == "u32" or arg.struct_name == "usize"):
         return name
     elif arg.is_primitive and not (arg.is_vec or arg.is_slice):
         if arg.struct_name == "bool":

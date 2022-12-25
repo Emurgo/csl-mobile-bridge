@@ -29,7 +29,7 @@ def get_jni_fn_arg(arg):
         return "String " + name
     elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u8":
         return "byte[] " + name
-    elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u32":
+    elif (arg.is_vec or arg.is_slice) and (arg.struct_name == "u32" or arg.struct_name == "usize"):
         return "String " + name
     elif arg.is_primitive and not (arg.is_vec or arg.is_slice):
         if arg.struct_name == "bool":
@@ -60,8 +60,8 @@ def get_jni_fn_ret(arg):
         return "Result<String>"
     elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u8":
         return "Result<byte[]>"
-    elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u32":
-        return "Result<byte[]>"
+    elif (arg.is_vec or arg.is_slice) and (arg.struct_name == "u32" or arg.struct_name == "usize"):
+        return "Result<String>"
     elif arg.is_primitive and not (arg.is_vec or arg.is_slice):
         if arg.struct_name == "bool":
             if arg.is_optional:

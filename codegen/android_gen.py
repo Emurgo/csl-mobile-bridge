@@ -129,21 +129,35 @@ def get_android_rust_fn_body(function):
     else:
         body += "    "
     if function.is_static:
-        body += function.struct_name + "::" + function.name + "("
+        body += function.struct_name + "::" + function.orig_name + "("
     elif function.struct_name is not None:
-        body += "self_rptr." + function.name + "("
+        body += "self_rptr." + function.orig_name + "("
     else:
-        body += function.name + "("
-    end_index = len(function.args) - 1
-    for i, arg in enumerate(function.args):
-        if arg.is_self:
+        body += function.orig_name + "("
+    args = function.orig_call_args
+    if args is None:
+        args = function.args
+    end_index = len(args) - 1
+    for i, arg in enumerate(args):
+        if arg is not None and arg.is_self:
             continue
-        if (arg.struct_name == "String" or arg.struct_name == "str") and arg.is_ref:
-            body += "&" + arg.name
+        if arg is None:
+            body += "None"
+        elif (arg.struct_name == "String" or arg.struct_name == "str") and arg.is_ref:
+            call_name = "&" + arg.name
+            if arg.orig_is_optional:
+                call_name = f"Some({call_name})"
+            body += call_name
         elif (arg.is_vec or arg.is_slice) and arg.is_ref:
-            body += "&" + arg.name
+            call_name = "&" + arg.name
+            if arg.orig_is_optional:
+                call_name = f"Some({call_name})"
+            body += call_name
         else:
-            body += arg.name
+            call_name = arg.name
+            if arg.orig_is_optional:
+                call_name = f"Some({call_name})"
+            body += call_name
         if i != end_index:
             body += ", "
 
