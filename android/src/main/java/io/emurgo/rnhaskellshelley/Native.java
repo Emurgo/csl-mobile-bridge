@@ -60,7 +60,9 @@ final class Native {
     public final native Result<String> addressToHex(RPtr self);
     public final native Result<RPtr> addressFromHex(String hexStr);
     public final native Result<byte[]> addressToBytes(RPtr self);
-    public final native Result<String> addressToBech32(RPtr self, String prefix);
+    public final native Result<String> addressToBech32(RPtr self);
+    public final native Result<String> addressToBech32WithPrefix(RPtr self, String prefix);
+
     public final native Result<RPtr> addressFromBech32(String bechStr);
     public final native Result<Long> addressNetworkId(RPtr self);
 
@@ -74,7 +76,7 @@ final class Native {
     public final native Result<RPtr> blockTransactionBodies(RPtr self);
     public final native Result<RPtr> blockTransactionWitnessSets(RPtr self);
     public final native Result<RPtr> blockAuxiliaryDataSet(RPtr self);
-    public final native Result<byte[]> blockInvalidTransactions(RPtr self);
+    public final native Result<String> blockInvalidTransactions(RPtr self);
     public final native Result<RPtr> blockNew(RPtr header, RPtr transactionBodies, RPtr transactionWitnessSets, RPtr auxiliaryDataSet, String invalidTransactions);
 
     public final native Result<RPtr> vkeysNew();
@@ -172,7 +174,9 @@ final class Native {
     public final native Result<RPtr> transactionBodyCollateralReturn(RPtr self);
     public final native Result<Void> transactionBodySetTotalCollateral(RPtr self, RPtr totalCollateral);
     public final native Result<RPtr> transactionBodyTotalCollateral(RPtr self);
-    public final native Result<RPtr> transactionBodyNew(RPtr inputs, RPtr outputs, RPtr fee, Long ttl);
+    public final native Result<RPtr> transactionBodyNew(RPtr inputs, RPtr outputs, RPtr fee);
+    public final native Result<RPtr> transactionBodyNewWithTtl(RPtr inputs, RPtr outputs, RPtr fee, long ttl);
+
     public final native Result<RPtr> transactionBodyNewTxBody(RPtr inputs, RPtr outputs, RPtr fee);
 
     public final native Result<RPtr> genesisHashFromBytes(byte[] bytes);
@@ -275,7 +279,7 @@ final class Native {
     public final native Result<Void> transactionBuilderRemoveScriptDataHash(RPtr self);
     public final native Result<Void> transactionBuilderAddRequiredSigner(RPtr self, RPtr key);
     public final native Result<Long> transactionBuilderFullSize(RPtr self);
-    public final native Result<RPtr> transactionBuilderOutputSizes(RPtr self);
+    public final native Result<String> transactionBuilderOutputSizes(RPtr self);
     public final native Result<RPtr> transactionBuilderBuild(RPtr self);
     public final native Result<RPtr> transactionBuilderBuildTx(RPtr self);
     public final native Result<RPtr> transactionBuilderBuildTxUnsafe(RPtr self);
@@ -353,7 +357,9 @@ final class Native {
     public final native Result<RPtr> singleHostNameFromJson(String json);
     public final native Result<Long> singleHostNamePort(RPtr self);
     public final native Result<RPtr> singleHostNameDnsName(RPtr self);
-    public final native Result<RPtr> singleHostNameNew(Long port, RPtr dnsName);
+    public final native Result<RPtr> singleHostNameNew(RPtr dnsName);
+    public final native Result<RPtr> singleHostNameNewWithPort(long port, RPtr dnsName);
+
 
     public final native Result<byte[]> relaysToBytes(RPtr self);
     public final native Result<RPtr> relaysFromBytes(byte[] bytes);
@@ -494,13 +500,15 @@ final class Native {
     public final native Result<RPtr> poolParamsPoolOwners(RPtr self);
     public final native Result<RPtr> poolParamsRelays(RPtr self);
     public final native Result<RPtr> poolParamsPoolMetadata(RPtr self);
-    public final native Result<RPtr> poolParamsNew(RPtr operator, RPtr vrfKeyhash, RPtr pledge, RPtr cost, RPtr margin, RPtr rewardAccount, RPtr poolOwners, RPtr relays, RPtr poolMetadata);
+    public final native Result<RPtr> poolParamsNew(RPtr operator, RPtr vrfKeyhash, RPtr pledge, RPtr cost, RPtr margin, RPtr rewardAccount, RPtr poolOwners, RPtr relays);
+    public final native Result<RPtr> poolParamsNewWithPoolMetadata(RPtr operator, RPtr vrfKeyhash, RPtr pledge, RPtr cost, RPtr margin, RPtr rewardAccount, RPtr poolOwners, RPtr relays, RPtr poolMetadata);
+
 
     public final native Result<RPtr> auxiliaryDataSetNew();
     public final native Result<Long> auxiliaryDataSetLen(RPtr self);
     public final native Result<RPtr> auxiliaryDataSetInsert(RPtr self, long txIndex, RPtr data);
     public final native Result<RPtr> auxiliaryDataSetGet(RPtr self, long txIndex);
-    public final native Result<byte[]> auxiliaryDataSetIndices(RPtr self);
+    public final native Result<String> auxiliaryDataSetIndices(RPtr self);
 
     public final native Result<byte[]> genesisKeyDelegationToBytes(RPtr self);
     public final native Result<RPtr> genesisKeyDelegationFromBytes(byte[] bytes);
@@ -1444,8 +1452,12 @@ final class Native {
     public final native Result<RPtr> headerBodyBlockBodyHash(RPtr self);
     public final native Result<RPtr> headerBodyOperationalCert(RPtr self);
     public final native Result<RPtr> headerBodyProtocolVersion(RPtr self);
-    public final native Result<RPtr> headerBodyNew(long blockNumber, long slot, RPtr prevHash, RPtr issuerVkey, RPtr vrfVkey, RPtr vrfResult, long blockBodySize, RPtr blockBodyHash, RPtr operationalCert, RPtr protocolVersion);
-    public final native Result<RPtr> headerBodyNewHeaderbody(long blockNumber, RPtr slot, RPtr prevHash, RPtr issuerVkey, RPtr vrfVkey, RPtr vrfResult, long blockBodySize, RPtr blockBodyHash, RPtr operationalCert, RPtr protocolVersion);
+    public final native Result<RPtr> headerBodyNew(long blockNumber, long slot, RPtr issuerVkey, RPtr vrfVkey, RPtr vrfResult, long blockBodySize, RPtr blockBodyHash, RPtr operationalCert, RPtr protocolVersion);
+    public final native Result<RPtr> headerBodyNewWithPrevHash(long blockNumber, long slot, RPtr prevHash, RPtr issuerVkey, RPtr vrfVkey, RPtr vrfResult, long blockBodySize, RPtr blockBodyHash, RPtr operationalCert, RPtr protocolVersion);
+
+    public final native Result<RPtr> headerBodyNewHeaderbody(long blockNumber, RPtr slot, RPtr issuerVkey, RPtr vrfVkey, RPtr vrfResult, long blockBodySize, RPtr blockBodyHash, RPtr operationalCert, RPtr protocolVersion);
+    public final native Result<RPtr> headerBodyNewHeaderbodyWithPrevHash(long blockNumber, RPtr slot, RPtr prevHash, RPtr issuerVkey, RPtr vrfVkey, RPtr vrfResult, long blockBodySize, RPtr blockBodyHash, RPtr operationalCert, RPtr protocolVersion);
+
 
     public final native Result<byte[]> mIRToStakeCredentialsToBytes(RPtr self);
     public final native Result<RPtr> mIRToStakeCredentialsFromBytes(byte[] bytes);
@@ -1468,7 +1480,15 @@ final class Native {
     public final native Result<Long> singleHostAddrPort(RPtr self);
     public final native Result<RPtr> singleHostAddrIpv4(RPtr self);
     public final native Result<RPtr> singleHostAddrIpv6(RPtr self);
-    public final native Result<RPtr> singleHostAddrNew(Long port, RPtr ipv4, RPtr ipv6);
+    public final native Result<RPtr> singleHostAddrNew();
+    public final native Result<RPtr> singleHostAddrNewWithPort(long port);
+    public final native Result<RPtr> singleHostAddrNewWithIpv4(RPtr ipv4);
+    public final native Result<RPtr> singleHostAddrNewWithPortIpv4(long port, RPtr ipv4);
+    public final native Result<RPtr> singleHostAddrNewWithIpv6(RPtr ipv6);
+    public final native Result<RPtr> singleHostAddrNewWithPortIpv6(long port, RPtr ipv6);
+    public final native Result<RPtr> singleHostAddrNewWithIpv4Ipv6(RPtr ipv4, RPtr ipv6);
+    public final native Result<RPtr> singleHostAddrNewWithPortIpv4Ipv6(long port, RPtr ipv4, RPtr ipv6);
+
 
     public final native Result<byte[]> moveInstantaneousRewardsCertToBytes(RPtr self);
     public final native Result<RPtr> moveInstantaneousRewardsCertFromBytes(byte[] bytes);
@@ -1497,7 +1517,9 @@ final class Native {
     public final native Result<Boolean> transactionIsValid(RPtr self);
     public final native Result<RPtr> transactionAuxiliaryData(RPtr self);
     public final native Result<Void> transactionSetIsValid(RPtr self, boolean valid);
-    public final native Result<RPtr> transactionNew(RPtr body, RPtr witnessSet, RPtr auxiliaryData);
+    public final native Result<RPtr> transactionNew(RPtr body, RPtr witnessSet);
+    public final native Result<RPtr> transactionNewWithAuxiliaryData(RPtr body, RPtr witnessSet, RPtr auxiliaryData);
+
 
     public final native Result<RPtr> vRFVKeyFromBytes(byte[] bytes);
     public final native Result<byte[]> vRFVKeyToBytes(RPtr self);
@@ -1628,7 +1650,9 @@ final class Native {
     public final native Result<RPtr> makeDaedalusBootstrapWitness(RPtr txBodyHash, RPtr addr, RPtr key);
     public final native Result<String> encryptWithPassword(String password, String salt, String nonce, String data);
     public final native Result<String> decodeMetadatumToJsonStr(RPtr metadatum, int schema);
-    public final native Result<RPtr> hashScriptData(RPtr redeemers, RPtr costModels, RPtr datums);
+    public final native Result<RPtr> hashScriptData(RPtr redeemers, RPtr costModels);
+    public final native Result<RPtr> hashScriptDataWithDatums(RPtr redeemers, RPtr costModels, RPtr datums);
+
     public final native Result<byte[]> decodeArbitraryBytesFromMetadatum(RPtr metadata);
     public final native Result<RPtr> getImplicitInput(RPtr txbody, RPtr poolDeposit, RPtr keyDeposit);
     public final native Result<RPtr> minFee(RPtr tx, RPtr linearFee);

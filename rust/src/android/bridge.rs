@@ -14,194 +14,193 @@ use jni::objects::{JObject, JString};
 use jni::sys::{jlong, jint, jobject, jboolean, jbyteArray};
 use jni::JNIEnv;
 use std::convert::TryFrom;
-use cardano_serialization_lib::utils::min_ada_for_output;
-use cardano_serialization_lib::plutus::RedeemerTag;
-use cardano_serialization_lib::address::BaseAddress;
-use cardano_serialization_lib::crypto::VRFVKey;
-use cardano_serialization_lib::utils::hash_plutus_data;
-use cardano_serialization_lib::crypto::BootstrapWitnesses;
-use cardano_serialization_lib::crypto::VRFKeyHash;
-use cardano_serialization_lib::PoolRetirement;
-use cardano_serialization_lib::crypto::PublicKey;
-use cardano_serialization_lib::utils::Value;
-use cardano_serialization_lib::AssetNames;
-use cardano_serialization_lib::address::StakeCredential;
-use cardano_serialization_lib::fees::LinearFee;
-use cardano_serialization_lib::plutus::decode_plutus_datum_to_json_str;
-use cardano_serialization_lib::utils::min_ada_required;
-use cardano_serialization_lib::crypto::ScriptDataHash;
-use cardano_serialization_lib::crypto::Vkeywitness;
-use cardano_serialization_lib::TransactionInput;
-use cardano_serialization_lib::ProtocolVersion;
-use cardano_serialization_lib::address::RewardAddress;
-use cardano_serialization_lib::plutus::RedeemerTagKind;
-use cardano_serialization_lib::fees::min_fee;
-use cardano_serialization_lib::utils::make_icarus_bootstrap_witness;
-use cardano_serialization_lib::Certificate;
-use cardano_serialization_lib::plutus::Redeemer;
-use cardano_serialization_lib::utils::ScriptSchema;
-use cardano_serialization_lib::NativeScript;
-use cardano_serialization_lib::crypto::VRFCert;
-use cardano_serialization_lib::crypto::BootstrapWitness;
-use cardano_serialization_lib::RewardAddresses;
-use cardano_serialization_lib::crypto::Vkey;
-use cardano_serialization_lib::output_builder::TransactionOutputAmountBuilder;
-use cardano_serialization_lib::TransactionBodies;
-use cardano_serialization_lib::TransactionWitnessSet;
-use cardano_serialization_lib::ScriptAny;
-use cardano_serialization_lib::utils::Int;
-use cardano_serialization_lib::crypto::KESSignature;
-use cardano_serialization_lib::address::PointerAddress;
-use cardano_serialization_lib::emip3::decrypt_with_password;
-use cardano_serialization_lib::plutus::Strings;
-use cardano_serialization_lib::crypto::PoolMetadataHash;
-use cardano_serialization_lib::tx_builder::tx_inputs_builder::InputsWithScriptWitness;
-use cardano_serialization_lib::crypto::Ed25519KeyHash;
-use cardano_serialization_lib::MintAssets;
-use cardano_serialization_lib::Ipv4;
-use cardano_serialization_lib::OperationalCert;
-use cardano_serialization_lib::Relay;
-use cardano_serialization_lib::MintsAssets;
-use cardano_serialization_lib::TimelockStart;
-use cardano_serialization_lib::AssetName;
-use cardano_serialization_lib::RelayKind;
-use cardano_serialization_lib::plutus::PlutusScript;
-use cardano_serialization_lib::StakeRegistration;
-use cardano_serialization_lib::Relays;
 use cardano_serialization_lib::utils::hash_auxiliary_data;
-use cardano_serialization_lib::utils::hash_transaction;
-use cardano_serialization_lib::ScriptHashNamespace;
-use cardano_serialization_lib::HeaderBody;
-use cardano_serialization_lib::crypto::Vkeywitnesses;
 use cardano_serialization_lib::crypto::Bip32PrivateKey;
-use cardano_serialization_lib::utils::get_deposit;
-use cardano_serialization_lib::Ipv6;
-use cardano_serialization_lib::plutus::ExUnitPrices;
-use cardano_serialization_lib::ProtocolParamUpdate;
-use cardano_serialization_lib::metadata::encode_json_str_to_metadatum;
-use cardano_serialization_lib::crypto::Vkeys;
-use cardano_serialization_lib::GenesisKeyDelegation;
-use cardano_serialization_lib::metadata::encode_arbitrary_bytes_as_metadatum;
+use cardano_serialization_lib::utils::encode_json_str_to_native_script;
+use cardano_serialization_lib::plutus::Languages;
 use cardano_serialization_lib::address::ByronAddress;
-use cardano_serialization_lib::DataCost;
-use cardano_serialization_lib::Header;
-use cardano_serialization_lib::StakeCredentials;
-use cardano_serialization_lib::plutus::PlutusList;
-use cardano_serialization_lib::plutus::PlutusMap;
-use cardano_serialization_lib::metadata::GeneralTransactionMetadata;
-use cardano_serialization_lib::SingleHostName;
-use cardano_serialization_lib::crypto::PrivateKey;
-use cardano_serialization_lib::ScriptRef;
-use cardano_serialization_lib::tx_builder::TransactionBuilderConfig;
-use cardano_serialization_lib::address::EnterpriseAddress;
-use cardano_serialization_lib::crypto::LegacyDaedalusPrivateKey;
-use cardano_serialization_lib::plutus::PlutusDataKind;
-use cardano_serialization_lib::tx_builder::TransactionBuilderConfigBuilder;
-use cardano_serialization_lib::metadata::TransactionMetadatum;
-use cardano_serialization_lib::metadata::MetadataJsonSchema;
-use cardano_serialization_lib::address::Pointer;
-use cardano_serialization_lib::fees::calculate_ex_units_ceil_cost;
-use cardano_serialization_lib::ScriptHashes;
-use cardano_serialization_lib::crypto::GenesisDelegateHash;
-use cardano_serialization_lib::address::StakeCredKind;
-use cardano_serialization_lib::SingleHostAddr;
-use cardano_serialization_lib::tx_builder::tx_inputs_builder::TxInputsBuilder;
-use cardano_serialization_lib::MoveInstantaneousReward;
-use cardano_serialization_lib::plutus::PlutusScripts;
-use cardano_serialization_lib::MoveInstantaneousRewardsCert;
-use cardano_serialization_lib::output_builder::TransactionOutputBuilder;
-use cardano_serialization_lib::MultiHostName;
-use cardano_serialization_lib::metadata::decode_metadatum_to_json_str;
-use cardano_serialization_lib::plutus::CostModel;
-use cardano_serialization_lib::ScriptPubkey;
-use cardano_serialization_lib::utils::BigInt;
-use cardano_serialization_lib::crypto::Bip32PublicKey;
-use cardano_serialization_lib::plutus::PlutusData;
-use cardano_serialization_lib::plutus::encode_json_str_to_plutus_datum;
-use cardano_serialization_lib::TransactionOutputs;
-use cardano_serialization_lib::crypto::GenesisHash;
-use cardano_serialization_lib::TransactionBody;
-use cardano_serialization_lib::metadata::AuxiliaryData;
-use cardano_serialization_lib::ProposedProtocolParameterUpdates;
-use cardano_serialization_lib::utils::TransactionUnspentOutput;
-use cardano_serialization_lib::crypto::Nonce;
-use cardano_serialization_lib::crypto::Ed25519Signature;
-use cardano_serialization_lib::plutus::Redeemers;
-use cardano_serialization_lib::Ed25519KeyHashes;
-use cardano_serialization_lib::Certificates;
-use cardano_serialization_lib::plutus::Language;
-use cardano_serialization_lib::tx_builder::tx_inputs_builder::PlutusWitnesses;
-use cardano_serialization_lib::StakeDeregistration;
-use cardano_serialization_lib::plutus::PlutusDatumSchema;
-use cardano_serialization_lib::crypto::AuxiliaryDataHash;
+use cardano_serialization_lib::MintAssets;
 use cardano_serialization_lib::MIRToStakeCredentials;
-use cardano_serialization_lib::emip3::encrypt_with_password;
-use cardano_serialization_lib::NetworkId;
-use cardano_serialization_lib::ScriptAll;
-use cardano_serialization_lib::ScriptNOfK;
-use cardano_serialization_lib::plutus::ExUnits;
-use cardano_serialization_lib::metadata::decode_arbitrary_bytes_from_metadatum;
-use cardano_serialization_lib::Mint;
-use cardano_serialization_lib::AuxiliaryDataSet;
 use cardano_serialization_lib::Withdrawals;
-use cardano_serialization_lib::MultiAsset;
-use cardano_serialization_lib::utils::make_vkey_witness;
-use cardano_serialization_lib::address::Address;
-use cardano_serialization_lib::fees::min_script_fee;
+use cardano_serialization_lib::AuxiliaryDataSet;
+use cardano_serialization_lib::utils::BigNum;
+use cardano_serialization_lib::address::PointerAddress;
+use cardano_serialization_lib::TransactionOutputs;
+use cardano_serialization_lib::tx_builder::tx_inputs_builder::PlutusWitnesses;
+use cardano_serialization_lib::tx_builder::TransactionBuilderConfigBuilder;
+use cardano_serialization_lib::NativeScripts;
+use cardano_serialization_lib::Transaction;
+use cardano_serialization_lib::TransactionBody;
+use cardano_serialization_lib::crypto::Bip32PublicKey;
+use cardano_serialization_lib::ScriptAny;
+use cardano_serialization_lib::metadata::encode_arbitrary_bytes_as_metadatum;
+use cardano_serialization_lib::metadata::decode_arbitrary_bytes_from_metadatum;
+use cardano_serialization_lib::MoveInstantaneousRewardsCert;
+use cardano_serialization_lib::Relay;
+use cardano_serialization_lib::plutus::Costmdls;
+use cardano_serialization_lib::utils::hash_transaction;
+use cardano_serialization_lib::tx_builder::tx_inputs_builder::PlutusScriptSource;
+use cardano_serialization_lib::Mint;
+use cardano_serialization_lib::AssetName;
+use cardano_serialization_lib::utils::Int;
+use cardano_serialization_lib::SingleHostName;
+use cardano_serialization_lib::PoolParams;
+use cardano_serialization_lib::plutus::PlutusDataKind;
+use cardano_serialization_lib::address::RewardAddress;
+use cardano_serialization_lib::plutus::ExUnits;
+use cardano_serialization_lib::NativeScriptKind;
+use cardano_serialization_lib::tx_builder::tx_inputs_builder::DatumSource;
+use cardano_serialization_lib::crypto::Vkeywitnesses;
+use cardano_serialization_lib::plutus::decode_plutus_datum_to_json_str;
+use cardano_serialization_lib::tx_builder::tx_inputs_builder::InputsWithScriptWitness;
+use cardano_serialization_lib::ScriptNOfK;
+use cardano_serialization_lib::plutus::PlutusData;
+use cardano_serialization_lib::ProtocolParamUpdate;
+use cardano_serialization_lib::crypto::BootstrapWitness;
+use cardano_serialization_lib::SingleHostAddr;
+use cardano_serialization_lib::TransactionWitnessSets;
+use cardano_serialization_lib::RelayKind;
+use cardano_serialization_lib::utils::get_deposit;
+use cardano_serialization_lib::fees::LinearFee;
+use cardano_serialization_lib::crypto::AuxiliaryDataHash;
+use cardano_serialization_lib::StakeDeregistration;
+use cardano_serialization_lib::crypto::TransactionHash;
 use cardano_serialization_lib::tx_builder_constants::TxBuilderConstants;
 use cardano_serialization_lib::metadata::MetadataMap;
-use cardano_serialization_lib::metadata::TransactionMetadatumKind;
-use cardano_serialization_lib::PoolRegistration;
-use cardano_serialization_lib::crypto::PublicKeys;
-use cardano_serialization_lib::tx_builder::tx_inputs_builder::DatumSource;
-use cardano_serialization_lib::plutus::Languages;
+use cardano_serialization_lib::plutus::Strings;
+use cardano_serialization_lib::plutus::PlutusDatumSchema;
+use cardano_serialization_lib::MoveInstantaneousReward;
 use cardano_serialization_lib::utils::TransactionUnspentOutputs;
-use cardano_serialization_lib::Assets;
-use cardano_serialization_lib::plutus::ConstrPlutusData;
-use cardano_serialization_lib::metadata::TransactionMetadatumLabels;
-use cardano_serialization_lib::Transaction;
-use cardano_serialization_lib::utils::get_implicit_input;
-use cardano_serialization_lib::PoolParams;
-use cardano_serialization_lib::address::NetworkInfo;
-use cardano_serialization_lib::StakeDelegation;
-use cardano_serialization_lib::crypto::ScriptHash;
-use cardano_serialization_lib::utils::BigNum;
-use cardano_serialization_lib::NativeScripts;
-use cardano_serialization_lib::MIRKind;
-use cardano_serialization_lib::crypto::KESVKey;
-use cardano_serialization_lib::tx_builder::mint_builder::MintWitness;
-use cardano_serialization_lib::DNSRecordSRV;
-use cardano_serialization_lib::tx_builder::tx_inputs_builder::InputWithScriptWitness;
-use cardano_serialization_lib::TransactionOutput;
-use cardano_serialization_lib::Update;
-use cardano_serialization_lib::PolicyIDs;
-use cardano_serialization_lib::utils::make_daedalus_bootstrap_witness;
-use cardano_serialization_lib::tx_builder::tx_inputs_builder::PlutusScriptSource;
-use cardano_serialization_lib::tx_builder::CoinSelectionStrategyCIP2;
-use cardano_serialization_lib::NetworkIdKind;
-use cardano_serialization_lib::metadata::MetadataList;
-use cardano_serialization_lib::TransactionWitnessSets;
-use cardano_serialization_lib::crypto::TransactionHash;
-use cardano_serialization_lib::GenesisHashes;
-use cardano_serialization_lib::TimelockExpiry;
-use cardano_serialization_lib::NativeScriptKind;
-use cardano_serialization_lib::utils::hash_script_data;
-use cardano_serialization_lib::CertificateKind;
-use cardano_serialization_lib::plutus::Costmdls;
-use cardano_serialization_lib::tx_builder::tx_inputs_builder::PlutusWitness;
+use cardano_serialization_lib::crypto::PoolMetadataHash;
+use cardano_serialization_lib::Certificates;
+use cardano_serialization_lib::crypto::GenesisHash;
+use cardano_serialization_lib::fees::calculate_ex_units_ceil_cost;
+use cardano_serialization_lib::plutus::CostModel;
 use cardano_serialization_lib::Block;
-use cardano_serialization_lib::MIRPot;
-use cardano_serialization_lib::DNSRecordAorAAAA;
-use cardano_serialization_lib::plutus::LanguageKind;
-use cardano_serialization_lib::tx_builder::mint_builder::MintBuilder;
-use cardano_serialization_lib::utils::encode_json_str_to_native_script;
-use cardano_serialization_lib::TransactionInputs;
+use cardano_serialization_lib::ScriptHashes;
+use cardano_serialization_lib::utils::get_implicit_input;
+use cardano_serialization_lib::utils::TransactionUnspentOutput;
+use cardano_serialization_lib::TransactionOutput;
+use cardano_serialization_lib::output_builder::TransactionOutputBuilder;
+use cardano_serialization_lib::utils::BigInt;
+use cardano_serialization_lib::tx_builder::CoinSelectionStrategyCIP2;
+use cardano_serialization_lib::metadata::MetadataJsonSchema;
+use cardano_serialization_lib::MintsAssets;
+use cardano_serialization_lib::utils::hash_script_data;
+use cardano_serialization_lib::RewardAddresses;
+use cardano_serialization_lib::TransactionBodies;
+use cardano_serialization_lib::tx_builder::tx_inputs_builder::TxInputsBuilder;
+use cardano_serialization_lib::StakeRegistration;
+use cardano_serialization_lib::plutus::Redeemers;
+use cardano_serialization_lib::metadata::TransactionMetadatumLabels;
+use cardano_serialization_lib::crypto::LegacyDaedalusPrivateKey;
+use cardano_serialization_lib::metadata::TransactionMetadatumKind;
+use cardano_serialization_lib::TimelockStart;
+use cardano_serialization_lib::plutus::Redeemer;
+use cardano_serialization_lib::ScriptHashNamespace;
+use cardano_serialization_lib::MultiAsset;
+use cardano_serialization_lib::address::Address;
+use cardano_serialization_lib::crypto::Ed25519Signature;
+use cardano_serialization_lib::utils::make_icarus_bootstrap_witness;
+use cardano_serialization_lib::NativeScript;
+use cardano_serialization_lib::fees::min_script_fee;
+use cardano_serialization_lib::Certificate;
+use cardano_serialization_lib::output_builder::TransactionOutputAmountBuilder;
 use cardano_serialization_lib::URL;
-use cardano_serialization_lib::tx_builder::TransactionBuilder;
+use cardano_serialization_lib::address::StakeCredential;
+use cardano_serialization_lib::GenesisKeyDelegation;
+use cardano_serialization_lib::tx_builder::TransactionBuilderConfig;
+use cardano_serialization_lib::address::NetworkInfo;
+use cardano_serialization_lib::utils::make_daedalus_bootstrap_witness;
+use cardano_serialization_lib::Ed25519KeyHashes;
+use cardano_serialization_lib::crypto::Vkeys;
+use cardano_serialization_lib::crypto::VRFCert;
+use cardano_serialization_lib::crypto::PublicKey;
+use cardano_serialization_lib::MultiHostName;
+use cardano_serialization_lib::plutus::PlutusMap;
+use cardano_serialization_lib::crypto::VRFVKey;
+use cardano_serialization_lib::PoolRegistration;
+use cardano_serialization_lib::PoolRetirement;
+use cardano_serialization_lib::emip3::decrypt_with_password;
+use cardano_serialization_lib::HeaderBody;
+use cardano_serialization_lib::address::StakeCredKind;
+use cardano_serialization_lib::metadata::MetadataList;
+use cardano_serialization_lib::tx_builder::tx_inputs_builder::PlutusWitness;
+use cardano_serialization_lib::utils::make_vkey_witness;
+use cardano_serialization_lib::crypto::VRFKeyHash;
+use cardano_serialization_lib::metadata::TransactionMetadatum;
+use cardano_serialization_lib::NetworkId;
+use cardano_serialization_lib::crypto::Ed25519KeyHash;
+use cardano_serialization_lib::crypto::BootstrapWitnesses;
+use cardano_serialization_lib::ScriptAll;
+use cardano_serialization_lib::utils::Value;
+use cardano_serialization_lib::DNSRecordSRV;
+use cardano_serialization_lib::OperationalCert;
+use cardano_serialization_lib::ScriptPubkey;
+use cardano_serialization_lib::utils::min_ada_for_output;
+use cardano_serialization_lib::tx_builder::mint_builder::MintWitness;
+use cardano_serialization_lib::plutus::PlutusList;
+use cardano_serialization_lib::crypto::ScriptDataHash;
+use cardano_serialization_lib::MIRPot;
+use cardano_serialization_lib::Ipv4;
+use cardano_serialization_lib::fees::min_fee;
+use cardano_serialization_lib::Header;
+use cardano_serialization_lib::ProtocolVersion;
 use cardano_serialization_lib::crypto::DataHash;
-use cardano_serialization_lib::crypto::BlockHash;
+use cardano_serialization_lib::metadata::AuxiliaryData;
+use cardano_serialization_lib::Ipv6;
+use cardano_serialization_lib::plutus::Language;
+use cardano_serialization_lib::crypto::ScriptHash;
+use cardano_serialization_lib::crypto::Vkeywitness;
+use cardano_serialization_lib::StakeCredentials;
+use cardano_serialization_lib::ScriptRef;
+use cardano_serialization_lib::Update;
+use cardano_serialization_lib::tx_builder::TransactionBuilder;
+use cardano_serialization_lib::plutus::PlutusScript;
+use cardano_serialization_lib::crypto::PrivateKey;
 use cardano_serialization_lib::UnitInterval;
+use cardano_serialization_lib::utils::min_ada_required;
+use cardano_serialization_lib::DataCost;
+use cardano_serialization_lib::CertificateKind;
+use cardano_serialization_lib::tx_builder::tx_inputs_builder::InputWithScriptWitness;
+use cardano_serialization_lib::emip3::encrypt_with_password;
+use cardano_serialization_lib::metadata::encode_json_str_to_metadatum;
+use cardano_serialization_lib::metadata::GeneralTransactionMetadata;
+use cardano_serialization_lib::TransactionWitnessSet;
+use cardano_serialization_lib::crypto::Nonce;
+use cardano_serialization_lib::plutus::ConstrPlutusData;
+use cardano_serialization_lib::AssetNames;
+use cardano_serialization_lib::utils::hash_plutus_data;
+use cardano_serialization_lib::MIRKind;
+use cardano_serialization_lib::Relays;
+use cardano_serialization_lib::ProposedProtocolParameterUpdates;
+use cardano_serialization_lib::Assets;
+use cardano_serialization_lib::crypto::KESSignature;
+use cardano_serialization_lib::crypto::KESVKey;
+use cardano_serialization_lib::crypto::GenesisDelegateHash;
+use cardano_serialization_lib::address::BaseAddress;
 use cardano_serialization_lib::PoolMetadata;
+use cardano_serialization_lib::metadata::decode_metadatum_to_json_str;
+use cardano_serialization_lib::plutus::PlutusScripts;
+use cardano_serialization_lib::TransactionInput;
+use cardano_serialization_lib::crypto::PublicKeys;
+use cardano_serialization_lib::plutus::LanguageKind;
+use cardano_serialization_lib::crypto::BlockHash;
+use cardano_serialization_lib::plutus::RedeemerTagKind;
+use cardano_serialization_lib::GenesisHashes;
+use cardano_serialization_lib::plutus::encode_json_str_to_plutus_datum;
+use cardano_serialization_lib::plutus::ExUnitPrices;
+use cardano_serialization_lib::crypto::Vkey;
+use cardano_serialization_lib::NetworkIdKind;
+use cardano_serialization_lib::plutus::RedeemerTag;
+use cardano_serialization_lib::utils::ScriptSchema;
+use cardano_serialization_lib::address::Pointer;
+use cardano_serialization_lib::tx_builder::mint_builder::MintBuilder;
+use cardano_serialization_lib::TimelockExpiry;
+use cardano_serialization_lib::address::EnterpriseAddress;
+use cardano_serialization_lib::DNSRecordAorAAAA;
+use cardano_serialization_lib::TransactionInputs;
+use cardano_serialization_lib::StakeDelegation;
 
 
 #[allow(non_snake_case)]
@@ -807,16 +806,30 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_addressToBytes(env: JNI
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_addressToBech32(env: JNIEnv, _: JObject, self_ptr: JRPtr, prefix_str: JString) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_addressToBech32(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
     let self_rptr = self_jrptr.typed_ref::<Address>()?;
-    let prefix = prefix_str.option_string(&env)?;
-    let result = self_rptr.to_bech32(prefix).into_result()?;
+    let result = self_rptr.to_bech32(None).into_result()?;
     result.jstring(&env)
   })
   .jresult(&env)
 }
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_addressToBech32WithPrefix(env: JNIEnv, _: JObject, self_ptr: JRPtr, prefix_str: JString) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<Address>()?;
+    let prefix = prefix_str.string(&env)?;
+    let result = self_rptr.to_bech32(Some(prefix)).into_result()?;
+    result.jstring(&env)
+  })
+  .jresult(&env)
+}
+
 
 
 #[allow(non_snake_case)]
@@ -2186,7 +2199,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_transactionBodyTotalCol
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_transactionBodyNew(env: JNIEnv, _: JObject, inputs_ptr: JRPtr, outputs_ptr: JRPtr, fee_ptr: JRPtr, ttl_jlong: JObject) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_transactionBodyNew(env: JNIEnv, _: JObject, inputs_ptr: JRPtr, outputs_ptr: JRPtr, fee_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let inputs_jrptr = inputs_ptr.rptr(&env)?;
     let inputs = inputs_jrptr.typed_ref::<TransactionInputs>()?;
@@ -2194,12 +2207,30 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_transactionBodyNew(env:
     let outputs = outputs_jrptr.typed_ref::<TransactionOutputs>()?;
     let fee_jrptr = fee_ptr.rptr(&env)?;
     let fee = fee_jrptr.typed_ref::<BigNum>()?;
-    let ttl = Option::<u32>::try_from_jlong(ttl_jlong.unbox(&env)?)?;
-    let result = TransactionBody::new(inputs, outputs, fee, ttl);
+    let result = TransactionBody::new(inputs, outputs, fee, None);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
 }
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_transactionBodyNewWithTtl(env: JNIEnv, _: JObject, inputs_ptr: JRPtr, outputs_ptr: JRPtr, fee_ptr: JRPtr, ttl_jlong: jlong) -> jobject {
+  handle_exception_result(|| { 
+    let inputs_jrptr = inputs_ptr.rptr(&env)?;
+    let inputs = inputs_jrptr.typed_ref::<TransactionInputs>()?;
+    let outputs_jrptr = outputs_ptr.rptr(&env)?;
+    let outputs = outputs_jrptr.typed_ref::<TransactionOutputs>()?;
+    let fee_jrptr = fee_ptr.rptr(&env)?;
+    let fee = fee_jrptr.typed_ref::<BigNum>()?;
+    let ttl = u32::try_from_jlong(ttl_jlong)?;
+    let result = TransactionBody::new(inputs, outputs, fee, Some(ttl));
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
 
 
 #[allow(non_snake_case)]
@@ -4517,16 +4548,30 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_singleHostNameDnsName(e
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_singleHostNameNew(env: JNIEnv, _: JObject, port_jlong: JObject, dns_name_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_singleHostNameNew(env: JNIEnv, _: JObject, dns_name_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
-    let port = Option::<u16>::try_from_jlong(port_jlong.unbox(&env)?)?;
     let dns_name_jrptr = dns_name_ptr.rptr(&env)?;
     let dns_name = dns_name_jrptr.typed_ref::<DNSRecordAorAAAA>()?;
-    let result = SingleHostName::new(port, dns_name);
+    let result = SingleHostName::new(None, dns_name);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
 }
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_singleHostNameNewWithPort(env: JNIEnv, _: JObject, port_jlong: jlong, dns_name_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let port = u16::try_from_jlong(port_jlong)?;
+    let dns_name_jrptr = dns_name_ptr.rptr(&env)?;
+    let dns_name = dns_name_jrptr.typed_ref::<DNSRecordAorAAAA>()?;
+    let result = SingleHostName::new(Some(port), dns_name);
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
 
 
 
@@ -6163,7 +6208,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_poolParamsPoolMetadata(
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_poolParamsNew(env: JNIEnv, _: JObject, operator_ptr: JRPtr, vrf_keyhash_ptr: JRPtr, pledge_ptr: JRPtr, cost_ptr: JRPtr, margin_ptr: JRPtr, reward_account_ptr: JRPtr, pool_owners_ptr: JRPtr, relays_ptr: JRPtr, pool_metadata_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_poolParamsNew(env: JNIEnv, _: JObject, operator_ptr: JRPtr, vrf_keyhash_ptr: JRPtr, pledge_ptr: JRPtr, cost_ptr: JRPtr, margin_ptr: JRPtr, reward_account_ptr: JRPtr, pool_owners_ptr: JRPtr, relays_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let operator_jrptr = operator_ptr.rptr(&env)?;
     let operator = operator_jrptr.typed_ref::<Ed25519KeyHash>()?;
@@ -6181,12 +6226,40 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_poolParamsNew(env: JNIE
     let pool_owners = pool_owners_jrptr.typed_ref::<Ed25519KeyHashes>()?;
     let relays_jrptr = relays_ptr.rptr(&env)?;
     let relays = relays_jrptr.typed_ref::<Relays>()?;
-    let pool_metadata = clone_optional(pool_metadata_ptr.rptr(&env)?.option_typed_ref::<PoolMetadata>()?);
-    let result = PoolParams::new(operator, vrf_keyhash, pledge, cost, margin, reward_account, pool_owners, relays, pool_metadata);
+    let result = PoolParams::new(operator, vrf_keyhash, pledge, cost, margin, reward_account, pool_owners, relays, None);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
 }
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_poolParamsNewWithPoolMetadata(env: JNIEnv, _: JObject, operator_ptr: JRPtr, vrf_keyhash_ptr: JRPtr, pledge_ptr: JRPtr, cost_ptr: JRPtr, margin_ptr: JRPtr, reward_account_ptr: JRPtr, pool_owners_ptr: JRPtr, relays_ptr: JRPtr, pool_metadata_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let operator_jrptr = operator_ptr.rptr(&env)?;
+    let operator = operator_jrptr.typed_ref::<Ed25519KeyHash>()?;
+    let vrf_keyhash_jrptr = vrf_keyhash_ptr.rptr(&env)?;
+    let vrf_keyhash = vrf_keyhash_jrptr.typed_ref::<VRFKeyHash>()?;
+    let pledge_jrptr = pledge_ptr.rptr(&env)?;
+    let pledge = pledge_jrptr.typed_ref::<BigNum>()?;
+    let cost_jrptr = cost_ptr.rptr(&env)?;
+    let cost = cost_jrptr.typed_ref::<BigNum>()?;
+    let margin_jrptr = margin_ptr.rptr(&env)?;
+    let margin = margin_jrptr.typed_ref::<UnitInterval>()?;
+    let reward_account_jrptr = reward_account_ptr.rptr(&env)?;
+    let reward_account = reward_account_jrptr.typed_ref::<RewardAddress>()?;
+    let pool_owners_jrptr = pool_owners_ptr.rptr(&env)?;
+    let pool_owners = pool_owners_jrptr.typed_ref::<Ed25519KeyHashes>()?;
+    let relays_jrptr = relays_ptr.rptr(&env)?;
+    let relays = relays_jrptr.typed_ref::<Relays>()?;
+    let pool_metadata = pool_metadata_ptr.rptr(&env)?.typed_ref::<PoolMetadata>()?.clone();
+    let result = PoolParams::new(operator, vrf_keyhash, pledge, cost, margin, reward_account, pool_owners, relays, Some(pool_metadata));
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
 
 
 
@@ -17504,11 +17577,10 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_headerBodyProtocolVersi
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_headerBodyNew(env: JNIEnv, _: JObject, block_number_jlong: jlong, slot_jlong: jlong, prev_hash_ptr: JRPtr, issuer_vkey_ptr: JRPtr, vrf_vkey_ptr: JRPtr, vrf_result_ptr: JRPtr, block_body_size_jlong: jlong, block_body_hash_ptr: JRPtr, operational_cert_ptr: JRPtr, protocol_version_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_headerBodyNew(env: JNIEnv, _: JObject, block_number_jlong: jlong, slot_jlong: jlong, issuer_vkey_ptr: JRPtr, vrf_vkey_ptr: JRPtr, vrf_result_ptr: JRPtr, block_body_size_jlong: jlong, block_body_hash_ptr: JRPtr, operational_cert_ptr: JRPtr, protocol_version_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let block_number = u32::try_from_jlong(block_number_jlong)?;
     let slot = u32::try_from_jlong(slot_jlong)?;
-    let prev_hash = clone_optional(prev_hash_ptr.rptr(&env)?.option_typed_ref::<BlockHash>()?);
     let issuer_vkey_jrptr = issuer_vkey_ptr.rptr(&env)?;
     let issuer_vkey = issuer_vkey_jrptr.typed_ref::<Vkey>()?;
     let vrf_vkey_jrptr = vrf_vkey_ptr.rptr(&env)?;
@@ -17522,7 +17594,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_headerBodyNew(env: JNIE
     let operational_cert = operational_cert_jrptr.typed_ref::<OperationalCert>()?;
     let protocol_version_jrptr = protocol_version_ptr.rptr(&env)?;
     let protocol_version = protocol_version_jrptr.typed_ref::<ProtocolVersion>()?;
-    let result = HeaderBody::new(block_number, slot, prev_hash, issuer_vkey, vrf_vkey, vrf_result, block_body_size, block_body_hash, operational_cert, protocol_version);
+    let result = HeaderBody::new(block_number, slot, None, issuer_vkey, vrf_vkey, vrf_result, block_body_size, block_body_hash, operational_cert, protocol_version);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -17531,12 +17603,11 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_headerBodyNew(env: JNIE
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_headerBodyNewHeaderbody(env: JNIEnv, _: JObject, block_number_jlong: jlong, slot_ptr: JRPtr, prev_hash_ptr: JRPtr, issuer_vkey_ptr: JRPtr, vrf_vkey_ptr: JRPtr, vrf_result_ptr: JRPtr, block_body_size_jlong: jlong, block_body_hash_ptr: JRPtr, operational_cert_ptr: JRPtr, protocol_version_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_headerBodyNewWithPrevHash(env: JNIEnv, _: JObject, block_number_jlong: jlong, slot_jlong: jlong, prev_hash_ptr: JRPtr, issuer_vkey_ptr: JRPtr, vrf_vkey_ptr: JRPtr, vrf_result_ptr: JRPtr, block_body_size_jlong: jlong, block_body_hash_ptr: JRPtr, operational_cert_ptr: JRPtr, protocol_version_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let block_number = u32::try_from_jlong(block_number_jlong)?;
-    let slot_jrptr = slot_ptr.rptr(&env)?;
-    let slot = slot_jrptr.typed_ref::<BigNum>()?;
-    let prev_hash = clone_optional(prev_hash_ptr.rptr(&env)?.option_typed_ref::<BlockHash>()?);
+    let slot = u32::try_from_jlong(slot_jlong)?;
+    let prev_hash = prev_hash_ptr.rptr(&env)?.typed_ref::<BlockHash>()?.clone();
     let issuer_vkey_jrptr = issuer_vkey_ptr.rptr(&env)?;
     let issuer_vkey = issuer_vkey_jrptr.typed_ref::<Vkey>()?;
     let vrf_vkey_jrptr = vrf_vkey_ptr.rptr(&env)?;
@@ -17550,11 +17621,68 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_headerBodyNewHeaderbody
     let operational_cert = operational_cert_jrptr.typed_ref::<OperationalCert>()?;
     let protocol_version_jrptr = protocol_version_ptr.rptr(&env)?;
     let protocol_version = protocol_version_jrptr.typed_ref::<ProtocolVersion>()?;
-    let result = HeaderBody::new_headerbody(block_number, slot, prev_hash, issuer_vkey, vrf_vkey, vrf_result, block_body_size, block_body_hash, operational_cert, protocol_version);
+    let result = HeaderBody::new(block_number, slot, Some(prev_hash), issuer_vkey, vrf_vkey, vrf_result, block_body_size, block_body_hash, operational_cert, protocol_version);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
 }
+
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_headerBodyNewHeaderbody(env: JNIEnv, _: JObject, block_number_jlong: jlong, slot_ptr: JRPtr, issuer_vkey_ptr: JRPtr, vrf_vkey_ptr: JRPtr, vrf_result_ptr: JRPtr, block_body_size_jlong: jlong, block_body_hash_ptr: JRPtr, operational_cert_ptr: JRPtr, protocol_version_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let block_number = u32::try_from_jlong(block_number_jlong)?;
+    let slot_jrptr = slot_ptr.rptr(&env)?;
+    let slot = slot_jrptr.typed_ref::<BigNum>()?;
+    let issuer_vkey_jrptr = issuer_vkey_ptr.rptr(&env)?;
+    let issuer_vkey = issuer_vkey_jrptr.typed_ref::<Vkey>()?;
+    let vrf_vkey_jrptr = vrf_vkey_ptr.rptr(&env)?;
+    let vrf_vkey = vrf_vkey_jrptr.typed_ref::<VRFVKey>()?;
+    let vrf_result_jrptr = vrf_result_ptr.rptr(&env)?;
+    let vrf_result = vrf_result_jrptr.typed_ref::<VRFCert>()?;
+    let block_body_size = u32::try_from_jlong(block_body_size_jlong)?;
+    let block_body_hash_jrptr = block_body_hash_ptr.rptr(&env)?;
+    let block_body_hash = block_body_hash_jrptr.typed_ref::<BlockHash>()?;
+    let operational_cert_jrptr = operational_cert_ptr.rptr(&env)?;
+    let operational_cert = operational_cert_jrptr.typed_ref::<OperationalCert>()?;
+    let protocol_version_jrptr = protocol_version_ptr.rptr(&env)?;
+    let protocol_version = protocol_version_jrptr.typed_ref::<ProtocolVersion>()?;
+    let result = HeaderBody::new_headerbody(block_number, slot, None, issuer_vkey, vrf_vkey, vrf_result, block_body_size, block_body_hash, operational_cert, protocol_version);
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_headerBodyNewHeaderbodyWithPrevHash(env: JNIEnv, _: JObject, block_number_jlong: jlong, slot_ptr: JRPtr, prev_hash_ptr: JRPtr, issuer_vkey_ptr: JRPtr, vrf_vkey_ptr: JRPtr, vrf_result_ptr: JRPtr, block_body_size_jlong: jlong, block_body_hash_ptr: JRPtr, operational_cert_ptr: JRPtr, protocol_version_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let block_number = u32::try_from_jlong(block_number_jlong)?;
+    let slot_jrptr = slot_ptr.rptr(&env)?;
+    let slot = slot_jrptr.typed_ref::<BigNum>()?;
+    let prev_hash = prev_hash_ptr.rptr(&env)?.typed_ref::<BlockHash>()?.clone();
+    let issuer_vkey_jrptr = issuer_vkey_ptr.rptr(&env)?;
+    let issuer_vkey = issuer_vkey_jrptr.typed_ref::<Vkey>()?;
+    let vrf_vkey_jrptr = vrf_vkey_ptr.rptr(&env)?;
+    let vrf_vkey = vrf_vkey_jrptr.typed_ref::<VRFVKey>()?;
+    let vrf_result_jrptr = vrf_result_ptr.rptr(&env)?;
+    let vrf_result = vrf_result_jrptr.typed_ref::<VRFCert>()?;
+    let block_body_size = u32::try_from_jlong(block_body_size_jlong)?;
+    let block_body_hash_jrptr = block_body_hash_ptr.rptr(&env)?;
+    let block_body_hash = block_body_hash_jrptr.typed_ref::<BlockHash>()?;
+    let operational_cert_jrptr = operational_cert_ptr.rptr(&env)?;
+    let operational_cert = operational_cert_jrptr.typed_ref::<OperationalCert>()?;
+    let protocol_version_jrptr = protocol_version_ptr.rptr(&env)?;
+    let protocol_version = protocol_version_jrptr.typed_ref::<ProtocolVersion>()?;
+    let result = HeaderBody::new_headerbody(block_number, slot, Some(prev_hash), issuer_vkey, vrf_vkey, vrf_result, block_body_size, block_body_hash, operational_cert, protocol_version);
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
 
 
 
@@ -17819,16 +17947,103 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_singleHostAddrIpv6(env:
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_singleHostAddrNew(env: JNIEnv, _: JObject, port_jlong: JObject, ipv4_ptr: JRPtr, ipv6_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_singleHostAddrNew(env: JNIEnv, _: JObject) -> jobject {
   handle_exception_result(|| { 
-    let port = Option::<u16>::try_from_jlong(port_jlong.unbox(&env)?)?;
-    let ipv4 = clone_optional(ipv4_ptr.rptr(&env)?.option_typed_ref::<Ipv4>()?);
-    let ipv6 = clone_optional(ipv6_ptr.rptr(&env)?.option_typed_ref::<Ipv6>()?);
-    let result = SingleHostAddr::new(port, ipv4, ipv6);
+    let result = SingleHostAddr::new(None, None, None);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
 }
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_singleHostAddrNewWithPort(env: JNIEnv, _: JObject, port_jlong: jlong) -> jobject {
+  handle_exception_result(|| { 
+    let port = u16::try_from_jlong(port_jlong)?;
+    let result = SingleHostAddr::new(Some(port), None, None);
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_singleHostAddrNewWithIpv4(env: JNIEnv, _: JObject, ipv4_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let ipv4 = ipv4_ptr.rptr(&env)?.typed_ref::<Ipv4>()?.clone();
+    let result = SingleHostAddr::new(None, Some(ipv4), None);
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_singleHostAddrNewWithPortIpv4(env: JNIEnv, _: JObject, port_jlong: jlong, ipv4_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let port = u16::try_from_jlong(port_jlong)?;
+    let ipv4 = ipv4_ptr.rptr(&env)?.typed_ref::<Ipv4>()?.clone();
+    let result = SingleHostAddr::new(Some(port), Some(ipv4), None);
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_singleHostAddrNewWithIpv6(env: JNIEnv, _: JObject, ipv6_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let ipv6 = ipv6_ptr.rptr(&env)?.typed_ref::<Ipv6>()?.clone();
+    let result = SingleHostAddr::new(None, None, Some(ipv6));
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_singleHostAddrNewWithPortIpv6(env: JNIEnv, _: JObject, port_jlong: jlong, ipv6_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let port = u16::try_from_jlong(port_jlong)?;
+    let ipv6 = ipv6_ptr.rptr(&env)?.typed_ref::<Ipv6>()?.clone();
+    let result = SingleHostAddr::new(Some(port), None, Some(ipv6));
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_singleHostAddrNewWithIpv4Ipv6(env: JNIEnv, _: JObject, ipv4_ptr: JRPtr, ipv6_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let ipv4 = ipv4_ptr.rptr(&env)?.typed_ref::<Ipv4>()?.clone();
+    let ipv6 = ipv6_ptr.rptr(&env)?.typed_ref::<Ipv6>()?.clone();
+    let result = SingleHostAddr::new(None, Some(ipv4), Some(ipv6));
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_singleHostAddrNewWithPortIpv4Ipv6(env: JNIEnv, _: JObject, port_jlong: jlong, ipv4_ptr: JRPtr, ipv6_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let port = u16::try_from_jlong(port_jlong)?;
+    let ipv4 = ipv4_ptr.rptr(&env)?.typed_ref::<Ipv4>()?.clone();
+    let ipv6 = ipv6_ptr.rptr(&env)?.typed_ref::<Ipv6>()?.clone();
+    let result = SingleHostAddr::new(Some(port), Some(ipv4), Some(ipv6));
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
 
 
 
@@ -18154,18 +18369,34 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_transactionSetIsValid(e
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_transactionNew(env: JNIEnv, _: JObject, body_ptr: JRPtr, witness_set_ptr: JRPtr, auxiliary_data_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_transactionNew(env: JNIEnv, _: JObject, body_ptr: JRPtr, witness_set_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let body_jrptr = body_ptr.rptr(&env)?;
     let body = body_jrptr.typed_ref::<TransactionBody>()?;
     let witness_set_jrptr = witness_set_ptr.rptr(&env)?;
     let witness_set = witness_set_jrptr.typed_ref::<TransactionWitnessSet>()?;
-    let auxiliary_data = clone_optional(auxiliary_data_ptr.rptr(&env)?.option_typed_ref::<AuxiliaryData>()?);
-    let result = Transaction::new(body, witness_set, auxiliary_data);
+    let result = Transaction::new(body, witness_set, None);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
 }
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_transactionNewWithAuxiliaryData(env: JNIEnv, _: JObject, body_ptr: JRPtr, witness_set_ptr: JRPtr, auxiliary_data_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let body_jrptr = body_ptr.rptr(&env)?;
+    let body = body_jrptr.typed_ref::<TransactionBody>()?;
+    let witness_set_jrptr = witness_set_ptr.rptr(&env)?;
+    let witness_set = witness_set_jrptr.typed_ref::<TransactionWitnessSet>()?;
+    let auxiliary_data = auxiliary_data_ptr.rptr(&env)?.typed_ref::<AuxiliaryData>()?.clone();
+    let result = Transaction::new(body, witness_set, Some(auxiliary_data));
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
 
 
 
@@ -19670,18 +19901,34 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_decodeMetadatumToJsonSt
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_hashScriptData(env: JNIEnv, _: JObject, redeemers_ptr: JRPtr, cost_models_ptr: JRPtr, datums_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_hashScriptData(env: JNIEnv, _: JObject, redeemers_ptr: JRPtr, cost_models_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let redeemers_jrptr = redeemers_ptr.rptr(&env)?;
     let redeemers = redeemers_jrptr.typed_ref::<Redeemers>()?;
     let cost_models_jrptr = cost_models_ptr.rptr(&env)?;
     let cost_models = cost_models_jrptr.typed_ref::<Costmdls>()?;
-    let datums = clone_optional(datums_ptr.rptr(&env)?.option_typed_ref::<PlutusList>()?);
-    let result = hash_script_data(redeemers, cost_models, datums);
+    let result = hash_script_data(redeemers, cost_models, None);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
 }
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_hashScriptDataWithDatums(env: JNIEnv, _: JObject, redeemers_ptr: JRPtr, cost_models_ptr: JRPtr, datums_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let redeemers_jrptr = redeemers_ptr.rptr(&env)?;
+    let redeemers = redeemers_jrptr.typed_ref::<Redeemers>()?;
+    let cost_models_jrptr = cost_models_ptr.rptr(&env)?;
+    let cost_models = cost_models_jrptr.typed_ref::<Costmdls>()?;
+    let datums = datums_ptr.rptr(&env)?.typed_ref::<PlutusList>()?.clone();
+    let result = hash_script_data(redeemers, cost_models, Some(datums));
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
 
 
 #[allow(non_snake_case)]

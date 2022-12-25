@@ -391,11 +391,19 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void addressToBech32(String self, String prefix, Promise promise) {
+    public final void addressToBech32(String self, Promise promise) {
         Native.I
-            .addressToBech32(new RPtr(self), prefix)
+            .addressToBech32(new RPtr(self))
             .pour(promise);
     }
+
+    @ReactMethod
+    public final void addressToBech32WithPrefix(String self, String prefix, Promise promise) {
+        Native.I
+            .addressToBech32WithPrefix(new RPtr(self), prefix)
+            .pour(promise);
+    }
+
 
     @ReactMethod
     public final void addressFromBech32(String bechStr, Promise promise) {
@@ -1197,12 +1205,21 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionBodyNew(String inputs, String outputs, String fee, Double ttl, Promise promise) {
+    public final void transactionBodyNew(String inputs, String outputs, String fee, Promise promise) {
         Native.I
-            .transactionBodyNew(new RPtr(inputs), new RPtr(outputs), new RPtr(fee), ttl.longValue())
+            .transactionBodyNew(new RPtr(inputs), new RPtr(outputs), new RPtr(fee))
             .map(RPtr::toJs)
             .pour(promise);
     }
+
+    @ReactMethod
+    public final void transactionBodyNewWithTtl(String inputs, String outputs, String fee, Double ttl, Promise promise) {
+        Native.I
+            .transactionBodyNewWithTtl(new RPtr(inputs), new RPtr(outputs), new RPtr(fee), ttl.longValue())
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
 
     @ReactMethod
     public final void transactionBodyNewTxBody(String inputs, String outputs, String fee, Promise promise) {
@@ -1944,7 +1961,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderOutputSizes(String self, Promise promise) {
         Native.I
             .transactionBuilderOutputSizes(new RPtr(self))
-            .map(RPtr::toJs)
             .pour(promise);
     }
 
@@ -2495,12 +2511,21 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void singleHostNameNew(Double port, String dnsName, Promise promise) {
+    public final void singleHostNameNew(String dnsName, Promise promise) {
         Native.I
-            .singleHostNameNew(port.longValue(), new RPtr(dnsName))
+            .singleHostNameNew(new RPtr(dnsName))
             .map(RPtr::toJs)
             .pour(promise);
     }
+
+    @ReactMethod
+    public final void singleHostNameNewWithPort(Double port, String dnsName, Promise promise) {
+        Native.I
+            .singleHostNameNewWithPort(port.longValue(), new RPtr(dnsName))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
 
 
     @ReactMethod
@@ -3505,12 +3530,21 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void poolParamsNew(String operator, String vrfKeyhash, String pledge, String cost, String margin, String rewardAccount, String poolOwners, String relays, String poolMetadata, Promise promise) {
+    public final void poolParamsNew(String operator, String vrfKeyhash, String pledge, String cost, String margin, String rewardAccount, String poolOwners, String relays, Promise promise) {
         Native.I
-            .poolParamsNew(new RPtr(operator), new RPtr(vrfKeyhash), new RPtr(pledge), new RPtr(cost), new RPtr(margin), new RPtr(rewardAccount), new RPtr(poolOwners), new RPtr(relays), new RPtr(poolMetadata))
+            .poolParamsNew(new RPtr(operator), new RPtr(vrfKeyhash), new RPtr(pledge), new RPtr(cost), new RPtr(margin), new RPtr(rewardAccount), new RPtr(poolOwners), new RPtr(relays))
             .map(RPtr::toJs)
             .pour(promise);
     }
+
+    @ReactMethod
+    public final void poolParamsNewWithPoolMetadata(String operator, String vrfKeyhash, String pledge, String cost, String margin, String rewardAccount, String poolOwners, String relays, String poolMetadata, Promise promise) {
+        Native.I
+            .poolParamsNewWithPoolMetadata(new RPtr(operator), new RPtr(vrfKeyhash), new RPtr(pledge), new RPtr(cost), new RPtr(margin), new RPtr(rewardAccount), new RPtr(poolOwners), new RPtr(relays), new RPtr(poolMetadata))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
 
 
     @ReactMethod
@@ -10258,20 +10292,38 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void headerBodyNew(Double blockNumber, Double slot, String prevHash, String issuerVkey, String vrfVkey, String vrfResult, Double blockBodySize, String blockBodyHash, String operationalCert, String protocolVersion, Promise promise) {
+    public final void headerBodyNew(Double blockNumber, Double slot, String issuerVkey, String vrfVkey, String vrfResult, Double blockBodySize, String blockBodyHash, String operationalCert, String protocolVersion, Promise promise) {
         Native.I
-            .headerBodyNew(blockNumber.longValue(), slot.longValue(), new RPtr(prevHash), new RPtr(issuerVkey), new RPtr(vrfVkey), new RPtr(vrfResult), blockBodySize.longValue(), new RPtr(blockBodyHash), new RPtr(operationalCert), new RPtr(protocolVersion))
+            .headerBodyNew(blockNumber.longValue(), slot.longValue(), new RPtr(issuerVkey), new RPtr(vrfVkey), new RPtr(vrfResult), blockBodySize.longValue(), new RPtr(blockBodyHash), new RPtr(operationalCert), new RPtr(protocolVersion))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void headerBodyNewHeaderbody(Double blockNumber, String slot, String prevHash, String issuerVkey, String vrfVkey, String vrfResult, Double blockBodySize, String blockBodyHash, String operationalCert, String protocolVersion, Promise promise) {
+    public final void headerBodyNewWithPrevHash(Double blockNumber, Double slot, String prevHash, String issuerVkey, String vrfVkey, String vrfResult, Double blockBodySize, String blockBodyHash, String operationalCert, String protocolVersion, Promise promise) {
         Native.I
-            .headerBodyNewHeaderbody(blockNumber.longValue(), new RPtr(slot), new RPtr(prevHash), new RPtr(issuerVkey), new RPtr(vrfVkey), new RPtr(vrfResult), blockBodySize.longValue(), new RPtr(blockBodyHash), new RPtr(operationalCert), new RPtr(protocolVersion))
+            .headerBodyNewWithPrevHash(blockNumber.longValue(), slot.longValue(), new RPtr(prevHash), new RPtr(issuerVkey), new RPtr(vrfVkey), new RPtr(vrfResult), blockBodySize.longValue(), new RPtr(blockBodyHash), new RPtr(operationalCert), new RPtr(protocolVersion))
             .map(RPtr::toJs)
             .pour(promise);
     }
+
+
+    @ReactMethod
+    public final void headerBodyNewHeaderbody(Double blockNumber, String slot, String issuerVkey, String vrfVkey, String vrfResult, Double blockBodySize, String blockBodyHash, String operationalCert, String protocolVersion, Promise promise) {
+        Native.I
+            .headerBodyNewHeaderbody(blockNumber.longValue(), new RPtr(slot), new RPtr(issuerVkey), new RPtr(vrfVkey), new RPtr(vrfResult), blockBodySize.longValue(), new RPtr(blockBodyHash), new RPtr(operationalCert), new RPtr(protocolVersion))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void headerBodyNewHeaderbodyWithPrevHash(Double blockNumber, String slot, String prevHash, String issuerVkey, String vrfVkey, String vrfResult, Double blockBodySize, String blockBodyHash, String operationalCert, String protocolVersion, Promise promise) {
+        Native.I
+            .headerBodyNewHeaderbodyWithPrevHash(blockNumber.longValue(), new RPtr(slot), new RPtr(prevHash), new RPtr(issuerVkey), new RPtr(vrfVkey), new RPtr(vrfResult), blockBodySize.longValue(), new RPtr(blockBodyHash), new RPtr(operationalCert), new RPtr(protocolVersion))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
 
 
     @ReactMethod
@@ -10432,12 +10484,69 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void singleHostAddrNew(Double port, String ipv4, String ipv6, Promise promise) {
+    public final void singleHostAddrNew( Promise promise) {
         Native.I
-            .singleHostAddrNew(port.longValue(), new RPtr(ipv4), new RPtr(ipv6))
+            .singleHostAddrNew()
             .map(RPtr::toJs)
             .pour(promise);
     }
+
+    @ReactMethod
+    public final void singleHostAddrNewWithPort(Double port, Promise promise) {
+        Native.I
+            .singleHostAddrNewWithPort(port.longValue())
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void singleHostAddrNewWithIpv4(String ipv4, Promise promise) {
+        Native.I
+            .singleHostAddrNewWithIpv4(new RPtr(ipv4))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void singleHostAddrNewWithPortIpv4(Double port, String ipv4, Promise promise) {
+        Native.I
+            .singleHostAddrNewWithPortIpv4(port.longValue(), new RPtr(ipv4))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void singleHostAddrNewWithIpv6(String ipv6, Promise promise) {
+        Native.I
+            .singleHostAddrNewWithIpv6(new RPtr(ipv6))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void singleHostAddrNewWithPortIpv6(Double port, String ipv6, Promise promise) {
+        Native.I
+            .singleHostAddrNewWithPortIpv6(port.longValue(), new RPtr(ipv6))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void singleHostAddrNewWithIpv4Ipv6(String ipv4, String ipv6, Promise promise) {
+        Native.I
+            .singleHostAddrNewWithIpv4Ipv6(new RPtr(ipv4), new RPtr(ipv6))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void singleHostAddrNewWithPortIpv4Ipv6(Double port, String ipv4, String ipv6, Promise promise) {
+        Native.I
+            .singleHostAddrNewWithPortIpv4Ipv6(port.longValue(), new RPtr(ipv4), new RPtr(ipv6))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
 
 
     @ReactMethod
@@ -10635,12 +10744,21 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionNew(String body, String witnessSet, String auxiliaryData, Promise promise) {
+    public final void transactionNew(String body, String witnessSet, Promise promise) {
         Native.I
-            .transactionNew(new RPtr(body), new RPtr(witnessSet), new RPtr(auxiliaryData))
+            .transactionNew(new RPtr(body), new RPtr(witnessSet))
             .map(RPtr::toJs)
             .pour(promise);
     }
+
+    @ReactMethod
+    public final void transactionNewWithAuxiliaryData(String body, String witnessSet, String auxiliaryData, Promise promise) {
+        Native.I
+            .transactionNewWithAuxiliaryData(new RPtr(body), new RPtr(witnessSet), new RPtr(auxiliaryData))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
 
 
     @ReactMethod
@@ -11550,12 +11668,21 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void hashScriptData(String redeemers, String costModels, String datums, Promise promise) {
+    public final void hashScriptData(String redeemers, String costModels, Promise promise) {
         Native.I
-            .hashScriptData(new RPtr(redeemers), new RPtr(costModels), new RPtr(datums))
+            .hashScriptData(new RPtr(redeemers), new RPtr(costModels))
             .map(RPtr::toJs)
             .pour(promise);
     }
+
+    @ReactMethod
+    public final void hashScriptDataWithDatums(String redeemers, String costModels, String datums, Promise promise) {
+        Native.I
+            .hashScriptDataWithDatums(new RPtr(redeemers), new RPtr(costModels), new RPtr(datums))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
 
     @ReactMethod
     public final void decodeArbitraryBytesFromMetadatum(String metadata, Promise promise) {
