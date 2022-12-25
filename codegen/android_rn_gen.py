@@ -91,7 +91,7 @@ def get_rn_java_fn_map_res(arg):
             else:
                 return ".map(Long::longValue)\r\n"
     elif arg.is_enum:
-        return name + ".map(Long::intValue)\r\n"
+        return ".map(Integer::intValue)\r\n"
     else:
         return ".map(RPtr::toJs)\r\n"
 
@@ -104,7 +104,7 @@ def get_rn_java_fn_call_arg(arg):
     elif arg.struct_name.lower() == "string" or arg.struct_name.lower() == "str":
         return name
     elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u8":
-        return "Base64.encodeToString(" + name + ")"
+        return "Base64.decode(" + name + ", Base64.DEFAULT)"
     elif (arg.is_vec or arg.is_slice) and (arg.struct_name == "u32" or arg.struct_name == "usize"):
         return name
     elif arg.is_primitive and not (arg.is_vec or arg.is_slice):

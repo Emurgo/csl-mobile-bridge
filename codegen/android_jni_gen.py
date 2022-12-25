@@ -16,7 +16,10 @@ final class Native {\r\n\
     }\r\n\
 \r\n\
     private Native() { } \r\n\
-    private native void initLibrary();\r\n"
+    private native void initLibrary();\r\n\
+\r\n\
+    public final native void ptrFree(RPtr ptr);\r\n\
+\r\n"
 
 
 def get_jni_fn_arg(arg):

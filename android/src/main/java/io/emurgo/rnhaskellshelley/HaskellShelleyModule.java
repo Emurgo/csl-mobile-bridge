@@ -43,7 +43,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void certificateFromBytes(String bytes, Promise promise) {
         Native.I
-            .certificateFromBytes(Base64.encodeToString(bytes))
+            .certificateFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -138,7 +138,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void certificateKind(String self, Promise promise) {
         Native.I
             .certificateKind(new RPtr(self))
-            none.map(Long::intValue)
+            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -210,7 +210,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void transactionWitnessSetFromBytes(String bytes, Promise promise) {
         Native.I
-            .transactionWitnessSetFromBytes(Base64.encodeToString(bytes))
+            .transactionWitnessSetFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -347,7 +347,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void addressFromBytes(String data, Promise promise) {
         Native.I
-            .addressFromBytes(Base64.encodeToString(data))
+            .addressFromBytes(Base64.decode(data, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -433,7 +433,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void blockFromBytes(String bytes, Promise promise) {
         Native.I
-            .blockFromBytes(Base64.encodeToString(bytes))
+            .blockFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -559,7 +559,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void ipv4FromBytes(String bytes, Promise promise) {
         Native.I
-            .ipv4FromBytes(Base64.encodeToString(bytes))
+            .ipv4FromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -597,7 +597,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void ipv4New(String data, Promise promise) {
         Native.I
-            .ipv4New(Base64.encodeToString(data))
+            .ipv4New(Base64.decode(data, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -622,7 +622,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void certificatesFromBytes(String bytes, Promise promise) {
         Native.I
-            .certificatesFromBytes(Base64.encodeToString(bytes))
+            .certificatesFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -700,7 +700,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void protocolVersionFromBytes(String bytes, Promise promise) {
         Native.I
-            .protocolVersionFromBytes(Base64.encodeToString(bytes))
+            .protocolVersionFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -771,7 +771,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void metadataListFromBytes(String bytes, Promise promise) {
         Native.I
-            .metadataListFromBytes(Base64.encodeToString(bytes))
+            .metadataListFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -834,7 +834,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void transactionMetadatumLabelsFromBytes(String bytes, Promise promise) {
         Native.I
-            .transactionMetadatumLabelsFromBytes(Base64.encodeToString(bytes))
+            .transactionMetadatumLabelsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -897,7 +897,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void transactionBodyFromBytes(String bytes, Promise promise) {
         Native.I
-            .transactionBodyFromBytes(Base64.encodeToString(bytes))
+            .transactionBodyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -1233,7 +1233,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void genesisHashFromBytes(String bytes, Promise promise) {
         Native.I
-            .genesisHashFromBytes(Base64.encodeToString(bytes))
+            .genesisHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -1288,7 +1288,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void transactionInputFromBytes(String bytes, Promise promise) {
         Native.I
-            .transactionInputFromBytes(Base64.encodeToString(bytes))
+            .transactionInputFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -1359,7 +1359,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void plutusScriptFromBytes(String bytes, Promise promise) {
         Native.I
-            .plutusScriptFromBytes(Base64.encodeToString(bytes))
+            .plutusScriptFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -1382,7 +1382,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void plutusScriptNew(String bytes, Promise promise) {
         Native.I
-            .plutusScriptNew(Base64.encodeToString(bytes))
+            .plutusScriptNew(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -1390,7 +1390,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void plutusScriptNewV2(String bytes, Promise promise) {
         Native.I
-            .plutusScriptNewV2(Base64.encodeToString(bytes))
+            .plutusScriptNewV2(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -1398,7 +1398,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void plutusScriptNewWithVersion(String bytes, String language, Promise promise) {
         Native.I
-            .plutusScriptNewWithVersion(Base64.encodeToString(bytes), new RPtr(language))
+            .plutusScriptNewWithVersion(Base64.decode(bytes, Base64.DEFAULT), new RPtr(language))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -1414,7 +1414,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void plutusScriptFromBytesV2(String bytes, Promise promise) {
         Native.I
-            .plutusScriptFromBytesV2(Base64.encodeToString(bytes))
+            .plutusScriptFromBytesV2(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -1422,7 +1422,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void plutusScriptFromBytesWithVersion(String bytes, String language, Promise promise) {
         Native.I
-            .plutusScriptFromBytesWithVersion(Base64.encodeToString(bytes), new RPtr(language))
+            .plutusScriptFromBytesWithVersion(Base64.decode(bytes, Base64.DEFAULT), new RPtr(language))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -1463,7 +1463,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void poolMetadataFromBytes(String bytes, Promise promise) {
         Native.I
-            .poolMetadataFromBytes(Base64.encodeToString(bytes))
+            .poolMetadataFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2008,7 +2008,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void transactionOutputsFromBytes(String bytes, Promise promise) {
         Native.I
-            .transactionOutputsFromBytes(Base64.encodeToString(bytes))
+            .transactionOutputsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2118,7 +2118,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void poolRegistrationFromBytes(String bytes, Promise promise) {
         Native.I
-            .poolRegistrationFromBytes(Base64.encodeToString(bytes))
+            .poolRegistrationFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2181,7 +2181,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void transactionUnspentOutputFromBytes(String bytes, Promise promise) {
         Native.I
-            .transactionUnspentOutputFromBytes(Base64.encodeToString(bytes))
+            .transactionUnspentOutputFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2301,7 +2301,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void vkeywitnessFromBytes(String bytes, Promise promise) {
         Native.I
-            .vkeywitnessFromBytes(Base64.encodeToString(bytes))
+            .vkeywitnessFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2372,7 +2372,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void redeemerFromBytes(String bytes, Promise promise) {
         Native.I
-            .redeemerFromBytes(Base64.encodeToString(bytes))
+            .redeemerFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2459,7 +2459,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void singleHostNameFromBytes(String bytes, Promise promise) {
         Native.I
-            .singleHostNameFromBytes(Base64.encodeToString(bytes))
+            .singleHostNameFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2539,7 +2539,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void relaysFromBytes(String bytes, Promise promise) {
         Native.I
-            .relaysFromBytes(Base64.encodeToString(bytes))
+            .relaysFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2617,7 +2617,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void costmdlsFromBytes(String bytes, Promise promise) {
         Native.I
-            .costmdlsFromBytes(Base64.encodeToString(bytes))
+            .costmdlsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2712,7 +2712,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void redeemerTagFromBytes(String bytes, Promise promise) {
         Native.I
-            .redeemerTagFromBytes(Base64.encodeToString(bytes))
+            .redeemerTagFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2783,7 +2783,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void redeemerTagKind(String self, Promise promise) {
         Native.I
             .redeemerTagKind(new RPtr(self))
-            none.map(Long::intValue)
+            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -2791,7 +2791,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void scriptDataHashFromBytes(String bytes, Promise promise) {
         Native.I
-            .scriptDataHashFromBytes(Base64.encodeToString(bytes))
+            .scriptDataHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2846,7 +2846,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void costModelFromBytes(String bytes, Promise promise) {
         Native.I
-            .costModelFromBytes(Base64.encodeToString(bytes))
+            .costModelFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2955,7 +2955,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void ed25519SignatureFromBytes(String bytes, Promise promise) {
         Native.I
-            .ed25519SignatureFromBytes(Base64.encodeToString(bytes))
+            .ed25519SignatureFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2972,7 +2972,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void bip32PrivateKeyFrom_128Xprv(String bytes, Promise promise) {
         Native.I
-            .bip32PrivateKeyFrom_128Xprv(Base64.encodeToString(bytes))
+            .bip32PrivateKeyFrom_128Xprv(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3012,7 +3012,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void bip32PrivateKeyFromBytes(String bytes, Promise promise) {
         Native.I
-            .bip32PrivateKeyFromBytes(Base64.encodeToString(bytes))
+            .bip32PrivateKeyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3043,7 +3043,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void bip32PrivateKeyFromBip39Entropy(String entropy, String password, Promise promise) {
         Native.I
-            .bip32PrivateKeyFromBip39Entropy(Base64.encodeToString(entropy), Base64.encodeToString(password))
+            .bip32PrivateKeyFromBip39Entropy(Base64.decode(entropy, Base64.DEFAULT), Base64.decode(password, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3115,7 +3115,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void transactionMetadatumFromBytes(String bytes, Promise promise) {
         Native.I
-            .transactionMetadatumFromBytes(Base64.encodeToString(bytes))
+            .transactionMetadatumFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3152,9 +3152,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionMetadatumNewInt(String int, Promise promise) {
+    public final void transactionMetadatumNewInt(String intValue, Promise promise) {
         Native.I
-            .transactionMetadatumNewInt(new RPtr(int))
+            .transactionMetadatumNewInt(new RPtr(intValue))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3162,7 +3162,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void transactionMetadatumNewBytes(String bytes, Promise promise) {
         Native.I
-            .transactionMetadatumNewBytes(Base64.encodeToString(bytes))
+            .transactionMetadatumNewBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3179,7 +3179,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionMetadatumKind(String self, Promise promise) {
         Native.I
             .transactionMetadatumKind(new RPtr(self))
-            none.map(Long::intValue)
+            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -3234,7 +3234,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void rewardAddressesFromBytes(String bytes, Promise promise) {
         Native.I
-            .rewardAddressesFromBytes(Base64.encodeToString(bytes))
+            .rewardAddressesFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3312,7 +3312,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void plutusListFromBytes(String bytes, Promise promise) {
         Native.I
-            .plutusListFromBytes(Base64.encodeToString(bytes))
+            .plutusListFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3367,7 +3367,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void transactionHashFromBytes(String bytes, Promise promise) {
         Native.I
-            .transactionHashFromBytes(Base64.encodeToString(bytes))
+            .transactionHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3422,7 +3422,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void poolParamsFromBytes(String bytes, Promise promise) {
         Native.I
-            .poolParamsFromBytes(Base64.encodeToString(bytes))
+            .poolParamsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3598,7 +3598,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void genesisKeyDelegationFromBytes(String bytes, Promise promise) {
         Native.I
-            .genesisKeyDelegationFromBytes(Base64.encodeToString(bytes))
+            .genesisKeyDelegationFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3677,7 +3677,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void uRLFromBytes(String bytes, Promise promise) {
         Native.I
-            .uRLFromBytes(Base64.encodeToString(bytes))
+            .uRLFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3739,7 +3739,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void constrPlutusDataFromBytes(String bytes, Promise promise) {
         Native.I
-            .constrPlutusDataFromBytes(Base64.encodeToString(bytes))
+            .constrPlutusDataFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3795,7 +3795,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void dNSRecordSRVFromBytes(String bytes, Promise promise) {
         Native.I
-            .dNSRecordSRVFromBytes(Base64.encodeToString(bytes))
+            .dNSRecordSRVFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3882,7 +3882,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void blockHashFromBytes(String bytes, Promise promise) {
         Native.I
-            .blockHashFromBytes(Base64.encodeToString(bytes))
+            .blockHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3929,7 +3929,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void vRFKeyHashFromBytes(String bytes, Promise promise) {
         Native.I
-            .vRFKeyHashFromBytes(Base64.encodeToString(bytes))
+            .vRFKeyHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -3985,7 +3985,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void stakeDelegationFromBytes(String bytes, Promise promise) {
         Native.I
-            .stakeDelegationFromBytes(Base64.encodeToString(bytes))
+            .stakeDelegationFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -4056,7 +4056,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void mintFromBytes(String bytes, Promise promise) {
         Native.I
-            .mintFromBytes(Base64.encodeToString(bytes))
+            .mintFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -4175,7 +4175,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void stakeCredentialsFromBytes(String bytes, Promise promise) {
         Native.I
-            .stakeCredentialsFromBytes(Base64.encodeToString(bytes))
+            .stakeCredentialsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -4253,7 +4253,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void metadataMapFromBytes(String bytes, Promise promise) {
         Native.I
-            .metadataMapFromBytes(Base64.encodeToString(bytes))
+            .metadataMapFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -4364,7 +4364,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void vRFCertFromBytes(String bytes, Promise promise) {
         Native.I
-            .vRFCertFromBytes(Base64.encodeToString(bytes))
+            .vRFCertFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -4418,7 +4418,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void vRFCertNew(String output, String proof, Promise promise) {
         Native.I
-            .vRFCertNew(Base64.encodeToString(output), Base64.encodeToString(proof))
+            .vRFCertNew(Base64.decode(output, Base64.DEFAULT), Base64.decode(proof, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -4435,7 +4435,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void bigNumFromBytes(String bytes, Promise promise) {
         Native.I
-            .bigNumFromBytes(Base64.encodeToString(bytes))
+            .bigNumFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -4583,7 +4583,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void withdrawalsFromBytes(String bytes, Promise promise) {
         Native.I
-            .withdrawalsFromBytes(Base64.encodeToString(bytes))
+            .withdrawalsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -4670,7 +4670,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void moveInstantaneousRewardFromBytes(String bytes, Promise promise) {
         Native.I
-            .moveInstantaneousRewardFromBytes(Base64.encodeToString(bytes))
+            .moveInstantaneousRewardFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -4725,7 +4725,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void moveInstantaneousRewardPot(String self, Promise promise) {
         Native.I
             .moveInstantaneousRewardPot(new RPtr(self))
-            none.map(Long::intValue)
+            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -4733,7 +4733,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void moveInstantaneousRewardKind(String self, Promise promise) {
         Native.I
             .moveInstantaneousRewardKind(new RPtr(self))
-            none.map(Long::intValue)
+            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -4765,7 +4765,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void ipv6FromBytes(String bytes, Promise promise) {
         Native.I
-            .ipv6FromBytes(Base64.encodeToString(bytes))
+            .ipv6FromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -4803,7 +4803,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void ipv6New(String data, Promise promise) {
         Native.I
-            .ipv6New(Base64.encodeToString(data))
+            .ipv6New(Base64.decode(data, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -4828,7 +4828,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void vkeyFromBytes(String bytes, Promise promise) {
         Native.I
-            .vkeyFromBytes(Base64.encodeToString(bytes))
+            .vkeyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -4938,7 +4938,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void proposedProtocolParameterUpdatesFromBytes(String bytes, Promise promise) {
         Native.I
-            .proposedProtocolParameterUpdatesFromBytes(Base64.encodeToString(bytes))
+            .proposedProtocolParameterUpdatesFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5074,7 +5074,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void assetNamesFromBytes(String bytes, Promise promise) {
         Native.I
-            .assetNamesFromBytes(Base64.encodeToString(bytes))
+            .assetNamesFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5152,7 +5152,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void generalTransactionMetadataFromBytes(String bytes, Promise promise) {
         Native.I
-            .generalTransactionMetadataFromBytes(Base64.encodeToString(bytes))
+            .generalTransactionMetadataFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5239,7 +5239,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void transactionInputsFromBytes(String bytes, Promise promise) {
         Native.I
-            .transactionInputsFromBytes(Base64.encodeToString(bytes))
+            .transactionInputsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5325,7 +5325,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void updateFromBytes(String bytes, Promise promise) {
         Native.I
-            .updateFromBytes(Base64.encodeToString(bytes))
+            .updateFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5452,7 +5452,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void timelockStartFromBytes(String bytes, Promise promise) {
         Native.I
-            .timelockStartFromBytes(Base64.encodeToString(bytes))
+            .timelockStartFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5531,7 +5531,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void ed25519KeyHashesFromBytes(String bytes, Promise promise) {
         Native.I
-            .ed25519KeyHashesFromBytes(Base64.encodeToString(bytes))
+            .ed25519KeyHashesFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5617,7 +5617,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void multiAssetFromBytes(String bytes, Promise promise) {
         Native.I
-            .multiAssetFromBytes(Base64.encodeToString(bytes))
+            .multiAssetFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5728,7 +5728,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void kESSignatureFromBytes(String bytes, Promise promise) {
         Native.I
-            .kESSignatureFromBytes(Base64.encodeToString(bytes))
+            .kESSignatureFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5777,7 +5777,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void scriptHashesFromBytes(String bytes, Promise promise) {
         Native.I
-            .scriptHashesFromBytes(Base64.encodeToString(bytes))
+            .scriptHashesFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5855,7 +5855,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void headerFromBytes(String bytes, Promise promise) {
         Native.I
-            .headerFromBytes(Base64.encodeToString(bytes))
+            .headerFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5926,7 +5926,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void dNSRecordAorAAAAFromBytes(String bytes, Promise promise) {
         Native.I
-            .dNSRecordAorAAAAFromBytes(Base64.encodeToString(bytes))
+            .dNSRecordAorAAAAFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5980,7 +5980,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void poolMetadataHashFromBytes(String bytes, Promise promise) {
         Native.I
-            .poolMetadataHashFromBytes(Base64.encodeToString(bytes))
+            .poolMetadataHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -6173,7 +6173,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void privateKeyFromExtendedBytes(String bytes, Promise promise) {
         Native.I
-            .privateKeyFromExtendedBytes(Base64.encodeToString(bytes))
+            .privateKeyFromExtendedBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -6181,7 +6181,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void privateKeyFromNormalBytes(String bytes, Promise promise) {
         Native.I
-            .privateKeyFromNormalBytes(Base64.encodeToString(bytes))
+            .privateKeyFromNormalBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -6189,7 +6189,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void privateKeySign(String self, String message, Promise promise) {
         Native.I
-            .privateKeySign(new RPtr(self), Base64.encodeToString(message))
+            .privateKeySign(new RPtr(self), Base64.decode(message, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -6221,7 +6221,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void languageFromBytes(String bytes, Promise promise) {
         Native.I
-            .languageFromBytes(Base64.encodeToString(bytes))
+            .languageFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -6276,7 +6276,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void languageKind(String self, Promise promise) {
         Native.I
             .languageKind(new RPtr(self))
-            none.map(Long::intValue)
+            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -6292,7 +6292,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void scriptAllFromBytes(String bytes, Promise promise) {
         Native.I
-            .scriptAllFromBytes(Base64.encodeToString(bytes))
+            .scriptAllFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -6355,7 +6355,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void operationalCertFromBytes(String bytes, Promise promise) {
         Native.I
-            .operationalCertFromBytes(Base64.encodeToString(bytes))
+            .operationalCertFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -6466,7 +6466,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void scriptHashFromBytes(String bytes, Promise promise) {
         Native.I
-            .scriptHashFromBytes(Base64.encodeToString(bytes))
+            .scriptHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -6521,7 +6521,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void stakeRegistrationFromBytes(String bytes, Promise promise) {
         Native.I
-            .stakeRegistrationFromBytes(Base64.encodeToString(bytes))
+            .stakeRegistrationFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -6673,7 +6673,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void assetsFromBytes(String bytes, Promise promise) {
         Native.I
-            .assetsFromBytes(Base64.encodeToString(bytes))
+            .assetsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -6760,7 +6760,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void unitIntervalFromBytes(String bytes, Promise promise) {
         Native.I
-            .unitIntervalFromBytes(Base64.encodeToString(bytes))
+            .unitIntervalFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -6823,7 +6823,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void kESVKeyFromBytes(String bytes, Promise promise) {
         Native.I
-            .kESVKeyFromBytes(Base64.encodeToString(bytes))
+            .kESVKeyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -6878,7 +6878,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void multiHostNameFromBytes(String bytes, Promise promise) {
         Native.I
-            .multiHostNameFromBytes(Base64.encodeToString(bytes))
+            .multiHostNameFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -6933,7 +6933,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void legacyDaedalusPrivateKeyFromBytes(String bytes, Promise promise) {
         Native.I
-            .legacyDaedalusPrivateKeyFromBytes(Base64.encodeToString(bytes))
+            .legacyDaedalusPrivateKeyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -6966,7 +6966,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void nonceFromBytes(String bytes, Promise promise) {
         Native.I
-            .nonceFromBytes(Base64.encodeToString(bytes))
+            .nonceFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -7012,7 +7012,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void nonceNewFromHash(String hash, Promise promise) {
         Native.I
-            .nonceNewFromHash(Base64.encodeToString(hash))
+            .nonceNewFromHash(Base64.decode(hash, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -7078,7 +7078,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void exUnitPricesFromBytes(String bytes, Promise promise) {
         Native.I
-            .exUnitPricesFromBytes(Base64.encodeToString(bytes))
+            .exUnitPricesFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -7149,7 +7149,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void assetNameFromBytes(String bytes, Promise promise) {
         Native.I
-            .assetNameFromBytes(Base64.encodeToString(bytes))
+            .assetNameFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -7187,7 +7187,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void assetNameNew(String name, Promise promise) {
         Native.I
-            .assetNameNew(Base64.encodeToString(name))
+            .assetNameNew(Base64.decode(name, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -7212,7 +7212,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void nativeScriptFromBytes(String bytes, Promise promise) {
         Native.I
-            .nativeScriptFromBytes(Base64.encodeToString(bytes))
+            .nativeScriptFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -7307,7 +7307,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void nativeScriptKind(String self, Promise promise) {
         Native.I
             .nativeScriptKind(new RPtr(self))
-            none.map(Long::intValue)
+            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -7386,7 +7386,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void byronAddressFromBytes(String bytes, Promise promise) {
         Native.I
-            .byronAddressFromBytes(Base64.encodeToString(bytes))
+            .byronAddressFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -7466,7 +7466,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void bigIntFromBytes(String bytes, Promise promise) {
         Native.I
-            .bigIntFromBytes(Base64.encodeToString(bytes))
+            .bigIntFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -7656,7 +7656,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void protocolParamUpdateFromBytes(String bytes, Promise promise) {
         Native.I
-            .protocolParamUpdateFromBytes(Base64.encodeToString(bytes))
+            .protocolParamUpdateFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -8049,7 +8049,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void dataHashFromBytes(String bytes, Promise promise) {
         Native.I
-            .dataHashFromBytes(Base64.encodeToString(bytes))
+            .dataHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -8104,7 +8104,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void transactionOutputFromBytes(String bytes, Promise promise) {
         Native.I
-            .transactionOutputFromBytes(Base64.encodeToString(bytes))
+            .transactionOutputFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -8241,7 +8241,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void redeemersFromBytes(String bytes, Promise promise) {
         Native.I
-            .redeemersFromBytes(Base64.encodeToString(bytes))
+            .redeemersFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -8384,7 +8384,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void plutusMapFromBytes(String bytes, Promise promise) {
         Native.I
-            .plutusMapFromBytes(Base64.encodeToString(bytes))
+            .plutusMapFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -8456,7 +8456,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void poolRetirementFromBytes(String bytes, Promise promise) {
         Native.I
-            .poolRetirementFromBytes(Base64.encodeToString(bytes))
+            .poolRetirementFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -8527,7 +8527,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void intFromBytes(String bytes, Promise promise) {
         Native.I
-            .intFromBytes(Base64.encodeToString(bytes))
+            .intFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -8660,7 +8660,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void plutusScriptsFromBytes(String bytes, Promise promise) {
         Native.I
-            .plutusScriptsFromBytes(Base64.encodeToString(bytes))
+            .plutusScriptsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -8738,7 +8738,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void timelockExpiryFromBytes(String bytes, Promise promise) {
         Native.I
-            .timelockExpiryFromBytes(Base64.encodeToString(bytes))
+            .timelockExpiryFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -8859,7 +8859,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void stakeCredentialKind(String self, Promise promise) {
         Native.I
             .stakeCredentialKind(new RPtr(self))
-            none.map(Long::intValue)
+            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -8874,7 +8874,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void stakeCredentialFromBytes(String bytes, Promise promise) {
         Native.I
-            .stakeCredentialFromBytes(Base64.encodeToString(bytes))
+            .stakeCredentialFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -8990,7 +8990,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void transactionWitnessSetsFromBytes(String bytes, Promise promise) {
         Native.I
-            .transactionWitnessSetsFromBytes(Base64.encodeToString(bytes))
+            .transactionWitnessSetsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -9125,7 +9125,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void stakeDeregistrationFromBytes(String bytes, Promise promise) {
         Native.I
-            .stakeDeregistrationFromBytes(Base64.encodeToString(bytes))
+            .stakeDeregistrationFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -9341,7 +9341,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void valueFromBytes(String bytes, Promise promise) {
         Native.I
-            .valueFromBytes(Base64.encodeToString(bytes))
+            .valueFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -9497,7 +9497,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void bip32PublicKeyFromBytes(String bytes, Promise promise) {
         Native.I
-            .bip32PublicKeyFromBytes(Base64.encodeToString(bytes))
+            .bip32PublicKeyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -9560,7 +9560,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void auxiliaryDataFromBytes(String bytes, Promise promise) {
         Native.I
-            .auxiliaryDataFromBytes(Base64.encodeToString(bytes))
+            .auxiliaryDataFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -9660,7 +9660,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void scriptNOfKFromBytes(String bytes, Promise promise) {
         Native.I
-            .scriptNOfKFromBytes(Base64.encodeToString(bytes))
+            .scriptNOfKFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -9731,7 +9731,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void scriptRefFromBytes(String bytes, Promise promise) {
         Native.I
-            .scriptRefFromBytes(Base64.encodeToString(bytes))
+            .scriptRefFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -9824,7 +9824,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void transactionBodiesFromBytes(String bytes, Promise promise) {
         Native.I
-            .transactionBodiesFromBytes(Base64.encodeToString(bytes))
+            .transactionBodiesFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -9902,7 +9902,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void networkIdFromBytes(String bytes, Promise promise) {
         Native.I
-            .networkIdFromBytes(Base64.encodeToString(bytes))
+            .networkIdFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -9957,7 +9957,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void networkIdKind(String self, Promise promise) {
         Native.I
             .networkIdKind(new RPtr(self))
-            none.map(Long::intValue)
+            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -10013,7 +10013,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void publicKeyFromBytes(String bytes, Promise promise) {
         Native.I
-            .publicKeyFromBytes(Base64.encodeToString(bytes))
+            .publicKeyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -10021,7 +10021,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void publicKeyVerify(String self, String data, String signature, Promise promise) {
         Native.I
-            .publicKeyVerify(new RPtr(self), Base64.encodeToString(data), new RPtr(signature))
+            .publicKeyVerify(new RPtr(self), Base64.decode(data, Base64.DEFAULT), new RPtr(signature))
             .pour(promise);
     }
 
@@ -10060,7 +10060,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void genesisHashesFromBytes(String bytes, Promise promise) {
         Native.I
-            .genesisHashesFromBytes(Base64.encodeToString(bytes))
+            .genesisHashesFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -10138,7 +10138,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void headerBodyFromBytes(String bytes, Promise promise) {
         Native.I
-            .headerBodyFromBytes(Base64.encodeToString(bytes))
+            .headerBodyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -10337,7 +10337,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void mIRToStakeCredentialsFromBytes(String bytes, Promise promise) {
         Native.I
-            .mIRToStakeCredentialsFromBytes(Base64.encodeToString(bytes))
+            .mIRToStakeCredentialsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -10424,7 +10424,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void singleHostAddrFromBytes(String bytes, Promise promise) {
         Native.I
-            .singleHostAddrFromBytes(Base64.encodeToString(bytes))
+            .singleHostAddrFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -10560,7 +10560,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void moveInstantaneousRewardsCertFromBytes(String bytes, Promise promise) {
         Native.I
-            .moveInstantaneousRewardsCertFromBytes(Base64.encodeToString(bytes))
+            .moveInstantaneousRewardsCertFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -10615,7 +10615,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void genesisDelegateHashFromBytes(String bytes, Promise promise) {
         Native.I
-            .genesisDelegateHashFromBytes(Base64.encodeToString(bytes))
+            .genesisDelegateHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -10670,7 +10670,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void transactionFromBytes(String bytes, Promise promise) {
         Native.I
-            .transactionFromBytes(Base64.encodeToString(bytes))
+            .transactionFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -10764,7 +10764,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void vRFVKeyFromBytes(String bytes, Promise promise) {
         Native.I
-            .vRFVKeyFromBytes(Base64.encodeToString(bytes))
+            .vRFVKeyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -10901,7 +10901,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void ed25519KeyHashFromBytes(String bytes, Promise promise) {
         Native.I
-            .ed25519KeyHashFromBytes(Base64.encodeToString(bytes))
+            .ed25519KeyHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -10956,7 +10956,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void bootstrapWitnessFromBytes(String bytes, Promise promise) {
         Native.I
-            .bootstrapWitnessFromBytes(Base64.encodeToString(bytes))
+            .bootstrapWitnessFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -11026,7 +11026,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void bootstrapWitnessNew(String vkey, String signature, String chainCode, String attributes, Promise promise) {
         Native.I
-            .bootstrapWitnessNew(new RPtr(vkey), new RPtr(signature), Base64.encodeToString(chainCode), Base64.encodeToString(attributes))
+            .bootstrapWitnessNew(new RPtr(vkey), new RPtr(signature), Base64.decode(chainCode, Base64.DEFAULT), Base64.decode(attributes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -11068,7 +11068,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void auxiliaryDataHashFromBytes(String bytes, Promise promise) {
         Native.I
-            .auxiliaryDataHashFromBytes(Base64.encodeToString(bytes))
+            .auxiliaryDataHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -11155,7 +11155,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void exUnitsFromBytes(String bytes, Promise promise) {
         Native.I
-            .exUnitsFromBytes(Base64.encodeToString(bytes))
+            .exUnitsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -11226,7 +11226,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void relayFromBytes(String bytes, Promise promise) {
         Native.I
-            .relayFromBytes(Base64.encodeToString(bytes))
+            .relayFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -11289,7 +11289,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void relayKind(String self, Promise promise) {
         Native.I
             .relayKind(new RPtr(self))
-            none.map(Long::intValue)
+            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -11330,7 +11330,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void scriptAnyFromBytes(String bytes, Promise promise) {
         Native.I
-            .scriptAnyFromBytes(Base64.encodeToString(bytes))
+            .scriptAnyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -11393,7 +11393,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void scriptPubkeyFromBytes(String bytes, Promise promise) {
         Native.I
-            .scriptPubkeyFromBytes(Base64.encodeToString(bytes))
+            .scriptPubkeyFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -11497,7 +11497,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void plutusDataFromBytes(String bytes, Promise promise) {
         Native.I
-            .plutusDataFromBytes(Base64.encodeToString(bytes))
+            .plutusDataFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -11560,7 +11560,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void plutusDataNewBytes(String bytes, Promise promise) {
         Native.I
-            .plutusDataNewBytes(Base64.encodeToString(bytes))
+            .plutusDataNewBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -11569,7 +11569,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void plutusDataKind(String self, Promise promise) {
         Native.I
             .plutusDataKind(new RPtr(self))
-            none.map(Long::intValue)
+            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -11805,7 +11805,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public final void encodeArbitraryBytesAsMetadatum(String bytes, Promise promise) {
         Native.I
-            .encodeArbitraryBytesAsMetadatum(Base64.encodeToString(bytes))
+            .encodeArbitraryBytesAsMetadatum(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }

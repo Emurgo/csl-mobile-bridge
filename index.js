@@ -2355,9 +2355,9 @@ export class TransactionMetadatum extends Ptr {
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
-  static async new_int(int) {
-    const intPtr = Ptr._assertClass(int, Int);
-    const ret = await HaskellShelley.new_int(intPtr);
+  static async new_int(int_value) {
+    const int_valuePtr = Ptr._assertClass(int_value, Int);
+    const ret = await HaskellShelley.new_int(int_valuePtr);
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 

@@ -12,6 +12,9 @@ final class Native {
 
     private Native() { } 
     private native void initLibrary();
+
+    public final native void ptrFree(RPtr ptr);
+
     public final native Result<byte[]> certificateToBytes(RPtr self);
     public final native Result<RPtr> certificateFromBytes(byte[] bytes);
     public final native Result<String> certificateToHex(RPtr self);
@@ -448,7 +451,7 @@ final class Native {
     public final native Result<RPtr> transactionMetadatumFromHex(String hexStr);
     public final native Result<RPtr> transactionMetadatumNewMap(RPtr map);
     public final native Result<RPtr> transactionMetadatumNewList(RPtr list);
-    public final native Result<RPtr> transactionMetadatumNewInt(RPtr int);
+    public final native Result<RPtr> transactionMetadatumNewInt(RPtr intValue);
     public final native Result<RPtr> transactionMetadatumNewBytes(byte[] bytes);
     public final native Result<RPtr> transactionMetadatumNewText(String text);
     public final native Result<Integer> transactionMetadatumKind(RPtr self);

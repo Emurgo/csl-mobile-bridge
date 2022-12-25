@@ -2336,10 +2336,10 @@ export class TransactionMetadatum extends Ptr {
   static new_list: (list: MetadataList) => Promise<TransactionMetadatum>;
 
   /**
-  * @param {Int} int
+  * @param {Int} int_value
   * @returns {Promise<TransactionMetadatum>}
   */
-  static new_int: (int: Int) => Promise<TransactionMetadatum>;
+  static new_int: (int_value: Int) => Promise<TransactionMetadatum>;
 
   /**
   * @param {Uint8Array} bytes

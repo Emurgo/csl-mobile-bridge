@@ -1,4 +1,4 @@
-import stringcase
+from sortedcontainers import SortedSet
 import android_gen
 import android_jni_gen
 import android_rn_gen
@@ -8,14 +8,16 @@ import js_index_gen
 
 import copy
 
-name_map = {"Coin": "BigNum",
+forbidden_names = {"int", "long", "bool", "boolean"}
+
+type_map = {"Coin": "BigNum",
             "TransactionMetadatumLabel": "BigNum",
             "RequiredSigners": "Ed25519KeyHashes",
             "PolicyID": "ScriptHash",
             "PolicyIDs": "ScriptHashes",
             "TransactionIndexes": "u32"}
 
-name_js_map = {"Coin": "BigNum",
+type_js_map = {"Coin": "BigNum",
                "TransactionMetadatumLabel": "BigNum",
                "RequiredSigners": "Ed25519KeyHashes",
                "PolicyID": "ScriptHash",
@@ -23,9 +25,15 @@ name_js_map = {"Coin": "BigNum",
                "TransactionIndexes": "Uint32Array"}
 
 
+def map_type(type_name):
+    if type_name in type_map:
+        return type_map[type_name]
+    else:
+        return type_name
+
 def map_name(name):
-    if name in name_map:
-        return name_map[name]
+    if name in forbidden_names:
+        return name + "_value"
     else:
         return name
 
@@ -133,7 +141,7 @@ class ArgType:
     def __init__(self, json, members, full_json, parent_struct, return_type=False):
         self.name = None
         if not return_type:
-            self.name = json[0]
+            self.name = map_name(json[0])
         self.id = None
         self.is_optional = False
         self.is_ref = False
@@ -155,7 +163,7 @@ class ArgType:
 
     def __set_struct_name(self, name):
         self.struct_orig_name = trim_struct_name(name)
-        self.struct_name = trim_struct_name(map_name(name))
+        self.struct_name = trim_struct_name(map_type(name))
 
     def __extract_details(self, json, full_json, members, parent_struct):
         arg_json = json
@@ -175,7 +183,7 @@ class ArgType:
                 arg_json = arg_json["inner"]
             # else:
             #     print("ee")
-            if "name" in arg_json and "id" in arg_json and arg_json["name"] in name_map:
+            if "name" in arg_json and "id" in arg_json and arg_json["name"] in type_map:
                 ref_info = full_json["index"][arg_json["id"]]
                 if "kind" in ref_info and ref_info["kind"] == "typedef":
                     arg_json = ref_info["inner"]["type"]
@@ -336,7 +344,7 @@ class Api:
                 self.enums.append(Enum(member, members, full_json))
 
     def __get_rust_imports(self, structs, functions, enums):
-        locations = set()
+        locations = SortedSet()
         imports = ""
         for struct in self.structs:
             if structs:
@@ -413,7 +421,7 @@ class Api:
     def to_js_index_d(self):
         all_code = ""
         all_code += js_index_d_gen.get_js_index_d_head()
-        for new_type, orig_type in name_js_map.items():
+        for new_type, orig_type in type_js_map.items():
             all_code += "export type " + new_type + " = " + orig_type + ";\r\n"
         all_code += "\r\n"
         for struct in self.structs:
