@@ -2,6 +2,11 @@ import stringcase
 import android_gen
 import android_jni_gen
 import android_rn_gen
+import js_index_d_gen
+import js_index_gen
+
+
+import copy
 
 name_map = {"Coin": "BigNum",
             "TransactionMetadatumLabel": "BigNum",
