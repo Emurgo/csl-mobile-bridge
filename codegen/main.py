@@ -34,6 +34,10 @@ def main():
         f.writelines(api.to_jni_java_bridge())
     with open('../android/src/main/java/io/emurgo/rnhaskellshelley/HaskellShelleyModule.java', 'w') as f:
         f.writelines(api.to_rn_java())
+    with open('../index.d.ts', 'w') as f:
+        f.writelines(api.to_js_index_d())
+    with open('../index.js', 'w') as f:
+        f.writelines(api.to_js_index())
     print(api.to_adnroid_rust_str())
 
 
