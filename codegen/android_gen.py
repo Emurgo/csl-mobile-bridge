@@ -11,12 +11,12 @@ use crate::panic::{handle_exception_result, Zip, ToResult};\r\n\
 use crate::ptr::RPtrRepresentable;\r\n\
 use crate::ptr_impl::*;\r\n\
 use crate::enum_maps::*;\r\n\
+use crate::arrays::*;\r\n\
 use super::bridge_tools::boxing::*;\r\n\
 use super::bridge_tools::unboxing::*;\r\n\
 use super::bridge_tools::primitives::*;\r\n\
 use super::bridge_tools::utils::*;\r\n\
 use super::bridge_tools::string::*;\r\n\
-use super::bridge_tools::arrays::*;\r\n\
 use jni::objects::{JObject, JString};\r\n\
 use jni::sys::{jlong, jint, jobject, jboolean, jbyteArray};\r\n\
 use jni::JNIEnv;\r\n\

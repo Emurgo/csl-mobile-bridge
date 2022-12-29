@@ -4,6 +4,7 @@ import android_jni_gen
 import android_rn_gen
 import js_index_d_gen
 import js_index_gen
+import ios_gen
 
 
 import copy
@@ -135,6 +136,9 @@ class Function:
 
     def to_js_index(self):
         return js_index_gen.get_js_index_fn(self)
+
+    def to_ios_rust(self):
+        return ios_gen.get_ios_rust_fn(self)
 
 
 class ArgType:
@@ -269,6 +273,12 @@ class Struct:
             fns += fn.to_adnroid_rust() + "\r\n"
         return fns
 
+    def to_ios_rust(self):
+        fns = ""
+        for fn in self.functions:
+            fns += fn.to_ios_rust() + "\r\n"
+        return fns
+
     def to_jni_java_bridge(self):
         fns = ""
         for fn in self.functions:
@@ -390,6 +400,17 @@ class Api:
             all_code += struct.to_adnroid_rust() + "\r\n"
         for fn in self.functions:
             all_code += fn.to_adnroid_rust() + "\r\n"
+        return all_code
+
+    def to_ios_rust(self):
+        all_code = ""
+        all_code += ios_gen.get_ios_rust_imports()
+        all_code += self.__get_rust_imports(True, False, True) + "\r\n"
+        all_code += "\r\n"
+        for struct in self.structs:
+            all_code += struct.to_ios_rust() + "\r\n"
+        for fn in self.functions:
+            all_code += fn.to_ios_rust() + "\r\n"
         return all_code
 
     def to_rust_enum_maps(self):

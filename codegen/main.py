@@ -26,6 +26,8 @@ def main():
     api = doc_types.Api(members, json)
     with open('../rust/src/android/bridge.rs', 'w') as f:
         f.writelines(api.to_adnroid_rust_str())
+    with open('../rust/src/ios/bridge.rs', 'w') as f:
+        f.writelines(api.to_ios_rust())
     with open('../rust/src/ptr_impl.rs', 'w') as f:
         f.writelines(api.to_ptr_impls())
     with open('../rust/src/enum_maps.rs', 'w') as f:
