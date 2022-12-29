@@ -5,4 +5,3 @@ pub mod utils;
 pub mod string;
 pub mod unboxing;
 pub mod primitives;
-pub mod arrays;

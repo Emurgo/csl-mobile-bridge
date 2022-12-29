@@ -18,5 +18,7 @@ pub use self::android::*;
 
 #[cfg(target_os = "ios")]
 mod ios;
+pub mod arrays;
+
 #[cfg(target_os = "ios")]
 pub use self::ios::*;

@@ -1,4 +1,5 @@
 use std::any::Any;
+use std::convert::Infallible;
 use std::panic;
 
 pub type Result<T> = std::result::Result<T, String>;
@@ -40,6 +41,12 @@ impl<T> ToResult<T> for std::result::Result<T, Box<dyn Any + 'static>> {
 }
 
 impl<T> ToResult<T> for std::result::Result<T, base64::DecodeError> {
+  fn into_result(self) -> Result<T> {
+    self.map_err(|e| e.to_string())
+  }
+}
+
+impl<T> ToResult<T> for std::result::Result<T, Infallible> {
   fn into_result(self) -> Result<T> {
     self.map_err(|e| e.to_string())
   }

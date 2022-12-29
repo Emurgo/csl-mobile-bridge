@@ -1,6 +1,5 @@
 extern crate byteorder;
 
-use std::convert::TryInto;
 use byteorder::{ByteOrder, LittleEndian, WriteBytesExt};
 use base64;
 

@@ -35,6 +35,19 @@ impl From<Vec<u8>> for DataPtr {
   }
 }
 
+pub trait IntoOptionDataPtr {
+  fn into_option(self) -> Option<DataPtr>;
+}
+
+impl <T:From<T>> IntoOptionDataPtr for Option<T> where DataPtr: From<T>{
+  fn into_option(self) -> Option<DataPtr> {
+    match self {
+      Some(data) => Some(data.into()),
+      None => None
+    }
+  }
+}
+
 #[no_mangle]
 pub unsafe extern "C" fn dataptr_free(data: &mut DataPtr) {
   data.free();
