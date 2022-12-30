@@ -15,8 +15,8 @@ pub trait IntoOptionalCString {
   fn into_opt_cstr(&self) -> Option<CharPtr>;
 }
 
-impl IntoStr<& str> for CharPtr<> {
-  fn into_str(& self) -> & str {
+impl <'a> IntoStr<&'a str> for CharPtr<> {
+  fn into_str(&self) -> &'a str {
     unsafe { CStr::from_ptr(*self).to_str().unwrap() }
   }
 }
