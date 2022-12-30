@@ -20,24 +20,35 @@ use crate::arrays::*;\r\n"
 def get_ios_return_arg(arg):
     if arg is None or arg.struct_name == "void":
         return None
+    return f"result: &mut {get_ios_return_type(arg)}"
+
+def get_ios_return_type_with_option(arg):
+    if arg.is_optional:
+        return "Option<" + get_ios_return_type(arg) + ">"
+    else:
+        return get_ios_return_type(arg)
+
+def get_ios_return_type(arg):
+    if arg is None or arg.struct_name == "void":
+        return None
 
     if arg.is_ref and not arg.is_primitive:
-        return "result: &mut RPtr"
+        return "RPtr"
     elif arg.struct_name.lower() == "string" or arg.struct_name.lower() == "str":
-        return "result: &mut CharPtr"
+        return "CharPtr"
     elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u8":
-        return "result: &mut DataPtr"
-    elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u32":
-        return "result: &mut CharPtr"
+        return "DataPtr"
+    elif (arg.is_vec or arg.is_slice) and (arg.struct_name == "u32" or arg.struct_name == "usize"):
+        return "CharPtr"
     elif arg.is_primitive and not (arg.is_vec or arg.is_slice):
         if arg.struct_name == "bool":
-            return "result: &mut bool"
+            return "bool"
         else:
-            return "result: &mut i64"
+            return "i64"
     elif arg.is_enum:
-        return "result: &mut i32"
+        return "i32"
     else:
-        return "result: &mut RPtr"
+        return "RPtr"
 
 def get_ios_rust_fn_arg(arg):
     if arg.is_self:
@@ -48,7 +59,7 @@ def get_ios_rust_fn_arg(arg):
         return arg.name + "_str: CharPtr"
     elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u8":
         return f"{arg.name}_data: *const u8, {arg.name}_len: usize"
-    elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u32":
+    elif (arg.is_vec or arg.is_slice) and (arg.struct_name == "u32" or arg.struct_name == "usize"):
         return arg.name + "_str: CharPtr"
     elif arg.is_primitive and not (arg.is_vec or arg.is_slice):
         if arg.struct_name == "bool":
@@ -77,7 +88,9 @@ def get_ios_rust_body_arg_cast(arg):
         else:
             cast = f"{naming} = from_raw_parts({arg.name}_data, {arg.name}_len);"
     elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u32":
-        cast = naming + " = base64_to_u32_array(&" + arg.name + "_str.into_str()" + ")?;"
+        cast = naming + " = base64_to_u32_array(" + arg.name + "_str.into_str()" + ")?;"
+    elif (arg.is_vec or arg.is_slice) and arg.struct_name == "usize":
+        cast = naming + " = base64_to_usize_array(" + arg.name + "_str.into_str()" + ")?;"
     elif arg.is_primitive and not (arg.is_vec or arg.is_slice):
         if arg.struct_name != "bool":
             cast = f"{naming}  = {arg.name}_long as {arg.struct_name};"
@@ -91,39 +104,43 @@ def get_ios_rust_body_arg_cast(arg):
 
 
 def get_ios_rust_result_cast(arg):
+    cast = f"Ok::<{get_ios_return_type_with_option(arg)}, String>"
     if arg.is_self:
-        cast = "Ok(result.rptr())"
+        cast += "(result.rptr())"
     elif arg.is_ref and not arg.is_primitive:
-        cast = "Ok(result.rptr())"
+        cast += "(result.rptr())"
     elif arg.struct_name.lower() == "string" or arg.struct_name.lower() == "str":
         if arg.is_optional:
-            cast = "Ok(result.into_opt_cstr())"
+            cast += "(result.into_opt_cstr())"
         else:
-            cast = "Ok(result.into_cstr())"
+            cast += "(result.into_cstr())"
     elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u8":
         if arg.is_optional:
-            cast = "Ok(result.into_option())"
+            cast += "(result.into_option())"
         else:
-            cast = "Ok(result.into())"
+            cast += "(result.into())"
     elif (arg.is_vec or arg.is_slice) and arg.struct_name == "u32":
-        cast = "Ok(u32_array_to_base64(&result).into_cstr())"
+        cast += "(u32_array_to_base64(&result).into_cstr())"
     elif (arg.is_vec or arg.is_slice) and arg.struct_name == "usize":
-        cast = "Ok(usize_array_to_base64(&result).into_cstr())"
+        cast += "(usize_array_to_base64(&result).into_cstr())"
     elif arg.is_primitive and not (arg.is_vec or arg.is_slice):
         if arg.struct_name == "bool":
-            cast = "Ok(result)"
+            cast += "(result)"
         else:
             if arg.is_optional:
-                cast = "Ok(result.map(|v| v as i64))"
+                cast += "(result.map(|v| v as i64))"
             else:
-                cast = "Ok(result as i64)"
+                cast += "(result as i64)"
     elif arg.is_enum:
         if arg.is_optional:
-            cast = "Ok(result.map(|v| v as i32))"
+            cast += "(result.map(|v| v as i32))"
         else:
-            cast = "Ok(result as i32)"
+            cast += "(result as i32)"
     else:
-        cast = "Ok(result.rptr())"
+        if arg.is_optional:
+            cast += "(result.map(|v| v.rptr()))"
+        else:
+            cast += "(result.rptr())"
     return cast
 
 
