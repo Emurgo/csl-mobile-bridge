@@ -123,6 +123,15 @@ class Function:
             fn_str = android_jni_gen.get_android_jni_fn(self)
         return fn_str
 
+    def to_ios_rust(self):
+        fn_str = ""
+        if self.variants is not None:
+            for fn_variant in self.variants:
+                fn_str += ios_gen.get_ios_rust_fn(fn_variant) + "\r\n"
+        else:
+            fn_str = ios_gen.get_ios_rust_fn(self)
+        return fn_str
+
     def to_ios_obj_c(self):
         fn_str = ""
         if self.variants is not None:
@@ -146,9 +155,6 @@ class Function:
 
     def to_js_index(self):
         return js_index_gen.get_js_index_fn(self)
-
-    def to_ios_rust(self):
-        return ios_gen.get_ios_rust_fn(self)
 
 
 
