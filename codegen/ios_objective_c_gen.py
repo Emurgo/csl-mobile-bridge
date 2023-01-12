@@ -110,10 +110,10 @@ def get_ios_obj_c_fn_result_def(arg):
 
 def get_ios_obj_c_fn_arg(arg, index):
     if index == 0:
-        return f"(nonnull {get_ios_obj_c_fn_arg_type(arg)} *) {get_ios_obj_c_fn_arg_name(arg)}"
+        return f"(nonnull {get_ios_obj_c_fn_arg_type(arg)} *){get_ios_obj_c_fn_arg_name(arg)}"
     else:
         arg_name = stringcase.pascalcase(arg.name)
-        return f"with{arg_name}:(nonnull {get_ios_obj_c_fn_arg_type(arg)} *) {get_ios_obj_c_fn_arg_name(arg)}"
+        return f"with{arg_name}:(nonnull {get_ios_obj_c_fn_arg_type(arg)} *){get_ios_obj_c_fn_arg_name(arg)}"
 
 
 def get_ios_obj_c_body_arg_cast(arg, index):
