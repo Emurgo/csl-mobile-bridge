@@ -1,5 +1,4 @@
 import stringcase
-#import doc_types
 
 
 def get_rn_java_head():

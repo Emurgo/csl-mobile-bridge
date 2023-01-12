@@ -81,7 +81,6 @@ def get_arg_android_rust_body_arg_cast(arg):
             else:
                 cast = naming + " = " + arg.struct_name + "::try_from_jlong(" + arg.name + "_jlong)?;"
     elif arg.is_enum:
-        # cast = " = " + arg.struct_name + "::from_i32(" + arg.name +"_jint)?;"
         cast = naming + " = " + arg.name + "_jint.to_enum()?;"
     else:
         if arg.is_optional:

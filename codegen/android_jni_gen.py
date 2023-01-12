@@ -1,5 +1,4 @@
 import stringcase
-#import doc_types
 
 
 def get_jni_java_bridge_head():
