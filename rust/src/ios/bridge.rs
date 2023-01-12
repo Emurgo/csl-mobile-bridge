@@ -687,7 +687,18 @@ pub unsafe extern "C" fn address_to_bytes(self_rptr: RPtr, result: &mut DataPtr,
 
 
 #[no_mangle]
-pub unsafe extern "C" fn address_to_bech32(self_rptr: RPtr, prefix_str: CharPtr, result: &mut CharPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn address_to_bech32(self_rptr: RPtr, result: &mut CharPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<Address>()?;
+    let result = self_ref.to_bech32(None).into_result()?;
+    Ok::<CharPtr, String>(result.into_cstr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn address_to_bech32_with_prefix(self_rptr: RPtr, prefix_str: CharPtr, result: &mut CharPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<Address>()?;
     let prefix : String = prefix_str.into_str();
@@ -696,6 +707,7 @@ pub unsafe extern "C" fn address_to_bech32(self_rptr: RPtr, prefix_str: CharPtr,
   })
   .response(result,  error)
 }
+
 
 
 #[no_mangle]
@@ -1864,7 +1876,20 @@ pub unsafe extern "C" fn transaction_body_total_collateral(self_rptr: RPtr, resu
 
 
 #[no_mangle]
-pub unsafe extern "C" fn transaction_body_new(inputs_rptr: RPtr, outputs_rptr: RPtr, fee_rptr: RPtr, ttl_long: i64, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn transaction_body_new(inputs_rptr: RPtr, outputs_rptr: RPtr, fee_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let inputs = inputs_rptr.typed_ref::<TransactionInputs>()?;
+    let outputs = outputs_rptr.typed_ref::<TransactionOutputs>()?;
+    let fee = fee_rptr.typed_ref::<BigNum>()?;
+    let result = TransactionBody::new(inputs, outputs, fee, None);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_body_new_with_ttl(inputs_rptr: RPtr, outputs_rptr: RPtr, fee_rptr: RPtr, ttl_long: i64, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let inputs = inputs_rptr.typed_ref::<TransactionInputs>()?;
     let outputs = outputs_rptr.typed_ref::<TransactionOutputs>()?;
@@ -1875,6 +1900,7 @@ pub unsafe extern "C" fn transaction_body_new(inputs_rptr: RPtr, outputs_rptr: R
   })
   .response(result,  error)
 }
+
 
 
 #[no_mangle]
@@ -3818,7 +3844,18 @@ pub unsafe extern "C" fn single_host_name_dns_name(self_rptr: RPtr, result: &mut
 
 
 #[no_mangle]
-pub unsafe extern "C" fn single_host_name_new(port_long: i64, dns_name_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn single_host_name_new(dns_name_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let dns_name = dns_name_rptr.typed_ref::<DNSRecordAorAAAA>()?;
+    let result = SingleHostName::new(None, dns_name);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn single_host_name_new_with_port(port_long: i64, dns_name_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let port  = port_long as u16;
     let dns_name = dns_name_rptr.typed_ref::<DNSRecordAorAAAA>()?;
@@ -3827,6 +3864,7 @@ pub unsafe extern "C" fn single_host_name_new(port_long: i64, dns_name_rptr: RPt
   })
   .response(result,  error)
 }
+
 
 
 
@@ -5248,7 +5286,25 @@ pub unsafe extern "C" fn pool_params_pool_metadata(self_rptr: RPtr, result: &mut
 
 
 #[no_mangle]
-pub unsafe extern "C" fn pool_params_new(operator_rptr: RPtr, vrf_keyhash_rptr: RPtr, pledge_rptr: RPtr, cost_rptr: RPtr, margin_rptr: RPtr, reward_account_rptr: RPtr, pool_owners_rptr: RPtr, relays_rptr: RPtr, pool_metadata_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn pool_params_new(operator_rptr: RPtr, vrf_keyhash_rptr: RPtr, pledge_rptr: RPtr, cost_rptr: RPtr, margin_rptr: RPtr, reward_account_rptr: RPtr, pool_owners_rptr: RPtr, relays_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let operator = operator_rptr.typed_ref::<Ed25519KeyHash>()?;
+    let vrf_keyhash = vrf_keyhash_rptr.typed_ref::<VRFKeyHash>()?;
+    let pledge = pledge_rptr.typed_ref::<BigNum>()?;
+    let cost = cost_rptr.typed_ref::<BigNum>()?;
+    let margin = margin_rptr.typed_ref::<UnitInterval>()?;
+    let reward_account = reward_account_rptr.typed_ref::<RewardAddress>()?;
+    let pool_owners = pool_owners_rptr.typed_ref::<Ed25519KeyHashes>()?;
+    let relays = relays_rptr.typed_ref::<Relays>()?;
+    let result = PoolParams::new(operator, vrf_keyhash, pledge, cost, margin, reward_account, pool_owners, relays, None);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn pool_params_new_with_pool_metadata(operator_rptr: RPtr, vrf_keyhash_rptr: RPtr, pledge_rptr: RPtr, cost_rptr: RPtr, margin_rptr: RPtr, reward_account_rptr: RPtr, pool_owners_rptr: RPtr, relays_rptr: RPtr, pool_metadata_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let operator = operator_rptr.typed_ref::<Ed25519KeyHash>()?;
     let vrf_keyhash = vrf_keyhash_rptr.typed_ref::<VRFKeyHash>()?;
@@ -5264,6 +5320,7 @@ pub unsafe extern "C" fn pool_params_new(operator_rptr: RPtr, vrf_keyhash_rptr: 
   })
   .response(result,  error)
 }
+
 
 
 
@@ -14963,7 +15020,26 @@ pub unsafe extern "C" fn header_body_protocol_version(self_rptr: RPtr, result: &
 
 
 #[no_mangle]
-pub unsafe extern "C" fn header_body_new(block_number_long: i64, slot_long: i64, prev_hash_rptr: RPtr, issuer_vkey_rptr: RPtr, vrf_vkey_rptr: RPtr, vrf_result_rptr: RPtr, block_body_size_long: i64, block_body_hash_rptr: RPtr, operational_cert_rptr: RPtr, protocol_version_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn header_body_new(block_number_long: i64, slot_long: i64, issuer_vkey_rptr: RPtr, vrf_vkey_rptr: RPtr, vrf_result_rptr: RPtr, block_body_size_long: i64, block_body_hash_rptr: RPtr, operational_cert_rptr: RPtr, protocol_version_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let block_number  = block_number_long as u32;
+    let slot  = slot_long as u32;
+    let issuer_vkey = issuer_vkey_rptr.typed_ref::<Vkey>()?;
+    let vrf_vkey = vrf_vkey_rptr.typed_ref::<VRFVKey>()?;
+    let vrf_result = vrf_result_rptr.typed_ref::<VRFCert>()?;
+    let block_body_size  = block_body_size_long as u32;
+    let block_body_hash = block_body_hash_rptr.typed_ref::<BlockHash>()?;
+    let operational_cert = operational_cert_rptr.typed_ref::<OperationalCert>()?;
+    let protocol_version = protocol_version_rptr.typed_ref::<ProtocolVersion>()?;
+    let result = HeaderBody::new(block_number, slot, None, issuer_vkey, vrf_vkey, vrf_result, block_body_size, block_body_hash, operational_cert, protocol_version);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn header_body_new_with_prev_hash(block_number_long: i64, slot_long: i64, prev_hash_rptr: RPtr, issuer_vkey_rptr: RPtr, vrf_vkey_rptr: RPtr, vrf_result_rptr: RPtr, block_body_size_long: i64, block_body_hash_rptr: RPtr, operational_cert_rptr: RPtr, protocol_version_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let block_number  = block_number_long as u32;
     let slot  = slot_long as u32;
@@ -14982,8 +15058,28 @@ pub unsafe extern "C" fn header_body_new(block_number_long: i64, slot_long: i64,
 }
 
 
+
 #[no_mangle]
-pub unsafe extern "C" fn header_body_new_headerbody(block_number_long: i64, slot_rptr: RPtr, prev_hash_rptr: RPtr, issuer_vkey_rptr: RPtr, vrf_vkey_rptr: RPtr, vrf_result_rptr: RPtr, block_body_size_long: i64, block_body_hash_rptr: RPtr, operational_cert_rptr: RPtr, protocol_version_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn header_body_new_headerbody(block_number_long: i64, slot_rptr: RPtr, issuer_vkey_rptr: RPtr, vrf_vkey_rptr: RPtr, vrf_result_rptr: RPtr, block_body_size_long: i64, block_body_hash_rptr: RPtr, operational_cert_rptr: RPtr, protocol_version_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let block_number  = block_number_long as u32;
+    let slot = slot_rptr.typed_ref::<BigNum>()?;
+    let issuer_vkey = issuer_vkey_rptr.typed_ref::<Vkey>()?;
+    let vrf_vkey = vrf_vkey_rptr.typed_ref::<VRFVKey>()?;
+    let vrf_result = vrf_result_rptr.typed_ref::<VRFCert>()?;
+    let block_body_size  = block_body_size_long as u32;
+    let block_body_hash = block_body_hash_rptr.typed_ref::<BlockHash>()?;
+    let operational_cert = operational_cert_rptr.typed_ref::<OperationalCert>()?;
+    let protocol_version = protocol_version_rptr.typed_ref::<ProtocolVersion>()?;
+    let result = HeaderBody::new_headerbody(block_number, slot, None, issuer_vkey, vrf_vkey, vrf_result, block_body_size, block_body_hash, operational_cert, protocol_version);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn header_body_new_headerbody_with_prev_hash(block_number_long: i64, slot_rptr: RPtr, prev_hash_rptr: RPtr, issuer_vkey_rptr: RPtr, vrf_vkey_rptr: RPtr, vrf_result_rptr: RPtr, block_body_size_long: i64, block_body_hash_rptr: RPtr, operational_cert_rptr: RPtr, protocol_version_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let block_number  = block_number_long as u32;
     let slot = slot_rptr.typed_ref::<BigNum>()?;
@@ -15000,6 +15096,7 @@ pub unsafe extern "C" fn header_body_new_headerbody(block_number_long: i64, slot
   })
   .response(result,  error)
 }
+
 
 
 
@@ -15227,7 +15324,86 @@ pub unsafe extern "C" fn single_host_addr_ipv6(self_rptr: RPtr, result: &mut RPt
 
 
 #[no_mangle]
-pub unsafe extern "C" fn single_host_addr_new(port_long: i64, ipv4_rptr: RPtr, ipv6_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn single_host_addr_new(result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let result = SingleHostAddr::new(None, None, None);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn single_host_addr_new_with_port(port_long: i64, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let port  = port_long as u16;
+    let result = SingleHostAddr::new(Some(port), None, None);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn single_host_addr_new_with_ipv4(ipv4_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let ipv4 = ipv4_rptr.typed_ref::<Ipv4>()?.clone();
+    let result = SingleHostAddr::new(None, Some(ipv4), None);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn single_host_addr_new_with_port_ipv4(port_long: i64, ipv4_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let port  = port_long as u16;
+    let ipv4 = ipv4_rptr.typed_ref::<Ipv4>()?.clone();
+    let result = SingleHostAddr::new(Some(port), Some(ipv4), None);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn single_host_addr_new_with_ipv6(ipv6_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let ipv6 = ipv6_rptr.typed_ref::<Ipv6>()?.clone();
+    let result = SingleHostAddr::new(None, None, Some(ipv6));
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn single_host_addr_new_with_port_ipv6(port_long: i64, ipv6_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let port  = port_long as u16;
+    let ipv6 = ipv6_rptr.typed_ref::<Ipv6>()?.clone();
+    let result = SingleHostAddr::new(Some(port), None, Some(ipv6));
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn single_host_addr_new_with_ipv4_ipv6(ipv4_rptr: RPtr, ipv6_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let ipv4 = ipv4_rptr.typed_ref::<Ipv4>()?.clone();
+    let ipv6 = ipv6_rptr.typed_ref::<Ipv6>()?.clone();
+    let result = SingleHostAddr::new(None, Some(ipv4), Some(ipv6));
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn single_host_addr_new_with_port_ipv4_ipv6(port_long: i64, ipv4_rptr: RPtr, ipv6_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let port  = port_long as u16;
     let ipv4 = ipv4_rptr.typed_ref::<Ipv4>()?.clone();
@@ -15237,6 +15413,7 @@ pub unsafe extern "C" fn single_host_addr_new(port_long: i64, ipv4_rptr: RPtr, i
   })
   .response(result,  error)
 }
+
 
 
 
@@ -15519,7 +15696,19 @@ pub unsafe extern "C" fn transaction_set_is_valid(self_rptr: RPtr, valid: bool, 
 
 
 #[no_mangle]
-pub unsafe extern "C" fn transaction_new(body_rptr: RPtr, witness_set_rptr: RPtr, auxiliary_data_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn transaction_new(body_rptr: RPtr, witness_set_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let body = body_rptr.typed_ref::<TransactionBody>()?;
+    let witness_set = witness_set_rptr.typed_ref::<TransactionWitnessSet>()?;
+    let result = Transaction::new(body, witness_set, None);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_new_with_auxiliary_data(body_rptr: RPtr, witness_set_rptr: RPtr, auxiliary_data_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let body = body_rptr.typed_ref::<TransactionBody>()?;
     let witness_set = witness_set_rptr.typed_ref::<TransactionWitnessSet>()?;
@@ -15529,6 +15718,7 @@ pub unsafe extern "C" fn transaction_new(body_rptr: RPtr, witness_set_rptr: RPtr
   })
   .response(result,  error)
 }
+
 
 
 
@@ -16824,7 +17014,19 @@ pub unsafe extern "C" fn decode_metadatum_to_json_str(metadatum_rptr: RPtr, sche
 
 
 #[no_mangle]
-pub unsafe extern "C" fn hash_script_data(redeemers_rptr: RPtr, cost_models_rptr: RPtr, datums_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn hash_script_data(redeemers_rptr: RPtr, cost_models_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let redeemers = redeemers_rptr.typed_ref::<Redeemers>()?;
+    let cost_models = cost_models_rptr.typed_ref::<Costmdls>()?;
+    let result = cardano_serialization_lib::utils::hash_script_data(redeemers, cost_models, None);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn hash_script_data_with_datums(redeemers_rptr: RPtr, cost_models_rptr: RPtr, datums_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let redeemers = redeemers_rptr.typed_ref::<Redeemers>()?;
     let cost_models = cost_models_rptr.typed_ref::<Costmdls>()?;
@@ -16834,6 +17036,7 @@ pub unsafe extern "C" fn hash_script_data(redeemers_rptr: RPtr, cost_models_rptr
   })
   .response(result,  error)
 }
+
 
 
 #[no_mangle]
