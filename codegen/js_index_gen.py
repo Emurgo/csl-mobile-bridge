@@ -1,5 +1,7 @@
 import stringcase
 import js_index_d_gen
+
+
 def get_js_index_head():
     return "/* eslint-disable max-len */\r\n\
 import { NativeModules } from 'react-native';\r\n\
@@ -82,9 +84,9 @@ class Ptr {\r\n\
 }\r\n\r\n"
 
 
-
 def get_js_index_fn_arg(arg):
     return arg.name
+
 
 def get_js_index_return_result(arg):
     if arg is None or arg.struct_name == "void":
@@ -106,6 +108,7 @@ def get_js_index_return_result(arg):
     else:
         return f"Ptr._wrap(ret, {arg.struct_name})"
 
+
 def get_js_index_call_arg(arg):
     if arg is None or arg.struct_name == "void":
         return ""
@@ -126,8 +129,10 @@ def get_js_index_call_arg(arg):
     else:
         return f"{arg.name}Ptr"
 
+
 def get_js_index_struct(struct):
     return f"export class {struct.name} extends Ptr"
+
 
 def get_js_index_enum(enum):
     all_code = f"export const {enum.name} = Object.freeze({{\r\n"
@@ -136,7 +141,8 @@ def get_js_index_enum(enum):
     all_code += "});\r\n"
     return all_code
 
-def get_js_index_fn_variants(function, ident = ""):
+
+def get_js_index_fn_variants(function, ident=""):
     all_code = ""
     for fn_var in function.variants:
         all_code += f"{ident}if("
@@ -154,6 +160,7 @@ def get_js_index_fn_variants(function, ident = ""):
         all_code += f"{ident}}}\r\n"
     return all_code
 
+
 def get_js_index_fn(function):
     ident = "  " if function.struct_name is not None else ""
     semicolon = ";" if function.struct_name is None else ""
@@ -169,6 +176,7 @@ def get_js_index_fn(function):
     all_code += f"{ident}}}{semicolon}\r\n"
     return all_code
 
+
 def get_js_index_fn_def(function):
     async_str = "async " if need_await(function) else ""
     fn_name = stringcase.snakecase(function.name)
@@ -178,6 +186,7 @@ def get_js_index_fn_def(function):
         return f"  {async_str}{fn_name}({', '.join(map(get_js_index_fn_arg, function.args[1:]))}) {{"
     else:
         return f"  static {async_str}{fn_name}({', '.join(map(get_js_index_fn_arg, function.args))}) {{"
+
 
 def get_js_index_fn_ptr_map(function, ident):
     all_code = ""
@@ -195,10 +204,12 @@ def get_js_index_fn_ptr_map(function, ident):
                 all_code += f"{ident}  const {arg.name}Ptr = Ptr._assertClass({arg.name}, {arg.struct_name});\r\n"
     return all_code
 
-def get_js_index_fn_call(function, ident = ""):
+
+def get_js_index_fn_call(function, ident=""):
     fn_name = stringcase.snakecase(function.name)
     await_srt = "await " if need_await(function) else ""
     return f"{ident}const ret = {await_srt}HaskellShelley.{fn_name}({', '.join(map(get_js_index_call_arg, function.args))});"
+
 
 def need_await(function):
     return not (function.return_type is None or function.return_type.struct_name == "void")
