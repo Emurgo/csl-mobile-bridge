@@ -25,7 +25,7 @@ def main():
     members = extract_public_members(json)
     api = doc_types.Api(members, json)
     with open('../rust/src/android/bridge.rs', 'w') as f:
-        f.writelines(api.to_adnroid_rust_str())
+        f.writelines(api.to_android_rust_str())
     with open('../rust/src/ios/bridge.rs', 'w') as f:
         f.writelines(api.to_ios_rust())
     with open('../rust/src/ptr_impl.rs', 'w') as f:
@@ -42,7 +42,7 @@ def main():
         f.writelines(api.to_js_index())
     with open('../ios/HaskellShelley.m', 'w') as f:
         f.writelines(api.to_ios_obj_c())
-    print(api.to_adnroid_rust_str())
+    print(api.to_android_rust_str())
 
 
 if __name__ == "__main__":

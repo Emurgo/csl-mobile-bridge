@@ -105,7 +105,7 @@ class Function:
             functions.append(f)
         return functions
 
-    def to_adnroid_rust(self):
+    def to_android_rust(self):
         fn_str = ""
         if self.variants is not None:
             for fn_variant in self.variants:
@@ -284,10 +284,10 @@ class Struct:
                                                            full_json,
                                                            self.name))
 
-    def to_adnroid_rust(self):
+    def to_android_rust(self):
         fns = ""
         for fn in self.functions:
-            fns += fn.to_adnroid_rust() + "\r\n"
+            fns += fn.to_android_rust() + "\r\n"
         return fns
 
     def to_ios_rust(self):
@@ -349,7 +349,7 @@ class Enum:
                             enum_index = int(variant["inner"]["variant_inner"]["value"])
                     self.variants.append((variant["name"], enum_index))
 
-    def to_adnroid_rust(self):
+    def to_android_rust(self):
         return android_gen.get_rust_enum_to_primitive(self) + "\r\n" + android_gen.get_rust_enum_from_primive(self)
 
     def to_js_index_d(self):
@@ -414,15 +414,15 @@ class Api:
     def __to_rust_import(self, location):
         return "use " + location + ";\r\n"
 
-    def to_adnroid_rust_str(self):
+    def to_android_rust_str(self):
         all_code = ""
         all_code += android_gen.get_android_rust_imports()
         all_code += self.__get_rust_imports(True, True, True) + "\r\n"
         all_code += "\r\n"
         for struct in self.structs:
-            all_code += struct.to_adnroid_rust() + "\r\n"
+            all_code += struct.to_android_rust() + "\r\n"
         for fn in self.functions:
-            all_code += fn.to_adnroid_rust() + "\r\n"
+            all_code += fn.to_android_rust() + "\r\n"
         return all_code
 
     def to_ios_rust(self):
@@ -452,7 +452,7 @@ class Api:
         all_code += self.__get_rust_imports(False, False, True) + "\r\n"
         all_code += android_gen.get_rust_enums_head()
         for enum in self.enums:
-            all_code += enum.to_adnroid_rust() + "\r\n"
+            all_code += enum.to_android_rust() + "\r\n"
         return all_code
 
     def to_jni_java_bridge(self):
