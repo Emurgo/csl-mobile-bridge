@@ -1,9 +1,6 @@
 import stringcase
 
 
-# import doc_types
-
-
 def get_js_index_d_head():
     return "export type Optional<T> = T | undefined;\r\n\
 \r\n\
@@ -69,11 +66,14 @@ def map_js_type(arg):
 def get_js_index_d_fn_arg(arg):
     return arg.name + ": " + map_js_type(arg)
 
+
 def get_js_index_d_fn_return(arg):
     return "Promise<" + map_js_type(arg) + ">"
 
+
 def get_js_index_d_struct(struct):
     return f"export class {struct.name} extends Ptr"
+
 
 def get_js_index_d_enum(enum):
     all_code = "export enum " + enum.name + " {\r\n"
@@ -81,6 +81,7 @@ def get_js_index_d_enum(enum):
         all_code += "  " + variant + " = " + str(i) + ",\r\n"
     all_code += "}\r\n"
     return all_code
+
 
 def get_fn_doc(args, return_type, start_sep):
     doc_str = f"{start_sep}/**\r\n"
@@ -90,6 +91,7 @@ def get_fn_doc(args, return_type, start_sep):
         doc_str += f"{start_sep}* @returns {{Promise<{map_js_type(return_type)}>}}\r\n"
     doc_str += f"{start_sep}*/\r\n"
     return doc_str
+
 
 def get_js_index_d_fn(function):
     args = function.args

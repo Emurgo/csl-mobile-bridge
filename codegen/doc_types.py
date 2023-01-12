@@ -5,6 +5,7 @@ import android_rn_gen
 import js_index_d_gen
 import js_index_gen
 import ios_gen
+import ios_objective_c_gen
 
 
 import copy
@@ -122,6 +123,15 @@ class Function:
             fn_str = android_jni_gen.get_android_jni_fn(self)
         return fn_str
 
+    def to_ios_obj_c(self):
+        fn_str = ""
+        if self.variants is not None:
+            for fn_variant in self.variants:
+                fn_str += ios_objective_c_gen.get_ios_obj_c_fn(fn_variant) + "\r\n"
+        else:
+            fn_str = ios_objective_c_gen.get_ios_obj_c_fn(self)
+        return fn_str
+
     def to_rn_java(self):
         fn_str = ""
         if self.variants is not None:
@@ -139,6 +149,7 @@ class Function:
 
     def to_ios_rust(self):
         return ios_gen.get_ios_rust_fn(self)
+
 
 
 class ArgType:
@@ -279,6 +290,12 @@ class Struct:
             fns += fn.to_ios_rust() + "\r\n"
         return fns
 
+    def to_ios_obj_c(self):
+        fns = ""
+        for fn in self.functions:
+            fns += fn.to_ios_obj_c() + "\r\n"
+        return fns
+
     def to_jni_java_bridge(self):
         fns = ""
         for fn in self.functions:
@@ -411,6 +428,17 @@ class Api:
             all_code += struct.to_ios_rust() + "\r\n"
         for fn in self.functions:
             all_code += fn.to_ios_rust() + "\r\n"
+        return all_code
+
+    def to_ios_obj_c(self):
+        all_code = ""
+        all_code += ios_objective_c_gen.get_ios_obj_c_imports()
+        all_code += "\r\n"
+        for struct in self.structs:
+            all_code += struct.to_ios_obj_c() + "\r\n"
+        for fn in self.functions:
+            all_code += fn.to_ios_obj_c() + "\r\n"
+        all_code += ios_objective_c_gen.get_ios_obj_c_footer()
         return all_code
 
     def to_rust_enum_maps(self):

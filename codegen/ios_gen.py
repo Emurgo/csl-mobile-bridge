@@ -1,9 +1,6 @@
 import stringcase
 
 
-# import doc_types
-
-
 def get_ios_rust_imports():
     return "use std::slice::from_raw_parts;\r\n\
 use super::bridge_tools::result::*;\r\n\
@@ -16,17 +13,18 @@ use crate::enum_maps::*;\r\n\
 use crate::arrays::*;\r\n"
 
 
-
 def get_ios_return_arg(arg):
     if arg is None or arg.struct_name == "void":
         return None
     return f"result: &mut {get_ios_return_type(arg)}"
+
 
 def get_ios_return_type_with_option(arg):
     if arg.is_optional:
         return "Option<" + get_ios_return_type(arg) + ">"
     else:
         return get_ios_return_type(arg)
+
 
 def get_ios_return_type(arg):
     if arg is None or arg.struct_name == "void":
@@ -49,6 +47,7 @@ def get_ios_return_type(arg):
         return "i32"
     else:
         return "RPtr"
+
 
 def get_ios_rust_fn_arg(arg):
     if arg.is_self:
@@ -232,4 +231,3 @@ pub unsafe extern \"C\" fn "
         return_arg = ""
 
     return name_start + name_middle + "(" + args_str + return_arg + "error: &mut CharPtr)" + name_end + body
-

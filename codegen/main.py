@@ -40,6 +40,8 @@ def main():
         f.writelines(api.to_js_index_d())
     with open('../index.js', 'w') as f:
         f.writelines(api.to_js_index())
+    with open('../ios/HaskellShelley.m', 'w') as f:
+        f.writelines(api.to_ios_obj_c())
     print(api.to_adnroid_rust_str())
 
 
