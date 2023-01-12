@@ -1,9 +1,6 @@
 import stringcase
 
 
-# import doc_types
-
-
 def get_android_rust_imports():
     return "use super::bridge_tools::ptr_j::*;\r\n\
 use super::bridge_tools::result::*;\r\n\
