@@ -10,19 +10,30 @@
 //   original location:
 //   - https://github.com/facebook/react-native/blob/0.58-stable/local-cli/templates/HelloWorld/android/app/build.gradle
 
-def DEFAULT_COMPILE_SDK_VERSION = 29
-def DEFAULT_BUILD_TOOLS_VERSION = '29.0.3'
-def DEFAULT_MIN_SDK_VERSION = 16
-def DEFAULT_TARGET_SDK_VERSION = 29
-def DEFAULT_NDK_API_LEVEL = 21
+def DEFAULT_COMPILE_SDK_VERSION = 30 
+def DEFAULT_BUILD_TOOLS_VERSION = '30.0.3'
+def DEFAULT_MIN_SDK_VERSION = 21
+def DEFAULT_TARGET_SDK_VERSION = 31
+def DEFAULT_NDK_API_LEVEL = 24
 
 def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'org.mozilla.rust-android-gradle.rust-android'
+
+def REACT_NATIVE_VERSION = new File(['node', '--print',"JSON.parse(require('fs').readFileSync(require.resolve('react-native/package.json'), 'utf-8')).version"].execute(null, rootDir).text.trim())
+
+allprojects {
+    // https://github.com/facebook/react-native/issues/35210
+    configurations.all {
+        resolutionStrategy {
+            force "com.facebook.react:react-native:" + REACT_NATIVE_VERSION
+        }
+    }
+}
 
 buildscript {
     // The Android Gradle plugin is only required when opening the android folder stand-alone.
@@ -33,16 +44,17 @@ buildscript {
         repositories {
             google()
             jcenter()
+            mavenCentral()
+            maven {
+                url "https://plugins.gradle.org/m2/"
+            }
         }
         dependencies {
-            classpath 'com.android.tools.build:gradle:3.4.1'
+            classpath 'org.mozilla.rust-android-gradle:plugin:0.9.3'
+            classpath 'com.android.tools.build:gradle:4.2.2'
         }
     }
 }
-
-apply plugin: 'com.android.library'
-apply plugin: 'maven'
-apply plugin: 'org.mozilla.rust-android-gradle.rust-android'
 
 android {
     compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
@@ -81,6 +93,9 @@ repositories {
     maven {
         // Android JSC is installed from npm
         url "$rootDir/../node_modules/jsc-android/dist"
+    }
+    maven {
+        url "https://plugins.gradle.org/m2/"
     }
     google()
     jcenter()
@@ -127,17 +142,17 @@ def configureReactNativePom(def pom) {
 afterEvaluate { project ->
     // some Gradle build hooks ref:
     // https://www.oreilly.com/library/view/gradle-beyond-the/9781449373801/ch03.html
-    task androidJavadoc(type: Javadoc) {
-        source = android.sourceSets.main.java.srcDirs
-        classpath += files(android.bootClasspath)
-        classpath += files(project.getConfigurations().getByName('compile').asList())
-        include '**/*.java'
-    }
+    // task androidJavadoc(type: Javadoc) {
+    //     source = android.sourceSets.main.java.srcDirs
+    //     classpath += files(android.bootClasspath)
+    //     classpath += files(project.getConfigurations().getByName('compile').asList())
+    //     include '**/*.java'
+    // }
 
-    task androidJavadocJar(type: Jar, dependsOn: androidJavadoc) {
-        classifier = 'javadoc'
-        from androidJavadoc.destinationDir
-    }
+    // task androidJavadocJar(type: Jar, dependsOn: androidJavadoc) {
+    //     classifier = 'javadoc'
+    //     from androidJavadoc.destinationDir
+    // }
 
     task androidSourcesJar(type: Jar) {
         classifier = 'sources'
@@ -163,15 +178,6 @@ afterEvaluate { project ->
 
     artifacts {
         archives androidSourcesJar
-        archives androidJavadocJar
-    }
-
-    task installArchives(type: Upload) {
-        configuration = configurations.archives
-        repositories.mavenDeployer {
-            // Deploy to react-native-event-bridge/maven, ready to publish to npm
-            repository url: "file://${projectDir}/../android/maven"
-            configureReactNativePom pom
-        }
+        // archives androidJavadocJar
     }
 }

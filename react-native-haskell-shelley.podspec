@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   # optional - use expanded license entry instead:
   # s.license    = { :type => "MIT", :file => "LICENSE" }
   s.authors      = { "emurgo" => "contact@emurgo.io" }
-  s.platforms    = { :ios => "9.0" }
+  s.platforms    = { :ios => "11.0" }
   s.source       = { :git => "https://github.com/Emurgo/react-native-haskell-shelley.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,c,m,swift,sh}"
