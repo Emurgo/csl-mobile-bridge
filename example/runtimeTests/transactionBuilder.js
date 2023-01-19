@@ -15,15 +15,16 @@ import {
   Withdrawals,
   Certificates,
   Value,
-  Coin,
   StakeCredential,
   StakeRegistration,
   Certificate,
   GeneralTransactionMetadata,
   AuxiliaryData,
-} from '@emurgo/react-native-haskell-shelley'
+  TransactionBuilderConfigBuilder,
+} from '@emurgo/react-native-haskell-shelley';
 
 import {assert} from '../util'
+import {ExUnitPrices, UnitInterval} from '../../index'
 
 /**
  * TransactionBuilder
@@ -54,6 +55,7 @@ const test: () => void = async () => {
   const hash32Bytes = Buffer.from(hash32Hex, 'hex')
   const txHash = await TransactionHash.from_bytes(hash32Bytes)
   const txInput = await TransactionInput.new(txHash, 0)
+  const txInput2 = await TransactionInput.new(txHash, 1)
 
   const addrBase58 =
     'Ae2tdPwUPEZHu3NZa6kCwet2msq4xrBXKHBDvogFKwMsF18Jca8JHLRBas7'
@@ -65,38 +67,56 @@ const test: () => void = async () => {
     '0000b03c3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf'
   const baseAddrBytes = Buffer.from(baseAddrHex, 'hex')
   const amountStr = '1000000'
-  const amount = await Value.new(await Coin.from_str(amountStr))
+  const amount = await Value.new(await BigNum.from_str(amountStr))
   const recipientAddr = await Address.from_bytes(baseAddrBytes)
   const txOutput = await TransactionOutput.new(recipientAddr, amount)
 
   const certs = await Certificates.new()
   await certs.add(cert)
+  const memPrice = await UnitInterval.new(
+    await BigNum.from_str('11'),
+    await BigNum.from_str('333'),
+  )
 
+  const stepPrice = await UnitInterval.new(
+    await BigNum.from_str('77'),
+    await BigNum.from_str('999'),
+  )
+
+  let configBuilder = await TransactionBuilderConfigBuilder.new()
+  configBuilder = await configBuilder.fee_algo(fee)
+  configBuilder = await configBuilder.coins_per_utxo_byte(
+    await BigNum.from_str('11'),
+  )
+  configBuilder = await configBuilder.ex_unit_prices(
+    await ExUnitPrices.new(memPrice, stepPrice),
+  )
+  configBuilder = await configBuilder.pool_deposit(poolDeposit)
+  configBuilder = await configBuilder.key_deposit(keyDeposit)
+  configBuilder = await configBuilder.max_value_size(7000)
+  configBuilder = await configBuilder.max_tx_size(888888)
+  const config = await configBuilder.build()
   /**
    * TransactionBuilder
    */
-  const txBuilder = await TransactionBuilder.new(
-    fee,
-    minUtxoVal,
-    poolDeposit,
-    keyDeposit,
-  )
+  const txBuilder = await TransactionBuilder.new(config)
+
   await txBuilder.add_key_input(
     ed25519KeyHash,
     txInput,
-    await Value.new(await Coin.from_str('1000000')),
+    await Value.new(await BigNum.from_str('1000000')),
   )
   await txBuilder.add_bootstrap_input(
     byronAddress,
-    txInput,
-    await Value.new(await Coin.from_str('1000000')),
+    txInput2,
+    await Value.new(await BigNum.from_str('1000000')),
   )
   await txBuilder.add_output(txOutput)
   // commented out so that we can test add_change_if_needed(), which
   // throws if fee has been previously set
   // await txBuilder.set_fee(await BigNum.from_str('500000'))
+
   const TTL = 10
-  await txBuilder.set_ttl(TTL)
 
   // add an empty metadata object
   const metadata = await GeneralTransactionMetadata.new()
@@ -129,23 +149,30 @@ const test: () => void = async () => {
     '0000b03c3aa052f51c084c54bd4059ead2d2e426ac89fa4b3ce41cbf'
   const change = await Address.from_bytes(Buffer.from(changeAddrHex, 'hex'))
   assert(
-    (await txBuilder.add_change_if_needed(change)) === false,
+    (await txBuilder.add_change_if_needed(change)) === true,
     'TransactionBuilder::add_change_if_needed()',
   )
 
-  let txBodyFromBuilder = await txBuilder.build()
+  const txFromBuilder = await txBuilder.build_tx()
+  let txBodyFromBuilder = await txFromBuilder.body()
+  const txWitnessSetFromBuilder = await txFromBuilder.witness_set()
 
   assert(
-    (await (await txBuilder.min_fee()).to_str()) === '174477',
+    (await txWitnessSetFromBuilder.native_scripts()) == null,
+    'Transaction::native_scripts()',
+  )
+
+  assert(
+    (await (await txBuilder.min_fee()).to_str()) === '177425',
     'TransactionBuilder::min_fee()',
   )
   assert(
     (await (await txBuilder.get_deposit()).to_str()) === '0',
-    'TransactionBuilder::get_fee_or_calc()',
+    'TransactionBuilder::get_deposit()',
   )
   assert(
-    (await (await txBuilder.get_fee_if_set()).to_str()) === '1000000',
-    'TransactionBuilder::get_fee_or_calc()',
+    (await (await txBuilder.get_fee_if_set()).to_str()) === '177425',
+    'TransactionBuilder::get_fee_if_set()',
   )
   await txBuilder.set_certs(certs)
 
@@ -155,7 +182,7 @@ const test: () => void = async () => {
         await Address.from_bytes(baseAddrBytes),
         // largest possible CBOR value
         // note: this slightly over-estimates by a few bytes
-        await Value.new(await Coin.from_str((0x100000000).toString())),
+        await Value.new(await BigNum.from_str((0x100000000).toString())),
       ),
     )
   ).to_str()
@@ -174,7 +201,7 @@ const test: () => void = async () => {
   // ------------------------------------------------
   // -------------- TransactionOutputs --------------
   const outputs = await txBodyFromBuilder.outputs()
-  assert((await outputs.len()) === 1, 'TransactionOutputs::len()')
+  assert((await outputs.len()) === 2, 'TransactionOutputs::len()')
   const output = await outputs.get(0)
   assert(output instanceof TransactionOutput, 'TransactionOutputs::get()')
 
@@ -214,12 +241,19 @@ const test: () => void = async () => {
     'Withdrawals::keys()',
   )
 
+  let ttlFromTxBody = await txBodyFromBuilder.ttl()
+  assert(ttlFromTxBody == null, 'TransactionBody::ttl()')
+
+  ttlFromTxBody = await txBodyFromBuilder.ttl_bignum()
+  assert(ttlFromTxBody == null, 'TransactionBody::ttl_bignum()')
+
   // ------------------------------------------------
   // --------------- TransactionBody ----------------
   // addditional TransactionBody tests using previous
   // outputs
   await txBuilder.set_certs(certs)
   await txBuilder.set_withdrawals(withdrawals)
+  await txBuilder.set_ttl(TTL)
 
   // re-generate tx body
   txBodyFromBuilder = await txBuilder.build()
@@ -227,7 +261,7 @@ const test: () => void = async () => {
   const feeFromTxBody = await txBodyFromBuilder.fee()
   assert(await feeFromTxBody.to_str(), 'TransactionBody::fee()')
 
-  const ttlFromTxBody = await txBodyFromBuilder.ttl()
+  ttlFromTxBody = await txBodyFromBuilder.ttl()
   assert(ttlFromTxBody === TTL, 'TransactionBody::ttl()')
 
   const withdrawalsFromTxBody = await txBodyFromBuilder.withdrawals()

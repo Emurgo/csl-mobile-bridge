@@ -6,7 +6,7 @@ import {
   TransactionMetadatum,
   MetadataJsonSchema,
   GeneralTransactionMetadata,
-  TransactionMetadata,
+  AuxiliaryData,
   PrivateKey,
   RewardAddress,
   StakeCredential,
@@ -28,7 +28,7 @@ export async function generateRegistration(request: {|
   rewardAddress: Address,
   absSlotNumber: number,
   signer: (Uint8Array) => Promise<string>,
-|}): Promise<TransactionMetadata> {
+|}): Promise<AuxiliaryData> {
   /**
    * Catalyst follows a certain standard to prove the voting power
    * A transaction is submitted with following metadata format for the registration process
@@ -90,7 +90,7 @@ export async function generateRegistration(request: {|
   await metadataList.add(
     await TransactionMetadatum.new_list(await MetadataList.new()),
   )
-  const trxMetadata = await TransactionMetadata.from_bytes(
+  const trxMetadata = await AuxiliaryData.from_bytes(
     await metadataList.to_bytes(),
   )
   return trxMetadata
@@ -137,7 +137,7 @@ const test: () => void = async () => {
     signer,
   })
 
-  const result = await txMetaData.general()
+  const result = await txMetaData.metadata()
 
   const data = await result.get(
     await BigNum.from_str(CatalystLabels.DATA.toString()),
