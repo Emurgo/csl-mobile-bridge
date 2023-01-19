@@ -8,13 +8,6 @@ export class Ptr {
   free(): Promise<void>;
 }
 
-export type Coin = BigNum;
-export type TransactionMetadatumLabel = BigNum;
-export type RequiredSigners = Ed25519KeyHashes;
-export type PolicyID = ScriptHash;
-export type PolicyIDs = ScriptHashes;
-export type TransactionIndexes = Uint32Array;
-
 export class Certificate extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}

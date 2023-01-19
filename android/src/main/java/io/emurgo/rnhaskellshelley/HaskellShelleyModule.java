@@ -138,7 +138,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void certificateKind(String self, Promise promise) {
         Native.I
             .certificateKind(new RPtr(self))
-            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -417,7 +416,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void addressNetworkId(String self, Promise promise) {
         Native.I
             .addressNetworkId(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -528,7 +527,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void vkeysLen(String self, Promise promise) {
         Native.I
             .vkeysLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -669,7 +668,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void certificatesLen(String self, Promise promise) {
         Native.I
             .certificatesLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -739,7 +738,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void protocolVersionMajor(String self, Promise promise) {
         Native.I
             .protocolVersionMajor(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -747,7 +746,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void protocolVersionMinor(String self, Promise promise) {
         Native.I
             .protocolVersionMinor(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -803,7 +802,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void metadataListLen(String self, Promise promise) {
         Native.I
             .metadataListLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -866,7 +865,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionMetadatumLabelsLen(String self, Promise promise) {
         Native.I
             .transactionMetadatumLabelsLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -960,7 +959,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBodyTtl(String self, Promise promise) {
         Native.I
             .transactionBodyTtl(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -1072,7 +1071,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBodyValidityStartInterval(String self, Promise promise) {
         Native.I
             .transactionBodyValidityStartInterval(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -1335,7 +1334,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionInputIndex(String self, Promise promise) {
         Native.I
             .transactionInputIndex(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -1625,7 +1624,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderCountMissingInputScripts(String self, Promise promise) {
         Native.I
             .transactionBuilderCountMissingInputScripts(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -1633,7 +1632,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderAddRequiredNativeInputScripts(String self, String scripts, Promise promise) {
         Native.I
             .transactionBuilderAddRequiredNativeInputScripts(new RPtr(self), new RPtr(scripts))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -1641,7 +1640,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderAddRequiredPlutusInputScripts(String self, String scripts, Promise promise) {
         Native.I
             .transactionBuilderAddRequiredPlutusInputScripts(new RPtr(self), new RPtr(scripts))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -1953,7 +1952,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderFullSize(String self, Promise promise) {
         Native.I
             .transactionBuilderFullSize(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -2055,7 +2054,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionOutputsLen(String self, Promise promise) {
         Native.I
             .transactionOutputsLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -2102,7 +2101,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void inputsWithScriptWitnessLen(String self, Promise promise) {
         Native.I
             .inputsWithScriptWitnessLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -2261,7 +2260,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void mintAssetsLen(String self, Promise promise) {
         Native.I
             .mintAssetsLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -2498,7 +2497,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void singleHostNamePort(String self, Promise promise) {
         Native.I
             .singleHostNamePort(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -2586,7 +2585,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void relaysLen(String self, Promise promise) {
         Native.I
             .relaysLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -2664,7 +2663,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void costmdlsLen(String self, Promise promise) {
         Native.I
             .costmdlsLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -2783,7 +2782,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void redeemerTagKind(String self, Promise promise) {
         Native.I
             .redeemerTagKind(new RPtr(self))
-            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -2909,7 +2907,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void costModelLen(String self, Promise promise) {
         Native.I
             .costModelLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -3084,7 +3082,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void vkeywitnessesLen(String self, Promise promise) {
         Native.I
             .vkeywitnessesLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -3179,7 +3177,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionMetadatumKind(String self, Promise promise) {
         Native.I
             .transactionMetadatumKind(new RPtr(self))
-            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -3281,7 +3278,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void rewardAddressesLen(String self, Promise promise) {
         Native.I
             .rewardAddressesLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -3344,7 +3341,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void plutusListLen(String self, Promise promise) {
         Native.I
             .plutusListLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -3559,7 +3556,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void auxiliaryDataSetLen(String self, Promise promise) {
         Native.I
             .auxiliaryDataSetLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -4111,7 +4108,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void mintLen(String self, Promise promise) {
         Native.I
             .mintLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -4222,7 +4219,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void stakeCredentialsLen(String self, Promise promise) {
         Native.I
             .stakeCredentialsLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -4285,7 +4282,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void metadataMapLen(String self, Promise promise) {
         Native.I
             .metadataMapLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -4552,7 +4549,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void bigNumCompare(String self, String rhsValue, Promise promise) {
         Native.I
             .bigNumCompare(new RPtr(self), new RPtr(rhsValue))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -4630,7 +4627,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void withdrawalsLen(String self, Promise promise) {
         Native.I
             .withdrawalsLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -4725,7 +4722,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void moveInstantaneousRewardPot(String self, Promise promise) {
         Native.I
             .moveInstantaneousRewardPot(new RPtr(self))
-            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -4733,7 +4729,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void moveInstantaneousRewardKind(String self, Promise promise) {
         Native.I
             .moveInstantaneousRewardKind(new RPtr(self))
-            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -4907,7 +4902,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionUnspentOutputsLen(String self, Promise promise) {
         Native.I
             .transactionUnspentOutputsLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -4985,7 +4980,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void proposedProtocolParameterUpdatesLen(String self, Promise promise) {
         Native.I
             .proposedProtocolParameterUpdatesLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -5121,7 +5116,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void assetNamesLen(String self, Promise promise) {
         Native.I
             .assetNamesLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -5199,7 +5194,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void generalTransactionMetadataLen(String self, Promise promise) {
         Native.I
             .generalTransactionMetadataLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -5286,7 +5281,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionInputsLen(String self, Promise promise) {
         Native.I
             .transactionInputsLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -5372,7 +5367,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void updateEpoch(String self, Promise promise) {
         Native.I
             .updateEpoch(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -5422,7 +5417,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void stringsLen(String self, Promise promise) {
         Native.I
             .stringsLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -5491,7 +5486,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void timelockStartSlot(String self, Promise promise) {
         Native.I
             .timelockStartSlot(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -5578,7 +5573,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void ed25519KeyHashesLen(String self, Promise promise) {
         Native.I
             .ed25519KeyHashesLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -5664,7 +5659,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void multiAssetLen(String self, Promise promise) {
         Native.I
             .multiAssetLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -5746,7 +5741,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void publicKeysSize(String self, Promise promise) {
         Native.I
             .publicKeysSize(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -5824,7 +5819,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void scriptHashesLen(String self, Promise promise) {
         Native.I
             .scriptHashesLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -6276,7 +6271,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void languageKind(String self, Promise promise) {
         Native.I
             .languageKind(new RPtr(self))
-            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -6402,7 +6396,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void operationalCertSequenceNumber(String self, Promise promise) {
         Native.I
             .operationalCertSequenceNumber(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -6410,7 +6404,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void operationalCertKesPeriod(String self, Promise promise) {
         Native.I
             .operationalCertKesPeriod(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -6443,7 +6437,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void plutusWitnessesLen(String self, Promise promise) {
         Native.I
             .plutusWitnessesLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -6720,7 +6714,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void assetsLen(String self, Promise promise) {
         Native.I
             .assetsLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -7307,7 +7301,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void nativeScriptKind(String self, Promise promise) {
         Native.I
             .nativeScriptKind(new RPtr(self))
-            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -7395,7 +7388,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void byronAddressByronProtocolMagic(String self, Promise promise) {
         Native.I
             .byronAddressByronProtocolMagic(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -7411,7 +7404,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void byronAddressNetworkId(String self, Promise promise) {
         Native.I
             .byronAddressNetworkId(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -7600,7 +7593,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void pointerSlot(String self, Promise promise) {
         Native.I
             .pointerSlot(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -7608,7 +7601,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void pointerTxIndex(String self, Promise promise) {
         Native.I
             .pointerTxIndex(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -7616,7 +7609,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void pointerCertIndex(String self, Promise promise) {
         Native.I
             .pointerCertIndex(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -7732,7 +7725,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void protocolParamUpdateMaxBlockBodySize(String self, Promise promise) {
         Native.I
             .protocolParamUpdateMaxBlockBodySize(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -7747,7 +7740,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void protocolParamUpdateMaxTxSize(String self, Promise promise) {
         Native.I
             .protocolParamUpdateMaxTxSize(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -7762,7 +7755,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void protocolParamUpdateMaxBlockHeaderSize(String self, Promise promise) {
         Native.I
             .protocolParamUpdateMaxBlockHeaderSize(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -7807,7 +7800,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void protocolParamUpdateMaxEpoch(String self, Promise promise) {
         Native.I
             .protocolParamUpdateMaxEpoch(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -7822,7 +7815,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void protocolParamUpdateNOpt(String self, Promise promise) {
         Native.I
             .protocolParamUpdateNOpt(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -8003,7 +7996,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void protocolParamUpdateMaxValueSize(String self, Promise promise) {
         Native.I
             .protocolParamUpdateMaxValueSize(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -8018,7 +8011,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void protocolParamUpdateCollateralPercentage(String self, Promise promise) {
         Native.I
             .protocolParamUpdateCollateralPercentage(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -8033,7 +8026,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void protocolParamUpdateMaxCollateralInputs(String self, Promise promise) {
         Native.I
             .protocolParamUpdateMaxCollateralInputs(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -8288,7 +8281,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void redeemersLen(String self, Promise promise) {
         Native.I
             .redeemersLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -8328,7 +8321,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void nativeScriptsLen(String self, Promise promise) {
         Native.I
             .nativeScriptsLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -8416,7 +8409,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void plutusMapLen(String self, Promise promise) {
         Native.I
             .plutusMapLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -8503,7 +8496,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void poolRetirementEpoch(String self, Promise promise) {
         Native.I
             .poolRetirementEpoch(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -8613,7 +8606,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void intAsI32(String self, Promise promise) {
         Native.I
             .intAsI32(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -8621,7 +8614,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void intAsI32OrNothing(String self, Promise promise) {
         Native.I
             .intAsI32OrNothing(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -8629,7 +8622,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void intAsI32OrFail(String self, Promise promise) {
         Native.I
             .intAsI32OrFail(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -8707,7 +8700,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void plutusScriptsLen(String self, Promise promise) {
         Native.I
             .plutusScriptsLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -8777,7 +8770,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void timelockExpirySlot(String self, Promise promise) {
         Native.I
             .timelockExpirySlot(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -8859,7 +8852,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void stakeCredentialKind(String self, Promise promise) {
         Native.I
             .stakeCredentialKind(new RPtr(self))
-            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -9037,7 +9029,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionWitnessSetsLen(String self, Promise promise) {
         Native.I
             .transactionWitnessSetsLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -9069,7 +9061,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void languagesLen(String self, Promise promise) {
         Native.I
             .languagesLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -9231,7 +9223,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void txInputsBuilderCountMissingInputScripts(String self, Promise promise) {
         Native.I
             .txInputsBuilderCountMissingInputScripts(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -9239,7 +9231,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void txInputsBuilderAddRequiredNativeInputScripts(String self, String scripts, Promise promise) {
         Native.I
             .txInputsBuilderAddRequiredNativeInputScripts(new RPtr(self), new RPtr(scripts))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -9247,7 +9239,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void txInputsBuilderAddRequiredPlutusInputScripts(String self, String scripts, Promise promise) {
         Native.I
             .txInputsBuilderAddRequiredPlutusInputScripts(new RPtr(self), new RPtr(scripts))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -9255,7 +9247,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void txInputsBuilderAddRequiredScriptInputWitnesses(String self, String inputsWithWit, Promise promise) {
         Native.I
             .txInputsBuilderAddRequiredScriptInputWitnesses(new RPtr(self), new RPtr(inputsWithWit))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -9287,7 +9279,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void txInputsBuilderLen(String self, Promise promise) {
         Native.I
             .txInputsBuilderLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -9473,7 +9465,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void valueCompare(String self, String rhsValue, Promise promise) {
         Native.I
             .valueCompare(new RPtr(self), new RPtr(rhsValue))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -9699,7 +9691,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void scriptNOfKN(String self, Promise promise) {
         Native.I
             .scriptNOfKN(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -9871,7 +9863,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBodiesLen(String self, Promise promise) {
         Native.I
             .transactionBodiesLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -9957,7 +9949,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void networkIdKind(String self, Promise promise) {
         Native.I
             .networkIdKind(new RPtr(self))
-            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -10107,7 +10098,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void genesisHashesLen(String self, Promise promise) {
         Native.I
             .genesisHashesLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -10177,7 +10168,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void headerBodyBlockNumber(String self, Promise promise) {
         Native.I
             .headerBodyBlockNumber(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -10185,7 +10176,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void headerBodySlot(String self, Promise promise) {
         Native.I
             .headerBodySlot(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -10263,7 +10254,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void headerBodyBlockBodySize(String self, Promise promise) {
         Native.I
             .headerBodyBlockBodySize(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -10384,7 +10375,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void mIRToStakeCredentialsLen(String self, Promise promise) {
         Native.I
             .mIRToStakeCredentialsLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -10463,7 +10454,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void singleHostAddrPort(String self, Promise promise) {
         Native.I
             .singleHostAddrPort(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -10869,7 +10860,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void networkInfoNetworkId(String self, Promise promise) {
         Native.I
             .networkInfoNetworkId(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -10877,7 +10868,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void networkInfoProtocolMagic(String self, Promise promise) {
         Native.I
             .networkInfoProtocolMagic(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -11124,7 +11115,7 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void bootstrapWitnessesLen(String self, Promise promise) {
         Native.I
             .bootstrapWitnessesLen(new RPtr(self))
-            .map(Long::longValue)
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -11289,7 +11280,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void relayKind(String self, Promise promise) {
         Native.I
             .relayKind(new RPtr(self))
-            .map(Integer::intValue)
             .pour(promise);
     }
 
@@ -11569,7 +11559,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void plutusDataKind(String self, Promise promise) {
         Native.I
             .plutusDataKind(new RPtr(self))
-            .map(Integer::intValue)
             .pour(promise);
     }
 
