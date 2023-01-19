@@ -7,8 +7,11 @@ edition = "2018"
 [build-dependencies]
 cbindgen = "=0.14.1"
 
+[patch.crates-io]
+cryptoxide = { git = "https://github.com/lisicky/cryptoxide", tag="0.4.4"}
+
 [dependencies]
-cardano-serialization-lib = { git = "https://github.com/Emurgo/cardano-serialization-lib.git", tag="11.2.0" }
+cardano-serialization-lib = { git = "https://github.com/Emurgo/cardano-serialization-lib.git", branch="evgenii/cryptoxide-fix-test" }
 byteorder = "1.4.3"
 base64 = "0.20.0"
 # tag = "2.3.1"
