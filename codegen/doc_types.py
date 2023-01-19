@@ -476,9 +476,6 @@ class Api:
     def to_js_index_d(self):
         all_code = ""
         all_code += js_index_d_gen.get_js_index_d_head()
-        for new_type, orig_type in type_js_map.items():
-            all_code += "export type " + new_type + " = " + orig_type + ";\r\n"
-        all_code += "\r\n"
         for struct in self.structs:
             all_code += struct.to_js_index_d() + "\r\n\r\n"
         for fn in self.functions:

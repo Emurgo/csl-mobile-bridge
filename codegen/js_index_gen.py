@@ -206,7 +206,11 @@ def get_js_index_fn_ptr_map(function, ident):
 
 
 def get_js_index_fn_call(function, ident=""):
-    fn_name = stringcase.snakecase(function.name)
+    fn_name = ""
+    if function.struct_name is None:
+        fn_name += stringcase.camelcase(function.name)
+    else:
+        fn_name += stringcase.camelcase(function.struct_name) + stringcase.pascalcase(function.name)
     await_srt = "await " if need_await(function) else ""
     return f"{ident}const ret = {await_srt}HaskellShelley.{fn_name}({', '.join(map(get_js_index_call_arg, function.args))});"
 

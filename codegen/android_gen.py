@@ -177,7 +177,7 @@ def get_android_rust_fn(function):
     args = function.args
     name_start = "#[allow(non_snake_case)]\r\n\
 #[no_mangle]\r\n\
-pub unsafe extern \"C\" fn Java_io_emurgo_rnhaskellshelley_"
+pub unsafe extern \"C\" fn Java_io_emurgo_rnhaskellshelley_Native_"
     if struct_name is None:
         name_middle = stringcase.camelcase(fn_name)
     else:

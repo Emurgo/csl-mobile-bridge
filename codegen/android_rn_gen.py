@@ -85,12 +85,9 @@ def get_rn_java_fn_map_res(arg):
         if arg.struct_name == "bool":
             return ""
         else:
-            if arg.is_optional:
-                return ".map(Long::longValue)\r\n"
-            else:
-                return ".map(Long::longValue)\r\n"
+            return ".map(Utils::boxedLongToDouble)\r\n"
     elif arg.is_enum:
-        return ".map(Integer::intValue)\r\n"
+        return ""
     else:
         return ".map(RPtr::toJs)\r\n"
 

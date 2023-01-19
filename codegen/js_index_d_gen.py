@@ -28,12 +28,12 @@ def map_js_type(arg):
 
     optional = arg.is_optional or arg.is_result
     if arg.is_self:
-        return arg.struct_orig_name
+        return arg.struct_name
     elif arg.is_ref and not arg.is_primitive:
         if optional:
-            return "Optional<" + arg.struct_orig_name + ">"
+            return "Optional<" + arg.struct_name + ">"
         else:
-            return arg.struct_orig_name
+            return arg.struct_name
     elif arg.struct_name.lower() == "string" or arg.struct_name.lower() == "str":
         if optional:
             return "Optional<string>"
@@ -58,9 +58,9 @@ def map_js_type(arg):
         return arg.struct_orig_name
     else:
         if optional:
-            return "Optional<" + arg.struct_orig_name + ">"
+            return "Optional<" + arg.struct_name + ">"
         else:
-            return arg.struct_orig_name
+            return arg.struct_name
 
 
 def get_js_index_d_fn_arg(arg):
