@@ -162,7 +162,7 @@ def get_ios_obj_c_safe_op_line(fn):
     if fn.args is None or len(fn.args) == 0:
         return f"[[CSafeOperation new:^{ret_type}*(id _void, CharPtr* error) {{"
     if len(fn.args) == 1:
-        return f"[[CSafeOperation new:^{ret_type}*({get_ios_obj_c_fn_arg_name(fn.args[0])}, CharPtr* error) {{"
+        return f"[[CSafeOperation new:^{ret_type}*({get_ios_obj_c_fn_arg_type(fn.args[0])}* {get_ios_obj_c_fn_arg_name(fn.args[0])}, CharPtr* error) {{"
     return f"[[CSafeOperation new:^{ret_type}*(NSArray* params, CharPtr* error) {{"
 
 
@@ -241,12 +241,11 @@ def get_ios_obj_c_fn(function):
     else:
         rust_fn_name = stringcase.snakecase(function.struct_name) + "_" + stringcase.snakecase(function.name)
 
-    fn_text += f"        return {rust_fn_name}({get_ios_obj_c_body_call_args(function)})"
     if function.return_type is None or function.return_type.struct_name.lower() == "void":
-        fn_text += ";\r\n"
+        fn_text += f"        {rust_fn_name}({get_ios_obj_c_body_call_args(function)});\r\n"
         fn_text += "        return nil;\r\n"
     else:
-        fn_text += "\r\n"
+        fn_text += f"        return {rust_fn_name}({get_ios_obj_c_body_call_args(function)})\r\n"
         fn_text += get_ios_obj_c_result_cast(function.return_type, "            ")
         fn_text += "\r\n"
     fn_text += f"    {get_ios_obj_c_exec_line(function)}\r\n}}\r\n"
