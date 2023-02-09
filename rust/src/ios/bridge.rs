@@ -334,7 +334,7 @@ pub unsafe extern "C" fn certificate_as_stake_registration(self_rptr: RPtr, resu
     let result = self_ref.as_stake_registration();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -345,7 +345,7 @@ pub unsafe extern "C" fn certificate_as_stake_deregistration(self_rptr: RPtr, re
     let result = self_ref.as_stake_deregistration();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -356,7 +356,7 @@ pub unsafe extern "C" fn certificate_as_stake_delegation(self_rptr: RPtr, result
     let result = self_ref.as_stake_delegation();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -367,7 +367,7 @@ pub unsafe extern "C" fn certificate_as_pool_registration(self_rptr: RPtr, resul
     let result = self_ref.as_pool_registration();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -378,7 +378,7 @@ pub unsafe extern "C" fn certificate_as_pool_retirement(self_rptr: RPtr, result:
     let result = self_ref.as_pool_retirement();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -389,7 +389,7 @@ pub unsafe extern "C" fn certificate_as_genesis_key_delegation(self_rptr: RPtr, 
     let result = self_ref.as_genesis_key_delegation();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -400,7 +400,7 @@ pub unsafe extern "C" fn certificate_as_move_instantaneous_rewards_cert(self_rpt
     let result = self_ref.as_move_instantaneous_rewards_cert();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -490,7 +490,7 @@ pub unsafe extern "C" fn transaction_witness_set_vkeys(self_rptr: RPtr, result: 
     let result = self_ref.vkeys();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -513,7 +513,7 @@ pub unsafe extern "C" fn transaction_witness_set_native_scripts(self_rptr: RPtr,
     let result = self_ref.native_scripts();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -536,7 +536,7 @@ pub unsafe extern "C" fn transaction_witness_set_bootstraps(self_rptr: RPtr, res
     let result = self_ref.bootstraps();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -559,7 +559,7 @@ pub unsafe extern "C" fn transaction_witness_set_plutus_scripts(self_rptr: RPtr,
     let result = self_ref.plutus_scripts();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -582,7 +582,7 @@ pub unsafe extern "C" fn transaction_witness_set_plutus_data(self_rptr: RPtr, re
     let result = self_ref.plutus_data();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -605,7 +605,7 @@ pub unsafe extern "C" fn transaction_witness_set_redeemers(self_rptr: RPtr, resu
     let result = self_ref.redeemers();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1504,7 +1504,7 @@ pub unsafe extern "C" fn transaction_body_ttl(self_rptr: RPtr, result: &mut i64,
     let result = self_ref.ttl().into_result()?;
     Ok::<Option<i64>, String>(result.map(|v| v as i64))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1515,7 +1515,7 @@ pub unsafe extern "C" fn transaction_body_ttl_bignum(self_rptr: RPtr, result: &m
     let result = self_ref.ttl_bignum();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1561,7 +1561,7 @@ pub unsafe extern "C" fn transaction_body_certs(self_rptr: RPtr, result: &mut RP
     let result = self_ref.certs();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1584,7 +1584,7 @@ pub unsafe extern "C" fn transaction_body_withdrawals(self_rptr: RPtr, result: &
     let result = self_ref.withdrawals();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1607,7 +1607,7 @@ pub unsafe extern "C" fn transaction_body_update(self_rptr: RPtr, result: &mut R
     let result = self_ref.update();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1630,7 +1630,7 @@ pub unsafe extern "C" fn transaction_body_auxiliary_data_hash(self_rptr: RPtr, r
     let result = self_ref.auxiliary_data_hash();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1665,7 +1665,7 @@ pub unsafe extern "C" fn transaction_body_validity_start_interval_bignum(self_rp
     let result = self_ref.validity_start_interval_bignum();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1676,7 +1676,7 @@ pub unsafe extern "C" fn transaction_body_validity_start_interval(self_rptr: RPt
     let result = self_ref.validity_start_interval().into_result()?;
     Ok::<Option<i64>, String>(result.map(|v| v as i64))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1699,7 +1699,7 @@ pub unsafe extern "C" fn transaction_body_mint(self_rptr: RPtr, result: &mut RPt
     let result = self_ref.mint();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1710,7 +1710,7 @@ pub unsafe extern "C" fn transaction_body_multiassets(self_rptr: RPtr, result: &
     let result = self_ref.multiassets();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1733,7 +1733,7 @@ pub unsafe extern "C" fn transaction_body_reference_inputs(self_rptr: RPtr, resu
     let result = self_ref.reference_inputs();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1756,7 +1756,7 @@ pub unsafe extern "C" fn transaction_body_script_data_hash(self_rptr: RPtr, resu
     let result = self_ref.script_data_hash();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1779,7 +1779,7 @@ pub unsafe extern "C" fn transaction_body_collateral(self_rptr: RPtr, result: &m
     let result = self_ref.collateral();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1802,7 +1802,7 @@ pub unsafe extern "C" fn transaction_body_required_signers(self_rptr: RPtr, resu
     let result = self_ref.required_signers();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1825,7 +1825,7 @@ pub unsafe extern "C" fn transaction_body_network_id(self_rptr: RPtr, result: &m
     let result = self_ref.network_id();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1848,7 +1848,7 @@ pub unsafe extern "C" fn transaction_body_collateral_return(self_rptr: RPtr, res
     let result = self_ref.collateral_return();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -1871,7 +1871,7 @@ pub unsafe extern "C" fn transaction_body_total_collateral(self_rptr: RPtr, resu
     let result = self_ref.total_collateral();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -2558,7 +2558,7 @@ pub unsafe extern "C" fn transaction_builder_get_native_input_scripts(self_rptr:
     let result = self_ref.get_native_input_scripts();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -2569,7 +2569,7 @@ pub unsafe extern "C" fn transaction_builder_get_plutus_input_scripts(self_rptr:
     let result = self_ref.get_plutus_input_scripts();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -2702,7 +2702,7 @@ pub unsafe extern "C" fn transaction_builder_get_auxiliary_data(self_rptr: RPtr,
     let result = self_ref.get_auxiliary_data();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -2789,7 +2789,7 @@ pub unsafe extern "C" fn transaction_builder_get_mint_builder(self_rptr: RPtr, r
     let result = self_ref.get_mint_builder();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -2813,7 +2813,7 @@ pub unsafe extern "C" fn transaction_builder_get_mint(self_rptr: RPtr, result: &
     let result = self_ref.get_mint();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -2824,7 +2824,7 @@ pub unsafe extern "C" fn transaction_builder_get_mint_scripts(self_rptr: RPtr, r
     let result = self_ref.get_mint_scripts();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -2981,7 +2981,7 @@ pub unsafe extern "C" fn transaction_builder_get_fee_if_set(self_rptr: RPtr, res
     let result = self_ref.get_fee_if_set();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -3501,7 +3501,7 @@ pub unsafe extern "C" fn mint_assets_insert(self_rptr: RPtr, key_rptr: RPtr, val
     let result = self_ref.insert(key, value);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -3513,7 +3513,7 @@ pub unsafe extern "C" fn mint_assets_get(self_rptr: RPtr, key_rptr: RPtr, result
     let result = self_ref.get(key);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -3828,7 +3828,7 @@ pub unsafe extern "C" fn single_host_name_port(self_rptr: RPtr, result: &mut i64
     let result = self_ref.port();
     Ok::<Option<i64>, String>(result.map(|v| v as i64))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -4076,7 +4076,7 @@ pub unsafe extern "C" fn costmdls_insert(self_rptr: RPtr, key_rptr: RPtr, value_
     let result = self_ref.insert(key, value);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -4088,7 +4088,7 @@ pub unsafe extern "C" fn costmdls_get(self_rptr: RPtr, key_rptr: RPtr, result: &
     let result = self_ref.get(key);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -5281,7 +5281,7 @@ pub unsafe extern "C" fn pool_params_pool_metadata(self_rptr: RPtr, result: &mut
     let result = self_ref.pool_metadata();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -5354,7 +5354,7 @@ pub unsafe extern "C" fn auxiliary_data_set_insert(self_rptr: RPtr, tx_index_lon
     let result = self_ref.insert(tx_index, data);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -5366,7 +5366,7 @@ pub unsafe extern "C" fn auxiliary_data_set_get(self_rptr: RPtr, tx_index_long: 
     let result = self_ref.get(tx_index);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -5793,7 +5793,7 @@ pub unsafe extern "C" fn enterprise_address_from_address(addr_rptr: RPtr, result
     let result = EnterpriseAddress::from_address(addr);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -6144,7 +6144,7 @@ pub unsafe extern "C" fn mint_insert(self_rptr: RPtr, key_rptr: RPtr, value_rptr
     let result = self_ref.insert(key, value);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -6156,7 +6156,7 @@ pub unsafe extern "C" fn mint_get(self_rptr: RPtr, key_rptr: RPtr, result: &mut 
     let result = self_ref.get(key);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -6168,7 +6168,7 @@ pub unsafe extern "C" fn mint_get_all(self_rptr: RPtr, key_rptr: RPtr, result: &
     let result = self_ref.get_all(key);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -6392,7 +6392,7 @@ pub unsafe extern "C" fn metadata_map_insert(self_rptr: RPtr, key_rptr: RPtr, va
     let result = self_ref.insert(key, value);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -6405,7 +6405,7 @@ pub unsafe extern "C" fn metadata_map_insert_str(self_rptr: RPtr, key_str: CharP
     let result = self_ref.insert_str(key, value).into_result()?;
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -6418,7 +6418,7 @@ pub unsafe extern "C" fn metadata_map_insert_i32(self_rptr: RPtr, key_long: i64,
     let result = self_ref.insert_i32(key, value);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -6895,7 +6895,7 @@ pub unsafe extern "C" fn withdrawals_insert(self_rptr: RPtr, key_rptr: RPtr, val
     let result = self_ref.insert(key, value);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -6907,7 +6907,7 @@ pub unsafe extern "C" fn withdrawals_get(self_rptr: RPtr, key_rptr: RPtr, result
     let result = self_ref.get(key);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -7042,7 +7042,7 @@ pub unsafe extern "C" fn move_instantaneous_reward_as_to_other_pot(self_rptr: RP
     let result = self_ref.as_to_other_pot();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -7053,7 +7053,7 @@ pub unsafe extern "C" fn move_instantaneous_reward_as_to_stake_creds(self_rptr: 
     let result = self_ref.as_to_stake_creds();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -7400,7 +7400,7 @@ pub unsafe extern "C" fn proposed_protocol_parameter_updates_insert(self_rptr: R
     let result = self_ref.insert(key, value);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -7412,7 +7412,7 @@ pub unsafe extern "C" fn proposed_protocol_parameter_updates_get(self_rptr: RPtr
     let result = self_ref.get(key);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -7711,7 +7711,7 @@ pub unsafe extern "C" fn general_transaction_metadata_insert(self_rptr: RPtr, ke
     let result = self_ref.insert(key, value);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -7723,7 +7723,7 @@ pub unsafe extern "C" fn general_transaction_metadata_get(self_rptr: RPtr, key_r
     let result = self_ref.get(key);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -7857,7 +7857,7 @@ pub unsafe extern "C" fn transaction_inputs_to_option(self_rptr: RPtr, result: &
     let result = self_ref.to_option();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -8273,7 +8273,7 @@ pub unsafe extern "C" fn ed25519_key_hashes_to_option(self_rptr: RPtr, result: &
     let result = self_ref.to_option();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -8374,7 +8374,7 @@ pub unsafe extern "C" fn multi_asset_insert(self_rptr: RPtr, policy_id_rptr: RPt
     let result = self_ref.insert(policy_id, assets);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -8386,7 +8386,7 @@ pub unsafe extern "C" fn multi_asset_get(self_rptr: RPtr, policy_id_rptr: RPtr, 
     let result = self_ref.get(policy_id);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -8400,7 +8400,7 @@ pub unsafe extern "C" fn multi_asset_set_asset(self_rptr: RPtr, policy_id_rptr: 
     let result = self_ref.set_asset(policy_id, asset_name, value);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -8998,7 +8998,7 @@ pub unsafe extern "C" fn plutus_witness_script(self_rptr: RPtr, result: &mut RPt
     let result = self_ref.script();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -9009,7 +9009,7 @@ pub unsafe extern "C" fn plutus_witness_datum(self_rptr: RPtr, result: &mut RPtr
     let result = self_ref.datum();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -9886,7 +9886,7 @@ pub unsafe extern "C" fn assets_insert(self_rptr: RPtr, key_rptr: RPtr, value_rp
     let result = self_ref.insert(key, value);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -9898,7 +9898,7 @@ pub unsafe extern "C" fn assets_get(self_rptr: RPtr, key_rptr: RPtr, result: &mu
     let result = self_ref.get(key);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -10300,7 +10300,7 @@ pub unsafe extern "C" fn nonce_get_hash(self_rptr: RPtr, result: &mut DataPtr, e
     let result = self_ref.get_hash();
     Ok::<Option<DataPtr>, String>(result.into_option())
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -10358,7 +10358,7 @@ pub unsafe extern "C" fn base_address_from_address(addr_rptr: RPtr, result: &mut
     let result = BaseAddress::from_address(addr);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -10714,7 +10714,7 @@ pub unsafe extern "C" fn native_script_as_script_pubkey(self_rptr: RPtr, result:
     let result = self_ref.as_script_pubkey();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -10725,7 +10725,7 @@ pub unsafe extern "C" fn native_script_as_script_all(self_rptr: RPtr, result: &m
     let result = self_ref.as_script_all();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -10736,7 +10736,7 @@ pub unsafe extern "C" fn native_script_as_script_any(self_rptr: RPtr, result: &m
     let result = self_ref.as_script_any();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -10747,7 +10747,7 @@ pub unsafe extern "C" fn native_script_as_script_n_of_k(self_rptr: RPtr, result:
     let result = self_ref.as_script_n_of_k();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -10758,7 +10758,7 @@ pub unsafe extern "C" fn native_script_as_timelock_start(self_rptr: RPtr, result
     let result = self_ref.as_timelock_start();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -10769,7 +10769,7 @@ pub unsafe extern "C" fn native_script_as_timelock_expiry(self_rptr: RPtr, resul
     let result = self_ref.as_timelock_expiry();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -10903,7 +10903,7 @@ pub unsafe extern "C" fn byron_address_from_address(addr_rptr: RPtr, result: &mu
     let result = ByronAddress::from_address(addr);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -10992,7 +10992,7 @@ pub unsafe extern "C" fn big_int_as_u64(self_rptr: RPtr, result: &mut RPtr, erro
     let result = self_ref.as_u64();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11003,7 +11003,7 @@ pub unsafe extern "C" fn big_int_as_int(self_rptr: RPtr, result: &mut RPtr, erro
     let result = self_ref.as_int();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11265,7 +11265,7 @@ pub unsafe extern "C" fn protocol_param_update_minfee_a(self_rptr: RPtr, result:
     let result = self_ref.minfee_a();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11288,7 +11288,7 @@ pub unsafe extern "C" fn protocol_param_update_minfee_b(self_rptr: RPtr, result:
     let result = self_ref.minfee_b();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11311,7 +11311,7 @@ pub unsafe extern "C" fn protocol_param_update_max_block_body_size(self_rptr: RP
     let result = self_ref.max_block_body_size();
     Ok::<Option<i64>, String>(result.map(|v| v as i64))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11334,7 +11334,7 @@ pub unsafe extern "C" fn protocol_param_update_max_tx_size(self_rptr: RPtr, resu
     let result = self_ref.max_tx_size();
     Ok::<Option<i64>, String>(result.map(|v| v as i64))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11357,7 +11357,7 @@ pub unsafe extern "C" fn protocol_param_update_max_block_header_size(self_rptr: 
     let result = self_ref.max_block_header_size();
     Ok::<Option<i64>, String>(result.map(|v| v as i64))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11380,7 +11380,7 @@ pub unsafe extern "C" fn protocol_param_update_key_deposit(self_rptr: RPtr, resu
     let result = self_ref.key_deposit();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11403,7 +11403,7 @@ pub unsafe extern "C" fn protocol_param_update_pool_deposit(self_rptr: RPtr, res
     let result = self_ref.pool_deposit();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11426,7 +11426,7 @@ pub unsafe extern "C" fn protocol_param_update_max_epoch(self_rptr: RPtr, result
     let result = self_ref.max_epoch();
     Ok::<Option<i64>, String>(result.map(|v| v as i64))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11449,7 +11449,7 @@ pub unsafe extern "C" fn protocol_param_update_n_opt(self_rptr: RPtr, result: &m
     let result = self_ref.n_opt();
     Ok::<Option<i64>, String>(result.map(|v| v as i64))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11472,7 +11472,7 @@ pub unsafe extern "C" fn protocol_param_update_pool_pledge_influence(self_rptr: 
     let result = self_ref.pool_pledge_influence();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11495,7 +11495,7 @@ pub unsafe extern "C" fn protocol_param_update_expansion_rate(self_rptr: RPtr, r
     let result = self_ref.expansion_rate();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11518,7 +11518,7 @@ pub unsafe extern "C" fn protocol_param_update_treasury_growth_rate(self_rptr: R
     let result = self_ref.treasury_growth_rate();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11529,7 +11529,7 @@ pub unsafe extern "C" fn protocol_param_update_d(self_rptr: RPtr, result: &mut R
     let result = self_ref.d();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11540,7 +11540,7 @@ pub unsafe extern "C" fn protocol_param_update_extra_entropy(self_rptr: RPtr, re
     let result = self_ref.extra_entropy();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11563,7 +11563,7 @@ pub unsafe extern "C" fn protocol_param_update_protocol_version(self_rptr: RPtr,
     let result = self_ref.protocol_version();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11586,7 +11586,7 @@ pub unsafe extern "C" fn protocol_param_update_min_pool_cost(self_rptr: RPtr, re
     let result = self_ref.min_pool_cost();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11609,7 +11609,7 @@ pub unsafe extern "C" fn protocol_param_update_ada_per_utxo_byte(self_rptr: RPtr
     let result = self_ref.ada_per_utxo_byte();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11632,7 +11632,7 @@ pub unsafe extern "C" fn protocol_param_update_cost_models(self_rptr: RPtr, resu
     let result = self_ref.cost_models();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11655,7 +11655,7 @@ pub unsafe extern "C" fn protocol_param_update_execution_costs(self_rptr: RPtr, 
     let result = self_ref.execution_costs();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11678,7 +11678,7 @@ pub unsafe extern "C" fn protocol_param_update_max_tx_ex_units(self_rptr: RPtr, 
     let result = self_ref.max_tx_ex_units();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11701,7 +11701,7 @@ pub unsafe extern "C" fn protocol_param_update_max_block_ex_units(self_rptr: RPt
     let result = self_ref.max_block_ex_units();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11724,7 +11724,7 @@ pub unsafe extern "C" fn protocol_param_update_max_value_size(self_rptr: RPtr, r
     let result = self_ref.max_value_size();
     Ok::<Option<i64>, String>(result.map(|v| v as i64))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11747,7 +11747,7 @@ pub unsafe extern "C" fn protocol_param_update_collateral_percentage(self_rptr: 
     let result = self_ref.collateral_percentage();
     Ok::<Option<i64>, String>(result.map(|v| v as i64))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11770,7 +11770,7 @@ pub unsafe extern "C" fn protocol_param_update_max_collateral_inputs(self_rptr: 
     let result = self_ref.max_collateral_inputs();
     Ok::<Option<i64>, String>(result.map(|v| v as i64))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11948,7 +11948,7 @@ pub unsafe extern "C" fn transaction_output_data_hash(self_rptr: RPtr, result: &
     let result = self_ref.data_hash();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11959,7 +11959,7 @@ pub unsafe extern "C" fn transaction_output_plutus_data(self_rptr: RPtr, result:
     let result = self_ref.plutus_data();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -11970,7 +11970,7 @@ pub unsafe extern "C" fn transaction_output_script_ref(self_rptr: RPtr, result: 
     let result = self_ref.script_ref();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -12330,7 +12330,7 @@ pub unsafe extern "C" fn plutus_map_insert(self_rptr: RPtr, key_rptr: RPtr, valu
     let result = self_ref.insert(key, value);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -12342,7 +12342,7 @@ pub unsafe extern "C" fn plutus_map_get(self_rptr: RPtr, key_rptr: RPtr, result:
     let result = self_ref.get(key);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -12576,7 +12576,7 @@ pub unsafe extern "C" fn int_as_positive(self_rptr: RPtr, result: &mut RPtr, err
     let result = self_ref.as_positive();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -12587,7 +12587,7 @@ pub unsafe extern "C" fn int_as_negative(self_rptr: RPtr, result: &mut RPtr, err
     let result = self_ref.as_negative();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -12598,7 +12598,7 @@ pub unsafe extern "C" fn int_as_i32(self_rptr: RPtr, result: &mut i64, error: &m
     let result = self_ref.as_i32();
     Ok::<Option<i64>, String>(result.map(|v| v as i64))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -12609,7 +12609,7 @@ pub unsafe extern "C" fn int_as_i32_or_nothing(self_rptr: RPtr, result: &mut i64
     let result = self_ref.as_i32_or_nothing();
     Ok::<Option<i64>, String>(result.map(|v| v as i64))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -12923,7 +12923,7 @@ pub unsafe extern "C" fn stake_credential_to_keyhash(self_rptr: RPtr, result: &m
     let result = self_ref.to_keyhash();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -12934,7 +12934,7 @@ pub unsafe extern "C" fn stake_credential_to_scripthash(self_rptr: RPtr, result:
     let result = self_ref.to_scripthash();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -13560,7 +13560,7 @@ pub unsafe extern "C" fn tx_inputs_builder_get_native_input_scripts(self_rptr: R
     let result = self_ref.get_native_input_scripts();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -13571,7 +13571,7 @@ pub unsafe extern "C" fn tx_inputs_builder_get_plutus_input_scripts(self_rptr: R
     let result = self_ref.get_plutus_input_scripts();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -13639,7 +13639,7 @@ pub unsafe extern "C" fn tx_inputs_builder_inputs_option(self_rptr: RPtr, result
     let result = self_ref.inputs_option();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -13795,7 +13795,7 @@ pub unsafe extern "C" fn value_multiasset(self_rptr: RPtr, result: &mut RPtr, er
     let result = self_ref.multiasset();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -13855,7 +13855,7 @@ pub unsafe extern "C" fn value_compare(self_rptr: RPtr, rhs_value_rptr: RPtr, re
     let result = self_ref.compare(rhs_value);
     Ok::<Option<i64>, String>(result.map(|v| v as i64))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -14044,7 +14044,7 @@ pub unsafe extern "C" fn auxiliary_data_metadata(self_rptr: RPtr, result: &mut R
     let result = self_ref.metadata();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -14067,7 +14067,7 @@ pub unsafe extern "C" fn auxiliary_data_native_scripts(self_rptr: RPtr, result: 
     let result = self_ref.native_scripts();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -14090,7 +14090,7 @@ pub unsafe extern "C" fn auxiliary_data_plutus_scripts(self_rptr: RPtr, result: 
     let result = self_ref.plutus_scripts();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -14325,7 +14325,7 @@ pub unsafe extern "C" fn script_ref_native_script(self_rptr: RPtr, result: &mut 
     let result = self_ref.native_script();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -14336,7 +14336,7 @@ pub unsafe extern "C" fn script_ref_plutus_script(self_rptr: RPtr, result: &mut 
     let result = self_ref.plutus_script();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -14894,7 +14894,7 @@ pub unsafe extern "C" fn header_body_prev_hash(self_rptr: RPtr, result: &mut RPt
     let result = self_ref.prev_hash();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -14938,7 +14938,7 @@ pub unsafe extern "C" fn header_body_nonce_vrf_or_nothing(self_rptr: RPtr, resul
     let result = self_ref.nonce_vrf_or_nothing();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -14949,7 +14949,7 @@ pub unsafe extern "C" fn header_body_leader_vrf_or_nothing(self_rptr: RPtr, resu
     let result = self_ref.leader_vrf_or_nothing();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -14971,7 +14971,7 @@ pub unsafe extern "C" fn header_body_vrf_result_or_nothing(self_rptr: RPtr, resu
     let result = self_ref.vrf_result_or_nothing();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -15196,7 +15196,7 @@ pub unsafe extern "C" fn m_i_r_to_stake_credentials_insert(self_rptr: RPtr, cred
     let result = self_ref.insert(cred, delta);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -15208,7 +15208,7 @@ pub unsafe extern "C" fn m_i_r_to_stake_credentials_get(self_rptr: RPtr, cred_rp
     let result = self_ref.get(cred);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -15297,7 +15297,7 @@ pub unsafe extern "C" fn single_host_addr_port(self_rptr: RPtr, result: &mut i64
     let result = self_ref.port();
     Ok::<Option<i64>, String>(result.map(|v| v as i64))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -15308,7 +15308,7 @@ pub unsafe extern "C" fn single_host_addr_ipv4(self_rptr: RPtr, result: &mut RPt
     let result = self_ref.ipv4();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -15319,7 +15319,7 @@ pub unsafe extern "C" fn single_host_addr_ipv6(self_rptr: RPtr, result: &mut RPt
     let result = self_ref.ipv6();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -15680,7 +15680,7 @@ pub unsafe extern "C" fn transaction_auxiliary_data(self_rptr: RPtr, result: &mu
     let result = self_ref.auxiliary_data();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -16149,7 +16149,7 @@ pub unsafe extern "C" fn reward_address_from_address(addr_rptr: RPtr, result: &m
     let result = RewardAddress::from_address(addr);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -16486,7 +16486,7 @@ pub unsafe extern "C" fn relay_as_single_host_addr(self_rptr: RPtr, result: &mut
     let result = self_ref.as_single_host_addr();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -16497,7 +16497,7 @@ pub unsafe extern "C" fn relay_as_single_host_name(self_rptr: RPtr, result: &mut
     let result = self_ref.as_single_host_name();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -16508,7 +16508,7 @@ pub unsafe extern "C" fn relay_as_multi_host_name(self_rptr: RPtr, result: &mut 
     let result = self_ref.as_multi_host_name();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -16745,7 +16745,7 @@ pub unsafe extern "C" fn pointer_address_from_address(addr_rptr: RPtr, result: &
     let result = PointerAddress::from_address(addr);
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -16878,7 +16878,7 @@ pub unsafe extern "C" fn plutus_data_as_constr_plutus_data(self_rptr: RPtr, resu
     let result = self_ref.as_constr_plutus_data();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -16889,7 +16889,7 @@ pub unsafe extern "C" fn plutus_data_as_map(self_rptr: RPtr, result: &mut RPtr, 
     let result = self_ref.as_map();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -16900,7 +16900,7 @@ pub unsafe extern "C" fn plutus_data_as_list(self_rptr: RPtr, result: &mut RPtr,
     let result = self_ref.as_list();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -16911,7 +16911,7 @@ pub unsafe extern "C" fn plutus_data_as_integer(self_rptr: RPtr, result: &mut RP
     let result = self_ref.as_integer();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
@@ -16922,7 +16922,7 @@ pub unsafe extern "C" fn plutus_data_as_bytes(self_rptr: RPtr, result: &mut Data
     let result = self_ref.as_bytes();
     Ok::<Option<DataPtr>, String>(result.into_option())
   })
-  .response(result,  error)
+  .response_nullable(result,  error)
 }
 
 
