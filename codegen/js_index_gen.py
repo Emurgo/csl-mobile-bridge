@@ -40,7 +40,7 @@ function base64ToUint32Array(base64String) {\r\n\
 \r\n\
 class Ptr {\r\n\
   static _wrap(ptr, klass) {\r\n\
-    if (ptr === '0') {\r\n\
+    if (ptr === '0' || ptr == null) {\r\n\
       return undefined;\r\n\
     }\r\n\
     const obj = Object.create(klass.prototype);\r\n\

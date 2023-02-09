@@ -203,7 +203,10 @@ def get_ios_rust_fn_body(function):
         body += "    Ok(())\r\n"
         result_ret = "&mut ()"
     body += "  })\r\n"
-    body += f"  .response({result_ret},  error)\r\n"
+    if function.return_type is not None and function.return_type.is_optional:
+        body += f"  .response_nullable({result_ret},  error)\r\n"
+    else:
+        body += f"  .response({result_ret},  error)\r\n"
     body += "}\r\n\r\n"
     return body
 

@@ -138,7 +138,7 @@ def get_ios_obj_c_body_arg_cast(arg, index):
     elif (arg.is_vec or arg.is_slice) and arg.struct_name == "usize":
         return f"CharPtr {arg_name} = {middle} charPtr];"
     elif arg.is_primitive and not (arg.is_vec or arg.is_slice):
-        if arg.struct_name != "bool":
+        if arg.struct_name == "bool":
             return f"BOOL {arg_name} = {middle} boolValue];"
         else:
             return f"int64_t {arg_name} = {middle} longLongValue];"
@@ -224,7 +224,9 @@ def get_ios_obj_c_fn(function):
     fn_text += ":"
     for (index, arg) in enumerate(function.args):
         fn_text += f"{get_ios_obj_c_fn_arg(arg, index)} "
-    fn_text += "withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)\r\n"
+    if len(function.args) != 0:
+        fn_text +="withResolve:"
+    fn_text += "(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)\r\n"
     fn_text += "{\r\n"
     fn_text += f"    {get_ios_obj_c_safe_op_line(function)}\r\n"
     if not(function.return_type is None or function.return_type.struct_name.lower() == "void"):
