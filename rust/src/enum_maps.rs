@@ -24,6 +24,54 @@ pub trait ToPrimitive {
 pub trait ToEnum<T> {
     fn to_enum(&self) -> Result<T>;
 }
+impl ToPrimitive for CertificateKind {
+    fn to_i32(&self) -> i32 {
+        match self {
+            CertificateKind::StakeRegistration => 0,
+            CertificateKind::StakeDeregistration => 1,
+            CertificateKind::StakeDelegation => 2,
+            CertificateKind::PoolRegistration => 3,
+            CertificateKind::PoolRetirement => 4,
+            CertificateKind::GenesisKeyDelegation => 5,
+            CertificateKind::MoveInstantaneousRewardsCert => 6,
+        }
+    }
+}
+
+impl ToEnum<CertificateKind> for i32 {
+    fn to_enum(&self) -> Result<CertificateKind> {
+        match self {
+            0 => Ok(CertificateKind::StakeRegistration),
+            1 => Ok(CertificateKind::StakeDeregistration),
+            2 => Ok(CertificateKind::StakeDelegation),
+            3 => Ok(CertificateKind::PoolRegistration),
+            4 => Ok(CertificateKind::PoolRetirement),
+            5 => Ok(CertificateKind::GenesisKeyDelegation),
+            6 => Ok(CertificateKind::MoveInstantaneousRewardsCert),
+            _ => Err("Invalid value for CertificateKind".into()),
+        }
+    }
+}
+
+impl ToPrimitive for MIRKind {
+    fn to_i32(&self) -> i32 {
+        match self {
+            MIRKind::ToOtherPot => 0,
+            MIRKind::ToStakeCredentials => 1,
+        }
+    }
+}
+
+impl ToEnum<MIRKind> for i32 {
+    fn to_enum(&self) -> Result<MIRKind> {
+        match self {
+            0 => Ok(MIRKind::ToOtherPot),
+            1 => Ok(MIRKind::ToStakeCredentials),
+            _ => Err("Invalid value for MIRKind".into()),
+        }
+    }
+}
+
 impl ToPrimitive for NetworkIdKind {
     fn to_i32(&self) -> i32 {
         match self {
@@ -64,27 +112,50 @@ impl ToEnum<ScriptHashNamespace> for i32 {
     }
 }
 
-impl ToPrimitive for PlutusDataKind {
+impl ToPrimitive for TransactionMetadatumKind {
     fn to_i32(&self) -> i32 {
         match self {
-            PlutusDataKind::ConstrPlutusData => 0,
-            PlutusDataKind::Map => 1,
-            PlutusDataKind::List => 2,
-            PlutusDataKind::Integer => 3,
-            PlutusDataKind::Bytes => 4,
+            TransactionMetadatumKind::MetadataMap => 0,
+            TransactionMetadatumKind::MetadataList => 1,
+            TransactionMetadatumKind::Int => 2,
+            TransactionMetadatumKind::Bytes => 3,
+            TransactionMetadatumKind::Text => 4,
         }
     }
 }
 
-impl ToEnum<PlutusDataKind> for i32 {
-    fn to_enum(&self) -> Result<PlutusDataKind> {
+impl ToEnum<TransactionMetadatumKind> for i32 {
+    fn to_enum(&self) -> Result<TransactionMetadatumKind> {
         match self {
-            0 => Ok(PlutusDataKind::ConstrPlutusData),
-            1 => Ok(PlutusDataKind::Map),
-            2 => Ok(PlutusDataKind::List),
-            3 => Ok(PlutusDataKind::Integer),
-            4 => Ok(PlutusDataKind::Bytes),
-            _ => Err("Invalid value for PlutusDataKind".into()),
+            0 => Ok(TransactionMetadatumKind::MetadataMap),
+            1 => Ok(TransactionMetadatumKind::MetadataList),
+            2 => Ok(TransactionMetadatumKind::Int),
+            3 => Ok(TransactionMetadatumKind::Bytes),
+            4 => Ok(TransactionMetadatumKind::Text),
+            _ => Err("Invalid value for TransactionMetadatumKind".into()),
+        }
+    }
+}
+
+impl ToPrimitive for CoinSelectionStrategyCIP2 {
+    fn to_i32(&self) -> i32 {
+        match self {
+            CoinSelectionStrategyCIP2::LargestFirst => 0,
+            CoinSelectionStrategyCIP2::RandomImprove => 1,
+            CoinSelectionStrategyCIP2::LargestFirstMultiAsset => 2,
+            CoinSelectionStrategyCIP2::RandomImproveMultiAsset => 3,
+        }
+    }
+}
+
+impl ToEnum<CoinSelectionStrategyCIP2> for i32 {
+    fn to_enum(&self) -> Result<CoinSelectionStrategyCIP2> {
+        match self {
+            0 => Ok(CoinSelectionStrategyCIP2::LargestFirst),
+            1 => Ok(CoinSelectionStrategyCIP2::RandomImprove),
+            2 => Ok(CoinSelectionStrategyCIP2::LargestFirstMultiAsset),
+            3 => Ok(CoinSelectionStrategyCIP2::RandomImproveMultiAsset),
+            _ => Err("Invalid value for CoinSelectionStrategyCIP2".into()),
         }
     }
 }
@@ -104,6 +175,147 @@ impl ToEnum<PlutusDatumSchema> for i32 {
             0 => Ok(PlutusDatumSchema::BasicConversions),
             1 => Ok(PlutusDatumSchema::DetailedSchema),
             _ => Err("Invalid value for PlutusDatumSchema".into()),
+        }
+    }
+}
+
+impl ToPrimitive for LanguageKind {
+    fn to_i32(&self) -> i32 {
+        match self {
+            LanguageKind::PlutusV1 => 0,
+            LanguageKind::PlutusV2 => 1,
+        }
+    }
+}
+
+impl ToEnum<LanguageKind> for i32 {
+    fn to_enum(&self) -> Result<LanguageKind> {
+        match self {
+            0 => Ok(LanguageKind::PlutusV1),
+            1 => Ok(LanguageKind::PlutusV2),
+            _ => Err("Invalid value for LanguageKind".into()),
+        }
+    }
+}
+
+impl ToPrimitive for StakeCredKind {
+    fn to_i32(&self) -> i32 {
+        match self {
+            StakeCredKind::Key => 0,
+            StakeCredKind::Script => 1,
+        }
+    }
+}
+
+impl ToEnum<StakeCredKind> for i32 {
+    fn to_enum(&self) -> Result<StakeCredKind> {
+        match self {
+            0 => Ok(StakeCredKind::Key),
+            1 => Ok(StakeCredKind::Script),
+            _ => Err("Invalid value for StakeCredKind".into()),
+        }
+    }
+}
+
+impl ToPrimitive for ScriptSchema {
+    fn to_i32(&self) -> i32 {
+        match self {
+            ScriptSchema::Wallet => 0,
+            ScriptSchema::Node => 1,
+        }
+    }
+}
+
+impl ToEnum<ScriptSchema> for i32 {
+    fn to_enum(&self) -> Result<ScriptSchema> {
+        match self {
+            0 => Ok(ScriptSchema::Wallet),
+            1 => Ok(ScriptSchema::Node),
+            _ => Err("Invalid value for ScriptSchema".into()),
+        }
+    }
+}
+
+impl ToPrimitive for RelayKind {
+    fn to_i32(&self) -> i32 {
+        match self {
+            RelayKind::SingleHostAddr => 0,
+            RelayKind::SingleHostName => 1,
+            RelayKind::MultiHostName => 2,
+        }
+    }
+}
+
+impl ToEnum<RelayKind> for i32 {
+    fn to_enum(&self) -> Result<RelayKind> {
+        match self {
+            0 => Ok(RelayKind::SingleHostAddr),
+            1 => Ok(RelayKind::SingleHostName),
+            2 => Ok(RelayKind::MultiHostName),
+            _ => Err("Invalid value for RelayKind".into()),
+        }
+    }
+}
+
+impl ToPrimitive for RedeemerTagKind {
+    fn to_i32(&self) -> i32 {
+        match self {
+            RedeemerTagKind::Spend => 0,
+            RedeemerTagKind::Mint => 1,
+            RedeemerTagKind::Cert => 2,
+            RedeemerTagKind::Reward => 3,
+        }
+    }
+}
+
+impl ToEnum<RedeemerTagKind> for i32 {
+    fn to_enum(&self) -> Result<RedeemerTagKind> {
+        match self {
+            0 => Ok(RedeemerTagKind::Spend),
+            1 => Ok(RedeemerTagKind::Mint),
+            2 => Ok(RedeemerTagKind::Cert),
+            3 => Ok(RedeemerTagKind::Reward),
+            _ => Err("Invalid value for RedeemerTagKind".into()),
+        }
+    }
+}
+
+impl ToPrimitive for MIRPot {
+    fn to_i32(&self) -> i32 {
+        match self {
+            MIRPot::Reserves => 0,
+            MIRPot::Treasury => 1,
+        }
+    }
+}
+
+impl ToEnum<MIRPot> for i32 {
+    fn to_enum(&self) -> Result<MIRPot> {
+        match self {
+            0 => Ok(MIRPot::Reserves),
+            1 => Ok(MIRPot::Treasury),
+            _ => Err("Invalid value for MIRPot".into()),
+        }
+    }
+}
+
+impl ToPrimitive for MetadataJsonSchema {
+    fn to_i32(&self) -> i32 {
+        match self {
+            MetadataJsonSchema::NoConversions => 0,
+            MetadataJsonSchema::BasicConversions => 1,
+            MetadataJsonSchema::DetailedSchema => 2,
+        }
+    }
+}
+
+impl ToEnum<MetadataJsonSchema> for i32 {
+    fn to_enum(&self) -> Result<MetadataJsonSchema> {
+        match self {
+            0 => Ok(MetadataJsonSchema::NoConversions),
+            1 => Ok(MetadataJsonSchema::BasicConversions),
+            2 => Ok(MetadataJsonSchema::DetailedSchema),
+            _ => Err("Invalid value for MetadataJsonSchema".into()),
         }
     }
 }
@@ -135,239 +347,27 @@ impl ToEnum<NativeScriptKind> for i32 {
     }
 }
 
-impl ToPrimitive for MetadataJsonSchema {
+impl ToPrimitive for PlutusDataKind {
     fn to_i32(&self) -> i32 {
         match self {
-            MetadataJsonSchema::NoConversions => 0,
-            MetadataJsonSchema::BasicConversions => 1,
-            MetadataJsonSchema::DetailedSchema => 2,
+            PlutusDataKind::ConstrPlutusData => 0,
+            PlutusDataKind::Map => 1,
+            PlutusDataKind::List => 2,
+            PlutusDataKind::Integer => 3,
+            PlutusDataKind::Bytes => 4,
         }
     }
 }
 
-impl ToEnum<MetadataJsonSchema> for i32 {
-    fn to_enum(&self) -> Result<MetadataJsonSchema> {
+impl ToEnum<PlutusDataKind> for i32 {
+    fn to_enum(&self) -> Result<PlutusDataKind> {
         match self {
-            0 => Ok(MetadataJsonSchema::NoConversions),
-            1 => Ok(MetadataJsonSchema::BasicConversions),
-            2 => Ok(MetadataJsonSchema::DetailedSchema),
-            _ => Err("Invalid value for MetadataJsonSchema".into()),
-        }
-    }
-}
-
-impl ToPrimitive for CertificateKind {
-    fn to_i32(&self) -> i32 {
-        match self {
-            CertificateKind::StakeRegistration => 0,
-            CertificateKind::StakeDeregistration => 1,
-            CertificateKind::StakeDelegation => 2,
-            CertificateKind::PoolRegistration => 3,
-            CertificateKind::PoolRetirement => 4,
-            CertificateKind::GenesisKeyDelegation => 5,
-            CertificateKind::MoveInstantaneousRewardsCert => 6,
-        }
-    }
-}
-
-impl ToEnum<CertificateKind> for i32 {
-    fn to_enum(&self) -> Result<CertificateKind> {
-        match self {
-            0 => Ok(CertificateKind::StakeRegistration),
-            1 => Ok(CertificateKind::StakeDeregistration),
-            2 => Ok(CertificateKind::StakeDelegation),
-            3 => Ok(CertificateKind::PoolRegistration),
-            4 => Ok(CertificateKind::PoolRetirement),
-            5 => Ok(CertificateKind::GenesisKeyDelegation),
-            6 => Ok(CertificateKind::MoveInstantaneousRewardsCert),
-            _ => Err("Invalid value for CertificateKind".into()),
-        }
-    }
-}
-
-impl ToPrimitive for RelayKind {
-    fn to_i32(&self) -> i32 {
-        match self {
-            RelayKind::SingleHostAddr => 0,
-            RelayKind::SingleHostName => 1,
-            RelayKind::MultiHostName => 2,
-        }
-    }
-}
-
-impl ToEnum<RelayKind> for i32 {
-    fn to_enum(&self) -> Result<RelayKind> {
-        match self {
-            0 => Ok(RelayKind::SingleHostAddr),
-            1 => Ok(RelayKind::SingleHostName),
-            2 => Ok(RelayKind::MultiHostName),
-            _ => Err("Invalid value for RelayKind".into()),
-        }
-    }
-}
-
-impl ToPrimitive for ScriptSchema {
-    fn to_i32(&self) -> i32 {
-        match self {
-            ScriptSchema::Wallet => 0,
-            ScriptSchema::Node => 1,
-        }
-    }
-}
-
-impl ToEnum<ScriptSchema> for i32 {
-    fn to_enum(&self) -> Result<ScriptSchema> {
-        match self {
-            0 => Ok(ScriptSchema::Wallet),
-            1 => Ok(ScriptSchema::Node),
-            _ => Err("Invalid value for ScriptSchema".into()),
-        }
-    }
-}
-
-impl ToPrimitive for StakeCredKind {
-    fn to_i32(&self) -> i32 {
-        match self {
-            StakeCredKind::Key => 0,
-            StakeCredKind::Script => 1,
-        }
-    }
-}
-
-impl ToEnum<StakeCredKind> for i32 {
-    fn to_enum(&self) -> Result<StakeCredKind> {
-        match self {
-            0 => Ok(StakeCredKind::Key),
-            1 => Ok(StakeCredKind::Script),
-            _ => Err("Invalid value for StakeCredKind".into()),
-        }
-    }
-}
-
-impl ToPrimitive for TransactionMetadatumKind {
-    fn to_i32(&self) -> i32 {
-        match self {
-            TransactionMetadatumKind::MetadataMap => 0,
-            TransactionMetadatumKind::MetadataList => 1,
-            TransactionMetadatumKind::Int => 2,
-            TransactionMetadatumKind::Bytes => 3,
-            TransactionMetadatumKind::Text => 4,
-        }
-    }
-}
-
-impl ToEnum<TransactionMetadatumKind> for i32 {
-    fn to_enum(&self) -> Result<TransactionMetadatumKind> {
-        match self {
-            0 => Ok(TransactionMetadatumKind::MetadataMap),
-            1 => Ok(TransactionMetadatumKind::MetadataList),
-            2 => Ok(TransactionMetadatumKind::Int),
-            3 => Ok(TransactionMetadatumKind::Bytes),
-            4 => Ok(TransactionMetadatumKind::Text),
-            _ => Err("Invalid value for TransactionMetadatumKind".into()),
-        }
-    }
-}
-
-impl ToPrimitive for LanguageKind {
-    fn to_i32(&self) -> i32 {
-        match self {
-            LanguageKind::PlutusV1 => 0,
-            LanguageKind::PlutusV2 => 1,
-        }
-    }
-}
-
-impl ToEnum<LanguageKind> for i32 {
-    fn to_enum(&self) -> Result<LanguageKind> {
-        match self {
-            0 => Ok(LanguageKind::PlutusV1),
-            1 => Ok(LanguageKind::PlutusV2),
-            _ => Err("Invalid value for LanguageKind".into()),
-        }
-    }
-}
-
-impl ToPrimitive for MIRPot {
-    fn to_i32(&self) -> i32 {
-        match self {
-            MIRPot::Reserves => 0,
-            MIRPot::Treasury => 1,
-        }
-    }
-}
-
-impl ToEnum<MIRPot> for i32 {
-    fn to_enum(&self) -> Result<MIRPot> {
-        match self {
-            0 => Ok(MIRPot::Reserves),
-            1 => Ok(MIRPot::Treasury),
-            _ => Err("Invalid value for MIRPot".into()),
-        }
-    }
-}
-
-impl ToPrimitive for MIRKind {
-    fn to_i32(&self) -> i32 {
-        match self {
-            MIRKind::ToOtherPot => 0,
-            MIRKind::ToStakeCredentials => 1,
-        }
-    }
-}
-
-impl ToEnum<MIRKind> for i32 {
-    fn to_enum(&self) -> Result<MIRKind> {
-        match self {
-            0 => Ok(MIRKind::ToOtherPot),
-            1 => Ok(MIRKind::ToStakeCredentials),
-            _ => Err("Invalid value for MIRKind".into()),
-        }
-    }
-}
-
-impl ToPrimitive for CoinSelectionStrategyCIP2 {
-    fn to_i32(&self) -> i32 {
-        match self {
-            CoinSelectionStrategyCIP2::LargestFirst => 0,
-            CoinSelectionStrategyCIP2::RandomImprove => 1,
-            CoinSelectionStrategyCIP2::LargestFirstMultiAsset => 2,
-            CoinSelectionStrategyCIP2::RandomImproveMultiAsset => 3,
-        }
-    }
-}
-
-impl ToEnum<CoinSelectionStrategyCIP2> for i32 {
-    fn to_enum(&self) -> Result<CoinSelectionStrategyCIP2> {
-        match self {
-            0 => Ok(CoinSelectionStrategyCIP2::LargestFirst),
-            1 => Ok(CoinSelectionStrategyCIP2::RandomImprove),
-            2 => Ok(CoinSelectionStrategyCIP2::LargestFirstMultiAsset),
-            3 => Ok(CoinSelectionStrategyCIP2::RandomImproveMultiAsset),
-            _ => Err("Invalid value for CoinSelectionStrategyCIP2".into()),
-        }
-    }
-}
-
-impl ToPrimitive for RedeemerTagKind {
-    fn to_i32(&self) -> i32 {
-        match self {
-            RedeemerTagKind::Spend => 0,
-            RedeemerTagKind::Mint => 1,
-            RedeemerTagKind::Cert => 2,
-            RedeemerTagKind::Reward => 3,
-        }
-    }
-}
-
-impl ToEnum<RedeemerTagKind> for i32 {
-    fn to_enum(&self) -> Result<RedeemerTagKind> {
-        match self {
-            0 => Ok(RedeemerTagKind::Spend),
-            1 => Ok(RedeemerTagKind::Mint),
-            2 => Ok(RedeemerTagKind::Cert),
-            3 => Ok(RedeemerTagKind::Reward),
-            _ => Err("Invalid value for RedeemerTagKind".into()),
+            0 => Ok(PlutusDataKind::ConstrPlutusData),
+            1 => Ok(PlutusDataKind::Map),
+            2 => Ok(PlutusDataKind::List),
+            3 => Ok(PlutusDataKind::Integer),
+            4 => Ok(PlutusDataKind::Bytes),
+            _ => Err("Invalid value for PlutusDataKind".into()),
         }
     }
 }
