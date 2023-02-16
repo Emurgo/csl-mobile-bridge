@@ -17,6 +17,7 @@ const test: () => void = async () => {
 
   //check u32 array roundtrip
   let u32Array = new Uint32Array([1, 2, 3, 4, 5])
+  //TODO: add block deserialization/serialization test with invalid txs
 }
 
 export default test
