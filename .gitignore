@@ -46,3 +46,5 @@ buck-out/
 
 # Project
 index.js.flow
+*.pyc
+__pycache__

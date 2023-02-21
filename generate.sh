@@ -21,5 +21,5 @@ cargo +nightly rustdoc --target="wasm32-unknown-unknown" -- -Zunstable-options -
 cp target/wasm32-unknown-unknown/doc/cardano_serialization_lib.json ../..
 cd ../..
 # needs python 3.9+
-python generator.py
+python3 generator.py
 rm -rf cardano-serialization-lib
