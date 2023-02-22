@@ -42,6 +42,7 @@ import transactionBuilder from './runtimeTests/transactionBuilder'
 import auxiliaryData from './runtimeTests/auxiliaryData'
 import catalyst from './runtimeTests/catalyst'
 import emip3 from './runtimeTests/emip3'
+import mixedTests from './runtimeTests/mixedTests'
 
 const tests = [
   {name: 'misc', testFn: misc},
@@ -73,6 +74,7 @@ const tests = [
   {name: 'auxiliaryData', testFn: auxiliaryData},
   {name: 'catalyst', testFn: catalyst},
   {name: 'emip3', testFn: emip3},
+  {name: 'mixedTests', testFn: mixedTests},
 ]
 
 let failed = 0

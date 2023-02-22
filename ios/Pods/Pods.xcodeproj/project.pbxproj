@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2A56DA82364F013DE5F3E4D21F51B80F /* Pods-HaskellShelley-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA81F33E170A0D0E9B5CF8783E45B0F /* Pods-HaskellShelley-dummy.m */; };
+		F313B18236F08EE3FED7C75CD35840D1 /* Pods-HaskellShelley-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA81F33E170A0D0E9B5CF8783E45B0F /* Pods-HaskellShelley-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -15,13 +15,13 @@
 		632A8EFF2AB200768BAF7890CF060DA2 /* Pods-HaskellShelley.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HaskellShelley.debug.xcconfig"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BCA6CFF5D02204153951B3999D1D0941 /* Pods-HaskellShelley-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HaskellShelley-acknowledgements.markdown"; sourceTree = "<group>"; };
-		C05CA845396D5AA97353F0E2ECC99D4F /* libPods-HaskellShelley.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-HaskellShelley.a"; path = "libPods-HaskellShelley.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C05CA845396D5AA97353F0E2ECC99D4F /* Pods-HaskellShelley */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Pods-HaskellShelley"; path = "libPods-HaskellShelley.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01A3BA85C287FE7A3F7F456525C3C26 /* Pods-HaskellShelley-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HaskellShelley-acknowledgements.plist"; sourceTree = "<group>"; };
 		EBC417ADC3AA7AB004A3556B2CA6D133 /* Pods-HaskellShelley.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HaskellShelley.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		E89C4F22482F8A0357FF33CB498C4FD0 /* Frameworks */ = {
+		4B4F89B33654FA394326630702C33953 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -44,10 +44,10 @@
 			path = "Target Support Files/Pods-HaskellShelley";
 			sourceTree = "<group>";
 		};
-		1D9FF067898588B7C4865E5D3F99ED61 /* Products */ = {
+		63E356A9A97937126F66D7A3ACA4F160 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C05CA845396D5AA97353F0E2ECC99D4F /* libPods-HaskellShelley.a */,
+				C05CA845396D5AA97353F0E2ECC99D4F /* Pods-HaskellShelley */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -65,7 +65,7 @@
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D89477F20FB1DE18A04690586D7808C4 /* Frameworks */,
-				1D9FF067898588B7C4865E5D3F99ED61 /* Products */,
+				63E356A9A97937126F66D7A3ACA4F160 /* Products */,
 				658B1BD7CA5887D6939787E157596522 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
@@ -80,7 +80,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		15EA9A0D89888D82B5CC35454CB03D05 /* Headers */ = {
+		45CD84680385E7D674DFE9A57429AE1D /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -92,11 +92,11 @@
 /* Begin PBXNativeTarget section */
 		6B467D7578CC15698AE2AE129CF81A23 /* Pods-HaskellShelley */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A3561DFA6C5178CD633A259908DC501B /* Build configuration list for PBXNativeTarget "Pods-HaskellShelley" */;
+			buildConfigurationList = CC153FA5B8316D2602A992E544CE0086 /* Build configuration list for PBXNativeTarget "Pods-HaskellShelley" */;
 			buildPhases = (
-				15EA9A0D89888D82B5CC35454CB03D05 /* Headers */,
-				7DCA46C4A4395F61B9D6B765C537A301 /* Sources */,
-				E89C4F22482F8A0357FF33CB498C4FD0 /* Frameworks */,
+				45CD84680385E7D674DFE9A57429AE1D /* Headers */,
+				F18D678DF75518D8284F672F17591AD8 /* Sources */,
+				4B4F89B33654FA394326630702C33953 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -104,7 +104,7 @@
 			);
 			name = "Pods-HaskellShelley";
 			productName = "Pods-HaskellShelley";
-			productReference = C05CA845396D5AA97353F0E2ECC99D4F /* libPods-HaskellShelley.a */;
+			productReference = C05CA845396D5AA97353F0E2ECC99D4F /* Pods-HaskellShelley */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -113,19 +113,19 @@
 		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 1300;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 1D9FF067898588B7C4865E5D3F99ED61 /* Products */;
+			productRefGroup = 63E356A9A97937126F66D7A3ACA4F160 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -135,48 +135,28 @@
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		7DCA46C4A4395F61B9D6B765C537A301 /* Sources */ = {
+		F18D678DF75518D8284F672F17591AD8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A56DA82364F013DE5F3E4D21F51B80F /* Pods-HaskellShelley-dummy.m in Sources */,
+				F313B18236F08EE3FED7C75CD35840D1 /* Pods-HaskellShelley-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		17C0514EB82DEB7C90C2725654F4465D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 632A8EFF2AB200768BAF7890CF060DA2 /* Pods-HaskellShelley.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		7D7C1E6F070A1656B3ACAD8EA5589898 /* Release */ = {
+		19A280009B062C9D62453523D735E425 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EBC417ADC3AA7AB004A3556B2CA6D133 /* Pods-HaskellShelley.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -189,10 +169,11 @@
 			};
 			name = Release;
 		};
-		8F17DC3A99F99FBAD606CE6963886315 /* Release */ = {
+		903A0004D3E6651EFD5D2E16214D101B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -215,6 +196,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -237,7 +219,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -249,10 +231,11 @@
 			};
 			name = Release;
 		};
-		916E0404255105F480DC4950B7625F7A /* Debug */ = {
+		B4EFE046ACF8F37157F6E322C7FCFC28 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -275,6 +258,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -300,7 +284,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -313,23 +297,45 @@
 			};
 			name = Debug;
 		};
+		F08C2A8B90480258565425034A75A1C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 632A8EFF2AB200768BAF7890CF060DA2 /* Pods-HaskellShelley.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				916E0404255105F480DC4950B7625F7A /* Debug */,
-				8F17DC3A99F99FBAD606CE6963886315 /* Release */,
+				B4EFE046ACF8F37157F6E322C7FCFC28 /* Debug */,
+				903A0004D3E6651EFD5D2E16214D101B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A3561DFA6C5178CD633A259908DC501B /* Build configuration list for PBXNativeTarget "Pods-HaskellShelley" */ = {
+		CC153FA5B8316D2602A992E544CE0086 /* Build configuration list for PBXNativeTarget "Pods-HaskellShelley" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				17C0514EB82DEB7C90C2725654F4465D /* Debug */,
-				7D7C1E6F070A1656B3ACAD8EA5589898 /* Release */,
+				F08C2A8B90480258565425034A75A1C8 /* Debug */,
+				19A280009B062C9D62453523D735E425 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

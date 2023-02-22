@@ -5,11 +5,10 @@ import {
   AssetNames,
   Assets,
   BigNum,
-  PolicyID,
-  PolicyIDs,
+  ScriptHash,
+  ScriptHashes,
   MultiAsset,
   Value,
-  Coin,
 } from '@emurgo/react-native-haskell-shelley'
 
 import {assert, testHashToFromBytes, testVector, testDict} from '../util'
@@ -49,13 +48,13 @@ const test: () => void = async () => {
    * PolicyID
    */
   const policyIDHex = '3aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf3ce41cbf'
-  await testHashToFromBytes(PolicyID, policyIDHex)
+  await testHashToFromBytes(ScriptHash, policyIDHex)
 
   /**
    * PolicyIDs
    */
-  const policyID = await PolicyID.from_bytes(Buffer.from(policyIDHex, 'hex'))
-  await testVector(PolicyIDs, PolicyID, policyID)
+  const policyID = await ScriptHash.from_bytes(Buffer.from(policyIDHex, 'hex'))
+  await testVector(ScriptHashes, ScriptHash, policyID)
 
   /**
    * Assets
@@ -80,7 +79,7 @@ const test: () => void = async () => {
    */
   const multiAsset = await testDict(
     MultiAsset,
-    PolicyID,
+    ScriptHash,
     policyID,
     Assets,
     assets,
@@ -105,10 +104,10 @@ const test: () => void = async () => {
   /**
    * Value
    */
-  const value = await Value.new(await Coin.from_str('200'))
+  const value = await Value.new(await BigNum.from_str('200'))
   // prettier-ignore
   assert((await (await value.coin()).to_str()) === '200', 'Value::coin()')
-  const otherValue = await Value.new(await Coin.from_str('100'))
+  const otherValue = await Value.new(await BigNum.from_str('100'))
   assert((await value.compare(otherValue)) === 1, 'Value::compare()')
   assert((await otherValue.compare(value)) === -1, 'Value::compare()')
   await value.set_multiasset(multiAsset)
@@ -122,7 +121,7 @@ const test: () => void = async () => {
     await BigNum.from_str('40000000'),
   )
   const otherValueMultiAsset = await MultiAsset.new()
-  const otherPolicyID = await PolicyID.from_bytes(
+  const otherPolicyID = await ScriptHash.from_bytes(
     Buffer.from(
       '4aa052f51c086c54bd4059ead2d2e426ac89fa4b3ce41cbf3ce41cbf',
       'hex',

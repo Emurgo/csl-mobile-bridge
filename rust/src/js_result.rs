@@ -12,3 +12,9 @@ impl<T> ToResult<T> for std::result::Result<T, JsError> {
     self.map_err(|e| e.to_string())
   }
 }
+
+impl<T> ToResult<T> for Result<T> {
+  fn into_result(self) -> Result<T> {
+    self
+  }
+}

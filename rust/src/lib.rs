@@ -5,6 +5,7 @@ mod panic;
 mod ptr;
 mod ptr_impl;
 mod utils;
+mod enum_maps;
 
 pub use ptr::*;
 
@@ -17,5 +18,7 @@ pub use self::android::*;
 
 #[cfg(target_os = "ios")]
 mod ios;
+pub mod arrays;
+
 #[cfg(target_os = "ios")]
 pub use self::ios::*;

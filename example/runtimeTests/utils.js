@@ -12,7 +12,6 @@ import {
   Vkeywitness,
   TransactionBody,
   Value,
-  Coin,
   BigNum,
 } from '@emurgo/react-native-haskell-shelley'
 
@@ -91,9 +90,9 @@ const test: () => void = async () => {
   /**
    * min_ada_required
    */
-  const value = await Value.new(await Coin.from_str('200'))
-  const minUtxoVal = await Coin.from_str('1000000')
-  const minAda = await min_ada_required(value, minUtxoVal)
+  const value = await Value.new(await BigNum.from_str('200'))
+  const minUtxoVal = await BigNum.from_str('1000000')
+  const minAda = await min_ada_required(value, true, minUtxoVal)
   assert(
     minAda instanceof BigNum,
     'min_ada_required should return instance of BigNum',
