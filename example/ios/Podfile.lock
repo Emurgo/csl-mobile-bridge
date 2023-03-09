@@ -203,7 +203,7 @@ PODS:
     - React-jsi (= 0.64.4)
     - React-perflogger (= 0.64.4)
   - React-jsinspector (0.64.4)
-  - react-native-haskell-shelley (4.0.0):
+  - react-native-haskell-shelley (5.0.0):
     - React
   - React-perflogger (0.64.4)
   - React-RCTActionSheet (0.64.4):
@@ -385,7 +385,7 @@ SPEC CHECKSUMS:
   React-jsi: 64f80675a66899bf0f4a58b8e3908966fa516234
   React-jsiexecutor: 8c077bef1c64430b6034f27df1000d194551e2eb
   React-jsinspector: d4f6973dd474357dbaaf6f52f31ffc713bf3e766
-  react-native-haskell-shelley: a0b1d1afff50127f846f4b1700192ce6ce603535
+  react-native-haskell-shelley: 0fb39d601a79556780abd2c72eaa3e67be763992
   React-perflogger: 5a890ca0911669421b7611661e9b58f91c805f5c
   React-RCTActionSheet: bd180e0879f8424a73650c5c28fbef4f3b5b27fb
   React-RCTAnimation: 1004d2b4be1f2cedfdc4cb2326adc95b989e6c6b
