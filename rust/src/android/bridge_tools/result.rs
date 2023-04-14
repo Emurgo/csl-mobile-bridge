@@ -22,7 +22,7 @@ where
   fn jresult(self, env: &JNIEnv) -> jobject {
     static CONSTRUCTOR: &str = "(Ljava/lang/Object;Ljava/lang/String;)V";
 
-    let class = env.find_class("io/emurgo/rnhaskellshelley/Result").expect("Can't find Result class");
+    let class = env.find_class("io/emurgo/cslmobilebridge/Result").expect("Can't find Result class");
     match self {
       Ok(res) => {
         let jobj = res.into();

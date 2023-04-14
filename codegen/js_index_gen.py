@@ -7,9 +7,9 @@ def get_js_index_head():
 import { NativeModules } from 'react-native';\r\n\
 import { decode as base64_decode, encode as base64_encode } from 'base-64';\r\n\
 \r\n\
-const { HaskellShelley } = NativeModules;\r\n\
+const { CslMobileBridge } = NativeModules;\r\n\
 \r\n\
-// export default HaskellShelley;\r\n\
+// export default CslMobileBridge;\r\n\
 \r\n\
 function uint8ArrayFromB64(base64_string) {\r\n\
   return Uint8Array.from(base64_decode(base64_string), c => c.charCodeAt(0));\r\n\
@@ -79,7 +79,7 @@ class Ptr {\r\n\
     }\r\n\
     const ptr = this.ptr;\r\n\
     this.ptr = null;\r\n\
-    await HaskellShelley.ptrFree(ptr);\r\n\
+    await CslMobileBridge.ptrFree(ptr);\r\n\
   }\r\n\
 }\r\n\r\n"
 
@@ -212,7 +212,7 @@ def get_js_index_fn_call(function, ident=""):
     else:
         fn_name += stringcase.camelcase(function.struct_name) + stringcase.pascalcase(function.name)
     await_srt = "await " if need_await(function) else ""
-    return f"{ident}const ret = {await_srt}HaskellShelley.{fn_name}({', '.join(map(get_js_index_call_arg, function.args))});"
+    return f"{ident}const ret = {await_srt}CslMobileBridge.{fn_name}({', '.join(map(get_js_index_call_arg, function.args))});"
 
 
 def need_await(function):

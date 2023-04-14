@@ -2,7 +2,7 @@ import stringcase
 
 
 def get_rn_java_head():
-    return "package io.emurgo.rnhaskellshelley;\r\n\
+    return "package io.emurgo.cslmobilebridge;\r\n\
 \r\n\
 import com.facebook.react.bridge.Promise;\r\n\
 import com.facebook.react.bridge.ReactApplicationContext;\r\n\
@@ -13,18 +13,18 @@ import android.util.Base64;\r\n\
 import java.util.HashMap;\r\n\
 import java.util.Map;\r\n\
 \r\n\
-public class HaskellShelleyModule extends ReactContextBaseJavaModule {\r\n\
+public class CslMobileBridgeModule extends ReactContextBaseJavaModule {\r\n\
 \r\n\
     private final ReactApplicationContext reactContext;\r\n\
 \r\n\
-    public HaskellShelleyModule(ReactApplicationContext reactContext) {\r\n\
+    public CslMobileBridgeModule(ReactApplicationContext reactContext) {\r\n\
         super(reactContext);\r\n\
         this.reactContext = reactContext;\r\n\
     }\r\n\
 \r\n\
     @Override\r\n\
     public String getName() {\r\n\
-        return \"HaskellShelley\";\r\n\
+        return \"CslMobileBridge\";\r\n\
     }\r\n\
 \r\n\
     @ReactMethod\r\n\

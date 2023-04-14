@@ -1,4 +1,4 @@
-package io.emurgo.rnhaskellshelley;
+package io.emurgo.cslmobilebridge;
 
 import java.math.BigInteger;
 

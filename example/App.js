@@ -115,7 +115,7 @@ export default class App extends Component<{}> {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>☆HaskellShelley example☆</Text>
+        <Text style={styles.welcome}>☆CslMobileBridge example☆</Text>
         <Text style={styles.instructions}>STATUS: {this.state.status}</Text>
         <Text style={styles.instructions}>
           Failed tests: {this.state.failed}

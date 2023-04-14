@@ -86,7 +86,7 @@ impl ToJniPtr for RPtr {
   fn jptr<'a>(self, env: &'a JNIEnv) -> Result<JRPtr<'a>> {
     let ptr: usize = self.into();
     env
-      .find_class("io/emurgo/rnhaskellshelley/RPtr")
+      .find_class("io/emurgo/cslmobilebridge/RPtr")
       .and_then(|class| env.new_object(class, "(J)V", &[ptr.into_jlong().into()]))
       .into_result()
   }

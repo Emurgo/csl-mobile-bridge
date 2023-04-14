@@ -1,11 +1,11 @@
-#import "HaskellShelley.h"
+#import "CslMobileBridge.h"
 #import "NSString+RPtr.h"
 #import "NSData+DataPtr.h"
 #import "SafeOperation.h"
 #import <react_native_haskell_shelley.h>
 
 
-@implementation HaskellShelley
+@implementation CslMobileBridge
 
 RCT_EXPORT_MODULE()
 
@@ -18,7 +18,7 @@ RCT_EXPORT_METHOD(ptrFree:(NSString *)ptr withResolve:(RCTPromiseResolveBlock)re
 
 + (void)initialize
 {
-    if (self == [HaskellShelley class]) {
+    if (self == [CslMobileBridge class]) {
         init_haskell_shelley_library();
     }
 }

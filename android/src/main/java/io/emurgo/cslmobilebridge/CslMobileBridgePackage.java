@@ -1,4 +1,4 @@
-package io.emurgo.rnhaskellshelley;
+package io.emurgo.cslmobilebridge;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,10 +12,10 @@ import com.facebook.react.bridge.JavaScriptModule;
 
 import androidx.annotation.NonNull;
 
-public class HaskellShelleyPackage implements ReactPackage {
+public class CslMobileBridgePackage implements ReactPackage {
     @NonNull
     public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext) {
-        return Arrays.<NativeModule>asList(new HaskellShelleyModule(reactContext));
+        return Arrays.<NativeModule>asList(new CslMobileBridgeModule(reactContext));
     }
 
     @NonNull

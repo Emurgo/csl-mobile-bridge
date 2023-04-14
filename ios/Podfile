@@ -1,7 +1,7 @@
 platform :ios, '11.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'HaskellShelley' do
+target 'CslMobileBridge' do
 
   use_native_modules!
 end

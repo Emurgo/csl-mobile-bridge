@@ -2,14 +2,14 @@ import stringcase
 
 
 def get_ios_obj_c_imports():
-    return "#import \"HaskellShelley.h\"\r\n\
+    return "#import \"CslMobileBridge.h\"\r\n\
 #import \"NSString+RPtr.h\"\r\n\
 #import \"NSData+DataPtr.h\"\r\n\
 #import \"SafeOperation.h\"\r\n\
-#import <react_native_haskell_shelley.h>\r\n\
+#import <csl_mobile_bridge.h>\r\n\
 \r\n\
 \r\n\
-@implementation HaskellShelley\r\n\
+@implementation CslMobileBridge\r\n\
 \r\n\
 RCT_EXPORT_MODULE()\r\n\
 \r\n\
@@ -22,8 +22,8 @@ RCT_EXPORT_METHOD(ptrFree:(NSString *)ptr withResolve:(RCTPromiseResolveBlock)re
 \r\n\
 + (void)initialize\r\n\
 {\r\n\
-    if (self == [HaskellShelley class]) {\r\n\
-        init_haskell_shelley_library();\r\n\
+    if (self == [CslMobileBridge class]) {\r\n\
+        init_csl_mobile_bridge_library();\r\n\
     }\r\n\
 }\r\n"
 

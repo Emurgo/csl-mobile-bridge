@@ -1,4 +1,4 @@
-package io.emurgo.rnhaskellshelley;
+package io.emurgo.cslmobilebridge;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -9,18 +9,18 @@ import android.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HaskellShelleyModule extends ReactContextBaseJavaModule {
+public class CslMobileBridgeModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
 
-    public HaskellShelleyModule(ReactApplicationContext reactContext) {
+    public CslMobileBridgeModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
     }
 
     @Override
     public String getName() {
-        return "HaskellShelley";
+        return "CslMobileBridge";
     }
 
     @ReactMethod

@@ -77,7 +77,7 @@ android {
 cargo {
     profile = 'release'
     module = '../rust'
-    libname = 'react_native_haskell_shelley'
+    libname = 'csl_mobile_bridge'
     targets = ['arm', 'arm64', 'x86', 'x86_64']
     apiLevel = safeExtGet('ndkApiLevel', DEFAULT_NDK_API_LEVEL)
     prebuiltToolchains = true
@@ -118,7 +118,7 @@ def configureReactNativePom(def pom) {
         name packageJson.title
         artifactId packageJson.name
         version = packageJson.version
-        group = "io.emurgo.rnhaskellshelley"
+        group = "io.emurgo.cslmobilebridge"
         description packageJson.description
         url packageJson.repository.baseUrl
 

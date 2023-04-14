@@ -1,6 +1,6 @@
 [package]
-name = "react-native-haskell-shelley"
-version = "5.0.0"
+name = "csl-mobile-bridge"
+version = "0.1.0"
 authors = ["EMURGO R&D"]
 edition = "2018"
 
@@ -20,7 +20,7 @@ base64 = "0.20.0"
 jni = "0.20.0"
 
 [lib]
-name = "react_native_haskell_shelley"
+name = "csl_mobile_bridge"
 crate-type = ["staticlib", "cdylib"]
 
 [profile.release]

@@ -2,7 +2,7 @@ import stringcase
 
 
 def get_jni_java_bridge_head():
-    return "package io.emurgo.rnhaskellshelley;\r\n\
+    return "package io.emurgo.cslmobilebridge;\r\n\
 import java.util.Map;\r\n\
 \r\n\
 final class Native {\r\n\
@@ -10,7 +10,7 @@ final class Native {\r\n\
 \r\n\
     static {\r\n\
         I = new Native();\r\n\
-        System.loadLibrary(\"react_native_haskell_shelley\");\r\n\
+        System.loadLibrary(\"csl_mobile_bridge\");\r\n\
         I.initLibrary();\r\n\
     }\r\n\
 \r\n\

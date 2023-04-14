@@ -1,4 +1,4 @@
-package io.emurgo.rnhaskellshelley;
+package io.emurgo.cslmobilebridge;
 import java.util.Map;
 
 final class Native {
@@ -6,7 +6,7 @@ final class Native {
 
     static {
         I = new Native();
-        System.loadLibrary("react_native_haskell_shelley");
+        System.loadLibrary("csl_mobile_bridge");
         I.initLibrary();
     }
 

@@ -1,8 +1,8 @@
 {
-  "name": "@emurgo/react-native-haskell-shelley",
-  "title": "React Native Haskell Shelley",
-  "version": "5.0.0",
-  "description": "React-native bindings for Emurgo's cardano-serialization-lib (Cardano haskell Shelley)",
+  "name": "@emurgo/csl-mobile-bridge",
+  "title": "Mobile Bridge for Cardano Serialization Lib",
+  "version": "0.1.0",
+  "description": "React-native bindings for Emurgo's cardano-serialization-lib",
   "main": "index.js",
   "files": [
     "README.md",
@@ -13,12 +13,11 @@
     "index.js.flow",
     "/ios",
     "react-native.config.js",
-    "react-native-haskell-shelley.podspec",
+    "csl-mobile-bridge.podspec",
     "/rust",
     "yarn.lock"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint index.js index.d.ts",
     "js:flowgen": "flowgen ./index.d.ts -o ./index.js.flow --add-flow-header",
     "release:prod": "yarn js:flowgen && npm publish --access public",
@@ -26,11 +25,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Emurgo/react-native-haskell-shelley.git",
-    "baseUrl": "https://github.com/Emurgo/react-native-haskell-shelley"
+    "url": "git+https://github.com/Emurgo/csl-mobile-bridge.git",
+    "baseUrl": "https://github.com/Emurgo/csl-mobile-bridge"
   },
   "keywords": [
-    "react-native"
+    "react-native",
+    "cardano",
+    "bridge"
   ],
   "author": {
     "name": "EMURGO"

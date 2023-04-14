@@ -1,5 +1,5 @@
 #import <React/RCTBridgeModule.h>
 
-@interface HaskellShelley : NSObject <RCTBridgeModule>
+@interface CslMobileBridge : NSObject <RCTBridgeModule>
 
 @end

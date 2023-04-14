@@ -52,10 +52,10 @@ def main():
     with open('../rust/src/enum_maps.rs', 'w') as f:
         f.writelines(api.to_rust_enum_maps())
         print("Wrote rust enum maps")
-    with open('../android/src/main/java/io/emurgo/rnhaskellshelley/Native.java', 'w') as f:
+    with open('../android/src/main/java/io/emurgo/cslmobilebridge/Native.java', 'w') as f:
         f.writelines(api.to_jni_java_bridge())
         print("Wrote jni bridge")
-    with open('../android/src/main/java/io/emurgo/rnhaskellshelley/HaskellShelleyModule.java', 'w') as f:
+    with open('../android/src/main/java/io/emurgo/cslmobilebridge/CslMobileBridgeMobile.java', 'w') as f:
         f.writelines(api.to_rn_java())
         print("Wrote react-java bridge")
     with open('../index.d.ts', 'w') as f:
@@ -64,7 +64,7 @@ def main():
     with open('../index.js', 'w') as f:
         f.writelines(api.to_js_index())
         print("Wrote javascript index")
-    with open('../ios/HaskellShelley.m', 'w') as f:
+    with open('../ios/CslMobileBridge.m', 'w') as f:
         f.writelines(api.to_ios_obj_c())
         print("Wrote ios objective-c bridge")
 
