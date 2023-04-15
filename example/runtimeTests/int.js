@@ -1,6 +1,6 @@
 // @flow
 
-import {BigNum, Int} from '@emurgo/react-native-haskell-shelley'
+import {BigNum, Int} from '@emurgo/csl-mobile-bridge'
 
 import {assert} from '../util'
 

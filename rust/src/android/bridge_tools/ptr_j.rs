@@ -94,7 +94,7 @@ impl ToJniPtr for RPtr {
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_ptrFree(
+pub unsafe extern "C" fn Java_io_emurgo_cslmobilebridge_Native_ptrFree(
   env: JNIEnv, _: JObject, ptr: JRPtr
 ) {
   ptr.free(&env).unwrap();

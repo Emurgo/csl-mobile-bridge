@@ -206,6 +206,17 @@ version = "0.4.2"
 source = "git+https://github.com/emurgo/cryptoxide?tag=0.4.4#cbc69c01642b263541c6225a28c00257db1875fa"
 
 [[package]]
+name = "csl-mobile-bridge"
+version = "0.1.0"
+dependencies = [
+ "base64",
+ "byteorder",
+ "cardano-serialization-lib",
+ "cbindgen",
+ "jni",
+]
+
+[[package]]
 name = "digest"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -541,17 +552,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "678054eb77286b51581ba43620cc911abf02758c91f93f479767aed0f90458b2"
 dependencies = [
  "rand_core 0.3.1",
-]
-
-[[package]]
-name = "react-native-haskell-shelley"
-version = "5.0.0"
-dependencies = [
- "base64",
- "byteorder",
- "cardano-serialization-lib",
- "cbindgen",
- "jni",
 ]
 
 [[package]]

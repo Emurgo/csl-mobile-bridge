@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "58B511DA1A9E6C8500147676"
-               BuildableName = "libHaskellShelley.a"
+               BuildableName = "libCslMobileBridge.a"
                BlueprintName = "CslMobileBridge"
                ReferencedContainer = "container:CslMobileBridge.xcodeproj">
             </BuildableReference>
@@ -51,7 +51,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "58B511DA1A9E6C8500147676"
-            BuildableName = "libHaskellShelley.a"
+            BuildableName = "libCslMobileBridge.a"
             BlueprintName = "CslMobileBridge"
             ReferencedContainer = "container:CslMobileBridge.xcodeproj">
          </BuildableReference>

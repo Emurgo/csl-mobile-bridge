@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable  max-len */
 
-import {Ed25519Signature} from '@emurgo/react-native-haskell-shelley'
+import {Ed25519Signature} from '@emurgo/csl-mobile-bridge'
 
 import {assert} from '../util'
 

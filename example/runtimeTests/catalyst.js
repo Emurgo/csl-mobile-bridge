@@ -12,7 +12,7 @@ import {
   StakeCredential,
   encode_json_str_to_metadatum,
   decode_metadatum_to_json_str,
-} from '@emurgo/react-native-haskell-shelley'
+} from '@emurgo/csl-mobile-bridge'
 import blake2b from 'blake2b'
 
 import {assert} from '../util'

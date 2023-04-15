@@ -1,6 +1,6 @@
 // @flow
 
-import {PublicKey} from '@emurgo/react-native-haskell-shelley'
+import {PublicKey} from '@emurgo/csl-mobile-bridge'
 
 import {assert} from '../util'
 

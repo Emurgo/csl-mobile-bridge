@@ -7,21 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F313B18236F08EE3FED7C75CD35840D1 /* Pods-CslMobileBridge-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA81F33E170A0D0E9B5CF8783E45B0F /* Pods-CslMobileBridge-dummy.m */; };
+		E374205E569FFA3B5E95027DDEA7D824 /* Pods-CslMobileBridge-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A586D2EF749C18C92A903CFBFFDDE4 /* Pods-CslMobileBridge-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0FA81F33E170A0D0E9B5CF8783E45B0F /* Pods-CslMobileBridge-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CslMobileBridge-dummy.m"; sourceTree = "<group>"; };
-		632A8EFF2AB200768BAF7890CF060DA2 /* Pods-CslMobileBridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CslMobileBridge.debug.xcconfig"; sourceTree = "<group>"; };
+		00A586D2EF749C18C92A903CFBFFDDE4 /* Pods-CslMobileBridge-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CslMobileBridge-dummy.m"; sourceTree = "<group>"; };
+		90B84A065232968363416BDD4D0F798F /* Pods-CslMobileBridge-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CslMobileBridge-acknowledgements.markdown"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		BCA6CFF5D02204153951B3999D1D0941 /* Pods-CslMobileBridge-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CslMobileBridge-acknowledgements.markdown"; sourceTree = "<group>"; };
-		C05CA845396D5AA97353F0E2ECC99D4F /* Pods-CslMobileBridge */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Pods-CslMobileBridge"; path = "libPods-CslMobileBridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E01A3BA85C287FE7A3F7F456525C3C26 /* Pods-CslMobileBridge-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CslMobileBridge-acknowledgements.plist"; sourceTree = "<group>"; };
-		EBC417ADC3AA7AB004A3556B2CA6D133 /* Pods-CslMobileBridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CslMobileBridge.release.xcconfig"; sourceTree = "<group>"; };
+		AD85C96271A72AFFE6F8D8363A1D1A1A /* Pods-CslMobileBridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CslMobileBridge.debug.xcconfig"; sourceTree = "<group>"; };
+		DAEE1586CAD194CAE35A6B1B78016C4A /* Pods-CslMobileBridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CslMobileBridge.release.xcconfig"; sourceTree = "<group>"; };
+		EBF88800C20119B05899621D99C92CEA /* Pods-CslMobileBridge */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Pods-CslMobileBridge"; path = "libPods-CslMobileBridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0B3802E9D202FF3E036662728DC3C30 /* Pods-CslMobileBridge-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CslMobileBridge-acknowledgements.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		4B4F89B33654FA394326630702C33953 /* Frameworks */ = {
+		28C299106D77F19E0057FFB2D8F2ECF9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -31,31 +31,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0AAFB129C85FE0F9056D5934CF886559 /* Pods-CslMobileBridge */ = {
+		08F4A42D95F7F68652462A455CC704D2 /* Pods-CslMobileBridge */ = {
 			isa = PBXGroup;
 			children = (
-				BCA6CFF5D02204153951B3999D1D0941 /* Pods-CslMobileBridge-acknowledgements.markdown */,
-				E01A3BA85C287FE7A3F7F456525C3C26 /* Pods-CslMobileBridge-acknowledgements.plist */,
-				0FA81F33E170A0D0E9B5CF8783E45B0F /* Pods-CslMobileBridge-dummy.m */,
-				632A8EFF2AB200768BAF7890CF060DA2 /* Pods-CslMobileBridge.debug.xcconfig */,
-				EBC417ADC3AA7AB004A3556B2CA6D133 /* Pods-CslMobileBridge.release.xcconfig */,
+				90B84A065232968363416BDD4D0F798F /* Pods-CslMobileBridge-acknowledgements.markdown */,
+				F0B3802E9D202FF3E036662728DC3C30 /* Pods-CslMobileBridge-acknowledgements.plist */,
+				00A586D2EF749C18C92A903CFBFFDDE4 /* Pods-CslMobileBridge-dummy.m */,
+				AD85C96271A72AFFE6F8D8363A1D1A1A /* Pods-CslMobileBridge.debug.xcconfig */,
+				DAEE1586CAD194CAE35A6B1B78016C4A /* Pods-CslMobileBridge.release.xcconfig */,
 			);
 			name = "Pods-CslMobileBridge";
 			path = "Target Support Files/Pods-CslMobileBridge";
 			sourceTree = "<group>";
 		};
-		63E356A9A97937126F66D7A3ACA4F160 /* Products */ = {
+		4C53B3404CA2BC09939034E5FB0C6276 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C05CA845396D5AA97353F0E2ECC99D4F /* Pods-CslMobileBridge */,
+				EBF88800C20119B05899621D99C92CEA /* Pods-CslMobileBridge */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		658B1BD7CA5887D6939787E157596522 /* Targets Support Files */ = {
+		56DA2E325CB38E6118611C3314E42470 /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				0AAFB129C85FE0F9056D5934CF886559 /* Pods-CslMobileBridge */,
+				08F4A42D95F7F68652462A455CC704D2 /* Pods-CslMobileBridge */,
 			);
 			name = "Targets Support Files";
 			sourceTree = "<group>";
@@ -65,8 +65,8 @@
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D89477F20FB1DE18A04690586D7808C4 /* Frameworks */,
-				63E356A9A97937126F66D7A3ACA4F160 /* Products */,
-				658B1BD7CA5887D6939787E157596522 /* Targets Support Files */,
+				4C53B3404CA2BC09939034E5FB0C6276 /* Products */,
+				56DA2E325CB38E6118611C3314E42470 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,7 +80,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		45CD84680385E7D674DFE9A57429AE1D /* Headers */ = {
+		04D665FAE751252ED314F2E44BEAB020 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -90,13 +90,13 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		6B467D7578CC15698AE2AE129CF81A23 /* Pods-CslMobileBridge */ = {
+		C745690E4C31438533F3A5E00C95F31C /* Pods-CslMobileBridge */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CC153FA5B8316D2602A992E544CE0086 /* Build configuration list for PBXNativeTarget "Pods-CslMobileBridge" */;
+			buildConfigurationList = 0B447CC838C5C1EDBAD298EDF6CED5F1 /* Build configuration list for PBXNativeTarget "Pods-CslMobileBridge" */;
 			buildPhases = (
-				45CD84680385E7D674DFE9A57429AE1D /* Headers */,
-				F18D678DF75518D8284F672F17591AD8 /* Sources */,
-				4B4F89B33654FA394326630702C33953 /* Frameworks */,
+				04D665FAE751252ED314F2E44BEAB020 /* Headers */,
+				EF36D1650C522797716FEA8372698257 /* Sources */,
+				28C299106D77F19E0057FFB2D8F2ECF9 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -104,7 +104,7 @@
 			);
 			name = "Pods-CslMobileBridge";
 			productName = "Pods-CslMobileBridge";
-			productReference = C05CA845396D5AA97353F0E2ECC99D4F /* Pods-CslMobileBridge */;
+			productReference = EBF88800C20119B05899621D99C92CEA /* Pods-CslMobileBridge */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -125,30 +125,30 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 63E356A9A97937126F66D7A3ACA4F160 /* Products */;
+			productRefGroup = 4C53B3404CA2BC09939034E5FB0C6276 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6B467D7578CC15698AE2AE129CF81A23 /* Pods-CslMobileBridge */,
+				C745690E4C31438533F3A5E00C95F31C /* Pods-CslMobileBridge */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		F18D678DF75518D8284F672F17591AD8 /* Sources */ = {
+		EF36D1650C522797716FEA8372698257 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F313B18236F08EE3FED7C75CD35840D1 /* Pods-CslMobileBridge-dummy.m in Sources */,
+				E374205E569FFA3B5E95027DDEA7D824 /* Pods-CslMobileBridge-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		19A280009B062C9D62453523D735E425 /* Release */ = {
+		5E0228BFE5DDC787752DB6E920D57810 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EBC417ADC3AA7AB004A3556B2CA6D133 /* Pods-CslMobileBridge.release.xcconfig */;
+			baseConfigurationReference = DAEE1586CAD194CAE35A6B1B78016C4A /* Pods-CslMobileBridge.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
@@ -297,9 +297,9 @@
 			};
 			name = Debug;
 		};
-		F08C2A8B90480258565425034A75A1C8 /* Debug */ = {
+		F4D3D13B218C38610B9CD0815AEE759C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 632A8EFF2AB200768BAF7890CF060DA2 /* Pods-CslMobileBridge.debug.xcconfig */;
+			baseConfigurationReference = AD85C96271A72AFFE6F8D8363A1D1A1A /* Pods-CslMobileBridge.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
@@ -322,20 +322,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0B447CC838C5C1EDBAD298EDF6CED5F1 /* Build configuration list for PBXNativeTarget "Pods-CslMobileBridge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4D3D13B218C38610B9CD0815AEE759C /* Debug */,
+				5E0228BFE5DDC787752DB6E920D57810 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B4EFE046ACF8F37157F6E322C7FCFC28 /* Debug */,
 				903A0004D3E6651EFD5D2E16214D101B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CC153FA5B8316D2602A992E544CE0086 /* Build configuration list for PBXNativeTarget "Pods-CslMobileBridge" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F08C2A8B90480258565425034A75A1C8 /* Debug */,
-				19A280009B062C9D62453523D735E425 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

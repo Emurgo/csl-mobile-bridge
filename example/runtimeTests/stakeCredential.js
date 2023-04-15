@@ -4,7 +4,7 @@ import {
   StakeCredential,
   Ed25519KeyHash,
   ScriptHash,
-} from '@emurgo/react-native-haskell-shelley'
+} from '@emurgo/csl-mobile-bridge'
 
 import {assert} from '../util'
 

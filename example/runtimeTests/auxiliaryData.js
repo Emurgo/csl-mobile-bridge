@@ -9,7 +9,7 @@ import {
   AuxiliaryData,
   encode_json_str_to_metadatum,
   decode_metadatum_to_json_str,
-} from '@emurgo/react-native-haskell-shelley'
+} from '@emurgo/csl-mobile-bridge'
 
 import {testVector, assert} from '../util'
 

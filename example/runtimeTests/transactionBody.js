@@ -1,6 +1,6 @@
 // @flow
 
-import {TransactionBody} from '@emurgo/react-native-haskell-shelley'
+import {TransactionBody} from '@emurgo/csl-mobile-bridge'
 
 import {assert} from '../util'
 

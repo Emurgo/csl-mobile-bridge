@@ -110,7 +110,7 @@
 @implementation NSError (Rust)
 
 + (NSError *)rustError:(NSString *)description {
-    return [NSError errorWithDomain:@"HaskellShelleyLibs.Rust"
+    return [NSError errorWithDomain:@"CslMobileBridgeLibs.Rust"
                               code: 0
                           userInfo: @{NSLocalizedDescriptionKey: description}];
 }

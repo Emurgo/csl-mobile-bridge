@@ -3,7 +3,7 @@
 import {
   encrypt_with_password,
   decrypt_with_password,
-} from '@emurgo/react-native-haskell-shelley'
+} from '@emurgo/csl-mobile-bridge'
 
 import {assert} from '../util'
 

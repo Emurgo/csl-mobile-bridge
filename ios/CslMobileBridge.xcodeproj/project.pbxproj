@@ -27,7 +27,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		134814201AA4EA6300B7C361 /* libHaskellShelley.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHaskellShelley.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		288C2D92A082A7DEF511068A /* Pods-CslMobileBridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CslMobileBridge.release.xcconfig"; path = "Target Support Files/Pods-CslMobileBridge/Pods-CslMobileBridge.release.xcconfig"; sourceTree = "<group>"; };
 		6B79470C77387D074303A27D /* libPods-CslMobileBridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CslMobileBridge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C04E85A98CF089D86CA122D7 /* Pods-CslMobileBridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CslMobileBridge.debug.xcconfig"; path = "Target Support Files/Pods-CslMobileBridge/Pods-CslMobileBridge.debug.xcconfig"; sourceTree = "<group>"; };

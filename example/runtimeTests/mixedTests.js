@@ -2,7 +2,7 @@ import {
   BigNum,
   PlutusData,
   PlutusDataKind,
-} from '@emurgo/react-native-haskell-shelley'
+} from '@emurgo/csl-mobile-bridge'
 
 import {assert} from '../util'
 import {BigInt} from '../../index';

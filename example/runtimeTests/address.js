@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable  max-len */
 
-import {Address} from '@emurgo/react-native-haskell-shelley'
+import {Address} from '@emurgo/csl-mobile-bridge'
 
 import {assert} from '../util'
 

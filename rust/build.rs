@@ -9,6 +9,6 @@ fn main() {
 
     cbindgen::generate(crate_dir)
       .expect("Unable to generate bindings")
-      .write_to_file("include/react_native_haskell_shelley.h");
+      .write_to_file("include/csl_mobile_bridge.h");
   }
 }

@@ -6,6 +6,6 @@ pub use bridge_tools::ptr_c::*;
 pub use bridge_tools::string::*;
 
 #[no_mangle]
-pub extern "C" fn init_haskell_shelley_library() {
+pub extern "C" fn init_csl_mobile_bridge_library() {
   crate::panic::hide_exceptions();
 }

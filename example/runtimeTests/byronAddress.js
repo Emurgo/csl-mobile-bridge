@@ -4,7 +4,7 @@ import {
   ByronAddress,
   Address,
   Bip32PublicKey,
-} from '@emurgo/react-native-haskell-shelley'
+} from '@emurgo/csl-mobile-bridge'
 
 import {assert} from '../util'
 

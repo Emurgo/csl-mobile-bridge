@@ -7,7 +7,7 @@ import {
   PublicKey,
   Vkey,
   Ed25519Signature,
-} from '@emurgo/react-native-haskell-shelley'
+} from '@emurgo/csl-mobile-bridge'
 
 import {assert} from '../util'
 

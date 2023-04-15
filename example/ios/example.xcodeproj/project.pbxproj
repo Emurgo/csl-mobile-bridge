@@ -587,7 +587,7 @@
 					"\"${PODS_ROOT}/Headers/Public/React-jsiexecutor\"",
 					"\"${PODS_ROOT}/Headers/Public/React-jsinspector\"",
 					"\"${PODS_ROOT}/Headers/Public/glog\"",
-					"\"${PODS_ROOT}/Headers/Public/react-native-haskell-shelley\"",
+					"\"${PODS_ROOT}/Headers/Public/csl-mobile-bridge\"",
 					"\"${PODS_ROOT}/Headers/Public/yoga\"",
 					"\"${PODS_ROOT}/Headers/Public/Folly\"",
 				);

@@ -6,7 +6,7 @@ import {
   ScriptHash,
   TransactionHash,
   PublicKey,
-} from '@emurgo/react-native-haskell-shelley'
+} from '@emurgo/csl-mobile-bridge'
 
 import {assert} from '../util'
 

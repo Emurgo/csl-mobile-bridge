@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import <React/RCTBridgeModule.h>
-#import <react_native_haskell_shelley.h>
+#import <csl_mobile_bridge.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
