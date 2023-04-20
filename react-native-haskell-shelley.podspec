@@ -10,12 +10,11 @@ Pod::Spec.new do |s|
                   react-native-haskell-shelley
                    DESC
   s.homepage     = "https://github.com/Emurgo/react-native-haskell-shelley"
-  # brief license entry:
   s.license      = "MIT"
   # optional - use expanded license entry instead:
   # s.license    = { :type => "MIT", :file => "LICENSE" }
   s.authors      = { "emurgo" => "contact@emurgo.io" }
-  s.platforms    = { :ios => "11.0" }
+  s.platforms    = { :ios => "12.4" }
   s.source       = { :git => "https://github.com/Emurgo/react-native-haskell-shelley.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,c,m,swift,sh}"
