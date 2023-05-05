@@ -25,7 +25,7 @@ cd "${ROOT_DIR}"
 if [[ "$TARGET_DEVICE_PLATFORM_NAME" == "iphonesimulator" ]]  && [[ "$MAC_CURRENT_ARCH" == "arm64" ]]; then
   # If we're building for the arm simulator on an M1 Mac, we need to use the x86_64-apple-ios-sim target.
   # Otherwise, lipo will compile for arm64 iphone that can't run on the simulator.
-  export LIBRARY_PATH="${DEVELOPER_SDK_DIR}../../iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/lib:${LIBRARY_PATH:-}"
+  export LIBRARY_PATH="${DEVELOPER_SDK_DIR}/../../../iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/lib:${LIBRARY_PATH:-}"
   cargo lipo --targets="aarch64-apple-ios-sim"
   LIPO_BIN_TARGET_DIR="aarch64-apple-ios-sim"
 else
