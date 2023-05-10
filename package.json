@@ -46,7 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
     "eslint": "7.8.1",
-    "flowgen": "1.13.0",
+    "flowgen": "^1.21.0",
     "react": "^18.0.0",
     "react-native": "^0.71.6",
     "typescript": "^4.1.3"
