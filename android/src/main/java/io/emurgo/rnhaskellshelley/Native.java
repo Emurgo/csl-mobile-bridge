@@ -730,6 +730,7 @@ final class Native {
     public final native Result<RPtr> plutusDataFromHex(String hexStr);
     public final native Result<RPtr> plutusDataNewConstrPlutusData(RPtr constrPlutusData);
     public final native Result<RPtr> plutusDataNewEmptyConstrPlutusData(RPtr alternative);
+    public final native Result<RPtr> plutusDataNewSingleValueConstrPlutusData(RPtr alternative, RPtr plutusData);
     public final native Result<RPtr> plutusDataNewMap(RPtr map);
     public final native Result<RPtr> plutusDataNewList(RPtr list);
     public final native Result<RPtr> plutusDataNewInteger(RPtr integer);
@@ -742,6 +743,7 @@ final class Native {
     public final native Result<byte[]> plutusDataAsBytes(RPtr self);
     public final native Result<String> plutusDataToJson(RPtr self, int schema);
     public final native Result<RPtr> plutusDataFromJson(String json, int schema);
+    public final native Result<RPtr> plutusDataFromAddress(RPtr address);
 
     public final native Result<byte[]> plutusListToBytes(RPtr self);
     public final native Result<RPtr> plutusListFromBytes(byte[] bytes);
@@ -1466,6 +1468,7 @@ final class Native {
     public final native Result<Boolean> transactionOutputHasDataHash(RPtr self);
     public final native Result<Boolean> transactionOutputHasScriptRef(RPtr self);
     public final native Result<RPtr> transactionOutputNew(RPtr address, RPtr amount);
+    public final native Result<Integer> transactionOutputSerializationFormat(RPtr self);
 
     public final native Result<RPtr> transactionOutputAmountBuilderWithValue(RPtr self, RPtr amount);
     public final native Result<RPtr> transactionOutputAmountBuilderWithCoin(RPtr self, RPtr coin);

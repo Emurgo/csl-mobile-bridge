@@ -151,6 +151,7 @@ use cardano_serialization_lib::plutus::RedeemerTagKind;
 use cardano_serialization_lib::plutus::Redeemers;
 use cardano_serialization_lib::plutus::Strings;
 use cardano_serialization_lib::protocol_types::fixed_tx::FixedTransaction;
+use cardano_serialization_lib::ser_info::types::CborContainerType;
 use cardano_serialization_lib::tx_builder::CoinSelectionStrategyCIP2;
 use cardano_serialization_lib::tx_builder::TransactionBuilder;
 use cardano_serialization_lib::tx_builder::TransactionBuilderConfig;
@@ -7439,6 +7440,18 @@ pub unsafe extern "C" fn plutus_data_new_empty_constr_plutus_data(alternative_rp
 
 
 #[no_mangle]
+pub unsafe extern "C" fn plutus_data_new_single_value_constr_plutus_data(alternative_rptr: RPtr, plutus_data_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let alternative = alternative_rptr.typed_ref::<BigNum>()?;
+    let plutus_data = plutus_data_rptr.typed_ref::<PlutusData>()?;
+    let result = PlutusData::new_single_value_constr_plutus_data(alternative, plutus_data);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
 pub unsafe extern "C" fn plutus_data_new_map(map_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let map = map_rptr.typed_ref::<PlutusMap>()?;
@@ -7566,6 +7579,17 @@ pub unsafe extern "C" fn plutus_data_from_json(json_str: CharPtr, schema_int: i3
     let json: &str = json_str.into_str();
     let schema = schema_int.to_enum()?;
     let result = PlutusData::from_json(json, schema).into_result()?;
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn plutus_data_from_address(address_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let address = address_rptr.typed_ref::<Address>()?;
+    let result = PlutusData::from_address(address).into_result()?;
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -15090,6 +15114,17 @@ pub unsafe extern "C" fn transaction_output_new(address_rptr: RPtr, amount_rptr:
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn transaction_output_serialization_format(self_rptr: RPtr, result: &mut i32, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<TransactionOutput>()?;
+    let result = self_ref.serialization_format();
+    Ok::<Option<i32>, String>(result.map(|v| v as i32))
+  })
+  .response_nullable(result,  error)
 }
 
 
