@@ -109,7 +109,10 @@ def get_arg_android_rust_result_cast(arg):
         else:
             cast = "result.into_jlong().jobject(&env)"
     elif arg.is_enum:
-        cast = "(result.to_i32() as jint).jobject(&env)"
+        if arg.is_optional:
+            cast = "result.map(|x| x.to_i32() as jint).jobject(&env)"
+        else:
+            cast = "(result.to_i32() as jint).jobject(&env)"
     else:
         cast = "result.rptr().jptr(&env)"
     return cast

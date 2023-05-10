@@ -7251,6 +7251,18 @@ RCT_EXPORT_METHOD(plutusDataNewEmptyConstrPlutusData:(nonnull NSString *)alterna
     }] exec:alternativePtr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(plutusDataNewSingleValueConstrPlutusData:(nonnull NSString *)alternativePtr withPlutusData:(nonnull NSString *)plutusDataPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr alternative = [[params objectAtIndex:0]  rPtr];
+        RPtr plutusData = [[params objectAtIndex:1]  rPtr];
+        return plutus_data_new_single_value_constr_plutus_data(alternative, plutusData, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[alternativePtr, plutusDataPtr] andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(plutusDataNewMap:(nonnull NSString *)mapPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* mapPtr, CharPtr* error) {
@@ -7383,6 +7395,17 @@ RCT_EXPORT_METHOD(plutusDataFromJson:(nonnull NSString *)jsonVal withSchema:(non
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:@[jsonVal, schemaVal] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(plutusDataFromAddress:(nonnull NSString *)addressPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* addressPtr, CharPtr* error) {
+        RPtr result;
+        RPtr address = [addressPtr  rPtr];
+        return plutus_data_from_address(address, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:addressPtr andResolve:resolve orReject:reject];
 }
 
 
@@ -14722,6 +14745,17 @@ RCT_EXPORT_METHOD(transactionOutputNew:(nonnull NSString *)addressPtr withAmount
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:@[addressPtr, amountPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionOutputSerializationFormat:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* selfPtr, CharPtr* error) {
+        int32_t result;
+        RPtr self = [selfPtr  rPtr];
+        return transaction_output_serialization_format(self, &result, error)
+            ? [NSNumber numberWithLong:result]
+            : nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
 
