@@ -55,7 +55,10 @@ def map_js_type(arg):
             else:
                 return "number"
     elif arg.is_enum:
-        return arg.struct_orig_name
+        if optional:
+            return f"Optional<{arg.struct_orig_name}>"
+        else:
+            return arg.struct_orig_name
     else:
         if optional:
             return "Optional<" + arg.struct_name + ">"
