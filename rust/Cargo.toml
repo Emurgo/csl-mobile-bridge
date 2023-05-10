@@ -1,7 +1,7 @@
 [package]
-name = "react-native-haskell-shelley"
-version = "5.0.0"
-authors = ["EMURGO R&D"]
+name = "csl-mobile-bridge"
+version = "5.1.0"
+authors = ["EMURGO"]
 edition = "2018"
 
 [build-dependencies]
