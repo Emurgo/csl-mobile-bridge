@@ -3841,6 +3841,13 @@ export class PlutusData extends Ptr {
   static new_empty_constr_plutus_data: (alternative: BigNum) => Promise<PlutusData>;
 
   /**
+  * @param {BigNum} alternative
+  * @param {PlutusData} plutus_data
+  * @returns {Promise<PlutusData>}
+  */
+  static new_single_value_constr_plutus_data: (alternative: BigNum, plutus_data: PlutusData) => Promise<PlutusData>;
+
+  /**
   * @param {PlutusMap} map
   * @returns {Promise<PlutusData>}
   */
@@ -3906,6 +3913,12 @@ export class PlutusData extends Ptr {
   * @returns {Promise<Optional<PlutusData>>}
   */
   static from_json: (json: string, schema: PlutusDatumSchema) => Promise<Optional<PlutusData>>;
+
+  /**
+  * @param {Address} address
+  * @returns {Promise<Optional<PlutusData>>}
+  */
+  static from_address: (address: Address) => Promise<Optional<PlutusData>>;
 
 }
 
@@ -7706,6 +7719,11 @@ export class TransactionOutput extends Ptr {
   */
   static new: (address: Address, amount: Value) => Promise<TransactionOutput>;
 
+  /**
+  * @returns {Promise<Optional<CborContainerType>>}
+  */
+  serialization_format: () => Promise<Optional<CborContainerType>>;
+
 }
 
 
@@ -9053,6 +9071,12 @@ export const min_fee: (tx: Transaction, linear_fee: LinearFee) => Promise<Option
 * @returns {Promise<Optional<BigNum>>}
 */
 export const min_script_fee: (tx: Transaction, ex_unit_prices: ExUnitPrices) => Promise<Optional<BigNum>>;
+
+export enum CborContainerType {
+  Array = 0,
+  Map = 1,
+}
+
 
 export enum CertificateKind {
   StakeRegistration = 0,

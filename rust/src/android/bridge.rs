@@ -169,6 +169,7 @@ use cardano_serialization_lib::plutus::Strings;
 use cardano_serialization_lib::plutus::decode_plutus_datum_to_json_str;
 use cardano_serialization_lib::plutus::encode_json_str_to_plutus_datum;
 use cardano_serialization_lib::protocol_types::fixed_tx::FixedTransaction;
+use cardano_serialization_lib::ser_info::types::CborContainerType;
 use cardano_serialization_lib::tx_builder::CoinSelectionStrategyCIP2;
 use cardano_serialization_lib::tx_builder::TransactionBuilder;
 use cardano_serialization_lib::tx_builder::TransactionBuilderConfig;
@@ -8659,6 +8660,21 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_plutusDataNewEmp
 
 #[allow(non_snake_case)]
 #[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_plutusDataNewSingleValueConstrPlutusData(env: JNIEnv, _: JObject, alternative_ptr: JRPtr, plutus_data_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let alternative_jrptr = alternative_ptr.rptr(&env)?;
+    let alternative = alternative_jrptr.typed_ref::<BigNum>()?;
+    let plutus_data_jrptr = plutus_data_ptr.rptr(&env)?;
+    let plutus_data = plutus_data_jrptr.typed_ref::<PlutusData>()?;
+    let result = PlutusData::new_single_value_constr_plutus_data(alternative, plutus_data);
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_plutusDataNewMap(env: JNIEnv, _: JObject, map_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let map_jrptr = map_ptr.rptr(&env)?;
@@ -8810,6 +8826,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_plutusDataFromJs
     let json = json_str.string(&env)?;
     let schema = schema_jint.to_enum()?;
     let result = PlutusData::from_json(&json, schema).into_result()?;
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_plutusDataFromAddress(env: JNIEnv, _: JObject, address_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let address_jrptr = address_ptr.rptr(&env)?;
+    let address = address_jrptr.typed_ref::<Address>()?;
+    let result = PlutusData::from_address(address).into_result()?;
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -17637,6 +17666,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionOutpu
     let amount = amount_jrptr.typed_ref::<Value>()?;
     let result = TransactionOutput::new(address, amount);
     result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionOutputSerializationFormat(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TransactionOutput>()?;
+    let result = self_rptr.serialization_format();
+    result.map(|x| x.to_i32() as jint).jobject(&env)
   })
   .jresult(&env)
 }

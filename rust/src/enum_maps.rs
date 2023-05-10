@@ -12,6 +12,7 @@ use cardano_serialization_lib::plutus::LanguageKind;
 use cardano_serialization_lib::plutus::PlutusDataKind;
 use cardano_serialization_lib::plutus::PlutusDatumSchema;
 use cardano_serialization_lib::plutus::RedeemerTagKind;
+use cardano_serialization_lib::ser_info::types::CborContainerType;
 use cardano_serialization_lib::tx_builder::CoinSelectionStrategyCIP2;
 use cardano_serialization_lib::utils::ScriptSchema;
 
@@ -24,6 +25,25 @@ pub trait ToPrimitive {
 pub trait ToEnum<T> {
     fn to_enum(&self) -> Result<T>;
 }
+impl ToPrimitive for CborContainerType {
+    fn to_i32(&self) -> i32 {
+        match self {
+            CborContainerType::Array => 0,
+            CborContainerType::Map => 1,
+        }
+    }
+}
+
+impl ToEnum<CborContainerType> for i32 {
+    fn to_enum(&self) -> Result<CborContainerType> {
+        match self {
+            0 => Ok(CborContainerType::Array),
+            1 => Ok(CborContainerType::Map),
+            _ => Err("Invalid value for CborContainerType".into()),
+        }
+    }
+}
+
 impl ToPrimitive for CertificateKind {
     fn to_i32(&self) -> i32 {
         match self {

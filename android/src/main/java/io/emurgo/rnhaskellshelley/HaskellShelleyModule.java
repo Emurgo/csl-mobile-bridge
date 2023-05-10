@@ -5096,6 +5096,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void plutusDataNewSingleValueConstrPlutusData(String alternative, String plutusData, Promise promise) {
+        Native.I
+            .plutusDataNewSingleValueConstrPlutusData(new RPtr(alternative), new RPtr(plutusData))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void plutusDataNewMap(String map, Promise promise) {
         Native.I
             .plutusDataNewMap(new RPtr(map))
@@ -5185,6 +5193,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void plutusDataFromJson(String json, Double schema, Promise promise) {
         Native.I
             .plutusDataFromJson(json, schema.intValue())
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void plutusDataFromAddress(String address, Promise promise) {
+        Native.I
+            .plutusDataFromAddress(new RPtr(address))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -10336,6 +10352,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
         Native.I
             .transactionOutputNew(new RPtr(address), new RPtr(amount))
             .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionOutputSerializationFormat(String self, Promise promise) {
+        Native.I
+            .transactionOutputSerializationFormat(new RPtr(self))
             .pour(promise);
     }
 

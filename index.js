@@ -3718,6 +3718,13 @@ export class PlutusData extends Ptr {
     return Ptr._wrap(ret, PlutusData);
   }
 
+  static async new_single_value_constr_plutus_data(alternative, plutus_data) {
+    const alternativePtr = Ptr._assertClass(alternative, BigNum);
+    const plutus_dataPtr = Ptr._assertClass(plutus_data, PlutusData);
+    const ret = await HaskellShelley.plutusDataNewSingleValueConstrPlutusData(alternativePtr, plutus_dataPtr);
+    return Ptr._wrap(ret, PlutusData);
+  }
+
   static async new_map(map) {
     const mapPtr = Ptr._assertClass(map, PlutusMap);
     const ret = await HaskellShelley.plutusDataNewMap(mapPtr);
@@ -3778,6 +3785,12 @@ export class PlutusData extends Ptr {
 
   static async from_json(json, schema) {
     const ret = await HaskellShelley.plutusDataFromJson(json, schema);
+    return Ptr._wrap(ret, PlutusData);
+  }
+
+  static async from_address(address) {
+    const addressPtr = Ptr._assertClass(address, Address);
+    const ret = await HaskellShelley.plutusDataFromAddress(addressPtr);
     return Ptr._wrap(ret, PlutusData);
   }
 
@@ -7518,6 +7531,11 @@ export class TransactionOutput extends Ptr {
     return Ptr._wrap(ret, TransactionOutput);
   }
 
+  async serialization_format() {
+    const ret = await HaskellShelley.transactionOutputSerializationFormat(this.ptr);
+    return ret;
+  }
+
 }
 
 
@@ -8841,6 +8859,12 @@ export const min_script_fee = async (tx, ex_unit_prices) => {
   const ret = await HaskellShelley.minScriptFee(txPtr, ex_unit_pricesPtr);
   return Ptr._wrap(ret, BigNum);
 };
+
+
+export const CborContainerType = Object.freeze({
+  Array: 0,
+  Map: 1,
+});
 
 
 export const CertificateKind = Object.freeze({
