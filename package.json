@@ -1,5 +1,5 @@
 {
-  "name": "@emurgo/react-native-haskell-shelley",
+  "name": "@emurgo/csl-mobile-bridge",
   "title": "CSL mobile bridge",
   "version": "5.1.0",
   "description": "React-native bindings for Emurgo's cardano-serialization-lib (Cardano haskell Shelley)",
