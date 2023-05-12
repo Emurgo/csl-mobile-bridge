@@ -32,7 +32,7 @@ if [[ "$TARGET_DEVICE_PLATFORM_NAME" == "iphonesimulator" ]]  && [[ "$MAC_CURREN
 else
   ACTUAL_SDK_PATH=$(xcrun --sdk iphoneos --show-sdk-path)
   export LIBRARY_PATH="${ACTUAL_SDK_PATH}/usr/lib:${LIBRARY_PATH:-}"
-  cargo lipo --xcode-intem
+  cargo lipo --xcode-integ
 fi
 
 mkdir -p "${CONFIGURATION_BUILD_DIR}"
