@@ -83,6 +83,12 @@ cargo {
     prebuiltToolchains = true
 }
 
+tasks.whenTaskAdded { task ->
+    if ((task.name == 'javaPreCompileDebug' || task.name == 'javaPreCompileRelease')) {
+        task.dependsOn 'cargoBuild'
+    }
+}
+
 repositories {
     // ref: https://www.baeldung.com/maven-local-repository
     mavenLocal()
