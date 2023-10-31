@@ -3,19 +3,11 @@
 set -e
 set -x
 
-HAS_CARGO_IN_PATH=`which cargo; echo $?`
-
-if [ "${HAS_CARGO_IN_PATH}" -ne "0" ]; then
-    source $HOME/.cargo/env
-fi
-
 if [ -z "${PODS_TARGET_SRCROOT}" ]; then
     ROOT_DIR="${SRCROOT}/../rust"
 else
     ROOT_DIR="${PODS_TARGET_SRCROOT}/rust"
 fi
-
-build_path="$HOME/.cargo/bin:/usr/local/bin:/usr/bin:/bin"
 
 #
 # Figure out the correct Rust target from the ARCHS and PLATFORM.
@@ -49,10 +41,12 @@ for CURRENT_ARCH in $ARCH_LIST; do
     build_args=(--manifest-path "${ROOT_DIR}/Cargo.toml" --target "${rust_target}")
     if [[ "$CONFIGURATION" == "Release" ]]; then
     	rust_config="release"
-    	env PATH="${build_path}" cargo build --release "${build_args[@]}"
+      cmd="cargo build --release ${build_args[@]}"
+      bash -l -c "${cmd}"
     elif [[ "$CONFIGURATION" == "Debug" ]]; then
     	rust_config="debug"
-    	env PATH="${build_path}" cargo build "${build_args[@]}"
+      cmd="cargo build ${build_args[@]}"
+      bash -l -c "${cmd}"
     else
         echo "error: Unexpected build configuration: $CONFIGURATION"
     fi
