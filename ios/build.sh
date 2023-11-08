@@ -10,7 +10,6 @@ else
 fi
 
 #install targets
-bash -l -c "rustup install 1.69"
 bash -l -c "rustup default 1.69"
 bash -l -c "rustup target add aarch64-apple-darwin aarch64-apple-ios aarch64-apple-ios-sim  x86_64-apple-ios"
 
