@@ -9,6 +9,9 @@ else
     ROOT_DIR="${PODS_TARGET_SRCROOT}/rust"
 fi
 
+#install targets
+bash -l -c "rustup target add aarch64-apple-darwin aarch64-apple-ios aarch64-apple-ios-sim  x86_64-apple-ios"
+
 #
 # Figure out the correct Rust target from the ARCHS and PLATFORM.
 # This script expects just one element in ARCHS.
