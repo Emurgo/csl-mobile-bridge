@@ -7,7 +7,6 @@ import js_index_gen
 import ios_gen
 import ios_objective_c_gen
 
-
 import copy
 
 forbidden_names = {"int", "long", "bool", "boolean"}
@@ -32,6 +31,7 @@ def map_type(type_name):
         return type_map[type_name]
     else:
         return type_name
+
 
 def map_name(name):
     if name in forbidden_names:
@@ -70,7 +70,7 @@ class Function:
             self.return_type = ArgType(json["inner"]["decl"]["output"], members, full_json, parent_struct, True)
         if parent_struct is None:
             self.is_static = False
-            self.location = "::".join(full_json["paths"][self.id]["path"])
+            self.location = get_location(self.id, self.name, full_json)
         elif any(arg.is_self for arg in self.args):
             self.is_static = False
 
@@ -155,7 +155,6 @@ class Function:
 
     def to_js_index(self):
         return js_index_gen.get_js_index_fn(self)
-
 
 
 class ArgType:
@@ -247,14 +246,14 @@ class ArgType:
                 self.is_self = True
             break
         if self.id is not None:
-            self.location = "::".join(full_json["paths"][self.id]["path"])
+            self.location = get_location(self.id, self.struct_name, full_json)
 
 
 class Struct:
     def __init__(self, json, members, full_json):
         self.id = json["id"]
-        self.location = "::".join(full_json["paths"][self.id]["path"])
         self.name = json["name"]
+        self.location = get_location(self.id, self.name, full_json)
         self.functions = []
         self.__read_functions(json, members, full_json)
 
@@ -332,8 +331,8 @@ class Struct:
 class Enum:
     def __init__(self, json, members, full_json):
         self.id = json["id"]
-        self.location = "::".join(full_json["paths"][self.id]["path"])
         self.name = json["name"]
+        self.location = get_location(self.id, self.name, full_json)
         self.variants = []
         self.__read_variants(json, members, full_json)
 
@@ -495,10 +494,16 @@ class Api:
             all_code += enum.to_js_index() + "\r\n\r\n"
         return all_code
 
-
     def to_ptr_impls(self):
         head = "use crate::ptr::RPtrRepresentable;\r\n"
         impls = ""
         for struct in self.structs:
             impls += "impl RPtrRepresentable for " + struct.name + " {}\r\n"
         return head + self.__get_rust_imports(True, False, False) + impls
+
+
+def get_location(id, name, full_json):
+    if id in full_json["paths"]:
+        return "::".join(full_json["paths"][id]["path"])
+    else:
+        return "::".join(full_json["paths"][full_json["root"]]["path"] + [name])
