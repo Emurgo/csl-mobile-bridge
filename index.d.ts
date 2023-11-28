@@ -62,6 +62,98 @@ export class Address extends Ptr {
 }
 
 
+export class Anchor extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<Anchor>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Anchor>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<Anchor>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<Anchor>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<Anchor>>}
+  */
+  static from_json: (json: string) => Promise<Optional<Anchor>>;
+
+  /**
+  * @returns {Promise<URL>}
+  */
+  url: () => Promise<URL>;
+
+  /**
+  * @returns {Promise<AnchorDataHash>}
+  */
+  anchor_data_hash: () => Promise<AnchorDataHash>;
+
+  /**
+  * @param {URL} anchor_url
+  * @param {AnchorDataHash} anchor_data_hash
+  * @returns {Promise<Anchor>}
+  */
+  static new: (anchor_url: URL, anchor_data_hash: AnchorDataHash) => Promise<Anchor>;
+
+}
+
+
+export class AnchorDataHash extends Ptr {
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<AnchorDataHash>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<AnchorDataHash>>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {string} prefix
+  * @returns {Promise<Optional<string>>}
+  */
+  to_bech32: (prefix: string) => Promise<Optional<string>>;
+
+  /**
+  * @param {string} bech_str
+  * @returns {Promise<Optional<AnchorDataHash>>}
+  */
+  static from_bech32: (bech_str: string) => Promise<Optional<AnchorDataHash>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex
+  * @returns {Promise<Optional<AnchorDataHash>>}
+  */
+  static from_hex: (hex: string) => Promise<Optional<AnchorDataHash>>;
+
+}
+
+
 export class AssetName extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -388,21 +480,21 @@ export class AuxiliaryDataSet extends Ptr {
 export class BaseAddress extends Ptr {
   /**
   * @param {number} network
-  * @param {StakeCredential} payment
-  * @param {StakeCredential} stake
+  * @param {Credential} payment
+  * @param {Credential} stake
   * @returns {Promise<BaseAddress>}
   */
-  static new: (network: number, payment: StakeCredential, stake: StakeCredential) => Promise<BaseAddress>;
+  static new: (network: number, payment: Credential, stake: Credential) => Promise<BaseAddress>;
 
   /**
-  * @returns {Promise<StakeCredential>}
+  * @returns {Promise<Credential>}
   */
-  payment_cred: () => Promise<StakeCredential>;
+  payment_cred: () => Promise<Credential>;
 
   /**
-  * @returns {Promise<StakeCredential>}
+  * @returns {Promise<Credential>}
   */
-  stake_cred: () => Promise<StakeCredential>;
+  stake_cred: () => Promise<Credential>;
 
   /**
   * @returns {Promise<Address>}
@@ -1103,6 +1195,66 @@ export class Certificate extends Ptr {
   static new_move_instantaneous_rewards_cert: (move_instantaneous_rewards_cert: MoveInstantaneousRewardsCert) => Promise<Certificate>;
 
   /**
+  * @param {CommitteeHotAuth} committee_hot_auth
+  * @returns {Promise<Certificate>}
+  */
+  static new_committee_hot_auth: (committee_hot_auth: CommitteeHotAuth) => Promise<Certificate>;
+
+  /**
+  * @param {CommitteeColdResign} committee_cold_resign
+  * @returns {Promise<Certificate>}
+  */
+  static new_committee_cold_resign: (committee_cold_resign: CommitteeColdResign) => Promise<Certificate>;
+
+  /**
+  * @param {DrepDeregistration} drep_deregistration
+  * @returns {Promise<Certificate>}
+  */
+  static new_drep_deregistration: (drep_deregistration: DrepDeregistration) => Promise<Certificate>;
+
+  /**
+  * @param {DrepRegistration} drep_registration
+  * @returns {Promise<Certificate>}
+  */
+  static new_drep_registration: (drep_registration: DrepRegistration) => Promise<Certificate>;
+
+  /**
+  * @param {DrepUpdate} drep_update
+  * @returns {Promise<Certificate>}
+  */
+  static new_drep_update: (drep_update: DrepUpdate) => Promise<Certificate>;
+
+  /**
+  * @param {StakeAndVoteDelegation} stake_and_vote_delegation
+  * @returns {Promise<Certificate>}
+  */
+  static new_stake_and_vote_delegation: (stake_and_vote_delegation: StakeAndVoteDelegation) => Promise<Certificate>;
+
+  /**
+  * @param {StakeRegistrationAndDelegation} stake_registration_and_delegation
+  * @returns {Promise<Certificate>}
+  */
+  static new_stake_registration_and_delegation: (stake_registration_and_delegation: StakeRegistrationAndDelegation) => Promise<Certificate>;
+
+  /**
+  * @param {StakeVoteRegistrationAndDelegation} stake_vote_registration_and_delegation
+  * @returns {Promise<Certificate>}
+  */
+  static new_stake_vote_registration_and_delegation: (stake_vote_registration_and_delegation: StakeVoteRegistrationAndDelegation) => Promise<Certificate>;
+
+  /**
+  * @param {VoteDelegation} vote_delegation
+  * @returns {Promise<Certificate>}
+  */
+  static new_vote_delegation: (vote_delegation: VoteDelegation) => Promise<Certificate>;
+
+  /**
+  * @param {VoteRegistrationAndDelegation} vote_registration_and_delegation
+  * @returns {Promise<Certificate>}
+  */
+  static new_vote_registration_and_delegation: (vote_registration_and_delegation: VoteRegistrationAndDelegation) => Promise<Certificate>;
+
+  /**
   * @returns {Promise<CertificateKind>}
   */
   kind: () => Promise<CertificateKind>;
@@ -1141,6 +1293,61 @@ export class Certificate extends Ptr {
   * @returns {Promise<Optional<MoveInstantaneousRewardsCert>>}
   */
   as_move_instantaneous_rewards_cert: () => Promise<Optional<MoveInstantaneousRewardsCert>>;
+
+  /**
+  * @returns {Promise<Optional<CommitteeHotAuth>>}
+  */
+  as_committee_hot_auth: () => Promise<Optional<CommitteeHotAuth>>;
+
+  /**
+  * @returns {Promise<Optional<CommitteeColdResign>>}
+  */
+  as_committee_cold_resign: () => Promise<Optional<CommitteeColdResign>>;
+
+  /**
+  * @returns {Promise<Optional<DrepDeregistration>>}
+  */
+  as_drep_deregistration: () => Promise<Optional<DrepDeregistration>>;
+
+  /**
+  * @returns {Promise<Optional<DrepRegistration>>}
+  */
+  as_drep_registration: () => Promise<Optional<DrepRegistration>>;
+
+  /**
+  * @returns {Promise<Optional<DrepUpdate>>}
+  */
+  as_drep_update: () => Promise<Optional<DrepUpdate>>;
+
+  /**
+  * @returns {Promise<Optional<StakeAndVoteDelegation>>}
+  */
+  as_stake_and_vote_delegation: () => Promise<Optional<StakeAndVoteDelegation>>;
+
+  /**
+  * @returns {Promise<Optional<StakeRegistrationAndDelegation>>}
+  */
+  as_stake_registration_and_delegation: () => Promise<Optional<StakeRegistrationAndDelegation>>;
+
+  /**
+  * @returns {Promise<Optional<StakeVoteRegistrationAndDelegation>>}
+  */
+  as_stake_vote_registration_and_delegation: () => Promise<Optional<StakeVoteRegistrationAndDelegation>>;
+
+  /**
+  * @returns {Promise<Optional<VoteDelegation>>}
+  */
+  as_vote_delegation: () => Promise<Optional<VoteDelegation>>;
+
+  /**
+  * @returns {Promise<Optional<VoteRegistrationAndDelegation>>}
+  */
+  as_vote_registration_and_delegation: () => Promise<Optional<VoteRegistrationAndDelegation>>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_required_script_witness: () => Promise<boolean>;
 
 }
 
@@ -1199,6 +1406,323 @@ export class Certificates extends Ptr {
   * @param {Certificate} elem
   */
   add: (elem: Certificate) => Promise<void>;
+
+}
+
+
+export class CertificatesBuilder extends Ptr {
+  /**
+  * @returns {Promise<CertificatesBuilder>}
+  */
+  static new: () => Promise<CertificatesBuilder>;
+
+  /**
+  * @param {Certificate} cert
+  * @returns {Promise<void>}
+  */
+  add: (cert: Certificate) => Promise<void>;
+
+  /**
+  * @param {Certificate} cert
+  * @param {PlutusWitness} witness
+  * @returns {Promise<void>}
+  */
+  add_with_plutus_witness: (cert: Certificate, witness: PlutusWitness) => Promise<void>;
+
+  /**
+  * @param {Certificate} cert
+  * @param {NativeScriptSource} native_script_source
+  * @returns {Promise<void>}
+  */
+  add_with_native_script: (cert: Certificate, native_script_source: NativeScriptSource) => Promise<void>;
+
+  /**
+  * @returns {Promise<PlutusWitnesses>}
+  */
+  get_plutus_witnesses: () => Promise<PlutusWitnesses>;
+
+  /**
+  * @returns {Promise<TransactionInputs>}
+  */
+  get_ref_inputs: () => Promise<TransactionInputs>;
+
+  /**
+  * @returns {Promise<NativeScripts>}
+  */
+  get_native_scripts: () => Promise<NativeScripts>;
+
+  /**
+  * @param {BigNum} pool_deposit
+  * @param {BigNum} key_deposit
+  * @returns {Promise<Optional<Value>>}
+  */
+  get_certificates_refund: (pool_deposit: BigNum, key_deposit: BigNum) => Promise<Optional<Value>>;
+
+  /**
+  * @param {BigNum} pool_deposit
+  * @param {BigNum} key_deposit
+  * @returns {Promise<Optional<BigNum>>}
+  */
+  get_certificates_deposit: (pool_deposit: BigNum, key_deposit: BigNum) => Promise<Optional<BigNum>>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_plutus_scripts: () => Promise<boolean>;
+
+  /**
+  * @returns {Promise<Certificates>}
+  */
+  build: () => Promise<Certificates>;
+
+}
+
+
+export class Committee extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<Committee>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Committee>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<Committee>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<Committee>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<Committee>>}
+  */
+  static from_json: (json: string) => Promise<Optional<Committee>>;
+
+  /**
+  * @param {UnitInterval} quorum_threshold
+  * @returns {Promise<Committee>}
+  */
+  static new: (quorum_threshold: UnitInterval) => Promise<Committee>;
+
+  /**
+  * @returns {Promise<Credentials>}
+  */
+  members_keys: () => Promise<Credentials>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  quorum_threshold: () => Promise<UnitInterval>;
+
+  /**
+  * @param {Credential} committee_cold_credential
+  * @param {number} epoch
+  */
+  add_member: (committee_cold_credential: Credential, epoch: number) => Promise<void>;
+
+  /**
+  * @param {Credential} committee_cold_credential
+  * @returns {Promise<Optional<number>>}
+  */
+  get_member_epoch: (committee_cold_credential: Credential) => Promise<Optional<number>>;
+
+}
+
+
+export class CommitteeColdResign extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<CommitteeColdResign>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<CommitteeColdResign>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<CommitteeColdResign>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<CommitteeColdResign>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<CommitteeColdResign>>}
+  */
+  static from_json: (json: string) => Promise<Optional<CommitteeColdResign>>;
+
+  /**
+  * @returns {Promise<Credential>}
+  */
+  committee_cold_key: () => Promise<Credential>;
+
+  /**
+  * @returns {Promise<Optional<Anchor>>}
+  */
+  anchor: () => Promise<Optional<Anchor>>;
+
+  /**
+  * @param {Credential} committee_cold_key
+  * @returns {Promise<CommitteeColdResign>}
+  */
+  static new: (committee_cold_key: Credential) => Promise<CommitteeColdResign>;
+
+  /**
+  * @param {Credential} committee_cold_key
+  * @param {Anchor} anchor
+  * @returns {Promise<CommitteeColdResign>}
+  */
+  static new_with_anchor: (committee_cold_key: Credential, anchor: Anchor) => Promise<CommitteeColdResign>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_script_credentials: () => Promise<boolean>;
+
+}
+
+
+export class CommitteeHotAuth extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<CommitteeHotAuth>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<CommitteeHotAuth>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<CommitteeHotAuth>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<CommitteeHotAuth>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<CommitteeHotAuth>>}
+  */
+  static from_json: (json: string) => Promise<Optional<CommitteeHotAuth>>;
+
+  /**
+  * @returns {Promise<Credential>}
+  */
+  committee_cold_key: () => Promise<Credential>;
+
+  /**
+  * @returns {Promise<Credential>}
+  */
+  committee_hot_key: () => Promise<Credential>;
+
+  /**
+  * @param {Credential} committee_cold_key
+  * @param {Credential} committee_hot_key
+  * @returns {Promise<CommitteeHotAuth>}
+  */
+  static new: (committee_cold_key: Credential, committee_hot_key: Credential) => Promise<CommitteeHotAuth>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_script_credentials: () => Promise<boolean>;
+
+}
+
+
+export class Constitution extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<Constitution>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Constitution>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<Constitution>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<Constitution>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<Constitution>>}
+  */
+  static from_json: (json: string) => Promise<Optional<Constitution>>;
+
+  /**
+  * @returns {Promise<Anchor>}
+  */
+  anchor: () => Promise<Anchor>;
+
+  /**
+  * @returns {Promise<Optional<ScriptHash>>}
+  */
+  script_hash: () => Promise<Optional<ScriptHash>>;
+
+  /**
+  * @param {Anchor} anchor
+  * @returns {Promise<Constitution>}
+  */
+  static new: (anchor: Anchor) => Promise<Constitution>;
+
+  /**
+  * @param {Anchor} anchor
+  * @param {ScriptHash} script_hash
+  * @returns {Promise<Constitution>}
+  */
+  static new_with_script_hash: (anchor: Anchor, script_hash: ScriptHash) => Promise<Constitution>;
 
 }
 
@@ -1377,6 +1901,133 @@ export class Costmdls extends Ptr {
 }
 
 
+export class Credential extends Ptr {
+  /**
+  * @param {Ed25519KeyHash} hash
+  * @returns {Promise<Credential>}
+  */
+  static from_keyhash: (hash: Ed25519KeyHash) => Promise<Credential>;
+
+  /**
+  * @param {ScriptHash} hash
+  * @returns {Promise<Credential>}
+  */
+  static from_scripthash: (hash: ScriptHash) => Promise<Credential>;
+
+  /**
+  * @returns {Promise<Optional<Ed25519KeyHash>>}
+  */
+  to_keyhash: () => Promise<Optional<Ed25519KeyHash>>;
+
+  /**
+  * @returns {Promise<Optional<ScriptHash>>}
+  */
+  to_scripthash: () => Promise<Optional<ScriptHash>>;
+
+  /**
+  * @returns {Promise<CredKind>}
+  */
+  kind: () => Promise<CredKind>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_script_hash: () => Promise<boolean>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<Credential>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Credential>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<Credential>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<Credential>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<Credential>>}
+  */
+  static from_json: (json: string) => Promise<Optional<Credential>>;
+
+}
+
+
+export class Credentials extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<Credentials>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Credentials>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<Credentials>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<Credentials>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<Credentials>>}
+  */
+  static from_json: (json: string) => Promise<Optional<Credentials>>;
+
+  /**
+  * @returns {Promise<Credentials>}
+  */
+  static new: () => Promise<Credentials>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len: () => Promise<number>;
+
+  /**
+  * @param {number} index
+  * @returns {Promise<Credential>}
+  */
+  get: (index: number) => Promise<Credential>;
+
+  /**
+  * @param {Credential} elem
+  */
+  add: (elem: Credential) => Promise<void>;
+
+}
+
+
 export class DNSRecordAorAAAA extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -1473,6 +2124,80 @@ export class DNSRecordSRV extends Ptr {
 }
 
 
+export class DRep extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<DRep>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<DRep>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<DRep>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<DRep>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<DRep>>}
+  */
+  static from_json: (json: string) => Promise<Optional<DRep>>;
+
+  /**
+  * @param {Ed25519KeyHash} key_hash
+  * @returns {Promise<DRep>}
+  */
+  static new_key_hash: (key_hash: Ed25519KeyHash) => Promise<DRep>;
+
+  /**
+  * @param {ScriptHash} script_hash
+  * @returns {Promise<DRep>}
+  */
+  static new_script_hash: (script_hash: ScriptHash) => Promise<DRep>;
+
+  /**
+  * @returns {Promise<DRep>}
+  */
+  static new_always_abstain: () => Promise<DRep>;
+
+  /**
+  * @returns {Promise<DRep>}
+  */
+  static new_always_no_confidence: () => Promise<DRep>;
+
+  /**
+  * @returns {Promise<DRepKind>}
+  */
+  kind: () => Promise<DRepKind>;
+
+  /**
+  * @returns {Promise<Optional<Ed25519KeyHash>>}
+  */
+  to_key_hash: () => Promise<Optional<Ed25519KeyHash>>;
+
+  /**
+  * @returns {Promise<Optional<ScriptHash>>}
+  */
+  to_script_hash: () => Promise<Optional<ScriptHash>>;
+
+}
+
+
 export class DataCost extends Ptr {
   /**
   * @param {BigNum} coins_per_word
@@ -1544,6 +2269,354 @@ export class DatumSource extends Ptr {
   * @returns {Promise<DatumSource>}
   */
   static new_ref_input: (input: TransactionInput) => Promise<DatumSource>;
+
+}
+
+
+export class DrepDeregistration extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<DrepDeregistration>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<DrepDeregistration>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<DrepDeregistration>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<DrepDeregistration>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<DrepDeregistration>>}
+  */
+  static from_json: (json: string) => Promise<Optional<DrepDeregistration>>;
+
+  /**
+  * @returns {Promise<Credential>}
+  */
+  voting_credential: () => Promise<Credential>;
+
+  /**
+  * @returns {Promise<BigNum>}
+  */
+  coin: () => Promise<BigNum>;
+
+  /**
+  * @param {Credential} voting_credential
+  * @param {BigNum} coin
+  * @returns {Promise<DrepDeregistration>}
+  */
+  static new: (voting_credential: Credential, coin: BigNum) => Promise<DrepDeregistration>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_script_credentials: () => Promise<boolean>;
+
+}
+
+
+export class DrepRegistration extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<DrepRegistration>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<DrepRegistration>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<DrepRegistration>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<DrepRegistration>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<DrepRegistration>>}
+  */
+  static from_json: (json: string) => Promise<Optional<DrepRegistration>>;
+
+  /**
+  * @returns {Promise<Credential>}
+  */
+  voting_credential: () => Promise<Credential>;
+
+  /**
+  * @returns {Promise<BigNum>}
+  */
+  coin: () => Promise<BigNum>;
+
+  /**
+  * @returns {Promise<Optional<Anchor>>}
+  */
+  anchor: () => Promise<Optional<Anchor>>;
+
+  /**
+  * @param {Credential} voting_credential
+  * @param {BigNum} coin
+  * @returns {Promise<DrepRegistration>}
+  */
+  static new: (voting_credential: Credential, coin: BigNum) => Promise<DrepRegistration>;
+
+  /**
+  * @param {Credential} voting_credential
+  * @param {BigNum} coin
+  * @param {Anchor} anchor
+  * @returns {Promise<DrepRegistration>}
+  */
+  static new_with_anchor: (voting_credential: Credential, coin: BigNum, anchor: Anchor) => Promise<DrepRegistration>;
+
+}
+
+
+export class DrepUpdate extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<DrepUpdate>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<DrepUpdate>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<DrepUpdate>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<DrepUpdate>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<DrepUpdate>>}
+  */
+  static from_json: (json: string) => Promise<Optional<DrepUpdate>>;
+
+  /**
+  * @returns {Promise<Credential>}
+  */
+  voting_credential: () => Promise<Credential>;
+
+  /**
+  * @returns {Promise<Optional<Anchor>>}
+  */
+  anchor: () => Promise<Optional<Anchor>>;
+
+  /**
+  * @param {Credential} voting_credential
+  * @returns {Promise<DrepUpdate>}
+  */
+  static new: (voting_credential: Credential) => Promise<DrepUpdate>;
+
+  /**
+  * @param {Credential} voting_credential
+  * @param {Anchor} anchor
+  * @returns {Promise<DrepUpdate>}
+  */
+  static new_with_anchor: (voting_credential: Credential, anchor: Anchor) => Promise<DrepUpdate>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_script_credentials: () => Promise<boolean>;
+
+}
+
+
+export class DrepVotingThresholds extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<DrepVotingThresholds>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<DrepVotingThresholds>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<DrepVotingThresholds>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<DrepVotingThresholds>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<DrepVotingThresholds>>}
+  */
+  static from_json: (json: string) => Promise<Optional<DrepVotingThresholds>>;
+
+  /**
+  * @param {UnitInterval} motion_no_confidence
+  * @param {UnitInterval} committee_normal
+  * @param {UnitInterval} committee_no_confidence
+  * @param {UnitInterval} update_constitution
+  * @param {UnitInterval} hard_fork_initiation
+  * @param {UnitInterval} pp_network_group
+  * @param {UnitInterval} pp_economic_group
+  * @param {UnitInterval} pp_technical_group
+  * @param {UnitInterval} pp_governance_group
+  * @param {UnitInterval} treasury_withdrawal
+  * @returns {Promise<DrepVotingThresholds>}
+  */
+  static new: (motion_no_confidence: UnitInterval, committee_normal: UnitInterval, committee_no_confidence: UnitInterval, update_constitution: UnitInterval, hard_fork_initiation: UnitInterval, pp_network_group: UnitInterval, pp_economic_group: UnitInterval, pp_technical_group: UnitInterval, pp_governance_group: UnitInterval, treasury_withdrawal: UnitInterval) => Promise<DrepVotingThresholds>;
+
+  /**
+  * @returns {Promise<DrepVotingThresholds>}
+  */
+  static new_default: () => Promise<DrepVotingThresholds>;
+
+  /**
+  * @param {UnitInterval} motion_no_confidence
+  */
+  set_motion_no_confidence: (motion_no_confidence: UnitInterval) => Promise<void>;
+
+  /**
+  * @param {UnitInterval} committee_normal
+  */
+  set_committee_normal: (committee_normal: UnitInterval) => Promise<void>;
+
+  /**
+  * @param {UnitInterval} committee_no_confidence
+  */
+  set_committee_no_confidence: (committee_no_confidence: UnitInterval) => Promise<void>;
+
+  /**
+  * @param {UnitInterval} update_constitution
+  */
+  set_update_constitution: (update_constitution: UnitInterval) => Promise<void>;
+
+  /**
+  * @param {UnitInterval} hard_fork_initiation
+  */
+  set_hard_fork_initiation: (hard_fork_initiation: UnitInterval) => Promise<void>;
+
+  /**
+  * @param {UnitInterval} pp_network_group
+  */
+  set_pp_network_group: (pp_network_group: UnitInterval) => Promise<void>;
+
+  /**
+  * @param {UnitInterval} pp_economic_group
+  */
+  set_pp_economic_group: (pp_economic_group: UnitInterval) => Promise<void>;
+
+  /**
+  * @param {UnitInterval} pp_technical_group
+  */
+  set_pp_technical_group: (pp_technical_group: UnitInterval) => Promise<void>;
+
+  /**
+  * @param {UnitInterval} pp_governance_group
+  */
+  set_pp_governance_group: (pp_governance_group: UnitInterval) => Promise<void>;
+
+  /**
+  * @param {UnitInterval} treasury_withdrawal
+  */
+  set_treasury_withdrawal: (treasury_withdrawal: UnitInterval) => Promise<void>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  motion_no_confidence: () => Promise<UnitInterval>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  committee_normal: () => Promise<UnitInterval>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  committee_no_confidence: () => Promise<UnitInterval>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  update_constitution: () => Promise<UnitInterval>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  hard_fork_initiation: () => Promise<UnitInterval>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  pp_network_group: () => Promise<UnitInterval>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  pp_economic_group: () => Promise<UnitInterval>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  pp_technical_group: () => Promise<UnitInterval>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  pp_governance_group: () => Promise<UnitInterval>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  treasury_withdrawal: () => Promise<UnitInterval>;
 
 }
 
@@ -1689,15 +2762,15 @@ export class Ed25519Signature extends Ptr {
 export class EnterpriseAddress extends Ptr {
   /**
   * @param {number} network
-  * @param {StakeCredential} payment
+  * @param {Credential} payment
   * @returns {Promise<EnterpriseAddress>}
   */
-  static new: (network: number, payment: StakeCredential) => Promise<EnterpriseAddress>;
+  static new: (network: number, payment: Credential) => Promise<EnterpriseAddress>;
 
   /**
-  * @returns {Promise<StakeCredential>}
+  * @returns {Promise<Credential>}
   */
-  payment_cred: () => Promise<StakeCredential>;
+  payment_cred: () => Promise<Credential>;
 
   /**
   * @returns {Promise<Address>}
@@ -2181,6 +3254,275 @@ export class GenesisKeyDelegation extends Ptr {
 }
 
 
+export class GovernanceAction extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<GovernanceAction>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<GovernanceAction>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<GovernanceAction>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<GovernanceAction>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<GovernanceAction>>}
+  */
+  static from_json: (json: string) => Promise<Optional<GovernanceAction>>;
+
+  /**
+  * @param {ParameterChangeAction} parameter_change_action
+  * @returns {Promise<GovernanceAction>}
+  */
+  static new_parameter_change_action: (parameter_change_action: ParameterChangeAction) => Promise<GovernanceAction>;
+
+  /**
+  * @param {HardForkInitiationAction} hard_fork_initiation_action
+  * @returns {Promise<GovernanceAction>}
+  */
+  static new_hard_fork_initiation_action: (hard_fork_initiation_action: HardForkInitiationAction) => Promise<GovernanceAction>;
+
+  /**
+  * @param {TreasuryWithdrawalsAction} treasury_withdrawals_action
+  * @returns {Promise<GovernanceAction>}
+  */
+  static new_treasury_withdrawals_action: (treasury_withdrawals_action: TreasuryWithdrawalsAction) => Promise<GovernanceAction>;
+
+  /**
+  * @param {NoConfidenceAction} no_confidence_action
+  * @returns {Promise<GovernanceAction>}
+  */
+  static new_no_confidence_action: (no_confidence_action: NoConfidenceAction) => Promise<GovernanceAction>;
+
+  /**
+  * @param {UpdateCommitteeAction} new_committee_action
+  * @returns {Promise<GovernanceAction>}
+  */
+  static new_new_committee_action: (new_committee_action: UpdateCommitteeAction) => Promise<GovernanceAction>;
+
+  /**
+  * @param {NewConstitutionAction} new_constitution_action
+  * @returns {Promise<GovernanceAction>}
+  */
+  static new_new_constitution_action: (new_constitution_action: NewConstitutionAction) => Promise<GovernanceAction>;
+
+  /**
+  * @param {InfoAction} info_action
+  * @returns {Promise<GovernanceAction>}
+  */
+  static new_info_action: (info_action: InfoAction) => Promise<GovernanceAction>;
+
+  /**
+  * @returns {Promise<GovernanceActionKind>}
+  */
+  kind: () => Promise<GovernanceActionKind>;
+
+  /**
+  * @returns {Promise<Optional<ParameterChangeAction>>}
+  */
+  as_parameter_change_action: () => Promise<Optional<ParameterChangeAction>>;
+
+  /**
+  * @returns {Promise<Optional<HardForkInitiationAction>>}
+  */
+  as_hard_fork_initiation_action: () => Promise<Optional<HardForkInitiationAction>>;
+
+  /**
+  * @returns {Promise<Optional<TreasuryWithdrawalsAction>>}
+  */
+  as_treasury_withdrawals_action: () => Promise<Optional<TreasuryWithdrawalsAction>>;
+
+  /**
+  * @returns {Promise<Optional<NoConfidenceAction>>}
+  */
+  as_no_confidence_action: () => Promise<Optional<NoConfidenceAction>>;
+
+  /**
+  * @returns {Promise<Optional<UpdateCommitteeAction>>}
+  */
+  as_new_committee_action: () => Promise<Optional<UpdateCommitteeAction>>;
+
+  /**
+  * @returns {Promise<Optional<NewConstitutionAction>>}
+  */
+  as_new_constitution_action: () => Promise<Optional<NewConstitutionAction>>;
+
+  /**
+  * @returns {Promise<Optional<InfoAction>>}
+  */
+  as_info_action: () => Promise<Optional<InfoAction>>;
+
+}
+
+
+export class GovernanceActionId extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<GovernanceActionId>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<GovernanceActionId>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<GovernanceActionId>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<GovernanceActionId>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<GovernanceActionId>>}
+  */
+  static from_json: (json: string) => Promise<Optional<GovernanceActionId>>;
+
+  /**
+  * @returns {Promise<TransactionHash>}
+  */
+  transaction_id: () => Promise<TransactionHash>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  index: () => Promise<number>;
+
+  /**
+  * @param {TransactionHash} transaction_id
+  * @param {number} index
+  * @returns {Promise<GovernanceActionId>}
+  */
+  static new: (transaction_id: TransactionHash, index: number) => Promise<GovernanceActionId>;
+
+}
+
+
+export class GovernanceActionIds extends Ptr {
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<GovernanceActionIds>>}
+  */
+  static from_json: (json: string) => Promise<Optional<GovernanceActionIds>>;
+
+  /**
+  * @returns {Promise<GovernanceActionIds>}
+  */
+  static new: () => Promise<GovernanceActionIds>;
+
+  /**
+  * @param {GovernanceActionId} governance_action_id
+  */
+  add: (governance_action_id: GovernanceActionId) => Promise<void>;
+
+  /**
+  * @param {number} index
+  * @returns {Promise<Optional<GovernanceActionId>>}
+  */
+  get: (index: number) => Promise<Optional<GovernanceActionId>>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len: () => Promise<number>;
+
+}
+
+
+export class HardForkInitiationAction extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<HardForkInitiationAction>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<HardForkInitiationAction>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<HardForkInitiationAction>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<HardForkInitiationAction>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<HardForkInitiationAction>>}
+  */
+  static from_json: (json: string) => Promise<Optional<HardForkInitiationAction>>;
+
+  /**
+  * @returns {Promise<Optional<GovernanceActionId>>}
+  */
+  gov_action_id: () => Promise<Optional<GovernanceActionId>>;
+
+  /**
+  * @returns {Promise<ProtocolVersion>}
+  */
+  protocol_version: () => Promise<ProtocolVersion>;
+
+  /**
+  * @param {ProtocolVersion} protocol_version
+  * @returns {Promise<HardForkInitiationAction>}
+  */
+  static new: (protocol_version: ProtocolVersion) => Promise<HardForkInitiationAction>;
+
+  /**
+  * @param {GovernanceActionId} gov_action_id
+  * @param {ProtocolVersion} protocol_version
+  * @returns {Promise<HardForkInitiationAction>}
+  */
+  static new_with_action_id: (gov_action_id: GovernanceActionId, protocol_version: ProtocolVersion) => Promise<HardForkInitiationAction>;
+
+}
+
+
 export class Header extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -2373,6 +3715,15 @@ export class HeaderBody extends Ptr {
   * @returns {Promise<HeaderBody>}
   */
   static new_headerbody: (block_number: number, slot: BigNum, prev_hash: Optional<BlockHash>, issuer_vkey: Vkey, vrf_vkey: VRFVKey, vrf_result: VRFCert, block_body_size: number, block_body_hash: BlockHash, operational_cert: OperationalCert, protocol_version: ProtocolVersion) => Promise<HeaderBody>;
+
+}
+
+
+export class InfoAction extends Ptr {
+  /**
+  * @returns {Promise<InfoAction>}
+  */
+  static new: () => Promise<InfoAction>;
 
 }
 
@@ -2715,6 +4066,11 @@ export class Language extends Ptr {
   static new_plutus_v2: () => Promise<Language>;
 
   /**
+  * @returns {Promise<Language>}
+  */
+  static new_plutus_v3: () => Promise<Language>;
+
+  /**
   * @returns {Promise<LanguageKind>}
   */
   kind: () => Promise<LanguageKind>;
@@ -2838,22 +4194,22 @@ export class MIRToStakeCredentials extends Ptr {
   len: () => Promise<number>;
 
   /**
-  * @param {StakeCredential} cred
+  * @param {Credential} cred
   * @param {Int} delta
   * @returns {Promise<Optional<Int>>}
   */
-  insert: (cred: StakeCredential, delta: Int) => Promise<Optional<Int>>;
+  insert: (cred: Credential, delta: Int) => Promise<Optional<Int>>;
 
   /**
-  * @param {StakeCredential} cred
+  * @param {Credential} cred
   * @returns {Promise<Optional<Int>>}
   */
-  get: (cred: StakeCredential) => Promise<Optional<Int>>;
+  get: (cred: Credential) => Promise<Optional<Int>>;
 
   /**
-  * @returns {Promise<StakeCredentials>}
+  * @returns {Promise<Credentials>}
   */
-  keys: () => Promise<StakeCredentials>;
+  keys: () => Promise<Credentials>;
 
 }
 
@@ -3088,9 +4444,9 @@ export class MintAssets extends Ptr {
   /**
   * @param {AssetName} key
   * @param {Int} value
-  * @returns {Promise<MintAssets>}
+  * @returns {Promise<Optional<MintAssets>>}
   */
-  static new_from_entry: (key: AssetName, value: Int) => Promise<MintAssets>;
+  static new_from_entry: (key: AssetName, value: Int) => Promise<Optional<MintAssets>>;
 
   /**
   * @returns {Promise<number>}
@@ -3128,6 +4484,7 @@ export class MintBuilder extends Ptr {
   * @param {MintWitness} mint
   * @param {AssetName} asset_name
   * @param {Int} amount
+  * @returns {Promise<void>}
   */
   add_asset: (mint: MintWitness, asset_name: AssetName, amount: Int) => Promise<void>;
 
@@ -3135,6 +4492,7 @@ export class MintBuilder extends Ptr {
   * @param {MintWitness} mint
   * @param {AssetName} asset_name
   * @param {Int} amount
+  * @returns {Promise<void>}
   */
   set_asset: (mint: MintWitness, asset_name: AssetName, amount: Int) => Promise<void>;
 
@@ -3568,6 +4926,24 @@ export class NativeScript extends Ptr {
 }
 
 
+export class NativeScriptSource extends Ptr {
+  /**
+  * @param {NativeScript} script
+  * @returns {Promise<NativeScriptSource>}
+  */
+  static new: (script: NativeScript) => Promise<NativeScriptSource>;
+
+  /**
+  * @param {ScriptHash} script_hash
+  * @param {TransactionInput} input
+  * @param {Ed25519KeyHashes} required_signers
+  * @returns {Promise<NativeScriptSource>}
+  */
+  static new_ref_input: (script_hash: ScriptHash, input: TransactionInput, required_signers: Ed25519KeyHashes) => Promise<NativeScriptSource>;
+
+}
+
+
 export class NativeScripts extends Ptr {
   /**
   * @returns {Promise<NativeScripts>}
@@ -3682,6 +5058,119 @@ export class NetworkInfo extends Ptr {
   * @returns {Promise<NetworkInfo>}
   */
   static mainnet: () => Promise<NetworkInfo>;
+
+}
+
+
+export class NewConstitutionAction extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<NewConstitutionAction>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<NewConstitutionAction>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<NewConstitutionAction>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<NewConstitutionAction>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<NewConstitutionAction>>}
+  */
+  static from_json: (json: string) => Promise<Optional<NewConstitutionAction>>;
+
+  /**
+  * @returns {Promise<Optional<GovernanceActionId>>}
+  */
+  gov_action_id: () => Promise<Optional<GovernanceActionId>>;
+
+  /**
+  * @returns {Promise<Constitution>}
+  */
+  constitution: () => Promise<Constitution>;
+
+  /**
+  * @param {Constitution} constitution
+  * @returns {Promise<NewConstitutionAction>}
+  */
+  static new: (constitution: Constitution) => Promise<NewConstitutionAction>;
+
+  /**
+  * @param {GovernanceActionId} gov_action_id
+  * @param {Constitution} constitution
+  * @returns {Promise<NewConstitutionAction>}
+  */
+  static new_with_action_id: (gov_action_id: GovernanceActionId, constitution: Constitution) => Promise<NewConstitutionAction>;
+
+}
+
+
+export class NoConfidenceAction extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<NoConfidenceAction>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<NoConfidenceAction>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<NoConfidenceAction>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<NoConfidenceAction>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<NoConfidenceAction>>}
+  */
+  static from_json: (json: string) => Promise<Optional<NoConfidenceAction>>;
+
+  /**
+  * @returns {Promise<Optional<GovernanceActionId>>}
+  */
+  gov_action_id: () => Promise<Optional<GovernanceActionId>>;
+
+  /**
+  * @returns {Promise<NoConfidenceAction>}
+  */
+  static new: () => Promise<NoConfidenceAction>;
+
+  /**
+  * @param {GovernanceActionId} gov_action_id
+  * @returns {Promise<NoConfidenceAction>}
+  */
+  static new_with_action_id: (gov_action_id: GovernanceActionId) => Promise<NoConfidenceAction>;
 
 }
 
@@ -3801,6 +5290,92 @@ export class OperationalCert extends Ptr {
   * @returns {Promise<OperationalCert>}
   */
   static new: (hot_vkey: KESVKey, sequence_number: number, kes_period: number, sigma: Ed25519Signature) => Promise<OperationalCert>;
+
+}
+
+
+export class OutputDatum extends Ptr {
+  /**
+  * @param {DataHash} data_hash
+  * @returns {Promise<OutputDatum>}
+  */
+  static new_data_hash: (data_hash: DataHash) => Promise<OutputDatum>;
+
+  /**
+  * @param {PlutusData} data
+  * @returns {Promise<OutputDatum>}
+  */
+  static new_data: (data: PlutusData) => Promise<OutputDatum>;
+
+  /**
+  * @returns {Promise<Optional<DataHash>>}
+  */
+  data_hash: () => Promise<Optional<DataHash>>;
+
+  /**
+  * @returns {Promise<Optional<PlutusData>>}
+  */
+  data: () => Promise<Optional<PlutusData>>;
+
+}
+
+
+export class ParameterChangeAction extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<ParameterChangeAction>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ParameterChangeAction>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<ParameterChangeAction>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<ParameterChangeAction>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<ParameterChangeAction>>}
+  */
+  static from_json: (json: string) => Promise<Optional<ParameterChangeAction>>;
+
+  /**
+  * @returns {Promise<Optional<GovernanceActionId>>}
+  */
+  gov_action_id: () => Promise<Optional<GovernanceActionId>>;
+
+  /**
+  * @returns {Promise<ProtocolParamUpdate>}
+  */
+  protocol_param_updates: () => Promise<ProtocolParamUpdate>;
+
+  /**
+  * @param {ProtocolParamUpdate} protocol_param_updates
+  * @returns {Promise<ParameterChangeAction>}
+  */
+  static new: (protocol_param_updates: ProtocolParamUpdate) => Promise<ParameterChangeAction>;
+
+  /**
+  * @param {GovernanceActionId} gov_action_id
+  * @param {ProtocolParamUpdate} protocol_param_updates
+  * @returns {Promise<ParameterChangeAction>}
+  */
+  static new_with_action_id: (gov_action_id: GovernanceActionId, protocol_param_updates: ProtocolParamUpdate) => Promise<ParameterChangeAction>;
 
 }
 
@@ -4061,6 +5636,12 @@ export class PlutusScript extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
+  * @returns {Promise<PlutusScript>}
+  */
+  static new_v3: (bytes: Uint8Array) => Promise<PlutusScript>;
+
+  /**
+  * @param {Uint8Array} bytes
   * @param {Language} language
   * @returns {Promise<PlutusScript>}
   */
@@ -4076,6 +5657,12 @@ export class PlutusScript extends Ptr {
   * @returns {Promise<Optional<PlutusScript>>}
   */
   static from_bytes_v2: (bytes: Uint8Array) => Promise<Optional<PlutusScript>>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<PlutusScript>>}
+  */
+  static from_bytes_v3: (bytes: Uint8Array) => Promise<Optional<PlutusScript>>;
 
   /**
   * @param {Uint8Array} bytes
@@ -4314,16 +5901,16 @@ export class Pointer extends Ptr {
 export class PointerAddress extends Ptr {
   /**
   * @param {number} network
-  * @param {StakeCredential} payment
+  * @param {Credential} payment
   * @param {Pointer} stake
   * @returns {Promise<PointerAddress>}
   */
-  static new: (network: number, payment: StakeCredential, stake: Pointer) => Promise<PointerAddress>;
+  static new: (network: number, payment: Credential, stake: Pointer) => Promise<PointerAddress>;
 
   /**
-  * @returns {Promise<StakeCredential>}
+  * @returns {Promise<Credential>}
   */
-  payment_cred: () => Promise<StakeCredential>;
+  payment_cred: () => Promise<Credential>;
 
   /**
   * @returns {Promise<Pointer>}
@@ -4630,6 +6217,72 @@ export class PoolRetirement extends Ptr {
   * @returns {Promise<PoolRetirement>}
   */
   static new: (pool_keyhash: Ed25519KeyHash, epoch: number) => Promise<PoolRetirement>;
+
+}
+
+
+export class PoolVotingThresholds extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<PoolVotingThresholds>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<PoolVotingThresholds>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<PoolVotingThresholds>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<PoolVotingThresholds>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<PoolVotingThresholds>>}
+  */
+  static from_json: (json: string) => Promise<Optional<PoolVotingThresholds>>;
+
+  /**
+  * @param {UnitInterval} motion_no_confidence
+  * @param {UnitInterval} committee_normal
+  * @param {UnitInterval} committee_no_confidence
+  * @param {UnitInterval} hard_fork_initiation
+  * @returns {Promise<PoolVotingThresholds>}
+  */
+  static new: (motion_no_confidence: UnitInterval, committee_normal: UnitInterval, committee_no_confidence: UnitInterval, hard_fork_initiation: UnitInterval) => Promise<PoolVotingThresholds>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  motion_no_confidence: () => Promise<UnitInterval>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  committee_normal: () => Promise<UnitInterval>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  committee_no_confidence: () => Promise<UnitInterval>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  hard_fork_initiation: () => Promise<UnitInterval>;
 
 }
 
@@ -5028,6 +6681,86 @@ export class ProtocolParamUpdate extends Ptr {
   max_collateral_inputs: () => Promise<Optional<number>>;
 
   /**
+  * @param {PoolVotingThresholds} pool_voting_thresholds
+  */
+  set_pool_voting_thresholds: (pool_voting_thresholds: PoolVotingThresholds) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<PoolVotingThresholds>>}
+  */
+  pool_voting_thresholds: () => Promise<Optional<PoolVotingThresholds>>;
+
+  /**
+  * @param {DrepVotingThresholds} drep_voting_thresholds
+  */
+  set_drep_voting_thresholds: (drep_voting_thresholds: DrepVotingThresholds) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<DrepVotingThresholds>>}
+  */
+  drep_voting_thresholds: () => Promise<Optional<DrepVotingThresholds>>;
+
+  /**
+  * @param {number} min_committee_size
+  */
+  set_min_committee_size: (min_committee_size: number) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<number>>}
+  */
+  min_committee_size: () => Promise<Optional<number>>;
+
+  /**
+  * @param {number} committee_term_limit
+  */
+  set_committee_term_limit: (committee_term_limit: number) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<number>>}
+  */
+  committee_term_limit: () => Promise<Optional<number>>;
+
+  /**
+  * @param {number} governance_action_validity_period
+  */
+  set_governance_action_validity_period: (governance_action_validity_period: number) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<number>>}
+  */
+  governance_action_validity_period: () => Promise<Optional<number>>;
+
+  /**
+  * @param {BigNum} governance_action_deposit
+  */
+  set_governance_action_deposit: (governance_action_deposit: BigNum) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<BigNum>>}
+  */
+  governance_action_deposit: () => Promise<Optional<BigNum>>;
+
+  /**
+  * @param {BigNum} drep_deposit
+  */
+  set_drep_deposit: (drep_deposit: BigNum) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<BigNum>>}
+  */
+  drep_deposit: () => Promise<Optional<BigNum>>;
+
+  /**
+  * @param {number} drep_inactivity_period
+  */
+  set_drep_inactivity_period: (drep_inactivity_period: number) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<number>>}
+  */
+  drep_inactivity_period: () => Promise<Optional<number>>;
+
+  /**
   * @returns {Promise<ProtocolParamUpdate>}
   */
   static new: () => Promise<ProtocolParamUpdate>;
@@ -5284,6 +7017,16 @@ export class RedeemerTag extends Ptr {
   static new_reward: () => Promise<RedeemerTag>;
 
   /**
+  * @returns {Promise<RedeemerTag>}
+  */
+  static new_vote: () => Promise<RedeemerTag>;
+
+  /**
+  * @returns {Promise<RedeemerTag>}
+  */
+  static new_voting_proposal: () => Promise<RedeemerTag>;
+
+  /**
   * @returns {Promise<RedeemerTagKind>}
   */
   kind: () => Promise<RedeemerTagKind>;
@@ -5490,15 +7233,15 @@ export class Relays extends Ptr {
 export class RewardAddress extends Ptr {
   /**
   * @param {number} network
-  * @param {StakeCredential} payment
+  * @param {Credential} payment
   * @returns {Promise<RewardAddress>}
   */
-  static new: (network: number, payment: StakeCredential) => Promise<RewardAddress>;
+  static new: (network: number, payment: Credential) => Promise<RewardAddress>;
 
   /**
-  * @returns {Promise<StakeCredential>}
+  * @returns {Promise<Credential>}
   */
-  payment_cred: () => Promise<StakeCredential>;
+  payment_cred: () => Promise<Credential>;
 
   /**
   * @returns {Promise<Address>}
@@ -6087,34 +7830,7 @@ export class SingleHostName extends Ptr {
 }
 
 
-export class StakeCredential extends Ptr {
-  /**
-  * @param {Ed25519KeyHash} hash
-  * @returns {Promise<StakeCredential>}
-  */
-  static from_keyhash: (hash: Ed25519KeyHash) => Promise<StakeCredential>;
-
-  /**
-  * @param {ScriptHash} hash
-  * @returns {Promise<StakeCredential>}
-  */
-  static from_scripthash: (hash: ScriptHash) => Promise<StakeCredential>;
-
-  /**
-  * @returns {Promise<Optional<Ed25519KeyHash>>}
-  */
-  to_keyhash: () => Promise<Optional<Ed25519KeyHash>>;
-
-  /**
-  * @returns {Promise<Optional<ScriptHash>>}
-  */
-  to_scripthash: () => Promise<Optional<ScriptHash>>;
-
-  /**
-  * @returns {Promise<StakeCredKind>}
-  */
-  kind: () => Promise<StakeCredKind>;
-
+export class StakeAndVoteDelegation extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
   */
@@ -6122,9 +7838,9 @@ export class StakeCredential extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<StakeCredential>>}
+  * @returns {Promise<Optional<StakeAndVoteDelegation>>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<StakeCredential>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<StakeAndVoteDelegation>>;
 
   /**
   * @returns {Promise<string>}
@@ -6133,9 +7849,9 @@ export class StakeCredential extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<StakeCredential>>}
+  * @returns {Promise<Optional<StakeAndVoteDelegation>>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<StakeCredential>>;
+  static from_hex: (hex_str: string) => Promise<Optional<StakeAndVoteDelegation>>;
 
   /**
   * @returns {Promise<Optional<string>>}
@@ -6144,67 +7860,37 @@ export class StakeCredential extends Ptr {
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<StakeCredential>>}
+  * @returns {Promise<Optional<StakeAndVoteDelegation>>}
   */
-  static from_json: (json: string) => Promise<Optional<StakeCredential>>;
-
-}
-
-
-export class StakeCredentials extends Ptr {
-  /**
-  * @returns {Promise<Uint8Array>}
-  */
-  to_bytes: () => Promise<Uint8Array>;
+  static from_json: (json: string) => Promise<Optional<StakeAndVoteDelegation>>;
 
   /**
-  * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<StakeCredentials>>}
+  * @returns {Promise<Credential>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<StakeCredentials>>;
+  stake_credential: () => Promise<Credential>;
 
   /**
-  * @returns {Promise<string>}
+  * @returns {Promise<Ed25519KeyHash>}
   */
-  to_hex: () => Promise<string>;
+  pool_keyhash: () => Promise<Ed25519KeyHash>;
 
   /**
-  * @param {string} hex_str
-  * @returns {Promise<Optional<StakeCredentials>>}
+  * @returns {Promise<DRep>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<StakeCredentials>>;
+  drep: () => Promise<DRep>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @param {Credential} stake_credential
+  * @param {Ed25519KeyHash} pool_keyhash
+  * @param {DRep} drep
+  * @returns {Promise<StakeAndVoteDelegation>}
   */
-  to_json: () => Promise<Optional<string>>;
+  static new: (stake_credential: Credential, pool_keyhash: Ed25519KeyHash, drep: DRep) => Promise<StakeAndVoteDelegation>;
 
   /**
-  * @param {string} json
-  * @returns {Promise<Optional<StakeCredentials>>}
+  * @returns {Promise<boolean>}
   */
-  static from_json: (json: string) => Promise<Optional<StakeCredentials>>;
-
-  /**
-  * @returns {Promise<StakeCredentials>}
-  */
-  static new: () => Promise<StakeCredentials>;
-
-  /**
-  * @returns {Promise<number>}
-  */
-  len: () => Promise<number>;
-
-  /**
-  * @param {number} index
-  * @returns {Promise<StakeCredential>}
-  */
-  get: (index: number) => Promise<StakeCredential>;
-
-  /**
-  * @param {StakeCredential} elem
-  */
-  add: (elem: StakeCredential) => Promise<void>;
+  has_script_credentials: () => Promise<boolean>;
 
 }
 
@@ -6244,9 +7930,9 @@ export class StakeDelegation extends Ptr {
   static from_json: (json: string) => Promise<Optional<StakeDelegation>>;
 
   /**
-  * @returns {Promise<StakeCredential>}
+  * @returns {Promise<Credential>}
   */
-  stake_credential: () => Promise<StakeCredential>;
+  stake_credential: () => Promise<Credential>;
 
   /**
   * @returns {Promise<Ed25519KeyHash>}
@@ -6254,11 +7940,16 @@ export class StakeDelegation extends Ptr {
   pool_keyhash: () => Promise<Ed25519KeyHash>;
 
   /**
-  * @param {StakeCredential} stake_credential
+  * @param {Credential} stake_credential
   * @param {Ed25519KeyHash} pool_keyhash
   * @returns {Promise<StakeDelegation>}
   */
-  static new: (stake_credential: StakeCredential, pool_keyhash: Ed25519KeyHash) => Promise<StakeDelegation>;
+  static new: (stake_credential: Credential, pool_keyhash: Ed25519KeyHash) => Promise<StakeDelegation>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_script_credentials: () => Promise<boolean>;
 
 }
 
@@ -6298,15 +7989,32 @@ export class StakeDeregistration extends Ptr {
   static from_json: (json: string) => Promise<Optional<StakeDeregistration>>;
 
   /**
-  * @returns {Promise<StakeCredential>}
+  * @returns {Promise<Credential>}
   */
-  stake_credential: () => Promise<StakeCredential>;
+  stake_credential: () => Promise<Credential>;
 
   /**
-  * @param {StakeCredential} stake_credential
+  * @returns {Promise<Optional<BigNum>>}
+  */
+  coin: () => Promise<Optional<BigNum>>;
+
+  /**
+  * @param {Credential} stake_credential
   * @returns {Promise<StakeDeregistration>}
   */
-  static new: (stake_credential: StakeCredential) => Promise<StakeDeregistration>;
+  static new: (stake_credential: Credential) => Promise<StakeDeregistration>;
+
+  /**
+  * @param {Credential} stake_credential
+  * @param {BigNum} coin
+  * @returns {Promise<StakeDeregistration>}
+  */
+  static new_with_coin: (stake_credential: Credential, coin: BigNum) => Promise<StakeDeregistration>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_script_credentials: () => Promise<boolean>;
 
 }
 
@@ -6346,15 +8054,168 @@ export class StakeRegistration extends Ptr {
   static from_json: (json: string) => Promise<Optional<StakeRegistration>>;
 
   /**
-  * @returns {Promise<StakeCredential>}
+  * @returns {Promise<Credential>}
   */
-  stake_credential: () => Promise<StakeCredential>;
+  stake_credential: () => Promise<Credential>;
 
   /**
-  * @param {StakeCredential} stake_credential
+  * @returns {Promise<Optional<BigNum>>}
+  */
+  coin: () => Promise<Optional<BigNum>>;
+
+  /**
+  * @param {Credential} stake_credential
   * @returns {Promise<StakeRegistration>}
   */
-  static new: (stake_credential: StakeCredential) => Promise<StakeRegistration>;
+  static new: (stake_credential: Credential) => Promise<StakeRegistration>;
+
+  /**
+  * @param {Credential} stake_credential
+  * @param {BigNum} coin
+  * @returns {Promise<StakeRegistration>}
+  */
+  static new_with_coin: (stake_credential: Credential, coin: BigNum) => Promise<StakeRegistration>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_script_credentials: () => Promise<boolean>;
+
+}
+
+
+export class StakeRegistrationAndDelegation extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<StakeRegistrationAndDelegation>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<StakeRegistrationAndDelegation>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<StakeRegistrationAndDelegation>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<StakeRegistrationAndDelegation>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<StakeRegistrationAndDelegation>>}
+  */
+  static from_json: (json: string) => Promise<Optional<StakeRegistrationAndDelegation>>;
+
+  /**
+  * @returns {Promise<Credential>}
+  */
+  stake_credential: () => Promise<Credential>;
+
+  /**
+  * @returns {Promise<Ed25519KeyHash>}
+  */
+  pool_keyhash: () => Promise<Ed25519KeyHash>;
+
+  /**
+  * @returns {Promise<BigNum>}
+  */
+  coin: () => Promise<BigNum>;
+
+  /**
+  * @param {Credential} stake_credential
+  * @param {Ed25519KeyHash} pool_keyhash
+  * @param {BigNum} coin
+  * @returns {Promise<StakeRegistrationAndDelegation>}
+  */
+  static new: (stake_credential: Credential, pool_keyhash: Ed25519KeyHash, coin: BigNum) => Promise<StakeRegistrationAndDelegation>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_script_credentials: () => Promise<boolean>;
+
+}
+
+
+export class StakeVoteRegistrationAndDelegation extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<StakeVoteRegistrationAndDelegation>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<StakeVoteRegistrationAndDelegation>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<StakeVoteRegistrationAndDelegation>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<StakeVoteRegistrationAndDelegation>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<StakeVoteRegistrationAndDelegation>>}
+  */
+  static from_json: (json: string) => Promise<Optional<StakeVoteRegistrationAndDelegation>>;
+
+  /**
+  * @returns {Promise<Credential>}
+  */
+  stake_credential: () => Promise<Credential>;
+
+  /**
+  * @returns {Promise<Ed25519KeyHash>}
+  */
+  pool_keyhash: () => Promise<Ed25519KeyHash>;
+
+  /**
+  * @returns {Promise<DRep>}
+  */
+  drep: () => Promise<DRep>;
+
+  /**
+  * @returns {Promise<BigNum>}
+  */
+  coin: () => Promise<BigNum>;
+
+  /**
+  * @param {Credential} stake_credential
+  * @param {Ed25519KeyHash} pool_keyhash
+  * @param {DRep} drep
+  * @param {BigNum} coin
+  * @returns {Promise<StakeVoteRegistrationAndDelegation>}
+  */
+  static new: (stake_credential: Credential, pool_keyhash: Ed25519KeyHash, drep: DRep, coin: BigNum) => Promise<StakeVoteRegistrationAndDelegation>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_script_credentials: () => Promise<boolean>;
 
 }
 
@@ -6874,6 +8735,46 @@ export class TransactionBody extends Ptr {
   total_collateral: () => Promise<Optional<BigNum>>;
 
   /**
+  * @param {VotingProcedures} voting_procedures
+  */
+  set_voting_procedures: (voting_procedures: VotingProcedures) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<VotingProcedures>>}
+  */
+  voting_procedures: () => Promise<Optional<VotingProcedures>>;
+
+  /**
+  * @param {VotingProposals} voting_proposals
+  */
+  set_voting_proposals: (voting_proposals: VotingProposals) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<VotingProposals>>}
+  */
+  voting_proposals: () => Promise<Optional<VotingProposals>>;
+
+  /**
+  * @param {BigNum} donation
+  */
+  set_donation: (donation: BigNum) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<BigNum>>}
+  */
+  donation: () => Promise<Optional<BigNum>>;
+
+  /**
+  * @param {BigNum} current_treasury_value
+  */
+  set_current_treasury_value: (current_treasury_value: BigNum) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<BigNum>>}
+  */
+  current_treasury_value: () => Promise<Optional<BigNum>>;
+
+  /**
   * @param {TransactionInputs} inputs
   * @param {TransactionOutputs} outputs
   * @param {BigNum} fee
@@ -7055,13 +8956,35 @@ export class TransactionBuilder extends Ptr {
 
   /**
   * @param {Certificates} certs
+  * @returns {Promise<void>}
   */
   set_certs: (certs: Certificates) => Promise<void>;
 
   /**
+  * @param {CertificatesBuilder} certs
+  */
+  set_certs_builder: (certs: CertificatesBuilder) => Promise<void>;
+
+  /**
   * @param {Withdrawals} withdrawals
+  * @returns {Promise<void>}
   */
   set_withdrawals: (withdrawals: Withdrawals) => Promise<void>;
+
+  /**
+  * @param {WithdrawalsBuilder} withdrawals
+  */
+  set_withdrawals_builder: (withdrawals: WithdrawalsBuilder) => Promise<void>;
+
+  /**
+  * @param {VotingBuilder} voting_builder
+  */
+  set_voting_builder: (voting_builder: VotingBuilder) => Promise<void>;
+
+  /**
+  * @param {VotingProposalBuilder} voting_proposal_builder
+  */
+  set_voting_proposal_builder: (voting_proposal_builder: VotingProposalBuilder) => Promise<void>;
 
   /**
   * @returns {Promise<Optional<AuxiliaryData>>}
@@ -7159,6 +9082,37 @@ export class TransactionBuilder extends Ptr {
   add_mint_asset_and_output_min_required_coin: (policy_script: NativeScript, asset_name: AssetName, amount: Int, output_builder: TransactionOutputAmountBuilder) => Promise<void>;
 
   /**
+  * @param {PlutusData} datum
+  */
+  add_extra_witness_datum: (datum: PlutusData) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<PlutusList>>}
+  */
+  get_extra_witness_datums: () => Promise<Optional<PlutusList>>;
+
+  /**
+  * @param {BigNum} donation
+  */
+  set_donation: (donation: BigNum) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<BigNum>>}
+  */
+  get_donation: () => Promise<Optional<BigNum>>;
+
+  /**
+  * @param {BigNum} current_treasury_value
+  * @returns {Promise<void>}
+  */
+  set_current_treasury_value: (current_treasury_value: BigNum) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<BigNum>>}
+  */
+  get_current_treasury_value: () => Promise<Optional<BigNum>>;
+
+  /**
   * @param {TransactionBuilderConfig} cfg
   * @returns {Promise<TransactionBuilder>}
   */
@@ -7209,6 +9163,13 @@ export class TransactionBuilder extends Ptr {
   * @returns {Promise<Optional<boolean>>}
   */
   add_change_if_needed: (address: Address) => Promise<Optional<boolean>>;
+
+  /**
+  * @param {Address} address
+  * @param {OutputDatum} plutus_data
+  * @returns {Promise<Optional<boolean>>}
+  */
+  add_change_if_needed_with_datum: (address: Address, plutus_data: OutputDatum) => Promise<Optional<boolean>>;
 
   /**
   * @param {Costmdls} cost_models
@@ -8115,6 +10076,96 @@ export class TransactionWitnessSets extends Ptr {
 }
 
 
+export class TreasuryWithdrawals extends Ptr {
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<TreasuryWithdrawals>>}
+  */
+  static from_json: (json: string) => Promise<Optional<TreasuryWithdrawals>>;
+
+  /**
+  * @returns {Promise<TreasuryWithdrawals>}
+  */
+  static new: () => Promise<TreasuryWithdrawals>;
+
+  /**
+  * @param {RewardAddress} key
+  * @returns {Promise<Optional<BigNum>>}
+  */
+  get: (key: RewardAddress) => Promise<Optional<BigNum>>;
+
+  /**
+  * @param {RewardAddress} key
+  * @param {BigNum} value
+  */
+  insert: (key: RewardAddress, value: BigNum) => Promise<void>;
+
+  /**
+  * @returns {Promise<RewardAddresses>}
+  */
+  keys: () => Promise<RewardAddresses>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len: () => Promise<number>;
+
+}
+
+
+export class TreasuryWithdrawalsAction extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<TreasuryWithdrawalsAction>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TreasuryWithdrawalsAction>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<TreasuryWithdrawalsAction>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<TreasuryWithdrawalsAction>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<TreasuryWithdrawalsAction>>}
+  */
+  static from_json: (json: string) => Promise<Optional<TreasuryWithdrawalsAction>>;
+
+  /**
+  * @returns {Promise<TreasuryWithdrawals>}
+  */
+  withdrawals: () => Promise<TreasuryWithdrawals>;
+
+  /**
+  * @param {TreasuryWithdrawals} withdrawals
+  * @returns {Promise<TreasuryWithdrawalsAction>}
+  */
+  static new: (withdrawals: TreasuryWithdrawals) => Promise<TreasuryWithdrawalsAction>;
+
+}
+
+
 export class TxBuilderConstants extends Ptr {
   /**
   * @returns {Promise<Costmdls>}
@@ -8405,6 +10456,73 @@ export class Update extends Ptr {
   * @returns {Promise<Update>}
   */
   static new: (proposed_protocol_parameter_updates: ProposedProtocolParameterUpdates, epoch: number) => Promise<Update>;
+
+}
+
+
+export class UpdateCommitteeAction extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<UpdateCommitteeAction>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<UpdateCommitteeAction>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<UpdateCommitteeAction>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<UpdateCommitteeAction>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<UpdateCommitteeAction>>}
+  */
+  static from_json: (json: string) => Promise<Optional<UpdateCommitteeAction>>;
+
+  /**
+  * @returns {Promise<Optional<GovernanceActionId>>}
+  */
+  gov_action_id: () => Promise<Optional<GovernanceActionId>>;
+
+  /**
+  * @returns {Promise<Committee>}
+  */
+  committee: () => Promise<Committee>;
+
+  /**
+  * @returns {Promise<Credentials>}
+  */
+  members_to_remove: () => Promise<Credentials>;
+
+  /**
+  * @param {Committee} committee
+  * @param {Credentials} members_to_remove
+  * @returns {Promise<UpdateCommitteeAction>}
+  */
+  static new: (committee: Committee, members_to_remove: Credentials) => Promise<UpdateCommitteeAction>;
+
+  /**
+  * @param {GovernanceActionId} gov_action_id
+  * @param {Committee} committee
+  * @param {Credentials} members_to_remove
+  * @returns {Promise<UpdateCommitteeAction>}
+  */
+  static new_with_action_id: (gov_action_id: GovernanceActionId, committee: Committee, members_to_remove: Credentials) => Promise<UpdateCommitteeAction>;
 
 }
 
@@ -8834,6 +10952,604 @@ export class Vkeywitnesses extends Ptr {
 }
 
 
+export class VoteDelegation extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<VoteDelegation>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<VoteDelegation>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<VoteDelegation>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<VoteDelegation>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<VoteDelegation>>}
+  */
+  static from_json: (json: string) => Promise<Optional<VoteDelegation>>;
+
+  /**
+  * @returns {Promise<Credential>}
+  */
+  stake_credential: () => Promise<Credential>;
+
+  /**
+  * @returns {Promise<DRep>}
+  */
+  drep: () => Promise<DRep>;
+
+  /**
+  * @param {Credential} stake_credential
+  * @param {DRep} drep
+  * @returns {Promise<VoteDelegation>}
+  */
+  static new: (stake_credential: Credential, drep: DRep) => Promise<VoteDelegation>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_script_credentials: () => Promise<boolean>;
+
+}
+
+
+export class VoteRegistrationAndDelegation extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<VoteRegistrationAndDelegation>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<VoteRegistrationAndDelegation>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<VoteRegistrationAndDelegation>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<VoteRegistrationAndDelegation>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<VoteRegistrationAndDelegation>>}
+  */
+  static from_json: (json: string) => Promise<Optional<VoteRegistrationAndDelegation>>;
+
+  /**
+  * @returns {Promise<Credential>}
+  */
+  stake_credential: () => Promise<Credential>;
+
+  /**
+  * @returns {Promise<DRep>}
+  */
+  drep: () => Promise<DRep>;
+
+  /**
+  * @returns {Promise<BigNum>}
+  */
+  coin: () => Promise<BigNum>;
+
+  /**
+  * @param {Credential} stake_credential
+  * @param {DRep} drep
+  * @param {BigNum} coin
+  * @returns {Promise<VoteRegistrationAndDelegation>}
+  */
+  static new: (stake_credential: Credential, drep: DRep, coin: BigNum) => Promise<VoteRegistrationAndDelegation>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_script_credentials: () => Promise<boolean>;
+
+}
+
+
+export class Voter extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<Voter>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Voter>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<Voter>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<Voter>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<Voter>>}
+  */
+  static from_json: (json: string) => Promise<Optional<Voter>>;
+
+  /**
+  * @param {Credential} cred
+  * @returns {Promise<Voter>}
+  */
+  static new_constitutional_committee_hot_key: (cred: Credential) => Promise<Voter>;
+
+  /**
+  * @param {Credential} cred
+  * @returns {Promise<Voter>}
+  */
+  static new_drep: (cred: Credential) => Promise<Voter>;
+
+  /**
+  * @param {Ed25519KeyHash} key_hash
+  * @returns {Promise<Voter>}
+  */
+  static new_staking_pool: (key_hash: Ed25519KeyHash) => Promise<Voter>;
+
+  /**
+  * @returns {Promise<VoterKind>}
+  */
+  kind: () => Promise<VoterKind>;
+
+  /**
+  * @returns {Promise<Optional<Credential>>}
+  */
+  to_constitutional_committee_hot_cred: () => Promise<Optional<Credential>>;
+
+  /**
+  * @returns {Promise<Optional<Credential>>}
+  */
+  to_drep_cred: () => Promise<Optional<Credential>>;
+
+  /**
+  * @returns {Promise<Optional<Ed25519KeyHash>>}
+  */
+  to_staking_pool_key_hash: () => Promise<Optional<Ed25519KeyHash>>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_script_credentials: () => Promise<boolean>;
+
+  /**
+  * @returns {Promise<Optional<Ed25519KeyHash>>}
+  */
+  to_key_hash: () => Promise<Optional<Ed25519KeyHash>>;
+
+}
+
+
+export class Voters extends Ptr {
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<Voters>>}
+  */
+  static from_json: (json: string) => Promise<Optional<Voters>>;
+
+  /**
+  * @returns {Promise<Voters>}
+  */
+  static new: () => Promise<Voters>;
+
+  /**
+  * @param {Voter} voter
+  */
+  add: (voter: Voter) => Promise<void>;
+
+  /**
+  * @param {number} index
+  * @returns {Promise<Optional<Voter>>}
+  */
+  get: (index: number) => Promise<Optional<Voter>>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len: () => Promise<number>;
+
+}
+
+
+export class VotingBuilder extends Ptr {
+  /**
+  * @returns {Promise<VotingBuilder>}
+  */
+  static new: () => Promise<VotingBuilder>;
+
+  /**
+  * @param {Voter} voter
+  * @param {GovernanceActionId} gov_action_id
+  * @param {VotingProcedure} voting_procedure
+  * @returns {Promise<void>}
+  */
+  add: (voter: Voter, gov_action_id: GovernanceActionId, voting_procedure: VotingProcedure) => Promise<void>;
+
+  /**
+  * @param {Voter} voter
+  * @param {GovernanceActionId} gov_action_id
+  * @param {VotingProcedure} voting_procedure
+  * @param {PlutusWitness} witness
+  * @returns {Promise<void>}
+  */
+  add_with_plutus_witness: (voter: Voter, gov_action_id: GovernanceActionId, voting_procedure: VotingProcedure, witness: PlutusWitness) => Promise<void>;
+
+  /**
+  * @param {Voter} voter
+  * @param {GovernanceActionId} gov_action_id
+  * @param {VotingProcedure} voting_procedure
+  * @param {NativeScriptSource} native_script_source
+  * @returns {Promise<void>}
+  */
+  add_with_native_script: (voter: Voter, gov_action_id: GovernanceActionId, voting_procedure: VotingProcedure, native_script_source: NativeScriptSource) => Promise<void>;
+
+  /**
+  * @returns {Promise<PlutusWitnesses>}
+  */
+  get_plutus_witnesses: () => Promise<PlutusWitnesses>;
+
+  /**
+  * @returns {Promise<TransactionInputs>}
+  */
+  get_ref_inputs: () => Promise<TransactionInputs>;
+
+  /**
+  * @returns {Promise<NativeScripts>}
+  */
+  get_native_scripts: () => Promise<NativeScripts>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_plutus_scripts: () => Promise<boolean>;
+
+  /**
+  * @returns {Promise<VotingProcedures>}
+  */
+  build: () => Promise<VotingProcedures>;
+
+}
+
+
+export class VotingProcedure extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<VotingProcedure>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<VotingProcedure>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<VotingProcedure>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<VotingProcedure>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<VotingProcedure>>}
+  */
+  static from_json: (json: string) => Promise<Optional<VotingProcedure>>;
+
+  /**
+  * @param {VoteKind} vote
+  * @returns {Promise<VotingProcedure>}
+  */
+  static new: (vote: VoteKind) => Promise<VotingProcedure>;
+
+  /**
+  * @param {VoteKind} vote
+  * @param {Anchor} anchor
+  * @returns {Promise<VotingProcedure>}
+  */
+  static new_with_anchor: (vote: VoteKind, anchor: Anchor) => Promise<VotingProcedure>;
+
+  /**
+  * @returns {Promise<VoteKind>}
+  */
+  vote_kind: () => Promise<VoteKind>;
+
+  /**
+  * @returns {Promise<Optional<Anchor>>}
+  */
+  anchor: () => Promise<Optional<Anchor>>;
+
+}
+
+
+export class VotingProcedures extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<VotingProcedures>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<VotingProcedures>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<VotingProcedures>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<VotingProcedures>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<VotingProcedures>>}
+  */
+  static from_json: (json: string) => Promise<Optional<VotingProcedures>>;
+
+  /**
+  * @returns {Promise<VotingProcedures>}
+  */
+  static new: () => Promise<VotingProcedures>;
+
+  /**
+  * @param {Voter} voter
+  * @param {GovernanceActionId} governance_action_id
+  * @param {VotingProcedure} voting_procedure
+  */
+  insert: (voter: Voter, governance_action_id: GovernanceActionId, voting_procedure: VotingProcedure) => Promise<void>;
+
+  /**
+  * @param {Voter} voter
+  * @param {GovernanceActionId} governance_action_id
+  * @returns {Promise<Optional<VotingProcedure>>}
+  */
+  get: (voter: Voter, governance_action_id: GovernanceActionId) => Promise<Optional<VotingProcedure>>;
+
+  /**
+  * @returns {Promise<Voters>}
+  */
+  get_voters: () => Promise<Voters>;
+
+  /**
+  * @param {Voter} voter
+  * @returns {Promise<GovernanceActionIds>}
+  */
+  get_governance_action_ids_by_voter: (voter: Voter) => Promise<GovernanceActionIds>;
+
+}
+
+
+export class VotingProposal extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<VotingProposal>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<VotingProposal>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<VotingProposal>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<VotingProposal>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<VotingProposal>>}
+  */
+  static from_json: (json: string) => Promise<Optional<VotingProposal>>;
+
+  /**
+  * @returns {Promise<GovernanceAction>}
+  */
+  governance_action: () => Promise<GovernanceAction>;
+
+  /**
+  * @returns {Promise<Anchor>}
+  */
+  anchor: () => Promise<Anchor>;
+
+  /**
+  * @returns {Promise<RewardAddress>}
+  */
+  reward_account: () => Promise<RewardAddress>;
+
+  /**
+  * @returns {Promise<BigNum>}
+  */
+  deposit: () => Promise<BigNum>;
+
+  /**
+  * @param {GovernanceAction} governance_action
+  * @param {Anchor} anchor
+  * @param {RewardAddress} reward_account
+  * @param {BigNum} deposit
+  * @returns {Promise<VotingProposal>}
+  */
+  static new: (governance_action: GovernanceAction, anchor: Anchor, reward_account: RewardAddress, deposit: BigNum) => Promise<VotingProposal>;
+
+}
+
+
+export class VotingProposalBuilder extends Ptr {
+  /**
+  * @returns {Promise<VotingProposalBuilder>}
+  */
+  static new: () => Promise<VotingProposalBuilder>;
+
+  /**
+  * @param {VotingProposal} proposal
+  * @returns {Promise<void>}
+  */
+  add: (proposal: VotingProposal) => Promise<void>;
+
+  /**
+  * @param {VotingProposal} proposal
+  * @param {PlutusWitness} witness
+  * @returns {Promise<void>}
+  */
+  add_with_plutus_witness: (proposal: VotingProposal, witness: PlutusWitness) => Promise<void>;
+
+  /**
+  * @returns {Promise<PlutusWitnesses>}
+  */
+  get_plutus_witnesses: () => Promise<PlutusWitnesses>;
+
+  /**
+  * @returns {Promise<TransactionInputs>}
+  */
+  get_ref_inputs: () => Promise<TransactionInputs>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_plutus_scripts: () => Promise<boolean>;
+
+  /**
+  * @returns {Promise<VotingProposals>}
+  */
+  build: () => Promise<VotingProposals>;
+
+}
+
+
+export class VotingProposals extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<Optional<VotingProposals>>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<Optional<VotingProposals>>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<Optional<VotingProposals>>}
+  */
+  static from_hex: (hex_str: string) => Promise<Optional<VotingProposals>>;
+
+  /**
+  * @returns {Promise<Optional<string>>}
+  */
+  to_json: () => Promise<Optional<string>>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<Optional<VotingProposals>>}
+  */
+  static from_json: (json: string) => Promise<Optional<VotingProposals>>;
+
+  /**
+  * @returns {Promise<VotingProposals>}
+  */
+  static new: () => Promise<VotingProposals>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len: () => Promise<number>;
+
+  /**
+  * @param {number} index
+  * @returns {Promise<VotingProposal>}
+  */
+  get: (index: number) => Promise<VotingProposal>;
+
+  /**
+  * @param {VotingProposal} proposal
+  */
+  add: (proposal: VotingProposal) => Promise<void>;
+
+}
+
+
 export class Withdrawals extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -8895,6 +11611,68 @@ export class Withdrawals extends Ptr {
   * @returns {Promise<RewardAddresses>}
   */
   keys: () => Promise<RewardAddresses>;
+
+}
+
+
+export class WithdrawalsBuilder extends Ptr {
+  /**
+  * @returns {Promise<WithdrawalsBuilder>}
+  */
+  static new: () => Promise<WithdrawalsBuilder>;
+
+  /**
+  * @param {RewardAddress} address
+  * @param {BigNum} coin
+  * @returns {Promise<void>}
+  */
+  add: (address: RewardAddress, coin: BigNum) => Promise<void>;
+
+  /**
+  * @param {RewardAddress} address
+  * @param {BigNum} coin
+  * @param {PlutusWitness} witness
+  * @returns {Promise<void>}
+  */
+  add_with_plutus_witness: (address: RewardAddress, coin: BigNum, witness: PlutusWitness) => Promise<void>;
+
+  /**
+  * @param {RewardAddress} address
+  * @param {BigNum} coin
+  * @param {NativeScriptSource} native_script_source
+  * @returns {Promise<void>}
+  */
+  add_with_native_script: (address: RewardAddress, coin: BigNum, native_script_source: NativeScriptSource) => Promise<void>;
+
+  /**
+  * @returns {Promise<PlutusWitnesses>}
+  */
+  get_plutus_witnesses: () => Promise<PlutusWitnesses>;
+
+  /**
+  * @returns {Promise<TransactionInputs>}
+  */
+  get_ref_inputs: () => Promise<TransactionInputs>;
+
+  /**
+  * @returns {Promise<NativeScripts>}
+  */
+  get_native_scripts: () => Promise<NativeScripts>;
+
+  /**
+  * @returns {Promise<Optional<Value>>}
+  */
+  get_total_withdrawals: () => Promise<Optional<Value>>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_plutus_scripts: () => Promise<boolean>;
+
+  /**
+  * @returns {Promise<Withdrawals>}
+  */
+  build: () => Promise<Withdrawals>;
 
 }
 
@@ -9086,6 +11864,16 @@ export enum CertificateKind {
   PoolRetirement = 4,
   GenesisKeyDelegation = 5,
   MoveInstantaneousRewardsCert = 6,
+  CommitteeHotAuth = 7,
+  CommitteeColdResign = 8,
+  DrepDeregistration = 9,
+  DrepRegistration = 10,
+  DrepUpdate = 11,
+  StakeAndVoteDelegation = 12,
+  StakeRegistrationAndDelegation = 13,
+  StakeVoteRegistrationAndDelegation = 14,
+  VoteDelegation = 15,
+  VoteRegistrationAndDelegation = 16,
 }
 
 
@@ -9097,9 +11885,35 @@ export enum CoinSelectionStrategyCIP2 {
 }
 
 
+export enum CredKind {
+  Key = 0,
+  Script = 1,
+}
+
+
+export enum DRepKind {
+  KeyHash = 0,
+  ScriptHash = 1,
+  AlwaysAbstain = 2,
+  AlwaysNoConfidence = 3,
+}
+
+
+export enum GovernanceActionKind {
+  ParameterChangeAction = 0,
+  HardForkInitiationAction = 1,
+  TreasuryWithdrawalsAction = 2,
+  NoConfidenceAction = 3,
+  UpdateCommitteeAction = 4,
+  NewConstitutionAction = 5,
+  InfoAction = 6,
+}
+
+
 export enum LanguageKind {
   PlutusV1 = 0,
   PlutusV2 = 1,
+  PlutusV3 = 2,
 }
 
 
@@ -9158,6 +11972,8 @@ export enum RedeemerTagKind {
   Mint = 1,
   Cert = 2,
   Reward = 3,
+  Vote = 4,
+  VotingProposal = 5,
 }
 
 
@@ -9172,6 +11988,7 @@ export enum ScriptHashNamespace {
   NativeScript = 0,
   PlutusScript = 1,
   PlutusScriptV2 = 2,
+  PlutusScriptV3 = 3,
 }
 
 
@@ -9181,18 +11998,28 @@ export enum ScriptSchema {
 }
 
 
-export enum StakeCredKind {
-  Key = 0,
-  Script = 1,
-}
-
-
 export enum TransactionMetadatumKind {
   MetadataMap = 0,
   MetadataList = 1,
   Int = 2,
   Bytes = 3,
   Text = 4,
+}
+
+
+export enum VoteKind {
+  No = 0,
+  Yes = 1,
+  Abstain = 2,
+}
+
+
+export enum VoterKind {
+  ConstitutionalCommitteeHotKeyHash = 0,
+  ConstitutionalCommitteeHotScriptHash = 1,
+  DRepKeyHash = 2,
+  DRepScriptHash = 3,
+  StakingPoolKeyHash = 4,
 }
 
 

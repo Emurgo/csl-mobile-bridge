@@ -27,6 +27,23 @@ final class Native {
     public final native Result<RPtr> addressFromBech32(String bechStr);
     public final native Result<Long> addressNetworkId(RPtr self);
 
+    public final native Result<byte[]> anchorToBytes(RPtr self);
+    public final native Result<RPtr> anchorFromBytes(byte[] bytes);
+    public final native Result<String> anchorToHex(RPtr self);
+    public final native Result<RPtr> anchorFromHex(String hexStr);
+    public final native Result<String> anchorToJson(RPtr self);
+    public final native Result<RPtr> anchorFromJson(String json);
+    public final native Result<RPtr> anchorUrl(RPtr self);
+    public final native Result<RPtr> anchorAnchorDataHash(RPtr self);
+    public final native Result<RPtr> anchorNew(RPtr anchorUrl, RPtr anchorDataHash);
+
+    public final native Result<RPtr> anchorDataHashFromBytes(byte[] bytes);
+    public final native Result<byte[]> anchorDataHashToBytes(RPtr self);
+    public final native Result<String> anchorDataHashToBech32(RPtr self, String prefix);
+    public final native Result<RPtr> anchorDataHashFromBech32(String bechStr);
+    public final native Result<String> anchorDataHashToHex(RPtr self);
+    public final native Result<RPtr> anchorDataHashFromHex(String hex);
+
     public final native Result<byte[]> assetNameToBytes(RPtr self);
     public final native Result<RPtr> assetNameFromBytes(byte[] bytes);
     public final native Result<String> assetNameToHex(RPtr self);
@@ -219,6 +236,16 @@ final class Native {
     public final native Result<RPtr> certificateNewPoolRetirement(RPtr poolRetirement);
     public final native Result<RPtr> certificateNewGenesisKeyDelegation(RPtr genesisKeyDelegation);
     public final native Result<RPtr> certificateNewMoveInstantaneousRewardsCert(RPtr moveInstantaneousRewardsCert);
+    public final native Result<RPtr> certificateNewCommitteeHotAuth(RPtr committeeHotAuth);
+    public final native Result<RPtr> certificateNewCommitteeColdResign(RPtr committeeColdResign);
+    public final native Result<RPtr> certificateNewDrepDeregistration(RPtr drepDeregistration);
+    public final native Result<RPtr> certificateNewDrepRegistration(RPtr drepRegistration);
+    public final native Result<RPtr> certificateNewDrepUpdate(RPtr drepUpdate);
+    public final native Result<RPtr> certificateNewStakeAndVoteDelegation(RPtr stakeAndVoteDelegation);
+    public final native Result<RPtr> certificateNewStakeRegistrationAndDelegation(RPtr stakeRegistrationAndDelegation);
+    public final native Result<RPtr> certificateNewStakeVoteRegistrationAndDelegation(RPtr stakeVoteRegistrationAndDelegation);
+    public final native Result<RPtr> certificateNewVoteDelegation(RPtr voteDelegation);
+    public final native Result<RPtr> certificateNewVoteRegistrationAndDelegation(RPtr voteRegistrationAndDelegation);
     public final native Result<Integer> certificateKind(RPtr self);
     public final native Result<RPtr> certificateAsStakeRegistration(RPtr self);
     public final native Result<RPtr> certificateAsStakeDeregistration(RPtr self);
@@ -227,6 +254,17 @@ final class Native {
     public final native Result<RPtr> certificateAsPoolRetirement(RPtr self);
     public final native Result<RPtr> certificateAsGenesisKeyDelegation(RPtr self);
     public final native Result<RPtr> certificateAsMoveInstantaneousRewardsCert(RPtr self);
+    public final native Result<RPtr> certificateAsCommitteeHotAuth(RPtr self);
+    public final native Result<RPtr> certificateAsCommitteeColdResign(RPtr self);
+    public final native Result<RPtr> certificateAsDrepDeregistration(RPtr self);
+    public final native Result<RPtr> certificateAsDrepRegistration(RPtr self);
+    public final native Result<RPtr> certificateAsDrepUpdate(RPtr self);
+    public final native Result<RPtr> certificateAsStakeAndVoteDelegation(RPtr self);
+    public final native Result<RPtr> certificateAsStakeRegistrationAndDelegation(RPtr self);
+    public final native Result<RPtr> certificateAsStakeVoteRegistrationAndDelegation(RPtr self);
+    public final native Result<RPtr> certificateAsVoteDelegation(RPtr self);
+    public final native Result<RPtr> certificateAsVoteRegistrationAndDelegation(RPtr self);
+    public final native Result<Boolean> certificateHasRequiredScriptWitness(RPtr self);
 
     public final native Result<byte[]> certificatesToBytes(RPtr self);
     public final native Result<RPtr> certificatesFromBytes(byte[] bytes);
@@ -238,6 +276,64 @@ final class Native {
     public final native Result<Long> certificatesLen(RPtr self);
     public final native Result<RPtr> certificatesGet(RPtr self, long index);
     public final native Result<Void> certificatesAdd(RPtr self, RPtr elem);
+
+    public final native Result<RPtr> certificatesBuilderNew();
+    public final native Result<Void> certificatesBuilderAdd(RPtr self, RPtr cert);
+    public final native Result<Void> certificatesBuilderAddWithPlutusWitness(RPtr self, RPtr cert, RPtr witness);
+    public final native Result<Void> certificatesBuilderAddWithNativeScript(RPtr self, RPtr cert, RPtr nativeScriptSource);
+    public final native Result<RPtr> certificatesBuilderGetPlutusWitnesses(RPtr self);
+    public final native Result<RPtr> certificatesBuilderGetRefInputs(RPtr self);
+    public final native Result<RPtr> certificatesBuilderGetNativeScripts(RPtr self);
+    public final native Result<RPtr> certificatesBuilderGetCertificatesRefund(RPtr self, RPtr poolDeposit, RPtr keyDeposit);
+    public final native Result<RPtr> certificatesBuilderGetCertificatesDeposit(RPtr self, RPtr poolDeposit, RPtr keyDeposit);
+    public final native Result<Boolean> certificatesBuilderHasPlutusScripts(RPtr self);
+    public final native Result<RPtr> certificatesBuilderBuild(RPtr self);
+
+    public final native Result<byte[]> committeeToBytes(RPtr self);
+    public final native Result<RPtr> committeeFromBytes(byte[] bytes);
+    public final native Result<String> committeeToHex(RPtr self);
+    public final native Result<RPtr> committeeFromHex(String hexStr);
+    public final native Result<String> committeeToJson(RPtr self);
+    public final native Result<RPtr> committeeFromJson(String json);
+    public final native Result<RPtr> committeeNew(RPtr quorumThreshold);
+    public final native Result<RPtr> committeeMembersKeys(RPtr self);
+    public final native Result<RPtr> committeeQuorumThreshold(RPtr self);
+    public final native Result<Void> committeeAddMember(RPtr self, RPtr committeeColdCredential, long epoch);
+    public final native Result<Long> committeeGetMemberEpoch(RPtr self, RPtr committeeColdCredential);
+
+    public final native Result<byte[]> committeeColdResignToBytes(RPtr self);
+    public final native Result<RPtr> committeeColdResignFromBytes(byte[] bytes);
+    public final native Result<String> committeeColdResignToHex(RPtr self);
+    public final native Result<RPtr> committeeColdResignFromHex(String hexStr);
+    public final native Result<String> committeeColdResignToJson(RPtr self);
+    public final native Result<RPtr> committeeColdResignFromJson(String json);
+    public final native Result<RPtr> committeeColdResignCommitteeColdKey(RPtr self);
+    public final native Result<RPtr> committeeColdResignAnchor(RPtr self);
+    public final native Result<RPtr> committeeColdResignNew(RPtr committeeColdKey);
+    public final native Result<RPtr> committeeColdResignNewWithAnchor(RPtr committeeColdKey, RPtr anchor);
+    public final native Result<Boolean> committeeColdResignHasScriptCredentials(RPtr self);
+
+    public final native Result<byte[]> committeeHotAuthToBytes(RPtr self);
+    public final native Result<RPtr> committeeHotAuthFromBytes(byte[] bytes);
+    public final native Result<String> committeeHotAuthToHex(RPtr self);
+    public final native Result<RPtr> committeeHotAuthFromHex(String hexStr);
+    public final native Result<String> committeeHotAuthToJson(RPtr self);
+    public final native Result<RPtr> committeeHotAuthFromJson(String json);
+    public final native Result<RPtr> committeeHotAuthCommitteeColdKey(RPtr self);
+    public final native Result<RPtr> committeeHotAuthCommitteeHotKey(RPtr self);
+    public final native Result<RPtr> committeeHotAuthNew(RPtr committeeColdKey, RPtr committeeHotKey);
+    public final native Result<Boolean> committeeHotAuthHasScriptCredentials(RPtr self);
+
+    public final native Result<byte[]> constitutionToBytes(RPtr self);
+    public final native Result<RPtr> constitutionFromBytes(byte[] bytes);
+    public final native Result<String> constitutionToHex(RPtr self);
+    public final native Result<RPtr> constitutionFromHex(String hexStr);
+    public final native Result<String> constitutionToJson(RPtr self);
+    public final native Result<RPtr> constitutionFromJson(String json);
+    public final native Result<RPtr> constitutionAnchor(RPtr self);
+    public final native Result<RPtr> constitutionScriptHash(RPtr self);
+    public final native Result<RPtr> constitutionNew(RPtr anchor);
+    public final native Result<RPtr> constitutionNewWithScriptHash(RPtr anchor, RPtr scriptHash);
 
     public final native Result<byte[]> constrPlutusDataToBytes(RPtr self);
     public final native Result<RPtr> constrPlutusDataFromBytes(byte[] bytes);
@@ -271,6 +367,30 @@ final class Native {
     public final native Result<RPtr> costmdlsKeys(RPtr self);
     public final native Result<RPtr> costmdlsRetainLanguageVersions(RPtr self, RPtr languages);
 
+    public final native Result<RPtr> credentialFromKeyhash(RPtr hash);
+    public final native Result<RPtr> credentialFromScripthash(RPtr hash);
+    public final native Result<RPtr> credentialToKeyhash(RPtr self);
+    public final native Result<RPtr> credentialToScripthash(RPtr self);
+    public final native Result<Integer> credentialKind(RPtr self);
+    public final native Result<Boolean> credentialHasScriptHash(RPtr self);
+    public final native Result<byte[]> credentialToBytes(RPtr self);
+    public final native Result<RPtr> credentialFromBytes(byte[] bytes);
+    public final native Result<String> credentialToHex(RPtr self);
+    public final native Result<RPtr> credentialFromHex(String hexStr);
+    public final native Result<String> credentialToJson(RPtr self);
+    public final native Result<RPtr> credentialFromJson(String json);
+
+    public final native Result<byte[]> credentialsToBytes(RPtr self);
+    public final native Result<RPtr> credentialsFromBytes(byte[] bytes);
+    public final native Result<String> credentialsToHex(RPtr self);
+    public final native Result<RPtr> credentialsFromHex(String hexStr);
+    public final native Result<String> credentialsToJson(RPtr self);
+    public final native Result<RPtr> credentialsFromJson(String json);
+    public final native Result<RPtr> credentialsNew();
+    public final native Result<Long> credentialsLen(RPtr self);
+    public final native Result<RPtr> credentialsGet(RPtr self, long index);
+    public final native Result<Void> credentialsAdd(RPtr self, RPtr elem);
+
     public final native Result<byte[]> dNSRecordAorAAAAToBytes(RPtr self);
     public final native Result<RPtr> dNSRecordAorAAAAFromBytes(byte[] bytes);
     public final native Result<String> dNSRecordAorAAAAToHex(RPtr self);
@@ -289,6 +409,20 @@ final class Native {
     public final native Result<RPtr> dNSRecordSRVNew(String dnsName);
     public final native Result<String> dNSRecordSRVRecord(RPtr self);
 
+    public final native Result<byte[]> dRepToBytes(RPtr self);
+    public final native Result<RPtr> dRepFromBytes(byte[] bytes);
+    public final native Result<String> dRepToHex(RPtr self);
+    public final native Result<RPtr> dRepFromHex(String hexStr);
+    public final native Result<String> dRepToJson(RPtr self);
+    public final native Result<RPtr> dRepFromJson(String json);
+    public final native Result<RPtr> dRepNewKeyHash(RPtr keyHash);
+    public final native Result<RPtr> dRepNewScriptHash(RPtr scriptHash);
+    public final native Result<RPtr> dRepNewAlwaysAbstain();
+    public final native Result<RPtr> dRepNewAlwaysNoConfidence();
+    public final native Result<Integer> dRepKind(RPtr self);
+    public final native Result<RPtr> dRepToKeyHash(RPtr self);
+    public final native Result<RPtr> dRepToScriptHash(RPtr self);
+
     public final native Result<RPtr> dataCostNewCoinsPerWord(RPtr coinsPerWord);
     public final native Result<RPtr> dataCostNewCoinsPerByte(RPtr coinsPerByte);
     public final native Result<RPtr> dataCostCoinsPerByte(RPtr self);
@@ -302,6 +436,70 @@ final class Native {
 
     public final native Result<RPtr> datumSourceNew(RPtr datum);
     public final native Result<RPtr> datumSourceNewRefInput(RPtr input);
+
+    public final native Result<byte[]> drepDeregistrationToBytes(RPtr self);
+    public final native Result<RPtr> drepDeregistrationFromBytes(byte[] bytes);
+    public final native Result<String> drepDeregistrationToHex(RPtr self);
+    public final native Result<RPtr> drepDeregistrationFromHex(String hexStr);
+    public final native Result<String> drepDeregistrationToJson(RPtr self);
+    public final native Result<RPtr> drepDeregistrationFromJson(String json);
+    public final native Result<RPtr> drepDeregistrationVotingCredential(RPtr self);
+    public final native Result<RPtr> drepDeregistrationCoin(RPtr self);
+    public final native Result<RPtr> drepDeregistrationNew(RPtr votingCredential, RPtr coin);
+    public final native Result<Boolean> drepDeregistrationHasScriptCredentials(RPtr self);
+
+    public final native Result<byte[]> drepRegistrationToBytes(RPtr self);
+    public final native Result<RPtr> drepRegistrationFromBytes(byte[] bytes);
+    public final native Result<String> drepRegistrationToHex(RPtr self);
+    public final native Result<RPtr> drepRegistrationFromHex(String hexStr);
+    public final native Result<String> drepRegistrationToJson(RPtr self);
+    public final native Result<RPtr> drepRegistrationFromJson(String json);
+    public final native Result<RPtr> drepRegistrationVotingCredential(RPtr self);
+    public final native Result<RPtr> drepRegistrationCoin(RPtr self);
+    public final native Result<RPtr> drepRegistrationAnchor(RPtr self);
+    public final native Result<RPtr> drepRegistrationNew(RPtr votingCredential, RPtr coin);
+    public final native Result<RPtr> drepRegistrationNewWithAnchor(RPtr votingCredential, RPtr coin, RPtr anchor);
+
+    public final native Result<byte[]> drepUpdateToBytes(RPtr self);
+    public final native Result<RPtr> drepUpdateFromBytes(byte[] bytes);
+    public final native Result<String> drepUpdateToHex(RPtr self);
+    public final native Result<RPtr> drepUpdateFromHex(String hexStr);
+    public final native Result<String> drepUpdateToJson(RPtr self);
+    public final native Result<RPtr> drepUpdateFromJson(String json);
+    public final native Result<RPtr> drepUpdateVotingCredential(RPtr self);
+    public final native Result<RPtr> drepUpdateAnchor(RPtr self);
+    public final native Result<RPtr> drepUpdateNew(RPtr votingCredential);
+    public final native Result<RPtr> drepUpdateNewWithAnchor(RPtr votingCredential, RPtr anchor);
+    public final native Result<Boolean> drepUpdateHasScriptCredentials(RPtr self);
+
+    public final native Result<byte[]> drepVotingThresholdsToBytes(RPtr self);
+    public final native Result<RPtr> drepVotingThresholdsFromBytes(byte[] bytes);
+    public final native Result<String> drepVotingThresholdsToHex(RPtr self);
+    public final native Result<RPtr> drepVotingThresholdsFromHex(String hexStr);
+    public final native Result<String> drepVotingThresholdsToJson(RPtr self);
+    public final native Result<RPtr> drepVotingThresholdsFromJson(String json);
+    public final native Result<RPtr> drepVotingThresholdsNew(RPtr motionNoConfidence, RPtr committeeNormal, RPtr committeeNoConfidence, RPtr updateConstitution, RPtr hardForkInitiation, RPtr ppNetworkGroup, RPtr ppEconomicGroup, RPtr ppTechnicalGroup, RPtr ppGovernanceGroup, RPtr treasuryWithdrawal);
+    public final native Result<RPtr> drepVotingThresholdsNewDefault();
+    public final native Result<Void> drepVotingThresholdsSetMotionNoConfidence(RPtr self, RPtr motionNoConfidence);
+    public final native Result<Void> drepVotingThresholdsSetCommitteeNormal(RPtr self, RPtr committeeNormal);
+    public final native Result<Void> drepVotingThresholdsSetCommitteeNoConfidence(RPtr self, RPtr committeeNoConfidence);
+    public final native Result<Void> drepVotingThresholdsSetUpdateConstitution(RPtr self, RPtr updateConstitution);
+    public final native Result<Void> drepVotingThresholdsSetHardForkInitiation(RPtr self, RPtr hardForkInitiation);
+    public final native Result<Void> drepVotingThresholdsSetPpNetworkGroup(RPtr self, RPtr ppNetworkGroup);
+    public final native Result<Void> drepVotingThresholdsSetPpEconomicGroup(RPtr self, RPtr ppEconomicGroup);
+    public final native Result<Void> drepVotingThresholdsSetPpTechnicalGroup(RPtr self, RPtr ppTechnicalGroup);
+    public final native Result<Void> drepVotingThresholdsSetPpGovernanceGroup(RPtr self, RPtr ppGovernanceGroup);
+    public final native Result<Void> drepVotingThresholdsSetTreasuryWithdrawal(RPtr self, RPtr treasuryWithdrawal);
+    public final native Result<RPtr> drepVotingThresholdsMotionNoConfidence(RPtr self);
+    public final native Result<RPtr> drepVotingThresholdsCommitteeNormal(RPtr self);
+    public final native Result<RPtr> drepVotingThresholdsCommitteeNoConfidence(RPtr self);
+    public final native Result<RPtr> drepVotingThresholdsUpdateConstitution(RPtr self);
+    public final native Result<RPtr> drepVotingThresholdsHardForkInitiation(RPtr self);
+    public final native Result<RPtr> drepVotingThresholdsPpNetworkGroup(RPtr self);
+    public final native Result<RPtr> drepVotingThresholdsPpEconomicGroup(RPtr self);
+    public final native Result<RPtr> drepVotingThresholdsPpTechnicalGroup(RPtr self);
+    public final native Result<RPtr> drepVotingThresholdsPpGovernanceGroup(RPtr self);
+    public final native Result<RPtr> drepVotingThresholdsTreasuryWithdrawal(RPtr self);
 
     public final native Result<RPtr> ed25519KeyHashFromBytes(byte[] bytes);
     public final native Result<byte[]> ed25519KeyHashToBytes(RPtr self);
@@ -420,6 +618,56 @@ final class Native {
     public final native Result<RPtr> genesisKeyDelegationVrfKeyhash(RPtr self);
     public final native Result<RPtr> genesisKeyDelegationNew(RPtr genesishash, RPtr genesisDelegateHash, RPtr vrfKeyhash);
 
+    public final native Result<byte[]> governanceActionToBytes(RPtr self);
+    public final native Result<RPtr> governanceActionFromBytes(byte[] bytes);
+    public final native Result<String> governanceActionToHex(RPtr self);
+    public final native Result<RPtr> governanceActionFromHex(String hexStr);
+    public final native Result<String> governanceActionToJson(RPtr self);
+    public final native Result<RPtr> governanceActionFromJson(String json);
+    public final native Result<RPtr> governanceActionNewParameterChangeAction(RPtr parameterChangeAction);
+    public final native Result<RPtr> governanceActionNewHardForkInitiationAction(RPtr hardForkInitiationAction);
+    public final native Result<RPtr> governanceActionNewTreasuryWithdrawalsAction(RPtr treasuryWithdrawalsAction);
+    public final native Result<RPtr> governanceActionNewNoConfidenceAction(RPtr noConfidenceAction);
+    public final native Result<RPtr> governanceActionNewNewCommitteeAction(RPtr newCommitteeAction);
+    public final native Result<RPtr> governanceActionNewNewConstitutionAction(RPtr newConstitutionAction);
+    public final native Result<RPtr> governanceActionNewInfoAction(RPtr infoAction);
+    public final native Result<Integer> governanceActionKind(RPtr self);
+    public final native Result<RPtr> governanceActionAsParameterChangeAction(RPtr self);
+    public final native Result<RPtr> governanceActionAsHardForkInitiationAction(RPtr self);
+    public final native Result<RPtr> governanceActionAsTreasuryWithdrawalsAction(RPtr self);
+    public final native Result<RPtr> governanceActionAsNoConfidenceAction(RPtr self);
+    public final native Result<RPtr> governanceActionAsNewCommitteeAction(RPtr self);
+    public final native Result<RPtr> governanceActionAsNewConstitutionAction(RPtr self);
+    public final native Result<RPtr> governanceActionAsInfoAction(RPtr self);
+
+    public final native Result<byte[]> governanceActionIdToBytes(RPtr self);
+    public final native Result<RPtr> governanceActionIdFromBytes(byte[] bytes);
+    public final native Result<String> governanceActionIdToHex(RPtr self);
+    public final native Result<RPtr> governanceActionIdFromHex(String hexStr);
+    public final native Result<String> governanceActionIdToJson(RPtr self);
+    public final native Result<RPtr> governanceActionIdFromJson(String json);
+    public final native Result<RPtr> governanceActionIdTransactionId(RPtr self);
+    public final native Result<Long> governanceActionIdIndex(RPtr self);
+    public final native Result<RPtr> governanceActionIdNew(RPtr transactionId, long index);
+
+    public final native Result<String> governanceActionIdsToJson(RPtr self);
+    public final native Result<RPtr> governanceActionIdsFromJson(String json);
+    public final native Result<RPtr> governanceActionIdsNew();
+    public final native Result<Void> governanceActionIdsAdd(RPtr self, RPtr governanceActionId);
+    public final native Result<RPtr> governanceActionIdsGet(RPtr self, long index);
+    public final native Result<Long> governanceActionIdsLen(RPtr self);
+
+    public final native Result<byte[]> hardForkInitiationActionToBytes(RPtr self);
+    public final native Result<RPtr> hardForkInitiationActionFromBytes(byte[] bytes);
+    public final native Result<String> hardForkInitiationActionToHex(RPtr self);
+    public final native Result<RPtr> hardForkInitiationActionFromHex(String hexStr);
+    public final native Result<String> hardForkInitiationActionToJson(RPtr self);
+    public final native Result<RPtr> hardForkInitiationActionFromJson(String json);
+    public final native Result<RPtr> hardForkInitiationActionGovActionId(RPtr self);
+    public final native Result<RPtr> hardForkInitiationActionProtocolVersion(RPtr self);
+    public final native Result<RPtr> hardForkInitiationActionNew(RPtr protocolVersion);
+    public final native Result<RPtr> hardForkInitiationActionNewWithActionId(RPtr govActionId, RPtr protocolVersion);
+
     public final native Result<byte[]> headerToBytes(RPtr self);
     public final native Result<RPtr> headerFromBytes(byte[] bytes);
     public final native Result<String> headerToHex(RPtr self);
@@ -457,6 +705,8 @@ final class Native {
     public final native Result<RPtr> headerBodyNewHeaderbody(long blockNumber, RPtr slot, RPtr issuerVkey, RPtr vrfVkey, RPtr vrfResult, long blockBodySize, RPtr blockBodyHash, RPtr operationalCert, RPtr protocolVersion);
     public final native Result<RPtr> headerBodyNewHeaderbodyWithPrevHash(long blockNumber, RPtr slot, RPtr prevHash, RPtr issuerVkey, RPtr vrfVkey, RPtr vrfResult, long blockBodySize, RPtr blockBodyHash, RPtr operationalCert, RPtr protocolVersion);
 
+
+    public final native Result<RPtr> infoActionNew();
 
     public final native Result<RPtr> inputWithScriptWitnessNewWithNativeScriptWitness(RPtr input, RPtr witness);
     public final native Result<RPtr> inputWithScriptWitnessNewWithPlutusWitness(RPtr input, RPtr witness);
@@ -521,6 +771,7 @@ final class Native {
     public final native Result<RPtr> languageFromJson(String json);
     public final native Result<RPtr> languageNewPlutusV1();
     public final native Result<RPtr> languageNewPlutusV2();
+    public final native Result<RPtr> languageNewPlutusV3();
     public final native Result<Integer> languageKind(RPtr self);
 
     public final native Result<RPtr> languagesNew();
@@ -679,6 +930,9 @@ final class Native {
     public final native Result<RPtr> nativeScriptAsTimelockExpiry(RPtr self);
     public final native Result<RPtr> nativeScriptGetRequiredSigners(RPtr self);
 
+    public final native Result<RPtr> nativeScriptSourceNew(RPtr script);
+    public final native Result<RPtr> nativeScriptSourceNewRefInput(RPtr scriptHash, RPtr input, RPtr requiredSigners);
+
     public final native Result<RPtr> nativeScriptsNew();
     public final native Result<Long> nativeScriptsLen(RPtr self);
     public final native Result<RPtr> nativeScriptsGet(RPtr self, long index);
@@ -702,6 +956,27 @@ final class Native {
     public final native Result<RPtr> networkInfoTestnet();
     public final native Result<RPtr> networkInfoMainnet();
 
+    public final native Result<byte[]> newConstitutionActionToBytes(RPtr self);
+    public final native Result<RPtr> newConstitutionActionFromBytes(byte[] bytes);
+    public final native Result<String> newConstitutionActionToHex(RPtr self);
+    public final native Result<RPtr> newConstitutionActionFromHex(String hexStr);
+    public final native Result<String> newConstitutionActionToJson(RPtr self);
+    public final native Result<RPtr> newConstitutionActionFromJson(String json);
+    public final native Result<RPtr> newConstitutionActionGovActionId(RPtr self);
+    public final native Result<RPtr> newConstitutionActionConstitution(RPtr self);
+    public final native Result<RPtr> newConstitutionActionNew(RPtr constitution);
+    public final native Result<RPtr> newConstitutionActionNewWithActionId(RPtr govActionId, RPtr constitution);
+
+    public final native Result<byte[]> noConfidenceActionToBytes(RPtr self);
+    public final native Result<RPtr> noConfidenceActionFromBytes(byte[] bytes);
+    public final native Result<String> noConfidenceActionToHex(RPtr self);
+    public final native Result<RPtr> noConfidenceActionFromHex(String hexStr);
+    public final native Result<String> noConfidenceActionToJson(RPtr self);
+    public final native Result<RPtr> noConfidenceActionFromJson(String json);
+    public final native Result<RPtr> noConfidenceActionGovActionId(RPtr self);
+    public final native Result<RPtr> noConfidenceActionNew();
+    public final native Result<RPtr> noConfidenceActionNewWithActionId(RPtr govActionId);
+
     public final native Result<byte[]> nonceToBytes(RPtr self);
     public final native Result<RPtr> nonceFromBytes(byte[] bytes);
     public final native Result<String> nonceToHex(RPtr self);
@@ -723,6 +998,22 @@ final class Native {
     public final native Result<Long> operationalCertKesPeriod(RPtr self);
     public final native Result<RPtr> operationalCertSigma(RPtr self);
     public final native Result<RPtr> operationalCertNew(RPtr hotVkey, long sequenceNumber, long kesPeriod, RPtr sigma);
+
+    public final native Result<RPtr> outputDatumNewDataHash(RPtr dataHash);
+    public final native Result<RPtr> outputDatumNewData(RPtr data);
+    public final native Result<RPtr> outputDatumDataHash(RPtr self);
+    public final native Result<RPtr> outputDatumData(RPtr self);
+
+    public final native Result<byte[]> parameterChangeActionToBytes(RPtr self);
+    public final native Result<RPtr> parameterChangeActionFromBytes(byte[] bytes);
+    public final native Result<String> parameterChangeActionToHex(RPtr self);
+    public final native Result<RPtr> parameterChangeActionFromHex(String hexStr);
+    public final native Result<String> parameterChangeActionToJson(RPtr self);
+    public final native Result<RPtr> parameterChangeActionFromJson(String json);
+    public final native Result<RPtr> parameterChangeActionGovActionId(RPtr self);
+    public final native Result<RPtr> parameterChangeActionProtocolParamUpdates(RPtr self);
+    public final native Result<RPtr> parameterChangeActionNew(RPtr protocolParamUpdates);
+    public final native Result<RPtr> parameterChangeActionNewWithActionId(RPtr govActionId, RPtr protocolParamUpdates);
 
     public final native Result<byte[]> plutusDataToBytes(RPtr self);
     public final native Result<RPtr> plutusDataFromBytes(byte[] bytes);
@@ -770,9 +1061,11 @@ final class Native {
     public final native Result<RPtr> plutusScriptFromHex(String hexStr);
     public final native Result<RPtr> plutusScriptNew(byte[] bytes);
     public final native Result<RPtr> plutusScriptNewV2(byte[] bytes);
+    public final native Result<RPtr> plutusScriptNewV3(byte[] bytes);
     public final native Result<RPtr> plutusScriptNewWithVersion(byte[] bytes, RPtr language);
     public final native Result<byte[]> plutusScriptBytes(RPtr self);
     public final native Result<RPtr> plutusScriptFromBytesV2(byte[] bytes);
+    public final native Result<RPtr> plutusScriptFromBytesV3(byte[] bytes);
     public final native Result<RPtr> plutusScriptFromBytesWithVersion(byte[] bytes, RPtr language);
     public final native Result<RPtr> plutusScriptFromHexWithVersion(String hexStr, RPtr language);
     public final native Result<RPtr> plutusScriptHash(RPtr self);
@@ -876,6 +1169,18 @@ final class Native {
     public final native Result<Long> poolRetirementEpoch(RPtr self);
     public final native Result<RPtr> poolRetirementNew(RPtr poolKeyhash, long epoch);
 
+    public final native Result<byte[]> poolVotingThresholdsToBytes(RPtr self);
+    public final native Result<RPtr> poolVotingThresholdsFromBytes(byte[] bytes);
+    public final native Result<String> poolVotingThresholdsToHex(RPtr self);
+    public final native Result<RPtr> poolVotingThresholdsFromHex(String hexStr);
+    public final native Result<String> poolVotingThresholdsToJson(RPtr self);
+    public final native Result<RPtr> poolVotingThresholdsFromJson(String json);
+    public final native Result<RPtr> poolVotingThresholdsNew(RPtr motionNoConfidence, RPtr committeeNormal, RPtr committeeNoConfidence, RPtr hardForkInitiation);
+    public final native Result<RPtr> poolVotingThresholdsMotionNoConfidence(RPtr self);
+    public final native Result<RPtr> poolVotingThresholdsCommitteeNormal(RPtr self);
+    public final native Result<RPtr> poolVotingThresholdsCommitteeNoConfidence(RPtr self);
+    public final native Result<RPtr> poolVotingThresholdsHardForkInitiation(RPtr self);
+
     public final native Result<RPtr> privateKeyToPublic(RPtr self);
     public final native Result<RPtr> privateKeyGenerateEd25519();
     public final native Result<RPtr> privateKeyGenerateEd25519extended();
@@ -952,6 +1257,22 @@ final class Native {
     public final native Result<Long> protocolParamUpdateCollateralPercentage(RPtr self);
     public final native Result<Void> protocolParamUpdateSetMaxCollateralInputs(RPtr self, long maxCollateralInputs);
     public final native Result<Long> protocolParamUpdateMaxCollateralInputs(RPtr self);
+    public final native Result<Void> protocolParamUpdateSetPoolVotingThresholds(RPtr self, RPtr poolVotingThresholds);
+    public final native Result<RPtr> protocolParamUpdatePoolVotingThresholds(RPtr self);
+    public final native Result<Void> protocolParamUpdateSetDrepVotingThresholds(RPtr self, RPtr drepVotingThresholds);
+    public final native Result<RPtr> protocolParamUpdateDrepVotingThresholds(RPtr self);
+    public final native Result<Void> protocolParamUpdateSetMinCommitteeSize(RPtr self, long minCommitteeSize);
+    public final native Result<Long> protocolParamUpdateMinCommitteeSize(RPtr self);
+    public final native Result<Void> protocolParamUpdateSetCommitteeTermLimit(RPtr self, long committeeTermLimit);
+    public final native Result<Long> protocolParamUpdateCommitteeTermLimit(RPtr self);
+    public final native Result<Void> protocolParamUpdateSetGovernanceActionValidityPeriod(RPtr self, long governanceActionValidityPeriod);
+    public final native Result<Long> protocolParamUpdateGovernanceActionValidityPeriod(RPtr self);
+    public final native Result<Void> protocolParamUpdateSetGovernanceActionDeposit(RPtr self, RPtr governanceActionDeposit);
+    public final native Result<RPtr> protocolParamUpdateGovernanceActionDeposit(RPtr self);
+    public final native Result<Void> protocolParamUpdateSetDrepDeposit(RPtr self, RPtr drepDeposit);
+    public final native Result<RPtr> protocolParamUpdateDrepDeposit(RPtr self);
+    public final native Result<Void> protocolParamUpdateSetDrepInactivityPeriod(RPtr self, long drepInactivityPeriod);
+    public final native Result<Long> protocolParamUpdateDrepInactivityPeriod(RPtr self);
     public final native Result<RPtr> protocolParamUpdateNew();
 
     public final native Result<byte[]> protocolVersionToBytes(RPtr self);
@@ -1000,6 +1321,8 @@ final class Native {
     public final native Result<RPtr> redeemerTagNewMint();
     public final native Result<RPtr> redeemerTagNewCert();
     public final native Result<RPtr> redeemerTagNewReward();
+    public final native Result<RPtr> redeemerTagNewVote();
+    public final native Result<RPtr> redeemerTagNewVotingProposal();
     public final native Result<Integer> redeemerTagKind(RPtr self);
 
     public final native Result<byte[]> redeemersToBytes(RPtr self);
@@ -1161,28 +1484,17 @@ final class Native {
     public final native Result<RPtr> singleHostNameNewWithPort(long port, RPtr dnsName);
 
 
-    public final native Result<RPtr> stakeCredentialFromKeyhash(RPtr hash);
-    public final native Result<RPtr> stakeCredentialFromScripthash(RPtr hash);
-    public final native Result<RPtr> stakeCredentialToKeyhash(RPtr self);
-    public final native Result<RPtr> stakeCredentialToScripthash(RPtr self);
-    public final native Result<Integer> stakeCredentialKind(RPtr self);
-    public final native Result<byte[]> stakeCredentialToBytes(RPtr self);
-    public final native Result<RPtr> stakeCredentialFromBytes(byte[] bytes);
-    public final native Result<String> stakeCredentialToHex(RPtr self);
-    public final native Result<RPtr> stakeCredentialFromHex(String hexStr);
-    public final native Result<String> stakeCredentialToJson(RPtr self);
-    public final native Result<RPtr> stakeCredentialFromJson(String json);
-
-    public final native Result<byte[]> stakeCredentialsToBytes(RPtr self);
-    public final native Result<RPtr> stakeCredentialsFromBytes(byte[] bytes);
-    public final native Result<String> stakeCredentialsToHex(RPtr self);
-    public final native Result<RPtr> stakeCredentialsFromHex(String hexStr);
-    public final native Result<String> stakeCredentialsToJson(RPtr self);
-    public final native Result<RPtr> stakeCredentialsFromJson(String json);
-    public final native Result<RPtr> stakeCredentialsNew();
-    public final native Result<Long> stakeCredentialsLen(RPtr self);
-    public final native Result<RPtr> stakeCredentialsGet(RPtr self, long index);
-    public final native Result<Void> stakeCredentialsAdd(RPtr self, RPtr elem);
+    public final native Result<byte[]> stakeAndVoteDelegationToBytes(RPtr self);
+    public final native Result<RPtr> stakeAndVoteDelegationFromBytes(byte[] bytes);
+    public final native Result<String> stakeAndVoteDelegationToHex(RPtr self);
+    public final native Result<RPtr> stakeAndVoteDelegationFromHex(String hexStr);
+    public final native Result<String> stakeAndVoteDelegationToJson(RPtr self);
+    public final native Result<RPtr> stakeAndVoteDelegationFromJson(String json);
+    public final native Result<RPtr> stakeAndVoteDelegationStakeCredential(RPtr self);
+    public final native Result<RPtr> stakeAndVoteDelegationPoolKeyhash(RPtr self);
+    public final native Result<RPtr> stakeAndVoteDelegationDrep(RPtr self);
+    public final native Result<RPtr> stakeAndVoteDelegationNew(RPtr stakeCredential, RPtr poolKeyhash, RPtr drep);
+    public final native Result<Boolean> stakeAndVoteDelegationHasScriptCredentials(RPtr self);
 
     public final native Result<byte[]> stakeDelegationToBytes(RPtr self);
     public final native Result<RPtr> stakeDelegationFromBytes(byte[] bytes);
@@ -1193,6 +1505,7 @@ final class Native {
     public final native Result<RPtr> stakeDelegationStakeCredential(RPtr self);
     public final native Result<RPtr> stakeDelegationPoolKeyhash(RPtr self);
     public final native Result<RPtr> stakeDelegationNew(RPtr stakeCredential, RPtr poolKeyhash);
+    public final native Result<Boolean> stakeDelegationHasScriptCredentials(RPtr self);
 
     public final native Result<byte[]> stakeDeregistrationToBytes(RPtr self);
     public final native Result<RPtr> stakeDeregistrationFromBytes(byte[] bytes);
@@ -1201,7 +1514,10 @@ final class Native {
     public final native Result<String> stakeDeregistrationToJson(RPtr self);
     public final native Result<RPtr> stakeDeregistrationFromJson(String json);
     public final native Result<RPtr> stakeDeregistrationStakeCredential(RPtr self);
+    public final native Result<RPtr> stakeDeregistrationCoin(RPtr self);
     public final native Result<RPtr> stakeDeregistrationNew(RPtr stakeCredential);
+    public final native Result<RPtr> stakeDeregistrationNewWithCoin(RPtr stakeCredential, RPtr coin);
+    public final native Result<Boolean> stakeDeregistrationHasScriptCredentials(RPtr self);
 
     public final native Result<byte[]> stakeRegistrationToBytes(RPtr self);
     public final native Result<RPtr> stakeRegistrationFromBytes(byte[] bytes);
@@ -1210,7 +1526,35 @@ final class Native {
     public final native Result<String> stakeRegistrationToJson(RPtr self);
     public final native Result<RPtr> stakeRegistrationFromJson(String json);
     public final native Result<RPtr> stakeRegistrationStakeCredential(RPtr self);
+    public final native Result<RPtr> stakeRegistrationCoin(RPtr self);
     public final native Result<RPtr> stakeRegistrationNew(RPtr stakeCredential);
+    public final native Result<RPtr> stakeRegistrationNewWithCoin(RPtr stakeCredential, RPtr coin);
+    public final native Result<Boolean> stakeRegistrationHasScriptCredentials(RPtr self);
+
+    public final native Result<byte[]> stakeRegistrationAndDelegationToBytes(RPtr self);
+    public final native Result<RPtr> stakeRegistrationAndDelegationFromBytes(byte[] bytes);
+    public final native Result<String> stakeRegistrationAndDelegationToHex(RPtr self);
+    public final native Result<RPtr> stakeRegistrationAndDelegationFromHex(String hexStr);
+    public final native Result<String> stakeRegistrationAndDelegationToJson(RPtr self);
+    public final native Result<RPtr> stakeRegistrationAndDelegationFromJson(String json);
+    public final native Result<RPtr> stakeRegistrationAndDelegationStakeCredential(RPtr self);
+    public final native Result<RPtr> stakeRegistrationAndDelegationPoolKeyhash(RPtr self);
+    public final native Result<RPtr> stakeRegistrationAndDelegationCoin(RPtr self);
+    public final native Result<RPtr> stakeRegistrationAndDelegationNew(RPtr stakeCredential, RPtr poolKeyhash, RPtr coin);
+    public final native Result<Boolean> stakeRegistrationAndDelegationHasScriptCredentials(RPtr self);
+
+    public final native Result<byte[]> stakeVoteRegistrationAndDelegationToBytes(RPtr self);
+    public final native Result<RPtr> stakeVoteRegistrationAndDelegationFromBytes(byte[] bytes);
+    public final native Result<String> stakeVoteRegistrationAndDelegationToHex(RPtr self);
+    public final native Result<RPtr> stakeVoteRegistrationAndDelegationFromHex(String hexStr);
+    public final native Result<String> stakeVoteRegistrationAndDelegationToJson(RPtr self);
+    public final native Result<RPtr> stakeVoteRegistrationAndDelegationFromJson(String json);
+    public final native Result<RPtr> stakeVoteRegistrationAndDelegationStakeCredential(RPtr self);
+    public final native Result<RPtr> stakeVoteRegistrationAndDelegationPoolKeyhash(RPtr self);
+    public final native Result<RPtr> stakeVoteRegistrationAndDelegationDrep(RPtr self);
+    public final native Result<RPtr> stakeVoteRegistrationAndDelegationCoin(RPtr self);
+    public final native Result<RPtr> stakeVoteRegistrationAndDelegationNew(RPtr stakeCredential, RPtr poolKeyhash, RPtr drep, RPtr coin);
+    public final native Result<Boolean> stakeVoteRegistrationAndDelegationHasScriptCredentials(RPtr self);
 
     public final native Result<RPtr> stringsNew();
     public final native Result<Long> stringsLen(RPtr self);
@@ -1313,6 +1657,14 @@ final class Native {
     public final native Result<RPtr> transactionBodyCollateralReturn(RPtr self);
     public final native Result<Void> transactionBodySetTotalCollateral(RPtr self, RPtr totalCollateral);
     public final native Result<RPtr> transactionBodyTotalCollateral(RPtr self);
+    public final native Result<Void> transactionBodySetVotingProcedures(RPtr self, RPtr votingProcedures);
+    public final native Result<RPtr> transactionBodyVotingProcedures(RPtr self);
+    public final native Result<Void> transactionBodySetVotingProposals(RPtr self, RPtr votingProposals);
+    public final native Result<RPtr> transactionBodyVotingProposals(RPtr self);
+    public final native Result<Void> transactionBodySetDonation(RPtr self, RPtr donation);
+    public final native Result<RPtr> transactionBodyDonation(RPtr self);
+    public final native Result<Void> transactionBodySetCurrentTreasuryValue(RPtr self, RPtr currentTreasuryValue);
+    public final native Result<RPtr> transactionBodyCurrentTreasuryValue(RPtr self);
     public final native Result<RPtr> transactionBodyNew(RPtr inputs, RPtr outputs, RPtr fee);
     public final native Result<RPtr> transactionBodyNewWithTtl(RPtr inputs, RPtr outputs, RPtr fee, long ttl);
 
@@ -1346,7 +1698,11 @@ final class Native {
     public final native Result<Void> transactionBuilderSetValidityStartInterval(RPtr self, long validityStartInterval);
     public final native Result<Void> transactionBuilderSetValidityStartIntervalBignum(RPtr self, RPtr validityStartInterval);
     public final native Result<Void> transactionBuilderSetCerts(RPtr self, RPtr certs);
+    public final native Result<Void> transactionBuilderSetCertsBuilder(RPtr self, RPtr certs);
     public final native Result<Void> transactionBuilderSetWithdrawals(RPtr self, RPtr withdrawals);
+    public final native Result<Void> transactionBuilderSetWithdrawalsBuilder(RPtr self, RPtr withdrawals);
+    public final native Result<Void> transactionBuilderSetVotingBuilder(RPtr self, RPtr votingBuilder);
+    public final native Result<Void> transactionBuilderSetVotingProposalBuilder(RPtr self, RPtr votingProposalBuilder);
     public final native Result<RPtr> transactionBuilderGetAuxiliaryData(RPtr self);
     public final native Result<Void> transactionBuilderSetAuxiliaryData(RPtr self, RPtr auxiliaryData);
     public final native Result<Void> transactionBuilderSetMetadata(RPtr self, RPtr metadata);
@@ -1362,6 +1718,12 @@ final class Native {
     public final native Result<Void> transactionBuilderAddMintAsset(RPtr self, RPtr policyScript, RPtr assetName, RPtr amount);
     public final native Result<Void> transactionBuilderAddMintAssetAndOutput(RPtr self, RPtr policyScript, RPtr assetName, RPtr amount, RPtr outputBuilder, RPtr outputCoin);
     public final native Result<Void> transactionBuilderAddMintAssetAndOutputMinRequiredCoin(RPtr self, RPtr policyScript, RPtr assetName, RPtr amount, RPtr outputBuilder);
+    public final native Result<Void> transactionBuilderAddExtraWitnessDatum(RPtr self, RPtr datum);
+    public final native Result<RPtr> transactionBuilderGetExtraWitnessDatums(RPtr self);
+    public final native Result<Void> transactionBuilderSetDonation(RPtr self, RPtr donation);
+    public final native Result<RPtr> transactionBuilderGetDonation(RPtr self);
+    public final native Result<Void> transactionBuilderSetCurrentTreasuryValue(RPtr self, RPtr currentTreasuryValue);
+    public final native Result<RPtr> transactionBuilderGetCurrentTreasuryValue(RPtr self);
     public final native Result<RPtr> transactionBuilderNew(RPtr cfg);
     public final native Result<RPtr> transactionBuilderGetReferenceInputs(RPtr self);
     public final native Result<RPtr> transactionBuilderGetExplicitInput(RPtr self);
@@ -1372,6 +1734,7 @@ final class Native {
     public final native Result<RPtr> transactionBuilderGetDeposit(RPtr self);
     public final native Result<RPtr> transactionBuilderGetFeeIfSet(RPtr self);
     public final native Result<Boolean> transactionBuilderAddChangeIfNeeded(RPtr self, RPtr address);
+    public final native Result<Boolean> transactionBuilderAddChangeIfNeededWithDatum(RPtr self, RPtr address, RPtr plutusData);
     public final native Result<Void> transactionBuilderCalcScriptDataHash(RPtr self, RPtr costModels);
     public final native Result<Void> transactionBuilderSetScriptDataHash(RPtr self, RPtr hash);
     public final native Result<Void> transactionBuilderRemoveScriptDataHash(RPtr self);
@@ -1543,6 +1906,23 @@ final class Native {
     public final native Result<RPtr> transactionWitnessSetsGet(RPtr self, long index);
     public final native Result<Void> transactionWitnessSetsAdd(RPtr self, RPtr elem);
 
+    public final native Result<String> treasuryWithdrawalsToJson(RPtr self);
+    public final native Result<RPtr> treasuryWithdrawalsFromJson(String json);
+    public final native Result<RPtr> treasuryWithdrawalsNew();
+    public final native Result<RPtr> treasuryWithdrawalsGet(RPtr self, RPtr key);
+    public final native Result<Void> treasuryWithdrawalsInsert(RPtr self, RPtr key, RPtr value);
+    public final native Result<RPtr> treasuryWithdrawalsKeys(RPtr self);
+    public final native Result<Long> treasuryWithdrawalsLen(RPtr self);
+
+    public final native Result<byte[]> treasuryWithdrawalsActionToBytes(RPtr self);
+    public final native Result<RPtr> treasuryWithdrawalsActionFromBytes(byte[] bytes);
+    public final native Result<String> treasuryWithdrawalsActionToHex(RPtr self);
+    public final native Result<RPtr> treasuryWithdrawalsActionFromHex(String hexStr);
+    public final native Result<String> treasuryWithdrawalsActionToJson(RPtr self);
+    public final native Result<RPtr> treasuryWithdrawalsActionFromJson(String json);
+    public final native Result<RPtr> treasuryWithdrawalsActionWithdrawals(RPtr self);
+    public final native Result<RPtr> treasuryWithdrawalsActionNew(RPtr withdrawals);
+
     public final native Result<RPtr> txBuilderConstantsPlutusDefaultCostModels();
     public final native Result<RPtr> txBuilderConstantsPlutusAlonzoCostModels();
     public final native Result<RPtr> txBuilderConstantsPlutusVasilCostModels();
@@ -1596,6 +1976,18 @@ final class Native {
     public final native Result<RPtr> updateProposedProtocolParameterUpdates(RPtr self);
     public final native Result<Long> updateEpoch(RPtr self);
     public final native Result<RPtr> updateNew(RPtr proposedProtocolParameterUpdates, long epoch);
+
+    public final native Result<byte[]> updateCommitteeActionToBytes(RPtr self);
+    public final native Result<RPtr> updateCommitteeActionFromBytes(byte[] bytes);
+    public final native Result<String> updateCommitteeActionToHex(RPtr self);
+    public final native Result<RPtr> updateCommitteeActionFromHex(String hexStr);
+    public final native Result<String> updateCommitteeActionToJson(RPtr self);
+    public final native Result<RPtr> updateCommitteeActionFromJson(String json);
+    public final native Result<RPtr> updateCommitteeActionGovActionId(RPtr self);
+    public final native Result<RPtr> updateCommitteeActionCommittee(RPtr self);
+    public final native Result<RPtr> updateCommitteeActionMembersToRemove(RPtr self);
+    public final native Result<RPtr> updateCommitteeActionNew(RPtr committee, RPtr membersToRemove);
+    public final native Result<RPtr> updateCommitteeActionNewWithActionId(RPtr govActionId, RPtr committee, RPtr membersToRemove);
 
     public final native Result<byte[]> vRFCertToBytes(RPtr self);
     public final native Result<RPtr> vRFCertFromBytes(byte[] bytes);
@@ -1676,6 +2068,116 @@ final class Native {
     public final native Result<RPtr> vkeywitnessesGet(RPtr self, long index);
     public final native Result<Void> vkeywitnessesAdd(RPtr self, RPtr elem);
 
+    public final native Result<byte[]> voteDelegationToBytes(RPtr self);
+    public final native Result<RPtr> voteDelegationFromBytes(byte[] bytes);
+    public final native Result<String> voteDelegationToHex(RPtr self);
+    public final native Result<RPtr> voteDelegationFromHex(String hexStr);
+    public final native Result<String> voteDelegationToJson(RPtr self);
+    public final native Result<RPtr> voteDelegationFromJson(String json);
+    public final native Result<RPtr> voteDelegationStakeCredential(RPtr self);
+    public final native Result<RPtr> voteDelegationDrep(RPtr self);
+    public final native Result<RPtr> voteDelegationNew(RPtr stakeCredential, RPtr drep);
+    public final native Result<Boolean> voteDelegationHasScriptCredentials(RPtr self);
+
+    public final native Result<byte[]> voteRegistrationAndDelegationToBytes(RPtr self);
+    public final native Result<RPtr> voteRegistrationAndDelegationFromBytes(byte[] bytes);
+    public final native Result<String> voteRegistrationAndDelegationToHex(RPtr self);
+    public final native Result<RPtr> voteRegistrationAndDelegationFromHex(String hexStr);
+    public final native Result<String> voteRegistrationAndDelegationToJson(RPtr self);
+    public final native Result<RPtr> voteRegistrationAndDelegationFromJson(String json);
+    public final native Result<RPtr> voteRegistrationAndDelegationStakeCredential(RPtr self);
+    public final native Result<RPtr> voteRegistrationAndDelegationDrep(RPtr self);
+    public final native Result<RPtr> voteRegistrationAndDelegationCoin(RPtr self);
+    public final native Result<RPtr> voteRegistrationAndDelegationNew(RPtr stakeCredential, RPtr drep, RPtr coin);
+    public final native Result<Boolean> voteRegistrationAndDelegationHasScriptCredentials(RPtr self);
+
+    public final native Result<byte[]> voterToBytes(RPtr self);
+    public final native Result<RPtr> voterFromBytes(byte[] bytes);
+    public final native Result<String> voterToHex(RPtr self);
+    public final native Result<RPtr> voterFromHex(String hexStr);
+    public final native Result<String> voterToJson(RPtr self);
+    public final native Result<RPtr> voterFromJson(String json);
+    public final native Result<RPtr> voterNewConstitutionalCommitteeHotKey(RPtr cred);
+    public final native Result<RPtr> voterNewDrep(RPtr cred);
+    public final native Result<RPtr> voterNewStakingPool(RPtr keyHash);
+    public final native Result<Integer> voterKind(RPtr self);
+    public final native Result<RPtr> voterToConstitutionalCommitteeHotCred(RPtr self);
+    public final native Result<RPtr> voterToDrepCred(RPtr self);
+    public final native Result<RPtr> voterToStakingPoolKeyHash(RPtr self);
+    public final native Result<Boolean> voterHasScriptCredentials(RPtr self);
+    public final native Result<RPtr> voterToKeyHash(RPtr self);
+
+    public final native Result<String> votersToJson(RPtr self);
+    public final native Result<RPtr> votersFromJson(String json);
+    public final native Result<RPtr> votersNew();
+    public final native Result<Void> votersAdd(RPtr self, RPtr voter);
+    public final native Result<RPtr> votersGet(RPtr self, long index);
+    public final native Result<Long> votersLen(RPtr self);
+
+    public final native Result<RPtr> votingBuilderNew();
+    public final native Result<Void> votingBuilderAdd(RPtr self, RPtr voter, RPtr govActionId, RPtr votingProcedure);
+    public final native Result<Void> votingBuilderAddWithPlutusWitness(RPtr self, RPtr voter, RPtr govActionId, RPtr votingProcedure, RPtr witness);
+    public final native Result<Void> votingBuilderAddWithNativeScript(RPtr self, RPtr voter, RPtr govActionId, RPtr votingProcedure, RPtr nativeScriptSource);
+    public final native Result<RPtr> votingBuilderGetPlutusWitnesses(RPtr self);
+    public final native Result<RPtr> votingBuilderGetRefInputs(RPtr self);
+    public final native Result<RPtr> votingBuilderGetNativeScripts(RPtr self);
+    public final native Result<Boolean> votingBuilderHasPlutusScripts(RPtr self);
+    public final native Result<RPtr> votingBuilderBuild(RPtr self);
+
+    public final native Result<byte[]> votingProcedureToBytes(RPtr self);
+    public final native Result<RPtr> votingProcedureFromBytes(byte[] bytes);
+    public final native Result<String> votingProcedureToHex(RPtr self);
+    public final native Result<RPtr> votingProcedureFromHex(String hexStr);
+    public final native Result<String> votingProcedureToJson(RPtr self);
+    public final native Result<RPtr> votingProcedureFromJson(String json);
+    public final native Result<RPtr> votingProcedureNew(int vote);
+    public final native Result<RPtr> votingProcedureNewWithAnchor(int vote, RPtr anchor);
+    public final native Result<Integer> votingProcedureVoteKind(RPtr self);
+    public final native Result<RPtr> votingProcedureAnchor(RPtr self);
+
+    public final native Result<byte[]> votingProceduresToBytes(RPtr self);
+    public final native Result<RPtr> votingProceduresFromBytes(byte[] bytes);
+    public final native Result<String> votingProceduresToHex(RPtr self);
+    public final native Result<RPtr> votingProceduresFromHex(String hexStr);
+    public final native Result<String> votingProceduresToJson(RPtr self);
+    public final native Result<RPtr> votingProceduresFromJson(String json);
+    public final native Result<RPtr> votingProceduresNew();
+    public final native Result<Void> votingProceduresInsert(RPtr self, RPtr voter, RPtr governanceActionId, RPtr votingProcedure);
+    public final native Result<RPtr> votingProceduresGet(RPtr self, RPtr voter, RPtr governanceActionId);
+    public final native Result<RPtr> votingProceduresGetVoters(RPtr self);
+    public final native Result<RPtr> votingProceduresGetGovernanceActionIdsByVoter(RPtr self, RPtr voter);
+
+    public final native Result<byte[]> votingProposalToBytes(RPtr self);
+    public final native Result<RPtr> votingProposalFromBytes(byte[] bytes);
+    public final native Result<String> votingProposalToHex(RPtr self);
+    public final native Result<RPtr> votingProposalFromHex(String hexStr);
+    public final native Result<String> votingProposalToJson(RPtr self);
+    public final native Result<RPtr> votingProposalFromJson(String json);
+    public final native Result<RPtr> votingProposalGovernanceAction(RPtr self);
+    public final native Result<RPtr> votingProposalAnchor(RPtr self);
+    public final native Result<RPtr> votingProposalRewardAccount(RPtr self);
+    public final native Result<RPtr> votingProposalDeposit(RPtr self);
+    public final native Result<RPtr> votingProposalNew(RPtr governanceAction, RPtr anchor, RPtr rewardAccount, RPtr deposit);
+
+    public final native Result<RPtr> votingProposalBuilderNew();
+    public final native Result<Void> votingProposalBuilderAdd(RPtr self, RPtr proposal);
+    public final native Result<Void> votingProposalBuilderAddWithPlutusWitness(RPtr self, RPtr proposal, RPtr witness);
+    public final native Result<RPtr> votingProposalBuilderGetPlutusWitnesses(RPtr self);
+    public final native Result<RPtr> votingProposalBuilderGetRefInputs(RPtr self);
+    public final native Result<Boolean> votingProposalBuilderHasPlutusScripts(RPtr self);
+    public final native Result<RPtr> votingProposalBuilderBuild(RPtr self);
+
+    public final native Result<byte[]> votingProposalsToBytes(RPtr self);
+    public final native Result<RPtr> votingProposalsFromBytes(byte[] bytes);
+    public final native Result<String> votingProposalsToHex(RPtr self);
+    public final native Result<RPtr> votingProposalsFromHex(String hexStr);
+    public final native Result<String> votingProposalsToJson(RPtr self);
+    public final native Result<RPtr> votingProposalsFromJson(String json);
+    public final native Result<RPtr> votingProposalsNew();
+    public final native Result<Long> votingProposalsLen(RPtr self);
+    public final native Result<RPtr> votingProposalsGet(RPtr self, long index);
+    public final native Result<Void> votingProposalsAdd(RPtr self, RPtr proposal);
+
     public final native Result<byte[]> withdrawalsToBytes(RPtr self);
     public final native Result<RPtr> withdrawalsFromBytes(byte[] bytes);
     public final native Result<String> withdrawalsToHex(RPtr self);
@@ -1687,6 +2189,17 @@ final class Native {
     public final native Result<RPtr> withdrawalsInsert(RPtr self, RPtr key, RPtr value);
     public final native Result<RPtr> withdrawalsGet(RPtr self, RPtr key);
     public final native Result<RPtr> withdrawalsKeys(RPtr self);
+
+    public final native Result<RPtr> withdrawalsBuilderNew();
+    public final native Result<Void> withdrawalsBuilderAdd(RPtr self, RPtr address, RPtr coin);
+    public final native Result<Void> withdrawalsBuilderAddWithPlutusWitness(RPtr self, RPtr address, RPtr coin, RPtr witness);
+    public final native Result<Void> withdrawalsBuilderAddWithNativeScript(RPtr self, RPtr address, RPtr coin, RPtr nativeScriptSource);
+    public final native Result<RPtr> withdrawalsBuilderGetPlutusWitnesses(RPtr self);
+    public final native Result<RPtr> withdrawalsBuilderGetRefInputs(RPtr self);
+    public final native Result<RPtr> withdrawalsBuilderGetNativeScripts(RPtr self);
+    public final native Result<RPtr> withdrawalsBuilderGetTotalWithdrawals(RPtr self);
+    public final native Result<Boolean> withdrawalsBuilderHasPlutusScripts(RPtr self);
+    public final native Result<RPtr> withdrawalsBuilderBuild(RPtr self);
 
     public final native Result<RPtr> calculateExUnitsCeilCost(RPtr exUnits, RPtr exUnitPrices);
     public final native Result<RPtr> createSendAll(RPtr address, RPtr utxos, RPtr config);
