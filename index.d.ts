@@ -11,20 +11,20 @@ export class Ptr {
 export class Address extends Ptr {
   /**
   * @param {Uint8Array} data
-  * @returns {Promise<Optional<Address>>}
+  * @returns {Promise<Address>}
   */
-  static from_bytes: (data: Uint8Array) => Promise<Optional<Address>>;
+  static from_bytes: (data: Uint8Array) => Promise<Address>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Address>>}
+  * @returns {Promise<Address>}
   */
-  static from_json: (json: string) => Promise<Optional<Address>>;
+  static from_json: (json: string) => Promise<Address>;
 
   /**
   * @returns {Promise<string>}
@@ -33,9 +33,9 @@ export class Address extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Address>>}
+  * @returns {Promise<Address>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Address>>;
+  static from_hex: (hex_str: string) => Promise<Address>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -44,20 +44,20 @@ export class Address extends Ptr {
 
   /**
   * @param {Optional<string>} prefix
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_bech32: (prefix: Optional<string>) => Promise<Optional<string>>;
+  to_bech32: (prefix: Optional<string>) => Promise<string>;
 
   /**
   * @param {string} bech_str
-  * @returns {Promise<Optional<Address>>}
+  * @returns {Promise<Address>}
   */
-  static from_bech32: (bech_str: string) => Promise<Optional<Address>>;
+  static from_bech32: (bech_str: string) => Promise<Address>;
 
   /**
-  * @returns {Promise<Optional<number>>}
+  * @returns {Promise<number>}
   */
-  network_id: () => Promise<Optional<number>>;
+  network_id: () => Promise<number>;
 
 }
 
@@ -70,9 +70,9 @@ export class Anchor extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Anchor>>}
+  * @returns {Promise<Anchor>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Anchor>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Anchor>;
 
   /**
   * @returns {Promise<string>}
@@ -81,20 +81,20 @@ export class Anchor extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Anchor>>}
+  * @returns {Promise<Anchor>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Anchor>>;
+  static from_hex: (hex_str: string) => Promise<Anchor>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Anchor>>}
+  * @returns {Promise<Anchor>}
   */
-  static from_json: (json: string) => Promise<Optional<Anchor>>;
+  static from_json: (json: string) => Promise<Anchor>;
 
   /**
   * @returns {Promise<URL>}
@@ -119,9 +119,9 @@ export class Anchor extends Ptr {
 export class AnchorDataHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<AnchorDataHash>>}
+  * @returns {Promise<AnchorDataHash>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<AnchorDataHash>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<AnchorDataHash>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -130,15 +130,15 @@ export class AnchorDataHash extends Ptr {
 
   /**
   * @param {string} prefix
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_bech32: (prefix: string) => Promise<Optional<string>>;
+  to_bech32: (prefix: string) => Promise<string>;
 
   /**
   * @param {string} bech_str
-  * @returns {Promise<Optional<AnchorDataHash>>}
+  * @returns {Promise<AnchorDataHash>}
   */
-  static from_bech32: (bech_str: string) => Promise<Optional<AnchorDataHash>>;
+  static from_bech32: (bech_str: string) => Promise<AnchorDataHash>;
 
   /**
   * @returns {Promise<string>}
@@ -147,9 +147,9 @@ export class AnchorDataHash extends Ptr {
 
   /**
   * @param {string} hex
-  * @returns {Promise<Optional<AnchorDataHash>>}
+  * @returns {Promise<AnchorDataHash>}
   */
-  static from_hex: (hex: string) => Promise<Optional<AnchorDataHash>>;
+  static from_hex: (hex: string) => Promise<AnchorDataHash>;
 
 }
 
@@ -162,9 +162,9 @@ export class AssetName extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<AssetName>>}
+  * @returns {Promise<AssetName>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<AssetName>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<AssetName>;
 
   /**
   * @returns {Promise<string>}
@@ -173,26 +173,26 @@ export class AssetName extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<AssetName>>}
+  * @returns {Promise<AssetName>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<AssetName>>;
+  static from_hex: (hex_str: string) => Promise<AssetName>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<AssetName>>}
+  * @returns {Promise<AssetName>}
   */
-  static from_json: (json: string) => Promise<Optional<AssetName>>;
+  static from_json: (json: string) => Promise<AssetName>;
 
   /**
   * @param {Uint8Array} name
-  * @returns {Promise<Optional<AssetName>>}
+  * @returns {Promise<AssetName>}
   */
-  static new: (name: Uint8Array) => Promise<Optional<AssetName>>;
+  static new: (name: Uint8Array) => Promise<AssetName>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -210,9 +210,9 @@ export class AssetNames extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<AssetNames>>}
+  * @returns {Promise<AssetNames>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<AssetNames>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<AssetNames>;
 
   /**
   * @returns {Promise<string>}
@@ -221,20 +221,20 @@ export class AssetNames extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<AssetNames>>}
+  * @returns {Promise<AssetNames>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<AssetNames>>;
+  static from_hex: (hex_str: string) => Promise<AssetNames>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<AssetNames>>}
+  * @returns {Promise<AssetNames>}
   */
-  static from_json: (json: string) => Promise<Optional<AssetNames>>;
+  static from_json: (json: string) => Promise<AssetNames>;
 
   /**
   * @returns {Promise<AssetNames>}
@@ -268,9 +268,9 @@ export class Assets extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Assets>>}
+  * @returns {Promise<Assets>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Assets>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Assets>;
 
   /**
   * @returns {Promise<string>}
@@ -279,20 +279,20 @@ export class Assets extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Assets>>}
+  * @returns {Promise<Assets>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Assets>>;
+  static from_hex: (hex_str: string) => Promise<Assets>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Assets>>}
+  * @returns {Promise<Assets>}
   */
-  static from_json: (json: string) => Promise<Optional<Assets>>;
+  static from_json: (json: string) => Promise<Assets>;
 
   /**
   * @returns {Promise<Assets>}
@@ -333,9 +333,9 @@ export class AuxiliaryData extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<AuxiliaryData>>}
+  * @returns {Promise<AuxiliaryData>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<AuxiliaryData>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<AuxiliaryData>;
 
   /**
   * @returns {Promise<string>}
@@ -344,20 +344,20 @@ export class AuxiliaryData extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<AuxiliaryData>>}
+  * @returns {Promise<AuxiliaryData>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<AuxiliaryData>>;
+  static from_hex: (hex_str: string) => Promise<AuxiliaryData>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<AuxiliaryData>>}
+  * @returns {Promise<AuxiliaryData>}
   */
-  static from_json: (json: string) => Promise<Optional<AuxiliaryData>>;
+  static from_json: (json: string) => Promise<AuxiliaryData>;
 
   /**
   * @returns {Promise<AuxiliaryData>}
@@ -410,9 +410,9 @@ export class AuxiliaryData extends Ptr {
 export class AuxiliaryDataHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<AuxiliaryDataHash>>}
+  * @returns {Promise<AuxiliaryDataHash>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<AuxiliaryDataHash>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<AuxiliaryDataHash>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -421,15 +421,15 @@ export class AuxiliaryDataHash extends Ptr {
 
   /**
   * @param {string} prefix
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_bech32: (prefix: string) => Promise<Optional<string>>;
+  to_bech32: (prefix: string) => Promise<string>;
 
   /**
   * @param {string} bech_str
-  * @returns {Promise<Optional<AuxiliaryDataHash>>}
+  * @returns {Promise<AuxiliaryDataHash>}
   */
-  static from_bech32: (bech_str: string) => Promise<Optional<AuxiliaryDataHash>>;
+  static from_bech32: (bech_str: string) => Promise<AuxiliaryDataHash>;
 
   /**
   * @returns {Promise<string>}
@@ -438,9 +438,9 @@ export class AuxiliaryDataHash extends Ptr {
 
   /**
   * @param {string} hex
-  * @returns {Promise<Optional<AuxiliaryDataHash>>}
+  * @returns {Promise<AuxiliaryDataHash>}
   */
-  static from_hex: (hex: string) => Promise<Optional<AuxiliaryDataHash>>;
+  static from_hex: (hex: string) => Promise<AuxiliaryDataHash>;
 
 }
 
@@ -518,9 +518,9 @@ export class BigInt extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<BigInt>>}
+  * @returns {Promise<BigInt>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<BigInt>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<BigInt>;
 
   /**
   * @returns {Promise<string>}
@@ -529,20 +529,20 @@ export class BigInt extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<BigInt>>}
+  * @returns {Promise<BigInt>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<BigInt>>;
+  static from_hex: (hex_str: string) => Promise<BigInt>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<BigInt>>}
+  * @returns {Promise<BigInt>}
   */
-  static from_json: (json: string) => Promise<Optional<BigInt>>;
+  static from_json: (json: string) => Promise<BigInt>;
 
   /**
   * @returns {Promise<boolean>}
@@ -561,9 +561,9 @@ export class BigInt extends Ptr {
 
   /**
   * @param {string} text
-  * @returns {Promise<Optional<BigInt>>}
+  * @returns {Promise<BigInt>}
   */
-  static from_str: (text: string) => Promise<Optional<BigInt>>;
+  static from_str: (text: string) => Promise<BigInt>;
 
   /**
   * @returns {Promise<string>}
@@ -609,9 +609,9 @@ export class BigNum extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<BigNum>>}
+  * @returns {Promise<BigNum>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<BigNum>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<BigNum>;
 
   /**
   * @returns {Promise<string>}
@@ -620,26 +620,26 @@ export class BigNum extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<BigNum>>}
+  * @returns {Promise<BigNum>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<BigNum>>;
+  static from_hex: (hex_str: string) => Promise<BigNum>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<BigNum>>}
+  * @returns {Promise<BigNum>}
   */
-  static from_json: (json: string) => Promise<Optional<BigNum>>;
+  static from_json: (json: string) => Promise<BigNum>;
 
   /**
   * @param {string} string
-  * @returns {Promise<Optional<BigNum>>}
+  * @returns {Promise<BigNum>}
   */
-  static from_str: (string: string) => Promise<Optional<BigNum>>;
+  static from_str: (string: string) => Promise<BigNum>;
 
   /**
   * @returns {Promise<string>}
@@ -669,21 +669,21 @@ export class BigNum extends Ptr {
 
   /**
   * @param {BigNum} other
-  * @returns {Promise<Optional<BigNum>>}
+  * @returns {Promise<BigNum>}
   */
-  checked_mul: (other: BigNum) => Promise<Optional<BigNum>>;
+  checked_mul: (other: BigNum) => Promise<BigNum>;
 
   /**
   * @param {BigNum} other
-  * @returns {Promise<Optional<BigNum>>}
+  * @returns {Promise<BigNum>}
   */
-  checked_add: (other: BigNum) => Promise<Optional<BigNum>>;
+  checked_add: (other: BigNum) => Promise<BigNum>;
 
   /**
   * @param {BigNum} other
-  * @returns {Promise<Optional<BigNum>>}
+  * @returns {Promise<BigNum>}
   */
-  checked_sub: (other: BigNum) => Promise<Optional<BigNum>>;
+  checked_sub: (other: BigNum) => Promise<BigNum>;
 
   /**
   * @param {BigNum} other
@@ -727,9 +727,9 @@ export class Bip32PrivateKey extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Bip32PrivateKey>>}
+  * @returns {Promise<Bip32PrivateKey>}
   */
-  static from_128_xprv: (bytes: Uint8Array) => Promise<Optional<Bip32PrivateKey>>;
+  static from_128_xprv: (bytes: Uint8Array) => Promise<Bip32PrivateKey>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -737,9 +737,9 @@ export class Bip32PrivateKey extends Ptr {
   to_128_xprv: () => Promise<Uint8Array>;
 
   /**
-  * @returns {Promise<Optional<Bip32PrivateKey>>}
+  * @returns {Promise<Bip32PrivateKey>}
   */
-  static generate_ed25519_bip32: () => Promise<Optional<Bip32PrivateKey>>;
+  static generate_ed25519_bip32: () => Promise<Bip32PrivateKey>;
 
   /**
   * @returns {Promise<PrivateKey>}
@@ -753,9 +753,9 @@ export class Bip32PrivateKey extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Bip32PrivateKey>>}
+  * @returns {Promise<Bip32PrivateKey>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Bip32PrivateKey>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Bip32PrivateKey>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -764,9 +764,9 @@ export class Bip32PrivateKey extends Ptr {
 
   /**
   * @param {string} bech32_str
-  * @returns {Promise<Optional<Bip32PrivateKey>>}
+  * @returns {Promise<Bip32PrivateKey>}
   */
-  static from_bech32: (bech32_str: string) => Promise<Optional<Bip32PrivateKey>>;
+  static from_bech32: (bech32_str: string) => Promise<Bip32PrivateKey>;
 
   /**
   * @returns {Promise<string>}
@@ -792,9 +792,9 @@ export class Bip32PrivateKey extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Bip32PrivateKey>>}
+  * @returns {Promise<Bip32PrivateKey>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Bip32PrivateKey>>;
+  static from_hex: (hex_str: string) => Promise<Bip32PrivateKey>;
 
 }
 
@@ -802,9 +802,9 @@ export class Bip32PrivateKey extends Ptr {
 export class Bip32PublicKey extends Ptr {
   /**
   * @param {number} index
-  * @returns {Promise<Optional<Bip32PublicKey>>}
+  * @returns {Promise<Bip32PublicKey>}
   */
-  derive: (index: number) => Promise<Optional<Bip32PublicKey>>;
+  derive: (index: number) => Promise<Bip32PublicKey>;
 
   /**
   * @returns {Promise<PublicKey>}
@@ -813,9 +813,9 @@ export class Bip32PublicKey extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Bip32PublicKey>>}
+  * @returns {Promise<Bip32PublicKey>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Bip32PublicKey>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Bip32PublicKey>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -824,9 +824,9 @@ export class Bip32PublicKey extends Ptr {
 
   /**
   * @param {string} bech32_str
-  * @returns {Promise<Optional<Bip32PublicKey>>}
+  * @returns {Promise<Bip32PublicKey>}
   */
-  static from_bech32: (bech32_str: string) => Promise<Optional<Bip32PublicKey>>;
+  static from_bech32: (bech32_str: string) => Promise<Bip32PublicKey>;
 
   /**
   * @returns {Promise<string>}
@@ -845,9 +845,9 @@ export class Bip32PublicKey extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Bip32PublicKey>>}
+  * @returns {Promise<Bip32PublicKey>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Bip32PublicKey>>;
+  static from_hex: (hex_str: string) => Promise<Bip32PublicKey>;
 
 }
 
@@ -860,9 +860,9 @@ export class Block extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Block>>}
+  * @returns {Promise<Block>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Block>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Block>;
 
   /**
   * @returns {Promise<string>}
@@ -871,20 +871,20 @@ export class Block extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Block>>}
+  * @returns {Promise<Block>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Block>>;
+  static from_hex: (hex_str: string) => Promise<Block>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Block>>}
+  * @returns {Promise<Block>}
   */
-  static from_json: (json: string) => Promise<Optional<Block>>;
+  static from_json: (json: string) => Promise<Block>;
 
   /**
   * @returns {Promise<Header>}
@@ -927,9 +927,9 @@ export class Block extends Ptr {
 export class BlockHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<BlockHash>>}
+  * @returns {Promise<BlockHash>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<BlockHash>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<BlockHash>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -938,15 +938,15 @@ export class BlockHash extends Ptr {
 
   /**
   * @param {string} prefix
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_bech32: (prefix: string) => Promise<Optional<string>>;
+  to_bech32: (prefix: string) => Promise<string>;
 
   /**
   * @param {string} bech_str
-  * @returns {Promise<Optional<BlockHash>>}
+  * @returns {Promise<BlockHash>}
   */
-  static from_bech32: (bech_str: string) => Promise<Optional<BlockHash>>;
+  static from_bech32: (bech_str: string) => Promise<BlockHash>;
 
   /**
   * @returns {Promise<string>}
@@ -955,9 +955,9 @@ export class BlockHash extends Ptr {
 
   /**
   * @param {string} hex
-  * @returns {Promise<Optional<BlockHash>>}
+  * @returns {Promise<BlockHash>}
   */
-  static from_hex: (hex: string) => Promise<Optional<BlockHash>>;
+  static from_hex: (hex: string) => Promise<BlockHash>;
 
 }
 
@@ -970,9 +970,9 @@ export class BootstrapWitness extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<BootstrapWitness>>}
+  * @returns {Promise<BootstrapWitness>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<BootstrapWitness>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<BootstrapWitness>;
 
   /**
   * @returns {Promise<string>}
@@ -981,20 +981,20 @@ export class BootstrapWitness extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<BootstrapWitness>>}
+  * @returns {Promise<BootstrapWitness>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<BootstrapWitness>>;
+  static from_hex: (hex_str: string) => Promise<BootstrapWitness>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<BootstrapWitness>>}
+  * @returns {Promise<BootstrapWitness>}
   */
-  static from_json: (json: string) => Promise<Optional<BootstrapWitness>>;
+  static from_json: (json: string) => Promise<BootstrapWitness>;
 
   /**
   * @returns {Promise<Vkey>}
@@ -1066,9 +1066,9 @@ export class ByronAddress extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ByronAddress>>}
+  * @returns {Promise<ByronAddress>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ByronAddress>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ByronAddress>;
 
   /**
   * @returns {Promise<number>}
@@ -1081,15 +1081,15 @@ export class ByronAddress extends Ptr {
   attributes: () => Promise<Uint8Array>;
 
   /**
-  * @returns {Promise<Optional<number>>}
+  * @returns {Promise<number>}
   */
-  network_id: () => Promise<Optional<number>>;
+  network_id: () => Promise<number>;
 
   /**
   * @param {string} s
-  * @returns {Promise<Optional<ByronAddress>>}
+  * @returns {Promise<ByronAddress>}
   */
-  static from_base58: (s: string) => Promise<Optional<ByronAddress>>;
+  static from_base58: (s: string) => Promise<ByronAddress>;
 
   /**
   * @param {Bip32PublicKey} key
@@ -1126,9 +1126,9 @@ export class Certificate extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Certificate>>}
+  * @returns {Promise<Certificate>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Certificate>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Certificate>;
 
   /**
   * @returns {Promise<string>}
@@ -1137,20 +1137,20 @@ export class Certificate extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Certificate>>}
+  * @returns {Promise<Certificate>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Certificate>>;
+  static from_hex: (hex_str: string) => Promise<Certificate>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Certificate>>}
+  * @returns {Promise<Certificate>}
   */
-  static from_json: (json: string) => Promise<Optional<Certificate>>;
+  static from_json: (json: string) => Promise<Certificate>;
 
   /**
   * @param {StakeRegistration} stake_registration
@@ -1360,9 +1360,9 @@ export class Certificates extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Certificates>>}
+  * @returns {Promise<Certificates>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Certificates>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Certificates>;
 
   /**
   * @returns {Promise<string>}
@@ -1371,20 +1371,20 @@ export class Certificates extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Certificates>>}
+  * @returns {Promise<Certificates>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Certificates>>;
+  static from_hex: (hex_str: string) => Promise<Certificates>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Certificates>>}
+  * @returns {Promise<Certificates>}
   */
-  static from_json: (json: string) => Promise<Optional<Certificates>>;
+  static from_json: (json: string) => Promise<Certificates>;
 
   /**
   * @returns {Promise<Certificates>}
@@ -1454,16 +1454,16 @@ export class CertificatesBuilder extends Ptr {
   /**
   * @param {BigNum} pool_deposit
   * @param {BigNum} key_deposit
-  * @returns {Promise<Optional<Value>>}
+  * @returns {Promise<Value>}
   */
-  get_certificates_refund: (pool_deposit: BigNum, key_deposit: BigNum) => Promise<Optional<Value>>;
+  get_certificates_refund: (pool_deposit: BigNum, key_deposit: BigNum) => Promise<Value>;
 
   /**
   * @param {BigNum} pool_deposit
   * @param {BigNum} key_deposit
-  * @returns {Promise<Optional<BigNum>>}
+  * @returns {Promise<BigNum>}
   */
-  get_certificates_deposit: (pool_deposit: BigNum, key_deposit: BigNum) => Promise<Optional<BigNum>>;
+  get_certificates_deposit: (pool_deposit: BigNum, key_deposit: BigNum) => Promise<BigNum>;
 
   /**
   * @returns {Promise<boolean>}
@@ -1486,9 +1486,9 @@ export class Committee extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Committee>>}
+  * @returns {Promise<Committee>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Committee>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Committee>;
 
   /**
   * @returns {Promise<string>}
@@ -1497,20 +1497,20 @@ export class Committee extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Committee>>}
+  * @returns {Promise<Committee>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Committee>>;
+  static from_hex: (hex_str: string) => Promise<Committee>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Committee>>}
+  * @returns {Promise<Committee>}
   */
-  static from_json: (json: string) => Promise<Optional<Committee>>;
+  static from_json: (json: string) => Promise<Committee>;
 
   /**
   * @param {UnitInterval} quorum_threshold
@@ -1551,9 +1551,9 @@ export class CommitteeColdResign extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<CommitteeColdResign>>}
+  * @returns {Promise<CommitteeColdResign>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<CommitteeColdResign>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<CommitteeColdResign>;
 
   /**
   * @returns {Promise<string>}
@@ -1562,20 +1562,20 @@ export class CommitteeColdResign extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<CommitteeColdResign>>}
+  * @returns {Promise<CommitteeColdResign>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<CommitteeColdResign>>;
+  static from_hex: (hex_str: string) => Promise<CommitteeColdResign>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<CommitteeColdResign>>}
+  * @returns {Promise<CommitteeColdResign>}
   */
-  static from_json: (json: string) => Promise<Optional<CommitteeColdResign>>;
+  static from_json: (json: string) => Promise<CommitteeColdResign>;
 
   /**
   * @returns {Promise<Credential>}
@@ -1616,9 +1616,9 @@ export class CommitteeHotAuth extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<CommitteeHotAuth>>}
+  * @returns {Promise<CommitteeHotAuth>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<CommitteeHotAuth>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<CommitteeHotAuth>;
 
   /**
   * @returns {Promise<string>}
@@ -1627,20 +1627,20 @@ export class CommitteeHotAuth extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<CommitteeHotAuth>>}
+  * @returns {Promise<CommitteeHotAuth>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<CommitteeHotAuth>>;
+  static from_hex: (hex_str: string) => Promise<CommitteeHotAuth>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<CommitteeHotAuth>>}
+  * @returns {Promise<CommitteeHotAuth>}
   */
-  static from_json: (json: string) => Promise<Optional<CommitteeHotAuth>>;
+  static from_json: (json: string) => Promise<CommitteeHotAuth>;
 
   /**
   * @returns {Promise<Credential>}
@@ -1675,9 +1675,9 @@ export class Constitution extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Constitution>>}
+  * @returns {Promise<Constitution>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Constitution>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Constitution>;
 
   /**
   * @returns {Promise<string>}
@@ -1686,20 +1686,20 @@ export class Constitution extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Constitution>>}
+  * @returns {Promise<Constitution>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Constitution>>;
+  static from_hex: (hex_str: string) => Promise<Constitution>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Constitution>>}
+  * @returns {Promise<Constitution>}
   */
-  static from_json: (json: string) => Promise<Optional<Constitution>>;
+  static from_json: (json: string) => Promise<Constitution>;
 
   /**
   * @returns {Promise<Anchor>}
@@ -1735,9 +1735,9 @@ export class ConstrPlutusData extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ConstrPlutusData>>}
+  * @returns {Promise<ConstrPlutusData>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ConstrPlutusData>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ConstrPlutusData>;
 
   /**
   * @returns {Promise<string>}
@@ -1746,9 +1746,9 @@ export class ConstrPlutusData extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<ConstrPlutusData>>}
+  * @returns {Promise<ConstrPlutusData>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<ConstrPlutusData>>;
+  static from_hex: (hex_str: string) => Promise<ConstrPlutusData>;
 
   /**
   * @returns {Promise<BigNum>}
@@ -1778,9 +1778,9 @@ export class CostModel extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<CostModel>>}
+  * @returns {Promise<CostModel>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<CostModel>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<CostModel>;
 
   /**
   * @returns {Promise<string>}
@@ -1789,20 +1789,20 @@ export class CostModel extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<CostModel>>}
+  * @returns {Promise<CostModel>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<CostModel>>;
+  static from_hex: (hex_str: string) => Promise<CostModel>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<CostModel>>}
+  * @returns {Promise<CostModel>}
   */
-  static from_json: (json: string) => Promise<Optional<CostModel>>;
+  static from_json: (json: string) => Promise<CostModel>;
 
   /**
   * @returns {Promise<CostModel>}
@@ -1812,15 +1812,15 @@ export class CostModel extends Ptr {
   /**
   * @param {number} operation
   * @param {Int} cost
-  * @returns {Promise<Optional<Int>>}
+  * @returns {Promise<Int>}
   */
-  set: (operation: number, cost: Int) => Promise<Optional<Int>>;
+  set: (operation: number, cost: Int) => Promise<Int>;
 
   /**
   * @param {number} operation
-  * @returns {Promise<Optional<Int>>}
+  * @returns {Promise<Int>}
   */
-  get: (operation: number) => Promise<Optional<Int>>;
+  get: (operation: number) => Promise<Int>;
 
   /**
   * @returns {Promise<number>}
@@ -1838,9 +1838,9 @@ export class Costmdls extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Costmdls>>}
+  * @returns {Promise<Costmdls>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Costmdls>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Costmdls>;
 
   /**
   * @returns {Promise<string>}
@@ -1849,20 +1849,20 @@ export class Costmdls extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Costmdls>>}
+  * @returns {Promise<Costmdls>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Costmdls>>;
+  static from_hex: (hex_str: string) => Promise<Costmdls>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Costmdls>>}
+  * @returns {Promise<Costmdls>}
   */
-  static from_json: (json: string) => Promise<Optional<Costmdls>>;
+  static from_json: (json: string) => Promise<Costmdls>;
 
   /**
   * @returns {Promise<Costmdls>}
@@ -1941,9 +1941,9 @@ export class Credential extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Credential>>}
+  * @returns {Promise<Credential>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Credential>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Credential>;
 
   /**
   * @returns {Promise<string>}
@@ -1952,20 +1952,20 @@ export class Credential extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Credential>>}
+  * @returns {Promise<Credential>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Credential>>;
+  static from_hex: (hex_str: string) => Promise<Credential>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Credential>>}
+  * @returns {Promise<Credential>}
   */
-  static from_json: (json: string) => Promise<Optional<Credential>>;
+  static from_json: (json: string) => Promise<Credential>;
 
 }
 
@@ -1978,9 +1978,9 @@ export class Credentials extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Credentials>>}
+  * @returns {Promise<Credentials>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Credentials>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Credentials>;
 
   /**
   * @returns {Promise<string>}
@@ -1989,20 +1989,20 @@ export class Credentials extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Credentials>>}
+  * @returns {Promise<Credentials>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Credentials>>;
+  static from_hex: (hex_str: string) => Promise<Credentials>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Credentials>>}
+  * @returns {Promise<Credentials>}
   */
-  static from_json: (json: string) => Promise<Optional<Credentials>>;
+  static from_json: (json: string) => Promise<Credentials>;
 
   /**
   * @returns {Promise<Credentials>}
@@ -2036,9 +2036,9 @@ export class DNSRecordAorAAAA extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<DNSRecordAorAAAA>>}
+  * @returns {Promise<DNSRecordAorAAAA>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<DNSRecordAorAAAA>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<DNSRecordAorAAAA>;
 
   /**
   * @returns {Promise<string>}
@@ -2047,26 +2047,26 @@ export class DNSRecordAorAAAA extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<DNSRecordAorAAAA>>}
+  * @returns {Promise<DNSRecordAorAAAA>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<DNSRecordAorAAAA>>;
+  static from_hex: (hex_str: string) => Promise<DNSRecordAorAAAA>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<DNSRecordAorAAAA>>}
+  * @returns {Promise<DNSRecordAorAAAA>}
   */
-  static from_json: (json: string) => Promise<Optional<DNSRecordAorAAAA>>;
+  static from_json: (json: string) => Promise<DNSRecordAorAAAA>;
 
   /**
   * @param {string} dns_name
-  * @returns {Promise<Optional<DNSRecordAorAAAA>>}
+  * @returns {Promise<DNSRecordAorAAAA>}
   */
-  static new: (dns_name: string) => Promise<Optional<DNSRecordAorAAAA>>;
+  static new: (dns_name: string) => Promise<DNSRecordAorAAAA>;
 
   /**
   * @returns {Promise<string>}
@@ -2084,9 +2084,9 @@ export class DNSRecordSRV extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<DNSRecordSRV>>}
+  * @returns {Promise<DNSRecordSRV>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<DNSRecordSRV>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<DNSRecordSRV>;
 
   /**
   * @returns {Promise<string>}
@@ -2095,26 +2095,26 @@ export class DNSRecordSRV extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<DNSRecordSRV>>}
+  * @returns {Promise<DNSRecordSRV>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<DNSRecordSRV>>;
+  static from_hex: (hex_str: string) => Promise<DNSRecordSRV>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<DNSRecordSRV>>}
+  * @returns {Promise<DNSRecordSRV>}
   */
-  static from_json: (json: string) => Promise<Optional<DNSRecordSRV>>;
+  static from_json: (json: string) => Promise<DNSRecordSRV>;
 
   /**
   * @param {string} dns_name
-  * @returns {Promise<Optional<DNSRecordSRV>>}
+  * @returns {Promise<DNSRecordSRV>}
   */
-  static new: (dns_name: string) => Promise<Optional<DNSRecordSRV>>;
+  static new: (dns_name: string) => Promise<DNSRecordSRV>;
 
   /**
   * @returns {Promise<string>}
@@ -2132,9 +2132,9 @@ export class DRep extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<DRep>>}
+  * @returns {Promise<DRep>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<DRep>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<DRep>;
 
   /**
   * @returns {Promise<string>}
@@ -2143,20 +2143,20 @@ export class DRep extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<DRep>>}
+  * @returns {Promise<DRep>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<DRep>>;
+  static from_hex: (hex_str: string) => Promise<DRep>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<DRep>>}
+  * @returns {Promise<DRep>}
   */
-  static from_json: (json: string) => Promise<Optional<DRep>>;
+  static from_json: (json: string) => Promise<DRep>;
 
   /**
   * @param {Ed25519KeyHash} key_hash
@@ -2222,9 +2222,9 @@ export class DataCost extends Ptr {
 export class DataHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<DataHash>>}
+  * @returns {Promise<DataHash>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<DataHash>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<DataHash>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -2233,15 +2233,15 @@ export class DataHash extends Ptr {
 
   /**
   * @param {string} prefix
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_bech32: (prefix: string) => Promise<Optional<string>>;
+  to_bech32: (prefix: string) => Promise<string>;
 
   /**
   * @param {string} bech_str
-  * @returns {Promise<Optional<DataHash>>}
+  * @returns {Promise<DataHash>}
   */
-  static from_bech32: (bech_str: string) => Promise<Optional<DataHash>>;
+  static from_bech32: (bech_str: string) => Promise<DataHash>;
 
   /**
   * @returns {Promise<string>}
@@ -2250,9 +2250,9 @@ export class DataHash extends Ptr {
 
   /**
   * @param {string} hex
-  * @returns {Promise<Optional<DataHash>>}
+  * @returns {Promise<DataHash>}
   */
-  static from_hex: (hex: string) => Promise<Optional<DataHash>>;
+  static from_hex: (hex: string) => Promise<DataHash>;
 
 }
 
@@ -2281,9 +2281,9 @@ export class DrepDeregistration extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<DrepDeregistration>>}
+  * @returns {Promise<DrepDeregistration>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<DrepDeregistration>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<DrepDeregistration>;
 
   /**
   * @returns {Promise<string>}
@@ -2292,20 +2292,20 @@ export class DrepDeregistration extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<DrepDeregistration>>}
+  * @returns {Promise<DrepDeregistration>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<DrepDeregistration>>;
+  static from_hex: (hex_str: string) => Promise<DrepDeregistration>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<DrepDeregistration>>}
+  * @returns {Promise<DrepDeregistration>}
   */
-  static from_json: (json: string) => Promise<Optional<DrepDeregistration>>;
+  static from_json: (json: string) => Promise<DrepDeregistration>;
 
   /**
   * @returns {Promise<Credential>}
@@ -2340,9 +2340,9 @@ export class DrepRegistration extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<DrepRegistration>>}
+  * @returns {Promise<DrepRegistration>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<DrepRegistration>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<DrepRegistration>;
 
   /**
   * @returns {Promise<string>}
@@ -2351,20 +2351,20 @@ export class DrepRegistration extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<DrepRegistration>>}
+  * @returns {Promise<DrepRegistration>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<DrepRegistration>>;
+  static from_hex: (hex_str: string) => Promise<DrepRegistration>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<DrepRegistration>>}
+  * @returns {Promise<DrepRegistration>}
   */
-  static from_json: (json: string) => Promise<Optional<DrepRegistration>>;
+  static from_json: (json: string) => Promise<DrepRegistration>;
 
   /**
   * @returns {Promise<Credential>}
@@ -2407,9 +2407,9 @@ export class DrepUpdate extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<DrepUpdate>>}
+  * @returns {Promise<DrepUpdate>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<DrepUpdate>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<DrepUpdate>;
 
   /**
   * @returns {Promise<string>}
@@ -2418,20 +2418,20 @@ export class DrepUpdate extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<DrepUpdate>>}
+  * @returns {Promise<DrepUpdate>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<DrepUpdate>>;
+  static from_hex: (hex_str: string) => Promise<DrepUpdate>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<DrepUpdate>>}
+  * @returns {Promise<DrepUpdate>}
   */
-  static from_json: (json: string) => Promise<Optional<DrepUpdate>>;
+  static from_json: (json: string) => Promise<DrepUpdate>;
 
   /**
   * @returns {Promise<Credential>}
@@ -2472,9 +2472,9 @@ export class DrepVotingThresholds extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<DrepVotingThresholds>>}
+  * @returns {Promise<DrepVotingThresholds>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<DrepVotingThresholds>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<DrepVotingThresholds>;
 
   /**
   * @returns {Promise<string>}
@@ -2483,20 +2483,20 @@ export class DrepVotingThresholds extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<DrepVotingThresholds>>}
+  * @returns {Promise<DrepVotingThresholds>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<DrepVotingThresholds>>;
+  static from_hex: (hex_str: string) => Promise<DrepVotingThresholds>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<DrepVotingThresholds>>}
+  * @returns {Promise<DrepVotingThresholds>}
   */
-  static from_json: (json: string) => Promise<Optional<DrepVotingThresholds>>;
+  static from_json: (json: string) => Promise<DrepVotingThresholds>;
 
   /**
   * @param {UnitInterval} motion_no_confidence
@@ -2624,9 +2624,9 @@ export class DrepVotingThresholds extends Ptr {
 export class Ed25519KeyHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Ed25519KeyHash>>}
+  * @returns {Promise<Ed25519KeyHash>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Ed25519KeyHash>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Ed25519KeyHash>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -2635,15 +2635,15 @@ export class Ed25519KeyHash extends Ptr {
 
   /**
   * @param {string} prefix
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_bech32: (prefix: string) => Promise<Optional<string>>;
+  to_bech32: (prefix: string) => Promise<string>;
 
   /**
   * @param {string} bech_str
-  * @returns {Promise<Optional<Ed25519KeyHash>>}
+  * @returns {Promise<Ed25519KeyHash>}
   */
-  static from_bech32: (bech_str: string) => Promise<Optional<Ed25519KeyHash>>;
+  static from_bech32: (bech_str: string) => Promise<Ed25519KeyHash>;
 
   /**
   * @returns {Promise<string>}
@@ -2652,9 +2652,9 @@ export class Ed25519KeyHash extends Ptr {
 
   /**
   * @param {string} hex
-  * @returns {Promise<Optional<Ed25519KeyHash>>}
+  * @returns {Promise<Ed25519KeyHash>}
   */
-  static from_hex: (hex: string) => Promise<Optional<Ed25519KeyHash>>;
+  static from_hex: (hex: string) => Promise<Ed25519KeyHash>;
 
 }
 
@@ -2667,9 +2667,9 @@ export class Ed25519KeyHashes extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Ed25519KeyHashes>>}
+  * @returns {Promise<Ed25519KeyHashes>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Ed25519KeyHashes>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Ed25519KeyHashes>;
 
   /**
   * @returns {Promise<string>}
@@ -2678,20 +2678,20 @@ export class Ed25519KeyHashes extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Ed25519KeyHashes>>}
+  * @returns {Promise<Ed25519KeyHashes>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Ed25519KeyHashes>>;
+  static from_hex: (hex_str: string) => Promise<Ed25519KeyHashes>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Ed25519KeyHashes>>}
+  * @returns {Promise<Ed25519KeyHashes>}
   */
-  static from_json: (json: string) => Promise<Optional<Ed25519KeyHashes>>;
+  static from_json: (json: string) => Promise<Ed25519KeyHashes>;
 
   /**
   * @returns {Promise<Ed25519KeyHashes>}
@@ -2740,21 +2740,21 @@ export class Ed25519Signature extends Ptr {
 
   /**
   * @param {string} bech32_str
-  * @returns {Promise<Optional<Ed25519Signature>>}
+  * @returns {Promise<Ed25519Signature>}
   */
-  static from_bech32: (bech32_str: string) => Promise<Optional<Ed25519Signature>>;
+  static from_bech32: (bech32_str: string) => Promise<Ed25519Signature>;
 
   /**
   * @param {string} input
-  * @returns {Promise<Optional<Ed25519Signature>>}
+  * @returns {Promise<Ed25519Signature>}
   */
-  static from_hex: (input: string) => Promise<Optional<Ed25519Signature>>;
+  static from_hex: (input: string) => Promise<Ed25519Signature>;
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Ed25519Signature>>}
+  * @returns {Promise<Ed25519Signature>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Ed25519Signature>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Ed25519Signature>;
 
 }
 
@@ -2794,9 +2794,9 @@ export class ExUnitPrices extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ExUnitPrices>>}
+  * @returns {Promise<ExUnitPrices>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ExUnitPrices>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ExUnitPrices>;
 
   /**
   * @returns {Promise<string>}
@@ -2805,20 +2805,20 @@ export class ExUnitPrices extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<ExUnitPrices>>}
+  * @returns {Promise<ExUnitPrices>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<ExUnitPrices>>;
+  static from_hex: (hex_str: string) => Promise<ExUnitPrices>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<ExUnitPrices>>}
+  * @returns {Promise<ExUnitPrices>}
   */
-  static from_json: (json: string) => Promise<Optional<ExUnitPrices>>;
+  static from_json: (json: string) => Promise<ExUnitPrices>;
 
   /**
   * @returns {Promise<UnitInterval>}
@@ -2848,9 +2848,9 @@ export class ExUnits extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ExUnits>>}
+  * @returns {Promise<ExUnits>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ExUnits>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ExUnits>;
 
   /**
   * @returns {Promise<string>}
@@ -2859,20 +2859,20 @@ export class ExUnits extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<ExUnits>>}
+  * @returns {Promise<ExUnits>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<ExUnits>>;
+  static from_hex: (hex_str: string) => Promise<ExUnits>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<ExUnits>>}
+  * @returns {Promise<ExUnits>}
   */
-  static from_json: (json: string) => Promise<Optional<ExUnits>>;
+  static from_json: (json: string) => Promise<ExUnits>;
 
   /**
   * @returns {Promise<BigNum>}
@@ -2902,9 +2902,9 @@ export class FixedTransaction extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<FixedTransaction>>}
+  * @returns {Promise<FixedTransaction>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<FixedTransaction>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<FixedTransaction>;
 
   /**
   * @returns {Promise<string>}
@@ -2913,26 +2913,26 @@ export class FixedTransaction extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<FixedTransaction>>}
+  * @returns {Promise<FixedTransaction>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<FixedTransaction>>;
+  static from_hex: (hex_str: string) => Promise<FixedTransaction>;
 
   /**
   * @param {Uint8Array} raw_body
   * @param {Uint8Array} raw_witness_set
   * @param {boolean} is_valid
-  * @returns {Promise<Optional<FixedTransaction>>}
+  * @returns {Promise<FixedTransaction>}
   */
-  static new: (raw_body: Uint8Array, raw_witness_set: Uint8Array, is_valid: boolean) => Promise<Optional<FixedTransaction>>;
+  static new: (raw_body: Uint8Array, raw_witness_set: Uint8Array, is_valid: boolean) => Promise<FixedTransaction>;
 
   /**
   * @param {Uint8Array} raw_body
   * @param {Uint8Array} raw_witness_set
   * @param {Uint8Array} raw_auxiliary_data
   * @param {boolean} is_valid
-  * @returns {Promise<Optional<FixedTransaction>>}
+  * @returns {Promise<FixedTransaction>}
   */
-  static new_with_auxiliary: (raw_body: Uint8Array, raw_witness_set: Uint8Array, raw_auxiliary_data: Uint8Array, is_valid: boolean) => Promise<Optional<FixedTransaction>>;
+  static new_with_auxiliary: (raw_body: Uint8Array, raw_witness_set: Uint8Array, raw_auxiliary_data: Uint8Array, is_valid: boolean) => Promise<FixedTransaction>;
 
   /**
   * @returns {Promise<TransactionBody>}
@@ -2988,9 +2988,9 @@ export class FixedTransaction extends Ptr {
   auxiliary_data: () => Promise<Optional<AuxiliaryData>>;
 
   /**
-  * @returns {Promise<Uint8Array>}
+  * @returns {Promise<Optional<Uint8Array>>}
   */
-  raw_auxiliary_data: () => Promise<Uint8Array>;
+  raw_auxiliary_data: () => Promise<Optional<Uint8Array>>;
 
 }
 
@@ -3003,9 +3003,9 @@ export class GeneralTransactionMetadata extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<GeneralTransactionMetadata>>}
+  * @returns {Promise<GeneralTransactionMetadata>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<GeneralTransactionMetadata>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<GeneralTransactionMetadata>;
 
   /**
   * @returns {Promise<string>}
@@ -3014,20 +3014,20 @@ export class GeneralTransactionMetadata extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<GeneralTransactionMetadata>>}
+  * @returns {Promise<GeneralTransactionMetadata>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<GeneralTransactionMetadata>>;
+  static from_hex: (hex_str: string) => Promise<GeneralTransactionMetadata>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<GeneralTransactionMetadata>>}
+  * @returns {Promise<GeneralTransactionMetadata>}
   */
-  static from_json: (json: string) => Promise<Optional<GeneralTransactionMetadata>>;
+  static from_json: (json: string) => Promise<GeneralTransactionMetadata>;
 
   /**
   * @returns {Promise<GeneralTransactionMetadata>}
@@ -3063,9 +3063,9 @@ export class GeneralTransactionMetadata extends Ptr {
 export class GenesisDelegateHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<GenesisDelegateHash>>}
+  * @returns {Promise<GenesisDelegateHash>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<GenesisDelegateHash>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<GenesisDelegateHash>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -3074,15 +3074,15 @@ export class GenesisDelegateHash extends Ptr {
 
   /**
   * @param {string} prefix
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_bech32: (prefix: string) => Promise<Optional<string>>;
+  to_bech32: (prefix: string) => Promise<string>;
 
   /**
   * @param {string} bech_str
-  * @returns {Promise<Optional<GenesisDelegateHash>>}
+  * @returns {Promise<GenesisDelegateHash>}
   */
-  static from_bech32: (bech_str: string) => Promise<Optional<GenesisDelegateHash>>;
+  static from_bech32: (bech_str: string) => Promise<GenesisDelegateHash>;
 
   /**
   * @returns {Promise<string>}
@@ -3091,9 +3091,9 @@ export class GenesisDelegateHash extends Ptr {
 
   /**
   * @param {string} hex
-  * @returns {Promise<Optional<GenesisDelegateHash>>}
+  * @returns {Promise<GenesisDelegateHash>}
   */
-  static from_hex: (hex: string) => Promise<Optional<GenesisDelegateHash>>;
+  static from_hex: (hex: string) => Promise<GenesisDelegateHash>;
 
 }
 
@@ -3101,9 +3101,9 @@ export class GenesisDelegateHash extends Ptr {
 export class GenesisHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<GenesisHash>>}
+  * @returns {Promise<GenesisHash>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<GenesisHash>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<GenesisHash>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -3112,15 +3112,15 @@ export class GenesisHash extends Ptr {
 
   /**
   * @param {string} prefix
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_bech32: (prefix: string) => Promise<Optional<string>>;
+  to_bech32: (prefix: string) => Promise<string>;
 
   /**
   * @param {string} bech_str
-  * @returns {Promise<Optional<GenesisHash>>}
+  * @returns {Promise<GenesisHash>}
   */
-  static from_bech32: (bech_str: string) => Promise<Optional<GenesisHash>>;
+  static from_bech32: (bech_str: string) => Promise<GenesisHash>;
 
   /**
   * @returns {Promise<string>}
@@ -3129,9 +3129,9 @@ export class GenesisHash extends Ptr {
 
   /**
   * @param {string} hex
-  * @returns {Promise<Optional<GenesisHash>>}
+  * @returns {Promise<GenesisHash>}
   */
-  static from_hex: (hex: string) => Promise<Optional<GenesisHash>>;
+  static from_hex: (hex: string) => Promise<GenesisHash>;
 
 }
 
@@ -3144,9 +3144,9 @@ export class GenesisHashes extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<GenesisHashes>>}
+  * @returns {Promise<GenesisHashes>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<GenesisHashes>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<GenesisHashes>;
 
   /**
   * @returns {Promise<string>}
@@ -3155,20 +3155,20 @@ export class GenesisHashes extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<GenesisHashes>>}
+  * @returns {Promise<GenesisHashes>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<GenesisHashes>>;
+  static from_hex: (hex_str: string) => Promise<GenesisHashes>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<GenesisHashes>>}
+  * @returns {Promise<GenesisHashes>}
   */
-  static from_json: (json: string) => Promise<Optional<GenesisHashes>>;
+  static from_json: (json: string) => Promise<GenesisHashes>;
 
   /**
   * @returns {Promise<GenesisHashes>}
@@ -3202,9 +3202,9 @@ export class GenesisKeyDelegation extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<GenesisKeyDelegation>>}
+  * @returns {Promise<GenesisKeyDelegation>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<GenesisKeyDelegation>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<GenesisKeyDelegation>;
 
   /**
   * @returns {Promise<string>}
@@ -3213,20 +3213,20 @@ export class GenesisKeyDelegation extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<GenesisKeyDelegation>>}
+  * @returns {Promise<GenesisKeyDelegation>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<GenesisKeyDelegation>>;
+  static from_hex: (hex_str: string) => Promise<GenesisKeyDelegation>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<GenesisKeyDelegation>>}
+  * @returns {Promise<GenesisKeyDelegation>}
   */
-  static from_json: (json: string) => Promise<Optional<GenesisKeyDelegation>>;
+  static from_json: (json: string) => Promise<GenesisKeyDelegation>;
 
   /**
   * @returns {Promise<GenesisHash>}
@@ -3262,9 +3262,9 @@ export class GovernanceAction extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<GovernanceAction>>}
+  * @returns {Promise<GovernanceAction>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<GovernanceAction>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<GovernanceAction>;
 
   /**
   * @returns {Promise<string>}
@@ -3273,20 +3273,20 @@ export class GovernanceAction extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<GovernanceAction>>}
+  * @returns {Promise<GovernanceAction>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<GovernanceAction>>;
+  static from_hex: (hex_str: string) => Promise<GovernanceAction>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<GovernanceAction>>}
+  * @returns {Promise<GovernanceAction>}
   */
-  static from_json: (json: string) => Promise<Optional<GovernanceAction>>;
+  static from_json: (json: string) => Promise<GovernanceAction>;
 
   /**
   * @param {ParameterChangeAction} parameter_change_action
@@ -3381,9 +3381,9 @@ export class GovernanceActionId extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<GovernanceActionId>>}
+  * @returns {Promise<GovernanceActionId>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<GovernanceActionId>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<GovernanceActionId>;
 
   /**
   * @returns {Promise<string>}
@@ -3392,20 +3392,20 @@ export class GovernanceActionId extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<GovernanceActionId>>}
+  * @returns {Promise<GovernanceActionId>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<GovernanceActionId>>;
+  static from_hex: (hex_str: string) => Promise<GovernanceActionId>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<GovernanceActionId>>}
+  * @returns {Promise<GovernanceActionId>}
   */
-  static from_json: (json: string) => Promise<Optional<GovernanceActionId>>;
+  static from_json: (json: string) => Promise<GovernanceActionId>;
 
   /**
   * @returns {Promise<TransactionHash>}
@@ -3429,15 +3429,15 @@ export class GovernanceActionId extends Ptr {
 
 export class GovernanceActionIds extends Ptr {
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<GovernanceActionIds>>}
+  * @returns {Promise<GovernanceActionIds>}
   */
-  static from_json: (json: string) => Promise<Optional<GovernanceActionIds>>;
+  static from_json: (json: string) => Promise<GovernanceActionIds>;
 
   /**
   * @returns {Promise<GovernanceActionIds>}
@@ -3471,9 +3471,9 @@ export class HardForkInitiationAction extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<HardForkInitiationAction>>}
+  * @returns {Promise<HardForkInitiationAction>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<HardForkInitiationAction>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<HardForkInitiationAction>;
 
   /**
   * @returns {Promise<string>}
@@ -3482,20 +3482,20 @@ export class HardForkInitiationAction extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<HardForkInitiationAction>>}
+  * @returns {Promise<HardForkInitiationAction>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<HardForkInitiationAction>>;
+  static from_hex: (hex_str: string) => Promise<HardForkInitiationAction>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<HardForkInitiationAction>>}
+  * @returns {Promise<HardForkInitiationAction>}
   */
-  static from_json: (json: string) => Promise<Optional<HardForkInitiationAction>>;
+  static from_json: (json: string) => Promise<HardForkInitiationAction>;
 
   /**
   * @returns {Promise<Optional<GovernanceActionId>>}
@@ -3531,9 +3531,9 @@ export class Header extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Header>>}
+  * @returns {Promise<Header>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Header>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Header>;
 
   /**
   * @returns {Promise<string>}
@@ -3542,20 +3542,20 @@ export class Header extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Header>>}
+  * @returns {Promise<Header>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Header>>;
+  static from_hex: (hex_str: string) => Promise<Header>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Header>>}
+  * @returns {Promise<Header>}
   */
-  static from_json: (json: string) => Promise<Optional<Header>>;
+  static from_json: (json: string) => Promise<Header>;
 
   /**
   * @returns {Promise<HeaderBody>}
@@ -3585,9 +3585,9 @@ export class HeaderBody extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<HeaderBody>>}
+  * @returns {Promise<HeaderBody>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<HeaderBody>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<HeaderBody>;
 
   /**
   * @returns {Promise<string>}
@@ -3596,20 +3596,20 @@ export class HeaderBody extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<HeaderBody>>}
+  * @returns {Promise<HeaderBody>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<HeaderBody>>;
+  static from_hex: (hex_str: string) => Promise<HeaderBody>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<HeaderBody>>}
+  * @returns {Promise<HeaderBody>}
   */
-  static from_json: (json: string) => Promise<Optional<HeaderBody>>;
+  static from_json: (json: string) => Promise<HeaderBody>;
 
   /**
   * @returns {Promise<number>}
@@ -3617,9 +3617,9 @@ export class HeaderBody extends Ptr {
   block_number: () => Promise<number>;
 
   /**
-  * @returns {Promise<Optional<number>>}
+  * @returns {Promise<number>}
   */
-  slot: () => Promise<Optional<number>>;
+  slot: () => Promise<number>;
 
   /**
   * @returns {Promise<BigNum>}
@@ -3784,9 +3784,9 @@ export class Int extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Int>>}
+  * @returns {Promise<Int>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Int>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Int>;
 
   /**
   * @returns {Promise<string>}
@@ -3795,20 +3795,20 @@ export class Int extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Int>>}
+  * @returns {Promise<Int>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Int>>;
+  static from_hex: (hex_str: string) => Promise<Int>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Int>>}
+  * @returns {Promise<Int>}
   */
-  static from_json: (json: string) => Promise<Optional<Int>>;
+  static from_json: (json: string) => Promise<Int>;
 
   /**
   * @param {BigNum} x
@@ -3854,9 +3854,9 @@ export class Int extends Ptr {
   as_i32_or_nothing: () => Promise<Optional<number>>;
 
   /**
-  * @returns {Promise<Optional<number>>}
+  * @returns {Promise<number>}
   */
-  as_i32_or_fail: () => Promise<Optional<number>>;
+  as_i32_or_fail: () => Promise<number>;
 
   /**
   * @returns {Promise<string>}
@@ -3865,9 +3865,9 @@ export class Int extends Ptr {
 
   /**
   * @param {string} string
-  * @returns {Promise<Optional<Int>>}
+  * @returns {Promise<Int>}
   */
-  static from_str: (string: string) => Promise<Optional<Int>>;
+  static from_str: (string: string) => Promise<Int>;
 
 }
 
@@ -3880,9 +3880,9 @@ export class Ipv4 extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Ipv4>>}
+  * @returns {Promise<Ipv4>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Ipv4>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Ipv4>;
 
   /**
   * @returns {Promise<string>}
@@ -3891,26 +3891,26 @@ export class Ipv4 extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Ipv4>>}
+  * @returns {Promise<Ipv4>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Ipv4>>;
+  static from_hex: (hex_str: string) => Promise<Ipv4>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Ipv4>>}
+  * @returns {Promise<Ipv4>}
   */
-  static from_json: (json: string) => Promise<Optional<Ipv4>>;
+  static from_json: (json: string) => Promise<Ipv4>;
 
   /**
   * @param {Uint8Array} data
-  * @returns {Promise<Optional<Ipv4>>}
+  * @returns {Promise<Ipv4>}
   */
-  static new: (data: Uint8Array) => Promise<Optional<Ipv4>>;
+  static new: (data: Uint8Array) => Promise<Ipv4>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -3928,9 +3928,9 @@ export class Ipv6 extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Ipv6>>}
+  * @returns {Promise<Ipv6>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Ipv6>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Ipv6>;
 
   /**
   * @returns {Promise<string>}
@@ -3939,26 +3939,26 @@ export class Ipv6 extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Ipv6>>}
+  * @returns {Promise<Ipv6>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Ipv6>>;
+  static from_hex: (hex_str: string) => Promise<Ipv6>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Ipv6>>}
+  * @returns {Promise<Ipv6>}
   */
-  static from_json: (json: string) => Promise<Optional<Ipv6>>;
+  static from_json: (json: string) => Promise<Ipv6>;
 
   /**
   * @param {Uint8Array} data
-  * @returns {Promise<Optional<Ipv6>>}
+  * @returns {Promise<Ipv6>}
   */
-  static new: (data: Uint8Array) => Promise<Optional<Ipv6>>;
+  static new: (data: Uint8Array) => Promise<Ipv6>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -3976,9 +3976,9 @@ export class KESSignature extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<KESSignature>>}
+  * @returns {Promise<KESSignature>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<KESSignature>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<KESSignature>;
 
 }
 
@@ -3986,9 +3986,9 @@ export class KESSignature extends Ptr {
 export class KESVKey extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<KESVKey>>}
+  * @returns {Promise<KESVKey>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<KESVKey>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<KESVKey>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -3997,15 +3997,15 @@ export class KESVKey extends Ptr {
 
   /**
   * @param {string} prefix
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_bech32: (prefix: string) => Promise<Optional<string>>;
+  to_bech32: (prefix: string) => Promise<string>;
 
   /**
   * @param {string} bech_str
-  * @returns {Promise<Optional<KESVKey>>}
+  * @returns {Promise<KESVKey>}
   */
-  static from_bech32: (bech_str: string) => Promise<Optional<KESVKey>>;
+  static from_bech32: (bech_str: string) => Promise<KESVKey>;
 
   /**
   * @returns {Promise<string>}
@@ -4014,9 +4014,9 @@ export class KESVKey extends Ptr {
 
   /**
   * @param {string} hex
-  * @returns {Promise<Optional<KESVKey>>}
+  * @returns {Promise<KESVKey>}
   */
-  static from_hex: (hex: string) => Promise<Optional<KESVKey>>;
+  static from_hex: (hex: string) => Promise<KESVKey>;
 
 }
 
@@ -4029,9 +4029,9 @@ export class Language extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Language>>}
+  * @returns {Promise<Language>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Language>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Language>;
 
   /**
   * @returns {Promise<string>}
@@ -4040,20 +4040,20 @@ export class Language extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Language>>}
+  * @returns {Promise<Language>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Language>>;
+  static from_hex: (hex_str: string) => Promise<Language>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Language>>}
+  * @returns {Promise<Language>}
   */
-  static from_json: (json: string) => Promise<Optional<Language>>;
+  static from_json: (json: string) => Promise<Language>;
 
   /**
   * @returns {Promise<Language>}
@@ -4111,9 +4111,9 @@ export class Languages extends Ptr {
 export class LegacyDaedalusPrivateKey extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<LegacyDaedalusPrivateKey>>}
+  * @returns {Promise<LegacyDaedalusPrivateKey>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<LegacyDaedalusPrivateKey>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<LegacyDaedalusPrivateKey>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -4157,9 +4157,9 @@ export class MIRToStakeCredentials extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<MIRToStakeCredentials>>}
+  * @returns {Promise<MIRToStakeCredentials>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<MIRToStakeCredentials>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<MIRToStakeCredentials>;
 
   /**
   * @returns {Promise<string>}
@@ -4168,20 +4168,20 @@ export class MIRToStakeCredentials extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<MIRToStakeCredentials>>}
+  * @returns {Promise<MIRToStakeCredentials>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<MIRToStakeCredentials>>;
+  static from_hex: (hex_str: string) => Promise<MIRToStakeCredentials>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<MIRToStakeCredentials>>}
+  * @returns {Promise<MIRToStakeCredentials>}
   */
-  static from_json: (json: string) => Promise<Optional<MIRToStakeCredentials>>;
+  static from_json: (json: string) => Promise<MIRToStakeCredentials>;
 
   /**
   * @returns {Promise<MIRToStakeCredentials>}
@@ -4222,9 +4222,9 @@ export class MetadataList extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<MetadataList>>}
+  * @returns {Promise<MetadataList>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<MetadataList>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<MetadataList>;
 
   /**
   * @returns {Promise<string>}
@@ -4233,9 +4233,9 @@ export class MetadataList extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<MetadataList>>}
+  * @returns {Promise<MetadataList>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<MetadataList>>;
+  static from_hex: (hex_str: string) => Promise<MetadataList>;
 
   /**
   * @returns {Promise<MetadataList>}
@@ -4269,9 +4269,9 @@ export class MetadataMap extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<MetadataMap>>}
+  * @returns {Promise<MetadataMap>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<MetadataMap>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<MetadataMap>;
 
   /**
   * @returns {Promise<string>}
@@ -4280,9 +4280,9 @@ export class MetadataMap extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<MetadataMap>>}
+  * @returns {Promise<MetadataMap>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<MetadataMap>>;
+  static from_hex: (hex_str: string) => Promise<MetadataMap>;
 
   /**
   * @returns {Promise<MetadataMap>}
@@ -4317,21 +4317,21 @@ export class MetadataMap extends Ptr {
 
   /**
   * @param {TransactionMetadatum} key
-  * @returns {Promise<Optional<TransactionMetadatum>>}
+  * @returns {Promise<TransactionMetadatum>}
   */
-  get: (key: TransactionMetadatum) => Promise<Optional<TransactionMetadatum>>;
+  get: (key: TransactionMetadatum) => Promise<TransactionMetadatum>;
 
   /**
   * @param {string} key
-  * @returns {Promise<Optional<TransactionMetadatum>>}
+  * @returns {Promise<TransactionMetadatum>}
   */
-  get_str: (key: string) => Promise<Optional<TransactionMetadatum>>;
+  get_str: (key: string) => Promise<TransactionMetadatum>;
 
   /**
   * @param {number} key
-  * @returns {Promise<Optional<TransactionMetadatum>>}
+  * @returns {Promise<TransactionMetadatum>}
   */
-  get_i32: (key: number) => Promise<Optional<TransactionMetadatum>>;
+  get_i32: (key: number) => Promise<TransactionMetadatum>;
 
   /**
   * @param {TransactionMetadatum} key
@@ -4355,9 +4355,9 @@ export class Mint extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Mint>>}
+  * @returns {Promise<Mint>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Mint>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Mint>;
 
   /**
   * @returns {Promise<string>}
@@ -4366,20 +4366,20 @@ export class Mint extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Mint>>}
+  * @returns {Promise<Mint>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Mint>>;
+  static from_hex: (hex_str: string) => Promise<Mint>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Mint>>}
+  * @returns {Promise<Mint>}
   */
-  static from_json: (json: string) => Promise<Optional<Mint>>;
+  static from_json: (json: string) => Promise<Mint>;
 
   /**
   * @returns {Promise<Mint>}
@@ -4444,9 +4444,9 @@ export class MintAssets extends Ptr {
   /**
   * @param {AssetName} key
   * @param {Int} value
-  * @returns {Promise<Optional<MintAssets>>}
+  * @returns {Promise<MintAssets>}
   */
-  static new_from_entry: (key: AssetName, value: Int) => Promise<Optional<MintAssets>>;
+  static new_from_entry: (key: AssetName, value: Int) => Promise<MintAssets>;
 
   /**
   * @returns {Promise<number>}
@@ -4517,9 +4517,9 @@ export class MintBuilder extends Ptr {
   get_ref_inputs: () => Promise<TransactionInputs>;
 
   /**
-  * @returns {Promise<Optional<Redeemers>>}
+  * @returns {Promise<Redeemers>}
   */
-  get_redeeemers: () => Promise<Optional<Redeemers>>;
+  get_redeeemers: () => Promise<Redeemers>;
 
   /**
   * @returns {Promise<boolean>}
@@ -4563,9 +4563,9 @@ export class MoveInstantaneousReward extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<MoveInstantaneousReward>>}
+  * @returns {Promise<MoveInstantaneousReward>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<MoveInstantaneousReward>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<MoveInstantaneousReward>;
 
   /**
   * @returns {Promise<string>}
@@ -4574,20 +4574,20 @@ export class MoveInstantaneousReward extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<MoveInstantaneousReward>>}
+  * @returns {Promise<MoveInstantaneousReward>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<MoveInstantaneousReward>>;
+  static from_hex: (hex_str: string) => Promise<MoveInstantaneousReward>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<MoveInstantaneousReward>>}
+  * @returns {Promise<MoveInstantaneousReward>}
   */
-  static from_json: (json: string) => Promise<Optional<MoveInstantaneousReward>>;
+  static from_json: (json: string) => Promise<MoveInstantaneousReward>;
 
   /**
   * @param {MIRPot} pot
@@ -4634,9 +4634,9 @@ export class MoveInstantaneousRewardsCert extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<MoveInstantaneousRewardsCert>>}
+  * @returns {Promise<MoveInstantaneousRewardsCert>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<MoveInstantaneousRewardsCert>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<MoveInstantaneousRewardsCert>;
 
   /**
   * @returns {Promise<string>}
@@ -4645,20 +4645,20 @@ export class MoveInstantaneousRewardsCert extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<MoveInstantaneousRewardsCert>>}
+  * @returns {Promise<MoveInstantaneousRewardsCert>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<MoveInstantaneousRewardsCert>>;
+  static from_hex: (hex_str: string) => Promise<MoveInstantaneousRewardsCert>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<MoveInstantaneousRewardsCert>>}
+  * @returns {Promise<MoveInstantaneousRewardsCert>}
   */
-  static from_json: (json: string) => Promise<Optional<MoveInstantaneousRewardsCert>>;
+  static from_json: (json: string) => Promise<MoveInstantaneousRewardsCert>;
 
   /**
   * @returns {Promise<MoveInstantaneousReward>}
@@ -4682,9 +4682,9 @@ export class MultiAsset extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<MultiAsset>>}
+  * @returns {Promise<MultiAsset>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<MultiAsset>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<MultiAsset>;
 
   /**
   * @returns {Promise<string>}
@@ -4693,20 +4693,20 @@ export class MultiAsset extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<MultiAsset>>}
+  * @returns {Promise<MultiAsset>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<MultiAsset>>;
+  static from_hex: (hex_str: string) => Promise<MultiAsset>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<MultiAsset>>}
+  * @returns {Promise<MultiAsset>}
   */
-  static from_json: (json: string) => Promise<Optional<MultiAsset>>;
+  static from_json: (json: string) => Promise<MultiAsset>;
 
   /**
   * @returns {Promise<MultiAsset>}
@@ -4768,9 +4768,9 @@ export class MultiHostName extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<MultiHostName>>}
+  * @returns {Promise<MultiHostName>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<MultiHostName>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<MultiHostName>;
 
   /**
   * @returns {Promise<string>}
@@ -4779,20 +4779,20 @@ export class MultiHostName extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<MultiHostName>>}
+  * @returns {Promise<MultiHostName>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<MultiHostName>>;
+  static from_hex: (hex_str: string) => Promise<MultiHostName>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<MultiHostName>>}
+  * @returns {Promise<MultiHostName>}
   */
-  static from_json: (json: string) => Promise<Optional<MultiHostName>>;
+  static from_json: (json: string) => Promise<MultiHostName>;
 
   /**
   * @returns {Promise<DNSRecordSRV>}
@@ -4816,9 +4816,9 @@ export class NativeScript extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<NativeScript>>}
+  * @returns {Promise<NativeScript>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<NativeScript>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<NativeScript>;
 
   /**
   * @returns {Promise<string>}
@@ -4827,20 +4827,20 @@ export class NativeScript extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<NativeScript>>}
+  * @returns {Promise<NativeScript>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<NativeScript>>;
+  static from_hex: (hex_str: string) => Promise<NativeScript>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<NativeScript>>}
+  * @returns {Promise<NativeScript>}
   */
-  static from_json: (json: string) => Promise<Optional<NativeScript>>;
+  static from_json: (json: string) => Promise<NativeScript>;
 
   /**
   * @returns {Promise<ScriptHash>}
@@ -4977,9 +4977,9 @@ export class NetworkId extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<NetworkId>>}
+  * @returns {Promise<NetworkId>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<NetworkId>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<NetworkId>;
 
   /**
   * @returns {Promise<string>}
@@ -4988,20 +4988,20 @@ export class NetworkId extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<NetworkId>>}
+  * @returns {Promise<NetworkId>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<NetworkId>>;
+  static from_hex: (hex_str: string) => Promise<NetworkId>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<NetworkId>>}
+  * @returns {Promise<NetworkId>}
   */
-  static from_json: (json: string) => Promise<Optional<NetworkId>>;
+  static from_json: (json: string) => Promise<NetworkId>;
 
   /**
   * @returns {Promise<NetworkId>}
@@ -5070,9 +5070,9 @@ export class NewConstitutionAction extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<NewConstitutionAction>>}
+  * @returns {Promise<NewConstitutionAction>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<NewConstitutionAction>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<NewConstitutionAction>;
 
   /**
   * @returns {Promise<string>}
@@ -5081,20 +5081,20 @@ export class NewConstitutionAction extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<NewConstitutionAction>>}
+  * @returns {Promise<NewConstitutionAction>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<NewConstitutionAction>>;
+  static from_hex: (hex_str: string) => Promise<NewConstitutionAction>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<NewConstitutionAction>>}
+  * @returns {Promise<NewConstitutionAction>}
   */
-  static from_json: (json: string) => Promise<Optional<NewConstitutionAction>>;
+  static from_json: (json: string) => Promise<NewConstitutionAction>;
 
   /**
   * @returns {Promise<Optional<GovernanceActionId>>}
@@ -5130,9 +5130,9 @@ export class NoConfidenceAction extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<NoConfidenceAction>>}
+  * @returns {Promise<NoConfidenceAction>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<NoConfidenceAction>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<NoConfidenceAction>;
 
   /**
   * @returns {Promise<string>}
@@ -5141,20 +5141,20 @@ export class NoConfidenceAction extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<NoConfidenceAction>>}
+  * @returns {Promise<NoConfidenceAction>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<NoConfidenceAction>>;
+  static from_hex: (hex_str: string) => Promise<NoConfidenceAction>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<NoConfidenceAction>>}
+  * @returns {Promise<NoConfidenceAction>}
   */
-  static from_json: (json: string) => Promise<Optional<NoConfidenceAction>>;
+  static from_json: (json: string) => Promise<NoConfidenceAction>;
 
   /**
   * @returns {Promise<Optional<GovernanceActionId>>}
@@ -5183,9 +5183,9 @@ export class Nonce extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Nonce>>}
+  * @returns {Promise<Nonce>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Nonce>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Nonce>;
 
   /**
   * @returns {Promise<string>}
@@ -5194,20 +5194,20 @@ export class Nonce extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Nonce>>}
+  * @returns {Promise<Nonce>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Nonce>>;
+  static from_hex: (hex_str: string) => Promise<Nonce>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Nonce>>}
+  * @returns {Promise<Nonce>}
   */
-  static from_json: (json: string) => Promise<Optional<Nonce>>;
+  static from_json: (json: string) => Promise<Nonce>;
 
   /**
   * @returns {Promise<Nonce>}
@@ -5216,14 +5216,14 @@ export class Nonce extends Ptr {
 
   /**
   * @param {Uint8Array} hash
-  * @returns {Promise<Optional<Nonce>>}
+  * @returns {Promise<Nonce>}
   */
-  static new_from_hash: (hash: Uint8Array) => Promise<Optional<Nonce>>;
+  static new_from_hash: (hash: Uint8Array) => Promise<Nonce>;
 
   /**
-  * @returns {Promise<Uint8Array>}
+  * @returns {Promise<Optional<Uint8Array>>}
   */
-  get_hash: () => Promise<Uint8Array>;
+  get_hash: () => Promise<Optional<Uint8Array>>;
 
 }
 
@@ -5236,9 +5236,9 @@ export class OperationalCert extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<OperationalCert>>}
+  * @returns {Promise<OperationalCert>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<OperationalCert>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<OperationalCert>;
 
   /**
   * @returns {Promise<string>}
@@ -5247,20 +5247,20 @@ export class OperationalCert extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<OperationalCert>>}
+  * @returns {Promise<OperationalCert>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<OperationalCert>>;
+  static from_hex: (hex_str: string) => Promise<OperationalCert>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<OperationalCert>>}
+  * @returns {Promise<OperationalCert>}
   */
-  static from_json: (json: string) => Promise<Optional<OperationalCert>>;
+  static from_json: (json: string) => Promise<OperationalCert>;
 
   /**
   * @returns {Promise<KESVKey>}
@@ -5328,9 +5328,9 @@ export class ParameterChangeAction extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ParameterChangeAction>>}
+  * @returns {Promise<ParameterChangeAction>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ParameterChangeAction>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ParameterChangeAction>;
 
   /**
   * @returns {Promise<string>}
@@ -5339,20 +5339,20 @@ export class ParameterChangeAction extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<ParameterChangeAction>>}
+  * @returns {Promise<ParameterChangeAction>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<ParameterChangeAction>>;
+  static from_hex: (hex_str: string) => Promise<ParameterChangeAction>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<ParameterChangeAction>>}
+  * @returns {Promise<ParameterChangeAction>}
   */
-  static from_json: (json: string) => Promise<Optional<ParameterChangeAction>>;
+  static from_json: (json: string) => Promise<ParameterChangeAction>;
 
   /**
   * @returns {Promise<Optional<GovernanceActionId>>}
@@ -5388,9 +5388,9 @@ export class PlutusData extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PlutusData>>}
+  * @returns {Promise<PlutusData>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<PlutusData>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<PlutusData>;
 
   /**
   * @returns {Promise<string>}
@@ -5399,9 +5399,9 @@ export class PlutusData extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<PlutusData>>}
+  * @returns {Promise<PlutusData>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<PlutusData>>;
+  static from_hex: (hex_str: string) => Promise<PlutusData>;
 
   /**
   * @param {ConstrPlutusData} constr_plutus_data
@@ -5472,28 +5472,28 @@ export class PlutusData extends Ptr {
   as_integer: () => Promise<Optional<BigInt>>;
 
   /**
-  * @returns {Promise<Uint8Array>}
+  * @returns {Promise<Optional<Uint8Array>>}
   */
-  as_bytes: () => Promise<Uint8Array>;
+  as_bytes: () => Promise<Optional<Uint8Array>>;
 
   /**
   * @param {PlutusDatumSchema} schema
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: (schema: PlutusDatumSchema) => Promise<Optional<string>>;
+  to_json: (schema: PlutusDatumSchema) => Promise<string>;
 
   /**
   * @param {string} json
   * @param {PlutusDatumSchema} schema
-  * @returns {Promise<Optional<PlutusData>>}
+  * @returns {Promise<PlutusData>}
   */
-  static from_json: (json: string, schema: PlutusDatumSchema) => Promise<Optional<PlutusData>>;
+  static from_json: (json: string, schema: PlutusDatumSchema) => Promise<PlutusData>;
 
   /**
   * @param {Address} address
-  * @returns {Promise<Optional<PlutusData>>}
+  * @returns {Promise<PlutusData>}
   */
-  static from_address: (address: Address) => Promise<Optional<PlutusData>>;
+  static from_address: (address: Address) => Promise<PlutusData>;
 
 }
 
@@ -5506,9 +5506,9 @@ export class PlutusList extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PlutusList>>}
+  * @returns {Promise<PlutusList>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<PlutusList>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<PlutusList>;
 
   /**
   * @returns {Promise<string>}
@@ -5517,9 +5517,9 @@ export class PlutusList extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<PlutusList>>}
+  * @returns {Promise<PlutusList>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<PlutusList>>;
+  static from_hex: (hex_str: string) => Promise<PlutusList>;
 
   /**
   * @returns {Promise<PlutusList>}
@@ -5553,9 +5553,9 @@ export class PlutusMap extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PlutusMap>>}
+  * @returns {Promise<PlutusMap>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<PlutusMap>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<PlutusMap>;
 
   /**
   * @returns {Promise<string>}
@@ -5564,9 +5564,9 @@ export class PlutusMap extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<PlutusMap>>}
+  * @returns {Promise<PlutusMap>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<PlutusMap>>;
+  static from_hex: (hex_str: string) => Promise<PlutusMap>;
 
   /**
   * @returns {Promise<PlutusMap>}
@@ -5607,9 +5607,9 @@ export class PlutusScript extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PlutusScript>>}
+  * @returns {Promise<PlutusScript>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<PlutusScript>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<PlutusScript>;
 
   /**
   * @returns {Promise<string>}
@@ -5618,9 +5618,9 @@ export class PlutusScript extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<PlutusScript>>}
+  * @returns {Promise<PlutusScript>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<PlutusScript>>;
+  static from_hex: (hex_str: string) => Promise<PlutusScript>;
 
   /**
   * @param {Uint8Array} bytes
@@ -5654,29 +5654,29 @@ export class PlutusScript extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PlutusScript>>}
+  * @returns {Promise<PlutusScript>}
   */
-  static from_bytes_v2: (bytes: Uint8Array) => Promise<Optional<PlutusScript>>;
+  static from_bytes_v2: (bytes: Uint8Array) => Promise<PlutusScript>;
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PlutusScript>>}
+  * @returns {Promise<PlutusScript>}
   */
-  static from_bytes_v3: (bytes: Uint8Array) => Promise<Optional<PlutusScript>>;
+  static from_bytes_v3: (bytes: Uint8Array) => Promise<PlutusScript>;
 
   /**
   * @param {Uint8Array} bytes
   * @param {Language} language
-  * @returns {Promise<Optional<PlutusScript>>}
+  * @returns {Promise<PlutusScript>}
   */
-  static from_bytes_with_version: (bytes: Uint8Array, language: Language) => Promise<Optional<PlutusScript>>;
+  static from_bytes_with_version: (bytes: Uint8Array, language: Language) => Promise<PlutusScript>;
 
   /**
   * @param {string} hex_str
   * @param {Language} language
-  * @returns {Promise<Optional<PlutusScript>>}
+  * @returns {Promise<PlutusScript>}
   */
-  static from_hex_with_version: (hex_str: string, language: Language) => Promise<Optional<PlutusScript>>;
+  static from_hex_with_version: (hex_str: string, language: Language) => Promise<PlutusScript>;
 
   /**
   * @returns {Promise<ScriptHash>}
@@ -5724,9 +5724,9 @@ export class PlutusScripts extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PlutusScripts>>}
+  * @returns {Promise<PlutusScripts>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<PlutusScripts>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<PlutusScripts>;
 
   /**
   * @returns {Promise<string>}
@@ -5735,20 +5735,20 @@ export class PlutusScripts extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<PlutusScripts>>}
+  * @returns {Promise<PlutusScripts>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<PlutusScripts>>;
+  static from_hex: (hex_str: string) => Promise<PlutusScripts>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<PlutusScripts>>}
+  * @returns {Promise<PlutusScripts>}
   */
-  static from_json: (json: string) => Promise<Optional<PlutusScripts>>;
+  static from_json: (json: string) => Promise<PlutusScripts>;
 
   /**
   * @returns {Promise<PlutusScripts>}
@@ -5866,19 +5866,19 @@ export class Pointer extends Ptr {
   static new_pointer: (slot: BigNum, tx_index: BigNum, cert_index: BigNum) => Promise<Pointer>;
 
   /**
-  * @returns {Promise<Optional<number>>}
+  * @returns {Promise<number>}
   */
-  slot: () => Promise<Optional<number>>;
+  slot: () => Promise<number>;
 
   /**
-  * @returns {Promise<Optional<number>>}
+  * @returns {Promise<number>}
   */
-  tx_index: () => Promise<Optional<number>>;
+  tx_index: () => Promise<number>;
 
   /**
-  * @returns {Promise<Optional<number>>}
+  * @returns {Promise<number>}
   */
-  cert_index: () => Promise<Optional<number>>;
+  cert_index: () => Promise<number>;
 
   /**
   * @returns {Promise<BigNum>}
@@ -5939,9 +5939,9 @@ export class PoolMetadata extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PoolMetadata>>}
+  * @returns {Promise<PoolMetadata>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<PoolMetadata>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<PoolMetadata>;
 
   /**
   * @returns {Promise<string>}
@@ -5950,20 +5950,20 @@ export class PoolMetadata extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<PoolMetadata>>}
+  * @returns {Promise<PoolMetadata>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<PoolMetadata>>;
+  static from_hex: (hex_str: string) => Promise<PoolMetadata>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<PoolMetadata>>}
+  * @returns {Promise<PoolMetadata>}
   */
-  static from_json: (json: string) => Promise<Optional<PoolMetadata>>;
+  static from_json: (json: string) => Promise<PoolMetadata>;
 
   /**
   * @returns {Promise<URL>}
@@ -5988,9 +5988,9 @@ export class PoolMetadata extends Ptr {
 export class PoolMetadataHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PoolMetadataHash>>}
+  * @returns {Promise<PoolMetadataHash>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<PoolMetadataHash>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<PoolMetadataHash>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -5999,15 +5999,15 @@ export class PoolMetadataHash extends Ptr {
 
   /**
   * @param {string} prefix
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_bech32: (prefix: string) => Promise<Optional<string>>;
+  to_bech32: (prefix: string) => Promise<string>;
 
   /**
   * @param {string} bech_str
-  * @returns {Promise<Optional<PoolMetadataHash>>}
+  * @returns {Promise<PoolMetadataHash>}
   */
-  static from_bech32: (bech_str: string) => Promise<Optional<PoolMetadataHash>>;
+  static from_bech32: (bech_str: string) => Promise<PoolMetadataHash>;
 
   /**
   * @returns {Promise<string>}
@@ -6016,9 +6016,9 @@ export class PoolMetadataHash extends Ptr {
 
   /**
   * @param {string} hex
-  * @returns {Promise<Optional<PoolMetadataHash>>}
+  * @returns {Promise<PoolMetadataHash>}
   */
-  static from_hex: (hex: string) => Promise<Optional<PoolMetadataHash>>;
+  static from_hex: (hex: string) => Promise<PoolMetadataHash>;
 
 }
 
@@ -6031,9 +6031,9 @@ export class PoolParams extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PoolParams>>}
+  * @returns {Promise<PoolParams>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<PoolParams>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<PoolParams>;
 
   /**
   * @returns {Promise<string>}
@@ -6042,20 +6042,20 @@ export class PoolParams extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<PoolParams>>}
+  * @returns {Promise<PoolParams>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<PoolParams>>;
+  static from_hex: (hex_str: string) => Promise<PoolParams>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<PoolParams>>}
+  * @returns {Promise<PoolParams>}
   */
-  static from_json: (json: string) => Promise<Optional<PoolParams>>;
+  static from_json: (json: string) => Promise<PoolParams>;
 
   /**
   * @returns {Promise<Ed25519KeyHash>}
@@ -6127,9 +6127,9 @@ export class PoolRegistration extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PoolRegistration>>}
+  * @returns {Promise<PoolRegistration>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<PoolRegistration>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<PoolRegistration>;
 
   /**
   * @returns {Promise<string>}
@@ -6138,20 +6138,20 @@ export class PoolRegistration extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<PoolRegistration>>}
+  * @returns {Promise<PoolRegistration>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<PoolRegistration>>;
+  static from_hex: (hex_str: string) => Promise<PoolRegistration>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<PoolRegistration>>}
+  * @returns {Promise<PoolRegistration>}
   */
-  static from_json: (json: string) => Promise<Optional<PoolRegistration>>;
+  static from_json: (json: string) => Promise<PoolRegistration>;
 
   /**
   * @returns {Promise<PoolParams>}
@@ -6175,9 +6175,9 @@ export class PoolRetirement extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PoolRetirement>>}
+  * @returns {Promise<PoolRetirement>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<PoolRetirement>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<PoolRetirement>;
 
   /**
   * @returns {Promise<string>}
@@ -6186,20 +6186,20 @@ export class PoolRetirement extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<PoolRetirement>>}
+  * @returns {Promise<PoolRetirement>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<PoolRetirement>>;
+  static from_hex: (hex_str: string) => Promise<PoolRetirement>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<PoolRetirement>>}
+  * @returns {Promise<PoolRetirement>}
   */
-  static from_json: (json: string) => Promise<Optional<PoolRetirement>>;
+  static from_json: (json: string) => Promise<PoolRetirement>;
 
   /**
   * @returns {Promise<Ed25519KeyHash>}
@@ -6229,9 +6229,9 @@ export class PoolVotingThresholds extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PoolVotingThresholds>>}
+  * @returns {Promise<PoolVotingThresholds>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<PoolVotingThresholds>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<PoolVotingThresholds>;
 
   /**
   * @returns {Promise<string>}
@@ -6240,20 +6240,20 @@ export class PoolVotingThresholds extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<PoolVotingThresholds>>}
+  * @returns {Promise<PoolVotingThresholds>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<PoolVotingThresholds>>;
+  static from_hex: (hex_str: string) => Promise<PoolVotingThresholds>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<PoolVotingThresholds>>}
+  * @returns {Promise<PoolVotingThresholds>}
   */
-  static from_json: (json: string) => Promise<Optional<PoolVotingThresholds>>;
+  static from_json: (json: string) => Promise<PoolVotingThresholds>;
 
   /**
   * @param {UnitInterval} motion_no_confidence
@@ -6294,20 +6294,20 @@ export class PrivateKey extends Ptr {
   to_public: () => Promise<PublicKey>;
 
   /**
-  * @returns {Promise<Optional<PrivateKey>>}
+  * @returns {Promise<PrivateKey>}
   */
-  static generate_ed25519: () => Promise<Optional<PrivateKey>>;
+  static generate_ed25519: () => Promise<PrivateKey>;
 
   /**
-  * @returns {Promise<Optional<PrivateKey>>}
+  * @returns {Promise<PrivateKey>}
   */
-  static generate_ed25519extended: () => Promise<Optional<PrivateKey>>;
+  static generate_ed25519extended: () => Promise<PrivateKey>;
 
   /**
   * @param {string} bech32_str
-  * @returns {Promise<Optional<PrivateKey>>}
+  * @returns {Promise<PrivateKey>}
   */
-  static from_bech32: (bech32_str: string) => Promise<Optional<PrivateKey>>;
+  static from_bech32: (bech32_str: string) => Promise<PrivateKey>;
 
   /**
   * @returns {Promise<string>}
@@ -6321,15 +6321,15 @@ export class PrivateKey extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PrivateKey>>}
+  * @returns {Promise<PrivateKey>}
   */
-  static from_extended_bytes: (bytes: Uint8Array) => Promise<Optional<PrivateKey>>;
+  static from_extended_bytes: (bytes: Uint8Array) => Promise<PrivateKey>;
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PrivateKey>>}
+  * @returns {Promise<PrivateKey>}
   */
-  static from_normal_bytes: (bytes: Uint8Array) => Promise<Optional<PrivateKey>>;
+  static from_normal_bytes: (bytes: Uint8Array) => Promise<PrivateKey>;
 
   /**
   * @param {Uint8Array} message
@@ -6344,9 +6344,9 @@ export class PrivateKey extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<PrivateKey>>}
+  * @returns {Promise<PrivateKey>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<PrivateKey>>;
+  static from_hex: (hex_str: string) => Promise<PrivateKey>;
 
 }
 
@@ -6359,9 +6359,9 @@ export class ProposedProtocolParameterUpdates extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ProposedProtocolParameterUpdates>>}
+  * @returns {Promise<ProposedProtocolParameterUpdates>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ProposedProtocolParameterUpdates>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ProposedProtocolParameterUpdates>;
 
   /**
   * @returns {Promise<string>}
@@ -6370,20 +6370,20 @@ export class ProposedProtocolParameterUpdates extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<ProposedProtocolParameterUpdates>>}
+  * @returns {Promise<ProposedProtocolParameterUpdates>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<ProposedProtocolParameterUpdates>>;
+  static from_hex: (hex_str: string) => Promise<ProposedProtocolParameterUpdates>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<ProposedProtocolParameterUpdates>>}
+  * @returns {Promise<ProposedProtocolParameterUpdates>}
   */
-  static from_json: (json: string) => Promise<Optional<ProposedProtocolParameterUpdates>>;
+  static from_json: (json: string) => Promise<ProposedProtocolParameterUpdates>;
 
   /**
   * @returns {Promise<ProposedProtocolParameterUpdates>}
@@ -6424,9 +6424,9 @@ export class ProtocolParamUpdate extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ProtocolParamUpdate>>}
+  * @returns {Promise<ProtocolParamUpdate>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ProtocolParamUpdate>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ProtocolParamUpdate>;
 
   /**
   * @returns {Promise<string>}
@@ -6435,20 +6435,20 @@ export class ProtocolParamUpdate extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<ProtocolParamUpdate>>}
+  * @returns {Promise<ProtocolParamUpdate>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<ProtocolParamUpdate>>;
+  static from_hex: (hex_str: string) => Promise<ProtocolParamUpdate>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<ProtocolParamUpdate>>}
+  * @returns {Promise<ProtocolParamUpdate>}
   */
-  static from_json: (json: string) => Promise<Optional<ProtocolParamUpdate>>;
+  static from_json: (json: string) => Promise<ProtocolParamUpdate>;
 
   /**
   * @param {BigNum} minfee_a
@@ -6776,9 +6776,9 @@ export class ProtocolVersion extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ProtocolVersion>>}
+  * @returns {Promise<ProtocolVersion>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ProtocolVersion>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ProtocolVersion>;
 
   /**
   * @returns {Promise<string>}
@@ -6787,20 +6787,20 @@ export class ProtocolVersion extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<ProtocolVersion>>}
+  * @returns {Promise<ProtocolVersion>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<ProtocolVersion>>;
+  static from_hex: (hex_str: string) => Promise<ProtocolVersion>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<ProtocolVersion>>}
+  * @returns {Promise<ProtocolVersion>}
   */
-  static from_json: (json: string) => Promise<Optional<ProtocolVersion>>;
+  static from_json: (json: string) => Promise<ProtocolVersion>;
 
   /**
   * @returns {Promise<number>}
@@ -6825,9 +6825,9 @@ export class ProtocolVersion extends Ptr {
 export class PublicKey extends Ptr {
   /**
   * @param {string} bech32_str
-  * @returns {Promise<Optional<PublicKey>>}
+  * @returns {Promise<PublicKey>}
   */
-  static from_bech32: (bech32_str: string) => Promise<Optional<PublicKey>>;
+  static from_bech32: (bech32_str: string) => Promise<PublicKey>;
 
   /**
   * @returns {Promise<string>}
@@ -6841,9 +6841,9 @@ export class PublicKey extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<PublicKey>>}
+  * @returns {Promise<PublicKey>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<PublicKey>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<PublicKey>;
 
   /**
   * @param {Uint8Array} data
@@ -6864,9 +6864,9 @@ export class PublicKey extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<PublicKey>>}
+  * @returns {Promise<PublicKey>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<PublicKey>>;
+  static from_hex: (hex_str: string) => Promise<PublicKey>;
 
 }
 
@@ -6904,9 +6904,9 @@ export class Redeemer extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Redeemer>>}
+  * @returns {Promise<Redeemer>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Redeemer>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Redeemer>;
 
   /**
   * @returns {Promise<string>}
@@ -6915,20 +6915,20 @@ export class Redeemer extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Redeemer>>}
+  * @returns {Promise<Redeemer>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Redeemer>>;
+  static from_hex: (hex_str: string) => Promise<Redeemer>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Redeemer>>}
+  * @returns {Promise<Redeemer>}
   */
-  static from_json: (json: string) => Promise<Optional<Redeemer>>;
+  static from_json: (json: string) => Promise<Redeemer>;
 
   /**
   * @returns {Promise<RedeemerTag>}
@@ -6970,9 +6970,9 @@ export class RedeemerTag extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<RedeemerTag>>}
+  * @returns {Promise<RedeemerTag>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<RedeemerTag>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<RedeemerTag>;
 
   /**
   * @returns {Promise<string>}
@@ -6981,20 +6981,20 @@ export class RedeemerTag extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<RedeemerTag>>}
+  * @returns {Promise<RedeemerTag>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<RedeemerTag>>;
+  static from_hex: (hex_str: string) => Promise<RedeemerTag>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<RedeemerTag>>}
+  * @returns {Promise<RedeemerTag>}
   */
-  static from_json: (json: string) => Promise<Optional<RedeemerTag>>;
+  static from_json: (json: string) => Promise<RedeemerTag>;
 
   /**
   * @returns {Promise<RedeemerTag>}
@@ -7042,9 +7042,9 @@ export class Redeemers extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Redeemers>>}
+  * @returns {Promise<Redeemers>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Redeemers>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Redeemers>;
 
   /**
   * @returns {Promise<string>}
@@ -7053,20 +7053,20 @@ export class Redeemers extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Redeemers>>}
+  * @returns {Promise<Redeemers>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Redeemers>>;
+  static from_hex: (hex_str: string) => Promise<Redeemers>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Redeemers>>}
+  * @returns {Promise<Redeemers>}
   */
-  static from_json: (json: string) => Promise<Optional<Redeemers>>;
+  static from_json: (json: string) => Promise<Redeemers>;
 
   /**
   * @returns {Promise<Redeemers>}
@@ -7090,9 +7090,9 @@ export class Redeemers extends Ptr {
   add: (elem: Redeemer) => Promise<void>;
 
   /**
-  * @returns {Promise<Optional<ExUnits>>}
+  * @returns {Promise<ExUnits>}
   */
-  total_ex_units: () => Promise<Optional<ExUnits>>;
+  total_ex_units: () => Promise<ExUnits>;
 
 }
 
@@ -7105,9 +7105,9 @@ export class Relay extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Relay>>}
+  * @returns {Promise<Relay>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Relay>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Relay>;
 
   /**
   * @returns {Promise<string>}
@@ -7116,20 +7116,20 @@ export class Relay extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Relay>>}
+  * @returns {Promise<Relay>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Relay>>;
+  static from_hex: (hex_str: string) => Promise<Relay>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Relay>>}
+  * @returns {Promise<Relay>}
   */
-  static from_json: (json: string) => Promise<Optional<Relay>>;
+  static from_json: (json: string) => Promise<Relay>;
 
   /**
   * @param {SingleHostAddr} single_host_addr
@@ -7180,9 +7180,9 @@ export class Relays extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Relays>>}
+  * @returns {Promise<Relays>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Relays>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Relays>;
 
   /**
   * @returns {Promise<string>}
@@ -7191,20 +7191,20 @@ export class Relays extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Relays>>}
+  * @returns {Promise<Relays>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Relays>>;
+  static from_hex: (hex_str: string) => Promise<Relays>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Relays>>}
+  * @returns {Promise<Relays>}
   */
-  static from_json: (json: string) => Promise<Optional<Relays>>;
+  static from_json: (json: string) => Promise<Relays>;
 
   /**
   * @returns {Promise<Relays>}
@@ -7265,9 +7265,9 @@ export class RewardAddresses extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<RewardAddresses>>}
+  * @returns {Promise<RewardAddresses>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<RewardAddresses>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<RewardAddresses>;
 
   /**
   * @returns {Promise<string>}
@@ -7276,20 +7276,20 @@ export class RewardAddresses extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<RewardAddresses>>}
+  * @returns {Promise<RewardAddresses>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<RewardAddresses>>;
+  static from_hex: (hex_str: string) => Promise<RewardAddresses>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<RewardAddresses>>}
+  * @returns {Promise<RewardAddresses>}
   */
-  static from_json: (json: string) => Promise<Optional<RewardAddresses>>;
+  static from_json: (json: string) => Promise<RewardAddresses>;
 
   /**
   * @returns {Promise<RewardAddresses>}
@@ -7323,9 +7323,9 @@ export class ScriptAll extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ScriptAll>>}
+  * @returns {Promise<ScriptAll>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ScriptAll>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ScriptAll>;
 
   /**
   * @returns {Promise<string>}
@@ -7334,20 +7334,20 @@ export class ScriptAll extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<ScriptAll>>}
+  * @returns {Promise<ScriptAll>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<ScriptAll>>;
+  static from_hex: (hex_str: string) => Promise<ScriptAll>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<ScriptAll>>}
+  * @returns {Promise<ScriptAll>}
   */
-  static from_json: (json: string) => Promise<Optional<ScriptAll>>;
+  static from_json: (json: string) => Promise<ScriptAll>;
 
   /**
   * @returns {Promise<NativeScripts>}
@@ -7371,9 +7371,9 @@ export class ScriptAny extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ScriptAny>>}
+  * @returns {Promise<ScriptAny>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ScriptAny>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ScriptAny>;
 
   /**
   * @returns {Promise<string>}
@@ -7382,20 +7382,20 @@ export class ScriptAny extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<ScriptAny>>}
+  * @returns {Promise<ScriptAny>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<ScriptAny>>;
+  static from_hex: (hex_str: string) => Promise<ScriptAny>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<ScriptAny>>}
+  * @returns {Promise<ScriptAny>}
   */
-  static from_json: (json: string) => Promise<Optional<ScriptAny>>;
+  static from_json: (json: string) => Promise<ScriptAny>;
 
   /**
   * @returns {Promise<NativeScripts>}
@@ -7414,9 +7414,9 @@ export class ScriptAny extends Ptr {
 export class ScriptDataHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ScriptDataHash>>}
+  * @returns {Promise<ScriptDataHash>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ScriptDataHash>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ScriptDataHash>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -7425,15 +7425,15 @@ export class ScriptDataHash extends Ptr {
 
   /**
   * @param {string} prefix
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_bech32: (prefix: string) => Promise<Optional<string>>;
+  to_bech32: (prefix: string) => Promise<string>;
 
   /**
   * @param {string} bech_str
-  * @returns {Promise<Optional<ScriptDataHash>>}
+  * @returns {Promise<ScriptDataHash>}
   */
-  static from_bech32: (bech_str: string) => Promise<Optional<ScriptDataHash>>;
+  static from_bech32: (bech_str: string) => Promise<ScriptDataHash>;
 
   /**
   * @returns {Promise<string>}
@@ -7442,9 +7442,9 @@ export class ScriptDataHash extends Ptr {
 
   /**
   * @param {string} hex
-  * @returns {Promise<Optional<ScriptDataHash>>}
+  * @returns {Promise<ScriptDataHash>}
   */
-  static from_hex: (hex: string) => Promise<Optional<ScriptDataHash>>;
+  static from_hex: (hex: string) => Promise<ScriptDataHash>;
 
 }
 
@@ -7452,9 +7452,9 @@ export class ScriptDataHash extends Ptr {
 export class ScriptHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ScriptHash>>}
+  * @returns {Promise<ScriptHash>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ScriptHash>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ScriptHash>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -7463,15 +7463,15 @@ export class ScriptHash extends Ptr {
 
   /**
   * @param {string} prefix
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_bech32: (prefix: string) => Promise<Optional<string>>;
+  to_bech32: (prefix: string) => Promise<string>;
 
   /**
   * @param {string} bech_str
-  * @returns {Promise<Optional<ScriptHash>>}
+  * @returns {Promise<ScriptHash>}
   */
-  static from_bech32: (bech_str: string) => Promise<Optional<ScriptHash>>;
+  static from_bech32: (bech_str: string) => Promise<ScriptHash>;
 
   /**
   * @returns {Promise<string>}
@@ -7480,9 +7480,9 @@ export class ScriptHash extends Ptr {
 
   /**
   * @param {string} hex
-  * @returns {Promise<Optional<ScriptHash>>}
+  * @returns {Promise<ScriptHash>}
   */
-  static from_hex: (hex: string) => Promise<Optional<ScriptHash>>;
+  static from_hex: (hex: string) => Promise<ScriptHash>;
 
 }
 
@@ -7495,9 +7495,9 @@ export class ScriptHashes extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ScriptHashes>>}
+  * @returns {Promise<ScriptHashes>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ScriptHashes>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ScriptHashes>;
 
   /**
   * @returns {Promise<string>}
@@ -7506,20 +7506,20 @@ export class ScriptHashes extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<ScriptHashes>>}
+  * @returns {Promise<ScriptHashes>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<ScriptHashes>>;
+  static from_hex: (hex_str: string) => Promise<ScriptHashes>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<ScriptHashes>>}
+  * @returns {Promise<ScriptHashes>}
   */
-  static from_json: (json: string) => Promise<Optional<ScriptHashes>>;
+  static from_json: (json: string) => Promise<ScriptHashes>;
 
   /**
   * @returns {Promise<ScriptHashes>}
@@ -7553,9 +7553,9 @@ export class ScriptNOfK extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ScriptNOfK>>}
+  * @returns {Promise<ScriptNOfK>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ScriptNOfK>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ScriptNOfK>;
 
   /**
   * @returns {Promise<string>}
@@ -7564,20 +7564,20 @@ export class ScriptNOfK extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<ScriptNOfK>>}
+  * @returns {Promise<ScriptNOfK>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<ScriptNOfK>>;
+  static from_hex: (hex_str: string) => Promise<ScriptNOfK>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<ScriptNOfK>>}
+  * @returns {Promise<ScriptNOfK>}
   */
-  static from_json: (json: string) => Promise<Optional<ScriptNOfK>>;
+  static from_json: (json: string) => Promise<ScriptNOfK>;
 
   /**
   * @returns {Promise<number>}
@@ -7607,9 +7607,9 @@ export class ScriptPubkey extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ScriptPubkey>>}
+  * @returns {Promise<ScriptPubkey>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ScriptPubkey>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ScriptPubkey>;
 
   /**
   * @returns {Promise<string>}
@@ -7618,20 +7618,20 @@ export class ScriptPubkey extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<ScriptPubkey>>}
+  * @returns {Promise<ScriptPubkey>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<ScriptPubkey>>;
+  static from_hex: (hex_str: string) => Promise<ScriptPubkey>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<ScriptPubkey>>}
+  * @returns {Promise<ScriptPubkey>}
   */
-  static from_json: (json: string) => Promise<Optional<ScriptPubkey>>;
+  static from_json: (json: string) => Promise<ScriptPubkey>;
 
   /**
   * @returns {Promise<Ed25519KeyHash>}
@@ -7655,9 +7655,9 @@ export class ScriptRef extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<ScriptRef>>}
+  * @returns {Promise<ScriptRef>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<ScriptRef>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<ScriptRef>;
 
   /**
   * @returns {Promise<string>}
@@ -7666,20 +7666,20 @@ export class ScriptRef extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<ScriptRef>>}
+  * @returns {Promise<ScriptRef>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<ScriptRef>>;
+  static from_hex: (hex_str: string) => Promise<ScriptRef>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<ScriptRef>>}
+  * @returns {Promise<ScriptRef>}
   */
-  static from_json: (json: string) => Promise<Optional<ScriptRef>>;
+  static from_json: (json: string) => Promise<ScriptRef>;
 
   /**
   * @param {NativeScript} native_script
@@ -7724,9 +7724,9 @@ export class SingleHostAddr extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<SingleHostAddr>>}
+  * @returns {Promise<SingleHostAddr>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<SingleHostAddr>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<SingleHostAddr>;
 
   /**
   * @returns {Promise<string>}
@@ -7735,20 +7735,20 @@ export class SingleHostAddr extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<SingleHostAddr>>}
+  * @returns {Promise<SingleHostAddr>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<SingleHostAddr>>;
+  static from_hex: (hex_str: string) => Promise<SingleHostAddr>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<SingleHostAddr>>}
+  * @returns {Promise<SingleHostAddr>}
   */
-  static from_json: (json: string) => Promise<Optional<SingleHostAddr>>;
+  static from_json: (json: string) => Promise<SingleHostAddr>;
 
   /**
   * @returns {Promise<Optional<number>>}
@@ -7784,9 +7784,9 @@ export class SingleHostName extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<SingleHostName>>}
+  * @returns {Promise<SingleHostName>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<SingleHostName>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<SingleHostName>;
 
   /**
   * @returns {Promise<string>}
@@ -7795,20 +7795,20 @@ export class SingleHostName extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<SingleHostName>>}
+  * @returns {Promise<SingleHostName>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<SingleHostName>>;
+  static from_hex: (hex_str: string) => Promise<SingleHostName>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<SingleHostName>>}
+  * @returns {Promise<SingleHostName>}
   */
-  static from_json: (json: string) => Promise<Optional<SingleHostName>>;
+  static from_json: (json: string) => Promise<SingleHostName>;
 
   /**
   * @returns {Promise<Optional<number>>}
@@ -7838,9 +7838,9 @@ export class StakeAndVoteDelegation extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<StakeAndVoteDelegation>>}
+  * @returns {Promise<StakeAndVoteDelegation>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<StakeAndVoteDelegation>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<StakeAndVoteDelegation>;
 
   /**
   * @returns {Promise<string>}
@@ -7849,20 +7849,20 @@ export class StakeAndVoteDelegation extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<StakeAndVoteDelegation>>}
+  * @returns {Promise<StakeAndVoteDelegation>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<StakeAndVoteDelegation>>;
+  static from_hex: (hex_str: string) => Promise<StakeAndVoteDelegation>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<StakeAndVoteDelegation>>}
+  * @returns {Promise<StakeAndVoteDelegation>}
   */
-  static from_json: (json: string) => Promise<Optional<StakeAndVoteDelegation>>;
+  static from_json: (json: string) => Promise<StakeAndVoteDelegation>;
 
   /**
   * @returns {Promise<Credential>}
@@ -7903,9 +7903,9 @@ export class StakeDelegation extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<StakeDelegation>>}
+  * @returns {Promise<StakeDelegation>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<StakeDelegation>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<StakeDelegation>;
 
   /**
   * @returns {Promise<string>}
@@ -7914,20 +7914,20 @@ export class StakeDelegation extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<StakeDelegation>>}
+  * @returns {Promise<StakeDelegation>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<StakeDelegation>>;
+  static from_hex: (hex_str: string) => Promise<StakeDelegation>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<StakeDelegation>>}
+  * @returns {Promise<StakeDelegation>}
   */
-  static from_json: (json: string) => Promise<Optional<StakeDelegation>>;
+  static from_json: (json: string) => Promise<StakeDelegation>;
 
   /**
   * @returns {Promise<Credential>}
@@ -7962,9 +7962,9 @@ export class StakeDeregistration extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<StakeDeregistration>>}
+  * @returns {Promise<StakeDeregistration>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<StakeDeregistration>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<StakeDeregistration>;
 
   /**
   * @returns {Promise<string>}
@@ -7973,20 +7973,20 @@ export class StakeDeregistration extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<StakeDeregistration>>}
+  * @returns {Promise<StakeDeregistration>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<StakeDeregistration>>;
+  static from_hex: (hex_str: string) => Promise<StakeDeregistration>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<StakeDeregistration>>}
+  * @returns {Promise<StakeDeregistration>}
   */
-  static from_json: (json: string) => Promise<Optional<StakeDeregistration>>;
+  static from_json: (json: string) => Promise<StakeDeregistration>;
 
   /**
   * @returns {Promise<Credential>}
@@ -8027,9 +8027,9 @@ export class StakeRegistration extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<StakeRegistration>>}
+  * @returns {Promise<StakeRegistration>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<StakeRegistration>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<StakeRegistration>;
 
   /**
   * @returns {Promise<string>}
@@ -8038,20 +8038,20 @@ export class StakeRegistration extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<StakeRegistration>>}
+  * @returns {Promise<StakeRegistration>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<StakeRegistration>>;
+  static from_hex: (hex_str: string) => Promise<StakeRegistration>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<StakeRegistration>>}
+  * @returns {Promise<StakeRegistration>}
   */
-  static from_json: (json: string) => Promise<Optional<StakeRegistration>>;
+  static from_json: (json: string) => Promise<StakeRegistration>;
 
   /**
   * @returns {Promise<Credential>}
@@ -8092,9 +8092,9 @@ export class StakeRegistrationAndDelegation extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<StakeRegistrationAndDelegation>>}
+  * @returns {Promise<StakeRegistrationAndDelegation>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<StakeRegistrationAndDelegation>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<StakeRegistrationAndDelegation>;
 
   /**
   * @returns {Promise<string>}
@@ -8103,20 +8103,20 @@ export class StakeRegistrationAndDelegation extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<StakeRegistrationAndDelegation>>}
+  * @returns {Promise<StakeRegistrationAndDelegation>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<StakeRegistrationAndDelegation>>;
+  static from_hex: (hex_str: string) => Promise<StakeRegistrationAndDelegation>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<StakeRegistrationAndDelegation>>}
+  * @returns {Promise<StakeRegistrationAndDelegation>}
   */
-  static from_json: (json: string) => Promise<Optional<StakeRegistrationAndDelegation>>;
+  static from_json: (json: string) => Promise<StakeRegistrationAndDelegation>;
 
   /**
   * @returns {Promise<Credential>}
@@ -8157,9 +8157,9 @@ export class StakeVoteRegistrationAndDelegation extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<StakeVoteRegistrationAndDelegation>>}
+  * @returns {Promise<StakeVoteRegistrationAndDelegation>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<StakeVoteRegistrationAndDelegation>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<StakeVoteRegistrationAndDelegation>;
 
   /**
   * @returns {Promise<string>}
@@ -8168,20 +8168,20 @@ export class StakeVoteRegistrationAndDelegation extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<StakeVoteRegistrationAndDelegation>>}
+  * @returns {Promise<StakeVoteRegistrationAndDelegation>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<StakeVoteRegistrationAndDelegation>>;
+  static from_hex: (hex_str: string) => Promise<StakeVoteRegistrationAndDelegation>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<StakeVoteRegistrationAndDelegation>>}
+  * @returns {Promise<StakeVoteRegistrationAndDelegation>}
   */
-  static from_json: (json: string) => Promise<Optional<StakeVoteRegistrationAndDelegation>>;
+  static from_json: (json: string) => Promise<StakeVoteRegistrationAndDelegation>;
 
   /**
   * @returns {Promise<Credential>}
@@ -8253,9 +8253,9 @@ export class TimelockExpiry extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TimelockExpiry>>}
+  * @returns {Promise<TimelockExpiry>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TimelockExpiry>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<TimelockExpiry>;
 
   /**
   * @returns {Promise<string>}
@@ -8264,25 +8264,25 @@ export class TimelockExpiry extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<TimelockExpiry>>}
+  * @returns {Promise<TimelockExpiry>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<TimelockExpiry>>;
+  static from_hex: (hex_str: string) => Promise<TimelockExpiry>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<TimelockExpiry>>}
+  * @returns {Promise<TimelockExpiry>}
   */
-  static from_json: (json: string) => Promise<Optional<TimelockExpiry>>;
+  static from_json: (json: string) => Promise<TimelockExpiry>;
 
   /**
-  * @returns {Promise<Optional<number>>}
+  * @returns {Promise<number>}
   */
-  slot: () => Promise<Optional<number>>;
+  slot: () => Promise<number>;
 
   /**
   * @returns {Promise<BigNum>}
@@ -8312,9 +8312,9 @@ export class TimelockStart extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TimelockStart>>}
+  * @returns {Promise<TimelockStart>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TimelockStart>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<TimelockStart>;
 
   /**
   * @returns {Promise<string>}
@@ -8323,25 +8323,25 @@ export class TimelockStart extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<TimelockStart>>}
+  * @returns {Promise<TimelockStart>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<TimelockStart>>;
+  static from_hex: (hex_str: string) => Promise<TimelockStart>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<TimelockStart>>}
+  * @returns {Promise<TimelockStart>}
   */
-  static from_json: (json: string) => Promise<Optional<TimelockStart>>;
+  static from_json: (json: string) => Promise<TimelockStart>;
 
   /**
-  * @returns {Promise<Optional<number>>}
+  * @returns {Promise<number>}
   */
-  slot: () => Promise<Optional<number>>;
+  slot: () => Promise<number>;
 
   /**
   * @returns {Promise<BigNum>}
@@ -8371,9 +8371,9 @@ export class Transaction extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Transaction>>}
+  * @returns {Promise<Transaction>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Transaction>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Transaction>;
 
   /**
   * @returns {Promise<string>}
@@ -8382,20 +8382,20 @@ export class Transaction extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Transaction>>}
+  * @returns {Promise<Transaction>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Transaction>>;
+  static from_hex: (hex_str: string) => Promise<Transaction>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Transaction>>}
+  * @returns {Promise<Transaction>}
   */
-  static from_json: (json: string) => Promise<Optional<Transaction>>;
+  static from_json: (json: string) => Promise<Transaction>;
 
   /**
   * @returns {Promise<TransactionBody>}
@@ -8471,9 +8471,9 @@ export class TransactionBodies extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TransactionBodies>>}
+  * @returns {Promise<TransactionBodies>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TransactionBodies>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<TransactionBodies>;
 
   /**
   * @returns {Promise<string>}
@@ -8482,20 +8482,20 @@ export class TransactionBodies extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<TransactionBodies>>}
+  * @returns {Promise<TransactionBodies>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<TransactionBodies>>;
+  static from_hex: (hex_str: string) => Promise<TransactionBodies>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<TransactionBodies>>}
+  * @returns {Promise<TransactionBodies>}
   */
-  static from_json: (json: string) => Promise<Optional<TransactionBodies>>;
+  static from_json: (json: string) => Promise<TransactionBodies>;
 
   /**
   * @returns {Promise<TransactionBodies>}
@@ -8529,9 +8529,9 @@ export class TransactionBody extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TransactionBody>>}
+  * @returns {Promise<TransactionBody>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TransactionBody>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<TransactionBody>;
 
   /**
   * @returns {Promise<string>}
@@ -8540,20 +8540,20 @@ export class TransactionBody extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<TransactionBody>>}
+  * @returns {Promise<TransactionBody>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<TransactionBody>>;
+  static from_hex: (hex_str: string) => Promise<TransactionBody>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<TransactionBody>>}
+  * @returns {Promise<TransactionBody>}
   */
-  static from_json: (json: string) => Promise<Optional<TransactionBody>>;
+  static from_json: (json: string) => Promise<TransactionBody>;
 
   /**
   * @returns {Promise<TransactionInputs>}
@@ -8913,9 +8913,9 @@ export class TransactionBuilder extends Ptr {
   * @param {Address} address
   * @param {TransactionInput} input
   * @param {Value} amount
-  * @returns {Promise<Optional<BigNum>>}
+  * @returns {Promise<BigNum>}
   */
-  fee_for_input: (address: Address, input: TransactionInput, amount: Value) => Promise<Optional<BigNum>>;
+  fee_for_input: (address: Address, input: TransactionInput, amount: Value) => Promise<BigNum>;
 
   /**
   * @param {TransactionOutput} output
@@ -8925,9 +8925,9 @@ export class TransactionBuilder extends Ptr {
 
   /**
   * @param {TransactionOutput} output
-  * @returns {Promise<Optional<BigNum>>}
+  * @returns {Promise<BigNum>}
   */
-  fee_for_output: (output: TransactionOutput) => Promise<Optional<BigNum>>;
+  fee_for_output: (output: TransactionOutput) => Promise<BigNum>;
 
   /**
   * @param {BigNum} fee
@@ -9124,34 +9124,34 @@ export class TransactionBuilder extends Ptr {
   get_reference_inputs: () => Promise<TransactionInputs>;
 
   /**
-  * @returns {Promise<Optional<Value>>}
+  * @returns {Promise<Value>}
   */
-  get_explicit_input: () => Promise<Optional<Value>>;
+  get_explicit_input: () => Promise<Value>;
 
   /**
-  * @returns {Promise<Optional<Value>>}
+  * @returns {Promise<Value>}
   */
-  get_implicit_input: () => Promise<Optional<Value>>;
+  get_implicit_input: () => Promise<Value>;
 
   /**
-  * @returns {Promise<Optional<Value>>}
+  * @returns {Promise<Value>}
   */
-  get_total_input: () => Promise<Optional<Value>>;
+  get_total_input: () => Promise<Value>;
 
   /**
-  * @returns {Promise<Optional<Value>>}
+  * @returns {Promise<Value>}
   */
-  get_total_output: () => Promise<Optional<Value>>;
+  get_total_output: () => Promise<Value>;
 
   /**
-  * @returns {Promise<Optional<Value>>}
+  * @returns {Promise<Value>}
   */
-  get_explicit_output: () => Promise<Optional<Value>>;
+  get_explicit_output: () => Promise<Value>;
 
   /**
-  * @returns {Promise<Optional<BigNum>>}
+  * @returns {Promise<BigNum>}
   */
-  get_deposit: () => Promise<Optional<BigNum>>;
+  get_deposit: () => Promise<BigNum>;
 
   /**
   * @returns {Promise<Optional<BigNum>>}
@@ -9160,16 +9160,16 @@ export class TransactionBuilder extends Ptr {
 
   /**
   * @param {Address} address
-  * @returns {Promise<Optional<boolean>>}
+  * @returns {Promise<boolean>}
   */
-  add_change_if_needed: (address: Address) => Promise<Optional<boolean>>;
+  add_change_if_needed: (address: Address) => Promise<boolean>;
 
   /**
   * @param {Address} address
   * @param {OutputDatum} plutus_data
-  * @returns {Promise<Optional<boolean>>}
+  * @returns {Promise<boolean>}
   */
-  add_change_if_needed_with_datum: (address: Address, plutus_data: OutputDatum) => Promise<Optional<boolean>>;
+  add_change_if_needed_with_datum: (address: Address, plutus_data: OutputDatum) => Promise<boolean>;
 
   /**
   * @param {Costmdls} cost_models
@@ -9192,9 +9192,9 @@ export class TransactionBuilder extends Ptr {
   add_required_signer: (key: Ed25519KeyHash) => Promise<void>;
 
   /**
-  * @returns {Promise<Optional<number>>}
+  * @returns {Promise<number>}
   */
-  full_size: () => Promise<Optional<number>>;
+  full_size: () => Promise<number>;
 
   /**
   * @returns {Promise<Uint32Array>}
@@ -9202,24 +9202,24 @@ export class TransactionBuilder extends Ptr {
   output_sizes: () => Promise<Uint32Array>;
 
   /**
-  * @returns {Promise<Optional<TransactionBody>>}
+  * @returns {Promise<TransactionBody>}
   */
-  build: () => Promise<Optional<TransactionBody>>;
+  build: () => Promise<TransactionBody>;
 
   /**
-  * @returns {Promise<Optional<Transaction>>}
+  * @returns {Promise<Transaction>}
   */
-  build_tx: () => Promise<Optional<Transaction>>;
+  build_tx: () => Promise<Transaction>;
 
   /**
-  * @returns {Promise<Optional<Transaction>>}
+  * @returns {Promise<Transaction>}
   */
-  build_tx_unsafe: () => Promise<Optional<Transaction>>;
+  build_tx_unsafe: () => Promise<Transaction>;
 
   /**
-  * @returns {Promise<Optional<BigNum>>}
+  * @returns {Promise<BigNum>}
   */
-  min_fee: () => Promise<Optional<BigNum>>;
+  min_fee: () => Promise<BigNum>;
 
 }
 
@@ -9289,9 +9289,9 @@ export class TransactionBuilderConfigBuilder extends Ptr {
   prefer_pure_change: (prefer_pure_change: boolean) => Promise<TransactionBuilderConfigBuilder>;
 
   /**
-  * @returns {Promise<Optional<TransactionBuilderConfig>>}
+  * @returns {Promise<TransactionBuilderConfig>}
   */
-  build: () => Promise<Optional<TransactionBuilderConfig>>;
+  build: () => Promise<TransactionBuilderConfig>;
 
 }
 
@@ -9299,9 +9299,9 @@ export class TransactionBuilderConfigBuilder extends Ptr {
 export class TransactionHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TransactionHash>>}
+  * @returns {Promise<TransactionHash>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TransactionHash>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<TransactionHash>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -9310,15 +9310,15 @@ export class TransactionHash extends Ptr {
 
   /**
   * @param {string} prefix
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_bech32: (prefix: string) => Promise<Optional<string>>;
+  to_bech32: (prefix: string) => Promise<string>;
 
   /**
   * @param {string} bech_str
-  * @returns {Promise<Optional<TransactionHash>>}
+  * @returns {Promise<TransactionHash>}
   */
-  static from_bech32: (bech_str: string) => Promise<Optional<TransactionHash>>;
+  static from_bech32: (bech_str: string) => Promise<TransactionHash>;
 
   /**
   * @returns {Promise<string>}
@@ -9327,9 +9327,9 @@ export class TransactionHash extends Ptr {
 
   /**
   * @param {string} hex
-  * @returns {Promise<Optional<TransactionHash>>}
+  * @returns {Promise<TransactionHash>}
   */
-  static from_hex: (hex: string) => Promise<Optional<TransactionHash>>;
+  static from_hex: (hex: string) => Promise<TransactionHash>;
 
 }
 
@@ -9342,9 +9342,9 @@ export class TransactionInput extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TransactionInput>>}
+  * @returns {Promise<TransactionInput>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TransactionInput>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<TransactionInput>;
 
   /**
   * @returns {Promise<string>}
@@ -9353,20 +9353,20 @@ export class TransactionInput extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<TransactionInput>>}
+  * @returns {Promise<TransactionInput>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<TransactionInput>>;
+  static from_hex: (hex_str: string) => Promise<TransactionInput>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<TransactionInput>>}
+  * @returns {Promise<TransactionInput>}
   */
-  static from_json: (json: string) => Promise<Optional<TransactionInput>>;
+  static from_json: (json: string) => Promise<TransactionInput>;
 
   /**
   * @returns {Promise<TransactionHash>}
@@ -9396,9 +9396,9 @@ export class TransactionInputs extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TransactionInputs>>}
+  * @returns {Promise<TransactionInputs>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TransactionInputs>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<TransactionInputs>;
 
   /**
   * @returns {Promise<string>}
@@ -9407,20 +9407,20 @@ export class TransactionInputs extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<TransactionInputs>>}
+  * @returns {Promise<TransactionInputs>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<TransactionInputs>>;
+  static from_hex: (hex_str: string) => Promise<TransactionInputs>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<TransactionInputs>>}
+  * @returns {Promise<TransactionInputs>}
   */
-  static from_json: (json: string) => Promise<Optional<TransactionInputs>>;
+  static from_json: (json: string) => Promise<TransactionInputs>;
 
   /**
   * @returns {Promise<TransactionInputs>}
@@ -9459,9 +9459,9 @@ export class TransactionMetadatum extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TransactionMetadatum>>}
+  * @returns {Promise<TransactionMetadatum>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TransactionMetadatum>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<TransactionMetadatum>;
 
   /**
   * @returns {Promise<string>}
@@ -9470,9 +9470,9 @@ export class TransactionMetadatum extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<TransactionMetadatum>>}
+  * @returns {Promise<TransactionMetadatum>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<TransactionMetadatum>>;
+  static from_hex: (hex_str: string) => Promise<TransactionMetadatum>;
 
   /**
   * @param {MetadataMap} map
@@ -9494,15 +9494,15 @@ export class TransactionMetadatum extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TransactionMetadatum>>}
+  * @returns {Promise<TransactionMetadatum>}
   */
-  static new_bytes: (bytes: Uint8Array) => Promise<Optional<TransactionMetadatum>>;
+  static new_bytes: (bytes: Uint8Array) => Promise<TransactionMetadatum>;
 
   /**
   * @param {string} text
-  * @returns {Promise<Optional<TransactionMetadatum>>}
+  * @returns {Promise<TransactionMetadatum>}
   */
-  static new_text: (text: string) => Promise<Optional<TransactionMetadatum>>;
+  static new_text: (text: string) => Promise<TransactionMetadatum>;
 
   /**
   * @returns {Promise<TransactionMetadatumKind>}
@@ -9510,19 +9510,19 @@ export class TransactionMetadatum extends Ptr {
   kind: () => Promise<TransactionMetadatumKind>;
 
   /**
-  * @returns {Promise<Optional<MetadataMap>>}
+  * @returns {Promise<MetadataMap>}
   */
-  as_map: () => Promise<Optional<MetadataMap>>;
+  as_map: () => Promise<MetadataMap>;
 
   /**
-  * @returns {Promise<Optional<MetadataList>>}
+  * @returns {Promise<MetadataList>}
   */
-  as_list: () => Promise<Optional<MetadataList>>;
+  as_list: () => Promise<MetadataList>;
 
   /**
-  * @returns {Promise<Optional<Int>>}
+  * @returns {Promise<Int>}
   */
-  as_int: () => Promise<Optional<Int>>;
+  as_int: () => Promise<Int>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -9530,9 +9530,9 @@ export class TransactionMetadatum extends Ptr {
   as_bytes: () => Promise<Uint8Array>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  as_text: () => Promise<Optional<string>>;
+  as_text: () => Promise<string>;
 
 }
 
@@ -9545,9 +9545,9 @@ export class TransactionMetadatumLabels extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TransactionMetadatumLabels>>}
+  * @returns {Promise<TransactionMetadatumLabels>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TransactionMetadatumLabels>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<TransactionMetadatumLabels>;
 
   /**
   * @returns {Promise<string>}
@@ -9556,9 +9556,9 @@ export class TransactionMetadatumLabels extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<TransactionMetadatumLabels>>}
+  * @returns {Promise<TransactionMetadatumLabels>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<TransactionMetadatumLabels>>;
+  static from_hex: (hex_str: string) => Promise<TransactionMetadatumLabels>;
 
   /**
   * @returns {Promise<TransactionMetadatumLabels>}
@@ -9592,9 +9592,9 @@ export class TransactionOutput extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TransactionOutput>>}
+  * @returns {Promise<TransactionOutput>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TransactionOutput>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<TransactionOutput>;
 
   /**
   * @returns {Promise<string>}
@@ -9603,20 +9603,20 @@ export class TransactionOutput extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<TransactionOutput>>}
+  * @returns {Promise<TransactionOutput>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<TransactionOutput>>;
+  static from_hex: (hex_str: string) => Promise<TransactionOutput>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<TransactionOutput>>}
+  * @returns {Promise<TransactionOutput>}
   */
-  static from_json: (json: string) => Promise<Optional<TransactionOutput>>;
+  static from_json: (json: string) => Promise<TransactionOutput>;
 
   /**
   * @returns {Promise<Address>}
@@ -9711,21 +9711,21 @@ export class TransactionOutputAmountBuilder extends Ptr {
   /**
   * @param {MultiAsset} multiasset
   * @param {BigNum} coins_per_utxo_word
-  * @returns {Promise<Optional<TransactionOutputAmountBuilder>>}
+  * @returns {Promise<TransactionOutputAmountBuilder>}
   */
-  with_asset_and_min_required_coin: (multiasset: MultiAsset, coins_per_utxo_word: BigNum) => Promise<Optional<TransactionOutputAmountBuilder>>;
+  with_asset_and_min_required_coin: (multiasset: MultiAsset, coins_per_utxo_word: BigNum) => Promise<TransactionOutputAmountBuilder>;
 
   /**
   * @param {MultiAsset} multiasset
   * @param {DataCost} data_cost
-  * @returns {Promise<Optional<TransactionOutputAmountBuilder>>}
+  * @returns {Promise<TransactionOutputAmountBuilder>}
   */
-  with_asset_and_min_required_coin_by_utxo_cost: (multiasset: MultiAsset, data_cost: DataCost) => Promise<Optional<TransactionOutputAmountBuilder>>;
+  with_asset_and_min_required_coin_by_utxo_cost: (multiasset: MultiAsset, data_cost: DataCost) => Promise<TransactionOutputAmountBuilder>;
 
   /**
-  * @returns {Promise<Optional<TransactionOutput>>}
+  * @returns {Promise<TransactionOutput>}
   */
-  build: () => Promise<Optional<TransactionOutput>>;
+  build: () => Promise<TransactionOutput>;
 
 }
 
@@ -9761,9 +9761,9 @@ export class TransactionOutputBuilder extends Ptr {
   with_script_ref: (script_ref: ScriptRef) => Promise<TransactionOutputBuilder>;
 
   /**
-  * @returns {Promise<Optional<TransactionOutputAmountBuilder>>}
+  * @returns {Promise<TransactionOutputAmountBuilder>}
   */
-  next: () => Promise<Optional<TransactionOutputAmountBuilder>>;
+  next: () => Promise<TransactionOutputAmountBuilder>;
 
 }
 
@@ -9776,9 +9776,9 @@ export class TransactionOutputs extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TransactionOutputs>>}
+  * @returns {Promise<TransactionOutputs>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TransactionOutputs>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<TransactionOutputs>;
 
   /**
   * @returns {Promise<string>}
@@ -9787,20 +9787,20 @@ export class TransactionOutputs extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<TransactionOutputs>>}
+  * @returns {Promise<TransactionOutputs>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<TransactionOutputs>>;
+  static from_hex: (hex_str: string) => Promise<TransactionOutputs>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<TransactionOutputs>>}
+  * @returns {Promise<TransactionOutputs>}
   */
-  static from_json: (json: string) => Promise<Optional<TransactionOutputs>>;
+  static from_json: (json: string) => Promise<TransactionOutputs>;
 
   /**
   * @returns {Promise<TransactionOutputs>}
@@ -9834,9 +9834,9 @@ export class TransactionUnspentOutput extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TransactionUnspentOutput>>}
+  * @returns {Promise<TransactionUnspentOutput>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TransactionUnspentOutput>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<TransactionUnspentOutput>;
 
   /**
   * @returns {Promise<string>}
@@ -9845,20 +9845,20 @@ export class TransactionUnspentOutput extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<TransactionUnspentOutput>>}
+  * @returns {Promise<TransactionUnspentOutput>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<TransactionUnspentOutput>>;
+  static from_hex: (hex_str: string) => Promise<TransactionUnspentOutput>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<TransactionUnspentOutput>>}
+  * @returns {Promise<TransactionUnspentOutput>}
   */
-  static from_json: (json: string) => Promise<Optional<TransactionUnspentOutput>>;
+  static from_json: (json: string) => Promise<TransactionUnspentOutput>;
 
   /**
   * @param {TransactionInput} input
@@ -9882,15 +9882,15 @@ export class TransactionUnspentOutput extends Ptr {
 
 export class TransactionUnspentOutputs extends Ptr {
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<TransactionUnspentOutputs>>}
+  * @returns {Promise<TransactionUnspentOutputs>}
   */
-  static from_json: (json: string) => Promise<Optional<TransactionUnspentOutputs>>;
+  static from_json: (json: string) => Promise<TransactionUnspentOutputs>;
 
   /**
   * @returns {Promise<TransactionUnspentOutputs>}
@@ -9924,9 +9924,9 @@ export class TransactionWitnessSet extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TransactionWitnessSet>>}
+  * @returns {Promise<TransactionWitnessSet>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TransactionWitnessSet>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<TransactionWitnessSet>;
 
   /**
   * @returns {Promise<string>}
@@ -9935,20 +9935,20 @@ export class TransactionWitnessSet extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<TransactionWitnessSet>>}
+  * @returns {Promise<TransactionWitnessSet>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<TransactionWitnessSet>>;
+  static from_hex: (hex_str: string) => Promise<TransactionWitnessSet>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<TransactionWitnessSet>>}
+  * @returns {Promise<TransactionWitnessSet>}
   */
-  static from_json: (json: string) => Promise<Optional<TransactionWitnessSet>>;
+  static from_json: (json: string) => Promise<TransactionWitnessSet>;
 
   /**
   * @param {Vkeywitnesses} vkeys
@@ -10026,9 +10026,9 @@ export class TransactionWitnessSets extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TransactionWitnessSets>>}
+  * @returns {Promise<TransactionWitnessSets>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TransactionWitnessSets>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<TransactionWitnessSets>;
 
   /**
   * @returns {Promise<string>}
@@ -10037,20 +10037,20 @@ export class TransactionWitnessSets extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<TransactionWitnessSets>>}
+  * @returns {Promise<TransactionWitnessSets>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<TransactionWitnessSets>>;
+  static from_hex: (hex_str: string) => Promise<TransactionWitnessSets>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<TransactionWitnessSets>>}
+  * @returns {Promise<TransactionWitnessSets>}
   */
-  static from_json: (json: string) => Promise<Optional<TransactionWitnessSets>>;
+  static from_json: (json: string) => Promise<TransactionWitnessSets>;
 
   /**
   * @returns {Promise<TransactionWitnessSets>}
@@ -10078,15 +10078,15 @@ export class TransactionWitnessSets extends Ptr {
 
 export class TreasuryWithdrawals extends Ptr {
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<TreasuryWithdrawals>>}
+  * @returns {Promise<TreasuryWithdrawals>}
   */
-  static from_json: (json: string) => Promise<Optional<TreasuryWithdrawals>>;
+  static from_json: (json: string) => Promise<TreasuryWithdrawals>;
 
   /**
   * @returns {Promise<TreasuryWithdrawals>}
@@ -10126,9 +10126,9 @@ export class TreasuryWithdrawalsAction extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<TreasuryWithdrawalsAction>>}
+  * @returns {Promise<TreasuryWithdrawalsAction>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<TreasuryWithdrawalsAction>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<TreasuryWithdrawalsAction>;
 
   /**
   * @returns {Promise<string>}
@@ -10137,20 +10137,20 @@ export class TreasuryWithdrawalsAction extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<TreasuryWithdrawalsAction>>}
+  * @returns {Promise<TreasuryWithdrawalsAction>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<TreasuryWithdrawalsAction>>;
+  static from_hex: (hex_str: string) => Promise<TreasuryWithdrawalsAction>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<TreasuryWithdrawalsAction>>}
+  * @returns {Promise<TreasuryWithdrawalsAction>}
   */
-  static from_json: (json: string) => Promise<Optional<TreasuryWithdrawalsAction>>;
+  static from_json: (json: string) => Promise<TreasuryWithdrawalsAction>;
 
   /**
   * @returns {Promise<TreasuryWithdrawals>}
@@ -10287,9 +10287,9 @@ export class TxInputsBuilder extends Ptr {
   add_required_signers: (keys: Ed25519KeyHashes) => Promise<void>;
 
   /**
-  * @returns {Promise<Optional<Value>>}
+  * @returns {Promise<Value>}
   */
-  total_value: () => Promise<Optional<Value>>;
+  total_value: () => Promise<Value>;
 
   /**
   * @returns {Promise<TransactionInputs>}
@@ -10312,9 +10312,9 @@ export class URL extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<URL>>}
+  * @returns {Promise<URL>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<URL>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<URL>;
 
   /**
   * @returns {Promise<string>}
@@ -10323,26 +10323,26 @@ export class URL extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<URL>>}
+  * @returns {Promise<URL>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<URL>>;
+  static from_hex: (hex_str: string) => Promise<URL>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<URL>>}
+  * @returns {Promise<URL>}
   */
-  static from_json: (json: string) => Promise<Optional<URL>>;
+  static from_json: (json: string) => Promise<URL>;
 
   /**
   * @param {string} url
-  * @returns {Promise<Optional<URL>>}
+  * @returns {Promise<URL>}
   */
-  static new: (url: string) => Promise<Optional<URL>>;
+  static new: (url: string) => Promise<URL>;
 
   /**
   * @returns {Promise<string>}
@@ -10360,9 +10360,9 @@ export class UnitInterval extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<UnitInterval>>}
+  * @returns {Promise<UnitInterval>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<UnitInterval>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<UnitInterval>;
 
   /**
   * @returns {Promise<string>}
@@ -10371,20 +10371,20 @@ export class UnitInterval extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<UnitInterval>>}
+  * @returns {Promise<UnitInterval>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<UnitInterval>>;
+  static from_hex: (hex_str: string) => Promise<UnitInterval>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<UnitInterval>>}
+  * @returns {Promise<UnitInterval>}
   */
-  static from_json: (json: string) => Promise<Optional<UnitInterval>>;
+  static from_json: (json: string) => Promise<UnitInterval>;
 
   /**
   * @returns {Promise<BigNum>}
@@ -10414,9 +10414,9 @@ export class Update extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Update>>}
+  * @returns {Promise<Update>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Update>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Update>;
 
   /**
   * @returns {Promise<string>}
@@ -10425,20 +10425,20 @@ export class Update extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Update>>}
+  * @returns {Promise<Update>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Update>>;
+  static from_hex: (hex_str: string) => Promise<Update>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Update>>}
+  * @returns {Promise<Update>}
   */
-  static from_json: (json: string) => Promise<Optional<Update>>;
+  static from_json: (json: string) => Promise<Update>;
 
   /**
   * @returns {Promise<ProposedProtocolParameterUpdates>}
@@ -10468,9 +10468,9 @@ export class UpdateCommitteeAction extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<UpdateCommitteeAction>>}
+  * @returns {Promise<UpdateCommitteeAction>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<UpdateCommitteeAction>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<UpdateCommitteeAction>;
 
   /**
   * @returns {Promise<string>}
@@ -10479,20 +10479,20 @@ export class UpdateCommitteeAction extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<UpdateCommitteeAction>>}
+  * @returns {Promise<UpdateCommitteeAction>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<UpdateCommitteeAction>>;
+  static from_hex: (hex_str: string) => Promise<UpdateCommitteeAction>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<UpdateCommitteeAction>>}
+  * @returns {Promise<UpdateCommitteeAction>}
   */
-  static from_json: (json: string) => Promise<Optional<UpdateCommitteeAction>>;
+  static from_json: (json: string) => Promise<UpdateCommitteeAction>;
 
   /**
   * @returns {Promise<Optional<GovernanceActionId>>}
@@ -10535,9 +10535,9 @@ export class VRFCert extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<VRFCert>>}
+  * @returns {Promise<VRFCert>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<VRFCert>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<VRFCert>;
 
   /**
   * @returns {Promise<string>}
@@ -10546,20 +10546,20 @@ export class VRFCert extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<VRFCert>>}
+  * @returns {Promise<VRFCert>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<VRFCert>>;
+  static from_hex: (hex_str: string) => Promise<VRFCert>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<VRFCert>>}
+  * @returns {Promise<VRFCert>}
   */
-  static from_json: (json: string) => Promise<Optional<VRFCert>>;
+  static from_json: (json: string) => Promise<VRFCert>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -10574,9 +10574,9 @@ export class VRFCert extends Ptr {
   /**
   * @param {Uint8Array} output
   * @param {Uint8Array} proof
-  * @returns {Promise<Optional<VRFCert>>}
+  * @returns {Promise<VRFCert>}
   */
-  static new: (output: Uint8Array, proof: Uint8Array) => Promise<Optional<VRFCert>>;
+  static new: (output: Uint8Array, proof: Uint8Array) => Promise<VRFCert>;
 
 }
 
@@ -10584,9 +10584,9 @@ export class VRFCert extends Ptr {
 export class VRFKeyHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<VRFKeyHash>>}
+  * @returns {Promise<VRFKeyHash>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<VRFKeyHash>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<VRFKeyHash>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -10595,15 +10595,15 @@ export class VRFKeyHash extends Ptr {
 
   /**
   * @param {string} prefix
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_bech32: (prefix: string) => Promise<Optional<string>>;
+  to_bech32: (prefix: string) => Promise<string>;
 
   /**
   * @param {string} bech_str
-  * @returns {Promise<Optional<VRFKeyHash>>}
+  * @returns {Promise<VRFKeyHash>}
   */
-  static from_bech32: (bech_str: string) => Promise<Optional<VRFKeyHash>>;
+  static from_bech32: (bech_str: string) => Promise<VRFKeyHash>;
 
   /**
   * @returns {Promise<string>}
@@ -10612,9 +10612,9 @@ export class VRFKeyHash extends Ptr {
 
   /**
   * @param {string} hex
-  * @returns {Promise<Optional<VRFKeyHash>>}
+  * @returns {Promise<VRFKeyHash>}
   */
-  static from_hex: (hex: string) => Promise<Optional<VRFKeyHash>>;
+  static from_hex: (hex: string) => Promise<VRFKeyHash>;
 
 }
 
@@ -10622,9 +10622,9 @@ export class VRFKeyHash extends Ptr {
 export class VRFVKey extends Ptr {
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<VRFVKey>>}
+  * @returns {Promise<VRFVKey>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<VRFVKey>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<VRFVKey>;
 
   /**
   * @returns {Promise<Uint8Array>}
@@ -10633,15 +10633,15 @@ export class VRFVKey extends Ptr {
 
   /**
   * @param {string} prefix
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_bech32: (prefix: string) => Promise<Optional<string>>;
+  to_bech32: (prefix: string) => Promise<string>;
 
   /**
   * @param {string} bech_str
-  * @returns {Promise<Optional<VRFVKey>>}
+  * @returns {Promise<VRFVKey>}
   */
-  static from_bech32: (bech_str: string) => Promise<Optional<VRFVKey>>;
+  static from_bech32: (bech_str: string) => Promise<VRFVKey>;
 
   /**
   * @returns {Promise<string>}
@@ -10650,9 +10650,9 @@ export class VRFVKey extends Ptr {
 
   /**
   * @param {string} hex
-  * @returns {Promise<Optional<VRFVKey>>}
+  * @returns {Promise<VRFVKey>}
   */
-  static from_hex: (hex: string) => Promise<Optional<VRFVKey>>;
+  static from_hex: (hex: string) => Promise<VRFVKey>;
 
 }
 
@@ -10665,9 +10665,9 @@ export class Value extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Value>>}
+  * @returns {Promise<Value>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Value>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Value>;
 
   /**
   * @returns {Promise<string>}
@@ -10676,20 +10676,20 @@ export class Value extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Value>>}
+  * @returns {Promise<Value>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Value>>;
+  static from_hex: (hex_str: string) => Promise<Value>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Value>>}
+  * @returns {Promise<Value>}
   */
-  static from_json: (json: string) => Promise<Optional<Value>>;
+  static from_json: (json: string) => Promise<Value>;
 
   /**
   * @param {BigNum} coin
@@ -10742,15 +10742,15 @@ export class Value extends Ptr {
 
   /**
   * @param {Value} rhs
-  * @returns {Promise<Optional<Value>>}
+  * @returns {Promise<Value>}
   */
-  checked_add: (rhs: Value) => Promise<Optional<Value>>;
+  checked_add: (rhs: Value) => Promise<Value>;
 
   /**
   * @param {Value} rhs_value
-  * @returns {Promise<Optional<Value>>}
+  * @returns {Promise<Value>}
   */
-  checked_sub: (rhs_value: Value) => Promise<Optional<Value>>;
+  checked_sub: (rhs_value: Value) => Promise<Value>;
 
   /**
   * @param {Value} rhs_value
@@ -10775,9 +10775,9 @@ export class Vkey extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Vkey>>}
+  * @returns {Promise<Vkey>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Vkey>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Vkey>;
 
   /**
   * @returns {Promise<string>}
@@ -10786,20 +10786,20 @@ export class Vkey extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Vkey>>}
+  * @returns {Promise<Vkey>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Vkey>>;
+  static from_hex: (hex_str: string) => Promise<Vkey>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Vkey>>}
+  * @returns {Promise<Vkey>}
   */
-  static from_json: (json: string) => Promise<Optional<Vkey>>;
+  static from_json: (json: string) => Promise<Vkey>;
 
   /**
   * @param {PublicKey} pk
@@ -10848,9 +10848,9 @@ export class Vkeywitness extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Vkeywitness>>}
+  * @returns {Promise<Vkeywitness>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Vkeywitness>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Vkeywitness>;
 
   /**
   * @returns {Promise<string>}
@@ -10859,20 +10859,20 @@ export class Vkeywitness extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Vkeywitness>>}
+  * @returns {Promise<Vkeywitness>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Vkeywitness>>;
+  static from_hex: (hex_str: string) => Promise<Vkeywitness>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Vkeywitness>>}
+  * @returns {Promise<Vkeywitness>}
   */
-  static from_json: (json: string) => Promise<Optional<Vkeywitness>>;
+  static from_json: (json: string) => Promise<Vkeywitness>;
 
   /**
   * @param {Vkey} vkey
@@ -10902,9 +10902,9 @@ export class Vkeywitnesses extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Vkeywitnesses>>}
+  * @returns {Promise<Vkeywitnesses>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Vkeywitnesses>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Vkeywitnesses>;
 
   /**
   * @returns {Promise<string>}
@@ -10913,20 +10913,20 @@ export class Vkeywitnesses extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Vkeywitnesses>>}
+  * @returns {Promise<Vkeywitnesses>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Vkeywitnesses>>;
+  static from_hex: (hex_str: string) => Promise<Vkeywitnesses>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Vkeywitnesses>>}
+  * @returns {Promise<Vkeywitnesses>}
   */
-  static from_json: (json: string) => Promise<Optional<Vkeywitnesses>>;
+  static from_json: (json: string) => Promise<Vkeywitnesses>;
 
   /**
   * @returns {Promise<Vkeywitnesses>}
@@ -10960,9 +10960,9 @@ export class VoteDelegation extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<VoteDelegation>>}
+  * @returns {Promise<VoteDelegation>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<VoteDelegation>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<VoteDelegation>;
 
   /**
   * @returns {Promise<string>}
@@ -10971,20 +10971,20 @@ export class VoteDelegation extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<VoteDelegation>>}
+  * @returns {Promise<VoteDelegation>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<VoteDelegation>>;
+  static from_hex: (hex_str: string) => Promise<VoteDelegation>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<VoteDelegation>>}
+  * @returns {Promise<VoteDelegation>}
   */
-  static from_json: (json: string) => Promise<Optional<VoteDelegation>>;
+  static from_json: (json: string) => Promise<VoteDelegation>;
 
   /**
   * @returns {Promise<Credential>}
@@ -11019,9 +11019,9 @@ export class VoteRegistrationAndDelegation extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<VoteRegistrationAndDelegation>>}
+  * @returns {Promise<VoteRegistrationAndDelegation>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<VoteRegistrationAndDelegation>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<VoteRegistrationAndDelegation>;
 
   /**
   * @returns {Promise<string>}
@@ -11030,20 +11030,20 @@ export class VoteRegistrationAndDelegation extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<VoteRegistrationAndDelegation>>}
+  * @returns {Promise<VoteRegistrationAndDelegation>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<VoteRegistrationAndDelegation>>;
+  static from_hex: (hex_str: string) => Promise<VoteRegistrationAndDelegation>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<VoteRegistrationAndDelegation>>}
+  * @returns {Promise<VoteRegistrationAndDelegation>}
   */
-  static from_json: (json: string) => Promise<Optional<VoteRegistrationAndDelegation>>;
+  static from_json: (json: string) => Promise<VoteRegistrationAndDelegation>;
 
   /**
   * @returns {Promise<Credential>}
@@ -11084,9 +11084,9 @@ export class Voter extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Voter>>}
+  * @returns {Promise<Voter>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Voter>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Voter>;
 
   /**
   * @returns {Promise<string>}
@@ -11095,20 +11095,20 @@ export class Voter extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Voter>>}
+  * @returns {Promise<Voter>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Voter>>;
+  static from_hex: (hex_str: string) => Promise<Voter>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Voter>>}
+  * @returns {Promise<Voter>}
   */
-  static from_json: (json: string) => Promise<Optional<Voter>>;
+  static from_json: (json: string) => Promise<Voter>;
 
   /**
   * @param {Credential} cred
@@ -11163,15 +11163,15 @@ export class Voter extends Ptr {
 
 export class Voters extends Ptr {
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Voters>>}
+  * @returns {Promise<Voters>}
   */
-  static from_json: (json: string) => Promise<Optional<Voters>>;
+  static from_json: (json: string) => Promise<Voters>;
 
   /**
   * @returns {Promise<Voters>}
@@ -11265,9 +11265,9 @@ export class VotingProcedure extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<VotingProcedure>>}
+  * @returns {Promise<VotingProcedure>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<VotingProcedure>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<VotingProcedure>;
 
   /**
   * @returns {Promise<string>}
@@ -11276,20 +11276,20 @@ export class VotingProcedure extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<VotingProcedure>>}
+  * @returns {Promise<VotingProcedure>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<VotingProcedure>>;
+  static from_hex: (hex_str: string) => Promise<VotingProcedure>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<VotingProcedure>>}
+  * @returns {Promise<VotingProcedure>}
   */
-  static from_json: (json: string) => Promise<Optional<VotingProcedure>>;
+  static from_json: (json: string) => Promise<VotingProcedure>;
 
   /**
   * @param {VoteKind} vote
@@ -11325,9 +11325,9 @@ export class VotingProcedures extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<VotingProcedures>>}
+  * @returns {Promise<VotingProcedures>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<VotingProcedures>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<VotingProcedures>;
 
   /**
   * @returns {Promise<string>}
@@ -11336,20 +11336,20 @@ export class VotingProcedures extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<VotingProcedures>>}
+  * @returns {Promise<VotingProcedures>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<VotingProcedures>>;
+  static from_hex: (hex_str: string) => Promise<VotingProcedures>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<VotingProcedures>>}
+  * @returns {Promise<VotingProcedures>}
   */
-  static from_json: (json: string) => Promise<Optional<VotingProcedures>>;
+  static from_json: (json: string) => Promise<VotingProcedures>;
 
   /**
   * @returns {Promise<VotingProcedures>}
@@ -11392,9 +11392,9 @@ export class VotingProposal extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<VotingProposal>>}
+  * @returns {Promise<VotingProposal>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<VotingProposal>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<VotingProposal>;
 
   /**
   * @returns {Promise<string>}
@@ -11403,20 +11403,20 @@ export class VotingProposal extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<VotingProposal>>}
+  * @returns {Promise<VotingProposal>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<VotingProposal>>;
+  static from_hex: (hex_str: string) => Promise<VotingProposal>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<VotingProposal>>}
+  * @returns {Promise<VotingProposal>}
   */
-  static from_json: (json: string) => Promise<Optional<VotingProposal>>;
+  static from_json: (json: string) => Promise<VotingProposal>;
 
   /**
   * @returns {Promise<GovernanceAction>}
@@ -11500,9 +11500,9 @@ export class VotingProposals extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<VotingProposals>>}
+  * @returns {Promise<VotingProposals>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<VotingProposals>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<VotingProposals>;
 
   /**
   * @returns {Promise<string>}
@@ -11511,20 +11511,20 @@ export class VotingProposals extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<VotingProposals>>}
+  * @returns {Promise<VotingProposals>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<VotingProposals>>;
+  static from_hex: (hex_str: string) => Promise<VotingProposals>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<VotingProposals>>}
+  * @returns {Promise<VotingProposals>}
   */
-  static from_json: (json: string) => Promise<Optional<VotingProposals>>;
+  static from_json: (json: string) => Promise<VotingProposals>;
 
   /**
   * @returns {Promise<VotingProposals>}
@@ -11558,9 +11558,9 @@ export class Withdrawals extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<Optional<Withdrawals>>}
+  * @returns {Promise<Withdrawals>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<Optional<Withdrawals>>;
+  static from_bytes: (bytes: Uint8Array) => Promise<Withdrawals>;
 
   /**
   * @returns {Promise<string>}
@@ -11569,20 +11569,20 @@ export class Withdrawals extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<Optional<Withdrawals>>}
+  * @returns {Promise<Withdrawals>}
   */
-  static from_hex: (hex_str: string) => Promise<Optional<Withdrawals>>;
+  static from_hex: (hex_str: string) => Promise<Withdrawals>;
 
   /**
-  * @returns {Promise<Optional<string>>}
+  * @returns {Promise<string>}
   */
-  to_json: () => Promise<Optional<string>>;
+  to_json: () => Promise<string>;
 
   /**
   * @param {string} json
-  * @returns {Promise<Optional<Withdrawals>>}
+  * @returns {Promise<Withdrawals>}
   */
-  static from_json: (json: string) => Promise<Optional<Withdrawals>>;
+  static from_json: (json: string) => Promise<Withdrawals>;
 
   /**
   * @returns {Promise<Withdrawals>}
@@ -11660,9 +11660,9 @@ export class WithdrawalsBuilder extends Ptr {
   get_native_scripts: () => Promise<NativeScripts>;
 
   /**
-  * @returns {Promise<Optional<Value>>}
+  * @returns {Promise<Value>}
   */
-  get_total_withdrawals: () => Promise<Optional<Value>>;
+  get_total_withdrawals: () => Promise<Value>;
 
   /**
   * @returns {Promise<boolean>}
@@ -11680,17 +11680,17 @@ export class WithdrawalsBuilder extends Ptr {
 /**
 * @param {ExUnits} ex_units
 * @param {ExUnitPrices} ex_unit_prices
-* @returns {Promise<Optional<BigNum>>}
+* @returns {Promise<BigNum>}
 */
-export const calculate_ex_units_ceil_cost: (ex_units: ExUnits, ex_unit_prices: ExUnitPrices) => Promise<Optional<BigNum>>;
+export const calculate_ex_units_ceil_cost: (ex_units: ExUnits, ex_unit_prices: ExUnitPrices) => Promise<BigNum>;
 
 /**
 * @param {Address} address
 * @param {TransactionUnspentOutputs} utxos
 * @param {TransactionBuilderConfig} config
-* @returns {Promise<Optional<TransactionBatchList>>}
+* @returns {Promise<TransactionBatchList>}
 */
-export const create_send_all: (address: Address, utxos: TransactionUnspentOutputs, config: TransactionBuilderConfig) => Promise<Optional<TransactionBatchList>>;
+export const create_send_all: (address: Address, utxos: TransactionUnspentOutputs, config: TransactionBuilderConfig) => Promise<TransactionBatchList>;
 
 /**
 * @param {TransactionMetadatum} metadata
@@ -11701,23 +11701,23 @@ export const decode_arbitrary_bytes_from_metadatum: (metadata: TransactionMetada
 /**
 * @param {TransactionMetadatum} metadatum
 * @param {MetadataJsonSchema} schema
-* @returns {Promise<Optional<string>>}
+* @returns {Promise<string>}
 */
-export const decode_metadatum_to_json_str: (metadatum: TransactionMetadatum, schema: MetadataJsonSchema) => Promise<Optional<string>>;
+export const decode_metadatum_to_json_str: (metadatum: TransactionMetadatum, schema: MetadataJsonSchema) => Promise<string>;
 
 /**
 * @param {PlutusData} datum
 * @param {PlutusDatumSchema} schema
-* @returns {Promise<Optional<string>>}
+* @returns {Promise<string>}
 */
-export const decode_plutus_datum_to_json_str: (datum: PlutusData, schema: PlutusDatumSchema) => Promise<Optional<string>>;
+export const decode_plutus_datum_to_json_str: (datum: PlutusData, schema: PlutusDatumSchema) => Promise<string>;
 
 /**
 * @param {string} password
 * @param {string} data
-* @returns {Promise<Optional<string>>}
+* @returns {Promise<string>}
 */
-export const decrypt_with_password: (password: string, data: string) => Promise<Optional<string>>;
+export const decrypt_with_password: (password: string, data: string) => Promise<string>;
 
 /**
 * @param {Uint8Array} bytes
@@ -11728,49 +11728,49 @@ export const encode_arbitrary_bytes_as_metadatum: (bytes: Uint8Array) => Promise
 /**
 * @param {string} json
 * @param {MetadataJsonSchema} schema
-* @returns {Promise<Optional<TransactionMetadatum>>}
+* @returns {Promise<TransactionMetadatum>}
 */
-export const encode_json_str_to_metadatum: (json: string, schema: MetadataJsonSchema) => Promise<Optional<TransactionMetadatum>>;
+export const encode_json_str_to_metadatum: (json: string, schema: MetadataJsonSchema) => Promise<TransactionMetadatum>;
 
 /**
 * @param {string} json
 * @param {string} self_xpub
 * @param {ScriptSchema} schema
-* @returns {Promise<Optional<NativeScript>>}
+* @returns {Promise<NativeScript>}
 */
-export const encode_json_str_to_native_script: (json: string, self_xpub: string, schema: ScriptSchema) => Promise<Optional<NativeScript>>;
+export const encode_json_str_to_native_script: (json: string, self_xpub: string, schema: ScriptSchema) => Promise<NativeScript>;
 
 /**
 * @param {string} json
 * @param {PlutusDatumSchema} schema
-* @returns {Promise<Optional<PlutusData>>}
+* @returns {Promise<PlutusData>}
 */
-export const encode_json_str_to_plutus_datum: (json: string, schema: PlutusDatumSchema) => Promise<Optional<PlutusData>>;
+export const encode_json_str_to_plutus_datum: (json: string, schema: PlutusDatumSchema) => Promise<PlutusData>;
 
 /**
 * @param {string} password
 * @param {string} salt
 * @param {string} nonce
 * @param {string} data
-* @returns {Promise<Optional<string>>}
+* @returns {Promise<string>}
 */
-export const encrypt_with_password: (password: string, salt: string, nonce: string, data: string) => Promise<Optional<string>>;
+export const encrypt_with_password: (password: string, salt: string, nonce: string, data: string) => Promise<string>;
 
 /**
 * @param {TransactionBody} txbody
 * @param {BigNum} pool_deposit
 * @param {BigNum} key_deposit
-* @returns {Promise<Optional<BigNum>>}
+* @returns {Promise<BigNum>}
 */
-export const get_deposit: (txbody: TransactionBody, pool_deposit: BigNum, key_deposit: BigNum) => Promise<Optional<BigNum>>;
+export const get_deposit: (txbody: TransactionBody, pool_deposit: BigNum, key_deposit: BigNum) => Promise<BigNum>;
 
 /**
 * @param {TransactionBody} txbody
 * @param {BigNum} pool_deposit
 * @param {BigNum} key_deposit
-* @returns {Promise<Optional<Value>>}
+* @returns {Promise<Value>}
 */
-export const get_implicit_input: (txbody: TransactionBody, pool_deposit: BigNum, key_deposit: BigNum) => Promise<Optional<Value>>;
+export const get_implicit_input: (txbody: TransactionBody, pool_deposit: BigNum, key_deposit: BigNum) => Promise<Value>;
 
 /**
 * @param {AuxiliaryData} auxiliary_data
@@ -11824,31 +11824,31 @@ export const make_vkey_witness: (tx_body_hash: TransactionHash, sk: PrivateKey) 
 /**
 * @param {TransactionOutput} output
 * @param {DataCost} data_cost
-* @returns {Promise<Optional<BigNum>>}
+* @returns {Promise<BigNum>}
 */
-export const min_ada_for_output: (output: TransactionOutput, data_cost: DataCost) => Promise<Optional<BigNum>>;
+export const min_ada_for_output: (output: TransactionOutput, data_cost: DataCost) => Promise<BigNum>;
 
 /**
 * @param {Value} assets
 * @param {boolean} has_data_hash
 * @param {BigNum} coins_per_utxo_word
-* @returns {Promise<Optional<BigNum>>}
+* @returns {Promise<BigNum>}
 */
-export const min_ada_required: (assets: Value, has_data_hash: boolean, coins_per_utxo_word: BigNum) => Promise<Optional<BigNum>>;
+export const min_ada_required: (assets: Value, has_data_hash: boolean, coins_per_utxo_word: BigNum) => Promise<BigNum>;
 
 /**
 * @param {Transaction} tx
 * @param {LinearFee} linear_fee
-* @returns {Promise<Optional<BigNum>>}
+* @returns {Promise<BigNum>}
 */
-export const min_fee: (tx: Transaction, linear_fee: LinearFee) => Promise<Optional<BigNum>>;
+export const min_fee: (tx: Transaction, linear_fee: LinearFee) => Promise<BigNum>;
 
 /**
 * @param {Transaction} tx
 * @param {ExUnitPrices} ex_unit_prices
-* @returns {Promise<Optional<BigNum>>}
+* @returns {Promise<BigNum>}
 */
-export const min_script_fee: (tx: Transaction, ex_unit_prices: ExUnitPrices) => Promise<Optional<BigNum>>;
+export const min_script_fee: (tx: Transaction, ex_unit_prices: ExUnitPrices) => Promise<BigNum>;
 
 export enum CborContainerType {
   Array = 0,

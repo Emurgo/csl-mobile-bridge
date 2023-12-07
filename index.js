@@ -7,14 +7,23 @@ const { HaskellShelley } = NativeModules;
 // export default HaskellShelley;
 
 function uint8ArrayFromB64(base64_string) {
+  if (base64_string == null) {
+    return undefined;
+  }
   return Uint8Array.from(base64_decode(base64_string), c => c.charCodeAt(0));
 }
 
 function b64FromUint8Array(uint8Array) {
+  if (uint8Array == null) {
+    return undefined;
+  }
   return base64_encode(String.fromCharCode.apply(null, uint8Array));
 }
 
 function uint32ArrayToBase64(uint32Array) {
+  if (uint32Array == null) {
+    return undefined;
+  }
   const uint8Array = new Uint8Array(uint32Array.length * 4);
   const dataView = new DataView(uint8Array.buffer);
   for (let i = 0; i < uint32Array.length; i++) {
@@ -24,6 +33,9 @@ function uint32ArrayToBase64(uint32Array) {
 }
 
 function base64ToUint32Array(base64String) {
+  if (base64String == null) {
+    return undefined;
+  }
   const uint8Array = uint8ArrayFromB64(base64String);
   const dataView = new DataView(uint8Array.buffer);
   const uint32Array = new Uint32Array(uint8Array.length / 4);
