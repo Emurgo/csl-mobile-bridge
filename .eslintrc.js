@@ -1,4 +1,8 @@
 module.exports = {
+  'parser': '@babel/eslint-parser',
+  'plugins': [
+    '@typescript-eslint',
+  ],
   'env': {
     'es2021': true
   },
@@ -22,9 +26,9 @@ module.exports = {
   },
   'overrides': [
     {
-      'files': ['**/*.d.ts'],
+      'files': ['**/*.d.ts', '**/*.tsx, **/*.ts'],
       'env': { 'browser': true, 'es6': true, 'node': true },
-      'parser': '@typescript-eslint/parser',
+      'parser': '@babel/eslint-parser',
       'plugins': [
         '@typescript-eslint',
       ],
