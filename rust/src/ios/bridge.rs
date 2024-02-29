@@ -73,8 +73,6 @@ use cardano_serialization_lib::HardForkInitiationAction;
 use cardano_serialization_lib::Header;
 use cardano_serialization_lib::HeaderBody;
 use cardano_serialization_lib::InfoAction;
-use cardano_serialization_lib::InputWithScriptWitness;
-use cardano_serialization_lib::InputsWithScriptWitness;
 use cardano_serialization_lib::Int;
 use cardano_serialization_lib::Ipv4;
 use cardano_serialization_lib::Ipv6;
@@ -125,6 +123,8 @@ use cardano_serialization_lib::PlutusWitness;
 use cardano_serialization_lib::PlutusWitnesses;
 use cardano_serialization_lib::Pointer;
 use cardano_serialization_lib::PointerAddress;
+use cardano_serialization_lib::PolicyID;
+use cardano_serialization_lib::PolicyIDs;
 use cardano_serialization_lib::PoolMetadata;
 use cardano_serialization_lib::PoolMetadataHash;
 use cardano_serialization_lib::PoolParams;
@@ -176,6 +176,7 @@ use cardano_serialization_lib::TransactionBuilder;
 use cardano_serialization_lib::TransactionBuilderConfig;
 use cardano_serialization_lib::TransactionBuilderConfigBuilder;
 use cardano_serialization_lib::TransactionHash;
+use cardano_serialization_lib::TransactionIndexes;
 use cardano_serialization_lib::TransactionInput;
 use cardano_serialization_lib::TransactionInputs;
 use cardano_serialization_lib::TransactionMetadatum;
@@ -1972,6 +1973,17 @@ pub unsafe extern "C" fn block_new(header_rptr: RPtr, transaction_bodies_rptr: R
     let auxiliary_data_set = auxiliary_data_set_rptr.typed_ref::<AuxiliaryDataSet>()?;
     let invalid_transactions = base64_to_u32_array(invalid_transactions_str.into_str())?;
     let result = Block::new(header, transaction_bodies, transaction_witness_sets, auxiliary_data_set, invalid_transactions);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn block_from_wrapped_bytes(data_data: *const u8, data_len: usize, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let data = from_raw_parts(data_data, data_len).to_vec();
+    let result = Block::from_wrapped_bytes(data).into_result()?;
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -4412,17 +4424,6 @@ pub unsafe extern "C" fn d_rep_to_script_hash(self_rptr: RPtr, result: &mut RPtr
 
 
 #[no_mangle]
-pub unsafe extern "C" fn data_cost_new_coins_per_word(coins_per_word_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let coins_per_word = coins_per_word_rptr.typed_ref::<BigNum>()?;
-    let result = DataCost::new_coins_per_word(coins_per_word);
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
 pub unsafe extern "C" fn data_cost_new_coins_per_byte(coins_per_byte_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let coins_per_byte = coins_per_byte_rptr.typed_ref::<BigNum>()?;
@@ -4767,6 +4768,17 @@ pub unsafe extern "C" fn drep_registration_new_with_anchor(voting_credential_rpt
     let anchor = anchor_rptr.typed_ref::<Anchor>()?;
     let result = DrepRegistration::new_with_anchor(voting_credential, coin, anchor);
     Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn drep_registration_has_script_credentials(self_rptr: RPtr, result: &mut bool, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<DrepRegistration>()?;
+    let result = self_ref.has_script_credentials();
+    Ok::<bool, String>(result)
   })
   .response(result,  error)
 }
@@ -5399,6 +5411,18 @@ pub unsafe extern "C" fn ed25519_key_hashes_add(self_rptr: RPtr, elem_rptr: RPtr
     Ok(())
   })
   .response(&mut (),  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn ed25519_key_hashes_contains(self_rptr: RPtr, elem_rptr: RPtr, result: &mut bool, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<Ed25519KeyHashes>()?;
+    let elem = elem_rptr.typed_ref::<Ed25519KeyHash>()?;
+    let result = self_ref.contains(elem);
+    Ok::<bool, String>(result)
+  })
+  .response(result,  error)
 }
 
 
@@ -7346,88 +7370,6 @@ pub unsafe extern "C" fn info_action_new(result: &mut RPtr, error: &mut CharPtr)
 
 
 #[no_mangle]
-pub unsafe extern "C" fn input_with_script_witness_new_with_native_script_witness(input_rptr: RPtr, witness_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let input = input_rptr.typed_ref::<TransactionInput>()?;
-    let witness = witness_rptr.typed_ref::<NativeScript>()?;
-    let result = InputWithScriptWitness::new_with_native_script_witness(input, witness);
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn input_with_script_witness_new_with_plutus_witness(input_rptr: RPtr, witness_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let input = input_rptr.typed_ref::<TransactionInput>()?;
-    let witness = witness_rptr.typed_ref::<PlutusWitness>()?;
-    let result = InputWithScriptWitness::new_with_plutus_witness(input, witness);
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn input_with_script_witness_input(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<InputWithScriptWitness>()?;
-    let result = self_ref.input();
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-
-#[no_mangle]
-pub unsafe extern "C" fn inputs_with_script_witness_new(result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let result = InputsWithScriptWitness::new();
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn inputs_with_script_witness_add(self_rptr: RPtr, input_rptr: RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<InputsWithScriptWitness>()?;
-    let input = input_rptr.typed_ref::<InputWithScriptWitness>()?;
-    self_ref.add(input);
-    Ok(())
-  })
-  .response(&mut (),  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn inputs_with_script_witness_get(self_rptr: RPtr, index_long: i64, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<InputsWithScriptWitness>()?;
-    let index  = index_long as usize;
-    let result = self_ref.get(index);
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn inputs_with_script_witness_len(self_rptr: RPtr, result: &mut i64, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<InputsWithScriptWitness>()?;
-    let result = self_ref.len();
-    Ok::<i64, String>(result as i64)
-  })
-  .response(result,  error)
-}
-
-
-
-#[no_mangle]
 pub unsafe extern "C" fn int_to_bytes(self_rptr: RPtr, result: &mut DataPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<Int>()?;
@@ -8620,18 +8562,6 @@ pub unsafe extern "C" fn mint_get(self_rptr: RPtr, key_rptr: RPtr, result: &mut 
 
 
 #[no_mangle]
-pub unsafe extern "C" fn mint_get_all(self_rptr: RPtr, key_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<Mint>()?;
-    let key = key_rptr.typed_ref::<ScriptHash>()?;
-    let result = self_ref.get_all(key);
-    Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
-  })
-  .response_nullable(result,  error)
-}
-
-
-#[no_mangle]
 pub unsafe extern "C" fn mint_keys(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<Mint>()?;
@@ -9654,6 +9584,72 @@ pub unsafe extern "C" fn native_scripts_add(self_rptr: RPtr, elem_rptr: RPtr, er
 }
 
 
+#[no_mangle]
+pub unsafe extern "C" fn native_scripts_to_bytes(self_rptr: RPtr, result: &mut DataPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<NativeScripts>()?;
+    let result = self_ref.to_bytes();
+    Ok::<DataPtr, String>(result.into())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn native_scripts_from_bytes(bytes_data: *const u8, bytes_len: usize, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let bytes = from_raw_parts(bytes_data, bytes_len).to_vec();
+    let result = NativeScripts::from_bytes(bytes).into_result()?;
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn native_scripts_to_hex(self_rptr: RPtr, result: &mut CharPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<NativeScripts>()?;
+    let result = self_ref.to_hex();
+    Ok::<CharPtr, String>(result.into_cstr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn native_scripts_from_hex(hex_str_str: CharPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let hex_str: &str = hex_str_str.into_str();
+    let result = NativeScripts::from_hex(hex_str).into_result()?;
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn native_scripts_to_json(self_rptr: RPtr, result: &mut CharPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<NativeScripts>()?;
+    let result = self_ref.to_json().into_result()?;
+    Ok::<CharPtr, String>(result.into_cstr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn native_scripts_from_json(json_str: CharPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let json: &str = json_str.into_str();
+    let result = NativeScripts::from_json(json).into_result()?;
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
 
 #[no_mangle]
 pub unsafe extern "C" fn network_id_to_bytes(self_rptr: RPtr, result: &mut DataPtr, error: &mut CharPtr) -> bool {
@@ -9808,16 +9804,6 @@ pub unsafe extern "C" fn network_info_testnet_preprod(result: &mut RPtr, error: 
 
 
 #[no_mangle]
-pub unsafe extern "C" fn network_info_testnet(result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let result = NetworkInfo::testnet();
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
 pub unsafe extern "C" fn network_info_mainnet(result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let result = NetworkInfo::mainnet();
@@ -9934,6 +9920,17 @@ pub unsafe extern "C" fn new_constitution_action_new_with_action_id(gov_action_i
     let constitution = constitution_rptr.typed_ref::<Constitution>()?;
     let result = NewConstitutionAction::new_with_action_id(gov_action_id, constitution);
     Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn new_constitution_action_has_script_hash(self_rptr: RPtr, result: &mut bool, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<NewConstitutionAction>()?;
+    let result = self_ref.has_script_hash();
+    Ok::<bool, String>(result)
   })
   .response(result,  error)
 }
@@ -10397,6 +10394,17 @@ pub unsafe extern "C" fn parameter_change_action_protocol_param_updates(self_rpt
 
 
 #[no_mangle]
+pub unsafe extern "C" fn parameter_change_action_policy_hash(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<ParameterChangeAction>()?;
+    let result = self_ref.policy_hash();
+    Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
+  })
+  .response_nullable(result,  error)
+}
+
+
+#[no_mangle]
 pub unsafe extern "C" fn parameter_change_action_new(protocol_param_updates_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let protocol_param_updates = protocol_param_updates_rptr.typed_ref::<ProtocolParamUpdate>()?;
@@ -10413,6 +10421,31 @@ pub unsafe extern "C" fn parameter_change_action_new_with_action_id(gov_action_i
     let gov_action_id = gov_action_id_rptr.typed_ref::<GovernanceActionId>()?;
     let protocol_param_updates = protocol_param_updates_rptr.typed_ref::<ProtocolParamUpdate>()?;
     let result = ParameterChangeAction::new_with_action_id(gov_action_id, protocol_param_updates);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn parameter_change_action_new_with_policy_hash(protocol_param_updates_rptr: RPtr, policy_hash_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let protocol_param_updates = protocol_param_updates_rptr.typed_ref::<ProtocolParamUpdate>()?;
+    let policy_hash = policy_hash_rptr.typed_ref::<ScriptHash>()?;
+    let result = ParameterChangeAction::new_with_policy_hash(protocol_param_updates, policy_hash);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn parameter_change_action_new_with_policy_hash_and_action_id(gov_action_id_rptr: RPtr, protocol_param_updates_rptr: RPtr, policy_hash_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let gov_action_id = gov_action_id_rptr.typed_ref::<GovernanceActionId>()?;
+    let protocol_param_updates = protocol_param_updates_rptr.typed_ref::<ProtocolParamUpdate>()?;
+    let policy_hash = policy_hash_rptr.typed_ref::<ScriptHash>()?;
+    let result = ParameterChangeAction::new_with_policy_hash_and_action_id(gov_action_id, protocol_param_updates, policy_hash);
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -11017,24 +11050,12 @@ pub unsafe extern "C" fn plutus_script_source_new(script_rptr: RPtr, result: &mu
 
 
 #[no_mangle]
-pub unsafe extern "C" fn plutus_script_source_new_ref_input(script_hash_rptr: RPtr, input_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let script_hash = script_hash_rptr.typed_ref::<ScriptHash>()?;
-    let input = input_rptr.typed_ref::<TransactionInput>()?;
-    let result = PlutusScriptSource::new_ref_input(script_hash, input);
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn plutus_script_source_new_ref_input_with_lang_ver(script_hash_rptr: RPtr, input_rptr: RPtr, lang_ver_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn plutus_script_source_new_ref_input(script_hash_rptr: RPtr, input_rptr: RPtr, lang_ver_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let script_hash = script_hash_rptr.typed_ref::<ScriptHash>()?;
     let input = input_rptr.typed_ref::<TransactionInput>()?;
     let lang_ver = lang_ver_rptr.typed_ref::<Language>()?;
-    let result = PlutusScriptSource::new_ref_input_with_lang_ver(script_hash, input, lang_ver);
+    let result = PlutusScriptSource::new_ref_input(script_hash, input, lang_ver);
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -16874,17 +16895,6 @@ pub unsafe extern "C" fn transaction_body_mint(self_rptr: RPtr, result: &mut RPt
 
 
 #[no_mangle]
-pub unsafe extern "C" fn transaction_body_multiassets(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<TransactionBody>()?;
-    let result = self_ref.multiassets();
-    Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
-  })
-  .response_nullable(result,  error)
-}
-
-
-#[no_mangle]
 pub unsafe extern "C" fn transaction_body_set_reference_inputs(self_rptr: RPtr, reference_inputs_rptr: RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<TransactionBody>()?;
@@ -17292,20 +17302,6 @@ pub unsafe extern "C" fn transaction_builder_add_key_input(self_rptr: RPtr, hash
 
 
 #[no_mangle]
-pub unsafe extern "C" fn transaction_builder_add_script_input(self_rptr: RPtr, hash_rptr: RPtr, input_rptr: RPtr, amount_rptr: RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<TransactionBuilder>()?;
-    let hash = hash_rptr.typed_ref::<ScriptHash>()?;
-    let input = input_rptr.typed_ref::<TransactionInput>()?;
-    let amount = amount_rptr.typed_ref::<Value>()?;
-    self_ref.add_script_input(hash, input, amount);
-    Ok(())
-  })
-  .response(&mut (),  error)
-}
-
-
-#[no_mangle]
 pub unsafe extern "C" fn transaction_builder_add_native_script_input(self_rptr: RPtr, script_rptr: RPtr, input_rptr: RPtr, amount_rptr: RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<TransactionBuilder>()?;
@@ -17348,51 +17344,16 @@ pub unsafe extern "C" fn transaction_builder_add_bootstrap_input(self_rptr: RPtr
 
 
 #[no_mangle]
-pub unsafe extern "C" fn transaction_builder_add_input(self_rptr: RPtr, address_rptr: RPtr, input_rptr: RPtr, amount_rptr: RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn transaction_builder_add_regular_input(self_rptr: RPtr, address_rptr: RPtr, input_rptr: RPtr, amount_rptr: RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<TransactionBuilder>()?;
     let address = address_rptr.typed_ref::<Address>()?;
     let input = input_rptr.typed_ref::<TransactionInput>()?;
     let amount = amount_rptr.typed_ref::<Value>()?;
-    self_ref.add_input(address, input, amount);
+    self_ref.add_regular_input(address, input, amount).into_result()?;
     Ok(())
   })
   .response(&mut (),  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn transaction_builder_count_missing_input_scripts(self_rptr: RPtr, result: &mut i64, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<TransactionBuilder>()?;
-    let result = self_ref.count_missing_input_scripts();
-    Ok::<i64, String>(result as i64)
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn transaction_builder_add_required_native_input_scripts(self_rptr: RPtr, scripts_rptr: RPtr, result: &mut i64, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<TransactionBuilder>()?;
-    let scripts = scripts_rptr.typed_ref::<NativeScripts>()?;
-    let result = self_ref.add_required_native_input_scripts(scripts);
-    Ok::<i64, String>(result as i64)
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn transaction_builder_add_required_plutus_input_scripts(self_rptr: RPtr, scripts_rptr: RPtr, result: &mut i64, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<TransactionBuilder>()?;
-    let scripts = scripts_rptr.typed_ref::<PlutusWitnesses>()?;
-    let result = self_ref.add_required_plutus_input_scripts(scripts);
-    Ok::<i64, String>(result as i64)
-  })
-  .response(result,  error)
 }
 
 
@@ -18103,18 +18064,6 @@ pub unsafe extern "C" fn transaction_builder_config_builder_fee_algo(self_rptr: 
     let self_ref = self_rptr.typed_ref::<TransactionBuilderConfigBuilder>()?;
     let fee_algo = fee_algo_rptr.typed_ref::<LinearFee>()?;
     let result = self_ref.fee_algo(fee_algo);
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn transaction_builder_config_builder_coins_per_utxo_word(self_rptr: RPtr, coins_per_utxo_word_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<TransactionBuilderConfigBuilder>()?;
-    let coins_per_utxo_word = coins_per_utxo_word_rptr.typed_ref::<BigNum>()?;
-    let result = self_ref.coins_per_utxo_word(coins_per_utxo_word);
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -19016,19 +18965,6 @@ pub unsafe extern "C" fn transaction_output_amount_builder_with_coin_and_asset(s
 
 
 #[no_mangle]
-pub unsafe extern "C" fn transaction_output_amount_builder_with_asset_and_min_required_coin(self_rptr: RPtr, multiasset_rptr: RPtr, coins_per_utxo_word_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<TransactionOutputAmountBuilder>()?;
-    let multiasset = multiasset_rptr.typed_ref::<MultiAsset>()?;
-    let coins_per_utxo_word = coins_per_utxo_word_rptr.typed_ref::<BigNum>()?;
-    let result = self_ref.with_asset_and_min_required_coin(multiasset, coins_per_utxo_word).into_result()?;
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
 pub unsafe extern "C" fn transaction_output_amount_builder_with_asset_and_min_required_coin_by_utxo_cost(self_rptr: RPtr, multiasset_rptr: RPtr, data_cost_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<TransactionOutputAmountBuilder>()?;
@@ -19889,10 +19825,33 @@ pub unsafe extern "C" fn treasury_withdrawals_action_withdrawals(self_rptr: RPtr
 
 
 #[no_mangle]
+pub unsafe extern "C" fn treasury_withdrawals_action_policy_hash(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<TreasuryWithdrawalsAction>()?;
+    let result = self_ref.policy_hash();
+    Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
+  })
+  .response_nullable(result,  error)
+}
+
+
+#[no_mangle]
 pub unsafe extern "C" fn treasury_withdrawals_action_new(withdrawals_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let withdrawals = withdrawals_rptr.typed_ref::<TreasuryWithdrawals>()?;
     let result = TreasuryWithdrawalsAction::new(withdrawals);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn treasury_withdrawals_action_new_with_policy_hash(withdrawals_rptr: RPtr, policy_hash_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let withdrawals = withdrawals_rptr.typed_ref::<TreasuryWithdrawals>()?;
+    let policy_hash = policy_hash_rptr.typed_ref::<ScriptHash>()?;
+    let result = TreasuryWithdrawalsAction::new_with_policy_hash(withdrawals, policy_hash);
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -19956,20 +19915,6 @@ pub unsafe extern "C" fn tx_inputs_builder_add_key_input(self_rptr: RPtr, hash_r
 
 
 #[no_mangle]
-pub unsafe extern "C" fn tx_inputs_builder_add_script_input(self_rptr: RPtr, hash_rptr: RPtr, input_rptr: RPtr, amount_rptr: RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<TxInputsBuilder>()?;
-    let hash = hash_rptr.typed_ref::<ScriptHash>()?;
-    let input = input_rptr.typed_ref::<TransactionInput>()?;
-    let amount = amount_rptr.typed_ref::<Value>()?;
-    self_ref.add_script_input(hash, input, amount);
-    Ok(())
-  })
-  .response(&mut (),  error)
-}
-
-
-#[no_mangle]
 pub unsafe extern "C" fn tx_inputs_builder_add_native_script_input(self_rptr: RPtr, script_rptr: RPtr, input_rptr: RPtr, amount_rptr: RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<TxInputsBuilder>()?;
@@ -20012,63 +19957,16 @@ pub unsafe extern "C" fn tx_inputs_builder_add_bootstrap_input(self_rptr: RPtr, 
 
 
 #[no_mangle]
-pub unsafe extern "C" fn tx_inputs_builder_add_input(self_rptr: RPtr, address_rptr: RPtr, input_rptr: RPtr, amount_rptr: RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn tx_inputs_builder_add_regular_input(self_rptr: RPtr, address_rptr: RPtr, input_rptr: RPtr, amount_rptr: RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<TxInputsBuilder>()?;
     let address = address_rptr.typed_ref::<Address>()?;
     let input = input_rptr.typed_ref::<TransactionInput>()?;
     let amount = amount_rptr.typed_ref::<Value>()?;
-    self_ref.add_input(address, input, amount);
+    self_ref.add_regular_input(address, input, amount).into_result()?;
     Ok(())
   })
   .response(&mut (),  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn tx_inputs_builder_count_missing_input_scripts(self_rptr: RPtr, result: &mut i64, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<TxInputsBuilder>()?;
-    let result = self_ref.count_missing_input_scripts();
-    Ok::<i64, String>(result as i64)
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn tx_inputs_builder_add_required_native_input_scripts(self_rptr: RPtr, scripts_rptr: RPtr, result: &mut i64, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<TxInputsBuilder>()?;
-    let scripts = scripts_rptr.typed_ref::<NativeScripts>()?;
-    let result = self_ref.add_required_native_input_scripts(scripts);
-    Ok::<i64, String>(result as i64)
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn tx_inputs_builder_add_required_plutus_input_scripts(self_rptr: RPtr, scripts_rptr: RPtr, result: &mut i64, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<TxInputsBuilder>()?;
-    let scripts = scripts_rptr.typed_ref::<PlutusWitnesses>()?;
-    let result = self_ref.add_required_plutus_input_scripts(scripts);
-    Ok::<i64, String>(result as i64)
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn tx_inputs_builder_add_required_script_input_witnesses(self_rptr: RPtr, inputs_with_wit_rptr: RPtr, result: &mut i64, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<TxInputsBuilder>()?;
-    let inputs_with_wit = inputs_with_wit_rptr.typed_ref::<InputsWithScriptWitness>()?;
-    let result = self_ref.add_required_script_input_witnesses(inputs_with_wit);
-    Ok::<i64, String>(result as i64)
-  })
-  .response(result,  error)
 }
 
 
@@ -23032,18 +22930,6 @@ pub unsafe extern "C" fn min_ada_for_output(output_rptr: RPtr, data_cost_rptr: R
     let output = output_rptr.typed_ref::<TransactionOutput>()?;
     let data_cost = data_cost_rptr.typed_ref::<DataCost>()?;
     let result = cardano_serialization_lib::min_ada_for_output(output, data_cost).into_result()?;
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn min_ada_required(assets_rptr: RPtr, has_data_hash: bool, coins_per_utxo_word_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let assets = assets_rptr.typed_ref::<Value>()?;
-    let coins_per_utxo_word = coins_per_utxo_word_rptr.typed_ref::<BigNum>()?;
-    let result = cardano_serialization_lib::min_ada_required(assets, has_data_hash, coins_per_utxo_word).into_result()?;
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)

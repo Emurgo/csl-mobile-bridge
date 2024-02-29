@@ -1254,6 +1254,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
             .pour(promise);
     }
 
+    @ReactMethod
+    public final void blockFromWrappedBytes(String data, Promise promise) {
+        Native.I
+            .blockFromWrappedBytes(Base64.decode(data, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
 
     @ReactMethod
     public final void blockHashFromBytes(String bytes, Promise promise) {
@@ -2961,14 +2969,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public final void dataCostNewCoinsPerWord(String coinsPerWord, Promise promise) {
-        Native.I
-            .dataCostNewCoinsPerWord(new RPtr(coinsPerWord))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
     public final void dataCostNewCoinsPerByte(String coinsPerByte, Promise promise) {
         Native.I
             .dataCostNewCoinsPerByte(new RPtr(coinsPerByte))
@@ -3210,6 +3210,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
         Native.I
             .drepRegistrationNewWithAnchor(new RPtr(votingCredential), new RPtr(coin), new RPtr(anchor))
             .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepRegistrationHasScriptCredentials(String self, Promise promise) {
+        Native.I
+            .drepRegistrationHasScriptCredentials(new RPtr(self))
             .pour(promise);
     }
 
@@ -3634,6 +3641,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void ed25519KeyHashesAdd(String self, String elem, Promise promise) {
         Native.I
             .ed25519KeyHashesAdd(new RPtr(self), new RPtr(elem))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void ed25519KeyHashesContains(String self, String elem, Promise promise) {
+        Native.I
+            .ed25519KeyHashesContains(new RPtr(self), new RPtr(elem))
             .pour(promise);
     }
 
@@ -4980,63 +4994,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public final void inputWithScriptWitnessNewWithNativeScriptWitness(String input, String witness, Promise promise) {
-        Native.I
-            .inputWithScriptWitnessNewWithNativeScriptWitness(new RPtr(input), new RPtr(witness))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void inputWithScriptWitnessNewWithPlutusWitness(String input, String witness, Promise promise) {
-        Native.I
-            .inputWithScriptWitnessNewWithPlutusWitness(new RPtr(input), new RPtr(witness))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void inputWithScriptWitnessInput(String self, Promise promise) {
-        Native.I
-            .inputWithScriptWitnessInput(new RPtr(self))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-
-    @ReactMethod
-    public final void inputsWithScriptWitnessNew( Promise promise) {
-        Native.I
-            .inputsWithScriptWitnessNew()
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void inputsWithScriptWitnessAdd(String self, String input, Promise promise) {
-        Native.I
-            .inputsWithScriptWitnessAdd(new RPtr(self), new RPtr(input))
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void inputsWithScriptWitnessGet(String self, Double index, Promise promise) {
-        Native.I
-            .inputsWithScriptWitnessGet(new RPtr(self), index.longValue())
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void inputsWithScriptWitnessLen(String self, Promise promise) {
-        Native.I
-            .inputsWithScriptWitnessLen(new RPtr(self))
-            .map(Utils::boxedLongToDouble)
-            .pour(promise);
-    }
-
-
-    @ReactMethod
     public final void intToBytes(String self, Promise promise) {
         Native.I
             .intToBytes(new RPtr(self))
@@ -5875,14 +5832,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void mintGetAll(String self, String key, Promise promise) {
-        Native.I
-            .mintGetAll(new RPtr(self), new RPtr(key))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
     public final void mintKeys(String self, Promise promise) {
         Native.I
             .mintKeys(new RPtr(self))
@@ -6595,6 +6544,52 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
             .pour(promise);
     }
 
+    @ReactMethod
+    public final void nativeScriptsToBytes(String self, Promise promise) {
+        Native.I
+            .nativeScriptsToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void nativeScriptsFromBytes(String bytes, Promise promise) {
+        Native.I
+            .nativeScriptsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void nativeScriptsToHex(String self, Promise promise) {
+        Native.I
+            .nativeScriptsToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void nativeScriptsFromHex(String hexStr, Promise promise) {
+        Native.I
+            .nativeScriptsFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void nativeScriptsToJson(String self, Promise promise) {
+        Native.I
+            .nativeScriptsToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void nativeScriptsFromJson(String json, Promise promise) {
+        Native.I
+            .nativeScriptsFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
 
     @ReactMethod
     public final void networkIdToBytes(String self, Promise promise) {
@@ -6707,14 +6702,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void networkInfoTestnet( Promise promise) {
-        Native.I
-            .networkInfoTestnet()
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
     public final void networkInfoMainnet( Promise promise) {
         Native.I
             .networkInfoMainnet()
@@ -6798,6 +6785,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
         Native.I
             .newConstitutionActionNewWithActionId(new RPtr(govActionId), new RPtr(constitution))
             .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void newConstitutionActionHasScriptHash(String self, Promise promise) {
+        Native.I
+            .newConstitutionActionHasScriptHash(new RPtr(self))
             .pour(promise);
     }
 
@@ -7127,6 +7121,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void parameterChangeActionPolicyHash(String self, Promise promise) {
+        Native.I
+            .parameterChangeActionPolicyHash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void parameterChangeActionNew(String protocolParamUpdates, Promise promise) {
         Native.I
             .parameterChangeActionNew(new RPtr(protocolParamUpdates))
@@ -7138,6 +7140,22 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void parameterChangeActionNewWithActionId(String govActionId, String protocolParamUpdates, Promise promise) {
         Native.I
             .parameterChangeActionNewWithActionId(new RPtr(govActionId), new RPtr(protocolParamUpdates))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void parameterChangeActionNewWithPolicyHash(String protocolParamUpdates, String policyHash, Promise promise) {
+        Native.I
+            .parameterChangeActionNewWithPolicyHash(new RPtr(protocolParamUpdates), new RPtr(policyHash))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void parameterChangeActionNewWithPolicyHashAndActionId(String govActionId, String protocolParamUpdates, String policyHash, Promise promise) {
+        Native.I
+            .parameterChangeActionNewWithPolicyHashAndActionId(new RPtr(govActionId), new RPtr(protocolParamUpdates), new RPtr(policyHash))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -7565,17 +7583,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void plutusScriptSourceNewRefInput(String scriptHash, String input, Promise promise) {
+    public final void plutusScriptSourceNewRefInput(String scriptHash, String input, String langVer, Promise promise) {
         Native.I
-            .plutusScriptSourceNewRefInput(new RPtr(scriptHash), new RPtr(input))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void plutusScriptSourceNewRefInputWithLangVer(String scriptHash, String input, String langVer, Promise promise) {
-        Native.I
-            .plutusScriptSourceNewRefInputWithLangVer(new RPtr(scriptHash), new RPtr(input), new RPtr(langVer))
+            .plutusScriptSourceNewRefInput(new RPtr(scriptHash), new RPtr(input), new RPtr(langVer))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -11621,14 +11631,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionBodyMultiassets(String self, Promise promise) {
-        Native.I
-            .transactionBodyMultiassets(new RPtr(self))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
     public final void transactionBodySetReferenceInputs(String self, String referenceInputs, Promise promise) {
         Native.I
             .transactionBodySetReferenceInputs(new RPtr(self), new RPtr(referenceInputs))
@@ -11883,13 +11885,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionBuilderAddScriptInput(String self, String hash, String input, String amount, Promise promise) {
-        Native.I
-            .transactionBuilderAddScriptInput(new RPtr(self), new RPtr(hash), new RPtr(input), new RPtr(amount))
-            .pour(promise);
-    }
-
-    @ReactMethod
     public final void transactionBuilderAddNativeScriptInput(String self, String script, String input, String amount, Promise promise) {
         Native.I
             .transactionBuilderAddNativeScriptInput(new RPtr(self), new RPtr(script), new RPtr(input), new RPtr(amount))
@@ -11911,33 +11906,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionBuilderAddInput(String self, String address, String input, String amount, Promise promise) {
+    public final void transactionBuilderAddRegularInput(String self, String address, String input, String amount, Promise promise) {
         Native.I
-            .transactionBuilderAddInput(new RPtr(self), new RPtr(address), new RPtr(input), new RPtr(amount))
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void transactionBuilderCountMissingInputScripts(String self, Promise promise) {
-        Native.I
-            .transactionBuilderCountMissingInputScripts(new RPtr(self))
-            .map(Utils::boxedLongToDouble)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void transactionBuilderAddRequiredNativeInputScripts(String self, String scripts, Promise promise) {
-        Native.I
-            .transactionBuilderAddRequiredNativeInputScripts(new RPtr(self), new RPtr(scripts))
-            .map(Utils::boxedLongToDouble)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void transactionBuilderAddRequiredPlutusInputScripts(String self, String scripts, Promise promise) {
-        Native.I
-            .transactionBuilderAddRequiredPlutusInputScripts(new RPtr(self), new RPtr(scripts))
-            .map(Utils::boxedLongToDouble)
+            .transactionBuilderAddRegularInput(new RPtr(self), new RPtr(address), new RPtr(input), new RPtr(amount))
             .pour(promise);
     }
 
@@ -12386,14 +12357,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderConfigBuilderFeeAlgo(String self, String feeAlgo, Promise promise) {
         Native.I
             .transactionBuilderConfigBuilderFeeAlgo(new RPtr(self), new RPtr(feeAlgo))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void transactionBuilderConfigBuilderCoinsPerUtxoWord(String self, String coinsPerUtxoWord, Promise promise) {
-        Native.I
-            .transactionBuilderConfigBuilderCoinsPerUtxoWord(new RPtr(self), new RPtr(coinsPerUtxoWord))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -13017,14 +12980,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionOutputAmountBuilderWithAssetAndMinRequiredCoin(String self, String multiasset, String coinsPerUtxoWord, Promise promise) {
-        Native.I
-            .transactionOutputAmountBuilderWithAssetAndMinRequiredCoin(new RPtr(self), new RPtr(multiasset), new RPtr(coinsPerUtxoWord))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
     public final void transactionOutputAmountBuilderWithAssetAndMinRequiredCoinByUtxoCost(String self, String multiasset, String dataCost, Promise promise) {
         Native.I
             .transactionOutputAmountBuilderWithAssetAndMinRequiredCoinByUtxoCost(new RPtr(self), new RPtr(multiasset), new RPtr(dataCost))
@@ -13619,9 +13574,25 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void treasuryWithdrawalsActionPolicyHash(String self, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsActionPolicyHash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void treasuryWithdrawalsActionNew(String withdrawals, Promise promise) {
         Native.I
             .treasuryWithdrawalsActionNew(new RPtr(withdrawals))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsActionNewWithPolicyHash(String withdrawals, String policyHash, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsActionNewWithPolicyHash(new RPtr(withdrawals), new RPtr(policyHash))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -13668,13 +13639,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void txInputsBuilderAddScriptInput(String self, String hash, String input, String amount, Promise promise) {
-        Native.I
-            .txInputsBuilderAddScriptInput(new RPtr(self), new RPtr(hash), new RPtr(input), new RPtr(amount))
-            .pour(promise);
-    }
-
-    @ReactMethod
     public final void txInputsBuilderAddNativeScriptInput(String self, String script, String input, String amount, Promise promise) {
         Native.I
             .txInputsBuilderAddNativeScriptInput(new RPtr(self), new RPtr(script), new RPtr(input), new RPtr(amount))
@@ -13696,41 +13660,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void txInputsBuilderAddInput(String self, String address, String input, String amount, Promise promise) {
+    public final void txInputsBuilderAddRegularInput(String self, String address, String input, String amount, Promise promise) {
         Native.I
-            .txInputsBuilderAddInput(new RPtr(self), new RPtr(address), new RPtr(input), new RPtr(amount))
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void txInputsBuilderCountMissingInputScripts(String self, Promise promise) {
-        Native.I
-            .txInputsBuilderCountMissingInputScripts(new RPtr(self))
-            .map(Utils::boxedLongToDouble)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void txInputsBuilderAddRequiredNativeInputScripts(String self, String scripts, Promise promise) {
-        Native.I
-            .txInputsBuilderAddRequiredNativeInputScripts(new RPtr(self), new RPtr(scripts))
-            .map(Utils::boxedLongToDouble)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void txInputsBuilderAddRequiredPlutusInputScripts(String self, String scripts, Promise promise) {
-        Native.I
-            .txInputsBuilderAddRequiredPlutusInputScripts(new RPtr(self), new RPtr(scripts))
-            .map(Utils::boxedLongToDouble)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void txInputsBuilderAddRequiredScriptInputWitnesses(String self, String inputsWithWit, Promise promise) {
-        Native.I
-            .txInputsBuilderAddRequiredScriptInputWitnesses(new RPtr(self), new RPtr(inputsWithWit))
-            .map(Utils::boxedLongToDouble)
+            .txInputsBuilderAddRegularInput(new RPtr(self), new RPtr(address), new RPtr(input), new RPtr(amount))
             .pour(promise);
     }
 
@@ -15766,14 +15698,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void minAdaForOutput(String output, String dataCost, Promise promise) {
         Native.I
             .minAdaForOutput(new RPtr(output), new RPtr(dataCost))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void minAdaRequired(String assets, Boolean hasDataHash, String coinsPerUtxoWord, Promise promise) {
-        Native.I
-            .minAdaRequired(new RPtr(assets), hasDataHash, new RPtr(coinsPerUtxoWord))
             .map(RPtr::toJs)
             .pour(promise);
     }

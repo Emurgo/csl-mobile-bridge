@@ -186,6 +186,7 @@ final class Native {
     public final native Result<RPtr> blockAuxiliaryDataSet(RPtr self);
     public final native Result<String> blockInvalidTransactions(RPtr self);
     public final native Result<RPtr> blockNew(RPtr header, RPtr transactionBodies, RPtr transactionWitnessSets, RPtr auxiliaryDataSet, String invalidTransactions);
+    public final native Result<RPtr> blockFromWrappedBytes(byte[] data);
 
     public final native Result<RPtr> blockHashFromBytes(byte[] bytes);
     public final native Result<byte[]> blockHashToBytes(RPtr self);
@@ -423,7 +424,6 @@ final class Native {
     public final native Result<RPtr> dRepToKeyHash(RPtr self);
     public final native Result<RPtr> dRepToScriptHash(RPtr self);
 
-    public final native Result<RPtr> dataCostNewCoinsPerWord(RPtr coinsPerWord);
     public final native Result<RPtr> dataCostNewCoinsPerByte(RPtr coinsPerByte);
     public final native Result<RPtr> dataCostCoinsPerByte(RPtr self);
 
@@ -459,6 +459,7 @@ final class Native {
     public final native Result<RPtr> drepRegistrationAnchor(RPtr self);
     public final native Result<RPtr> drepRegistrationNew(RPtr votingCredential, RPtr coin);
     public final native Result<RPtr> drepRegistrationNewWithAnchor(RPtr votingCredential, RPtr coin, RPtr anchor);
+    public final native Result<Boolean> drepRegistrationHasScriptCredentials(RPtr self);
 
     public final native Result<byte[]> drepUpdateToBytes(RPtr self);
     public final native Result<RPtr> drepUpdateFromBytes(byte[] bytes);
@@ -518,6 +519,7 @@ final class Native {
     public final native Result<Long> ed25519KeyHashesLen(RPtr self);
     public final native Result<RPtr> ed25519KeyHashesGet(RPtr self, long index);
     public final native Result<Void> ed25519KeyHashesAdd(RPtr self, RPtr elem);
+    public final native Result<Boolean> ed25519KeyHashesContains(RPtr self, RPtr elem);
     public final native Result<RPtr> ed25519KeyHashesToOption(RPtr self);
 
     public final native Result<byte[]> ed25519SignatureToBytes(RPtr self);
@@ -708,15 +710,6 @@ final class Native {
 
     public final native Result<RPtr> infoActionNew();
 
-    public final native Result<RPtr> inputWithScriptWitnessNewWithNativeScriptWitness(RPtr input, RPtr witness);
-    public final native Result<RPtr> inputWithScriptWitnessNewWithPlutusWitness(RPtr input, RPtr witness);
-    public final native Result<RPtr> inputWithScriptWitnessInput(RPtr self);
-
-    public final native Result<RPtr> inputsWithScriptWitnessNew();
-    public final native Result<Void> inputsWithScriptWitnessAdd(RPtr self, RPtr input);
-    public final native Result<RPtr> inputsWithScriptWitnessGet(RPtr self, long index);
-    public final native Result<Long> inputsWithScriptWitnessLen(RPtr self);
-
     public final native Result<byte[]> intToBytes(RPtr self);
     public final native Result<RPtr> intFromBytes(byte[] bytes);
     public final native Result<String> intToHex(RPtr self);
@@ -835,7 +828,6 @@ final class Native {
     public final native Result<Long> mintLen(RPtr self);
     public final native Result<RPtr> mintInsert(RPtr self, RPtr key, RPtr value);
     public final native Result<RPtr> mintGet(RPtr self, RPtr key);
-    public final native Result<RPtr> mintGetAll(RPtr self, RPtr key);
     public final native Result<RPtr> mintKeys(RPtr self);
     public final native Result<RPtr> mintAsPositiveMultiasset(RPtr self);
     public final native Result<RPtr> mintAsNegativeMultiasset(RPtr self);
@@ -937,6 +929,12 @@ final class Native {
     public final native Result<Long> nativeScriptsLen(RPtr self);
     public final native Result<RPtr> nativeScriptsGet(RPtr self, long index);
     public final native Result<Void> nativeScriptsAdd(RPtr self, RPtr elem);
+    public final native Result<byte[]> nativeScriptsToBytes(RPtr self);
+    public final native Result<RPtr> nativeScriptsFromBytes(byte[] bytes);
+    public final native Result<String> nativeScriptsToHex(RPtr self);
+    public final native Result<RPtr> nativeScriptsFromHex(String hexStr);
+    public final native Result<String> nativeScriptsToJson(RPtr self);
+    public final native Result<RPtr> nativeScriptsFromJson(String json);
 
     public final native Result<byte[]> networkIdToBytes(RPtr self);
     public final native Result<RPtr> networkIdFromBytes(byte[] bytes);
@@ -953,7 +951,6 @@ final class Native {
     public final native Result<Long> networkInfoProtocolMagic(RPtr self);
     public final native Result<RPtr> networkInfoTestnetPreview();
     public final native Result<RPtr> networkInfoTestnetPreprod();
-    public final native Result<RPtr> networkInfoTestnet();
     public final native Result<RPtr> networkInfoMainnet();
 
     public final native Result<byte[]> newConstitutionActionToBytes(RPtr self);
@@ -966,6 +963,7 @@ final class Native {
     public final native Result<RPtr> newConstitutionActionConstitution(RPtr self);
     public final native Result<RPtr> newConstitutionActionNew(RPtr constitution);
     public final native Result<RPtr> newConstitutionActionNewWithActionId(RPtr govActionId, RPtr constitution);
+    public final native Result<Boolean> newConstitutionActionHasScriptHash(RPtr self);
 
     public final native Result<byte[]> noConfidenceActionToBytes(RPtr self);
     public final native Result<RPtr> noConfidenceActionFromBytes(byte[] bytes);
@@ -1012,8 +1010,11 @@ final class Native {
     public final native Result<RPtr> parameterChangeActionFromJson(String json);
     public final native Result<RPtr> parameterChangeActionGovActionId(RPtr self);
     public final native Result<RPtr> parameterChangeActionProtocolParamUpdates(RPtr self);
+    public final native Result<RPtr> parameterChangeActionPolicyHash(RPtr self);
     public final native Result<RPtr> parameterChangeActionNew(RPtr protocolParamUpdates);
     public final native Result<RPtr> parameterChangeActionNewWithActionId(RPtr govActionId, RPtr protocolParamUpdates);
+    public final native Result<RPtr> parameterChangeActionNewWithPolicyHash(RPtr protocolParamUpdates, RPtr policyHash);
+    public final native Result<RPtr> parameterChangeActionNewWithPolicyHashAndActionId(RPtr govActionId, RPtr protocolParamUpdates, RPtr policyHash);
 
     public final native Result<byte[]> plutusDataToBytes(RPtr self);
     public final native Result<RPtr> plutusDataFromBytes(byte[] bytes);
@@ -1072,8 +1073,7 @@ final class Native {
     public final native Result<RPtr> plutusScriptLanguageVersion(RPtr self);
 
     public final native Result<RPtr> plutusScriptSourceNew(RPtr script);
-    public final native Result<RPtr> plutusScriptSourceNewRefInput(RPtr scriptHash, RPtr input);
-    public final native Result<RPtr> plutusScriptSourceNewRefInputWithLangVer(RPtr scriptHash, RPtr input, RPtr langVer);
+    public final native Result<RPtr> plutusScriptSourceNewRefInput(RPtr scriptHash, RPtr input, RPtr langVer);
 
     public final native Result<byte[]> plutusScriptsToBytes(RPtr self);
     public final native Result<RPtr> plutusScriptsFromBytes(byte[] bytes);
@@ -1642,7 +1642,6 @@ final class Native {
     public final native Result<Long> transactionBodyValidityStartInterval(RPtr self);
     public final native Result<Void> transactionBodySetMint(RPtr self, RPtr mint);
     public final native Result<RPtr> transactionBodyMint(RPtr self);
-    public final native Result<RPtr> transactionBodyMultiassets(RPtr self);
     public final native Result<Void> transactionBodySetReferenceInputs(RPtr self, RPtr referenceInputs);
     public final native Result<RPtr> transactionBodyReferenceInputs(RPtr self);
     public final native Result<Void> transactionBodySetScriptDataHash(RPtr self, RPtr scriptDataHash);
@@ -1679,14 +1678,10 @@ final class Native {
     public final native Result<Void> transactionBuilderSetTotalCollateralAndReturn(RPtr self, RPtr totalCollateral, RPtr returnAddress);
     public final native Result<Void> transactionBuilderAddReferenceInput(RPtr self, RPtr referenceInput);
     public final native Result<Void> transactionBuilderAddKeyInput(RPtr self, RPtr hash, RPtr input, RPtr amount);
-    public final native Result<Void> transactionBuilderAddScriptInput(RPtr self, RPtr hash, RPtr input, RPtr amount);
     public final native Result<Void> transactionBuilderAddNativeScriptInput(RPtr self, RPtr script, RPtr input, RPtr amount);
     public final native Result<Void> transactionBuilderAddPlutusScriptInput(RPtr self, RPtr witness, RPtr input, RPtr amount);
     public final native Result<Void> transactionBuilderAddBootstrapInput(RPtr self, RPtr hash, RPtr input, RPtr amount);
-    public final native Result<Void> transactionBuilderAddInput(RPtr self, RPtr address, RPtr input, RPtr amount);
-    public final native Result<Long> transactionBuilderCountMissingInputScripts(RPtr self);
-    public final native Result<Long> transactionBuilderAddRequiredNativeInputScripts(RPtr self, RPtr scripts);
-    public final native Result<Long> transactionBuilderAddRequiredPlutusInputScripts(RPtr self, RPtr scripts);
+    public final native Result<Void> transactionBuilderAddRegularInput(RPtr self, RPtr address, RPtr input, RPtr amount);
     public final native Result<RPtr> transactionBuilderGetNativeInputScripts(RPtr self);
     public final native Result<RPtr> transactionBuilderGetPlutusInputScripts(RPtr self);
     public final native Result<RPtr> transactionBuilderFeeForInput(RPtr self, RPtr address, RPtr input, RPtr amount);
@@ -1749,7 +1744,6 @@ final class Native {
 
     public final native Result<RPtr> transactionBuilderConfigBuilderNew();
     public final native Result<RPtr> transactionBuilderConfigBuilderFeeAlgo(RPtr self, RPtr feeAlgo);
-    public final native Result<RPtr> transactionBuilderConfigBuilderCoinsPerUtxoWord(RPtr self, RPtr coinsPerUtxoWord);
     public final native Result<RPtr> transactionBuilderConfigBuilderCoinsPerUtxoByte(RPtr self, RPtr coinsPerUtxoByte);
     public final native Result<RPtr> transactionBuilderConfigBuilderExUnitPrices(RPtr self, RPtr exUnitPrices);
     public final native Result<RPtr> transactionBuilderConfigBuilderPoolDeposit(RPtr self, RPtr poolDeposit);
@@ -1836,7 +1830,6 @@ final class Native {
     public final native Result<RPtr> transactionOutputAmountBuilderWithValue(RPtr self, RPtr amount);
     public final native Result<RPtr> transactionOutputAmountBuilderWithCoin(RPtr self, RPtr coin);
     public final native Result<RPtr> transactionOutputAmountBuilderWithCoinAndAsset(RPtr self, RPtr coin, RPtr multiasset);
-    public final native Result<RPtr> transactionOutputAmountBuilderWithAssetAndMinRequiredCoin(RPtr self, RPtr multiasset, RPtr coinsPerUtxoWord);
     public final native Result<RPtr> transactionOutputAmountBuilderWithAssetAndMinRequiredCoinByUtxoCost(RPtr self, RPtr multiasset, RPtr dataCost);
     public final native Result<RPtr> transactionOutputAmountBuilderBuild(RPtr self);
 
@@ -1921,7 +1914,9 @@ final class Native {
     public final native Result<String> treasuryWithdrawalsActionToJson(RPtr self);
     public final native Result<RPtr> treasuryWithdrawalsActionFromJson(String json);
     public final native Result<RPtr> treasuryWithdrawalsActionWithdrawals(RPtr self);
+    public final native Result<RPtr> treasuryWithdrawalsActionPolicyHash(RPtr self);
     public final native Result<RPtr> treasuryWithdrawalsActionNew(RPtr withdrawals);
+    public final native Result<RPtr> treasuryWithdrawalsActionNewWithPolicyHash(RPtr withdrawals, RPtr policyHash);
 
     public final native Result<RPtr> txBuilderConstantsPlutusDefaultCostModels();
     public final native Result<RPtr> txBuilderConstantsPlutusAlonzoCostModels();
@@ -1929,15 +1924,10 @@ final class Native {
 
     public final native Result<RPtr> txInputsBuilderNew();
     public final native Result<Void> txInputsBuilderAddKeyInput(RPtr self, RPtr hash, RPtr input, RPtr amount);
-    public final native Result<Void> txInputsBuilderAddScriptInput(RPtr self, RPtr hash, RPtr input, RPtr amount);
     public final native Result<Void> txInputsBuilderAddNativeScriptInput(RPtr self, RPtr script, RPtr input, RPtr amount);
     public final native Result<Void> txInputsBuilderAddPlutusScriptInput(RPtr self, RPtr witness, RPtr input, RPtr amount);
     public final native Result<Void> txInputsBuilderAddBootstrapInput(RPtr self, RPtr hash, RPtr input, RPtr amount);
-    public final native Result<Void> txInputsBuilderAddInput(RPtr self, RPtr address, RPtr input, RPtr amount);
-    public final native Result<Long> txInputsBuilderCountMissingInputScripts(RPtr self);
-    public final native Result<Long> txInputsBuilderAddRequiredNativeInputScripts(RPtr self, RPtr scripts);
-    public final native Result<Long> txInputsBuilderAddRequiredPlutusInputScripts(RPtr self, RPtr scripts);
-    public final native Result<Long> txInputsBuilderAddRequiredScriptInputWitnesses(RPtr self, RPtr inputsWithWit);
+    public final native Result<Void> txInputsBuilderAddRegularInput(RPtr self, RPtr address, RPtr input, RPtr amount);
     public final native Result<RPtr> txInputsBuilderGetRefInputs(RPtr self);
     public final native Result<RPtr> txInputsBuilderGetNativeInputScripts(RPtr self);
     public final native Result<RPtr> txInputsBuilderGetPlutusInputScripts(RPtr self);
@@ -2224,7 +2214,6 @@ final class Native {
     public final native Result<RPtr> makeIcarusBootstrapWitness(RPtr txBodyHash, RPtr addr, RPtr key);
     public final native Result<RPtr> makeVkeyWitness(RPtr txBodyHash, RPtr sk);
     public final native Result<RPtr> minAdaForOutput(RPtr output, RPtr dataCost);
-    public final native Result<RPtr> minAdaRequired(RPtr assets, boolean hasDataHash, RPtr coinsPerUtxoWord);
     public final native Result<RPtr> minFee(RPtr tx, RPtr linearFee);
     public final native Result<RPtr> minScriptFee(RPtr tx, RPtr exUnitPrices);
 }

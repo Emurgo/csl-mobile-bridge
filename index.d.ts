@@ -921,6 +921,12 @@ export class Block extends Ptr {
   */
   static new: (header: Header, transaction_bodies: TransactionBodies, transaction_witness_sets: TransactionWitnessSets, auxiliary_data_set: AuxiliaryDataSet, invalid_transactions: Uint32Array) => Promise<Block>;
 
+  /**
+  * @param {Uint8Array} data
+  * @returns {Promise<Block>}
+  */
+  static from_wrapped_bytes: (data: Uint8Array) => Promise<Block>;
+
 }
 
 
@@ -2200,12 +2206,6 @@ export class DRep extends Ptr {
 
 export class DataCost extends Ptr {
   /**
-  * @param {BigNum} coins_per_word
-  * @returns {Promise<DataCost>}
-  */
-  static new_coins_per_word: (coins_per_word: BigNum) => Promise<DataCost>;
-
-  /**
   * @param {BigNum} coins_per_byte
   * @returns {Promise<DataCost>}
   */
@@ -2395,6 +2395,11 @@ export class DrepRegistration extends Ptr {
   * @returns {Promise<DrepRegistration>}
   */
   static new_with_anchor: (voting_credential: Credential, coin: BigNum, anchor: Anchor) => Promise<DrepRegistration>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_script_credentials: () => Promise<boolean>;
 
 }
 
@@ -2713,6 +2718,12 @@ export class Ed25519KeyHashes extends Ptr {
   * @param {Ed25519KeyHash} elem
   */
   add: (elem: Ed25519KeyHash) => Promise<void>;
+
+  /**
+  * @param {Ed25519KeyHash} elem
+  * @returns {Promise<boolean>}
+  */
+  contains: (elem: Ed25519KeyHash) => Promise<boolean>;
 
   /**
   * @returns {Promise<Optional<Ed25519KeyHashes>>}
@@ -3728,54 +3739,6 @@ export class InfoAction extends Ptr {
 }
 
 
-export class InputWithScriptWitness extends Ptr {
-  /**
-  * @param {TransactionInput} input
-  * @param {NativeScript} witness
-  * @returns {Promise<InputWithScriptWitness>}
-  */
-  static new_with_native_script_witness: (input: TransactionInput, witness: NativeScript) => Promise<InputWithScriptWitness>;
-
-  /**
-  * @param {TransactionInput} input
-  * @param {PlutusWitness} witness
-  * @returns {Promise<InputWithScriptWitness>}
-  */
-  static new_with_plutus_witness: (input: TransactionInput, witness: PlutusWitness) => Promise<InputWithScriptWitness>;
-
-  /**
-  * @returns {Promise<TransactionInput>}
-  */
-  input: () => Promise<TransactionInput>;
-
-}
-
-
-export class InputsWithScriptWitness extends Ptr {
-  /**
-  * @returns {Promise<InputsWithScriptWitness>}
-  */
-  static new: () => Promise<InputsWithScriptWitness>;
-
-  /**
-  * @param {InputWithScriptWitness} input
-  */
-  add: (input: InputWithScriptWitness) => Promise<void>;
-
-  /**
-  * @param {number} index
-  * @returns {Promise<InputWithScriptWitness>}
-  */
-  get: (index: number) => Promise<InputWithScriptWitness>;
-
-  /**
-  * @returns {Promise<number>}
-  */
-  len: () => Promise<number>;
-
-}
-
-
 export class Int extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -4407,15 +4370,9 @@ export class Mint extends Ptr {
 
   /**
   * @param {ScriptHash} key
-  * @returns {Promise<Optional<MintAssets>>}
-  */
-  get: (key: ScriptHash) => Promise<Optional<MintAssets>>;
-
-  /**
-  * @param {ScriptHash} key
   * @returns {Promise<Optional<MintsAssets>>}
   */
-  get_all: (key: ScriptHash) => Promise<Optional<MintsAssets>>;
+  get: (key: ScriptHash) => Promise<Optional<MintsAssets>>;
 
   /**
   * @returns {Promise<ScriptHashes>}
@@ -4966,6 +4923,39 @@ export class NativeScripts extends Ptr {
   */
   add: (elem: NativeScript) => Promise<void>;
 
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<NativeScripts>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<NativeScripts>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<NativeScripts>}
+  */
+  static from_hex: (hex_str: string) => Promise<NativeScripts>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_json: () => Promise<string>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<NativeScripts>}
+  */
+  static from_json: (json: string) => Promise<NativeScripts>;
+
 }
 
 
@@ -5052,11 +5042,6 @@ export class NetworkInfo extends Ptr {
   /**
   * @returns {Promise<NetworkInfo>}
   */
-  static testnet: () => Promise<NetworkInfo>;
-
-  /**
-  * @returns {Promise<NetworkInfo>}
-  */
   static mainnet: () => Promise<NetworkInfo>;
 
 }
@@ -5118,6 +5103,11 @@ export class NewConstitutionAction extends Ptr {
   * @returns {Promise<NewConstitutionAction>}
   */
   static new_with_action_id: (gov_action_id: GovernanceActionId, constitution: Constitution) => Promise<NewConstitutionAction>;
+
+  /**
+  * @returns {Promise<boolean>}
+  */
+  has_script_hash: () => Promise<boolean>;
 
 }
 
@@ -5365,6 +5355,11 @@ export class ParameterChangeAction extends Ptr {
   protocol_param_updates: () => Promise<ProtocolParamUpdate>;
 
   /**
+  * @returns {Promise<Optional<ScriptHash>>}
+  */
+  policy_hash: () => Promise<Optional<ScriptHash>>;
+
+  /**
   * @param {ProtocolParamUpdate} protocol_param_updates
   * @returns {Promise<ParameterChangeAction>}
   */
@@ -5376,6 +5371,21 @@ export class ParameterChangeAction extends Ptr {
   * @returns {Promise<ParameterChangeAction>}
   */
   static new_with_action_id: (gov_action_id: GovernanceActionId, protocol_param_updates: ProtocolParamUpdate) => Promise<ParameterChangeAction>;
+
+  /**
+  * @param {ProtocolParamUpdate} protocol_param_updates
+  * @param {ScriptHash} policy_hash
+  * @returns {Promise<ParameterChangeAction>}
+  */
+  static new_with_policy_hash: (protocol_param_updates: ProtocolParamUpdate, policy_hash: ScriptHash) => Promise<ParameterChangeAction>;
+
+  /**
+  * @param {GovernanceActionId} gov_action_id
+  * @param {ProtocolParamUpdate} protocol_param_updates
+  * @param {ScriptHash} policy_hash
+  * @returns {Promise<ParameterChangeAction>}
+  */
+  static new_with_policy_hash_and_action_id: (gov_action_id: GovernanceActionId, protocol_param_updates: ProtocolParamUpdate, policy_hash: ScriptHash) => Promise<ParameterChangeAction>;
 
 }
 
@@ -5701,17 +5711,10 @@ export class PlutusScriptSource extends Ptr {
   /**
   * @param {ScriptHash} script_hash
   * @param {TransactionInput} input
-  * @returns {Promise<PlutusScriptSource>}
-  */
-  static new_ref_input: (script_hash: ScriptHash, input: TransactionInput) => Promise<PlutusScriptSource>;
-
-  /**
-  * @param {ScriptHash} script_hash
-  * @param {TransactionInput} input
   * @param {Language} lang_ver
   * @returns {Promise<PlutusScriptSource>}
   */
-  static new_ref_input_with_lang_ver: (script_hash: ScriptHash, input: TransactionInput, lang_ver: Language) => Promise<PlutusScriptSource>;
+  static new_ref_input: (script_hash: ScriptHash, input: TransactionInput, lang_ver: Language) => Promise<PlutusScriptSource>;
 
 }
 
@@ -8660,11 +8663,6 @@ export class TransactionBody extends Ptr {
   mint: () => Promise<Optional<Mint>>;
 
   /**
-  * @returns {Promise<Optional<Mint>>}
-  */
-  multiassets: () => Promise<Optional<Mint>>;
-
-  /**
   * @param {TransactionInputs} reference_inputs
   */
   set_reference_inputs: (reference_inputs: TransactionInputs) => Promise<void>;
@@ -8848,13 +8846,6 @@ export class TransactionBuilder extends Ptr {
   add_key_input: (hash: Ed25519KeyHash, input: TransactionInput, amount: Value) => Promise<void>;
 
   /**
-  * @param {ScriptHash} hash
-  * @param {TransactionInput} input
-  * @param {Value} amount
-  */
-  add_script_input: (hash: ScriptHash, input: TransactionInput, amount: Value) => Promise<void>;
-
-  /**
   * @param {NativeScript} script
   * @param {TransactionInput} input
   * @param {Value} amount
@@ -8879,25 +8870,9 @@ export class TransactionBuilder extends Ptr {
   * @param {Address} address
   * @param {TransactionInput} input
   * @param {Value} amount
+  * @returns {Promise<void>}
   */
-  add_input: (address: Address, input: TransactionInput, amount: Value) => Promise<void>;
-
-  /**
-  * @returns {Promise<number>}
-  */
-  count_missing_input_scripts: () => Promise<number>;
-
-  /**
-  * @param {NativeScripts} scripts
-  * @returns {Promise<number>}
-  */
-  add_required_native_input_scripts: (scripts: NativeScripts) => Promise<number>;
-
-  /**
-  * @param {PlutusWitnesses} scripts
-  * @returns {Promise<number>}
-  */
-  add_required_plutus_input_scripts: (scripts: PlutusWitnesses) => Promise<number>;
+  add_regular_input: (address: Address, input: TransactionInput, amount: Value) => Promise<void>;
 
   /**
   * @returns {Promise<Optional<NativeScripts>>}
@@ -9239,12 +9214,6 @@ export class TransactionBuilderConfigBuilder extends Ptr {
   * @returns {Promise<TransactionBuilderConfigBuilder>}
   */
   fee_algo: (fee_algo: LinearFee) => Promise<TransactionBuilderConfigBuilder>;
-
-  /**
-  * @param {BigNum} coins_per_utxo_word
-  * @returns {Promise<TransactionBuilderConfigBuilder>}
-  */
-  coins_per_utxo_word: (coins_per_utxo_word: BigNum) => Promise<TransactionBuilderConfigBuilder>;
 
   /**
   * @param {BigNum} coins_per_utxo_byte
@@ -9710,13 +9679,6 @@ export class TransactionOutputAmountBuilder extends Ptr {
 
   /**
   * @param {MultiAsset} multiasset
-  * @param {BigNum} coins_per_utxo_word
-  * @returns {Promise<TransactionOutputAmountBuilder>}
-  */
-  with_asset_and_min_required_coin: (multiasset: MultiAsset, coins_per_utxo_word: BigNum) => Promise<TransactionOutputAmountBuilder>;
-
-  /**
-  * @param {MultiAsset} multiasset
   * @param {DataCost} data_cost
   * @returns {Promise<TransactionOutputAmountBuilder>}
   */
@@ -10158,10 +10120,22 @@ export class TreasuryWithdrawalsAction extends Ptr {
   withdrawals: () => Promise<TreasuryWithdrawals>;
 
   /**
+  * @returns {Promise<Optional<ScriptHash>>}
+  */
+  policy_hash: () => Promise<Optional<ScriptHash>>;
+
+  /**
   * @param {TreasuryWithdrawals} withdrawals
   * @returns {Promise<TreasuryWithdrawalsAction>}
   */
   static new: (withdrawals: TreasuryWithdrawals) => Promise<TreasuryWithdrawalsAction>;
+
+  /**
+  * @param {TreasuryWithdrawals} withdrawals
+  * @param {ScriptHash} policy_hash
+  * @returns {Promise<TreasuryWithdrawalsAction>}
+  */
+  static new_with_policy_hash: (withdrawals: TreasuryWithdrawals, policy_hash: ScriptHash) => Promise<TreasuryWithdrawalsAction>;
 
 }
 
@@ -10199,13 +10173,6 @@ export class TxInputsBuilder extends Ptr {
   add_key_input: (hash: Ed25519KeyHash, input: TransactionInput, amount: Value) => Promise<void>;
 
   /**
-  * @param {ScriptHash} hash
-  * @param {TransactionInput} input
-  * @param {Value} amount
-  */
-  add_script_input: (hash: ScriptHash, input: TransactionInput, amount: Value) => Promise<void>;
-
-  /**
   * @param {NativeScript} script
   * @param {TransactionInput} input
   * @param {Value} amount
@@ -10230,31 +10197,9 @@ export class TxInputsBuilder extends Ptr {
   * @param {Address} address
   * @param {TransactionInput} input
   * @param {Value} amount
+  * @returns {Promise<void>}
   */
-  add_input: (address: Address, input: TransactionInput, amount: Value) => Promise<void>;
-
-  /**
-  * @returns {Promise<number>}
-  */
-  count_missing_input_scripts: () => Promise<number>;
-
-  /**
-  * @param {NativeScripts} scripts
-  * @returns {Promise<number>}
-  */
-  add_required_native_input_scripts: (scripts: NativeScripts) => Promise<number>;
-
-  /**
-  * @param {PlutusWitnesses} scripts
-  * @returns {Promise<number>}
-  */
-  add_required_plutus_input_scripts: (scripts: PlutusWitnesses) => Promise<number>;
-
-  /**
-  * @param {InputsWithScriptWitness} inputs_with_wit
-  * @returns {Promise<number>}
-  */
-  add_required_script_input_witnesses: (inputs_with_wit: InputsWithScriptWitness) => Promise<number>;
+  add_regular_input: (address: Address, input: TransactionInput, amount: Value) => Promise<void>;
 
   /**
   * @returns {Promise<TransactionInputs>}
@@ -11827,14 +11772,6 @@ export const make_vkey_witness: (tx_body_hash: TransactionHash, sk: PrivateKey) 
 * @returns {Promise<BigNum>}
 */
 export const min_ada_for_output: (output: TransactionOutput, data_cost: DataCost) => Promise<BigNum>;
-
-/**
-* @param {Value} assets
-* @param {boolean} has_data_hash
-* @param {BigNum} coins_per_utxo_word
-* @returns {Promise<BigNum>}
-*/
-export const min_ada_required: (assets: Value, has_data_hash: boolean, coins_per_utxo_word: BigNum) => Promise<BigNum>;
 
 /**
 * @param {Transaction} tx

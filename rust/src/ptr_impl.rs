@@ -59,8 +59,6 @@ use cardano_serialization_lib::HardForkInitiationAction;
 use cardano_serialization_lib::Header;
 use cardano_serialization_lib::HeaderBody;
 use cardano_serialization_lib::InfoAction;
-use cardano_serialization_lib::InputWithScriptWitness;
-use cardano_serialization_lib::InputsWithScriptWitness;
 use cardano_serialization_lib::Int;
 use cardano_serialization_lib::Ipv4;
 use cardano_serialization_lib::Ipv6;
@@ -103,6 +101,8 @@ use cardano_serialization_lib::PlutusWitness;
 use cardano_serialization_lib::PlutusWitnesses;
 use cardano_serialization_lib::Pointer;
 use cardano_serialization_lib::PointerAddress;
+use cardano_serialization_lib::PolicyID;
+use cardano_serialization_lib::PolicyIDs;
 use cardano_serialization_lib::PoolMetadata;
 use cardano_serialization_lib::PoolMetadataHash;
 use cardano_serialization_lib::PoolParams;
@@ -150,6 +150,7 @@ use cardano_serialization_lib::TransactionBuilder;
 use cardano_serialization_lib::TransactionBuilderConfig;
 use cardano_serialization_lib::TransactionBuilderConfigBuilder;
 use cardano_serialization_lib::TransactionHash;
+use cardano_serialization_lib::TransactionIndexes;
 use cardano_serialization_lib::TransactionInput;
 use cardano_serialization_lib::TransactionInputs;
 use cardano_serialization_lib::TransactionMetadatum;
@@ -250,8 +251,6 @@ impl RPtrRepresentable for HardForkInitiationAction {}
 impl RPtrRepresentable for Header {}
 impl RPtrRepresentable for HeaderBody {}
 impl RPtrRepresentable for InfoAction {}
-impl RPtrRepresentable for InputWithScriptWitness {}
-impl RPtrRepresentable for InputsWithScriptWitness {}
 impl RPtrRepresentable for Int {}
 impl RPtrRepresentable for Ipv4 {}
 impl RPtrRepresentable for Ipv6 {}

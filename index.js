@@ -957,6 +957,11 @@ export class Block extends Ptr {
     return Ptr._wrap(ret, Block);
   }
 
+  static async from_wrapped_bytes(data) {
+    const ret = await HaskellShelley.blockFromWrappedBytes(b64FromUint8Array(data));
+    return Ptr._wrap(ret, Block);
+  }
+
 }
 
 
@@ -2177,12 +2182,6 @@ export class DRep extends Ptr {
 
 
 export class DataCost extends Ptr {
-  static async new_coins_per_word(coins_per_word) {
-    const coins_per_wordPtr = Ptr._assertClass(coins_per_word, BigNum);
-    const ret = await HaskellShelley.dataCostNewCoinsPerWord(coins_per_wordPtr);
-    return Ptr._wrap(ret, DataCost);
-  }
-
   static async new_coins_per_byte(coins_per_byte) {
     const coins_per_bytePtr = Ptr._assertClass(coins_per_byte, BigNum);
     const ret = await HaskellShelley.dataCostNewCoinsPerByte(coins_per_bytePtr);
@@ -2362,6 +2361,11 @@ export class DrepRegistration extends Ptr {
     const anchorPtr = Ptr._assertClass(anchor, Anchor);
     const ret = await HaskellShelley.drepRegistrationNewWithAnchor(voting_credentialPtr, coinPtr, anchorPtr);
     return Ptr._wrap(ret, DrepRegistration);
+  }
+
+  async has_script_credentials() {
+    const ret = await HaskellShelley.drepRegistrationHasScriptCredentials(this.ptr);
+    return ret;
   }
 
 }
@@ -2676,6 +2680,12 @@ export class Ed25519KeyHashes extends Ptr {
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, Ed25519KeyHash);
     const ret = HaskellShelley.ed25519KeyHashesAdd(this.ptr, elemPtr);
+    return ret;
+  }
+
+  async contains(elem) {
+    const elemPtr = Ptr._assertClass(elem, Ed25519KeyHash);
+    const ret = await HaskellShelley.ed25519KeyHashesContains(this.ptr, elemPtr);
     return ret;
   }
 
@@ -3644,54 +3654,6 @@ export class InfoAction extends Ptr {
 }
 
 
-export class InputWithScriptWitness extends Ptr {
-  static async new_with_native_script_witness(input, witness) {
-    const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const witnessPtr = Ptr._assertClass(witness, NativeScript);
-    const ret = await HaskellShelley.inputWithScriptWitnessNewWithNativeScriptWitness(inputPtr, witnessPtr);
-    return Ptr._wrap(ret, InputWithScriptWitness);
-  }
-
-  static async new_with_plutus_witness(input, witness) {
-    const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const witnessPtr = Ptr._assertClass(witness, PlutusWitness);
-    const ret = await HaskellShelley.inputWithScriptWitnessNewWithPlutusWitness(inputPtr, witnessPtr);
-    return Ptr._wrap(ret, InputWithScriptWitness);
-  }
-
-  async input() {
-    const ret = await HaskellShelley.inputWithScriptWitnessInput(this.ptr);
-    return Ptr._wrap(ret, TransactionInput);
-  }
-
-}
-
-
-export class InputsWithScriptWitness extends Ptr {
-  static async new() {
-    const ret = await HaskellShelley.inputsWithScriptWitnessNew();
-    return Ptr._wrap(ret, InputsWithScriptWitness);
-  }
-
-  add(input) {
-    const inputPtr = Ptr._assertClass(input, InputWithScriptWitness);
-    const ret = HaskellShelley.inputsWithScriptWitnessAdd(this.ptr, inputPtr);
-    return ret;
-  }
-
-  async get(index) {
-    const ret = await HaskellShelley.inputsWithScriptWitnessGet(this.ptr, index);
-    return Ptr._wrap(ret, InputWithScriptWitness);
-  }
-
-  async len() {
-    const ret = await HaskellShelley.inputsWithScriptWitnessLen(this.ptr);
-    return ret;
-  }
-
-}
-
-
 export class Int extends Ptr {
   async to_bytes() {
     const ret = await HaskellShelley.intToBytes(this.ptr);
@@ -4288,12 +4250,6 @@ export class Mint extends Ptr {
   async get(key) {
     const keyPtr = Ptr._assertClass(key, ScriptHash);
     const ret = await HaskellShelley.mintGet(this.ptr, keyPtr);
-    return Ptr._wrap(ret, MintAssets);
-  }
-
-  async get_all(key) {
-    const keyPtr = Ptr._assertClass(key, ScriptHash);
-    const ret = await HaskellShelley.mintGetAll(this.ptr, keyPtr);
     return Ptr._wrap(ret, MintsAssets);
   }
 
@@ -4829,6 +4785,36 @@ export class NativeScripts extends Ptr {
     return ret;
   }
 
+  async to_bytes() {
+    const ret = await HaskellShelley.nativeScriptsToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.nativeScriptsFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, NativeScripts);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.nativeScriptsToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.nativeScriptsFromHex(hex_str);
+    return Ptr._wrap(ret, NativeScripts);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.nativeScriptsToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.nativeScriptsFromJson(json);
+    return Ptr._wrap(ret, NativeScripts);
+  }
+
 }
 
 
@@ -4907,11 +4893,6 @@ export class NetworkInfo extends Ptr {
     return Ptr._wrap(ret, NetworkInfo);
   }
 
-  static async testnet() {
-    const ret = await HaskellShelley.networkInfoTestnet();
-    return Ptr._wrap(ret, NetworkInfo);
-  }
-
   static async mainnet() {
     const ret = await HaskellShelley.networkInfoMainnet();
     return Ptr._wrap(ret, NetworkInfo);
@@ -4972,6 +4953,11 @@ export class NewConstitutionAction extends Ptr {
     const constitutionPtr = Ptr._assertClass(constitution, Constitution);
     const ret = await HaskellShelley.newConstitutionActionNewWithActionId(gov_action_idPtr, constitutionPtr);
     return Ptr._wrap(ret, NewConstitutionAction);
+  }
+
+  async has_script_hash() {
+    const ret = await HaskellShelley.newConstitutionActionHasScriptHash(this.ptr);
+    return ret;
   }
 
 }
@@ -5204,6 +5190,11 @@ export class ParameterChangeAction extends Ptr {
     return Ptr._wrap(ret, ProtocolParamUpdate);
   }
 
+  async policy_hash() {
+    const ret = await HaskellShelley.parameterChangeActionPolicyHash(this.ptr);
+    return Ptr._wrap(ret, ScriptHash);
+  }
+
   static async new(protocol_param_updates) {
     const protocol_param_updatesPtr = Ptr._assertClass(protocol_param_updates, ProtocolParamUpdate);
     const ret = await HaskellShelley.parameterChangeActionNew(protocol_param_updatesPtr);
@@ -5214,6 +5205,21 @@ export class ParameterChangeAction extends Ptr {
     const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
     const protocol_param_updatesPtr = Ptr._assertClass(protocol_param_updates, ProtocolParamUpdate);
     const ret = await HaskellShelley.parameterChangeActionNewWithActionId(gov_action_idPtr, protocol_param_updatesPtr);
+    return Ptr._wrap(ret, ParameterChangeAction);
+  }
+
+  static async new_with_policy_hash(protocol_param_updates, policy_hash) {
+    const protocol_param_updatesPtr = Ptr._assertClass(protocol_param_updates, ProtocolParamUpdate);
+    const policy_hashPtr = Ptr._assertClass(policy_hash, ScriptHash);
+    const ret = await HaskellShelley.parameterChangeActionNewWithPolicyHash(protocol_param_updatesPtr, policy_hashPtr);
+    return Ptr._wrap(ret, ParameterChangeAction);
+  }
+
+  static async new_with_policy_hash_and_action_id(gov_action_id, protocol_param_updates, policy_hash) {
+    const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
+    const protocol_param_updatesPtr = Ptr._assertClass(protocol_param_updates, ProtocolParamUpdate);
+    const policy_hashPtr = Ptr._assertClass(policy_hash, ScriptHash);
+    const ret = await HaskellShelley.parameterChangeActionNewWithPolicyHashAndActionId(gov_action_idPtr, protocol_param_updatesPtr, policy_hashPtr);
     return Ptr._wrap(ret, ParameterChangeAction);
   }
 
@@ -5518,18 +5524,11 @@ export class PlutusScriptSource extends Ptr {
     return Ptr._wrap(ret, PlutusScriptSource);
   }
 
-  static async new_ref_input(script_hash, input) {
-    const script_hashPtr = Ptr._assertClass(script_hash, ScriptHash);
-    const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const ret = await HaskellShelley.plutusScriptSourceNewRefInput(script_hashPtr, inputPtr);
-    return Ptr._wrap(ret, PlutusScriptSource);
-  }
-
-  static async new_ref_input_with_lang_ver(script_hash, input, lang_ver) {
+  static async new_ref_input(script_hash, input, lang_ver) {
     const script_hashPtr = Ptr._assertClass(script_hash, ScriptHash);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const lang_verPtr = Ptr._assertClass(lang_ver, Language);
-    const ret = await HaskellShelley.plutusScriptSourceNewRefInputWithLangVer(script_hashPtr, inputPtr, lang_verPtr);
+    const ret = await HaskellShelley.plutusScriptSourceNewRefInput(script_hashPtr, inputPtr, lang_verPtr);
     return Ptr._wrap(ret, PlutusScriptSource);
   }
 
@@ -8414,11 +8413,6 @@ export class TransactionBody extends Ptr {
     return Ptr._wrap(ret, Mint);
   }
 
-  async multiassets() {
-    const ret = await HaskellShelley.transactionBodyMultiassets(this.ptr);
-    return Ptr._wrap(ret, Mint);
-  }
-
   set_reference_inputs(reference_inputs) {
     const reference_inputsPtr = Ptr._assertClass(reference_inputs, TransactionInputs);
     const ret = HaskellShelley.transactionBodySetReferenceInputs(this.ptr, reference_inputsPtr);
@@ -8623,14 +8617,6 @@ export class TransactionBuilder extends Ptr {
     return ret;
   }
 
-  add_script_input(hash, input, amount) {
-    const hashPtr = Ptr._assertClass(hash, ScriptHash);
-    const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.transactionBuilderAddScriptInput(this.ptr, hashPtr, inputPtr, amountPtr);
-    return ret;
-  }
-
   add_native_script_input(script, input, amount) {
     const scriptPtr = Ptr._assertClass(script, NativeScript);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
@@ -8655,28 +8641,11 @@ export class TransactionBuilder extends Ptr {
     return ret;
   }
 
-  add_input(address, input, amount) {
+  add_regular_input(address, input, amount) {
     const addressPtr = Ptr._assertClass(address, Address);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.transactionBuilderAddInput(this.ptr, addressPtr, inputPtr, amountPtr);
-    return ret;
-  }
-
-  async count_missing_input_scripts() {
-    const ret = await HaskellShelley.transactionBuilderCountMissingInputScripts(this.ptr);
-    return ret;
-  }
-
-  async add_required_native_input_scripts(scripts) {
-    const scriptsPtr = Ptr._assertClass(scripts, NativeScripts);
-    const ret = await HaskellShelley.transactionBuilderAddRequiredNativeInputScripts(this.ptr, scriptsPtr);
-    return ret;
-  }
-
-  async add_required_plutus_input_scripts(scripts) {
-    const scriptsPtr = Ptr._assertClass(scripts, PlutusWitnesses);
-    const ret = await HaskellShelley.transactionBuilderAddRequiredPlutusInputScripts(this.ptr, scriptsPtr);
+    const ret = HaskellShelley.transactionBuilderAddRegularInput(this.ptr, addressPtr, inputPtr, amountPtr);
     return ret;
   }
 
@@ -9033,12 +9002,6 @@ export class TransactionBuilderConfigBuilder extends Ptr {
   async fee_algo(fee_algo) {
     const fee_algoPtr = Ptr._assertClass(fee_algo, LinearFee);
     const ret = await HaskellShelley.transactionBuilderConfigBuilderFeeAlgo(this.ptr, fee_algoPtr);
-    return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
-  }
-
-  async coins_per_utxo_word(coins_per_utxo_word) {
-    const coins_per_utxo_wordPtr = Ptr._assertClass(coins_per_utxo_word, BigNum);
-    const ret = await HaskellShelley.transactionBuilderConfigBuilderCoinsPerUtxoWord(this.ptr, coins_per_utxo_wordPtr);
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
@@ -9484,13 +9447,6 @@ export class TransactionOutputAmountBuilder extends Ptr {
     return Ptr._wrap(ret, TransactionOutputAmountBuilder);
   }
 
-  async with_asset_and_min_required_coin(multiasset, coins_per_utxo_word) {
-    const multiassetPtr = Ptr._assertClass(multiasset, MultiAsset);
-    const coins_per_utxo_wordPtr = Ptr._assertClass(coins_per_utxo_word, BigNum);
-    const ret = await HaskellShelley.transactionOutputAmountBuilderWithAssetAndMinRequiredCoin(this.ptr, multiassetPtr, coins_per_utxo_wordPtr);
-    return Ptr._wrap(ret, TransactionOutputAmountBuilder);
-  }
-
   async with_asset_and_min_required_coin_by_utxo_cost(multiasset, data_cost) {
     const multiassetPtr = Ptr._assertClass(multiasset, MultiAsset);
     const data_costPtr = Ptr._assertClass(data_cost, DataCost);
@@ -9923,9 +9879,21 @@ export class TreasuryWithdrawalsAction extends Ptr {
     return Ptr._wrap(ret, TreasuryWithdrawals);
   }
 
+  async policy_hash() {
+    const ret = await HaskellShelley.treasuryWithdrawalsActionPolicyHash(this.ptr);
+    return Ptr._wrap(ret, ScriptHash);
+  }
+
   static async new(withdrawals) {
     const withdrawalsPtr = Ptr._assertClass(withdrawals, TreasuryWithdrawals);
     const ret = await HaskellShelley.treasuryWithdrawalsActionNew(withdrawalsPtr);
+    return Ptr._wrap(ret, TreasuryWithdrawalsAction);
+  }
+
+  static async new_with_policy_hash(withdrawals, policy_hash) {
+    const withdrawalsPtr = Ptr._assertClass(withdrawals, TreasuryWithdrawals);
+    const policy_hashPtr = Ptr._assertClass(policy_hash, ScriptHash);
+    const ret = await HaskellShelley.treasuryWithdrawalsActionNewWithPolicyHash(withdrawalsPtr, policy_hashPtr);
     return Ptr._wrap(ret, TreasuryWithdrawalsAction);
   }
 
@@ -9965,14 +9933,6 @@ export class TxInputsBuilder extends Ptr {
     return ret;
   }
 
-  add_script_input(hash, input, amount) {
-    const hashPtr = Ptr._assertClass(hash, ScriptHash);
-    const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.txInputsBuilderAddScriptInput(this.ptr, hashPtr, inputPtr, amountPtr);
-    return ret;
-  }
-
   add_native_script_input(script, input, amount) {
     const scriptPtr = Ptr._assertClass(script, NativeScript);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
@@ -9997,34 +9957,11 @@ export class TxInputsBuilder extends Ptr {
     return ret;
   }
 
-  add_input(address, input, amount) {
+  add_regular_input(address, input, amount) {
     const addressPtr = Ptr._assertClass(address, Address);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.txInputsBuilderAddInput(this.ptr, addressPtr, inputPtr, amountPtr);
-    return ret;
-  }
-
-  async count_missing_input_scripts() {
-    const ret = await HaskellShelley.txInputsBuilderCountMissingInputScripts(this.ptr);
-    return ret;
-  }
-
-  async add_required_native_input_scripts(scripts) {
-    const scriptsPtr = Ptr._assertClass(scripts, NativeScripts);
-    const ret = await HaskellShelley.txInputsBuilderAddRequiredNativeInputScripts(this.ptr, scriptsPtr);
-    return ret;
-  }
-
-  async add_required_plutus_input_scripts(scripts) {
-    const scriptsPtr = Ptr._assertClass(scripts, PlutusWitnesses);
-    const ret = await HaskellShelley.txInputsBuilderAddRequiredPlutusInputScripts(this.ptr, scriptsPtr);
-    return ret;
-  }
-
-  async add_required_script_input_witnesses(inputs_with_wit) {
-    const inputs_with_witPtr = Ptr._assertClass(inputs_with_wit, InputsWithScriptWitness);
-    const ret = await HaskellShelley.txInputsBuilderAddRequiredScriptInputWitnesses(this.ptr, inputs_with_witPtr);
+    const ret = HaskellShelley.txInputsBuilderAddRegularInput(this.ptr, addressPtr, inputPtr, amountPtr);
     return ret;
   }
 
@@ -11546,14 +11483,6 @@ export const min_ada_for_output = async (output, data_cost) => {
   const outputPtr = Ptr._assertClass(output, TransactionOutput);
   const data_costPtr = Ptr._assertClass(data_cost, DataCost);
   const ret = await HaskellShelley.minAdaForOutput(outputPtr, data_costPtr);
-  return Ptr._wrap(ret, BigNum);
-};
-
-
-export const min_ada_required = async (assets, has_data_hash, coins_per_utxo_word) => {
-  const assetsPtr = Ptr._assertClass(assets, Value);
-  const coins_per_utxo_wordPtr = Ptr._assertClass(coins_per_utxo_word, BigNum);
-  const ret = await HaskellShelley.minAdaRequired(assetsPtr, has_data_hash, coins_per_utxo_wordPtr);
   return Ptr._wrap(ret, BigNum);
 };
 

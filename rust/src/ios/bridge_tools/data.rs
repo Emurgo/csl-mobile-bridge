@@ -5,6 +5,11 @@ pub struct DataPtr {
   len: usize
 }
 
+#[no_mangle]
+pub unsafe extern "C" fn free_data_ptr(data_ptr: &mut DataPtr) {
+  data_ptr.free();
+}
+
 impl DataPtr {
   pub unsafe fn rust_ref(&self) -> &[u8] {
     std::slice::from_raw_parts(self.ptr, self.len)
