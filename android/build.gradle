@@ -10,7 +10,7 @@
 //   original location:
 //   - https://github.com/facebook/react-native/blob/0.58-stable/local-cli/templates/HelloWorld/android/app/build.gradle
 
-def DEFAULT_COMPILE_SDK_VERSION = 30 
+def DEFAULT_COMPILE_SDK_VERSION = 30
 def DEFAULT_BUILD_TOOLS_VERSION = '30.0.3'
 def DEFAULT_MIN_SDK_VERSION = 21
 def DEFAULT_TARGET_SDK_VERSION = 31
@@ -89,6 +89,11 @@ tasks.whenTaskAdded { task ->
     }
 }
 
+tasks.matching { it.name.matches(/merge.*JniLibFolders/) }.configureEach {
+    it.inputs.dir(new File(buildDir, "rustJniLibs/android"))
+    it.dependsOn("cargoBuild")
+}
+
 repositories {
     // ref: https://www.baeldung.com/maven-local-repository
     mavenLocal()
@@ -161,7 +166,7 @@ afterEvaluate { project ->
     // }
 
     task androidSourcesJar(type: Jar) {
-        classifier = 'sources'
+        archiveClassifier = 'sources'
         from android.sourceSets.main.java.srcDirs
         include '**/*.java'
     }
