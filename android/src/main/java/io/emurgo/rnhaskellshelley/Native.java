@@ -18,6 +18,7 @@ final class Native {
     public final native Result<RPtr> addressFromBytes(byte[] data);
     public final native Result<String> addressToJson(RPtr self);
     public final native Result<RPtr> addressFromJson(String json);
+    public final native Result<Boolean> addressIsMalformed(RPtr self);
     public final native Result<String> addressToHex(RPtr self);
     public final native Result<RPtr> addressFromHex(String hexStr);
     public final native Result<byte[]> addressToBytes(RPtr self);
@@ -793,6 +794,10 @@ final class Native {
     public final native Result<RPtr> mIRToStakeCredentialsGet(RPtr self, RPtr cred);
     public final native Result<RPtr> mIRToStakeCredentialsKeys(RPtr self);
 
+    public final native Result<byte[]> malformedAddressOriginalBytes(RPtr self);
+    public final native Result<RPtr> malformedAddressToAddress(RPtr self);
+    public final native Result<RPtr> malformedAddressFromAddress(RPtr addr);
+
     public final native Result<byte[]> metadataListToBytes(RPtr self);
     public final native Result<RPtr> metadataListFromBytes(byte[] bytes);
     public final native Result<String> metadataListToHex(RPtr self);
@@ -846,13 +851,19 @@ final class Native {
     public final native Result<RPtr> mintBuilderGetNativeScripts(RPtr self);
     public final native Result<RPtr> mintBuilderGetPlutusWitnesses(RPtr self);
     public final native Result<RPtr> mintBuilderGetRefInputs(RPtr self);
-    public final native Result<RPtr> mintBuilderGetRedeeemers(RPtr self);
+    public final native Result<RPtr> mintBuilderGetRedeemers(RPtr self);
     public final native Result<Boolean> mintBuilderHasPlutusScripts(RPtr self);
     public final native Result<Boolean> mintBuilderHasNativeScripts(RPtr self);
 
     public final native Result<RPtr> mintWitnessNewNativeScript(RPtr nativeScript);
     public final native Result<RPtr> mintWitnessNewPlutusScript(RPtr plutusScript, RPtr redeemer);
 
+    public final native Result<String> mintsAssetsToJson(RPtr self);
+    public final native Result<RPtr> mintsAssetsFromJson(String json);
+    public final native Result<RPtr> mintsAssetsNew();
+    public final native Result<Void> mintsAssetsAdd(RPtr self, RPtr mintAssets);
+    public final native Result<RPtr> mintsAssetsGet(RPtr self, long index);
+    public final native Result<Long> mintsAssetsLen(RPtr self);
 
     public final native Result<byte[]> moveInstantaneousRewardToBytes(RPtr self);
     public final native Result<RPtr> moveInstantaneousRewardFromBytes(byte[] bytes);
@@ -1175,7 +1186,7 @@ final class Native {
     public final native Result<RPtr> poolVotingThresholdsFromHex(String hexStr);
     public final native Result<String> poolVotingThresholdsToJson(RPtr self);
     public final native Result<RPtr> poolVotingThresholdsFromJson(String json);
-    public final native Result<RPtr> poolVotingThresholdsNew(RPtr motionNoConfidence, RPtr committeeNormal, RPtr committeeNoConfidence, RPtr hardForkInitiation);
+    public final native Result<RPtr> poolVotingThresholdsNew(RPtr motionNoConfidence, RPtr committeeNormal, RPtr committeeNoConfidence, RPtr hardForkInitiation, RPtr securityRelevantThreshold);
     public final native Result<RPtr> poolVotingThresholdsMotionNoConfidence(RPtr self);
     public final native Result<RPtr> poolVotingThresholdsCommitteeNormal(RPtr self);
     public final native Result<RPtr> poolVotingThresholdsCommitteeNoConfidence(RPtr self);
@@ -1332,6 +1343,7 @@ final class Native {
     public final native Result<String> redeemersToJson(RPtr self);
     public final native Result<RPtr> redeemersFromJson(String json);
     public final native Result<RPtr> redeemersNew();
+    public final native Result<RPtr> redeemersNewWithSerializationFormat(RPtr redeemers, int serializationFormat);
     public final native Result<Long> redeemersLen(RPtr self);
     public final native Result<RPtr> redeemersGet(RPtr self, long index);
     public final native Result<Void> redeemersAdd(RPtr self, RPtr elem);

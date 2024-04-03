@@ -56,6 +56,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void addressIsMalformed(String self, Promise promise) {
+        Native.I
+            .addressIsMalformed(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void addressToHex(String self, Promise promise) {
         Native.I
             .addressToHex(new RPtr(self))
@@ -5572,6 +5579,31 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
+    public final void malformedAddressOriginalBytes(String self, Promise promise) {
+        Native.I
+            .malformedAddressOriginalBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void malformedAddressToAddress(String self, Promise promise) {
+        Native.I
+            .malformedAddressToAddress(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void malformedAddressFromAddress(String addr, Promise promise) {
+        Native.I
+            .malformedAddressFromAddress(new RPtr(addr))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
     public final void metadataListToBytes(String self, Promise promise) {
         Native.I
             .metadataListToBytes(new RPtr(self))
@@ -5960,9 +5992,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void mintBuilderGetRedeeemers(String self, Promise promise) {
+    public final void mintBuilderGetRedeemers(String self, Promise promise) {
         Native.I
-            .mintBuilderGetRedeeemers(new RPtr(self))
+            .mintBuilderGetRedeemers(new RPtr(self))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5998,6 +6030,52 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
             .pour(promise);
     }
 
+
+    @ReactMethod
+    public final void mintsAssetsToJson(String self, Promise promise) {
+        Native.I
+            .mintsAssetsToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void mintsAssetsFromJson(String json, Promise promise) {
+        Native.I
+            .mintsAssetsFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void mintsAssetsNew( Promise promise) {
+        Native.I
+            .mintsAssetsNew()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void mintsAssetsAdd(String self, String mintAssets, Promise promise) {
+        Native.I
+            .mintsAssetsAdd(new RPtr(self), new RPtr(mintAssets))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void mintsAssetsGet(String self, Double index, Promise promise) {
+        Native.I
+            .mintsAssetsGet(new RPtr(self), index.longValue())
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void mintsAssetsLen(String self, Promise promise) {
+        Native.I
+            .mintsAssetsLen(new RPtr(self))
+            .map(Utils::boxedLongToDouble)
+            .pour(promise);
+    }
 
 
     @ReactMethod
@@ -8299,9 +8377,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void poolVotingThresholdsNew(String motionNoConfidence, String committeeNormal, String committeeNoConfidence, String hardForkInitiation, Promise promise) {
+    public final void poolVotingThresholdsNew(String motionNoConfidence, String committeeNormal, String committeeNoConfidence, String hardForkInitiation, String securityRelevantThreshold, Promise promise) {
         Native.I
-            .poolVotingThresholdsNew(new RPtr(motionNoConfidence), new RPtr(committeeNormal), new RPtr(committeeNoConfidence), new RPtr(hardForkInitiation))
+            .poolVotingThresholdsNew(new RPtr(motionNoConfidence), new RPtr(committeeNormal), new RPtr(committeeNoConfidence), new RPtr(hardForkInitiation), new RPtr(securityRelevantThreshold))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -9438,6 +9516,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void redeemersNew( Promise promise) {
         Native.I
             .redeemersNew()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void redeemersNewWithSerializationFormat(String redeemers, Double serializationFormat, Promise promise) {
+        Native.I
+            .redeemersNewWithSerializationFormat(new RPtr(redeemers), serializationFormat.intValue())
             .map(RPtr::toJs)
             .pour(promise);
     }

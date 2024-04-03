@@ -93,6 +93,7 @@ use cardano_serialization_lib::LinearFee;
 use cardano_serialization_lib::MIRKind;
 use cardano_serialization_lib::MIRPot;
 use cardano_serialization_lib::MIRToStakeCredentials;
+use cardano_serialization_lib::MalformedAddress;
 use cardano_serialization_lib::MetadataJsonSchema;
 use cardano_serialization_lib::MetadataList;
 use cardano_serialization_lib::MetadataMap;
@@ -284,6 +285,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_addressFromJson(
     let json = json_str.string(&env)?;
     let result = Address::from_json(&json).into_result()?;
     result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_addressIsMalformed(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<Address>()?;
+    let result = self_rptr.is_malformed();
+    (result as jboolean).jobject(&env)
   })
   .jresult(&env)
 }
@@ -9527,6 +9541,46 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_mIRToStakeCreden
 
 #[allow(non_snake_case)]
 #[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_malformedAddressOriginalBytes(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<MalformedAddress>()?;
+    let result = self_rptr.original_bytes();
+    Ok(JObject::from_raw(env.byte_array_from_slice(&result).into_result()?))
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_malformedAddressToAddress(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<MalformedAddress>()?;
+    let result = self_rptr.to_address();
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_malformedAddressFromAddress(env: JNIEnv, _: JObject, addr_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let addr_jrptr = addr_ptr.rptr(&env)?;
+    let addr = addr_jrptr.typed_ref::<Address>()?;
+    let result = MalformedAddress::from_address(addr);
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_metadataListToBytes(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
@@ -10197,11 +10251,11 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_mintBuilderGetRe
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_mintBuilderGetRedeeemers(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_mintBuilderGetRedeemers(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
     let self_rptr = self_jrptr.typed_ref::<MintBuilder>()?;
-    let result = self_rptr.get_redeeemers().into_result()?;
+    let result = self_rptr.get_redeemers().into_result()?;
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -10262,6 +10316,84 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_mintWitnessNewPl
   .jresult(&env)
 }
 
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_mintsAssetsToJson(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<MintsAssets>()?;
+    let result = self_rptr.to_json().into_result()?;
+    result.jstring(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_mintsAssetsFromJson(env: JNIEnv, _: JObject, json_str: JString) -> jobject {
+  handle_exception_result(|| { 
+    let json = json_str.string(&env)?;
+    let result = MintsAssets::from_json(&json).into_result()?;
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_mintsAssetsNew(env: JNIEnv, _: JObject) -> jobject {
+  handle_exception_result(|| { 
+    let result = MintsAssets::new();
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_mintsAssetsAdd(env: JNIEnv, _: JObject, self_ptr: JRPtr, mint_assets_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<MintsAssets>()?;
+    let mint_assets_jrptr = mint_assets_ptr.rptr(&env)?;
+    let mint_assets = mint_assets_jrptr.typed_ref::<MintAssets>()?;
+    self_rptr.add(mint_assets);
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_mintsAssetsGet(env: JNIEnv, _: JObject, self_ptr: JRPtr, index_jlong: jlong) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<MintsAssets>()?;
+    let index = usize::try_from_jlong(index_jlong)?;
+    let result = self_rptr.get(index);
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_mintsAssetsLen(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<MintsAssets>()?;
+    let result = self_rptr.len();
+    result.into_jlong().jobject(&env)
+  })
+  .jresult(&env)
+}
 
 
 
@@ -14094,7 +14226,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_poolVotingThresh
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_poolVotingThresholdsNew(env: JNIEnv, _: JObject, motion_no_confidence_ptr: JRPtr, committee_normal_ptr: JRPtr, committee_no_confidence_ptr: JRPtr, hard_fork_initiation_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_poolVotingThresholdsNew(env: JNIEnv, _: JObject, motion_no_confidence_ptr: JRPtr, committee_normal_ptr: JRPtr, committee_no_confidence_ptr: JRPtr, hard_fork_initiation_ptr: JRPtr, security_relevant_threshold_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let motion_no_confidence_jrptr = motion_no_confidence_ptr.rptr(&env)?;
     let motion_no_confidence = motion_no_confidence_jrptr.typed_ref::<UnitInterval>()?;
@@ -14104,7 +14236,9 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_poolVotingThresh
     let committee_no_confidence = committee_no_confidence_jrptr.typed_ref::<UnitInterval>()?;
     let hard_fork_initiation_jrptr = hard_fork_initiation_ptr.rptr(&env)?;
     let hard_fork_initiation = hard_fork_initiation_jrptr.typed_ref::<UnitInterval>()?;
-    let result = PoolVotingThresholds::new(motion_no_confidence, committee_normal, committee_no_confidence, hard_fork_initiation);
+    let security_relevant_threshold_jrptr = security_relevant_threshold_ptr.rptr(&env)?;
+    let security_relevant_threshold = security_relevant_threshold_jrptr.typed_ref::<UnitInterval>()?;
+    let result = PoolVotingThresholds::new(motion_no_confidence, committee_normal, committee_no_confidence, hard_fork_initiation, security_relevant_threshold);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -16043,6 +16177,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_redeemersFromJso
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_redeemersNew(env: JNIEnv, _: JObject) -> jobject {
   handle_exception_result(|| { 
     let result = Redeemers::new();
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_redeemersNewWithSerializationFormat(env: JNIEnv, _: JObject, redeemers_ptr: JRPtr, serialization_format_jint: jint) -> jobject {
+  handle_exception_result(|| { 
+    let redeemers = redeemers_ptr.rptr(&env)?.typed_ref::<Redeemer>()?.clone();
+    let serialization_format = serialization_format_jint.to_enum()?;
+    let result = Redeemers::new_with_serialization_format(redeemers, serialization_format);
     result.rptr().jptr(&env)
   })
   .jresult(&env)

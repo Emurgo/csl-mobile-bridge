@@ -69,6 +69,7 @@ use cardano_serialization_lib::Languages;
 use cardano_serialization_lib::LegacyDaedalusPrivateKey;
 use cardano_serialization_lib::LinearFee;
 use cardano_serialization_lib::MIRToStakeCredentials;
+use cardano_serialization_lib::MalformedAddress;
 use cardano_serialization_lib::MetadataList;
 use cardano_serialization_lib::MetadataMap;
 use cardano_serialization_lib::Mint;
@@ -261,6 +262,7 @@ impl RPtrRepresentable for Languages {}
 impl RPtrRepresentable for LegacyDaedalusPrivateKey {}
 impl RPtrRepresentable for LinearFee {}
 impl RPtrRepresentable for MIRToStakeCredentials {}
+impl RPtrRepresentable for MalformedAddress {}
 impl RPtrRepresentable for MetadataList {}
 impl RPtrRepresentable for MetadataMap {}
 impl RPtrRepresentable for Mint {}

@@ -86,6 +86,7 @@ use cardano_serialization_lib::LinearFee;
 use cardano_serialization_lib::MIRKind;
 use cardano_serialization_lib::MIRPot;
 use cardano_serialization_lib::MIRToStakeCredentials;
+use cardano_serialization_lib::MalformedAddress;
 use cardano_serialization_lib::MetadataJsonSchema;
 use cardano_serialization_lib::MetadataList;
 use cardano_serialization_lib::MetadataMap;
@@ -250,6 +251,17 @@ pub unsafe extern "C" fn address_from_json(json_str: CharPtr, result: &mut RPtr,
     let json: &str = json_str.into_str();
     let result = Address::from_json(json).into_result()?;
     Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn address_is_malformed(self_rptr: RPtr, result: &mut bool, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<Address>()?;
+    let result = self_ref.is_malformed();
+    Ok::<bool, String>(result)
   })
   .response(result,  error)
 }
@@ -8184,6 +8196,40 @@ pub unsafe extern "C" fn m_i_r_to_stake_credentials_keys(self_rptr: RPtr, result
 
 
 #[no_mangle]
+pub unsafe extern "C" fn malformed_address_original_bytes(self_rptr: RPtr, result: &mut DataPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<MalformedAddress>()?;
+    let result = self_ref.original_bytes();
+    Ok::<DataPtr, String>(result.into())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn malformed_address_to_address(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<MalformedAddress>()?;
+    let result = self_ref.to_address();
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn malformed_address_from_address(addr_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let addr = addr_rptr.typed_ref::<Address>()?;
+    let result = MalformedAddress::from_address(addr);
+    Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
+  })
+  .response_nullable(result,  error)
+}
+
+
+
+#[no_mangle]
 pub unsafe extern "C" fn metadata_list_to_bytes(self_rptr: RPtr, result: &mut DataPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<MetadataList>()?;
@@ -8748,10 +8794,10 @@ pub unsafe extern "C" fn mint_builder_get_ref_inputs(self_rptr: RPtr, result: &m
 
 
 #[no_mangle]
-pub unsafe extern "C" fn mint_builder_get_redeeemers(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn mint_builder_get_redeemers(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<MintBuilder>()?;
-    let result = self_ref.get_redeeemers().into_result()?;
+    let result = self_ref.get_redeemers().into_result()?;
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -8803,6 +8849,73 @@ pub unsafe extern "C" fn mint_witness_new_plutus_script(plutus_script_rptr: RPtr
   .response(result,  error)
 }
 
+
+
+#[no_mangle]
+pub unsafe extern "C" fn mints_assets_to_json(self_rptr: RPtr, result: &mut CharPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<MintsAssets>()?;
+    let result = self_ref.to_json().into_result()?;
+    Ok::<CharPtr, String>(result.into_cstr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn mints_assets_from_json(json_str: CharPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let json: &str = json_str.into_str();
+    let result = MintsAssets::from_json(json).into_result()?;
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn mints_assets_new(result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let result = MintsAssets::new();
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn mints_assets_add(self_rptr: RPtr, mint_assets_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<MintsAssets>()?;
+    let mint_assets = mint_assets_rptr.typed_ref::<MintAssets>()?;
+    self_ref.add(mint_assets);
+    Ok(())
+  })
+  .response(&mut (),  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn mints_assets_get(self_rptr: RPtr, index_long: i64, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<MintsAssets>()?;
+    let index  = index_long as usize;
+    let result = self_ref.get(index);
+    Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
+  })
+  .response_nullable(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn mints_assets_len(self_rptr: RPtr, result: &mut i64, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<MintsAssets>()?;
+    let result = self_ref.len();
+    Ok::<i64, String>(result as i64)
+  })
+  .response(result,  error)
+}
 
 
 
@@ -12086,13 +12199,14 @@ pub unsafe extern "C" fn pool_voting_thresholds_from_json(json_str: CharPtr, res
 
 
 #[no_mangle]
-pub unsafe extern "C" fn pool_voting_thresholds_new(motion_no_confidence_rptr: RPtr, committee_normal_rptr: RPtr, committee_no_confidence_rptr: RPtr, hard_fork_initiation_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn pool_voting_thresholds_new(motion_no_confidence_rptr: RPtr, committee_normal_rptr: RPtr, committee_no_confidence_rptr: RPtr, hard_fork_initiation_rptr: RPtr, security_relevant_threshold_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let motion_no_confidence = motion_no_confidence_rptr.typed_ref::<UnitInterval>()?;
     let committee_normal = committee_normal_rptr.typed_ref::<UnitInterval>()?;
     let committee_no_confidence = committee_no_confidence_rptr.typed_ref::<UnitInterval>()?;
     let hard_fork_initiation = hard_fork_initiation_rptr.typed_ref::<UnitInterval>()?;
-    let result = PoolVotingThresholds::new(motion_no_confidence, committee_normal, committee_no_confidence, hard_fork_initiation);
+    let security_relevant_threshold = security_relevant_threshold_rptr.typed_ref::<UnitInterval>()?;
+    let result = PoolVotingThresholds::new(motion_no_confidence, committee_normal, committee_no_confidence, hard_fork_initiation, security_relevant_threshold);
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -13749,6 +13863,18 @@ pub unsafe extern "C" fn redeemers_from_json(json_str: CharPtr, result: &mut RPt
 pub unsafe extern "C" fn redeemers_new(result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let result = Redeemers::new();
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn redeemers_new_with_serialization_format(redeemers_rptr: RPtr, serialization_format_int: i32, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let redeemers = redeemers_rptr.typed_ref::<Redeemer>()?.clone();
+    let serialization_format = serialization_format_int.to_enum()?;
+    let result = Redeemers::new_with_serialization_format(redeemers, serialization_format);
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
