@@ -1,6 +1,6 @@
 [package]
 name = "csl-mobile-bridge"
-version = "5.1.2"
+version = "6.0.0-alpha.6"
 authors = ["EMURGO"]
 edition = "2018"
 
