@@ -106,6 +106,11 @@ export class Address extends Ptr {
     return Ptr._wrap(ret, Address);
   }
 
+  async is_malformed() {
+    const ret = await HaskellShelley.addressIsMalformed(this.ptr);
+    return ret;
+  }
+
   async to_hex() {
     const ret = await HaskellShelley.addressToHex(this.ptr);
     return ret;
@@ -4067,6 +4072,26 @@ export class MIRToStakeCredentials extends Ptr {
 }
 
 
+export class MalformedAddress extends Ptr {
+  async original_bytes() {
+    const ret = await HaskellShelley.malformedAddressOriginalBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  async to_address() {
+    const ret = await HaskellShelley.malformedAddressToAddress(this.ptr);
+    return Ptr._wrap(ret, Address);
+  }
+
+  static async from_address(addr) {
+    const addrPtr = Ptr._assertClass(addr, Address);
+    const ret = await HaskellShelley.malformedAddressFromAddress(addrPtr);
+    return Ptr._wrap(ret, MalformedAddress);
+  }
+
+}
+
+
 export class MetadataList extends Ptr {
   async to_bytes() {
     const ret = await HaskellShelley.metadataListToBytes(this.ptr);
@@ -4352,8 +4377,8 @@ export class MintBuilder extends Ptr {
     return Ptr._wrap(ret, TransactionInputs);
   }
 
-  async get_redeeemers() {
-    const ret = await HaskellShelley.mintBuilderGetRedeeemers(this.ptr);
+  async get_redeemers() {
+    const ret = await HaskellShelley.mintBuilderGetRedeemers(this.ptr);
     return Ptr._wrap(ret, Redeemers);
   }
 
@@ -4388,6 +4413,37 @@ export class MintWitness extends Ptr {
 
 
 export class MintsAssets extends Ptr {
+  async to_json() {
+    const ret = await HaskellShelley.mintsAssetsToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.mintsAssetsFromJson(json);
+    return Ptr._wrap(ret, MintsAssets);
+  }
+
+  static async new() {
+    const ret = await HaskellShelley.mintsAssetsNew();
+    return Ptr._wrap(ret, MintsAssets);
+  }
+
+  add(mint_assets) {
+    const mint_assetsPtr = Ptr._assertClass(mint_assets, MintAssets);
+    const ret = HaskellShelley.mintsAssetsAdd(this.ptr, mint_assetsPtr);
+    return ret;
+  }
+
+  async get(index) {
+    const ret = await HaskellShelley.mintsAssetsGet(this.ptr, index);
+    return Ptr._wrap(ret, MintAssets);
+  }
+
+  async len() {
+    const ret = await HaskellShelley.mintsAssetsLen(this.ptr);
+    return ret;
+  }
+
 }
 
 
@@ -6053,12 +6109,13 @@ export class PoolVotingThresholds extends Ptr {
     return Ptr._wrap(ret, PoolVotingThresholds);
   }
 
-  static async new(motion_no_confidence, committee_normal, committee_no_confidence, hard_fork_initiation) {
+  static async new(motion_no_confidence, committee_normal, committee_no_confidence, hard_fork_initiation, security_relevant_threshold) {
     const motion_no_confidencePtr = Ptr._assertClass(motion_no_confidence, UnitInterval);
     const committee_normalPtr = Ptr._assertClass(committee_normal, UnitInterval);
     const committee_no_confidencePtr = Ptr._assertClass(committee_no_confidence, UnitInterval);
     const hard_fork_initiationPtr = Ptr._assertClass(hard_fork_initiation, UnitInterval);
-    const ret = await HaskellShelley.poolVotingThresholdsNew(motion_no_confidencePtr, committee_normalPtr, committee_no_confidencePtr, hard_fork_initiationPtr);
+    const security_relevant_thresholdPtr = Ptr._assertClass(security_relevant_threshold, UnitInterval);
+    const ret = await HaskellShelley.poolVotingThresholdsNew(motion_no_confidencePtr, committee_normalPtr, committee_no_confidencePtr, hard_fork_initiationPtr, security_relevant_thresholdPtr);
     return Ptr._wrap(ret, PoolVotingThresholds);
   }
 
@@ -6857,6 +6914,11 @@ export class Redeemers extends Ptr {
 
   static async new() {
     const ret = await HaskellShelley.redeemersNew();
+    return Ptr._wrap(ret, Redeemers);
+  }
+
+  static async new_with_serialization_format(redeemers, serialization_format) {
+    const ret = await HaskellShelley.redeemersNewWithSerializationFormat(redeemersPtr, serialization_format);
     return Ptr._wrap(ret, Redeemers);
   }
 

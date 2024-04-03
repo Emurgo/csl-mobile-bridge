@@ -27,6 +27,11 @@ export class Address extends Ptr {
   static from_json: (json: string) => Promise<Address>;
 
   /**
+  * @returns {Promise<boolean>}
+  */
+  is_malformed: () => Promise<boolean>;
+
+  /**
   * @returns {Promise<string>}
   */
   to_hex: () => Promise<string>;
@@ -4177,6 +4182,26 @@ export class MIRToStakeCredentials extends Ptr {
 }
 
 
+export class MalformedAddress extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  original_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @returns {Promise<Address>}
+  */
+  to_address: () => Promise<Address>;
+
+  /**
+  * @param {Address} addr
+  * @returns {Promise<Optional<MalformedAddress>>}
+  */
+  static from_address: (addr: Address) => Promise<Optional<MalformedAddress>>;
+
+}
+
+
 export class MetadataList extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -4476,7 +4501,7 @@ export class MintBuilder extends Ptr {
   /**
   * @returns {Promise<Redeemers>}
   */
-  get_redeeemers: () => Promise<Redeemers>;
+  get_redeemers: () => Promise<Redeemers>;
 
   /**
   * @returns {Promise<boolean>}
@@ -4509,6 +4534,38 @@ export class MintWitness extends Ptr {
 
 
 export class MintsAssets extends Ptr {
+  /**
+  * @returns {Promise<string>}
+  */
+  to_json: () => Promise<string>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<MintsAssets>}
+  */
+  static from_json: (json: string) => Promise<MintsAssets>;
+
+  /**
+  * @returns {Promise<MintsAssets>}
+  */
+  static new: () => Promise<MintsAssets>;
+
+  /**
+  * @param {MintAssets} mint_assets
+  */
+  add: (mint_assets: MintAssets) => Promise<void>;
+
+  /**
+  * @param {number} index
+  * @returns {Promise<Optional<MintAssets>>}
+  */
+  get: (index: number) => Promise<Optional<MintAssets>>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len: () => Promise<number>;
+
 }
 
 
@@ -6263,9 +6320,10 @@ export class PoolVotingThresholds extends Ptr {
   * @param {UnitInterval} committee_normal
   * @param {UnitInterval} committee_no_confidence
   * @param {UnitInterval} hard_fork_initiation
+  * @param {UnitInterval} security_relevant_threshold
   * @returns {Promise<PoolVotingThresholds>}
   */
-  static new: (motion_no_confidence: UnitInterval, committee_normal: UnitInterval, committee_no_confidence: UnitInterval, hard_fork_initiation: UnitInterval) => Promise<PoolVotingThresholds>;
+  static new: (motion_no_confidence: UnitInterval, committee_normal: UnitInterval, committee_no_confidence: UnitInterval, hard_fork_initiation: UnitInterval, security_relevant_threshold: UnitInterval) => Promise<PoolVotingThresholds>;
 
   /**
   * @returns {Promise<UnitInterval>}
@@ -7075,6 +7133,13 @@ export class Redeemers extends Ptr {
   * @returns {Promise<Redeemers>}
   */
   static new: () => Promise<Redeemers>;
+
+  /**
+  * @param {Redeemer} redeemers
+  * @param {CborContainerType} serialization_format
+  * @returns {Promise<Redeemers>}
+  */
+  static new_with_serialization_format: (redeemers: Redeemer, serialization_format: CborContainerType) => Promise<Redeemers>;
 
   /**
   * @returns {Promise<number>}
