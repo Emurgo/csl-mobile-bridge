@@ -106,6 +106,16 @@ export class Address extends Ptr {
     return Ptr._wrap(ret, Address);
   }
 
+  async kind() {
+    const ret = await HaskellShelley.addressKind(this.ptr);
+    return ret;
+  }
+
+  async payment_cred() {
+    const ret = await HaskellShelley.addressPaymentCred(this.ptr);
+    return Ptr._wrap(ret, Credential);
+  }
+
   async is_malformed() {
     const ret = await HaskellShelley.addressIsMalformed(this.ptr);
     return ret;
@@ -1500,6 +1510,34 @@ export class CertificatesBuilder extends Ptr {
   async build() {
     const ret = await HaskellShelley.certificatesBuilderBuild(this.ptr);
     return Ptr._wrap(ret, Certificates);
+  }
+
+}
+
+
+export class ChangeConfig extends Ptr {
+  static async new(address) {
+    const addressPtr = Ptr._assertClass(address, Address);
+    const ret = await HaskellShelley.changeConfigNew(addressPtr);
+    return Ptr._wrap(ret, ChangeConfig);
+  }
+
+  async change_address(address) {
+    const addressPtr = Ptr._assertClass(address, Address);
+    const ret = await HaskellShelley.changeConfigChangeAddress(this.ptr, addressPtr);
+    return Ptr._wrap(ret, ChangeConfig);
+  }
+
+  async change_plutus_data(plutus_data) {
+    const plutus_dataPtr = Ptr._assertClass(plutus_data, OutputDatum);
+    const ret = await HaskellShelley.changeConfigChangePlutusData(this.ptr, plutus_dataPtr);
+    return Ptr._wrap(ret, ChangeConfig);
+  }
+
+  async change_script_ref(script_ref) {
+    const script_refPtr = Ptr._assertClass(script_ref, ScriptRef);
+    const ret = await HaskellShelley.changeConfigChangeScriptRef(this.ptr, script_refPtr);
+    return Ptr._wrap(ret, ChangeConfig);
   }
 
 }
@@ -4808,12 +4846,17 @@ export class NativeScriptSource extends Ptr {
     return Ptr._wrap(ret, NativeScriptSource);
   }
 
-  static async new_ref_input(script_hash, input, required_signers) {
+  static async new_ref_input(script_hash, input) {
     const script_hashPtr = Ptr._assertClass(script_hash, ScriptHash);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const required_signersPtr = Ptr._assertClass(required_signers, Ed25519KeyHashes);
-    const ret = await HaskellShelley.nativeScriptSourceNewRefInput(script_hashPtr, inputPtr, required_signersPtr);
+    const ret = await HaskellShelley.nativeScriptSourceNewRefInput(script_hashPtr, inputPtr);
     return Ptr._wrap(ret, NativeScriptSource);
+  }
+
+  set_required_signers(key_hashes) {
+    const key_hashesPtr = Ptr._assertClass(key_hashes, Ed25519KeyHashes);
+    const ret = HaskellShelley.nativeScriptSourceSetRequiredSigners(this.ptr, key_hashesPtr);
+    return ret;
   }
 
 }
@@ -5580,12 +5623,23 @@ export class PlutusScriptSource extends Ptr {
     return Ptr._wrap(ret, PlutusScriptSource);
   }
 
-  static async new_ref_input(script_hash, input, lang_ver) {
+  static async new_ref_input(script_hash, input, lang_ver, script_size) {
     const script_hashPtr = Ptr._assertClass(script_hash, ScriptHash);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const lang_verPtr = Ptr._assertClass(lang_ver, Language);
-    const ret = await HaskellShelley.plutusScriptSourceNewRefInput(script_hashPtr, inputPtr, lang_verPtr);
+    const ret = await HaskellShelley.plutusScriptSourceNewRefInput(script_hashPtr, inputPtr, lang_verPtr, script_size);
     return Ptr._wrap(ret, PlutusScriptSource);
+  }
+
+  set_required_signers(key_hashes) {
+    const key_hashesPtr = Ptr._assertClass(key_hashes, Ed25519KeyHashes);
+    const ret = HaskellShelley.plutusScriptSourceSetRequiredSigners(this.ptr, key_hashesPtr);
+    return ret;
+  }
+
+  async get_ref_script_size() {
+    const ret = await HaskellShelley.plutusScriptSourceGetRefScriptSize(this.ptr);
+    return ret;
   }
 
 }
@@ -6622,6 +6676,17 @@ export class ProtocolParamUpdate extends Ptr {
     return ret;
   }
 
+  set_ref_script_coins_per_byte(ref_script_coins_per_byte) {
+    const ref_script_coins_per_bytePtr = Ptr._assertClass(ref_script_coins_per_byte, UnitInterval);
+    const ret = HaskellShelley.protocolParamUpdateSetRefScriptCoinsPerByte(this.ptr, ref_script_coins_per_bytePtr);
+    return ret;
+  }
+
+  async ref_script_coins_per_byte() {
+    const ret = await HaskellShelley.protocolParamUpdateRefScriptCoinsPerByte(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
   static async new() {
     const ret = await HaskellShelley.protocolParamUpdateNew();
     return Ptr._wrap(ret, ProtocolParamUpdate);
@@ -6914,11 +6979,6 @@ export class Redeemers extends Ptr {
 
   static async new() {
     const ret = await HaskellShelley.redeemersNew();
-    return Ptr._wrap(ret, Redeemers);
-  }
-
-  static async new_with_serialization_format(redeemers, serialization_format) {
-    const ret = await HaskellShelley.redeemersNewWithSerializationFormat(redeemersPtr, serialization_format);
     return Ptr._wrap(ret, Redeemers);
   }
 
@@ -8646,6 +8706,11 @@ export class TransactionBuilder extends Ptr {
     return ret;
   }
 
+  remove_collateral_return() {
+    const ret = HaskellShelley.transactionBuilderRemoveCollateralReturn(this.ptr);
+    return ret;
+  }
+
   set_collateral_return_and_total(collateral_return) {
     const collateral_returnPtr = Ptr._assertClass(collateral_return, TransactionOutput);
     const ret = HaskellShelley.transactionBuilderSetCollateralReturnAndTotal(this.ptr, collateral_returnPtr);
@@ -8655,6 +8720,11 @@ export class TransactionBuilder extends Ptr {
   set_total_collateral(total_collateral) {
     const total_collateralPtr = Ptr._assertClass(total_collateral, BigNum);
     const ret = HaskellShelley.transactionBuilderSetTotalCollateral(this.ptr, total_collateralPtr);
+    return ret;
+  }
+
+  remove_total_collateral() {
+    const ret = HaskellShelley.transactionBuilderRemoveTotalCollateral(this.ptr);
     return ret;
   }
 
@@ -8668,6 +8738,12 @@ export class TransactionBuilder extends Ptr {
   add_reference_input(reference_input) {
     const reference_inputPtr = Ptr._assertClass(reference_input, TransactionInput);
     const ret = HaskellShelley.transactionBuilderAddReferenceInput(this.ptr, reference_inputPtr);
+    return ret;
+  }
+
+  add_script_reference_input(reference_input, script_size) {
+    const reference_inputPtr = Ptr._assertClass(reference_input, TransactionInput);
+    const ret = HaskellShelley.transactionBuilderAddScriptReferenceInput(this.ptr, reference_inputPtr, script_size);
     return ret;
   }
 
@@ -8708,6 +8784,20 @@ export class TransactionBuilder extends Ptr {
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
     const ret = HaskellShelley.transactionBuilderAddRegularInput(this.ptr, addressPtr, inputPtr, amountPtr);
+    return ret;
+  }
+
+  async add_inputs_from_and_change(inputs, strategy, change_config) {
+    const inputsPtr = Ptr._assertClass(inputs, TransactionUnspentOutputs);
+    const change_configPtr = Ptr._assertClass(change_config, ChangeConfig);
+    const ret = await HaskellShelley.transactionBuilderAddInputsFromAndChange(this.ptr, inputsPtr, strategy, change_configPtr);
+    return ret;
+  }
+
+  async add_inputs_from_and_change_with_collateral_return(inputs, strategy, change_config, collateral_percentage) {
+    const inputsPtr = Ptr._assertClass(inputs, TransactionUnspentOutputs);
+    const change_configPtr = Ptr._assertClass(change_config, ChangeConfig);
+    const ret = await HaskellShelley.transactionBuilderAddInputsFromAndChangeWithCollateralReturn(this.ptr, inputsPtr, strategy, change_configPtr, collateral_percentage);
     return ret;
   }
 
@@ -8758,6 +8848,11 @@ export class TransactionBuilder extends Ptr {
     return ret;
   }
 
+  remove_ttl() {
+    const ret = HaskellShelley.transactionBuilderRemoveTtl(this.ptr);
+    return ret;
+  }
+
   set_validity_start_interval(validity_start_interval) {
     const ret = HaskellShelley.transactionBuilderSetValidityStartInterval(this.ptr, validity_start_interval);
     return ret;
@@ -8769,9 +8864,19 @@ export class TransactionBuilder extends Ptr {
     return ret;
   }
 
+  remove_validity_start_interval() {
+    const ret = HaskellShelley.transactionBuilderRemoveValidityStartInterval(this.ptr);
+    return ret;
+  }
+
   set_certs(certs) {
     const certsPtr = Ptr._assertClass(certs, Certificates);
     const ret = HaskellShelley.transactionBuilderSetCerts(this.ptr, certsPtr);
+    return ret;
+  }
+
+  remove_certs() {
+    const ret = HaskellShelley.transactionBuilderRemoveCerts(this.ptr);
     return ret;
   }
 
@@ -8805,6 +8910,11 @@ export class TransactionBuilder extends Ptr {
     return ret;
   }
 
+  remove_withdrawals() {
+    const ret = HaskellShelley.transactionBuilderRemoveWithdrawals(this.ptr);
+    return ret;
+  }
+
   async get_auxiliary_data() {
     const ret = await HaskellShelley.transactionBuilderGetAuxiliaryData(this.ptr);
     return Ptr._wrap(ret, AuxiliaryData);
@@ -8813,6 +8923,11 @@ export class TransactionBuilder extends Ptr {
   set_auxiliary_data(auxiliary_data) {
     const auxiliary_dataPtr = Ptr._assertClass(auxiliary_data, AuxiliaryData);
     const ret = HaskellShelley.transactionBuilderSetAuxiliaryData(this.ptr, auxiliary_dataPtr);
+    return ret;
+  }
+
+  remove_auxiliary_data() {
+    const ret = HaskellShelley.transactionBuilderRemoveAuxiliaryData(this.ptr);
     return ret;
   }
 
@@ -8844,6 +8959,11 @@ export class TransactionBuilder extends Ptr {
   set_mint_builder(mint_builder) {
     const mint_builderPtr = Ptr._assertClass(mint_builder, MintBuilder);
     const ret = HaskellShelley.transactionBuilderSetMintBuilder(this.ptr, mint_builderPtr);
+    return ret;
+  }
+
+  remove_mint_builder() {
+    const ret = HaskellShelley.transactionBuilderRemoveMintBuilder(this.ptr);
     return ret;
   }
 
@@ -9098,6 +9218,12 @@ export class TransactionBuilderConfigBuilder extends Ptr {
 
   async max_tx_size(max_tx_size) {
     const ret = await HaskellShelley.transactionBuilderConfigBuilderMaxTxSize(this.ptr, max_tx_size);
+    return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
+  }
+
+  async ref_script_coins_per_byte(ref_script_coins_per_byte) {
+    const ref_script_coins_per_bytePtr = Ptr._assertClass(ref_script_coins_per_byte, UnitInterval);
+    const ret = await HaskellShelley.transactionBuilderConfigBuilderRefScriptCoinsPerByte(this.ptr, ref_script_coins_per_bytePtr);
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
@@ -11557,12 +11683,29 @@ export const min_fee = async (tx, linear_fee) => {
 };
 
 
+export const min_ref_script_fee = async (total_ref_scripts_size, ref_script_coins_per_byte) => {
+  const ref_script_coins_per_bytePtr = Ptr._assertClass(ref_script_coins_per_byte, UnitInterval);
+  const ret = await HaskellShelley.minRefScriptFee(total_ref_scripts_size, ref_script_coins_per_bytePtr);
+  return Ptr._wrap(ret, BigNum);
+};
+
+
 export const min_script_fee = async (tx, ex_unit_prices) => {
   const txPtr = Ptr._assertClass(tx, Transaction);
   const ex_unit_pricesPtr = Ptr._assertClass(ex_unit_prices, ExUnitPrices);
   const ret = await HaskellShelley.minScriptFee(txPtr, ex_unit_pricesPtr);
   return Ptr._wrap(ret, BigNum);
 };
+
+
+export const AddressKind = Object.freeze({
+  Base: 0,
+  Pointer: 1,
+  Enterprise: 2,
+  Reward: 3,
+  Byron: 4,
+  Malformed: 5,
+});
 
 
 export const CborContainerType = Object.freeze({

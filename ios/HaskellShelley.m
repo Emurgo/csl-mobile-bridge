@@ -56,6 +56,28 @@ RCT_EXPORT_METHOD(addressFromJson:(nonnull NSString *)jsonVal withResolve:(RCTPr
     }] exec:jsonVal andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(addressKind:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* selfPtr, CharPtr* error) {
+        int32_t result;
+        RPtr self = [selfPtr  rPtr];
+        return address_kind(self, &result, error)
+            ? [NSNumber numberWithLong:result]
+            : nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(addressPaymentCred:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
+        RPtr result;
+        RPtr self = [selfPtr  rPtr];
+        return address_payment_cred(self, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(addressIsMalformed:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSNumber*(NSString* selfPtr, CharPtr* error) {
@@ -2848,6 +2870,54 @@ RCT_EXPORT_METHOD(certificatesBuilderBuild:(nonnull NSString *)selfPtr withResol
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
+
+RCT_EXPORT_METHOD(changeConfigNew:(nonnull NSString *)addressPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* addressPtr, CharPtr* error) {
+        RPtr result;
+        RPtr address = [addressPtr  rPtr];
+        return change_config_new(address, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:addressPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(changeConfigChangeAddress:(nonnull NSString *)selfPtr withAddress:(nonnull NSString *)addressPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr address = [[params objectAtIndex:1]  rPtr];
+        return change_config_change_address(self, address, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[selfPtr, addressPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(changeConfigChangePlutusData:(nonnull NSString *)selfPtr withPlutusData:(nonnull NSString *)plutusDataPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr plutusData = [[params objectAtIndex:1]  rPtr];
+        return change_config_change_plutus_data(self, plutusData, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[selfPtr, plutusDataPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(changeConfigChangeScriptRef:(nonnull NSString *)selfPtr withScriptRef:(nonnull NSString *)scriptRefPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr scriptRef = [[params objectAtIndex:1]  rPtr];
+        return change_config_change_script_ref(self, scriptRef, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[selfPtr, scriptRefPtr] andResolve:resolve orReject:reject];
 }
 
 
@@ -9374,17 +9444,26 @@ RCT_EXPORT_METHOD(nativeScriptSourceNew:(nonnull NSString *)scriptPtr withResolv
     }] exec:scriptPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(nativeScriptSourceNewRefInput:(nonnull NSString *)scriptHashPtr withInput:(nonnull NSString *)inputPtr withRequiredSigners:(nonnull NSString *)requiredSignersPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(nativeScriptSourceNewRefInput:(nonnull NSString *)scriptHashPtr withInput:(nonnull NSString *)inputPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr result;
         RPtr scriptHash = [[params objectAtIndex:0]  rPtr];
         RPtr input = [[params objectAtIndex:1]  rPtr];
-        RPtr requiredSigners = [[params objectAtIndex:2]  rPtr];
-        return native_script_source_new_ref_input(scriptHash, input, requiredSigners, &result, error)
+        return native_script_source_new_ref_input(scriptHash, input, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
-    }] exec:@[scriptHashPtr, inputPtr, requiredSignersPtr] andResolve:resolve orReject:reject];
+    }] exec:@[scriptHashPtr, inputPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(nativeScriptSourceSetRequiredSigners:(nonnull NSString *)selfPtr withKeyHashes:(nonnull NSString *)keyHashesPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr keyHashes = [[params objectAtIndex:1]  rPtr];
+        native_script_source_set_required_signers(self, keyHashes, error);
+        return nil;
+    }] exec:@[selfPtr, keyHashesPtr] andResolve:resolve orReject:reject];
 }
 
 
@@ -10894,17 +10973,39 @@ RCT_EXPORT_METHOD(plutusScriptSourceNew:(nonnull NSString *)scriptPtr withResolv
     }] exec:scriptPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(plutusScriptSourceNewRefInput:(nonnull NSString *)scriptHashPtr withInput:(nonnull NSString *)inputPtr withLangVer:(nonnull NSString *)langVerPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(plutusScriptSourceNewRefInput:(nonnull NSString *)scriptHashPtr withInput:(nonnull NSString *)inputPtr withLangVer:(nonnull NSString *)langVerPtr withScriptSize:(nonnull NSNumber *)scriptSizeVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr result;
         RPtr scriptHash = [[params objectAtIndex:0]  rPtr];
         RPtr input = [[params objectAtIndex:1]  rPtr];
         RPtr langVer = [[params objectAtIndex:2]  rPtr];
-        return plutus_script_source_new_ref_input(scriptHash, input, langVer, &result, error)
+        int64_t scriptSize = [[params objectAtIndex:3]  longLongValue];
+        return plutus_script_source_new_ref_input(scriptHash, input, langVer, scriptSize, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
-    }] exec:@[scriptHashPtr, inputPtr, langVerPtr] andResolve:resolve orReject:reject];
+    }] exec:@[scriptHashPtr, inputPtr, langVerPtr, scriptSizeVal] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(plutusScriptSourceSetRequiredSigners:(nonnull NSString *)selfPtr withKeyHashes:(nonnull NSString *)keyHashesPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr keyHashes = [[params objectAtIndex:1]  rPtr];
+        plutus_script_source_set_required_signers(self, keyHashes, error);
+        return nil;
+    }] exec:@[selfPtr, keyHashesPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(plutusScriptSourceGetRefScriptSize:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSString* selfPtr, CharPtr* error) {
+        int64_t result;
+        RPtr self = [selfPtr  rPtr];
+        return plutus_script_source_get_ref_script_size(self, &result, error)
+            ? [NSNumber numberWithLongLong:result]
+            : nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
 
@@ -12949,6 +13050,27 @@ RCT_EXPORT_METHOD(protocolParamUpdateDrepInactivityPeriod:(nonnull NSString *)se
     }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(protocolParamUpdateSetRefScriptCoinsPerByte:(nonnull NSString *)selfPtr withRefScriptCoinsPerByte:(nonnull NSString *)refScriptCoinsPerBytePtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr refScriptCoinsPerByte = [[params objectAtIndex:1]  rPtr];
+        protocol_param_update_set_ref_script_coins_per_byte(self, refScriptCoinsPerByte, error);
+        return nil;
+    }] exec:@[selfPtr, refScriptCoinsPerBytePtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(protocolParamUpdateRefScriptCoinsPerByte:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
+        RPtr result;
+        RPtr self = [selfPtr  rPtr];
+        return protocol_param_update_ref_script_coins_per_byte(self, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(protocolParamUpdateNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(id _void, CharPtr* error) {
@@ -13533,18 +13655,6 @@ RCT_EXPORT_METHOD(redeemersNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPro
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:nil andResolve:resolve orReject:reject];
-}
-
-RCT_EXPORT_METHOD(redeemersNewWithSerializationFormat:(nonnull NSString *)redeemersPtr withSerializationFormat:(nonnull NSNumber *)serializationFormatVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
-{
-    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
-        RPtr result;
-        RPtr redeemers = [[params objectAtIndex:0]  rPtr];
-        int32_t serializationFormat = [[params objectAtIndex:1]  integerValue];
-        return redeemers_new_with_serialization_format(redeemers, serializationFormat, &result, error)
-            ? [NSString stringFromPtr:result]
-            : nil;
-    }] exec:@[redeemersPtr, serializationFormatVal] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(redeemersLen:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -16969,6 +17079,15 @@ RCT_EXPORT_METHOD(transactionBuilderSetCollateralReturn:(nonnull NSString *)self
     }] exec:@[selfPtr, collateralReturnPtr] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(transactionBuilderRemoveCollateralReturn:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
+        RPtr self = [selfPtr  rPtr];
+        transaction_builder_remove_collateral_return(self, error);
+        return nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(transactionBuilderSetCollateralReturnAndTotal:(nonnull NSString *)selfPtr withCollateralReturn:(nonnull NSString *)collateralReturnPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
@@ -16987,6 +17106,15 @@ RCT_EXPORT_METHOD(transactionBuilderSetTotalCollateral:(nonnull NSString *)selfP
         transaction_builder_set_total_collateral(self, totalCollateral, error);
         return nil;
     }] exec:@[selfPtr, totalCollateralPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderRemoveTotalCollateral:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
+        RPtr self = [selfPtr  rPtr];
+        transaction_builder_remove_total_collateral(self, error);
+        return nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(transactionBuilderSetTotalCollateralAndReturn:(nonnull NSString *)selfPtr withTotalCollateral:(nonnull NSString *)totalCollateralPtr withReturnAddress:(nonnull NSString *)returnAddressPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -17008,6 +17136,17 @@ RCT_EXPORT_METHOD(transactionBuilderAddReferenceInput:(nonnull NSString *)selfPt
         transaction_builder_add_reference_input(self, referenceInput, error);
         return nil;
     }] exec:@[selfPtr, referenceInputPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderAddScriptReferenceInput:(nonnull NSString *)selfPtr withReferenceInput:(nonnull NSString *)referenceInputPtr withScriptSize:(nonnull NSNumber *)scriptSizeVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr referenceInput = [[params objectAtIndex:1]  rPtr];
+        int64_t scriptSize = [[params objectAtIndex:2]  longLongValue];
+        transaction_builder_add_script_reference_input(self, referenceInput, scriptSize, error);
+        return nil;
+    }] exec:@[selfPtr, referenceInputPtr, scriptSizeVal] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(transactionBuilderAddKeyInput:(nonnull NSString *)selfPtr withHash:(nonnull NSString *)hashPtr withInput:(nonnull NSString *)inputPtr withAmount:(nonnull NSString *)amountPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -17068,6 +17207,35 @@ RCT_EXPORT_METHOD(transactionBuilderAddRegularInput:(nonnull NSString *)selfPtr 
         transaction_builder_add_regular_input(self, address, input, amount, error);
         return nil;
     }] exec:@[selfPtr, addressPtr, inputPtr, amountPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderAddInputsFromAndChange:(nonnull NSString *)selfPtr withInputs:(nonnull NSString *)inputsPtr withStrategy:(nonnull NSNumber *)strategyVal withChangeConfig:(nonnull NSString *)changeConfigPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSArray* params, CharPtr* error) {
+        BOOL result;
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr inputs = [[params objectAtIndex:1]  rPtr];
+        int32_t strategy = [[params objectAtIndex:2]  integerValue];
+        RPtr changeConfig = [[params objectAtIndex:3]  rPtr];
+        return transaction_builder_add_inputs_from_and_change(self, inputs, strategy, changeConfig, &result, error)
+            ? [NSNumber numberWithBool:result]
+            : nil;
+    }] exec:@[selfPtr, inputsPtr, strategyVal, changeConfigPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderAddInputsFromAndChangeWithCollateralReturn:(nonnull NSString *)selfPtr withInputs:(nonnull NSString *)inputsPtr withStrategy:(nonnull NSNumber *)strategyVal withChangeConfig:(nonnull NSString *)changeConfigPtr withCollateralPercentage:(nonnull NSNumber *)collateralPercentageVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSNumber*(NSArray* params, CharPtr* error) {
+        BOOL result;
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr inputs = [[params objectAtIndex:1]  rPtr];
+        int32_t strategy = [[params objectAtIndex:2]  integerValue];
+        RPtr changeConfig = [[params objectAtIndex:3]  rPtr];
+        int64_t collateralPercentage = [[params objectAtIndex:4]  longLongValue];
+        return transaction_builder_add_inputs_from_and_change_with_collateral_return(self, inputs, strategy, changeConfig, collateralPercentage, &result, error)
+            ? [NSNumber numberWithBool:result]
+            : nil;
+    }] exec:@[selfPtr, inputsPtr, strategyVal, changeConfigPtr, collateralPercentageVal] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(transactionBuilderGetNativeInputScripts:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -17158,6 +17326,15 @@ RCT_EXPORT_METHOD(transactionBuilderSetTtlBignum:(nonnull NSString *)selfPtr wit
     }] exec:@[selfPtr, ttlPtr] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(transactionBuilderRemoveTtl:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
+        RPtr self = [selfPtr  rPtr];
+        transaction_builder_remove_ttl(self, error);
+        return nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(transactionBuilderSetValidityStartInterval:(nonnull NSString *)selfPtr withValidityStartInterval:(nonnull NSNumber *)validityStartIntervalVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
@@ -17178,6 +17355,15 @@ RCT_EXPORT_METHOD(transactionBuilderSetValidityStartIntervalBignum:(nonnull NSSt
     }] exec:@[selfPtr, validityStartIntervalPtr] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(transactionBuilderRemoveValidityStartInterval:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
+        RPtr self = [selfPtr  rPtr];
+        transaction_builder_remove_validity_start_interval(self, error);
+        return nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(transactionBuilderSetCerts:(nonnull NSString *)selfPtr withCerts:(nonnull NSString *)certsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
@@ -17186,6 +17372,15 @@ RCT_EXPORT_METHOD(transactionBuilderSetCerts:(nonnull NSString *)selfPtr withCer
         transaction_builder_set_certs(self, certs, error);
         return nil;
     }] exec:@[selfPtr, certsPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderRemoveCerts:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
+        RPtr self = [selfPtr  rPtr];
+        transaction_builder_remove_certs(self, error);
+        return nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(transactionBuilderSetCertsBuilder:(nonnull NSString *)selfPtr withCerts:(nonnull NSString *)certsPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -17238,6 +17433,15 @@ RCT_EXPORT_METHOD(transactionBuilderSetVotingProposalBuilder:(nonnull NSString *
     }] exec:@[selfPtr, votingProposalBuilderPtr] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(transactionBuilderRemoveWithdrawals:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
+        RPtr self = [selfPtr  rPtr];
+        transaction_builder_remove_withdrawals(self, error);
+        return nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(transactionBuilderGetAuxiliaryData:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
@@ -17257,6 +17461,15 @@ RCT_EXPORT_METHOD(transactionBuilderSetAuxiliaryData:(nonnull NSString *)selfPtr
         transaction_builder_set_auxiliary_data(self, auxiliaryData, error);
         return nil;
     }] exec:@[selfPtr, auxiliaryDataPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderRemoveAuxiliaryData:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
+        RPtr self = [selfPtr  rPtr];
+        transaction_builder_remove_auxiliary_data(self, error);
+        return nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(transactionBuilderSetMetadata:(nonnull NSString *)selfPtr withMetadata:(nonnull NSString *)metadataPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -17311,6 +17524,15 @@ RCT_EXPORT_METHOD(transactionBuilderSetMintBuilder:(nonnull NSString *)selfPtr w
         transaction_builder_set_mint_builder(self, mintBuilder, error);
         return nil;
     }] exec:@[selfPtr, mintBuilderPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderRemoveMintBuilder:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
+        RPtr self = [selfPtr  rPtr];
+        transaction_builder_remove_mint_builder(self, error);
+        return nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(transactionBuilderGetMintBuilder:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -17793,6 +18015,18 @@ RCT_EXPORT_METHOD(transactionBuilderConfigBuilderMaxTxSize:(nonnull NSString *)s
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:@[selfPtr, maxTxSizeVal] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(transactionBuilderConfigBuilderRefScriptCoinsPerByte:(nonnull NSString *)selfPtr withRefScriptCoinsPerByte:(nonnull NSString *)refScriptCoinsPerBytePtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr refScriptCoinsPerByte = [[params objectAtIndex:1]  rPtr];
+        return transaction_builder_config_builder_ref_script_coins_per_byte(self, refScriptCoinsPerByte, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[selfPtr, refScriptCoinsPerBytePtr] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(transactionBuilderConfigBuilderPreferPureChange:(nonnull NSString *)selfPtr withPreferPureChange:(nonnull NSNumber *)preferPureChangeVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -22526,6 +22760,18 @@ RCT_EXPORT_METHOD(minFee:(nonnull NSString *)txPtr withLinearFee:(nonnull NSStri
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:@[txPtr, linearFeePtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(minRefScriptFee:(nonnull NSNumber *)totalRefScriptsSizeVal withRefScriptCoinsPerByte:(nonnull NSString *)refScriptCoinsPerBytePtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        int64_t totalRefScriptsSize = [[params objectAtIndex:0]  longLongValue];
+        RPtr refScriptCoinsPerByte = [[params objectAtIndex:1]  rPtr];
+        return min_ref_script_fee(totalRefScriptsSize, refScriptCoinsPerByte, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[totalRefScriptsSizeVal, refScriptCoinsPerBytePtr] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(minScriptFee:(nonnull NSString *)txPtr withExUnitPrices:(nonnull NSString *)exUnitPricesPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)

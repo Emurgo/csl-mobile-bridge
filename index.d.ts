@@ -27,6 +27,16 @@ export class Address extends Ptr {
   static from_json: (json: string) => Promise<Address>;
 
   /**
+  * @returns {Promise<AddressKind>}
+  */
+  kind: () => Promise<AddressKind>;
+
+  /**
+  * @returns {Promise<Optional<Credential>>}
+  */
+  payment_cred: () => Promise<Optional<Credential>>;
+
+  /**
   * @returns {Promise<boolean>}
   */
   is_malformed: () => Promise<boolean>;
@@ -1485,6 +1495,34 @@ export class CertificatesBuilder extends Ptr {
   * @returns {Promise<Certificates>}
   */
   build: () => Promise<Certificates>;
+
+}
+
+
+export class ChangeConfig extends Ptr {
+  /**
+  * @param {Address} address
+  * @returns {Promise<ChangeConfig>}
+  */
+  static new: (address: Address) => Promise<ChangeConfig>;
+
+  /**
+  * @param {Address} address
+  * @returns {Promise<ChangeConfig>}
+  */
+  change_address: (address: Address) => Promise<ChangeConfig>;
+
+  /**
+  * @param {OutputDatum} plutus_data
+  * @returns {Promise<ChangeConfig>}
+  */
+  change_plutus_data: (plutus_data: OutputDatum) => Promise<ChangeConfig>;
+
+  /**
+  * @param {ScriptRef} script_ref
+  * @returns {Promise<ChangeConfig>}
+  */
+  change_script_ref: (script_ref: ScriptRef) => Promise<ChangeConfig>;
 
 }
 
@@ -4950,10 +4988,14 @@ export class NativeScriptSource extends Ptr {
   /**
   * @param {ScriptHash} script_hash
   * @param {TransactionInput} input
-  * @param {Ed25519KeyHashes} required_signers
   * @returns {Promise<NativeScriptSource>}
   */
-  static new_ref_input: (script_hash: ScriptHash, input: TransactionInput, required_signers: Ed25519KeyHashes) => Promise<NativeScriptSource>;
+  static new_ref_input: (script_hash: ScriptHash, input: TransactionInput) => Promise<NativeScriptSource>;
+
+  /**
+  * @param {Ed25519KeyHashes} key_hashes
+  */
+  set_required_signers: (key_hashes: Ed25519KeyHashes) => Promise<void>;
 
 }
 
@@ -5769,9 +5811,20 @@ export class PlutusScriptSource extends Ptr {
   * @param {ScriptHash} script_hash
   * @param {TransactionInput} input
   * @param {Language} lang_ver
+  * @param {number} script_size
   * @returns {Promise<PlutusScriptSource>}
   */
-  static new_ref_input: (script_hash: ScriptHash, input: TransactionInput, lang_ver: Language) => Promise<PlutusScriptSource>;
+  static new_ref_input: (script_hash: ScriptHash, input: TransactionInput, lang_ver: Language, script_size: number) => Promise<PlutusScriptSource>;
+
+  /**
+  * @param {Ed25519KeyHashes} key_hashes
+  */
+  set_required_signers: (key_hashes: Ed25519KeyHashes) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<number>>}
+  */
+  get_ref_script_size: () => Promise<Optional<number>>;
 
 }
 
@@ -6822,6 +6875,16 @@ export class ProtocolParamUpdate extends Ptr {
   drep_inactivity_period: () => Promise<Optional<number>>;
 
   /**
+  * @param {UnitInterval} ref_script_coins_per_byte
+  */
+  set_ref_script_coins_per_byte: (ref_script_coins_per_byte: UnitInterval) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<UnitInterval>>}
+  */
+  ref_script_coins_per_byte: () => Promise<Optional<UnitInterval>>;
+
+  /**
   * @returns {Promise<ProtocolParamUpdate>}
   */
   static new: () => Promise<ProtocolParamUpdate>;
@@ -7133,13 +7196,6 @@ export class Redeemers extends Ptr {
   * @returns {Promise<Redeemers>}
   */
   static new: () => Promise<Redeemers>;
-
-  /**
-  * @param {Redeemer} redeemers
-  * @param {CborContainerType} serialization_format
-  * @returns {Promise<Redeemers>}
-  */
-  static new_with_serialization_format: (redeemers: Redeemer, serialization_format: CborContainerType) => Promise<Redeemers>;
 
   /**
   * @returns {Promise<number>}
@@ -8881,6 +8937,10 @@ export class TransactionBuilder extends Ptr {
   set_collateral_return: (collateral_return: TransactionOutput) => Promise<void>;
 
   /**
+  */
+  remove_collateral_return: () => Promise<void>;
+
+  /**
   * @param {TransactionOutput} collateral_return
   * @returns {Promise<void>}
   */
@@ -8890,6 +8950,10 @@ export class TransactionBuilder extends Ptr {
   * @param {BigNum} total_collateral
   */
   set_total_collateral: (total_collateral: BigNum) => Promise<void>;
+
+  /**
+  */
+  remove_total_collateral: () => Promise<void>;
 
   /**
   * @param {BigNum} total_collateral
@@ -8902,6 +8966,12 @@ export class TransactionBuilder extends Ptr {
   * @param {TransactionInput} reference_input
   */
   add_reference_input: (reference_input: TransactionInput) => Promise<void>;
+
+  /**
+  * @param {TransactionInput} reference_input
+  * @param {number} script_size
+  */
+  add_script_reference_input: (reference_input: TransactionInput, script_size: number) => Promise<void>;
 
   /**
   * @param {Ed25519KeyHash} hash
@@ -8938,6 +9008,23 @@ export class TransactionBuilder extends Ptr {
   * @returns {Promise<void>}
   */
   add_regular_input: (address: Address, input: TransactionInput, amount: Value) => Promise<void>;
+
+  /**
+  * @param {TransactionUnspentOutputs} inputs
+  * @param {CoinSelectionStrategyCIP2} strategy
+  * @param {ChangeConfig} change_config
+  * @returns {Promise<boolean>}
+  */
+  add_inputs_from_and_change: (inputs: TransactionUnspentOutputs, strategy: CoinSelectionStrategyCIP2, change_config: ChangeConfig) => Promise<boolean>;
+
+  /**
+  * @param {TransactionUnspentOutputs} inputs
+  * @param {CoinSelectionStrategyCIP2} strategy
+  * @param {ChangeConfig} change_config
+  * @param {number} collateral_percentage
+  * @returns {Promise<boolean>}
+  */
+  add_inputs_from_and_change_with_collateral_return: (inputs: TransactionUnspentOutputs, strategy: CoinSelectionStrategyCIP2, change_config: ChangeConfig, collateral_percentage: number) => Promise<boolean>;
 
   /**
   * @returns {Promise<Optional<NativeScripts>>}
@@ -8985,6 +9072,10 @@ export class TransactionBuilder extends Ptr {
   set_ttl_bignum: (ttl: BigNum) => Promise<void>;
 
   /**
+  */
+  remove_ttl: () => Promise<void>;
+
+  /**
   * @param {number} validity_start_interval
   */
   set_validity_start_interval: (validity_start_interval: number) => Promise<void>;
@@ -8995,10 +9086,18 @@ export class TransactionBuilder extends Ptr {
   set_validity_start_interval_bignum: (validity_start_interval: BigNum) => Promise<void>;
 
   /**
+  */
+  remove_validity_start_interval: () => Promise<void>;
+
+  /**
   * @param {Certificates} certs
   * @returns {Promise<void>}
   */
   set_certs: (certs: Certificates) => Promise<void>;
+
+  /**
+  */
+  remove_certs: () => Promise<void>;
 
   /**
   * @param {CertificatesBuilder} certs
@@ -9027,6 +9126,10 @@ export class TransactionBuilder extends Ptr {
   set_voting_proposal_builder: (voting_proposal_builder: VotingProposalBuilder) => Promise<void>;
 
   /**
+  */
+  remove_withdrawals: () => Promise<void>;
+
+  /**
   * @returns {Promise<Optional<AuxiliaryData>>}
   */
   get_auxiliary_data: () => Promise<Optional<AuxiliaryData>>;
@@ -9035,6 +9138,10 @@ export class TransactionBuilder extends Ptr {
   * @param {AuxiliaryData} auxiliary_data
   */
   set_auxiliary_data: (auxiliary_data: AuxiliaryData) => Promise<void>;
+
+  /**
+  */
+  remove_auxiliary_data: () => Promise<void>;
 
   /**
   * @param {GeneralTransactionMetadata} metadata
@@ -9066,6 +9173,10 @@ export class TransactionBuilder extends Ptr {
   * @param {MintBuilder} mint_builder
   */
   set_mint_builder: (mint_builder: MintBuilder) => Promise<void>;
+
+  /**
+  */
+  remove_mint_builder: () => Promise<void>;
 
   /**
   * @returns {Promise<Optional<MintBuilder>>}
@@ -9315,6 +9426,12 @@ export class TransactionBuilderConfigBuilder extends Ptr {
   * @returns {Promise<TransactionBuilderConfigBuilder>}
   */
   max_tx_size: (max_tx_size: number) => Promise<TransactionBuilderConfigBuilder>;
+
+  /**
+  * @param {UnitInterval} ref_script_coins_per_byte
+  * @returns {Promise<TransactionBuilderConfigBuilder>}
+  */
+  ref_script_coins_per_byte: (ref_script_coins_per_byte: UnitInterval) => Promise<TransactionBuilderConfigBuilder>;
 
   /**
   * @param {boolean} prefer_pure_change
@@ -11846,11 +11963,28 @@ export const min_ada_for_output: (output: TransactionOutput, data_cost: DataCost
 export const min_fee: (tx: Transaction, linear_fee: LinearFee) => Promise<BigNum>;
 
 /**
+* @param {number} total_ref_scripts_size
+* @param {UnitInterval} ref_script_coins_per_byte
+* @returns {Promise<BigNum>}
+*/
+export const min_ref_script_fee: (total_ref_scripts_size: number, ref_script_coins_per_byte: UnitInterval) => Promise<BigNum>;
+
+/**
 * @param {Transaction} tx
 * @param {ExUnitPrices} ex_unit_prices
 * @returns {Promise<BigNum>}
 */
 export const min_script_fee: (tx: Transaction, ex_unit_prices: ExUnitPrices) => Promise<BigNum>;
+
+export enum AddressKind {
+  Base = 0,
+  Pointer = 1,
+  Enterprise = 2,
+  Reward = 3,
+  Byron = 4,
+  Malformed = 5,
+}
+
 
 export enum CborContainerType {
   Array = 0,

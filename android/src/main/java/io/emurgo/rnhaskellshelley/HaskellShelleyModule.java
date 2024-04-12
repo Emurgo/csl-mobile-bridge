@@ -56,6 +56,21 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void addressKind(String self, Promise promise) {
+        Native.I
+            .addressKind(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void addressPaymentCred(String self, Promise promise) {
+        Native.I
+            .addressPaymentCred(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void addressIsMalformed(String self, Promise promise) {
         Native.I
             .addressIsMalformed(new RPtr(self))
@@ -2014,6 +2029,39 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void certificatesBuilderBuild(String self, Promise promise) {
         Native.I
             .certificatesBuilderBuild(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void changeConfigNew(String address, Promise promise) {
+        Native.I
+            .changeConfigNew(new RPtr(address))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void changeConfigChangeAddress(String self, String address, Promise promise) {
+        Native.I
+            .changeConfigChangeAddress(new RPtr(self), new RPtr(address))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void changeConfigChangePlutusData(String self, String plutusData, Promise promise) {
+        Native.I
+            .changeConfigChangePlutusData(new RPtr(self), new RPtr(plutusData))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void changeConfigChangeScriptRef(String self, String scriptRef, Promise promise) {
+        Native.I
+            .changeConfigChangeScriptRef(new RPtr(self), new RPtr(scriptRef))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -6583,10 +6631,17 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void nativeScriptSourceNewRefInput(String scriptHash, String input, String requiredSigners, Promise promise) {
+    public final void nativeScriptSourceNewRefInput(String scriptHash, String input, Promise promise) {
         Native.I
-            .nativeScriptSourceNewRefInput(new RPtr(scriptHash), new RPtr(input), new RPtr(requiredSigners))
+            .nativeScriptSourceNewRefInput(new RPtr(scriptHash), new RPtr(input))
             .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void nativeScriptSourceSetRequiredSigners(String self, String keyHashes, Promise promise) {
+        Native.I
+            .nativeScriptSourceSetRequiredSigners(new RPtr(self), new RPtr(keyHashes))
             .pour(promise);
     }
 
@@ -7661,10 +7716,25 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void plutusScriptSourceNewRefInput(String scriptHash, String input, String langVer, Promise promise) {
+    public final void plutusScriptSourceNewRefInput(String scriptHash, String input, String langVer, Double scriptSize, Promise promise) {
         Native.I
-            .plutusScriptSourceNewRefInput(new RPtr(scriptHash), new RPtr(input), new RPtr(langVer))
+            .plutusScriptSourceNewRefInput(new RPtr(scriptHash), new RPtr(input), new RPtr(langVer), scriptSize.longValue())
             .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void plutusScriptSourceSetRequiredSigners(String self, String keyHashes, Promise promise) {
+        Native.I
+            .plutusScriptSourceSetRequiredSigners(new RPtr(self), new RPtr(keyHashes))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void plutusScriptSourceGetRefScriptSize(String self, Promise promise) {
+        Native.I
+            .plutusScriptSourceGetRefScriptSize(new RPtr(self))
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -9104,6 +9174,21 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void protocolParamUpdateSetRefScriptCoinsPerByte(String self, String refScriptCoinsPerByte, Promise promise) {
+        Native.I
+            .protocolParamUpdateSetRefScriptCoinsPerByte(new RPtr(self), new RPtr(refScriptCoinsPerByte))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateRefScriptCoinsPerByte(String self, Promise promise) {
+        Native.I
+            .protocolParamUpdateRefScriptCoinsPerByte(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void protocolParamUpdateNew( Promise promise) {
         Native.I
             .protocolParamUpdateNew()
@@ -9516,14 +9601,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void redeemersNew( Promise promise) {
         Native.I
             .redeemersNew()
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void redeemersNewWithSerializationFormat(String redeemers, Double serializationFormat, Promise promise) {
-        Native.I
-            .redeemersNewWithSerializationFormat(new RPtr(redeemers), serializationFormat.intValue())
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -11936,6 +12013,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionBuilderRemoveCollateralReturn(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveCollateralReturn(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBuilderSetCollateralReturnAndTotal(String self, String collateralReturn, Promise promise) {
         Native.I
             .transactionBuilderSetCollateralReturnAndTotal(new RPtr(self), new RPtr(collateralReturn))
@@ -11950,6 +12034,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionBuilderRemoveTotalCollateral(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveTotalCollateral(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBuilderSetTotalCollateralAndReturn(String self, String totalCollateral, String returnAddress, Promise promise) {
         Native.I
             .transactionBuilderSetTotalCollateralAndReturn(new RPtr(self), new RPtr(totalCollateral), new RPtr(returnAddress))
@@ -11960,6 +12051,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderAddReferenceInput(String self, String referenceInput, Promise promise) {
         Native.I
             .transactionBuilderAddReferenceInput(new RPtr(self), new RPtr(referenceInput))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderAddScriptReferenceInput(String self, String referenceInput, Double scriptSize, Promise promise) {
+        Native.I
+            .transactionBuilderAddScriptReferenceInput(new RPtr(self), new RPtr(referenceInput), scriptSize.longValue())
             .pour(promise);
     }
 
@@ -11995,6 +12093,20 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderAddRegularInput(String self, String address, String input, String amount, Promise promise) {
         Native.I
             .transactionBuilderAddRegularInput(new RPtr(self), new RPtr(address), new RPtr(input), new RPtr(amount))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderAddInputsFromAndChange(String self, String inputs, Double strategy, String changeConfig, Promise promise) {
+        Native.I
+            .transactionBuilderAddInputsFromAndChange(new RPtr(self), new RPtr(inputs), strategy.intValue(), new RPtr(changeConfig))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderAddInputsFromAndChangeWithCollateralReturn(String self, String inputs, Double strategy, String changeConfig, Double collateralPercentage, Promise promise) {
+        Native.I
+            .transactionBuilderAddInputsFromAndChangeWithCollateralReturn(new RPtr(self), new RPtr(inputs), strategy.intValue(), new RPtr(changeConfig), collateralPercentage.longValue())
             .pour(promise);
     }
 
@@ -12059,6 +12171,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionBuilderRemoveTtl(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveTtl(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBuilderSetValidityStartInterval(String self, Double validityStartInterval, Promise promise) {
         Native.I
             .transactionBuilderSetValidityStartInterval(new RPtr(self), validityStartInterval.longValue())
@@ -12073,9 +12192,23 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionBuilderRemoveValidityStartInterval(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveValidityStartInterval(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBuilderSetCerts(String self, String certs, Promise promise) {
         Native.I
             .transactionBuilderSetCerts(new RPtr(self), new RPtr(certs))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderRemoveCerts(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveCerts(new RPtr(self))
             .pour(promise);
     }
 
@@ -12115,6 +12248,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionBuilderRemoveWithdrawals(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveWithdrawals(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBuilderGetAuxiliaryData(String self, Promise promise) {
         Native.I
             .transactionBuilderGetAuxiliaryData(new RPtr(self))
@@ -12126,6 +12266,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderSetAuxiliaryData(String self, String auxiliaryData, Promise promise) {
         Native.I
             .transactionBuilderSetAuxiliaryData(new RPtr(self), new RPtr(auxiliaryData))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderRemoveAuxiliaryData(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveAuxiliaryData(new RPtr(self))
             .pour(promise);
     }
 
@@ -12161,6 +12308,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderSetMintBuilder(String self, String mintBuilder, Promise promise) {
         Native.I
             .transactionBuilderSetMintBuilder(new RPtr(self), new RPtr(mintBuilder))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderRemoveMintBuilder(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveMintBuilder(new RPtr(self))
             .pour(promise);
     }
 
@@ -12491,6 +12645,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderConfigBuilderMaxTxSize(String self, Double maxTxSize, Promise promise) {
         Native.I
             .transactionBuilderConfigBuilderMaxTxSize(new RPtr(self), maxTxSize.longValue())
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderConfigBuilderRefScriptCoinsPerByte(String self, String refScriptCoinsPerByte, Promise promise) {
+        Native.I
+            .transactionBuilderConfigBuilderRefScriptCoinsPerByte(new RPtr(self), new RPtr(refScriptCoinsPerByte))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -15792,6 +15954,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void minFee(String tx, String linearFee, Promise promise) {
         Native.I
             .minFee(new RPtr(tx), new RPtr(linearFee))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void minRefScriptFee(Double totalRefScriptsSize, String refScriptCoinsPerByte, Promise promise) {
+        Native.I
+            .minRefScriptFee(totalRefScriptsSize.longValue(), new RPtr(refScriptCoinsPerByte))
             .map(RPtr::toJs)
             .pour(promise);
     }

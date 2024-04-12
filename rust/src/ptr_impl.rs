@@ -21,6 +21,7 @@ use cardano_serialization_lib::ByronAddress;
 use cardano_serialization_lib::Certificate;
 use cardano_serialization_lib::Certificates;
 use cardano_serialization_lib::CertificatesBuilder;
+use cardano_serialization_lib::ChangeConfig;
 use cardano_serialization_lib::Committee;
 use cardano_serialization_lib::CommitteeColdResign;
 use cardano_serialization_lib::CommitteeHotAuth;
@@ -214,6 +215,7 @@ impl RPtrRepresentable for ByronAddress {}
 impl RPtrRepresentable for Certificate {}
 impl RPtrRepresentable for Certificates {}
 impl RPtrRepresentable for CertificatesBuilder {}
+impl RPtrRepresentable for ChangeConfig {}
 impl RPtrRepresentable for Committee {}
 impl RPtrRepresentable for CommitteeColdResign {}
 impl RPtrRepresentable for CommitteeHotAuth {}

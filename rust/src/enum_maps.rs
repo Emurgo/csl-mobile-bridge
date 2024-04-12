@@ -1,3 +1,4 @@
+use cardano_serialization_lib::AddressKind;
 use cardano_serialization_lib::CborContainerType;
 use cardano_serialization_lib::CertificateKind;
 use cardano_serialization_lib::CoinSelectionStrategyCIP2;
@@ -29,6 +30,33 @@ pub trait ToPrimitive {
 pub trait ToEnum<T> {
     fn to_enum(&self) -> Result<T>;
 }
+impl ToPrimitive for AddressKind {
+    fn to_i32(&self) -> i32 {
+        match self {
+            AddressKind::Base => 0,
+            AddressKind::Pointer => 1,
+            AddressKind::Enterprise => 2,
+            AddressKind::Reward => 3,
+            AddressKind::Byron => 4,
+            AddressKind::Malformed => 5,
+        }
+    }
+}
+
+impl ToEnum<AddressKind> for i32 {
+    fn to_enum(&self) -> Result<AddressKind> {
+        match self {
+            0 => Ok(AddressKind::Base),
+            1 => Ok(AddressKind::Pointer),
+            2 => Ok(AddressKind::Enterprise),
+            3 => Ok(AddressKind::Reward),
+            4 => Ok(AddressKind::Byron),
+            5 => Ok(AddressKind::Malformed),
+            _ => Err("Invalid value for AddressKind".into()),
+        }
+    }
+}
+
 impl ToPrimitive for CborContainerType {
     fn to_i32(&self) -> i32 {
         match self {

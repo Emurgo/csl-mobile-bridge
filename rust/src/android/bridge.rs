@@ -15,6 +15,7 @@ use jni::sys::{jlong, jint, jobject, jboolean, jbyteArray};
 use jni::JNIEnv;
 use std::convert::TryFrom;
 use cardano_serialization_lib::Address;
+use cardano_serialization_lib::AddressKind;
 use cardano_serialization_lib::Anchor;
 use cardano_serialization_lib::AnchorDataHash;
 use cardano_serialization_lib::AssetName;
@@ -38,6 +39,7 @@ use cardano_serialization_lib::Certificate;
 use cardano_serialization_lib::CertificateKind;
 use cardano_serialization_lib::Certificates;
 use cardano_serialization_lib::CertificatesBuilder;
+use cardano_serialization_lib::ChangeConfig;
 use cardano_serialization_lib::CoinSelectionStrategyCIP2;
 use cardano_serialization_lib::Committee;
 use cardano_serialization_lib::CommitteeColdResign;
@@ -250,6 +252,7 @@ use cardano_serialization_lib::make_icarus_bootstrap_witness;
 use cardano_serialization_lib::make_vkey_witness;
 use cardano_serialization_lib::min_ada_for_output;
 use cardano_serialization_lib::min_fee;
+use cardano_serialization_lib::min_ref_script_fee;
 use cardano_serialization_lib::min_script_fee;
 
 
@@ -284,6 +287,32 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_addressFromJson(
   handle_exception_result(|| { 
     let json = json_str.string(&env)?;
     let result = Address::from_json(&json).into_result()?;
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_addressKind(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<Address>()?;
+    let result = self_rptr.kind();
+    (result.to_i32() as jint).jobject(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_addressPaymentCred(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<Address>()?;
+    let result = self_rptr.payment_cred();
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -3563,6 +3592,65 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_certificatesBuil
     let self_jrptr = self_ptr.rptr(&env)?;
     let self_rptr = self_jrptr.typed_ref::<CertificatesBuilder>()?;
     let result = self_rptr.build();
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_changeConfigNew(env: JNIEnv, _: JObject, address_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let address_jrptr = address_ptr.rptr(&env)?;
+    let address = address_jrptr.typed_ref::<Address>()?;
+    let result = ChangeConfig::new(address);
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_changeConfigChangeAddress(env: JNIEnv, _: JObject, self_ptr: JRPtr, address_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<ChangeConfig>()?;
+    let address_jrptr = address_ptr.rptr(&env)?;
+    let address = address_jrptr.typed_ref::<Address>()?;
+    let result = self_rptr.change_address(address);
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_changeConfigChangePlutusData(env: JNIEnv, _: JObject, self_ptr: JRPtr, plutus_data_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<ChangeConfig>()?;
+    let plutus_data_jrptr = plutus_data_ptr.rptr(&env)?;
+    let plutus_data = plutus_data_jrptr.typed_ref::<OutputDatum>()?;
+    let result = self_rptr.change_plutus_data(plutus_data);
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_changeConfigChangeScriptRef(env: JNIEnv, _: JObject, self_ptr: JRPtr, script_ref_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<ChangeConfig>()?;
+    let script_ref_jrptr = script_ref_ptr.rptr(&env)?;
+    let script_ref = script_ref_jrptr.typed_ref::<ScriptRef>()?;
+    let result = self_rptr.change_script_ref(script_ref);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -11238,16 +11326,29 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_nativeScriptSour
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_nativeScriptSourceNewRefInput(env: JNIEnv, _: JObject, script_hash_ptr: JRPtr, input_ptr: JRPtr, required_signers_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_nativeScriptSourceNewRefInput(env: JNIEnv, _: JObject, script_hash_ptr: JRPtr, input_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let script_hash_jrptr = script_hash_ptr.rptr(&env)?;
     let script_hash = script_hash_jrptr.typed_ref::<ScriptHash>()?;
     let input_jrptr = input_ptr.rptr(&env)?;
     let input = input_jrptr.typed_ref::<TransactionInput>()?;
-    let required_signers_jrptr = required_signers_ptr.rptr(&env)?;
-    let required_signers = required_signers_jrptr.typed_ref::<Ed25519KeyHashes>()?;
-    let result = NativeScriptSource::new_ref_input(script_hash, input, required_signers);
+    let result = NativeScriptSource::new_ref_input(script_hash, input);
     result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_nativeScriptSourceSetRequiredSigners(env: JNIEnv, _: JObject, self_ptr: JRPtr, key_hashes_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<NativeScriptSource>()?;
+    let key_hashes_jrptr = key_hashes_ptr.rptr(&env)?;
+    let key_hashes = key_hashes_jrptr.typed_ref::<Ed25519KeyHashes>()?;
+    self_rptr.set_required_signers(key_hashes);
+    Ok(JObject::null())
   })
   .jresult(&env)
 }
@@ -13006,7 +13107,7 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_plutusScriptSour
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_plutusScriptSourceNewRefInput(env: JNIEnv, _: JObject, script_hash_ptr: JRPtr, input_ptr: JRPtr, lang_ver_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_plutusScriptSourceNewRefInput(env: JNIEnv, _: JObject, script_hash_ptr: JRPtr, input_ptr: JRPtr, lang_ver_ptr: JRPtr, script_size_jlong: jlong) -> jobject {
   handle_exception_result(|| { 
     let script_hash_jrptr = script_hash_ptr.rptr(&env)?;
     let script_hash = script_hash_jrptr.typed_ref::<ScriptHash>()?;
@@ -13014,8 +13115,37 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_plutusScriptSour
     let input = input_jrptr.typed_ref::<TransactionInput>()?;
     let lang_ver_jrptr = lang_ver_ptr.rptr(&env)?;
     let lang_ver = lang_ver_jrptr.typed_ref::<Language>()?;
-    let result = PlutusScriptSource::new_ref_input(script_hash, input, lang_ver);
+    let script_size = usize::try_from_jlong(script_size_jlong)?;
+    let result = PlutusScriptSource::new_ref_input(script_hash, input, lang_ver, script_size);
     result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_plutusScriptSourceSetRequiredSigners(env: JNIEnv, _: JObject, self_ptr: JRPtr, key_hashes_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<PlutusScriptSource>()?;
+    let key_hashes_jrptr = key_hashes_ptr.rptr(&env)?;
+    let key_hashes = key_hashes_jrptr.typed_ref::<Ed25519KeyHashes>()?;
+    self_rptr.set_required_signers(key_hashes);
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_plutusScriptSourceGetRefScriptSize(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<PlutusScriptSource>()?;
+    let result = self_rptr.get_ref_script_size();
+    result.into_jlong().jobject(&env)
   })
   .jresult(&env)
 }
@@ -15511,6 +15641,34 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_protocolParamUpd
 
 #[allow(non_snake_case)]
 #[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_protocolParamUpdateSetRefScriptCoinsPerByte(env: JNIEnv, _: JObject, self_ptr: JRPtr, ref_script_coins_per_byte_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<ProtocolParamUpdate>()?;
+    let ref_script_coins_per_byte_jrptr = ref_script_coins_per_byte_ptr.rptr(&env)?;
+    let ref_script_coins_per_byte = ref_script_coins_per_byte_jrptr.typed_ref::<UnitInterval>()?;
+    self_rptr.set_ref_script_coins_per_byte(ref_script_coins_per_byte);
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_protocolParamUpdateRefScriptCoinsPerByte(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<ProtocolParamUpdate>()?;
+    let result = self_rptr.ref_script_coins_per_byte();
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_protocolParamUpdateNew(env: JNIEnv, _: JObject) -> jobject {
   handle_exception_result(|| { 
     let result = ProtocolParamUpdate::new();
@@ -16177,19 +16335,6 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_redeemersFromJso
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_redeemersNew(env: JNIEnv, _: JObject) -> jobject {
   handle_exception_result(|| { 
     let result = Redeemers::new();
-    result.rptr().jptr(&env)
-  })
-  .jresult(&env)
-}
-
-
-#[allow(non_snake_case)]
-#[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_redeemersNewWithSerializationFormat(env: JNIEnv, _: JObject, redeemers_ptr: JRPtr, serialization_format_jint: jint) -> jobject {
-  handle_exception_result(|| { 
-    let redeemers = redeemers_ptr.rptr(&env)?.typed_ref::<Redeemer>()?.clone();
-    let serialization_format = serialization_format_jint.to_enum()?;
-    let result = Redeemers::new_with_serialization_format(redeemers, serialization_format);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -20256,6 +20401,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
 
 #[allow(non_snake_case)]
 #[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderRemoveCollateralReturn(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TransactionBuilder>()?;
+    self_rptr.remove_collateral_return();
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderSetCollateralReturnAndTotal(env: JNIEnv, _: JObject, self_ptr: JRPtr, collateral_return_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
@@ -20278,6 +20436,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
     let total_collateral_jrptr = total_collateral_ptr.rptr(&env)?;
     let total_collateral = total_collateral_jrptr.typed_ref::<BigNum>()?;
     self_rptr.set_total_collateral(total_collateral);
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderRemoveTotalCollateral(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TransactionBuilder>()?;
+    self_rptr.remove_total_collateral();
     Ok(JObject::null())
   })
   .jresult(&env)
@@ -20310,6 +20481,22 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
     let reference_input_jrptr = reference_input_ptr.rptr(&env)?;
     let reference_input = reference_input_jrptr.typed_ref::<TransactionInput>()?;
     self_rptr.add_reference_input(reference_input);
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderAddScriptReferenceInput(env: JNIEnv, _: JObject, self_ptr: JRPtr, reference_input_ptr: JRPtr, script_size_jlong: jlong) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TransactionBuilder>()?;
+    let reference_input_jrptr = reference_input_ptr.rptr(&env)?;
+    let reference_input = reference_input_jrptr.typed_ref::<TransactionInput>()?;
+    let script_size = usize::try_from_jlong(script_size_jlong)?;
+    self_rptr.add_script_reference_input(reference_input, script_size);
     Ok(JObject::null())
   })
   .jresult(&env)
@@ -20406,6 +20593,43 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
     let amount = amount_jrptr.typed_ref::<Value>()?;
     self_rptr.add_regular_input(address, input, amount).into_result()?;
     Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderAddInputsFromAndChange(env: JNIEnv, _: JObject, self_ptr: JRPtr, inputs_ptr: JRPtr, strategy_jint: jint, change_config_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TransactionBuilder>()?;
+    let inputs_jrptr = inputs_ptr.rptr(&env)?;
+    let inputs = inputs_jrptr.typed_ref::<TransactionUnspentOutputs>()?;
+    let strategy = strategy_jint.to_enum()?;
+    let change_config_jrptr = change_config_ptr.rptr(&env)?;
+    let change_config = change_config_jrptr.typed_ref::<ChangeConfig>()?;
+    let result = self_rptr.add_inputs_from_and_change(inputs, strategy, change_config).into_result()?;
+    (result as jboolean).jobject(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderAddInputsFromAndChangeWithCollateralReturn(env: JNIEnv, _: JObject, self_ptr: JRPtr, inputs_ptr: JRPtr, strategy_jint: jint, change_config_ptr: JRPtr, collateral_percentage_jlong: jlong) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TransactionBuilder>()?;
+    let inputs_jrptr = inputs_ptr.rptr(&env)?;
+    let inputs = inputs_jrptr.typed_ref::<TransactionUnspentOutputs>()?;
+    let strategy = strategy_jint.to_enum()?;
+    let change_config_jrptr = change_config_ptr.rptr(&env)?;
+    let change_config = change_config_jrptr.typed_ref::<ChangeConfig>()?;
+    let collateral_percentage = u64::try_from_jlong(collateral_percentage_jlong)?;
+    let result = self_rptr.add_inputs_from_and_change_with_collateral_return(inputs, strategy, change_config, collateral_percentage).into_result()?;
+    (result as jboolean).jobject(&env)
   })
   .jresult(&env)
 }
@@ -20532,6 +20756,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
 
 #[allow(non_snake_case)]
 #[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderRemoveTtl(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TransactionBuilder>()?;
+    self_rptr.remove_ttl();
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderSetValidityStartInterval(env: JNIEnv, _: JObject, self_ptr: JRPtr, validity_start_interval_jlong: jlong) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
@@ -20560,6 +20797,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
 
 #[allow(non_snake_case)]
 #[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderRemoveValidityStartInterval(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TransactionBuilder>()?;
+    self_rptr.remove_validity_start_interval();
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderSetCerts(env: JNIEnv, _: JObject, self_ptr: JRPtr, certs_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
@@ -20567,6 +20817,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
     let certs_jrptr = certs_ptr.rptr(&env)?;
     let certs = certs_jrptr.typed_ref::<Certificates>()?;
     self_rptr.set_certs(certs).into_result()?;
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderRemoveCerts(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TransactionBuilder>()?;
+    self_rptr.remove_certs();
     Ok(JObject::null())
   })
   .jresult(&env)
@@ -20650,6 +20913,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
 
 #[allow(non_snake_case)]
 #[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderRemoveWithdrawals(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TransactionBuilder>()?;
+    self_rptr.remove_withdrawals();
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderGetAuxiliaryData(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
@@ -20670,6 +20946,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
     let auxiliary_data_jrptr = auxiliary_data_ptr.rptr(&env)?;
     let auxiliary_data = auxiliary_data_jrptr.typed_ref::<AuxiliaryData>()?;
     self_rptr.set_auxiliary_data(auxiliary_data);
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderRemoveAuxiliaryData(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TransactionBuilder>()?;
+    self_rptr.remove_auxiliary_data();
     Ok(JObject::null())
   })
   .jresult(&env)
@@ -20750,6 +21039,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
     let mint_builder_jrptr = mint_builder_ptr.rptr(&env)?;
     let mint_builder = mint_builder_jrptr.typed_ref::<MintBuilder>()?;
     self_rptr.set_mint_builder(mint_builder);
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderRemoveMintBuilder(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TransactionBuilder>()?;
+    self_rptr.remove_mint_builder();
     Ok(JObject::null())
   })
   .jresult(&env)
@@ -21371,6 +21673,21 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuild
     let self_rptr = self_jrptr.typed_ref::<TransactionBuilderConfigBuilder>()?;
     let max_tx_size = u32::try_from_jlong(max_tx_size_jlong)?;
     let result = self_rptr.max_tx_size(max_tx_size);
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_transactionBuilderConfigBuilderRefScriptCoinsPerByte(env: JNIEnv, _: JObject, self_ptr: JRPtr, ref_script_coins_per_byte_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TransactionBuilderConfigBuilder>()?;
+    let ref_script_coins_per_byte_jrptr = ref_script_coins_per_byte_ptr.rptr(&env)?;
+    let ref_script_coins_per_byte = ref_script_coins_per_byte_jrptr.typed_ref::<UnitInterval>()?;
+    let result = self_rptr.ref_script_coins_per_byte(ref_script_coins_per_byte);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -27014,6 +27331,20 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_minFee(env: JNIE
     let linear_fee_jrptr = linear_fee_ptr.rptr(&env)?;
     let linear_fee = linear_fee_jrptr.typed_ref::<LinearFee>()?;
     let result = min_fee(tx, linear_fee).into_result()?;
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_minRefScriptFee(env: JNIEnv, _: JObject, total_ref_scripts_size_jlong: jlong, ref_script_coins_per_byte_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let total_ref_scripts_size = usize::try_from_jlong(total_ref_scripts_size_jlong)?;
+    let ref_script_coins_per_byte_jrptr = ref_script_coins_per_byte_ptr.rptr(&env)?;
+    let ref_script_coins_per_byte = ref_script_coins_per_byte_jrptr.typed_ref::<UnitInterval>()?;
+    let result = min_ref_script_fee(total_ref_scripts_size, ref_script_coins_per_byte).into_result()?;
     result.rptr().jptr(&env)
   })
   .jresult(&env)
