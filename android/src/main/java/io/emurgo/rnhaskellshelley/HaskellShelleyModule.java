@@ -56,6 +56,28 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void addressKind(String self, Promise promise) {
+        Native.I
+            .addressKind(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void addressPaymentCred(String self, Promise promise) {
+        Native.I
+            .addressPaymentCred(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void addressIsMalformed(String self, Promise promise) {
+        Native.I
+            .addressIsMalformed(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void addressToHex(String self, Promise promise) {
         Native.I
             .addressToHex(new RPtr(self))
@@ -106,6 +128,124 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
         Native.I
             .addressNetworkId(new RPtr(self))
             .map(Utils::boxedLongToDouble)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void anchorToBytes(String self, Promise promise) {
+        Native.I
+            .anchorToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void anchorFromBytes(String bytes, Promise promise) {
+        Native.I
+            .anchorFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void anchorToHex(String self, Promise promise) {
+        Native.I
+            .anchorToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void anchorFromHex(String hexStr, Promise promise) {
+        Native.I
+            .anchorFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void anchorToJson(String self, Promise promise) {
+        Native.I
+            .anchorToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void anchorFromJson(String json, Promise promise) {
+        Native.I
+            .anchorFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void anchorUrl(String self, Promise promise) {
+        Native.I
+            .anchorUrl(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void anchorAnchorDataHash(String self, Promise promise) {
+        Native.I
+            .anchorAnchorDataHash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void anchorNew(String anchorUrl, String anchorDataHash, Promise promise) {
+        Native.I
+            .anchorNew(new RPtr(anchorUrl), new RPtr(anchorDataHash))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void anchorDataHashFromBytes(String bytes, Promise promise) {
+        Native.I
+            .anchorDataHashFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void anchorDataHashToBytes(String self, Promise promise) {
+        Native.I
+            .anchorDataHashToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void anchorDataHashToBech32(String self, String prefix, Promise promise) {
+        Native.I
+            .anchorDataHashToBech32(new RPtr(self), prefix)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void anchorDataHashFromBech32(String bechStr, Promise promise) {
+        Native.I
+            .anchorDataHashFromBech32(bechStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void anchorDataHashToHex(String self, Promise promise) {
+        Native.I
+            .anchorDataHashToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void anchorDataHashFromHex(String hex, Promise promise) {
+        Native.I
+            .anchorDataHashFromHex(hex)
+            .map(RPtr::toJs)
             .pour(promise);
     }
 
@@ -1136,6 +1276,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
             .pour(promise);
     }
 
+    @ReactMethod
+    public final void blockFromWrappedBytes(String data, Promise promise) {
+        Native.I
+            .blockFromWrappedBytes(Base64.decode(data, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
 
     @ReactMethod
     public final void blockHashFromBytes(String bytes, Promise promise) {
@@ -1493,6 +1641,86 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void certificateNewCommitteeHotAuth(String committeeHotAuth, Promise promise) {
+        Native.I
+            .certificateNewCommitteeHotAuth(new RPtr(committeeHotAuth))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateNewCommitteeColdResign(String committeeColdResign, Promise promise) {
+        Native.I
+            .certificateNewCommitteeColdResign(new RPtr(committeeColdResign))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateNewDrepDeregistration(String drepDeregistration, Promise promise) {
+        Native.I
+            .certificateNewDrepDeregistration(new RPtr(drepDeregistration))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateNewDrepRegistration(String drepRegistration, Promise promise) {
+        Native.I
+            .certificateNewDrepRegistration(new RPtr(drepRegistration))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateNewDrepUpdate(String drepUpdate, Promise promise) {
+        Native.I
+            .certificateNewDrepUpdate(new RPtr(drepUpdate))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateNewStakeAndVoteDelegation(String stakeAndVoteDelegation, Promise promise) {
+        Native.I
+            .certificateNewStakeAndVoteDelegation(new RPtr(stakeAndVoteDelegation))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateNewStakeRegistrationAndDelegation(String stakeRegistrationAndDelegation, Promise promise) {
+        Native.I
+            .certificateNewStakeRegistrationAndDelegation(new RPtr(stakeRegistrationAndDelegation))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateNewStakeVoteRegistrationAndDelegation(String stakeVoteRegistrationAndDelegation, Promise promise) {
+        Native.I
+            .certificateNewStakeVoteRegistrationAndDelegation(new RPtr(stakeVoteRegistrationAndDelegation))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateNewVoteDelegation(String voteDelegation, Promise promise) {
+        Native.I
+            .certificateNewVoteDelegation(new RPtr(voteDelegation))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateNewVoteRegistrationAndDelegation(String voteRegistrationAndDelegation, Promise promise) {
+        Native.I
+            .certificateNewVoteRegistrationAndDelegation(new RPtr(voteRegistrationAndDelegation))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void certificateKind(String self, Promise promise) {
         Native.I
             .certificateKind(new RPtr(self))
@@ -1552,6 +1780,93 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
         Native.I
             .certificateAsMoveInstantaneousRewardsCert(new RPtr(self))
             .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateAsCommitteeHotAuth(String self, Promise promise) {
+        Native.I
+            .certificateAsCommitteeHotAuth(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateAsCommitteeColdResign(String self, Promise promise) {
+        Native.I
+            .certificateAsCommitteeColdResign(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateAsDrepDeregistration(String self, Promise promise) {
+        Native.I
+            .certificateAsDrepDeregistration(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateAsDrepRegistration(String self, Promise promise) {
+        Native.I
+            .certificateAsDrepRegistration(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateAsDrepUpdate(String self, Promise promise) {
+        Native.I
+            .certificateAsDrepUpdate(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateAsStakeAndVoteDelegation(String self, Promise promise) {
+        Native.I
+            .certificateAsStakeAndVoteDelegation(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateAsStakeRegistrationAndDelegation(String self, Promise promise) {
+        Native.I
+            .certificateAsStakeRegistrationAndDelegation(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateAsStakeVoteRegistrationAndDelegation(String self, Promise promise) {
+        Native.I
+            .certificateAsStakeVoteRegistrationAndDelegation(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateAsVoteDelegation(String self, Promise promise) {
+        Native.I
+            .certificateAsVoteDelegation(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateAsVoteRegistrationAndDelegation(String self, Promise promise) {
+        Native.I
+            .certificateAsVoteRegistrationAndDelegation(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificateHasRequiredScriptWitness(String self, Promise promise) {
+        Native.I
+            .certificateHasRequiredScriptWitness(new RPtr(self))
             .pour(promise);
     }
 
@@ -1630,6 +1945,453 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void certificatesAdd(String self, String elem, Promise promise) {
         Native.I
             .certificatesAdd(new RPtr(self), new RPtr(elem))
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void certificatesBuilderNew( Promise promise) {
+        Native.I
+            .certificatesBuilderNew()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificatesBuilderAdd(String self, String cert, Promise promise) {
+        Native.I
+            .certificatesBuilderAdd(new RPtr(self), new RPtr(cert))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificatesBuilderAddWithPlutusWitness(String self, String cert, String witness, Promise promise) {
+        Native.I
+            .certificatesBuilderAddWithPlutusWitness(new RPtr(self), new RPtr(cert), new RPtr(witness))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificatesBuilderAddWithNativeScript(String self, String cert, String nativeScriptSource, Promise promise) {
+        Native.I
+            .certificatesBuilderAddWithNativeScript(new RPtr(self), new RPtr(cert), new RPtr(nativeScriptSource))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificatesBuilderGetPlutusWitnesses(String self, Promise promise) {
+        Native.I
+            .certificatesBuilderGetPlutusWitnesses(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificatesBuilderGetRefInputs(String self, Promise promise) {
+        Native.I
+            .certificatesBuilderGetRefInputs(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificatesBuilderGetNativeScripts(String self, Promise promise) {
+        Native.I
+            .certificatesBuilderGetNativeScripts(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificatesBuilderGetCertificatesRefund(String self, String poolDeposit, String keyDeposit, Promise promise) {
+        Native.I
+            .certificatesBuilderGetCertificatesRefund(new RPtr(self), new RPtr(poolDeposit), new RPtr(keyDeposit))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificatesBuilderGetCertificatesDeposit(String self, String poolDeposit, String keyDeposit, Promise promise) {
+        Native.I
+            .certificatesBuilderGetCertificatesDeposit(new RPtr(self), new RPtr(poolDeposit), new RPtr(keyDeposit))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificatesBuilderHasPlutusScripts(String self, Promise promise) {
+        Native.I
+            .certificatesBuilderHasPlutusScripts(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void certificatesBuilderBuild(String self, Promise promise) {
+        Native.I
+            .certificatesBuilderBuild(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void changeConfigNew(String address, Promise promise) {
+        Native.I
+            .changeConfigNew(new RPtr(address))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void changeConfigChangeAddress(String self, String address, Promise promise) {
+        Native.I
+            .changeConfigChangeAddress(new RPtr(self), new RPtr(address))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void changeConfigChangePlutusData(String self, String plutusData, Promise promise) {
+        Native.I
+            .changeConfigChangePlutusData(new RPtr(self), new RPtr(plutusData))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void changeConfigChangeScriptRef(String self, String scriptRef, Promise promise) {
+        Native.I
+            .changeConfigChangeScriptRef(new RPtr(self), new RPtr(scriptRef))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void committeeToBytes(String self, Promise promise) {
+        Native.I
+            .committeeToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeFromBytes(String bytes, Promise promise) {
+        Native.I
+            .committeeFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeToHex(String self, Promise promise) {
+        Native.I
+            .committeeToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeFromHex(String hexStr, Promise promise) {
+        Native.I
+            .committeeFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeToJson(String self, Promise promise) {
+        Native.I
+            .committeeToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeFromJson(String json, Promise promise) {
+        Native.I
+            .committeeFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeNew(String quorumThreshold, Promise promise) {
+        Native.I
+            .committeeNew(new RPtr(quorumThreshold))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeMembersKeys(String self, Promise promise) {
+        Native.I
+            .committeeMembersKeys(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeQuorumThreshold(String self, Promise promise) {
+        Native.I
+            .committeeQuorumThreshold(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeAddMember(String self, String committeeColdCredential, Double epoch, Promise promise) {
+        Native.I
+            .committeeAddMember(new RPtr(self), new RPtr(committeeColdCredential), epoch.longValue())
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeGetMemberEpoch(String self, String committeeColdCredential, Promise promise) {
+        Native.I
+            .committeeGetMemberEpoch(new RPtr(self), new RPtr(committeeColdCredential))
+            .map(Utils::boxedLongToDouble)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void committeeColdResignToBytes(String self, Promise promise) {
+        Native.I
+            .committeeColdResignToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeColdResignFromBytes(String bytes, Promise promise) {
+        Native.I
+            .committeeColdResignFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeColdResignToHex(String self, Promise promise) {
+        Native.I
+            .committeeColdResignToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeColdResignFromHex(String hexStr, Promise promise) {
+        Native.I
+            .committeeColdResignFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeColdResignToJson(String self, Promise promise) {
+        Native.I
+            .committeeColdResignToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeColdResignFromJson(String json, Promise promise) {
+        Native.I
+            .committeeColdResignFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeColdResignCommitteeColdKey(String self, Promise promise) {
+        Native.I
+            .committeeColdResignCommitteeColdKey(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeColdResignAnchor(String self, Promise promise) {
+        Native.I
+            .committeeColdResignAnchor(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeColdResignNew(String committeeColdKey, Promise promise) {
+        Native.I
+            .committeeColdResignNew(new RPtr(committeeColdKey))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeColdResignNewWithAnchor(String committeeColdKey, String anchor, Promise promise) {
+        Native.I
+            .committeeColdResignNewWithAnchor(new RPtr(committeeColdKey), new RPtr(anchor))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeColdResignHasScriptCredentials(String self, Promise promise) {
+        Native.I
+            .committeeColdResignHasScriptCredentials(new RPtr(self))
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void committeeHotAuthToBytes(String self, Promise promise) {
+        Native.I
+            .committeeHotAuthToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeHotAuthFromBytes(String bytes, Promise promise) {
+        Native.I
+            .committeeHotAuthFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeHotAuthToHex(String self, Promise promise) {
+        Native.I
+            .committeeHotAuthToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeHotAuthFromHex(String hexStr, Promise promise) {
+        Native.I
+            .committeeHotAuthFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeHotAuthToJson(String self, Promise promise) {
+        Native.I
+            .committeeHotAuthToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeHotAuthFromJson(String json, Promise promise) {
+        Native.I
+            .committeeHotAuthFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeHotAuthCommitteeColdKey(String self, Promise promise) {
+        Native.I
+            .committeeHotAuthCommitteeColdKey(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeHotAuthCommitteeHotKey(String self, Promise promise) {
+        Native.I
+            .committeeHotAuthCommitteeHotKey(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeHotAuthNew(String committeeColdKey, String committeeHotKey, Promise promise) {
+        Native.I
+            .committeeHotAuthNew(new RPtr(committeeColdKey), new RPtr(committeeHotKey))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void committeeHotAuthHasScriptCredentials(String self, Promise promise) {
+        Native.I
+            .committeeHotAuthHasScriptCredentials(new RPtr(self))
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void constitutionToBytes(String self, Promise promise) {
+        Native.I
+            .constitutionToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void constitutionFromBytes(String bytes, Promise promise) {
+        Native.I
+            .constitutionFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void constitutionToHex(String self, Promise promise) {
+        Native.I
+            .constitutionToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void constitutionFromHex(String hexStr, Promise promise) {
+        Native.I
+            .constitutionFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void constitutionToJson(String self, Promise promise) {
+        Native.I
+            .constitutionToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void constitutionFromJson(String json, Promise promise) {
+        Native.I
+            .constitutionFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void constitutionAnchor(String self, Promise promise) {
+        Native.I
+            .constitutionAnchor(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void constitutionScriptHash(String self, Promise promise) {
+        Native.I
+            .constitutionScriptHash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void constitutionNew(String anchor, Promise promise) {
+        Native.I
+            .constitutionNew(new RPtr(anchor))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void constitutionNewWithScriptHash(String anchor, String scriptHash, Promise promise) {
+        Native.I
+            .constitutionNewWithScriptHash(new RPtr(anchor), new RPtr(scriptHash))
+            .map(RPtr::toJs)
             .pour(promise);
     }
 
@@ -1865,6 +2627,177 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
+    public final void credentialFromKeyhash(String hash, Promise promise) {
+        Native.I
+            .credentialFromKeyhash(new RPtr(hash))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialFromScripthash(String hash, Promise promise) {
+        Native.I
+            .credentialFromScripthash(new RPtr(hash))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialToKeyhash(String self, Promise promise) {
+        Native.I
+            .credentialToKeyhash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialToScripthash(String self, Promise promise) {
+        Native.I
+            .credentialToScripthash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialKind(String self, Promise promise) {
+        Native.I
+            .credentialKind(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialHasScriptHash(String self, Promise promise) {
+        Native.I
+            .credentialHasScriptHash(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialToBytes(String self, Promise promise) {
+        Native.I
+            .credentialToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialFromBytes(String bytes, Promise promise) {
+        Native.I
+            .credentialFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialToHex(String self, Promise promise) {
+        Native.I
+            .credentialToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialFromHex(String hexStr, Promise promise) {
+        Native.I
+            .credentialFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialToJson(String self, Promise promise) {
+        Native.I
+            .credentialToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialFromJson(String json, Promise promise) {
+        Native.I
+            .credentialFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void credentialsToBytes(String self, Promise promise) {
+        Native.I
+            .credentialsToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialsFromBytes(String bytes, Promise promise) {
+        Native.I
+            .credentialsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialsToHex(String self, Promise promise) {
+        Native.I
+            .credentialsToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialsFromHex(String hexStr, Promise promise) {
+        Native.I
+            .credentialsFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialsToJson(String self, Promise promise) {
+        Native.I
+            .credentialsToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialsFromJson(String json, Promise promise) {
+        Native.I
+            .credentialsFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialsNew( Promise promise) {
+        Native.I
+            .credentialsNew()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialsLen(String self, Promise promise) {
+        Native.I
+            .credentialsLen(new RPtr(self))
+            .map(Utils::boxedLongToDouble)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialsGet(String self, Double index, Promise promise) {
+        Native.I
+            .credentialsGet(new RPtr(self), index.longValue())
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void credentialsAdd(String self, String elem, Promise promise) {
+        Native.I
+            .credentialsAdd(new RPtr(self), new RPtr(elem))
+            .pour(promise);
+    }
+
+
+    @ReactMethod
     public final void dNSRecordAorAAAAToBytes(String self, Promise promise) {
         Native.I
             .dNSRecordAorAAAAToBytes(new RPtr(self))
@@ -1989,12 +2922,106 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public final void dataCostNewCoinsPerWord(String coinsPerWord, Promise promise) {
+    public final void dRepToBytes(String self, Promise promise) {
         Native.I
-            .dataCostNewCoinsPerWord(new RPtr(coinsPerWord))
+            .dRepToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void dRepFromBytes(String bytes, Promise promise) {
+        Native.I
+            .dRepFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
+
+    @ReactMethod
+    public final void dRepToHex(String self, Promise promise) {
+        Native.I
+            .dRepToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void dRepFromHex(String hexStr, Promise promise) {
+        Native.I
+            .dRepFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void dRepToJson(String self, Promise promise) {
+        Native.I
+            .dRepToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void dRepFromJson(String json, Promise promise) {
+        Native.I
+            .dRepFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void dRepNewKeyHash(String keyHash, Promise promise) {
+        Native.I
+            .dRepNewKeyHash(new RPtr(keyHash))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void dRepNewScriptHash(String scriptHash, Promise promise) {
+        Native.I
+            .dRepNewScriptHash(new RPtr(scriptHash))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void dRepNewAlwaysAbstain( Promise promise) {
+        Native.I
+            .dRepNewAlwaysAbstain()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void dRepNewAlwaysNoConfidence( Promise promise) {
+        Native.I
+            .dRepNewAlwaysNoConfidence()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void dRepKind(String self, Promise promise) {
+        Native.I
+            .dRepKind(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void dRepToKeyHash(String self, Promise promise) {
+        Native.I
+            .dRepToKeyHash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void dRepToScriptHash(String self, Promise promise) {
+        Native.I
+            .dRepToScriptHash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
 
     @ReactMethod
     public final void dataCostNewCoinsPerByte(String coinsPerByte, Promise promise) {
@@ -2072,6 +3099,477 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void datumSourceNewRefInput(String input, Promise promise) {
         Native.I
             .datumSourceNewRefInput(new RPtr(input))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void drepDeregistrationToBytes(String self, Promise promise) {
+        Native.I
+            .drepDeregistrationToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepDeregistrationFromBytes(String bytes, Promise promise) {
+        Native.I
+            .drepDeregistrationFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepDeregistrationToHex(String self, Promise promise) {
+        Native.I
+            .drepDeregistrationToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepDeregistrationFromHex(String hexStr, Promise promise) {
+        Native.I
+            .drepDeregistrationFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepDeregistrationToJson(String self, Promise promise) {
+        Native.I
+            .drepDeregistrationToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepDeregistrationFromJson(String json, Promise promise) {
+        Native.I
+            .drepDeregistrationFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepDeregistrationVotingCredential(String self, Promise promise) {
+        Native.I
+            .drepDeregistrationVotingCredential(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepDeregistrationCoin(String self, Promise promise) {
+        Native.I
+            .drepDeregistrationCoin(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepDeregistrationNew(String votingCredential, String coin, Promise promise) {
+        Native.I
+            .drepDeregistrationNew(new RPtr(votingCredential), new RPtr(coin))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepDeregistrationHasScriptCredentials(String self, Promise promise) {
+        Native.I
+            .drepDeregistrationHasScriptCredentials(new RPtr(self))
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void drepRegistrationToBytes(String self, Promise promise) {
+        Native.I
+            .drepRegistrationToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepRegistrationFromBytes(String bytes, Promise promise) {
+        Native.I
+            .drepRegistrationFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepRegistrationToHex(String self, Promise promise) {
+        Native.I
+            .drepRegistrationToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepRegistrationFromHex(String hexStr, Promise promise) {
+        Native.I
+            .drepRegistrationFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepRegistrationToJson(String self, Promise promise) {
+        Native.I
+            .drepRegistrationToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepRegistrationFromJson(String json, Promise promise) {
+        Native.I
+            .drepRegistrationFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepRegistrationVotingCredential(String self, Promise promise) {
+        Native.I
+            .drepRegistrationVotingCredential(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepRegistrationCoin(String self, Promise promise) {
+        Native.I
+            .drepRegistrationCoin(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepRegistrationAnchor(String self, Promise promise) {
+        Native.I
+            .drepRegistrationAnchor(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepRegistrationNew(String votingCredential, String coin, Promise promise) {
+        Native.I
+            .drepRegistrationNew(new RPtr(votingCredential), new RPtr(coin))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepRegistrationNewWithAnchor(String votingCredential, String coin, String anchor, Promise promise) {
+        Native.I
+            .drepRegistrationNewWithAnchor(new RPtr(votingCredential), new RPtr(coin), new RPtr(anchor))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepRegistrationHasScriptCredentials(String self, Promise promise) {
+        Native.I
+            .drepRegistrationHasScriptCredentials(new RPtr(self))
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void drepUpdateToBytes(String self, Promise promise) {
+        Native.I
+            .drepUpdateToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepUpdateFromBytes(String bytes, Promise promise) {
+        Native.I
+            .drepUpdateFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepUpdateToHex(String self, Promise promise) {
+        Native.I
+            .drepUpdateToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepUpdateFromHex(String hexStr, Promise promise) {
+        Native.I
+            .drepUpdateFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepUpdateToJson(String self, Promise promise) {
+        Native.I
+            .drepUpdateToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepUpdateFromJson(String json, Promise promise) {
+        Native.I
+            .drepUpdateFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepUpdateVotingCredential(String self, Promise promise) {
+        Native.I
+            .drepUpdateVotingCredential(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepUpdateAnchor(String self, Promise promise) {
+        Native.I
+            .drepUpdateAnchor(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepUpdateNew(String votingCredential, Promise promise) {
+        Native.I
+            .drepUpdateNew(new RPtr(votingCredential))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepUpdateNewWithAnchor(String votingCredential, String anchor, Promise promise) {
+        Native.I
+            .drepUpdateNewWithAnchor(new RPtr(votingCredential), new RPtr(anchor))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepUpdateHasScriptCredentials(String self, Promise promise) {
+        Native.I
+            .drepUpdateHasScriptCredentials(new RPtr(self))
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void drepVotingThresholdsToBytes(String self, Promise promise) {
+        Native.I
+            .drepVotingThresholdsToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsFromBytes(String bytes, Promise promise) {
+        Native.I
+            .drepVotingThresholdsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsToHex(String self, Promise promise) {
+        Native.I
+            .drepVotingThresholdsToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsFromHex(String hexStr, Promise promise) {
+        Native.I
+            .drepVotingThresholdsFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsToJson(String self, Promise promise) {
+        Native.I
+            .drepVotingThresholdsToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsFromJson(String json, Promise promise) {
+        Native.I
+            .drepVotingThresholdsFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsNew(String motionNoConfidence, String committeeNormal, String committeeNoConfidence, String updateConstitution, String hardForkInitiation, String ppNetworkGroup, String ppEconomicGroup, String ppTechnicalGroup, String ppGovernanceGroup, String treasuryWithdrawal, Promise promise) {
+        Native.I
+            .drepVotingThresholdsNew(new RPtr(motionNoConfidence), new RPtr(committeeNormal), new RPtr(committeeNoConfidence), new RPtr(updateConstitution), new RPtr(hardForkInitiation), new RPtr(ppNetworkGroup), new RPtr(ppEconomicGroup), new RPtr(ppTechnicalGroup), new RPtr(ppGovernanceGroup), new RPtr(treasuryWithdrawal))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsNewDefault( Promise promise) {
+        Native.I
+            .drepVotingThresholdsNewDefault()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsSetMotionNoConfidence(String self, String motionNoConfidence, Promise promise) {
+        Native.I
+            .drepVotingThresholdsSetMotionNoConfidence(new RPtr(self), new RPtr(motionNoConfidence))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsSetCommitteeNormal(String self, String committeeNormal, Promise promise) {
+        Native.I
+            .drepVotingThresholdsSetCommitteeNormal(new RPtr(self), new RPtr(committeeNormal))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsSetCommitteeNoConfidence(String self, String committeeNoConfidence, Promise promise) {
+        Native.I
+            .drepVotingThresholdsSetCommitteeNoConfidence(new RPtr(self), new RPtr(committeeNoConfidence))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsSetUpdateConstitution(String self, String updateConstitution, Promise promise) {
+        Native.I
+            .drepVotingThresholdsSetUpdateConstitution(new RPtr(self), new RPtr(updateConstitution))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsSetHardForkInitiation(String self, String hardForkInitiation, Promise promise) {
+        Native.I
+            .drepVotingThresholdsSetHardForkInitiation(new RPtr(self), new RPtr(hardForkInitiation))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsSetPpNetworkGroup(String self, String ppNetworkGroup, Promise promise) {
+        Native.I
+            .drepVotingThresholdsSetPpNetworkGroup(new RPtr(self), new RPtr(ppNetworkGroup))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsSetPpEconomicGroup(String self, String ppEconomicGroup, Promise promise) {
+        Native.I
+            .drepVotingThresholdsSetPpEconomicGroup(new RPtr(self), new RPtr(ppEconomicGroup))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsSetPpTechnicalGroup(String self, String ppTechnicalGroup, Promise promise) {
+        Native.I
+            .drepVotingThresholdsSetPpTechnicalGroup(new RPtr(self), new RPtr(ppTechnicalGroup))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsSetPpGovernanceGroup(String self, String ppGovernanceGroup, Promise promise) {
+        Native.I
+            .drepVotingThresholdsSetPpGovernanceGroup(new RPtr(self), new RPtr(ppGovernanceGroup))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsSetTreasuryWithdrawal(String self, String treasuryWithdrawal, Promise promise) {
+        Native.I
+            .drepVotingThresholdsSetTreasuryWithdrawal(new RPtr(self), new RPtr(treasuryWithdrawal))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsMotionNoConfidence(String self, Promise promise) {
+        Native.I
+            .drepVotingThresholdsMotionNoConfidence(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsCommitteeNormal(String self, Promise promise) {
+        Native.I
+            .drepVotingThresholdsCommitteeNormal(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsCommitteeNoConfidence(String self, Promise promise) {
+        Native.I
+            .drepVotingThresholdsCommitteeNoConfidence(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsUpdateConstitution(String self, Promise promise) {
+        Native.I
+            .drepVotingThresholdsUpdateConstitution(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsHardForkInitiation(String self, Promise promise) {
+        Native.I
+            .drepVotingThresholdsHardForkInitiation(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsPpNetworkGroup(String self, Promise promise) {
+        Native.I
+            .drepVotingThresholdsPpNetworkGroup(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsPpEconomicGroup(String self, Promise promise) {
+        Native.I
+            .drepVotingThresholdsPpEconomicGroup(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsPpTechnicalGroup(String self, Promise promise) {
+        Native.I
+            .drepVotingThresholdsPpTechnicalGroup(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsPpGovernanceGroup(String self, Promise promise) {
+        Native.I
+            .drepVotingThresholdsPpGovernanceGroup(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void drepVotingThresholdsTreasuryWithdrawal(String self, Promise promise) {
+        Native.I
+            .drepVotingThresholdsTreasuryWithdrawal(new RPtr(self))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2198,6 +3696,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void ed25519KeyHashesAdd(String self, String elem, Promise promise) {
         Native.I
             .ed25519KeyHashesAdd(new RPtr(self), new RPtr(elem))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void ed25519KeyHashesContains(String self, String elem, Promise promise) {
+        Native.I
+            .ed25519KeyHashesContains(new RPtr(self), new RPtr(elem))
             .pour(promise);
     }
 
@@ -2902,6 +4407,369 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
+    public final void governanceActionToBytes(String self, Promise promise) {
+        Native.I
+            .governanceActionToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionFromBytes(String bytes, Promise promise) {
+        Native.I
+            .governanceActionFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionToHex(String self, Promise promise) {
+        Native.I
+            .governanceActionToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionFromHex(String hexStr, Promise promise) {
+        Native.I
+            .governanceActionFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionToJson(String self, Promise promise) {
+        Native.I
+            .governanceActionToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionFromJson(String json, Promise promise) {
+        Native.I
+            .governanceActionFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionNewParameterChangeAction(String parameterChangeAction, Promise promise) {
+        Native.I
+            .governanceActionNewParameterChangeAction(new RPtr(parameterChangeAction))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionNewHardForkInitiationAction(String hardForkInitiationAction, Promise promise) {
+        Native.I
+            .governanceActionNewHardForkInitiationAction(new RPtr(hardForkInitiationAction))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionNewTreasuryWithdrawalsAction(String treasuryWithdrawalsAction, Promise promise) {
+        Native.I
+            .governanceActionNewTreasuryWithdrawalsAction(new RPtr(treasuryWithdrawalsAction))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionNewNoConfidenceAction(String noConfidenceAction, Promise promise) {
+        Native.I
+            .governanceActionNewNoConfidenceAction(new RPtr(noConfidenceAction))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionNewNewCommitteeAction(String newCommitteeAction, Promise promise) {
+        Native.I
+            .governanceActionNewNewCommitteeAction(new RPtr(newCommitteeAction))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionNewNewConstitutionAction(String newConstitutionAction, Promise promise) {
+        Native.I
+            .governanceActionNewNewConstitutionAction(new RPtr(newConstitutionAction))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionNewInfoAction(String infoAction, Promise promise) {
+        Native.I
+            .governanceActionNewInfoAction(new RPtr(infoAction))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionKind(String self, Promise promise) {
+        Native.I
+            .governanceActionKind(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionAsParameterChangeAction(String self, Promise promise) {
+        Native.I
+            .governanceActionAsParameterChangeAction(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionAsHardForkInitiationAction(String self, Promise promise) {
+        Native.I
+            .governanceActionAsHardForkInitiationAction(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionAsTreasuryWithdrawalsAction(String self, Promise promise) {
+        Native.I
+            .governanceActionAsTreasuryWithdrawalsAction(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionAsNoConfidenceAction(String self, Promise promise) {
+        Native.I
+            .governanceActionAsNoConfidenceAction(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionAsNewCommitteeAction(String self, Promise promise) {
+        Native.I
+            .governanceActionAsNewCommitteeAction(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionAsNewConstitutionAction(String self, Promise promise) {
+        Native.I
+            .governanceActionAsNewConstitutionAction(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionAsInfoAction(String self, Promise promise) {
+        Native.I
+            .governanceActionAsInfoAction(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void governanceActionIdToBytes(String self, Promise promise) {
+        Native.I
+            .governanceActionIdToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionIdFromBytes(String bytes, Promise promise) {
+        Native.I
+            .governanceActionIdFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionIdToHex(String self, Promise promise) {
+        Native.I
+            .governanceActionIdToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionIdFromHex(String hexStr, Promise promise) {
+        Native.I
+            .governanceActionIdFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionIdToJson(String self, Promise promise) {
+        Native.I
+            .governanceActionIdToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionIdFromJson(String json, Promise promise) {
+        Native.I
+            .governanceActionIdFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionIdTransactionId(String self, Promise promise) {
+        Native.I
+            .governanceActionIdTransactionId(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionIdIndex(String self, Promise promise) {
+        Native.I
+            .governanceActionIdIndex(new RPtr(self))
+            .map(Utils::boxedLongToDouble)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionIdNew(String transactionId, Double index, Promise promise) {
+        Native.I
+            .governanceActionIdNew(new RPtr(transactionId), index.longValue())
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void governanceActionIdsToJson(String self, Promise promise) {
+        Native.I
+            .governanceActionIdsToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionIdsFromJson(String json, Promise promise) {
+        Native.I
+            .governanceActionIdsFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionIdsNew( Promise promise) {
+        Native.I
+            .governanceActionIdsNew()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionIdsAdd(String self, String governanceActionId, Promise promise) {
+        Native.I
+            .governanceActionIdsAdd(new RPtr(self), new RPtr(governanceActionId))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionIdsGet(String self, Double index, Promise promise) {
+        Native.I
+            .governanceActionIdsGet(new RPtr(self), index.longValue())
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void governanceActionIdsLen(String self, Promise promise) {
+        Native.I
+            .governanceActionIdsLen(new RPtr(self))
+            .map(Utils::boxedLongToDouble)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void hardForkInitiationActionToBytes(String self, Promise promise) {
+        Native.I
+            .hardForkInitiationActionToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void hardForkInitiationActionFromBytes(String bytes, Promise promise) {
+        Native.I
+            .hardForkInitiationActionFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void hardForkInitiationActionToHex(String self, Promise promise) {
+        Native.I
+            .hardForkInitiationActionToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void hardForkInitiationActionFromHex(String hexStr, Promise promise) {
+        Native.I
+            .hardForkInitiationActionFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void hardForkInitiationActionToJson(String self, Promise promise) {
+        Native.I
+            .hardForkInitiationActionToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void hardForkInitiationActionFromJson(String json, Promise promise) {
+        Native.I
+            .hardForkInitiationActionFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void hardForkInitiationActionGovActionId(String self, Promise promise) {
+        Native.I
+            .hardForkInitiationActionGovActionId(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void hardForkInitiationActionProtocolVersion(String self, Promise promise) {
+        Native.I
+            .hardForkInitiationActionProtocolVersion(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void hardForkInitiationActionNew(String protocolVersion, Promise promise) {
+        Native.I
+            .hardForkInitiationActionNew(new RPtr(protocolVersion))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void hardForkInitiationActionNewWithActionId(String govActionId, String protocolVersion, Promise promise) {
+        Native.I
+            .hardForkInitiationActionNewWithActionId(new RPtr(govActionId), new RPtr(protocolVersion))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
     public final void headerToBytes(String self, Promise promise) {
         Native.I
             .headerToBytes(new RPtr(self))
@@ -3172,58 +5040,10 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public final void inputWithScriptWitnessNewWithNativeScriptWitness(String input, String witness, Promise promise) {
+    public final void infoActionNew( Promise promise) {
         Native.I
-            .inputWithScriptWitnessNewWithNativeScriptWitness(new RPtr(input), new RPtr(witness))
+            .infoActionNew()
             .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void inputWithScriptWitnessNewWithPlutusWitness(String input, String witness, Promise promise) {
-        Native.I
-            .inputWithScriptWitnessNewWithPlutusWitness(new RPtr(input), new RPtr(witness))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void inputWithScriptWitnessInput(String self, Promise promise) {
-        Native.I
-            .inputWithScriptWitnessInput(new RPtr(self))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-
-    @ReactMethod
-    public final void inputsWithScriptWitnessNew( Promise promise) {
-        Native.I
-            .inputsWithScriptWitnessNew()
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void inputsWithScriptWitnessAdd(String self, String input, Promise promise) {
-        Native.I
-            .inputsWithScriptWitnessAdd(new RPtr(self), new RPtr(input))
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void inputsWithScriptWitnessGet(String self, Double index, Promise promise) {
-        Native.I
-            .inputsWithScriptWitnessGet(new RPtr(self), index.longValue())
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void inputsWithScriptWitnessLen(String self, Promise promise) {
-        Native.I
-            .inputsWithScriptWitnessLen(new RPtr(self))
-            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -3614,6 +5434,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void languageNewPlutusV3( Promise promise) {
+        Native.I
+            .languageNewPlutusV3()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void languageKind(String self, Promise promise) {
         Native.I
             .languageKind(new RPtr(self))
@@ -3793,6 +5621,31 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void mIRToStakeCredentialsKeys(String self, Promise promise) {
         Native.I
             .mIRToStakeCredentialsKeys(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void malformedAddressOriginalBytes(String self, Promise promise) {
+        Native.I
+            .malformedAddressOriginalBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void malformedAddressToAddress(String self, Promise promise) {
+        Native.I
+            .malformedAddressToAddress(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void malformedAddressFromAddress(String addr, Promise promise) {
+        Native.I
+            .malformedAddressFromAddress(new RPtr(addr))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -4059,14 +5912,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void mintGetAll(String self, String key, Promise promise) {
-        Native.I
-            .mintGetAll(new RPtr(self), new RPtr(key))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
     public final void mintKeys(String self, Promise promise) {
         Native.I
             .mintKeys(new RPtr(self))
@@ -4195,9 +6040,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void mintBuilderGetRedeeemers(String self, Promise promise) {
+    public final void mintBuilderGetRedeemers(String self, Promise promise) {
         Native.I
-            .mintBuilderGetRedeeemers(new RPtr(self))
+            .mintBuilderGetRedeemers(new RPtr(self))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -4233,6 +6078,52 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
             .pour(promise);
     }
 
+
+    @ReactMethod
+    public final void mintsAssetsToJson(String self, Promise promise) {
+        Native.I
+            .mintsAssetsToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void mintsAssetsFromJson(String json, Promise promise) {
+        Native.I
+            .mintsAssetsFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void mintsAssetsNew( Promise promise) {
+        Native.I
+            .mintsAssetsNew()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void mintsAssetsAdd(String self, String mintAssets, Promise promise) {
+        Native.I
+            .mintsAssetsAdd(new RPtr(self), new RPtr(mintAssets))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void mintsAssetsGet(String self, Double index, Promise promise) {
+        Native.I
+            .mintsAssetsGet(new RPtr(self), index.longValue())
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void mintsAssetsLen(String self, Promise promise) {
+        Native.I
+            .mintsAssetsLen(new RPtr(self))
+            .map(Utils::boxedLongToDouble)
+            .pour(promise);
+    }
 
 
     @ReactMethod
@@ -4732,6 +6623,30 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
+    public final void nativeScriptSourceNew(String script, Promise promise) {
+        Native.I
+            .nativeScriptSourceNew(new RPtr(script))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void nativeScriptSourceNewRefInput(String scriptHash, String input, Promise promise) {
+        Native.I
+            .nativeScriptSourceNewRefInput(new RPtr(scriptHash), new RPtr(input))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void nativeScriptSourceSetRequiredSigners(String self, String keyHashes, Promise promise) {
+        Native.I
+            .nativeScriptSourceSetRequiredSigners(new RPtr(self), new RPtr(keyHashes))
+            .pour(promise);
+    }
+
+
+    @ReactMethod
     public final void nativeScriptsNew( Promise promise) {
         Native.I
             .nativeScriptsNew()
@@ -4759,6 +6674,52 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void nativeScriptsAdd(String self, String elem, Promise promise) {
         Native.I
             .nativeScriptsAdd(new RPtr(self), new RPtr(elem))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void nativeScriptsToBytes(String self, Promise promise) {
+        Native.I
+            .nativeScriptsToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void nativeScriptsFromBytes(String bytes, Promise promise) {
+        Native.I
+            .nativeScriptsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void nativeScriptsToHex(String self, Promise promise) {
+        Native.I
+            .nativeScriptsToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void nativeScriptsFromHex(String hexStr, Promise promise) {
+        Native.I
+            .nativeScriptsFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void nativeScriptsToJson(String self, Promise promise) {
+        Native.I
+            .nativeScriptsToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void nativeScriptsFromJson(String json, Promise promise) {
+        Native.I
+            .nativeScriptsFromJson(json)
+            .map(RPtr::toJs)
             .pour(promise);
     }
 
@@ -4874,17 +6835,166 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void networkInfoTestnet( Promise promise) {
+    public final void networkInfoMainnet( Promise promise) {
         Native.I
-            .networkInfoTestnet()
+            .networkInfoMainnet()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void newConstitutionActionToBytes(String self, Promise promise) {
+        Native.I
+            .newConstitutionActionToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void newConstitutionActionFromBytes(String bytes, Promise promise) {
+        Native.I
+            .newConstitutionActionFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void networkInfoMainnet( Promise promise) {
+    public final void newConstitutionActionToHex(String self, Promise promise) {
         Native.I
-            .networkInfoMainnet()
+            .newConstitutionActionToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void newConstitutionActionFromHex(String hexStr, Promise promise) {
+        Native.I
+            .newConstitutionActionFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void newConstitutionActionToJson(String self, Promise promise) {
+        Native.I
+            .newConstitutionActionToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void newConstitutionActionFromJson(String json, Promise promise) {
+        Native.I
+            .newConstitutionActionFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void newConstitutionActionGovActionId(String self, Promise promise) {
+        Native.I
+            .newConstitutionActionGovActionId(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void newConstitutionActionConstitution(String self, Promise promise) {
+        Native.I
+            .newConstitutionActionConstitution(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void newConstitutionActionNew(String constitution, Promise promise) {
+        Native.I
+            .newConstitutionActionNew(new RPtr(constitution))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void newConstitutionActionNewWithActionId(String govActionId, String constitution, Promise promise) {
+        Native.I
+            .newConstitutionActionNewWithActionId(new RPtr(govActionId), new RPtr(constitution))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void newConstitutionActionHasScriptHash(String self, Promise promise) {
+        Native.I
+            .newConstitutionActionHasScriptHash(new RPtr(self))
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void noConfidenceActionToBytes(String self, Promise promise) {
+        Native.I
+            .noConfidenceActionToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void noConfidenceActionFromBytes(String bytes, Promise promise) {
+        Native.I
+            .noConfidenceActionFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void noConfidenceActionToHex(String self, Promise promise) {
+        Native.I
+            .noConfidenceActionToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void noConfidenceActionFromHex(String hexStr, Promise promise) {
+        Native.I
+            .noConfidenceActionFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void noConfidenceActionToJson(String self, Promise promise) {
+        Native.I
+            .noConfidenceActionToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void noConfidenceActionFromJson(String json, Promise promise) {
+        Native.I
+            .noConfidenceActionFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void noConfidenceActionGovActionId(String self, Promise promise) {
+        Native.I
+            .noConfidenceActionGovActionId(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void noConfidenceActionNew( Promise promise) {
+        Native.I
+            .noConfidenceActionNew()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void noConfidenceActionNewWithActionId(String govActionId, Promise promise) {
+        Native.I
+            .noConfidenceActionNewWithActionId(new RPtr(govActionId))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5043,6 +7153,142 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void operationalCertNew(String hotVkey, Double sequenceNumber, Double kesPeriod, String sigma, Promise promise) {
         Native.I
             .operationalCertNew(new RPtr(hotVkey), sequenceNumber.longValue(), kesPeriod.longValue(), new RPtr(sigma))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void outputDatumNewDataHash(String dataHash, Promise promise) {
+        Native.I
+            .outputDatumNewDataHash(new RPtr(dataHash))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void outputDatumNewData(String data, Promise promise) {
+        Native.I
+            .outputDatumNewData(new RPtr(data))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void outputDatumDataHash(String self, Promise promise) {
+        Native.I
+            .outputDatumDataHash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void outputDatumData(String self, Promise promise) {
+        Native.I
+            .outputDatumData(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void parameterChangeActionToBytes(String self, Promise promise) {
+        Native.I
+            .parameterChangeActionToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void parameterChangeActionFromBytes(String bytes, Promise promise) {
+        Native.I
+            .parameterChangeActionFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void parameterChangeActionToHex(String self, Promise promise) {
+        Native.I
+            .parameterChangeActionToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void parameterChangeActionFromHex(String hexStr, Promise promise) {
+        Native.I
+            .parameterChangeActionFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void parameterChangeActionToJson(String self, Promise promise) {
+        Native.I
+            .parameterChangeActionToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void parameterChangeActionFromJson(String json, Promise promise) {
+        Native.I
+            .parameterChangeActionFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void parameterChangeActionGovActionId(String self, Promise promise) {
+        Native.I
+            .parameterChangeActionGovActionId(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void parameterChangeActionProtocolParamUpdates(String self, Promise promise) {
+        Native.I
+            .parameterChangeActionProtocolParamUpdates(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void parameterChangeActionPolicyHash(String self, Promise promise) {
+        Native.I
+            .parameterChangeActionPolicyHash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void parameterChangeActionNew(String protocolParamUpdates, Promise promise) {
+        Native.I
+            .parameterChangeActionNew(new RPtr(protocolParamUpdates))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void parameterChangeActionNewWithActionId(String govActionId, String protocolParamUpdates, Promise promise) {
+        Native.I
+            .parameterChangeActionNewWithActionId(new RPtr(govActionId), new RPtr(protocolParamUpdates))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void parameterChangeActionNewWithPolicyHash(String protocolParamUpdates, String policyHash, Promise promise) {
+        Native.I
+            .parameterChangeActionNewWithPolicyHash(new RPtr(protocolParamUpdates), new RPtr(policyHash))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void parameterChangeActionNewWithPolicyHashAndActionId(String govActionId, String protocolParamUpdates, String policyHash, Promise promise) {
+        Native.I
+            .parameterChangeActionNewWithPolicyHashAndActionId(new RPtr(govActionId), new RPtr(protocolParamUpdates), new RPtr(policyHash))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5389,6 +7635,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void plutusScriptNewV3(String bytes, Promise promise) {
+        Native.I
+            .plutusScriptNewV3(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void plutusScriptNewWithVersion(String bytes, String language, Promise promise) {
         Native.I
             .plutusScriptNewWithVersion(Base64.decode(bytes, Base64.DEFAULT), new RPtr(language))
@@ -5408,6 +7662,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void plutusScriptFromBytesV2(String bytes, Promise promise) {
         Native.I
             .plutusScriptFromBytesV2(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void plutusScriptFromBytesV3(String bytes, Promise promise) {
+        Native.I
+            .plutusScriptFromBytesV3(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -5454,18 +7716,25 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void plutusScriptSourceNewRefInput(String scriptHash, String input, Promise promise) {
+    public final void plutusScriptSourceNewRefInput(String scriptHash, String input, String langVer, Double scriptSize, Promise promise) {
         Native.I
-            .plutusScriptSourceNewRefInput(new RPtr(scriptHash), new RPtr(input))
+            .plutusScriptSourceNewRefInput(new RPtr(scriptHash), new RPtr(input), new RPtr(langVer), scriptSize.longValue())
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void plutusScriptSourceNewRefInputWithLangVer(String scriptHash, String input, String langVer, Promise promise) {
+    public final void plutusScriptSourceSetRequiredSigners(String self, String keyHashes, Promise promise) {
         Native.I
-            .plutusScriptSourceNewRefInputWithLangVer(new RPtr(scriptHash), new RPtr(input), new RPtr(langVer))
-            .map(RPtr::toJs)
+            .plutusScriptSourceSetRequiredSigners(new RPtr(self), new RPtr(keyHashes))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void plutusScriptSourceGetRefScriptSize(String self, Promise promise) {
+        Native.I
+            .plutusScriptSourceGetRefScriptSize(new RPtr(self))
+            .map(Utils::boxedLongToDouble)
             .pour(promise);
     }
 
@@ -6132,6 +8401,93 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
+    public final void poolVotingThresholdsToBytes(String self, Promise promise) {
+        Native.I
+            .poolVotingThresholdsToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void poolVotingThresholdsFromBytes(String bytes, Promise promise) {
+        Native.I
+            .poolVotingThresholdsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void poolVotingThresholdsToHex(String self, Promise promise) {
+        Native.I
+            .poolVotingThresholdsToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void poolVotingThresholdsFromHex(String hexStr, Promise promise) {
+        Native.I
+            .poolVotingThresholdsFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void poolVotingThresholdsToJson(String self, Promise promise) {
+        Native.I
+            .poolVotingThresholdsToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void poolVotingThresholdsFromJson(String json, Promise promise) {
+        Native.I
+            .poolVotingThresholdsFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void poolVotingThresholdsNew(String motionNoConfidence, String committeeNormal, String committeeNoConfidence, String hardForkInitiation, String securityRelevantThreshold, Promise promise) {
+        Native.I
+            .poolVotingThresholdsNew(new RPtr(motionNoConfidence), new RPtr(committeeNormal), new RPtr(committeeNoConfidence), new RPtr(hardForkInitiation), new RPtr(securityRelevantThreshold))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void poolVotingThresholdsMotionNoConfidence(String self, Promise promise) {
+        Native.I
+            .poolVotingThresholdsMotionNoConfidence(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void poolVotingThresholdsCommitteeNormal(String self, Promise promise) {
+        Native.I
+            .poolVotingThresholdsCommitteeNormal(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void poolVotingThresholdsCommitteeNoConfidence(String self, Promise promise) {
+        Native.I
+            .poolVotingThresholdsCommitteeNoConfidence(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void poolVotingThresholdsHardForkInitiation(String self, Promise promise) {
+        Native.I
+            .poolVotingThresholdsHardForkInitiation(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
     public final void privateKeyToPublic(String self, Promise promise) {
         Native.I
             .privateKeyToPublic(new RPtr(self))
@@ -6698,6 +9054,141 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void protocolParamUpdateSetPoolVotingThresholds(String self, String poolVotingThresholds, Promise promise) {
+        Native.I
+            .protocolParamUpdateSetPoolVotingThresholds(new RPtr(self), new RPtr(poolVotingThresholds))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdatePoolVotingThresholds(String self, Promise promise) {
+        Native.I
+            .protocolParamUpdatePoolVotingThresholds(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateSetDrepVotingThresholds(String self, String drepVotingThresholds, Promise promise) {
+        Native.I
+            .protocolParamUpdateSetDrepVotingThresholds(new RPtr(self), new RPtr(drepVotingThresholds))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateDrepVotingThresholds(String self, Promise promise) {
+        Native.I
+            .protocolParamUpdateDrepVotingThresholds(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateSetMinCommitteeSize(String self, Double minCommitteeSize, Promise promise) {
+        Native.I
+            .protocolParamUpdateSetMinCommitteeSize(new RPtr(self), minCommitteeSize.longValue())
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateMinCommitteeSize(String self, Promise promise) {
+        Native.I
+            .protocolParamUpdateMinCommitteeSize(new RPtr(self))
+            .map(Utils::boxedLongToDouble)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateSetCommitteeTermLimit(String self, Double committeeTermLimit, Promise promise) {
+        Native.I
+            .protocolParamUpdateSetCommitteeTermLimit(new RPtr(self), committeeTermLimit.longValue())
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateCommitteeTermLimit(String self, Promise promise) {
+        Native.I
+            .protocolParamUpdateCommitteeTermLimit(new RPtr(self))
+            .map(Utils::boxedLongToDouble)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateSetGovernanceActionValidityPeriod(String self, Double governanceActionValidityPeriod, Promise promise) {
+        Native.I
+            .protocolParamUpdateSetGovernanceActionValidityPeriod(new RPtr(self), governanceActionValidityPeriod.longValue())
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateGovernanceActionValidityPeriod(String self, Promise promise) {
+        Native.I
+            .protocolParamUpdateGovernanceActionValidityPeriod(new RPtr(self))
+            .map(Utils::boxedLongToDouble)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateSetGovernanceActionDeposit(String self, String governanceActionDeposit, Promise promise) {
+        Native.I
+            .protocolParamUpdateSetGovernanceActionDeposit(new RPtr(self), new RPtr(governanceActionDeposit))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateGovernanceActionDeposit(String self, Promise promise) {
+        Native.I
+            .protocolParamUpdateGovernanceActionDeposit(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateSetDrepDeposit(String self, String drepDeposit, Promise promise) {
+        Native.I
+            .protocolParamUpdateSetDrepDeposit(new RPtr(self), new RPtr(drepDeposit))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateDrepDeposit(String self, Promise promise) {
+        Native.I
+            .protocolParamUpdateDrepDeposit(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateSetDrepInactivityPeriod(String self, Double drepInactivityPeriod, Promise promise) {
+        Native.I
+            .protocolParamUpdateSetDrepInactivityPeriod(new RPtr(self), drepInactivityPeriod.longValue())
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateDrepInactivityPeriod(String self, Promise promise) {
+        Native.I
+            .protocolParamUpdateDrepInactivityPeriod(new RPtr(self))
+            .map(Utils::boxedLongToDouble)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateSetRefScriptCoinsPerByte(String self, String refScriptCoinsPerByte, Promise promise) {
+        Native.I
+            .protocolParamUpdateSetRefScriptCoinsPerByte(new RPtr(self), new RPtr(refScriptCoinsPerByte))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void protocolParamUpdateRefScriptCoinsPerByte(String self, Promise promise) {
+        Native.I
+            .protocolParamUpdateRefScriptCoinsPerByte(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void protocolParamUpdateNew( Promise promise) {
         Native.I
             .protocolParamUpdateNew()
@@ -7032,6 +9523,22 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void redeemerTagNewReward( Promise promise) {
         Native.I
             .redeemerTagNewReward()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void redeemerTagNewVote( Promise promise) {
+        Native.I
+            .redeemerTagNewVote()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void redeemerTagNewVotingProposal( Promise promise) {
+        Native.I
+            .redeemerTagNewVotingProposal()
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -8163,165 +10670,87 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public final void stakeCredentialFromKeyhash(String hash, Promise promise) {
+    public final void stakeAndVoteDelegationToBytes(String self, Promise promise) {
         Native.I
-            .stakeCredentialFromKeyhash(new RPtr(hash))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void stakeCredentialFromScripthash(String hash, Promise promise) {
-        Native.I
-            .stakeCredentialFromScripthash(new RPtr(hash))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void stakeCredentialToKeyhash(String self, Promise promise) {
-        Native.I
-            .stakeCredentialToKeyhash(new RPtr(self))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void stakeCredentialToScripthash(String self, Promise promise) {
-        Native.I
-            .stakeCredentialToScripthash(new RPtr(self))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void stakeCredentialKind(String self, Promise promise) {
-        Native.I
-            .stakeCredentialKind(new RPtr(self))
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void stakeCredentialToBytes(String self, Promise promise) {
-        Native.I
-            .stakeCredentialToBytes(new RPtr(self))
+            .stakeAndVoteDelegationToBytes(new RPtr(self))
             .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
             .pour(promise);
     }
 
     @ReactMethod
-    public final void stakeCredentialFromBytes(String bytes, Promise promise) {
+    public final void stakeAndVoteDelegationFromBytes(String bytes, Promise promise) {
         Native.I
-            .stakeCredentialFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .stakeAndVoteDelegationFromBytes(Base64.decode(bytes, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void stakeCredentialToHex(String self, Promise promise) {
+    public final void stakeAndVoteDelegationToHex(String self, Promise promise) {
         Native.I
-            .stakeCredentialToHex(new RPtr(self))
+            .stakeAndVoteDelegationToHex(new RPtr(self))
             .pour(promise);
     }
 
     @ReactMethod
-    public final void stakeCredentialFromHex(String hexStr, Promise promise) {
+    public final void stakeAndVoteDelegationFromHex(String hexStr, Promise promise) {
         Native.I
-            .stakeCredentialFromHex(hexStr)
+            .stakeAndVoteDelegationFromHex(hexStr)
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void stakeCredentialToJson(String self, Promise promise) {
+    public final void stakeAndVoteDelegationToJson(String self, Promise promise) {
         Native.I
-            .stakeCredentialToJson(new RPtr(self))
+            .stakeAndVoteDelegationToJson(new RPtr(self))
             .pour(promise);
     }
 
     @ReactMethod
-    public final void stakeCredentialFromJson(String json, Promise promise) {
+    public final void stakeAndVoteDelegationFromJson(String json, Promise promise) {
         Native.I
-            .stakeCredentialFromJson(json)
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-
-    @ReactMethod
-    public final void stakeCredentialsToBytes(String self, Promise promise) {
-        Native.I
-            .stakeCredentialsToBytes(new RPtr(self))
-            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void stakeCredentialsFromBytes(String bytes, Promise promise) {
-        Native.I
-            .stakeCredentialsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .stakeAndVoteDelegationFromJson(json)
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void stakeCredentialsToHex(String self, Promise promise) {
+    public final void stakeAndVoteDelegationStakeCredential(String self, Promise promise) {
         Native.I
-            .stakeCredentialsToHex(new RPtr(self))
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void stakeCredentialsFromHex(String hexStr, Promise promise) {
-        Native.I
-            .stakeCredentialsFromHex(hexStr)
+            .stakeAndVoteDelegationStakeCredential(new RPtr(self))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void stakeCredentialsToJson(String self, Promise promise) {
+    public final void stakeAndVoteDelegationPoolKeyhash(String self, Promise promise) {
         Native.I
-            .stakeCredentialsToJson(new RPtr(self))
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void stakeCredentialsFromJson(String json, Promise promise) {
-        Native.I
-            .stakeCredentialsFromJson(json)
+            .stakeAndVoteDelegationPoolKeyhash(new RPtr(self))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void stakeCredentialsNew( Promise promise) {
+    public final void stakeAndVoteDelegationDrep(String self, Promise promise) {
         Native.I
-            .stakeCredentialsNew()
+            .stakeAndVoteDelegationDrep(new RPtr(self))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void stakeCredentialsLen(String self, Promise promise) {
+    public final void stakeAndVoteDelegationNew(String stakeCredential, String poolKeyhash, String drep, Promise promise) {
         Native.I
-            .stakeCredentialsLen(new RPtr(self))
-            .map(Utils::boxedLongToDouble)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void stakeCredentialsGet(String self, Double index, Promise promise) {
-        Native.I
-            .stakeCredentialsGet(new RPtr(self), index.longValue())
+            .stakeAndVoteDelegationNew(new RPtr(stakeCredential), new RPtr(poolKeyhash), new RPtr(drep))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void stakeCredentialsAdd(String self, String elem, Promise promise) {
+    public final void stakeAndVoteDelegationHasScriptCredentials(String self, Promise promise) {
         Native.I
-            .stakeCredentialsAdd(new RPtr(self), new RPtr(elem))
+            .stakeAndVoteDelegationHasScriptCredentials(new RPtr(self))
             .pour(promise);
     }
 
@@ -8396,6 +10825,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
             .pour(promise);
     }
 
+    @ReactMethod
+    public final void stakeDelegationHasScriptCredentials(String self, Promise promise) {
+        Native.I
+            .stakeDelegationHasScriptCredentials(new RPtr(self))
+            .pour(promise);
+    }
+
 
     @ReactMethod
     public final void stakeDeregistrationToBytes(String self, Promise promise) {
@@ -8452,10 +10888,33 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void stakeDeregistrationCoin(String self, Promise promise) {
+        Native.I
+            .stakeDeregistrationCoin(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void stakeDeregistrationNew(String stakeCredential, Promise promise) {
         Native.I
             .stakeDeregistrationNew(new RPtr(stakeCredential))
             .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeDeregistrationNewWithCoin(String stakeCredential, String coin, Promise promise) {
+        Native.I
+            .stakeDeregistrationNewWithCoin(new RPtr(stakeCredential), new RPtr(coin))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeDeregistrationHasScriptCredentials(String self, Promise promise) {
+        Native.I
+            .stakeDeregistrationHasScriptCredentials(new RPtr(self))
             .pour(promise);
     }
 
@@ -8515,10 +10974,213 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void stakeRegistrationCoin(String self, Promise promise) {
+        Native.I
+            .stakeRegistrationCoin(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void stakeRegistrationNew(String stakeCredential, Promise promise) {
         Native.I
             .stakeRegistrationNew(new RPtr(stakeCredential))
             .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeRegistrationNewWithCoin(String stakeCredential, String coin, Promise promise) {
+        Native.I
+            .stakeRegistrationNewWithCoin(new RPtr(stakeCredential), new RPtr(coin))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeRegistrationHasScriptCredentials(String self, Promise promise) {
+        Native.I
+            .stakeRegistrationHasScriptCredentials(new RPtr(self))
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void stakeRegistrationAndDelegationToBytes(String self, Promise promise) {
+        Native.I
+            .stakeRegistrationAndDelegationToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeRegistrationAndDelegationFromBytes(String bytes, Promise promise) {
+        Native.I
+            .stakeRegistrationAndDelegationFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeRegistrationAndDelegationToHex(String self, Promise promise) {
+        Native.I
+            .stakeRegistrationAndDelegationToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeRegistrationAndDelegationFromHex(String hexStr, Promise promise) {
+        Native.I
+            .stakeRegistrationAndDelegationFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeRegistrationAndDelegationToJson(String self, Promise promise) {
+        Native.I
+            .stakeRegistrationAndDelegationToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeRegistrationAndDelegationFromJson(String json, Promise promise) {
+        Native.I
+            .stakeRegistrationAndDelegationFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeRegistrationAndDelegationStakeCredential(String self, Promise promise) {
+        Native.I
+            .stakeRegistrationAndDelegationStakeCredential(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeRegistrationAndDelegationPoolKeyhash(String self, Promise promise) {
+        Native.I
+            .stakeRegistrationAndDelegationPoolKeyhash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeRegistrationAndDelegationCoin(String self, Promise promise) {
+        Native.I
+            .stakeRegistrationAndDelegationCoin(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeRegistrationAndDelegationNew(String stakeCredential, String poolKeyhash, String coin, Promise promise) {
+        Native.I
+            .stakeRegistrationAndDelegationNew(new RPtr(stakeCredential), new RPtr(poolKeyhash), new RPtr(coin))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeRegistrationAndDelegationHasScriptCredentials(String self, Promise promise) {
+        Native.I
+            .stakeRegistrationAndDelegationHasScriptCredentials(new RPtr(self))
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void stakeVoteRegistrationAndDelegationToBytes(String self, Promise promise) {
+        Native.I
+            .stakeVoteRegistrationAndDelegationToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeVoteRegistrationAndDelegationFromBytes(String bytes, Promise promise) {
+        Native.I
+            .stakeVoteRegistrationAndDelegationFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeVoteRegistrationAndDelegationToHex(String self, Promise promise) {
+        Native.I
+            .stakeVoteRegistrationAndDelegationToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeVoteRegistrationAndDelegationFromHex(String hexStr, Promise promise) {
+        Native.I
+            .stakeVoteRegistrationAndDelegationFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeVoteRegistrationAndDelegationToJson(String self, Promise promise) {
+        Native.I
+            .stakeVoteRegistrationAndDelegationToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeVoteRegistrationAndDelegationFromJson(String json, Promise promise) {
+        Native.I
+            .stakeVoteRegistrationAndDelegationFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeVoteRegistrationAndDelegationStakeCredential(String self, Promise promise) {
+        Native.I
+            .stakeVoteRegistrationAndDelegationStakeCredential(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeVoteRegistrationAndDelegationPoolKeyhash(String self, Promise promise) {
+        Native.I
+            .stakeVoteRegistrationAndDelegationPoolKeyhash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeVoteRegistrationAndDelegationDrep(String self, Promise promise) {
+        Native.I
+            .stakeVoteRegistrationAndDelegationDrep(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeVoteRegistrationAndDelegationCoin(String self, Promise promise) {
+        Native.I
+            .stakeVoteRegistrationAndDelegationCoin(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeVoteRegistrationAndDelegationNew(String stakeCredential, String poolKeyhash, String drep, String coin, Promise promise) {
+        Native.I
+            .stakeVoteRegistrationAndDelegationNew(new RPtr(stakeCredential), new RPtr(poolKeyhash), new RPtr(drep), new RPtr(coin))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void stakeVoteRegistrationAndDelegationHasScriptCredentials(String self, Promise promise) {
+        Native.I
+            .stakeVoteRegistrationAndDelegationHasScriptCredentials(new RPtr(self))
             .pour(promise);
     }
 
@@ -9132,14 +11794,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionBodyMultiassets(String self, Promise promise) {
-        Native.I
-            .transactionBodyMultiassets(new RPtr(self))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
     public final void transactionBodySetReferenceInputs(String self, String referenceInputs, Promise promise) {
         Native.I
             .transactionBodySetReferenceInputs(new RPtr(self), new RPtr(referenceInputs))
@@ -9245,6 +11899,66 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionBodySetVotingProcedures(String self, String votingProcedures, Promise promise) {
+        Native.I
+            .transactionBodySetVotingProcedures(new RPtr(self), new RPtr(votingProcedures))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBodyVotingProcedures(String self, Promise promise) {
+        Native.I
+            .transactionBodyVotingProcedures(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBodySetVotingProposals(String self, String votingProposals, Promise promise) {
+        Native.I
+            .transactionBodySetVotingProposals(new RPtr(self), new RPtr(votingProposals))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBodyVotingProposals(String self, Promise promise) {
+        Native.I
+            .transactionBodyVotingProposals(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBodySetDonation(String self, String donation, Promise promise) {
+        Native.I
+            .transactionBodySetDonation(new RPtr(self), new RPtr(donation))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBodyDonation(String self, Promise promise) {
+        Native.I
+            .transactionBodyDonation(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBodySetCurrentTreasuryValue(String self, String currentTreasuryValue, Promise promise) {
+        Native.I
+            .transactionBodySetCurrentTreasuryValue(new RPtr(self), new RPtr(currentTreasuryValue))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBodyCurrentTreasuryValue(String self, Promise promise) {
+        Native.I
+            .transactionBodyCurrentTreasuryValue(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBodyNew(String inputs, String outputs, String fee, Promise promise) {
         Native.I
             .transactionBodyNew(new RPtr(inputs), new RPtr(outputs), new RPtr(fee))
@@ -9299,6 +12013,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionBuilderRemoveCollateralReturn(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveCollateralReturn(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBuilderSetCollateralReturnAndTotal(String self, String collateralReturn, Promise promise) {
         Native.I
             .transactionBuilderSetCollateralReturnAndTotal(new RPtr(self), new RPtr(collateralReturn))
@@ -9309,6 +12030,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderSetTotalCollateral(String self, String totalCollateral, Promise promise) {
         Native.I
             .transactionBuilderSetTotalCollateral(new RPtr(self), new RPtr(totalCollateral))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderRemoveTotalCollateral(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveTotalCollateral(new RPtr(self))
             .pour(promise);
     }
 
@@ -9327,16 +12055,16 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionBuilderAddKeyInput(String self, String hash, String input, String amount, Promise promise) {
+    public final void transactionBuilderAddScriptReferenceInput(String self, String referenceInput, Double scriptSize, Promise promise) {
         Native.I
-            .transactionBuilderAddKeyInput(new RPtr(self), new RPtr(hash), new RPtr(input), new RPtr(amount))
+            .transactionBuilderAddScriptReferenceInput(new RPtr(self), new RPtr(referenceInput), scriptSize.longValue())
             .pour(promise);
     }
 
     @ReactMethod
-    public final void transactionBuilderAddScriptInput(String self, String hash, String input, String amount, Promise promise) {
+    public final void transactionBuilderAddKeyInput(String self, String hash, String input, String amount, Promise promise) {
         Native.I
-            .transactionBuilderAddScriptInput(new RPtr(self), new RPtr(hash), new RPtr(input), new RPtr(amount))
+            .transactionBuilderAddKeyInput(new RPtr(self), new RPtr(hash), new RPtr(input), new RPtr(amount))
             .pour(promise);
     }
 
@@ -9362,33 +12090,23 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionBuilderAddInput(String self, String address, String input, String amount, Promise promise) {
+    public final void transactionBuilderAddRegularInput(String self, String address, String input, String amount, Promise promise) {
         Native.I
-            .transactionBuilderAddInput(new RPtr(self), new RPtr(address), new RPtr(input), new RPtr(amount))
+            .transactionBuilderAddRegularInput(new RPtr(self), new RPtr(address), new RPtr(input), new RPtr(amount))
             .pour(promise);
     }
 
     @ReactMethod
-    public final void transactionBuilderCountMissingInputScripts(String self, Promise promise) {
+    public final void transactionBuilderAddInputsFromAndChange(String self, String inputs, Double strategy, String changeConfig, Promise promise) {
         Native.I
-            .transactionBuilderCountMissingInputScripts(new RPtr(self))
-            .map(Utils::boxedLongToDouble)
+            .transactionBuilderAddInputsFromAndChange(new RPtr(self), new RPtr(inputs), strategy.intValue(), new RPtr(changeConfig))
             .pour(promise);
     }
 
     @ReactMethod
-    public final void transactionBuilderAddRequiredNativeInputScripts(String self, String scripts, Promise promise) {
+    public final void transactionBuilderAddInputsFromAndChangeWithCollateralReturn(String self, String inputs, Double strategy, String changeConfig, Double collateralPercentage, Promise promise) {
         Native.I
-            .transactionBuilderAddRequiredNativeInputScripts(new RPtr(self), new RPtr(scripts))
-            .map(Utils::boxedLongToDouble)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void transactionBuilderAddRequiredPlutusInputScripts(String self, String scripts, Promise promise) {
-        Native.I
-            .transactionBuilderAddRequiredPlutusInputScripts(new RPtr(self), new RPtr(scripts))
-            .map(Utils::boxedLongToDouble)
+            .transactionBuilderAddInputsFromAndChangeWithCollateralReturn(new RPtr(self), new RPtr(inputs), strategy.intValue(), new RPtr(changeConfig), collateralPercentage.longValue())
             .pour(promise);
     }
 
@@ -9453,6 +12171,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionBuilderRemoveTtl(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveTtl(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBuilderSetValidityStartInterval(String self, Double validityStartInterval, Promise promise) {
         Native.I
             .transactionBuilderSetValidityStartInterval(new RPtr(self), validityStartInterval.longValue())
@@ -9467,6 +12192,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionBuilderRemoveValidityStartInterval(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveValidityStartInterval(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBuilderSetCerts(String self, String certs, Promise promise) {
         Native.I
             .transactionBuilderSetCerts(new RPtr(self), new RPtr(certs))
@@ -9474,9 +12206,51 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void transactionBuilderRemoveCerts(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveCerts(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderSetCertsBuilder(String self, String certs, Promise promise) {
+        Native.I
+            .transactionBuilderSetCertsBuilder(new RPtr(self), new RPtr(certs))
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void transactionBuilderSetWithdrawals(String self, String withdrawals, Promise promise) {
         Native.I
             .transactionBuilderSetWithdrawals(new RPtr(self), new RPtr(withdrawals))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderSetWithdrawalsBuilder(String self, String withdrawals, Promise promise) {
+        Native.I
+            .transactionBuilderSetWithdrawalsBuilder(new RPtr(self), new RPtr(withdrawals))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderSetVotingBuilder(String self, String votingBuilder, Promise promise) {
+        Native.I
+            .transactionBuilderSetVotingBuilder(new RPtr(self), new RPtr(votingBuilder))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderSetVotingProposalBuilder(String self, String votingProposalBuilder, Promise promise) {
+        Native.I
+            .transactionBuilderSetVotingProposalBuilder(new RPtr(self), new RPtr(votingProposalBuilder))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderRemoveWithdrawals(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveWithdrawals(new RPtr(self))
             .pour(promise);
     }
 
@@ -9492,6 +12266,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderSetAuxiliaryData(String self, String auxiliaryData, Promise promise) {
         Native.I
             .transactionBuilderSetAuxiliaryData(new RPtr(self), new RPtr(auxiliaryData))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderRemoveAuxiliaryData(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveAuxiliaryData(new RPtr(self))
             .pour(promise);
     }
 
@@ -9527,6 +12308,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderSetMintBuilder(String self, String mintBuilder, Promise promise) {
         Native.I
             .transactionBuilderSetMintBuilder(new RPtr(self), new RPtr(mintBuilder))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderRemoveMintBuilder(String self, Promise promise) {
+        Native.I
+            .transactionBuilderRemoveMintBuilder(new RPtr(self))
             .pour(promise);
     }
 
@@ -9586,6 +12374,51 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderAddMintAssetAndOutputMinRequiredCoin(String self, String policyScript, String assetName, String amount, String outputBuilder, Promise promise) {
         Native.I
             .transactionBuilderAddMintAssetAndOutputMinRequiredCoin(new RPtr(self), new RPtr(policyScript), new RPtr(assetName), new RPtr(amount), new RPtr(outputBuilder))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderAddExtraWitnessDatum(String self, String datum, Promise promise) {
+        Native.I
+            .transactionBuilderAddExtraWitnessDatum(new RPtr(self), new RPtr(datum))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderGetExtraWitnessDatums(String self, Promise promise) {
+        Native.I
+            .transactionBuilderGetExtraWitnessDatums(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderSetDonation(String self, String donation, Promise promise) {
+        Native.I
+            .transactionBuilderSetDonation(new RPtr(self), new RPtr(donation))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderGetDonation(String self, Promise promise) {
+        Native.I
+            .transactionBuilderGetDonation(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderSetCurrentTreasuryValue(String self, String currentTreasuryValue, Promise promise) {
+        Native.I
+            .transactionBuilderSetCurrentTreasuryValue(new RPtr(self), new RPtr(currentTreasuryValue))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderGetCurrentTreasuryValue(String self, Promise promise) {
+        Native.I
+            .transactionBuilderGetCurrentTreasuryValue(new RPtr(self))
+            .map(RPtr::toJs)
             .pour(promise);
     }
 
@@ -9665,6 +12498,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderAddChangeIfNeeded(String self, String address, Promise promise) {
         Native.I
             .transactionBuilderAddChangeIfNeeded(new RPtr(self), new RPtr(address))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderAddChangeIfNeededWithDatum(String self, String address, String plutusData, Promise promise) {
+        Native.I
+            .transactionBuilderAddChangeIfNeededWithDatum(new RPtr(self), new RPtr(address), new RPtr(plutusData))
             .pour(promise);
     }
 
@@ -9762,14 +12602,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionBuilderConfigBuilderCoinsPerUtxoWord(String self, String coinsPerUtxoWord, Promise promise) {
-        Native.I
-            .transactionBuilderConfigBuilderCoinsPerUtxoWord(new RPtr(self), new RPtr(coinsPerUtxoWord))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
     public final void transactionBuilderConfigBuilderCoinsPerUtxoByte(String self, String coinsPerUtxoByte, Promise promise) {
         Native.I
             .transactionBuilderConfigBuilderCoinsPerUtxoByte(new RPtr(self), new RPtr(coinsPerUtxoByte))
@@ -9813,6 +12645,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void transactionBuilderConfigBuilderMaxTxSize(String self, Double maxTxSize, Promise promise) {
         Native.I
             .transactionBuilderConfigBuilderMaxTxSize(new RPtr(self), maxTxSize.longValue())
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void transactionBuilderConfigBuilderRefScriptCoinsPerByte(String self, String refScriptCoinsPerByte, Promise promise) {
+        Native.I
+            .transactionBuilderConfigBuilderRefScriptCoinsPerByte(new RPtr(self), new RPtr(refScriptCoinsPerByte))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -10388,14 +13228,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void transactionOutputAmountBuilderWithAssetAndMinRequiredCoin(String self, String multiasset, String coinsPerUtxoWord, Promise promise) {
-        Native.I
-            .transactionOutputAmountBuilderWithAssetAndMinRequiredCoin(new RPtr(self), new RPtr(multiasset), new RPtr(coinsPerUtxoWord))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
     public final void transactionOutputAmountBuilderWithAssetAndMinRequiredCoinByUtxoCost(String self, String multiasset, String dataCost, Promise promise) {
         Native.I
             .transactionOutputAmountBuilderWithAssetAndMinRequiredCoinByUtxoCost(new RPtr(self), new RPtr(multiasset), new RPtr(dataCost))
@@ -10881,6 +13713,140 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
+    public final void treasuryWithdrawalsToJson(String self, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsFromJson(String json, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsNew( Promise promise) {
+        Native.I
+            .treasuryWithdrawalsNew()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsGet(String self, String key, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsGet(new RPtr(self), new RPtr(key))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsInsert(String self, String key, String value, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsInsert(new RPtr(self), new RPtr(key), new RPtr(value))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsKeys(String self, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsKeys(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsLen(String self, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsLen(new RPtr(self))
+            .map(Utils::boxedLongToDouble)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void treasuryWithdrawalsActionToBytes(String self, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsActionToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsActionFromBytes(String bytes, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsActionFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsActionToHex(String self, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsActionToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsActionFromHex(String hexStr, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsActionFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsActionToJson(String self, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsActionToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsActionFromJson(String json, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsActionFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsActionWithdrawals(String self, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsActionWithdrawals(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsActionPolicyHash(String self, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsActionPolicyHash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsActionNew(String withdrawals, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsActionNew(new RPtr(withdrawals))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void treasuryWithdrawalsActionNewWithPolicyHash(String withdrawals, String policyHash, Promise promise) {
+        Native.I
+            .treasuryWithdrawalsActionNewWithPolicyHash(new RPtr(withdrawals), new RPtr(policyHash))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
     public final void txBuilderConstantsPlutusDefaultCostModels( Promise promise) {
         Native.I
             .txBuilderConstantsPlutusDefaultCostModels()
@@ -10921,13 +13887,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void txInputsBuilderAddScriptInput(String self, String hash, String input, String amount, Promise promise) {
-        Native.I
-            .txInputsBuilderAddScriptInput(new RPtr(self), new RPtr(hash), new RPtr(input), new RPtr(amount))
-            .pour(promise);
-    }
-
-    @ReactMethod
     public final void txInputsBuilderAddNativeScriptInput(String self, String script, String input, String amount, Promise promise) {
         Native.I
             .txInputsBuilderAddNativeScriptInput(new RPtr(self), new RPtr(script), new RPtr(input), new RPtr(amount))
@@ -10949,41 +13908,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void txInputsBuilderAddInput(String self, String address, String input, String amount, Promise promise) {
+    public final void txInputsBuilderAddRegularInput(String self, String address, String input, String amount, Promise promise) {
         Native.I
-            .txInputsBuilderAddInput(new RPtr(self), new RPtr(address), new RPtr(input), new RPtr(amount))
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void txInputsBuilderCountMissingInputScripts(String self, Promise promise) {
-        Native.I
-            .txInputsBuilderCountMissingInputScripts(new RPtr(self))
-            .map(Utils::boxedLongToDouble)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void txInputsBuilderAddRequiredNativeInputScripts(String self, String scripts, Promise promise) {
-        Native.I
-            .txInputsBuilderAddRequiredNativeInputScripts(new RPtr(self), new RPtr(scripts))
-            .map(Utils::boxedLongToDouble)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void txInputsBuilderAddRequiredPlutusInputScripts(String self, String scripts, Promise promise) {
-        Native.I
-            .txInputsBuilderAddRequiredPlutusInputScripts(new RPtr(self), new RPtr(scripts))
-            .map(Utils::boxedLongToDouble)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void txInputsBuilderAddRequiredScriptInputWitnesses(String self, String inputsWithWit, Promise promise) {
-        Native.I
-            .txInputsBuilderAddRequiredScriptInputWitnesses(new RPtr(self), new RPtr(inputsWithWit))
-            .map(Utils::boxedLongToDouble)
+            .txInputsBuilderAddRegularInput(new RPtr(self), new RPtr(address), new RPtr(input), new RPtr(amount))
             .pour(promise);
     }
 
@@ -11257,6 +14184,93 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void updateNew(String proposedProtocolParameterUpdates, Double epoch, Promise promise) {
         Native.I
             .updateNew(new RPtr(proposedProtocolParameterUpdates), epoch.longValue())
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void updateCommitteeActionToBytes(String self, Promise promise) {
+        Native.I
+            .updateCommitteeActionToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void updateCommitteeActionFromBytes(String bytes, Promise promise) {
+        Native.I
+            .updateCommitteeActionFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void updateCommitteeActionToHex(String self, Promise promise) {
+        Native.I
+            .updateCommitteeActionToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void updateCommitteeActionFromHex(String hexStr, Promise promise) {
+        Native.I
+            .updateCommitteeActionFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void updateCommitteeActionToJson(String self, Promise promise) {
+        Native.I
+            .updateCommitteeActionToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void updateCommitteeActionFromJson(String json, Promise promise) {
+        Native.I
+            .updateCommitteeActionFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void updateCommitteeActionGovActionId(String self, Promise promise) {
+        Native.I
+            .updateCommitteeActionGovActionId(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void updateCommitteeActionCommittee(String self, Promise promise) {
+        Native.I
+            .updateCommitteeActionCommittee(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void updateCommitteeActionMembersToRemove(String self, Promise promise) {
+        Native.I
+            .updateCommitteeActionMembersToRemove(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void updateCommitteeActionNew(String committee, String membersToRemove, Promise promise) {
+        Native.I
+            .updateCommitteeActionNew(new RPtr(committee), new RPtr(membersToRemove))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void updateCommitteeActionNewWithActionId(String govActionId, String committee, String membersToRemove, Promise promise) {
+        Native.I
+            .updateCommitteeActionNewWithActionId(new RPtr(govActionId), new RPtr(committee), new RPtr(membersToRemove))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -11820,6 +14834,786 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
+    public final void voteDelegationToBytes(String self, Promise promise) {
+        Native.I
+            .voteDelegationToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteDelegationFromBytes(String bytes, Promise promise) {
+        Native.I
+            .voteDelegationFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteDelegationToHex(String self, Promise promise) {
+        Native.I
+            .voteDelegationToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteDelegationFromHex(String hexStr, Promise promise) {
+        Native.I
+            .voteDelegationFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteDelegationToJson(String self, Promise promise) {
+        Native.I
+            .voteDelegationToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteDelegationFromJson(String json, Promise promise) {
+        Native.I
+            .voteDelegationFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteDelegationStakeCredential(String self, Promise promise) {
+        Native.I
+            .voteDelegationStakeCredential(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteDelegationDrep(String self, Promise promise) {
+        Native.I
+            .voteDelegationDrep(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteDelegationNew(String stakeCredential, String drep, Promise promise) {
+        Native.I
+            .voteDelegationNew(new RPtr(stakeCredential), new RPtr(drep))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteDelegationHasScriptCredentials(String self, Promise promise) {
+        Native.I
+            .voteDelegationHasScriptCredentials(new RPtr(self))
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void voteRegistrationAndDelegationToBytes(String self, Promise promise) {
+        Native.I
+            .voteRegistrationAndDelegationToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteRegistrationAndDelegationFromBytes(String bytes, Promise promise) {
+        Native.I
+            .voteRegistrationAndDelegationFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteRegistrationAndDelegationToHex(String self, Promise promise) {
+        Native.I
+            .voteRegistrationAndDelegationToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteRegistrationAndDelegationFromHex(String hexStr, Promise promise) {
+        Native.I
+            .voteRegistrationAndDelegationFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteRegistrationAndDelegationToJson(String self, Promise promise) {
+        Native.I
+            .voteRegistrationAndDelegationToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteRegistrationAndDelegationFromJson(String json, Promise promise) {
+        Native.I
+            .voteRegistrationAndDelegationFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteRegistrationAndDelegationStakeCredential(String self, Promise promise) {
+        Native.I
+            .voteRegistrationAndDelegationStakeCredential(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteRegistrationAndDelegationDrep(String self, Promise promise) {
+        Native.I
+            .voteRegistrationAndDelegationDrep(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteRegistrationAndDelegationCoin(String self, Promise promise) {
+        Native.I
+            .voteRegistrationAndDelegationCoin(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteRegistrationAndDelegationNew(String stakeCredential, String drep, String coin, Promise promise) {
+        Native.I
+            .voteRegistrationAndDelegationNew(new RPtr(stakeCredential), new RPtr(drep), new RPtr(coin))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voteRegistrationAndDelegationHasScriptCredentials(String self, Promise promise) {
+        Native.I
+            .voteRegistrationAndDelegationHasScriptCredentials(new RPtr(self))
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void voterToBytes(String self, Promise promise) {
+        Native.I
+            .voterToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voterFromBytes(String bytes, Promise promise) {
+        Native.I
+            .voterFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voterToHex(String self, Promise promise) {
+        Native.I
+            .voterToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voterFromHex(String hexStr, Promise promise) {
+        Native.I
+            .voterFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voterToJson(String self, Promise promise) {
+        Native.I
+            .voterToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voterFromJson(String json, Promise promise) {
+        Native.I
+            .voterFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voterNewConstitutionalCommitteeHotKey(String cred, Promise promise) {
+        Native.I
+            .voterNewConstitutionalCommitteeHotKey(new RPtr(cred))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voterNewDrep(String cred, Promise promise) {
+        Native.I
+            .voterNewDrep(new RPtr(cred))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voterNewStakingPool(String keyHash, Promise promise) {
+        Native.I
+            .voterNewStakingPool(new RPtr(keyHash))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voterKind(String self, Promise promise) {
+        Native.I
+            .voterKind(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voterToConstitutionalCommitteeHotCred(String self, Promise promise) {
+        Native.I
+            .voterToConstitutionalCommitteeHotCred(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voterToDrepCred(String self, Promise promise) {
+        Native.I
+            .voterToDrepCred(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voterToStakingPoolKeyHash(String self, Promise promise) {
+        Native.I
+            .voterToStakingPoolKeyHash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voterHasScriptCredentials(String self, Promise promise) {
+        Native.I
+            .voterHasScriptCredentials(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void voterToKeyHash(String self, Promise promise) {
+        Native.I
+            .voterToKeyHash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void votersToJson(String self, Promise promise) {
+        Native.I
+            .votersToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votersFromJson(String json, Promise promise) {
+        Native.I
+            .votersFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votersNew( Promise promise) {
+        Native.I
+            .votersNew()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votersAdd(String self, String voter, Promise promise) {
+        Native.I
+            .votersAdd(new RPtr(self), new RPtr(voter))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votersGet(String self, Double index, Promise promise) {
+        Native.I
+            .votersGet(new RPtr(self), index.longValue())
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votersLen(String self, Promise promise) {
+        Native.I
+            .votersLen(new RPtr(self))
+            .map(Utils::boxedLongToDouble)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void votingBuilderNew( Promise promise) {
+        Native.I
+            .votingBuilderNew()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingBuilderAdd(String self, String voter, String govActionId, String votingProcedure, Promise promise) {
+        Native.I
+            .votingBuilderAdd(new RPtr(self), new RPtr(voter), new RPtr(govActionId), new RPtr(votingProcedure))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingBuilderAddWithPlutusWitness(String self, String voter, String govActionId, String votingProcedure, String witness, Promise promise) {
+        Native.I
+            .votingBuilderAddWithPlutusWitness(new RPtr(self), new RPtr(voter), new RPtr(govActionId), new RPtr(votingProcedure), new RPtr(witness))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingBuilderAddWithNativeScript(String self, String voter, String govActionId, String votingProcedure, String nativeScriptSource, Promise promise) {
+        Native.I
+            .votingBuilderAddWithNativeScript(new RPtr(self), new RPtr(voter), new RPtr(govActionId), new RPtr(votingProcedure), new RPtr(nativeScriptSource))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingBuilderGetPlutusWitnesses(String self, Promise promise) {
+        Native.I
+            .votingBuilderGetPlutusWitnesses(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingBuilderGetRefInputs(String self, Promise promise) {
+        Native.I
+            .votingBuilderGetRefInputs(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingBuilderGetNativeScripts(String self, Promise promise) {
+        Native.I
+            .votingBuilderGetNativeScripts(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingBuilderHasPlutusScripts(String self, Promise promise) {
+        Native.I
+            .votingBuilderHasPlutusScripts(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingBuilderBuild(String self, Promise promise) {
+        Native.I
+            .votingBuilderBuild(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void votingProcedureToBytes(String self, Promise promise) {
+        Native.I
+            .votingProcedureToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProcedureFromBytes(String bytes, Promise promise) {
+        Native.I
+            .votingProcedureFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProcedureToHex(String self, Promise promise) {
+        Native.I
+            .votingProcedureToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProcedureFromHex(String hexStr, Promise promise) {
+        Native.I
+            .votingProcedureFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProcedureToJson(String self, Promise promise) {
+        Native.I
+            .votingProcedureToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProcedureFromJson(String json, Promise promise) {
+        Native.I
+            .votingProcedureFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProcedureNew(Double vote, Promise promise) {
+        Native.I
+            .votingProcedureNew(vote.intValue())
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProcedureNewWithAnchor(Double vote, String anchor, Promise promise) {
+        Native.I
+            .votingProcedureNewWithAnchor(vote.intValue(), new RPtr(anchor))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProcedureVoteKind(String self, Promise promise) {
+        Native.I
+            .votingProcedureVoteKind(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProcedureAnchor(String self, Promise promise) {
+        Native.I
+            .votingProcedureAnchor(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void votingProceduresToBytes(String self, Promise promise) {
+        Native.I
+            .votingProceduresToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProceduresFromBytes(String bytes, Promise promise) {
+        Native.I
+            .votingProceduresFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProceduresToHex(String self, Promise promise) {
+        Native.I
+            .votingProceduresToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProceduresFromHex(String hexStr, Promise promise) {
+        Native.I
+            .votingProceduresFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProceduresToJson(String self, Promise promise) {
+        Native.I
+            .votingProceduresToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProceduresFromJson(String json, Promise promise) {
+        Native.I
+            .votingProceduresFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProceduresNew( Promise promise) {
+        Native.I
+            .votingProceduresNew()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProceduresInsert(String self, String voter, String governanceActionId, String votingProcedure, Promise promise) {
+        Native.I
+            .votingProceduresInsert(new RPtr(self), new RPtr(voter), new RPtr(governanceActionId), new RPtr(votingProcedure))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProceduresGet(String self, String voter, String governanceActionId, Promise promise) {
+        Native.I
+            .votingProceduresGet(new RPtr(self), new RPtr(voter), new RPtr(governanceActionId))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProceduresGetVoters(String self, Promise promise) {
+        Native.I
+            .votingProceduresGetVoters(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProceduresGetGovernanceActionIdsByVoter(String self, String voter, Promise promise) {
+        Native.I
+            .votingProceduresGetGovernanceActionIdsByVoter(new RPtr(self), new RPtr(voter))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void votingProposalToBytes(String self, Promise promise) {
+        Native.I
+            .votingProposalToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalFromBytes(String bytes, Promise promise) {
+        Native.I
+            .votingProposalFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalToHex(String self, Promise promise) {
+        Native.I
+            .votingProposalToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalFromHex(String hexStr, Promise promise) {
+        Native.I
+            .votingProposalFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalToJson(String self, Promise promise) {
+        Native.I
+            .votingProposalToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalFromJson(String json, Promise promise) {
+        Native.I
+            .votingProposalFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalGovernanceAction(String self, Promise promise) {
+        Native.I
+            .votingProposalGovernanceAction(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalAnchor(String self, Promise promise) {
+        Native.I
+            .votingProposalAnchor(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalRewardAccount(String self, Promise promise) {
+        Native.I
+            .votingProposalRewardAccount(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalDeposit(String self, Promise promise) {
+        Native.I
+            .votingProposalDeposit(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalNew(String governanceAction, String anchor, String rewardAccount, String deposit, Promise promise) {
+        Native.I
+            .votingProposalNew(new RPtr(governanceAction), new RPtr(anchor), new RPtr(rewardAccount), new RPtr(deposit))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void votingProposalBuilderNew( Promise promise) {
+        Native.I
+            .votingProposalBuilderNew()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalBuilderAdd(String self, String proposal, Promise promise) {
+        Native.I
+            .votingProposalBuilderAdd(new RPtr(self), new RPtr(proposal))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalBuilderAddWithPlutusWitness(String self, String proposal, String witness, Promise promise) {
+        Native.I
+            .votingProposalBuilderAddWithPlutusWitness(new RPtr(self), new RPtr(proposal), new RPtr(witness))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalBuilderGetPlutusWitnesses(String self, Promise promise) {
+        Native.I
+            .votingProposalBuilderGetPlutusWitnesses(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalBuilderGetRefInputs(String self, Promise promise) {
+        Native.I
+            .votingProposalBuilderGetRefInputs(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalBuilderHasPlutusScripts(String self, Promise promise) {
+        Native.I
+            .votingProposalBuilderHasPlutusScripts(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalBuilderBuild(String self, Promise promise) {
+        Native.I
+            .votingProposalBuilderBuild(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void votingProposalsToBytes(String self, Promise promise) {
+        Native.I
+            .votingProposalsToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalsFromBytes(String bytes, Promise promise) {
+        Native.I
+            .votingProposalsFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalsToHex(String self, Promise promise) {
+        Native.I
+            .votingProposalsToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalsFromHex(String hexStr, Promise promise) {
+        Native.I
+            .votingProposalsFromHex(hexStr)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalsToJson(String self, Promise promise) {
+        Native.I
+            .votingProposalsToJson(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalsFromJson(String json, Promise promise) {
+        Native.I
+            .votingProposalsFromJson(json)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalsNew( Promise promise) {
+        Native.I
+            .votingProposalsNew()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalsLen(String self, Promise promise) {
+        Native.I
+            .votingProposalsLen(new RPtr(self))
+            .map(Utils::boxedLongToDouble)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalsGet(String self, Double index, Promise promise) {
+        Native.I
+            .votingProposalsGet(new RPtr(self), index.longValue())
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void votingProposalsAdd(String self, String proposal, Promise promise) {
+        Native.I
+            .votingProposalsAdd(new RPtr(self), new RPtr(proposal))
+            .pour(promise);
+    }
+
+
+    @ReactMethod
     public final void withdrawalsToBytes(String self, Promise promise) {
         Native.I
             .withdrawalsToBytes(new RPtr(self))
@@ -11901,6 +15695,83 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void withdrawalsKeys(String self, Promise promise) {
         Native.I
             .withdrawalsKeys(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void withdrawalsBuilderNew( Promise promise) {
+        Native.I
+            .withdrawalsBuilderNew()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void withdrawalsBuilderAdd(String self, String address, String coin, Promise promise) {
+        Native.I
+            .withdrawalsBuilderAdd(new RPtr(self), new RPtr(address), new RPtr(coin))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void withdrawalsBuilderAddWithPlutusWitness(String self, String address, String coin, String witness, Promise promise) {
+        Native.I
+            .withdrawalsBuilderAddWithPlutusWitness(new RPtr(self), new RPtr(address), new RPtr(coin), new RPtr(witness))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void withdrawalsBuilderAddWithNativeScript(String self, String address, String coin, String nativeScriptSource, Promise promise) {
+        Native.I
+            .withdrawalsBuilderAddWithNativeScript(new RPtr(self), new RPtr(address), new RPtr(coin), new RPtr(nativeScriptSource))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void withdrawalsBuilderGetPlutusWitnesses(String self, Promise promise) {
+        Native.I
+            .withdrawalsBuilderGetPlutusWitnesses(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void withdrawalsBuilderGetRefInputs(String self, Promise promise) {
+        Native.I
+            .withdrawalsBuilderGetRefInputs(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void withdrawalsBuilderGetNativeScripts(String self, Promise promise) {
+        Native.I
+            .withdrawalsBuilderGetNativeScripts(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void withdrawalsBuilderGetTotalWithdrawals(String self, Promise promise) {
+        Native.I
+            .withdrawalsBuilderGetTotalWithdrawals(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void withdrawalsBuilderHasPlutusScripts(String self, Promise promise) {
+        Native.I
+            .withdrawalsBuilderHasPlutusScripts(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void withdrawalsBuilderBuild(String self, Promise promise) {
+        Native.I
+            .withdrawalsBuilderBuild(new RPtr(self))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -12080,17 +15951,17 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void minAdaRequired(String assets, Boolean hasDataHash, String coinsPerUtxoWord, Promise promise) {
+    public final void minFee(String tx, String linearFee, Promise promise) {
         Native.I
-            .minAdaRequired(new RPtr(assets), hasDataHash, new RPtr(coinsPerUtxoWord))
+            .minFee(new RPtr(tx), new RPtr(linearFee))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void minFee(String tx, String linearFee, Promise promise) {
+    public final void minRefScriptFee(Double totalRefScriptsSize, String refScriptCoinsPerByte, Promise promise) {
         Native.I
-            .minFee(new RPtr(tx), new RPtr(linearFee))
+            .minRefScriptFee(totalRefScriptsSize.longValue(), new RPtr(refScriptCoinsPerByte))
             .map(RPtr::toJs)
             .pour(promise);
     }

@@ -1,6 +1,6 @@
 [package]
 name = "csl-mobile-bridge"
-version = "5.1.2"
+version = "6.0.0-alpha.7"
 authors = ["EMURGO"]
 edition = "2018"
 
@@ -11,7 +11,7 @@ cbindgen = "=0.14.1"
 cryptoxide = { git = "https://github.com/emurgo/cryptoxide", tag="0.4.4"}
 
 [dependencies]
-cardano-serialization-lib = "11.4.0"
+cardano-serialization-lib = "=12.0.0-alpha.29"
 byteorder = "1.4.3"
 base64 = "0.20.0"
 # tag = "2.3.1"

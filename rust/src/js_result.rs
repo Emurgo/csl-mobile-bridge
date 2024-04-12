@@ -1,5 +1,5 @@
 use crate::panic::{Result, ToResult};
-use cardano_serialization_lib::error::{DeserializeError, JsError};
+use cardano_serialization_lib::{DeserializeError, JsError};
 
 impl<T> ToResult<T> for std::result::Result<T, DeserializeError> {
   fn into_result(self) -> Result<T> {

@@ -1,4 +1,4 @@
-use cardano_serialization_lib::error::{DeserializeError};
+use cardano_serialization_lib::{DeserializeError};
 
 pub trait ToFromBytes {
   fn to_bytes(&self) -> Vec<u8>;

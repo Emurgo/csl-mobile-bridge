@@ -7,14 +7,23 @@ const { HaskellShelley } = NativeModules;
 // export default HaskellShelley;
 
 function uint8ArrayFromB64(base64_string) {
+  if (base64_string == null) {
+    return undefined;
+  }
   return Uint8Array.from(base64_decode(base64_string), c => c.charCodeAt(0));
 }
 
 function b64FromUint8Array(uint8Array) {
+  if (uint8Array == null) {
+    return undefined;
+  }
   return base64_encode(String.fromCharCode.apply(null, uint8Array));
 }
 
 function uint32ArrayToBase64(uint32Array) {
+  if (uint32Array == null) {
+    return undefined;
+  }
   const uint8Array = new Uint8Array(uint32Array.length * 4);
   const dataView = new DataView(uint8Array.buffer);
   for (let i = 0; i < uint32Array.length; i++) {
@@ -24,6 +33,9 @@ function uint32ArrayToBase64(uint32Array) {
 }
 
 function base64ToUint32Array(base64String) {
+  if (base64String == null) {
+    return undefined;
+  }
   const uint8Array = uint8ArrayFromB64(base64String);
   const dataView = new DataView(uint8Array.buffer);
   const uint32Array = new Uint32Array(uint8Array.length / 4);
@@ -94,6 +106,21 @@ export class Address extends Ptr {
     return Ptr._wrap(ret, Address);
   }
 
+  async kind() {
+    const ret = await HaskellShelley.addressKind(this.ptr);
+    return ret;
+  }
+
+  async payment_cred() {
+    const ret = await HaskellShelley.addressPaymentCred(this.ptr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async is_malformed() {
+    const ret = await HaskellShelley.addressIsMalformed(this.ptr);
+    return ret;
+  }
+
   async to_hex() {
     const ret = await HaskellShelley.addressToHex(this.ptr);
     return ret;
@@ -128,6 +155,91 @@ export class Address extends Ptr {
   async network_id() {
     const ret = await HaskellShelley.addressNetworkId(this.ptr);
     return ret;
+  }
+
+}
+
+
+export class Anchor extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.anchorToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.anchorFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, Anchor);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.anchorToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.anchorFromHex(hex_str);
+    return Ptr._wrap(ret, Anchor);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.anchorToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.anchorFromJson(json);
+    return Ptr._wrap(ret, Anchor);
+  }
+
+  async url() {
+    const ret = await HaskellShelley.anchorUrl(this.ptr);
+    return Ptr._wrap(ret, URL);
+  }
+
+  async anchor_data_hash() {
+    const ret = await HaskellShelley.anchorAnchorDataHash(this.ptr);
+    return Ptr._wrap(ret, AnchorDataHash);
+  }
+
+  static async new(anchor_url, anchor_data_hash) {
+    const anchor_urlPtr = Ptr._assertClass(anchor_url, URL);
+    const anchor_data_hashPtr = Ptr._assertClass(anchor_data_hash, AnchorDataHash);
+    const ret = await HaskellShelley.anchorNew(anchor_urlPtr, anchor_data_hashPtr);
+    return Ptr._wrap(ret, Anchor);
+  }
+
+}
+
+
+export class AnchorDataHash extends Ptr {
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.anchorDataHashFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, AnchorDataHash);
+  }
+
+  async to_bytes() {
+    const ret = await HaskellShelley.anchorDataHashToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  async to_bech32(prefix) {
+    const ret = await HaskellShelley.anchorDataHashToBech32(this.ptr, prefix);
+    return ret;
+  }
+
+  static async from_bech32(bech_str) {
+    const ret = await HaskellShelley.anchorDataHashFromBech32(bech_str);
+    return Ptr._wrap(ret, AnchorDataHash);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.anchorDataHashToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex) {
+    const ret = await HaskellShelley.anchorDataHashFromHex(hex);
+    return Ptr._wrap(ret, AnchorDataHash);
   }
 
 }
@@ -442,20 +554,20 @@ export class AuxiliaryDataSet extends Ptr {
 
 export class BaseAddress extends Ptr {
   static async new(network, payment, stake) {
-    const paymentPtr = Ptr._assertClass(payment, StakeCredential);
-    const stakePtr = Ptr._assertClass(stake, StakeCredential);
+    const paymentPtr = Ptr._assertClass(payment, Credential);
+    const stakePtr = Ptr._assertClass(stake, Credential);
     const ret = await HaskellShelley.baseAddressNew(network, paymentPtr, stakePtr);
     return Ptr._wrap(ret, BaseAddress);
   }
 
   async payment_cred() {
     const ret = await HaskellShelley.baseAddressPaymentCred(this.ptr);
-    return Ptr._wrap(ret, StakeCredential);
+    return Ptr._wrap(ret, Credential);
   }
 
   async stake_cred() {
     const ret = await HaskellShelley.baseAddressStakeCred(this.ptr);
-    return Ptr._wrap(ret, StakeCredential);
+    return Ptr._wrap(ret, Credential);
   }
 
   async to_address() {
@@ -860,6 +972,11 @@ export class Block extends Ptr {
     return Ptr._wrap(ret, Block);
   }
 
+  static async from_wrapped_bytes(data) {
+    const ret = await HaskellShelley.blockFromWrappedBytes(b64FromUint8Array(data));
+    return Ptr._wrap(ret, Block);
+  }
+
 }
 
 
@@ -1117,6 +1234,66 @@ export class Certificate extends Ptr {
     return Ptr._wrap(ret, Certificate);
   }
 
+  static async new_committee_hot_auth(committee_hot_auth) {
+    const committee_hot_authPtr = Ptr._assertClass(committee_hot_auth, CommitteeHotAuth);
+    const ret = await HaskellShelley.certificateNewCommitteeHotAuth(committee_hot_authPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  static async new_committee_cold_resign(committee_cold_resign) {
+    const committee_cold_resignPtr = Ptr._assertClass(committee_cold_resign, CommitteeColdResign);
+    const ret = await HaskellShelley.certificateNewCommitteeColdResign(committee_cold_resignPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  static async new_drep_deregistration(drep_deregistration) {
+    const drep_deregistrationPtr = Ptr._assertClass(drep_deregistration, DrepDeregistration);
+    const ret = await HaskellShelley.certificateNewDrepDeregistration(drep_deregistrationPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  static async new_drep_registration(drep_registration) {
+    const drep_registrationPtr = Ptr._assertClass(drep_registration, DrepRegistration);
+    const ret = await HaskellShelley.certificateNewDrepRegistration(drep_registrationPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  static async new_drep_update(drep_update) {
+    const drep_updatePtr = Ptr._assertClass(drep_update, DrepUpdate);
+    const ret = await HaskellShelley.certificateNewDrepUpdate(drep_updatePtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  static async new_stake_and_vote_delegation(stake_and_vote_delegation) {
+    const stake_and_vote_delegationPtr = Ptr._assertClass(stake_and_vote_delegation, StakeAndVoteDelegation);
+    const ret = await HaskellShelley.certificateNewStakeAndVoteDelegation(stake_and_vote_delegationPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  static async new_stake_registration_and_delegation(stake_registration_and_delegation) {
+    const stake_registration_and_delegationPtr = Ptr._assertClass(stake_registration_and_delegation, StakeRegistrationAndDelegation);
+    const ret = await HaskellShelley.certificateNewStakeRegistrationAndDelegation(stake_registration_and_delegationPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  static async new_stake_vote_registration_and_delegation(stake_vote_registration_and_delegation) {
+    const stake_vote_registration_and_delegationPtr = Ptr._assertClass(stake_vote_registration_and_delegation, StakeVoteRegistrationAndDelegation);
+    const ret = await HaskellShelley.certificateNewStakeVoteRegistrationAndDelegation(stake_vote_registration_and_delegationPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  static async new_vote_delegation(vote_delegation) {
+    const vote_delegationPtr = Ptr._assertClass(vote_delegation, VoteDelegation);
+    const ret = await HaskellShelley.certificateNewVoteDelegation(vote_delegationPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  static async new_vote_registration_and_delegation(vote_registration_and_delegation) {
+    const vote_registration_and_delegationPtr = Ptr._assertClass(vote_registration_and_delegation, VoteRegistrationAndDelegation);
+    const ret = await HaskellShelley.certificateNewVoteRegistrationAndDelegation(vote_registration_and_delegationPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+
   async kind() {
     const ret = await HaskellShelley.certificateKind(this.ptr);
     return ret;
@@ -1155,6 +1332,61 @@ export class Certificate extends Ptr {
   async as_move_instantaneous_rewards_cert() {
     const ret = await HaskellShelley.certificateAsMoveInstantaneousRewardsCert(this.ptr);
     return Ptr._wrap(ret, MoveInstantaneousRewardsCert);
+  }
+
+  async as_committee_hot_auth() {
+    const ret = await HaskellShelley.certificateAsCommitteeHotAuth(this.ptr);
+    return Ptr._wrap(ret, CommitteeHotAuth);
+  }
+
+  async as_committee_cold_resign() {
+    const ret = await HaskellShelley.certificateAsCommitteeColdResign(this.ptr);
+    return Ptr._wrap(ret, CommitteeColdResign);
+  }
+
+  async as_drep_deregistration() {
+    const ret = await HaskellShelley.certificateAsDrepDeregistration(this.ptr);
+    return Ptr._wrap(ret, DrepDeregistration);
+  }
+
+  async as_drep_registration() {
+    const ret = await HaskellShelley.certificateAsDrepRegistration(this.ptr);
+    return Ptr._wrap(ret, DrepRegistration);
+  }
+
+  async as_drep_update() {
+    const ret = await HaskellShelley.certificateAsDrepUpdate(this.ptr);
+    return Ptr._wrap(ret, DrepUpdate);
+  }
+
+  async as_stake_and_vote_delegation() {
+    const ret = await HaskellShelley.certificateAsStakeAndVoteDelegation(this.ptr);
+    return Ptr._wrap(ret, StakeAndVoteDelegation);
+  }
+
+  async as_stake_registration_and_delegation() {
+    const ret = await HaskellShelley.certificateAsStakeRegistrationAndDelegation(this.ptr);
+    return Ptr._wrap(ret, StakeRegistrationAndDelegation);
+  }
+
+  async as_stake_vote_registration_and_delegation() {
+    const ret = await HaskellShelley.certificateAsStakeVoteRegistrationAndDelegation(this.ptr);
+    return Ptr._wrap(ret, StakeVoteRegistrationAndDelegation);
+  }
+
+  async as_vote_delegation() {
+    const ret = await HaskellShelley.certificateAsVoteDelegation(this.ptr);
+    return Ptr._wrap(ret, VoteDelegation);
+  }
+
+  async as_vote_registration_and_delegation() {
+    const ret = await HaskellShelley.certificateAsVoteRegistrationAndDelegation(this.ptr);
+    return Ptr._wrap(ret, VoteRegistrationAndDelegation);
+  }
+
+  async has_required_script_witness() {
+    const ret = await HaskellShelley.certificateHasRequiredScriptWitness(this.ptr);
+    return ret;
   }
 
 }
@@ -1210,6 +1442,339 @@ export class Certificates extends Ptr {
     const elemPtr = Ptr._assertClass(elem, Certificate);
     const ret = HaskellShelley.certificatesAdd(this.ptr, elemPtr);
     return ret;
+  }
+
+}
+
+
+export class CertificatesBuilder extends Ptr {
+  static async new() {
+    const ret = await HaskellShelley.certificatesBuilderNew();
+    return Ptr._wrap(ret, CertificatesBuilder);
+  }
+
+  add(cert) {
+    const certPtr = Ptr._assertClass(cert, Certificate);
+    const ret = HaskellShelley.certificatesBuilderAdd(this.ptr, certPtr);
+    return ret;
+  }
+
+  add_with_plutus_witness(cert, witness) {
+    const certPtr = Ptr._assertClass(cert, Certificate);
+    const witnessPtr = Ptr._assertClass(witness, PlutusWitness);
+    const ret = HaskellShelley.certificatesBuilderAddWithPlutusWitness(this.ptr, certPtr, witnessPtr);
+    return ret;
+  }
+
+  add_with_native_script(cert, native_script_source) {
+    const certPtr = Ptr._assertClass(cert, Certificate);
+    const native_script_sourcePtr = Ptr._assertClass(native_script_source, NativeScriptSource);
+    const ret = HaskellShelley.certificatesBuilderAddWithNativeScript(this.ptr, certPtr, native_script_sourcePtr);
+    return ret;
+  }
+
+  async get_plutus_witnesses() {
+    const ret = await HaskellShelley.certificatesBuilderGetPlutusWitnesses(this.ptr);
+    return Ptr._wrap(ret, PlutusWitnesses);
+  }
+
+  async get_ref_inputs() {
+    const ret = await HaskellShelley.certificatesBuilderGetRefInputs(this.ptr);
+    return Ptr._wrap(ret, TransactionInputs);
+  }
+
+  async get_native_scripts() {
+    const ret = await HaskellShelley.certificatesBuilderGetNativeScripts(this.ptr);
+    return Ptr._wrap(ret, NativeScripts);
+  }
+
+  async get_certificates_refund(pool_deposit, key_deposit) {
+    const pool_depositPtr = Ptr._assertClass(pool_deposit, BigNum);
+    const key_depositPtr = Ptr._assertClass(key_deposit, BigNum);
+    const ret = await HaskellShelley.certificatesBuilderGetCertificatesRefund(this.ptr, pool_depositPtr, key_depositPtr);
+    return Ptr._wrap(ret, Value);
+  }
+
+  async get_certificates_deposit(pool_deposit, key_deposit) {
+    const pool_depositPtr = Ptr._assertClass(pool_deposit, BigNum);
+    const key_depositPtr = Ptr._assertClass(key_deposit, BigNum);
+    const ret = await HaskellShelley.certificatesBuilderGetCertificatesDeposit(this.ptr, pool_depositPtr, key_depositPtr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  async has_plutus_scripts() {
+    const ret = await HaskellShelley.certificatesBuilderHasPlutusScripts(this.ptr);
+    return ret;
+  }
+
+  async build() {
+    const ret = await HaskellShelley.certificatesBuilderBuild(this.ptr);
+    return Ptr._wrap(ret, Certificates);
+  }
+
+}
+
+
+export class ChangeConfig extends Ptr {
+  static async new(address) {
+    const addressPtr = Ptr._assertClass(address, Address);
+    const ret = await HaskellShelley.changeConfigNew(addressPtr);
+    return Ptr._wrap(ret, ChangeConfig);
+  }
+
+  async change_address(address) {
+    const addressPtr = Ptr._assertClass(address, Address);
+    const ret = await HaskellShelley.changeConfigChangeAddress(this.ptr, addressPtr);
+    return Ptr._wrap(ret, ChangeConfig);
+  }
+
+  async change_plutus_data(plutus_data) {
+    const plutus_dataPtr = Ptr._assertClass(plutus_data, OutputDatum);
+    const ret = await HaskellShelley.changeConfigChangePlutusData(this.ptr, plutus_dataPtr);
+    return Ptr._wrap(ret, ChangeConfig);
+  }
+
+  async change_script_ref(script_ref) {
+    const script_refPtr = Ptr._assertClass(script_ref, ScriptRef);
+    const ret = await HaskellShelley.changeConfigChangeScriptRef(this.ptr, script_refPtr);
+    return Ptr._wrap(ret, ChangeConfig);
+  }
+
+}
+
+
+export class Committee extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.committeeToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.committeeFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, Committee);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.committeeToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.committeeFromHex(hex_str);
+    return Ptr._wrap(ret, Committee);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.committeeToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.committeeFromJson(json);
+    return Ptr._wrap(ret, Committee);
+  }
+
+  static async new(quorum_threshold) {
+    const quorum_thresholdPtr = Ptr._assertClass(quorum_threshold, UnitInterval);
+    const ret = await HaskellShelley.committeeNew(quorum_thresholdPtr);
+    return Ptr._wrap(ret, Committee);
+  }
+
+  async members_keys() {
+    const ret = await HaskellShelley.committeeMembersKeys(this.ptr);
+    return Ptr._wrap(ret, Credentials);
+  }
+
+  async quorum_threshold() {
+    const ret = await HaskellShelley.committeeQuorumThreshold(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+  add_member(committee_cold_credential, epoch) {
+    const committee_cold_credentialPtr = Ptr._assertClass(committee_cold_credential, Credential);
+    const ret = HaskellShelley.committeeAddMember(this.ptr, committee_cold_credentialPtr, epoch);
+    return ret;
+  }
+
+  async get_member_epoch(committee_cold_credential) {
+    const committee_cold_credentialPtr = Ptr._assertClass(committee_cold_credential, Credential);
+    const ret = await HaskellShelley.committeeGetMemberEpoch(this.ptr, committee_cold_credentialPtr);
+    return ret;
+  }
+
+}
+
+
+export class CommitteeColdResign extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.committeeColdResignToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.committeeColdResignFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, CommitteeColdResign);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.committeeColdResignToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.committeeColdResignFromHex(hex_str);
+    return Ptr._wrap(ret, CommitteeColdResign);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.committeeColdResignToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.committeeColdResignFromJson(json);
+    return Ptr._wrap(ret, CommitteeColdResign);
+  }
+
+  async committee_cold_key() {
+    const ret = await HaskellShelley.committeeColdResignCommitteeColdKey(this.ptr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async anchor() {
+    const ret = await HaskellShelley.committeeColdResignAnchor(this.ptr);
+    return Ptr._wrap(ret, Anchor);
+  }
+
+  static async new(committee_cold_key) {
+    const committee_cold_keyPtr = Ptr._assertClass(committee_cold_key, Credential);
+    const ret = await HaskellShelley.committeeColdResignNew(committee_cold_keyPtr);
+    return Ptr._wrap(ret, CommitteeColdResign);
+  }
+
+  static async new_with_anchor(committee_cold_key, anchor) {
+    const committee_cold_keyPtr = Ptr._assertClass(committee_cold_key, Credential);
+    const anchorPtr = Ptr._assertClass(anchor, Anchor);
+    const ret = await HaskellShelley.committeeColdResignNewWithAnchor(committee_cold_keyPtr, anchorPtr);
+    return Ptr._wrap(ret, CommitteeColdResign);
+  }
+
+  async has_script_credentials() {
+    const ret = await HaskellShelley.committeeColdResignHasScriptCredentials(this.ptr);
+    return ret;
+  }
+
+}
+
+
+export class CommitteeHotAuth extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.committeeHotAuthToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.committeeHotAuthFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, CommitteeHotAuth);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.committeeHotAuthToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.committeeHotAuthFromHex(hex_str);
+    return Ptr._wrap(ret, CommitteeHotAuth);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.committeeHotAuthToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.committeeHotAuthFromJson(json);
+    return Ptr._wrap(ret, CommitteeHotAuth);
+  }
+
+  async committee_cold_key() {
+    const ret = await HaskellShelley.committeeHotAuthCommitteeColdKey(this.ptr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async committee_hot_key() {
+    const ret = await HaskellShelley.committeeHotAuthCommitteeHotKey(this.ptr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  static async new(committee_cold_key, committee_hot_key) {
+    const committee_cold_keyPtr = Ptr._assertClass(committee_cold_key, Credential);
+    const committee_hot_keyPtr = Ptr._assertClass(committee_hot_key, Credential);
+    const ret = await HaskellShelley.committeeHotAuthNew(committee_cold_keyPtr, committee_hot_keyPtr);
+    return Ptr._wrap(ret, CommitteeHotAuth);
+  }
+
+  async has_script_credentials() {
+    const ret = await HaskellShelley.committeeHotAuthHasScriptCredentials(this.ptr);
+    return ret;
+  }
+
+}
+
+
+export class Constitution extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.constitutionToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.constitutionFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, Constitution);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.constitutionToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.constitutionFromHex(hex_str);
+    return Ptr._wrap(ret, Constitution);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.constitutionToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.constitutionFromJson(json);
+    return Ptr._wrap(ret, Constitution);
+  }
+
+  async anchor() {
+    const ret = await HaskellShelley.constitutionAnchor(this.ptr);
+    return Ptr._wrap(ret, Anchor);
+  }
+
+  async script_hash() {
+    const ret = await HaskellShelley.constitutionScriptHash(this.ptr);
+    return Ptr._wrap(ret, ScriptHash);
+  }
+
+  static async new(anchor) {
+    const anchorPtr = Ptr._assertClass(anchor, Anchor);
+    const ret = await HaskellShelley.constitutionNew(anchorPtr);
+    return Ptr._wrap(ret, Constitution);
+  }
+
+  static async new_with_script_hash(anchor, script_hash) {
+    const anchorPtr = Ptr._assertClass(anchor, Anchor);
+    const script_hashPtr = Ptr._assertClass(script_hash, ScriptHash);
+    const ret = await HaskellShelley.constitutionNewWithScriptHash(anchorPtr, script_hashPtr);
+    return Ptr._wrap(ret, Constitution);
   }
 
 }
@@ -1379,6 +1944,127 @@ export class Costmdls extends Ptr {
 }
 
 
+export class Credential extends Ptr {
+  static async from_keyhash(hash) {
+    const hashPtr = Ptr._assertClass(hash, Ed25519KeyHash);
+    const ret = await HaskellShelley.credentialFromKeyhash(hashPtr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  static async from_scripthash(hash) {
+    const hashPtr = Ptr._assertClass(hash, ScriptHash);
+    const ret = await HaskellShelley.credentialFromScripthash(hashPtr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async to_keyhash() {
+    const ret = await HaskellShelley.credentialToKeyhash(this.ptr);
+    return Ptr._wrap(ret, Ed25519KeyHash);
+  }
+
+  async to_scripthash() {
+    const ret = await HaskellShelley.credentialToScripthash(this.ptr);
+    return Ptr._wrap(ret, ScriptHash);
+  }
+
+  async kind() {
+    const ret = await HaskellShelley.credentialKind(this.ptr);
+    return ret;
+  }
+
+  async has_script_hash() {
+    const ret = await HaskellShelley.credentialHasScriptHash(this.ptr);
+    return ret;
+  }
+
+  async to_bytes() {
+    const ret = await HaskellShelley.credentialToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.credentialFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.credentialToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.credentialFromHex(hex_str);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.credentialToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.credentialFromJson(json);
+    return Ptr._wrap(ret, Credential);
+  }
+
+}
+
+
+export class Credentials extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.credentialsToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.credentialsFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, Credentials);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.credentialsToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.credentialsFromHex(hex_str);
+    return Ptr._wrap(ret, Credentials);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.credentialsToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.credentialsFromJson(json);
+    return Ptr._wrap(ret, Credentials);
+  }
+
+  static async new() {
+    const ret = await HaskellShelley.credentialsNew();
+    return Ptr._wrap(ret, Credentials);
+  }
+
+  async len() {
+    const ret = await HaskellShelley.credentialsLen(this.ptr);
+    return ret;
+  }
+
+  async get(index) {
+    const ret = await HaskellShelley.credentialsGet(this.ptr, index);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  add(elem) {
+    const elemPtr = Ptr._assertClass(elem, Credential);
+    const ret = HaskellShelley.credentialsAdd(this.ptr, elemPtr);
+    return ret;
+  }
+
+}
+
+
 export class DNSRecordAorAAAA extends Ptr {
   async to_bytes() {
     const ret = await HaskellShelley.dNSRecordAorAAAAToBytes(this.ptr);
@@ -1467,13 +2153,78 @@ export class DNSRecordSRV extends Ptr {
 }
 
 
-export class DataCost extends Ptr {
-  static async new_coins_per_word(coins_per_word) {
-    const coins_per_wordPtr = Ptr._assertClass(coins_per_word, BigNum);
-    const ret = await HaskellShelley.dataCostNewCoinsPerWord(coins_per_wordPtr);
-    return Ptr._wrap(ret, DataCost);
+export class DRep extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.dRepToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
   }
 
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.dRepFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, DRep);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.dRepToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.dRepFromHex(hex_str);
+    return Ptr._wrap(ret, DRep);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.dRepToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.dRepFromJson(json);
+    return Ptr._wrap(ret, DRep);
+  }
+
+  static async new_key_hash(key_hash) {
+    const key_hashPtr = Ptr._assertClass(key_hash, Ed25519KeyHash);
+    const ret = await HaskellShelley.dRepNewKeyHash(key_hashPtr);
+    return Ptr._wrap(ret, DRep);
+  }
+
+  static async new_script_hash(script_hash) {
+    const script_hashPtr = Ptr._assertClass(script_hash, ScriptHash);
+    const ret = await HaskellShelley.dRepNewScriptHash(script_hashPtr);
+    return Ptr._wrap(ret, DRep);
+  }
+
+  static async new_always_abstain() {
+    const ret = await HaskellShelley.dRepNewAlwaysAbstain();
+    return Ptr._wrap(ret, DRep);
+  }
+
+  static async new_always_no_confidence() {
+    const ret = await HaskellShelley.dRepNewAlwaysNoConfidence();
+    return Ptr._wrap(ret, DRep);
+  }
+
+  async kind() {
+    const ret = await HaskellShelley.dRepKind(this.ptr);
+    return ret;
+  }
+
+  async to_key_hash() {
+    const ret = await HaskellShelley.dRepToKeyHash(this.ptr);
+    return Ptr._wrap(ret, Ed25519KeyHash);
+  }
+
+  async to_script_hash() {
+    const ret = await HaskellShelley.dRepToScriptHash(this.ptr);
+    return Ptr._wrap(ret, ScriptHash);
+  }
+
+}
+
+
+export class DataCost extends Ptr {
   static async new_coins_per_byte(coins_per_byte) {
     const coins_per_bytePtr = Ptr._assertClass(coins_per_byte, BigNum);
     const ret = await HaskellShelley.dataCostNewCoinsPerByte(coins_per_bytePtr);
@@ -1533,6 +2284,357 @@ export class DatumSource extends Ptr {
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const ret = await HaskellShelley.datumSourceNewRefInput(inputPtr);
     return Ptr._wrap(ret, DatumSource);
+  }
+
+}
+
+
+export class DrepDeregistration extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.drepDeregistrationToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.drepDeregistrationFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, DrepDeregistration);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.drepDeregistrationToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.drepDeregistrationFromHex(hex_str);
+    return Ptr._wrap(ret, DrepDeregistration);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.drepDeregistrationToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.drepDeregistrationFromJson(json);
+    return Ptr._wrap(ret, DrepDeregistration);
+  }
+
+  async voting_credential() {
+    const ret = await HaskellShelley.drepDeregistrationVotingCredential(this.ptr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async coin() {
+    const ret = await HaskellShelley.drepDeregistrationCoin(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  static async new(voting_credential, coin) {
+    const voting_credentialPtr = Ptr._assertClass(voting_credential, Credential);
+    const coinPtr = Ptr._assertClass(coin, BigNum);
+    const ret = await HaskellShelley.drepDeregistrationNew(voting_credentialPtr, coinPtr);
+    return Ptr._wrap(ret, DrepDeregistration);
+  }
+
+  async has_script_credentials() {
+    const ret = await HaskellShelley.drepDeregistrationHasScriptCredentials(this.ptr);
+    return ret;
+  }
+
+}
+
+
+export class DrepRegistration extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.drepRegistrationToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.drepRegistrationFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, DrepRegistration);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.drepRegistrationToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.drepRegistrationFromHex(hex_str);
+    return Ptr._wrap(ret, DrepRegistration);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.drepRegistrationToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.drepRegistrationFromJson(json);
+    return Ptr._wrap(ret, DrepRegistration);
+  }
+
+  async voting_credential() {
+    const ret = await HaskellShelley.drepRegistrationVotingCredential(this.ptr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async coin() {
+    const ret = await HaskellShelley.drepRegistrationCoin(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  async anchor() {
+    const ret = await HaskellShelley.drepRegistrationAnchor(this.ptr);
+    return Ptr._wrap(ret, Anchor);
+  }
+
+  static async new(voting_credential, coin) {
+    const voting_credentialPtr = Ptr._assertClass(voting_credential, Credential);
+    const coinPtr = Ptr._assertClass(coin, BigNum);
+    const ret = await HaskellShelley.drepRegistrationNew(voting_credentialPtr, coinPtr);
+    return Ptr._wrap(ret, DrepRegistration);
+  }
+
+  static async new_with_anchor(voting_credential, coin, anchor) {
+    const voting_credentialPtr = Ptr._assertClass(voting_credential, Credential);
+    const coinPtr = Ptr._assertClass(coin, BigNum);
+    const anchorPtr = Ptr._assertClass(anchor, Anchor);
+    const ret = await HaskellShelley.drepRegistrationNewWithAnchor(voting_credentialPtr, coinPtr, anchorPtr);
+    return Ptr._wrap(ret, DrepRegistration);
+  }
+
+  async has_script_credentials() {
+    const ret = await HaskellShelley.drepRegistrationHasScriptCredentials(this.ptr);
+    return ret;
+  }
+
+}
+
+
+export class DrepUpdate extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.drepUpdateToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.drepUpdateFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, DrepUpdate);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.drepUpdateToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.drepUpdateFromHex(hex_str);
+    return Ptr._wrap(ret, DrepUpdate);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.drepUpdateToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.drepUpdateFromJson(json);
+    return Ptr._wrap(ret, DrepUpdate);
+  }
+
+  async voting_credential() {
+    const ret = await HaskellShelley.drepUpdateVotingCredential(this.ptr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async anchor() {
+    const ret = await HaskellShelley.drepUpdateAnchor(this.ptr);
+    return Ptr._wrap(ret, Anchor);
+  }
+
+  static async new(voting_credential) {
+    const voting_credentialPtr = Ptr._assertClass(voting_credential, Credential);
+    const ret = await HaskellShelley.drepUpdateNew(voting_credentialPtr);
+    return Ptr._wrap(ret, DrepUpdate);
+  }
+
+  static async new_with_anchor(voting_credential, anchor) {
+    const voting_credentialPtr = Ptr._assertClass(voting_credential, Credential);
+    const anchorPtr = Ptr._assertClass(anchor, Anchor);
+    const ret = await HaskellShelley.drepUpdateNewWithAnchor(voting_credentialPtr, anchorPtr);
+    return Ptr._wrap(ret, DrepUpdate);
+  }
+
+  async has_script_credentials() {
+    const ret = await HaskellShelley.drepUpdateHasScriptCredentials(this.ptr);
+    return ret;
+  }
+
+}
+
+
+export class DrepVotingThresholds extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.drepVotingThresholdsToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.drepVotingThresholdsFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, DrepVotingThresholds);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.drepVotingThresholdsToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.drepVotingThresholdsFromHex(hex_str);
+    return Ptr._wrap(ret, DrepVotingThresholds);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.drepVotingThresholdsToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.drepVotingThresholdsFromJson(json);
+    return Ptr._wrap(ret, DrepVotingThresholds);
+  }
+
+  static async new(motion_no_confidence, committee_normal, committee_no_confidence, update_constitution, hard_fork_initiation, pp_network_group, pp_economic_group, pp_technical_group, pp_governance_group, treasury_withdrawal) {
+    const motion_no_confidencePtr = Ptr._assertClass(motion_no_confidence, UnitInterval);
+    const committee_normalPtr = Ptr._assertClass(committee_normal, UnitInterval);
+    const committee_no_confidencePtr = Ptr._assertClass(committee_no_confidence, UnitInterval);
+    const update_constitutionPtr = Ptr._assertClass(update_constitution, UnitInterval);
+    const hard_fork_initiationPtr = Ptr._assertClass(hard_fork_initiation, UnitInterval);
+    const pp_network_groupPtr = Ptr._assertClass(pp_network_group, UnitInterval);
+    const pp_economic_groupPtr = Ptr._assertClass(pp_economic_group, UnitInterval);
+    const pp_technical_groupPtr = Ptr._assertClass(pp_technical_group, UnitInterval);
+    const pp_governance_groupPtr = Ptr._assertClass(pp_governance_group, UnitInterval);
+    const treasury_withdrawalPtr = Ptr._assertClass(treasury_withdrawal, UnitInterval);
+    const ret = await HaskellShelley.drepVotingThresholdsNew(motion_no_confidencePtr, committee_normalPtr, committee_no_confidencePtr, update_constitutionPtr, hard_fork_initiationPtr, pp_network_groupPtr, pp_economic_groupPtr, pp_technical_groupPtr, pp_governance_groupPtr, treasury_withdrawalPtr);
+    return Ptr._wrap(ret, DrepVotingThresholds);
+  }
+
+  static async new_default() {
+    const ret = await HaskellShelley.drepVotingThresholdsNewDefault();
+    return Ptr._wrap(ret, DrepVotingThresholds);
+  }
+
+  set_motion_no_confidence(motion_no_confidence) {
+    const motion_no_confidencePtr = Ptr._assertClass(motion_no_confidence, UnitInterval);
+    const ret = HaskellShelley.drepVotingThresholdsSetMotionNoConfidence(this.ptr, motion_no_confidencePtr);
+    return ret;
+  }
+
+  set_committee_normal(committee_normal) {
+    const committee_normalPtr = Ptr._assertClass(committee_normal, UnitInterval);
+    const ret = HaskellShelley.drepVotingThresholdsSetCommitteeNormal(this.ptr, committee_normalPtr);
+    return ret;
+  }
+
+  set_committee_no_confidence(committee_no_confidence) {
+    const committee_no_confidencePtr = Ptr._assertClass(committee_no_confidence, UnitInterval);
+    const ret = HaskellShelley.drepVotingThresholdsSetCommitteeNoConfidence(this.ptr, committee_no_confidencePtr);
+    return ret;
+  }
+
+  set_update_constitution(update_constitution) {
+    const update_constitutionPtr = Ptr._assertClass(update_constitution, UnitInterval);
+    const ret = HaskellShelley.drepVotingThresholdsSetUpdateConstitution(this.ptr, update_constitutionPtr);
+    return ret;
+  }
+
+  set_hard_fork_initiation(hard_fork_initiation) {
+    const hard_fork_initiationPtr = Ptr._assertClass(hard_fork_initiation, UnitInterval);
+    const ret = HaskellShelley.drepVotingThresholdsSetHardForkInitiation(this.ptr, hard_fork_initiationPtr);
+    return ret;
+  }
+
+  set_pp_network_group(pp_network_group) {
+    const pp_network_groupPtr = Ptr._assertClass(pp_network_group, UnitInterval);
+    const ret = HaskellShelley.drepVotingThresholdsSetPpNetworkGroup(this.ptr, pp_network_groupPtr);
+    return ret;
+  }
+
+  set_pp_economic_group(pp_economic_group) {
+    const pp_economic_groupPtr = Ptr._assertClass(pp_economic_group, UnitInterval);
+    const ret = HaskellShelley.drepVotingThresholdsSetPpEconomicGroup(this.ptr, pp_economic_groupPtr);
+    return ret;
+  }
+
+  set_pp_technical_group(pp_technical_group) {
+    const pp_technical_groupPtr = Ptr._assertClass(pp_technical_group, UnitInterval);
+    const ret = HaskellShelley.drepVotingThresholdsSetPpTechnicalGroup(this.ptr, pp_technical_groupPtr);
+    return ret;
+  }
+
+  set_pp_governance_group(pp_governance_group) {
+    const pp_governance_groupPtr = Ptr._assertClass(pp_governance_group, UnitInterval);
+    const ret = HaskellShelley.drepVotingThresholdsSetPpGovernanceGroup(this.ptr, pp_governance_groupPtr);
+    return ret;
+  }
+
+  set_treasury_withdrawal(treasury_withdrawal) {
+    const treasury_withdrawalPtr = Ptr._assertClass(treasury_withdrawal, UnitInterval);
+    const ret = HaskellShelley.drepVotingThresholdsSetTreasuryWithdrawal(this.ptr, treasury_withdrawalPtr);
+    return ret;
+  }
+
+  async motion_no_confidence() {
+    const ret = await HaskellShelley.drepVotingThresholdsMotionNoConfidence(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+  async committee_normal() {
+    const ret = await HaskellShelley.drepVotingThresholdsCommitteeNormal(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+  async committee_no_confidence() {
+    const ret = await HaskellShelley.drepVotingThresholdsCommitteeNoConfidence(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+  async update_constitution() {
+    const ret = await HaskellShelley.drepVotingThresholdsUpdateConstitution(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+  async hard_fork_initiation() {
+    const ret = await HaskellShelley.drepVotingThresholdsHardForkInitiation(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+  async pp_network_group() {
+    const ret = await HaskellShelley.drepVotingThresholdsPpNetworkGroup(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+  async pp_economic_group() {
+    const ret = await HaskellShelley.drepVotingThresholdsPpEconomicGroup(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+  async pp_technical_group() {
+    const ret = await HaskellShelley.drepVotingThresholdsPpTechnicalGroup(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+  async pp_governance_group() {
+    const ret = await HaskellShelley.drepVotingThresholdsPpGovernanceGroup(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+  async treasury_withdrawal() {
+    const ret = await HaskellShelley.drepVotingThresholdsTreasuryWithdrawal(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
   }
 
 }
@@ -1624,6 +2726,12 @@ export class Ed25519KeyHashes extends Ptr {
     return ret;
   }
 
+  async contains(elem) {
+    const elemPtr = Ptr._assertClass(elem, Ed25519KeyHash);
+    const ret = await HaskellShelley.ed25519KeyHashesContains(this.ptr, elemPtr);
+    return ret;
+  }
+
   async to_option() {
     const ret = await HaskellShelley.ed25519KeyHashesToOption(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHashes);
@@ -1668,14 +2776,14 @@ export class Ed25519Signature extends Ptr {
 
 export class EnterpriseAddress extends Ptr {
   static async new(network, payment) {
-    const paymentPtr = Ptr._assertClass(payment, StakeCredential);
+    const paymentPtr = Ptr._assertClass(payment, Credential);
     const ret = await HaskellShelley.enterpriseAddressNew(network, paymentPtr);
     return Ptr._wrap(ret, EnterpriseAddress);
   }
 
   async payment_cred() {
     const ret = await HaskellShelley.enterpriseAddressPaymentCred(this.ptr);
-    return Ptr._wrap(ret, StakeCredential);
+    return Ptr._wrap(ret, Credential);
   }
 
   async to_address() {
@@ -2125,6 +3233,264 @@ export class GenesisKeyDelegation extends Ptr {
 }
 
 
+export class GovernanceAction extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.governanceActionToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.governanceActionFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, GovernanceAction);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.governanceActionToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.governanceActionFromHex(hex_str);
+    return Ptr._wrap(ret, GovernanceAction);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.governanceActionToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.governanceActionFromJson(json);
+    return Ptr._wrap(ret, GovernanceAction);
+  }
+
+  static async new_parameter_change_action(parameter_change_action) {
+    const parameter_change_actionPtr = Ptr._assertClass(parameter_change_action, ParameterChangeAction);
+    const ret = await HaskellShelley.governanceActionNewParameterChangeAction(parameter_change_actionPtr);
+    return Ptr._wrap(ret, GovernanceAction);
+  }
+
+  static async new_hard_fork_initiation_action(hard_fork_initiation_action) {
+    const hard_fork_initiation_actionPtr = Ptr._assertClass(hard_fork_initiation_action, HardForkInitiationAction);
+    const ret = await HaskellShelley.governanceActionNewHardForkInitiationAction(hard_fork_initiation_actionPtr);
+    return Ptr._wrap(ret, GovernanceAction);
+  }
+
+  static async new_treasury_withdrawals_action(treasury_withdrawals_action) {
+    const treasury_withdrawals_actionPtr = Ptr._assertClass(treasury_withdrawals_action, TreasuryWithdrawalsAction);
+    const ret = await HaskellShelley.governanceActionNewTreasuryWithdrawalsAction(treasury_withdrawals_actionPtr);
+    return Ptr._wrap(ret, GovernanceAction);
+  }
+
+  static async new_no_confidence_action(no_confidence_action) {
+    const no_confidence_actionPtr = Ptr._assertClass(no_confidence_action, NoConfidenceAction);
+    const ret = await HaskellShelley.governanceActionNewNoConfidenceAction(no_confidence_actionPtr);
+    return Ptr._wrap(ret, GovernanceAction);
+  }
+
+  static async new_new_committee_action(new_committee_action) {
+    const new_committee_actionPtr = Ptr._assertClass(new_committee_action, UpdateCommitteeAction);
+    const ret = await HaskellShelley.governanceActionNewNewCommitteeAction(new_committee_actionPtr);
+    return Ptr._wrap(ret, GovernanceAction);
+  }
+
+  static async new_new_constitution_action(new_constitution_action) {
+    const new_constitution_actionPtr = Ptr._assertClass(new_constitution_action, NewConstitutionAction);
+    const ret = await HaskellShelley.governanceActionNewNewConstitutionAction(new_constitution_actionPtr);
+    return Ptr._wrap(ret, GovernanceAction);
+  }
+
+  static async new_info_action(info_action) {
+    const info_actionPtr = Ptr._assertClass(info_action, InfoAction);
+    const ret = await HaskellShelley.governanceActionNewInfoAction(info_actionPtr);
+    return Ptr._wrap(ret, GovernanceAction);
+  }
+
+  async kind() {
+    const ret = await HaskellShelley.governanceActionKind(this.ptr);
+    return ret;
+  }
+
+  async as_parameter_change_action() {
+    const ret = await HaskellShelley.governanceActionAsParameterChangeAction(this.ptr);
+    return Ptr._wrap(ret, ParameterChangeAction);
+  }
+
+  async as_hard_fork_initiation_action() {
+    const ret = await HaskellShelley.governanceActionAsHardForkInitiationAction(this.ptr);
+    return Ptr._wrap(ret, HardForkInitiationAction);
+  }
+
+  async as_treasury_withdrawals_action() {
+    const ret = await HaskellShelley.governanceActionAsTreasuryWithdrawalsAction(this.ptr);
+    return Ptr._wrap(ret, TreasuryWithdrawalsAction);
+  }
+
+  async as_no_confidence_action() {
+    const ret = await HaskellShelley.governanceActionAsNoConfidenceAction(this.ptr);
+    return Ptr._wrap(ret, NoConfidenceAction);
+  }
+
+  async as_new_committee_action() {
+    const ret = await HaskellShelley.governanceActionAsNewCommitteeAction(this.ptr);
+    return Ptr._wrap(ret, UpdateCommitteeAction);
+  }
+
+  async as_new_constitution_action() {
+    const ret = await HaskellShelley.governanceActionAsNewConstitutionAction(this.ptr);
+    return Ptr._wrap(ret, NewConstitutionAction);
+  }
+
+  async as_info_action() {
+    const ret = await HaskellShelley.governanceActionAsInfoAction(this.ptr);
+    return Ptr._wrap(ret, InfoAction);
+  }
+
+}
+
+
+export class GovernanceActionId extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.governanceActionIdToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.governanceActionIdFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, GovernanceActionId);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.governanceActionIdToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.governanceActionIdFromHex(hex_str);
+    return Ptr._wrap(ret, GovernanceActionId);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.governanceActionIdToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.governanceActionIdFromJson(json);
+    return Ptr._wrap(ret, GovernanceActionId);
+  }
+
+  async transaction_id() {
+    const ret = await HaskellShelley.governanceActionIdTransactionId(this.ptr);
+    return Ptr._wrap(ret, TransactionHash);
+  }
+
+  async index() {
+    const ret = await HaskellShelley.governanceActionIdIndex(this.ptr);
+    return ret;
+  }
+
+  static async new(transaction_id, index) {
+    const transaction_idPtr = Ptr._assertClass(transaction_id, TransactionHash);
+    const ret = await HaskellShelley.governanceActionIdNew(transaction_idPtr, index);
+    return Ptr._wrap(ret, GovernanceActionId);
+  }
+
+}
+
+
+export class GovernanceActionIds extends Ptr {
+  async to_json() {
+    const ret = await HaskellShelley.governanceActionIdsToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.governanceActionIdsFromJson(json);
+    return Ptr._wrap(ret, GovernanceActionIds);
+  }
+
+  static async new() {
+    const ret = await HaskellShelley.governanceActionIdsNew();
+    return Ptr._wrap(ret, GovernanceActionIds);
+  }
+
+  add(governance_action_id) {
+    const governance_action_idPtr = Ptr._assertClass(governance_action_id, GovernanceActionId);
+    const ret = HaskellShelley.governanceActionIdsAdd(this.ptr, governance_action_idPtr);
+    return ret;
+  }
+
+  async get(index) {
+    const ret = await HaskellShelley.governanceActionIdsGet(this.ptr, index);
+    return Ptr._wrap(ret, GovernanceActionId);
+  }
+
+  async len() {
+    const ret = await HaskellShelley.governanceActionIdsLen(this.ptr);
+    return ret;
+  }
+
+}
+
+
+export class HardForkInitiationAction extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.hardForkInitiationActionToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.hardForkInitiationActionFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, HardForkInitiationAction);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.hardForkInitiationActionToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.hardForkInitiationActionFromHex(hex_str);
+    return Ptr._wrap(ret, HardForkInitiationAction);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.hardForkInitiationActionToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.hardForkInitiationActionFromJson(json);
+    return Ptr._wrap(ret, HardForkInitiationAction);
+  }
+
+  async gov_action_id() {
+    const ret = await HaskellShelley.hardForkInitiationActionGovActionId(this.ptr);
+    return Ptr._wrap(ret, GovernanceActionId);
+  }
+
+  async protocol_version() {
+    const ret = await HaskellShelley.hardForkInitiationActionProtocolVersion(this.ptr);
+    return Ptr._wrap(ret, ProtocolVersion);
+  }
+
+  static async new(protocol_version) {
+    const protocol_versionPtr = Ptr._assertClass(protocol_version, ProtocolVersion);
+    const ret = await HaskellShelley.hardForkInitiationActionNew(protocol_versionPtr);
+    return Ptr._wrap(ret, HardForkInitiationAction);
+  }
+
+  static async new_with_action_id(gov_action_id, protocol_version) {
+    const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
+    const protocol_versionPtr = Ptr._assertClass(protocol_version, ProtocolVersion);
+    const ret = await HaskellShelley.hardForkInitiationActionNewWithActionId(gov_action_idPtr, protocol_versionPtr);
+    return Ptr._wrap(ret, HardForkInitiationAction);
+  }
+
+}
+
+
 export class Header extends Ptr {
   async to_bytes() {
     const ret = await HaskellShelley.headerToBytes(this.ptr);
@@ -2322,49 +3688,10 @@ export class HeaderBody extends Ptr {
 }
 
 
-export class InputWithScriptWitness extends Ptr {
-  static async new_with_native_script_witness(input, witness) {
-    const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const witnessPtr = Ptr._assertClass(witness, NativeScript);
-    const ret = await HaskellShelley.inputWithScriptWitnessNewWithNativeScriptWitness(inputPtr, witnessPtr);
-    return Ptr._wrap(ret, InputWithScriptWitness);
-  }
-
-  static async new_with_plutus_witness(input, witness) {
-    const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const witnessPtr = Ptr._assertClass(witness, PlutusWitness);
-    const ret = await HaskellShelley.inputWithScriptWitnessNewWithPlutusWitness(inputPtr, witnessPtr);
-    return Ptr._wrap(ret, InputWithScriptWitness);
-  }
-
-  async input() {
-    const ret = await HaskellShelley.inputWithScriptWitnessInput(this.ptr);
-    return Ptr._wrap(ret, TransactionInput);
-  }
-
-}
-
-
-export class InputsWithScriptWitness extends Ptr {
+export class InfoAction extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.inputsWithScriptWitnessNew();
-    return Ptr._wrap(ret, InputsWithScriptWitness);
-  }
-
-  add(input) {
-    const inputPtr = Ptr._assertClass(input, InputWithScriptWitness);
-    const ret = HaskellShelley.inputsWithScriptWitnessAdd(this.ptr, inputPtr);
-    return ret;
-  }
-
-  async get(index) {
-    const ret = await HaskellShelley.inputsWithScriptWitnessGet(this.ptr, index);
-    return Ptr._wrap(ret, InputWithScriptWitness);
-  }
-
-  async len() {
-    const ret = await HaskellShelley.inputsWithScriptWitnessLen(this.ptr);
-    return ret;
+    const ret = await HaskellShelley.infoActionNew();
+    return Ptr._wrap(ret, InfoAction);
   }
 
 }
@@ -2638,6 +3965,11 @@ export class Language extends Ptr {
     return Ptr._wrap(ret, Language);
   }
 
+  static async new_plutus_v3() {
+    const ret = await HaskellShelley.languageNewPlutusV3();
+    return Ptr._wrap(ret, Language);
+  }
+
   async kind() {
     const ret = await HaskellShelley.languageKind(this.ptr);
     return ret;
@@ -2758,21 +4090,41 @@ export class MIRToStakeCredentials extends Ptr {
   }
 
   async insert(cred, delta) {
-    const credPtr = Ptr._assertClass(cred, StakeCredential);
+    const credPtr = Ptr._assertClass(cred, Credential);
     const deltaPtr = Ptr._assertClass(delta, Int);
     const ret = await HaskellShelley.mIRToStakeCredentialsInsert(this.ptr, credPtr, deltaPtr);
     return Ptr._wrap(ret, Int);
   }
 
   async get(cred) {
-    const credPtr = Ptr._assertClass(cred, StakeCredential);
+    const credPtr = Ptr._assertClass(cred, Credential);
     const ret = await HaskellShelley.mIRToStakeCredentialsGet(this.ptr, credPtr);
     return Ptr._wrap(ret, Int);
   }
 
   async keys() {
     const ret = await HaskellShelley.mIRToStakeCredentialsKeys(this.ptr);
-    return Ptr._wrap(ret, StakeCredentials);
+    return Ptr._wrap(ret, Credentials);
+  }
+
+}
+
+
+export class MalformedAddress extends Ptr {
+  async original_bytes() {
+    const ret = await HaskellShelley.malformedAddressOriginalBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  async to_address() {
+    const ret = await HaskellShelley.malformedAddressToAddress(this.ptr);
+    return Ptr._wrap(ret, Address);
+  }
+
+  static async from_address(addr) {
+    const addrPtr = Ptr._assertClass(addr, Address);
+    const ret = await HaskellShelley.malformedAddressFromAddress(addrPtr);
+    return Ptr._wrap(ret, MalformedAddress);
   }
 
 }
@@ -2961,12 +4313,6 @@ export class Mint extends Ptr {
   async get(key) {
     const keyPtr = Ptr._assertClass(key, ScriptHash);
     const ret = await HaskellShelley.mintGet(this.ptr, keyPtr);
-    return Ptr._wrap(ret, MintAssets);
-  }
-
-  async get_all(key) {
-    const keyPtr = Ptr._assertClass(key, ScriptHash);
-    const ret = await HaskellShelley.mintGetAll(this.ptr, keyPtr);
     return Ptr._wrap(ret, MintsAssets);
   }
 
@@ -3069,8 +4415,8 @@ export class MintBuilder extends Ptr {
     return Ptr._wrap(ret, TransactionInputs);
   }
 
-  async get_redeeemers() {
-    const ret = await HaskellShelley.mintBuilderGetRedeeemers(this.ptr);
+  async get_redeemers() {
+    const ret = await HaskellShelley.mintBuilderGetRedeemers(this.ptr);
     return Ptr._wrap(ret, Redeemers);
   }
 
@@ -3105,6 +4451,37 @@ export class MintWitness extends Ptr {
 
 
 export class MintsAssets extends Ptr {
+  async to_json() {
+    const ret = await HaskellShelley.mintsAssetsToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.mintsAssetsFromJson(json);
+    return Ptr._wrap(ret, MintsAssets);
+  }
+
+  static async new() {
+    const ret = await HaskellShelley.mintsAssetsNew();
+    return Ptr._wrap(ret, MintsAssets);
+  }
+
+  add(mint_assets) {
+    const mint_assetsPtr = Ptr._assertClass(mint_assets, MintAssets);
+    const ret = HaskellShelley.mintsAssetsAdd(this.ptr, mint_assetsPtr);
+    return ret;
+  }
+
+  async get(index) {
+    const ret = await HaskellShelley.mintsAssetsGet(this.ptr, index);
+    return Ptr._wrap(ret, MintAssets);
+  }
+
+  async len() {
+    const ret = await HaskellShelley.mintsAssetsLen(this.ptr);
+    return ret;
+  }
+
 }
 
 
@@ -3462,6 +4839,29 @@ export class NativeScript extends Ptr {
 }
 
 
+export class NativeScriptSource extends Ptr {
+  static async new(script) {
+    const scriptPtr = Ptr._assertClass(script, NativeScript);
+    const ret = await HaskellShelley.nativeScriptSourceNew(scriptPtr);
+    return Ptr._wrap(ret, NativeScriptSource);
+  }
+
+  static async new_ref_input(script_hash, input) {
+    const script_hashPtr = Ptr._assertClass(script_hash, ScriptHash);
+    const inputPtr = Ptr._assertClass(input, TransactionInput);
+    const ret = await HaskellShelley.nativeScriptSourceNewRefInput(script_hashPtr, inputPtr);
+    return Ptr._wrap(ret, NativeScriptSource);
+  }
+
+  set_required_signers(key_hashes) {
+    const key_hashesPtr = Ptr._assertClass(key_hashes, Ed25519KeyHashes);
+    const ret = HaskellShelley.nativeScriptSourceSetRequiredSigners(this.ptr, key_hashesPtr);
+    return ret;
+  }
+
+}
+
+
 export class NativeScripts extends Ptr {
   static async new() {
     const ret = await HaskellShelley.nativeScriptsNew();
@@ -3482,6 +4882,36 @@ export class NativeScripts extends Ptr {
     const elemPtr = Ptr._assertClass(elem, NativeScript);
     const ret = HaskellShelley.nativeScriptsAdd(this.ptr, elemPtr);
     return ret;
+  }
+
+  async to_bytes() {
+    const ret = await HaskellShelley.nativeScriptsToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.nativeScriptsFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, NativeScripts);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.nativeScriptsToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.nativeScriptsFromHex(hex_str);
+    return Ptr._wrap(ret, NativeScripts);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.nativeScriptsToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.nativeScriptsFromJson(json);
+    return Ptr._wrap(ret, NativeScripts);
   }
 
 }
@@ -3562,14 +4992,121 @@ export class NetworkInfo extends Ptr {
     return Ptr._wrap(ret, NetworkInfo);
   }
 
-  static async testnet() {
-    const ret = await HaskellShelley.networkInfoTestnet();
-    return Ptr._wrap(ret, NetworkInfo);
-  }
-
   static async mainnet() {
     const ret = await HaskellShelley.networkInfoMainnet();
     return Ptr._wrap(ret, NetworkInfo);
+  }
+
+}
+
+
+export class NewConstitutionAction extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.newConstitutionActionToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.newConstitutionActionFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, NewConstitutionAction);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.newConstitutionActionToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.newConstitutionActionFromHex(hex_str);
+    return Ptr._wrap(ret, NewConstitutionAction);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.newConstitutionActionToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.newConstitutionActionFromJson(json);
+    return Ptr._wrap(ret, NewConstitutionAction);
+  }
+
+  async gov_action_id() {
+    const ret = await HaskellShelley.newConstitutionActionGovActionId(this.ptr);
+    return Ptr._wrap(ret, GovernanceActionId);
+  }
+
+  async constitution() {
+    const ret = await HaskellShelley.newConstitutionActionConstitution(this.ptr);
+    return Ptr._wrap(ret, Constitution);
+  }
+
+  static async new(constitution) {
+    const constitutionPtr = Ptr._assertClass(constitution, Constitution);
+    const ret = await HaskellShelley.newConstitutionActionNew(constitutionPtr);
+    return Ptr._wrap(ret, NewConstitutionAction);
+  }
+
+  static async new_with_action_id(gov_action_id, constitution) {
+    const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
+    const constitutionPtr = Ptr._assertClass(constitution, Constitution);
+    const ret = await HaskellShelley.newConstitutionActionNewWithActionId(gov_action_idPtr, constitutionPtr);
+    return Ptr._wrap(ret, NewConstitutionAction);
+  }
+
+  async has_script_hash() {
+    const ret = await HaskellShelley.newConstitutionActionHasScriptHash(this.ptr);
+    return ret;
+  }
+
+}
+
+
+export class NoConfidenceAction extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.noConfidenceActionToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.noConfidenceActionFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, NoConfidenceAction);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.noConfidenceActionToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.noConfidenceActionFromHex(hex_str);
+    return Ptr._wrap(ret, NoConfidenceAction);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.noConfidenceActionToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.noConfidenceActionFromJson(json);
+    return Ptr._wrap(ret, NoConfidenceAction);
+  }
+
+  async gov_action_id() {
+    const ret = await HaskellShelley.noConfidenceActionGovActionId(this.ptr);
+    return Ptr._wrap(ret, GovernanceActionId);
+  }
+
+  static async new() {
+    const ret = await HaskellShelley.noConfidenceActionNew();
+    return Ptr._wrap(ret, NoConfidenceAction);
+  }
+
+  static async new_with_action_id(gov_action_id) {
+    const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
+    const ret = await HaskellShelley.noConfidenceActionNewWithActionId(gov_action_idPtr);
+    return Ptr._wrap(ret, NoConfidenceAction);
   }
 
 }
@@ -3680,6 +5217,109 @@ export class OperationalCert extends Ptr {
     const sigmaPtr = Ptr._assertClass(sigma, Ed25519Signature);
     const ret = await HaskellShelley.operationalCertNew(hot_vkeyPtr, sequence_number, kes_period, sigmaPtr);
     return Ptr._wrap(ret, OperationalCert);
+  }
+
+}
+
+
+export class OutputDatum extends Ptr {
+  static async new_data_hash(data_hash) {
+    const data_hashPtr = Ptr._assertClass(data_hash, DataHash);
+    const ret = await HaskellShelley.outputDatumNewDataHash(data_hashPtr);
+    return Ptr._wrap(ret, OutputDatum);
+  }
+
+  static async new_data(data) {
+    const dataPtr = Ptr._assertClass(data, PlutusData);
+    const ret = await HaskellShelley.outputDatumNewData(dataPtr);
+    return Ptr._wrap(ret, OutputDatum);
+  }
+
+  async data_hash() {
+    const ret = await HaskellShelley.outputDatumDataHash(this.ptr);
+    return Ptr._wrap(ret, DataHash);
+  }
+
+  async data() {
+    const ret = await HaskellShelley.outputDatumData(this.ptr);
+    return Ptr._wrap(ret, PlutusData);
+  }
+
+}
+
+
+export class ParameterChangeAction extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.parameterChangeActionToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.parameterChangeActionFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, ParameterChangeAction);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.parameterChangeActionToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.parameterChangeActionFromHex(hex_str);
+    return Ptr._wrap(ret, ParameterChangeAction);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.parameterChangeActionToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.parameterChangeActionFromJson(json);
+    return Ptr._wrap(ret, ParameterChangeAction);
+  }
+
+  async gov_action_id() {
+    const ret = await HaskellShelley.parameterChangeActionGovActionId(this.ptr);
+    return Ptr._wrap(ret, GovernanceActionId);
+  }
+
+  async protocol_param_updates() {
+    const ret = await HaskellShelley.parameterChangeActionProtocolParamUpdates(this.ptr);
+    return Ptr._wrap(ret, ProtocolParamUpdate);
+  }
+
+  async policy_hash() {
+    const ret = await HaskellShelley.parameterChangeActionPolicyHash(this.ptr);
+    return Ptr._wrap(ret, ScriptHash);
+  }
+
+  static async new(protocol_param_updates) {
+    const protocol_param_updatesPtr = Ptr._assertClass(protocol_param_updates, ProtocolParamUpdate);
+    const ret = await HaskellShelley.parameterChangeActionNew(protocol_param_updatesPtr);
+    return Ptr._wrap(ret, ParameterChangeAction);
+  }
+
+  static async new_with_action_id(gov_action_id, protocol_param_updates) {
+    const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
+    const protocol_param_updatesPtr = Ptr._assertClass(protocol_param_updates, ProtocolParamUpdate);
+    const ret = await HaskellShelley.parameterChangeActionNewWithActionId(gov_action_idPtr, protocol_param_updatesPtr);
+    return Ptr._wrap(ret, ParameterChangeAction);
+  }
+
+  static async new_with_policy_hash(protocol_param_updates, policy_hash) {
+    const protocol_param_updatesPtr = Ptr._assertClass(protocol_param_updates, ProtocolParamUpdate);
+    const policy_hashPtr = Ptr._assertClass(policy_hash, ScriptHash);
+    const ret = await HaskellShelley.parameterChangeActionNewWithPolicyHash(protocol_param_updatesPtr, policy_hashPtr);
+    return Ptr._wrap(ret, ParameterChangeAction);
+  }
+
+  static async new_with_policy_hash_and_action_id(gov_action_id, protocol_param_updates, policy_hash) {
+    const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
+    const protocol_param_updatesPtr = Ptr._assertClass(protocol_param_updates, ProtocolParamUpdate);
+    const policy_hashPtr = Ptr._assertClass(policy_hash, ScriptHash);
+    const ret = await HaskellShelley.parameterChangeActionNewWithPolicyHashAndActionId(gov_action_idPtr, protocol_param_updatesPtr, policy_hashPtr);
+    return Ptr._wrap(ret, ParameterChangeAction);
   }
 
 }
@@ -3925,6 +5565,11 @@ export class PlutusScript extends Ptr {
     return Ptr._wrap(ret, PlutusScript);
   }
 
+  static async new_v3(bytes) {
+    const ret = await HaskellShelley.plutusScriptNewV3(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, PlutusScript);
+  }
+
   static async new_with_version(bytes, language) {
     const languagePtr = Ptr._assertClass(language, Language);
     const ret = await HaskellShelley.plutusScriptNewWithVersion(b64FromUint8Array(bytes), languagePtr);
@@ -3938,6 +5583,11 @@ export class PlutusScript extends Ptr {
 
   static async from_bytes_v2(bytes) {
     const ret = await HaskellShelley.plutusScriptFromBytesV2(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, PlutusScript);
+  }
+
+  static async from_bytes_v3(bytes) {
+    const ret = await HaskellShelley.plutusScriptFromBytesV3(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PlutusScript);
   }
 
@@ -3973,19 +5623,23 @@ export class PlutusScriptSource extends Ptr {
     return Ptr._wrap(ret, PlutusScriptSource);
   }
 
-  static async new_ref_input(script_hash, input) {
-    const script_hashPtr = Ptr._assertClass(script_hash, ScriptHash);
-    const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const ret = await HaskellShelley.plutusScriptSourceNewRefInput(script_hashPtr, inputPtr);
-    return Ptr._wrap(ret, PlutusScriptSource);
-  }
-
-  static async new_ref_input_with_lang_ver(script_hash, input, lang_ver) {
+  static async new_ref_input(script_hash, input, lang_ver, script_size) {
     const script_hashPtr = Ptr._assertClass(script_hash, ScriptHash);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const lang_verPtr = Ptr._assertClass(lang_ver, Language);
-    const ret = await HaskellShelley.plutusScriptSourceNewRefInputWithLangVer(script_hashPtr, inputPtr, lang_verPtr);
+    const ret = await HaskellShelley.plutusScriptSourceNewRefInput(script_hashPtr, inputPtr, lang_verPtr, script_size);
     return Ptr._wrap(ret, PlutusScriptSource);
+  }
+
+  set_required_signers(key_hashes) {
+    const key_hashesPtr = Ptr._assertClass(key_hashes, Ed25519KeyHashes);
+    const ret = HaskellShelley.plutusScriptSourceSetRequiredSigners(this.ptr, key_hashesPtr);
+    return ret;
+  }
+
+  async get_ref_script_size() {
+    const ret = await HaskellShelley.plutusScriptSourceGetRefScriptSize(this.ptr);
+    return ret;
   }
 
 }
@@ -4169,7 +5823,7 @@ export class Pointer extends Ptr {
 
 export class PointerAddress extends Ptr {
   static async new(network, payment, stake) {
-    const paymentPtr = Ptr._assertClass(payment, StakeCredential);
+    const paymentPtr = Ptr._assertClass(payment, Credential);
     const stakePtr = Ptr._assertClass(stake, Pointer);
     const ret = await HaskellShelley.pointerAddressNew(network, paymentPtr, stakePtr);
     return Ptr._wrap(ret, PointerAddress);
@@ -4177,7 +5831,7 @@ export class PointerAddress extends Ptr {
 
   async payment_cred() {
     const ret = await HaskellShelley.pointerAddressPaymentCred(this.ptr);
-    return Ptr._wrap(ret, StakeCredential);
+    return Ptr._wrap(ret, Credential);
   }
 
   async stake_pointer() {
@@ -4473,6 +6127,70 @@ export class PoolRetirement extends Ptr {
     const pool_keyhashPtr = Ptr._assertClass(pool_keyhash, Ed25519KeyHash);
     const ret = await HaskellShelley.poolRetirementNew(pool_keyhashPtr, epoch);
     return Ptr._wrap(ret, PoolRetirement);
+  }
+
+}
+
+
+export class PoolVotingThresholds extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.poolVotingThresholdsToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.poolVotingThresholdsFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, PoolVotingThresholds);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.poolVotingThresholdsToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.poolVotingThresholdsFromHex(hex_str);
+    return Ptr._wrap(ret, PoolVotingThresholds);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.poolVotingThresholdsToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.poolVotingThresholdsFromJson(json);
+    return Ptr._wrap(ret, PoolVotingThresholds);
+  }
+
+  static async new(motion_no_confidence, committee_normal, committee_no_confidence, hard_fork_initiation, security_relevant_threshold) {
+    const motion_no_confidencePtr = Ptr._assertClass(motion_no_confidence, UnitInterval);
+    const committee_normalPtr = Ptr._assertClass(committee_normal, UnitInterval);
+    const committee_no_confidencePtr = Ptr._assertClass(committee_no_confidence, UnitInterval);
+    const hard_fork_initiationPtr = Ptr._assertClass(hard_fork_initiation, UnitInterval);
+    const security_relevant_thresholdPtr = Ptr._assertClass(security_relevant_threshold, UnitInterval);
+    const ret = await HaskellShelley.poolVotingThresholdsNew(motion_no_confidencePtr, committee_normalPtr, committee_no_confidencePtr, hard_fork_initiationPtr, security_relevant_thresholdPtr);
+    return Ptr._wrap(ret, PoolVotingThresholds);
+  }
+
+  async motion_no_confidence() {
+    const ret = await HaskellShelley.poolVotingThresholdsMotionNoConfidence(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+  async committee_normal() {
+    const ret = await HaskellShelley.poolVotingThresholdsCommitteeNormal(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+  async committee_no_confidence() {
+    const ret = await HaskellShelley.poolVotingThresholdsCommitteeNoConfidence(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+  async hard_fork_initiation() {
+    const ret = await HaskellShelley.poolVotingThresholdsHardForkInitiation(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
   }
 
 }
@@ -4874,6 +6592,101 @@ export class ProtocolParamUpdate extends Ptr {
     return ret;
   }
 
+  set_pool_voting_thresholds(pool_voting_thresholds) {
+    const pool_voting_thresholdsPtr = Ptr._assertClass(pool_voting_thresholds, PoolVotingThresholds);
+    const ret = HaskellShelley.protocolParamUpdateSetPoolVotingThresholds(this.ptr, pool_voting_thresholdsPtr);
+    return ret;
+  }
+
+  async pool_voting_thresholds() {
+    const ret = await HaskellShelley.protocolParamUpdatePoolVotingThresholds(this.ptr);
+    return Ptr._wrap(ret, PoolVotingThresholds);
+  }
+
+  set_drep_voting_thresholds(drep_voting_thresholds) {
+    const drep_voting_thresholdsPtr = Ptr._assertClass(drep_voting_thresholds, DrepVotingThresholds);
+    const ret = HaskellShelley.protocolParamUpdateSetDrepVotingThresholds(this.ptr, drep_voting_thresholdsPtr);
+    return ret;
+  }
+
+  async drep_voting_thresholds() {
+    const ret = await HaskellShelley.protocolParamUpdateDrepVotingThresholds(this.ptr);
+    return Ptr._wrap(ret, DrepVotingThresholds);
+  }
+
+  set_min_committee_size(min_committee_size) {
+    const ret = HaskellShelley.protocolParamUpdateSetMinCommitteeSize(this.ptr, min_committee_size);
+    return ret;
+  }
+
+  async min_committee_size() {
+    const ret = await HaskellShelley.protocolParamUpdateMinCommitteeSize(this.ptr);
+    return ret;
+  }
+
+  set_committee_term_limit(committee_term_limit) {
+    const ret = HaskellShelley.protocolParamUpdateSetCommitteeTermLimit(this.ptr, committee_term_limit);
+    return ret;
+  }
+
+  async committee_term_limit() {
+    const ret = await HaskellShelley.protocolParamUpdateCommitteeTermLimit(this.ptr);
+    return ret;
+  }
+
+  set_governance_action_validity_period(governance_action_validity_period) {
+    const ret = HaskellShelley.protocolParamUpdateSetGovernanceActionValidityPeriod(this.ptr, governance_action_validity_period);
+    return ret;
+  }
+
+  async governance_action_validity_period() {
+    const ret = await HaskellShelley.protocolParamUpdateGovernanceActionValidityPeriod(this.ptr);
+    return ret;
+  }
+
+  set_governance_action_deposit(governance_action_deposit) {
+    const governance_action_depositPtr = Ptr._assertClass(governance_action_deposit, BigNum);
+    const ret = HaskellShelley.protocolParamUpdateSetGovernanceActionDeposit(this.ptr, governance_action_depositPtr);
+    return ret;
+  }
+
+  async governance_action_deposit() {
+    const ret = await HaskellShelley.protocolParamUpdateGovernanceActionDeposit(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  set_drep_deposit(drep_deposit) {
+    const drep_depositPtr = Ptr._assertClass(drep_deposit, BigNum);
+    const ret = HaskellShelley.protocolParamUpdateSetDrepDeposit(this.ptr, drep_depositPtr);
+    return ret;
+  }
+
+  async drep_deposit() {
+    const ret = await HaskellShelley.protocolParamUpdateDrepDeposit(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  set_drep_inactivity_period(drep_inactivity_period) {
+    const ret = HaskellShelley.protocolParamUpdateSetDrepInactivityPeriod(this.ptr, drep_inactivity_period);
+    return ret;
+  }
+
+  async drep_inactivity_period() {
+    const ret = await HaskellShelley.protocolParamUpdateDrepInactivityPeriod(this.ptr);
+    return ret;
+  }
+
+  set_ref_script_coins_per_byte(ref_script_coins_per_byte) {
+    const ref_script_coins_per_bytePtr = Ptr._assertClass(ref_script_coins_per_byte, UnitInterval);
+    const ret = HaskellShelley.protocolParamUpdateSetRefScriptCoinsPerByte(this.ptr, ref_script_coins_per_bytePtr);
+    return ret;
+  }
+
+  async ref_script_coins_per_byte() {
+    const ret = await HaskellShelley.protocolParamUpdateRefScriptCoinsPerByte(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
   static async new() {
     const ret = await HaskellShelley.protocolParamUpdateNew();
     return Ptr._wrap(ret, ProtocolParamUpdate);
@@ -5115,6 +6928,16 @@ export class RedeemerTag extends Ptr {
     return Ptr._wrap(ret, RedeemerTag);
   }
 
+  static async new_vote() {
+    const ret = await HaskellShelley.redeemerTagNewVote();
+    return Ptr._wrap(ret, RedeemerTag);
+  }
+
+  static async new_voting_proposal() {
+    const ret = await HaskellShelley.redeemerTagNewVotingProposal();
+    return Ptr._wrap(ret, RedeemerTag);
+  }
+
   async kind() {
     const ret = await HaskellShelley.redeemerTagKind(this.ptr);
     return ret;
@@ -5312,14 +7135,14 @@ export class Relays extends Ptr {
 
 export class RewardAddress extends Ptr {
   static async new(network, payment) {
-    const paymentPtr = Ptr._assertClass(payment, StakeCredential);
+    const paymentPtr = Ptr._assertClass(payment, Credential);
     const ret = await HaskellShelley.rewardAddressNew(network, paymentPtr);
     return Ptr._wrap(ret, RewardAddress);
   }
 
   async payment_cred() {
     const ret = await HaskellShelley.rewardAddressPaymentCred(this.ptr);
-    return Ptr._wrap(ret, StakeCredential);
+    return Ptr._wrap(ret, Credential);
   }
 
   async to_address() {
@@ -5907,116 +7730,62 @@ export class SingleHostName extends Ptr {
 }
 
 
-export class StakeCredential extends Ptr {
-  static async from_keyhash(hash) {
-    const hashPtr = Ptr._assertClass(hash, Ed25519KeyHash);
-    const ret = await HaskellShelley.stakeCredentialFromKeyhash(hashPtr);
-    return Ptr._wrap(ret, StakeCredential);
+export class StakeAndVoteDelegation extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.stakeAndVoteDelegationToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
   }
 
-  static async from_scripthash(hash) {
-    const hashPtr = Ptr._assertClass(hash, ScriptHash);
-    const ret = await HaskellShelley.stakeCredentialFromScripthash(hashPtr);
-    return Ptr._wrap(ret, StakeCredential);
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.stakeAndVoteDelegationFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, StakeAndVoteDelegation);
   }
 
-  async to_keyhash() {
-    const ret = await HaskellShelley.stakeCredentialToKeyhash(this.ptr);
+  async to_hex() {
+    const ret = await HaskellShelley.stakeAndVoteDelegationToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.stakeAndVoteDelegationFromHex(hex_str);
+    return Ptr._wrap(ret, StakeAndVoteDelegation);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.stakeAndVoteDelegationToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.stakeAndVoteDelegationFromJson(json);
+    return Ptr._wrap(ret, StakeAndVoteDelegation);
+  }
+
+  async stake_credential() {
+    const ret = await HaskellShelley.stakeAndVoteDelegationStakeCredential(this.ptr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async pool_keyhash() {
+    const ret = await HaskellShelley.stakeAndVoteDelegationPoolKeyhash(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
-  async to_scripthash() {
-    const ret = await HaskellShelley.stakeCredentialToScripthash(this.ptr);
-    return Ptr._wrap(ret, ScriptHash);
+  async drep() {
+    const ret = await HaskellShelley.stakeAndVoteDelegationDrep(this.ptr);
+    return Ptr._wrap(ret, DRep);
   }
 
-  async kind() {
-    const ret = await HaskellShelley.stakeCredentialKind(this.ptr);
-    return ret;
+  static async new(stake_credential, pool_keyhash, drep) {
+    const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
+    const pool_keyhashPtr = Ptr._assertClass(pool_keyhash, Ed25519KeyHash);
+    const drepPtr = Ptr._assertClass(drep, DRep);
+    const ret = await HaskellShelley.stakeAndVoteDelegationNew(stake_credentialPtr, pool_keyhashPtr, drepPtr);
+    return Ptr._wrap(ret, StakeAndVoteDelegation);
   }
 
-  async to_bytes() {
-    const ret = await HaskellShelley.stakeCredentialToBytes(this.ptr);
-    return uint8ArrayFromB64(ret);
-  }
-
-  static async from_bytes(bytes) {
-    const ret = await HaskellShelley.stakeCredentialFromBytes(b64FromUint8Array(bytes));
-    return Ptr._wrap(ret, StakeCredential);
-  }
-
-  async to_hex() {
-    const ret = await HaskellShelley.stakeCredentialToHex(this.ptr);
-    return ret;
-  }
-
-  static async from_hex(hex_str) {
-    const ret = await HaskellShelley.stakeCredentialFromHex(hex_str);
-    return Ptr._wrap(ret, StakeCredential);
-  }
-
-  async to_json() {
-    const ret = await HaskellShelley.stakeCredentialToJson(this.ptr);
-    return ret;
-  }
-
-  static async from_json(json) {
-    const ret = await HaskellShelley.stakeCredentialFromJson(json);
-    return Ptr._wrap(ret, StakeCredential);
-  }
-
-}
-
-
-export class StakeCredentials extends Ptr {
-  async to_bytes() {
-    const ret = await HaskellShelley.stakeCredentialsToBytes(this.ptr);
-    return uint8ArrayFromB64(ret);
-  }
-
-  static async from_bytes(bytes) {
-    const ret = await HaskellShelley.stakeCredentialsFromBytes(b64FromUint8Array(bytes));
-    return Ptr._wrap(ret, StakeCredentials);
-  }
-
-  async to_hex() {
-    const ret = await HaskellShelley.stakeCredentialsToHex(this.ptr);
-    return ret;
-  }
-
-  static async from_hex(hex_str) {
-    const ret = await HaskellShelley.stakeCredentialsFromHex(hex_str);
-    return Ptr._wrap(ret, StakeCredentials);
-  }
-
-  async to_json() {
-    const ret = await HaskellShelley.stakeCredentialsToJson(this.ptr);
-    return ret;
-  }
-
-  static async from_json(json) {
-    const ret = await HaskellShelley.stakeCredentialsFromJson(json);
-    return Ptr._wrap(ret, StakeCredentials);
-  }
-
-  static async new() {
-    const ret = await HaskellShelley.stakeCredentialsNew();
-    return Ptr._wrap(ret, StakeCredentials);
-  }
-
-  async len() {
-    const ret = await HaskellShelley.stakeCredentialsLen(this.ptr);
-    return ret;
-  }
-
-  async get(index) {
-    const ret = await HaskellShelley.stakeCredentialsGet(this.ptr, index);
-    return Ptr._wrap(ret, StakeCredential);
-  }
-
-  add(elem) {
-    const elemPtr = Ptr._assertClass(elem, StakeCredential);
-    const ret = HaskellShelley.stakeCredentialsAdd(this.ptr, elemPtr);
+  async has_script_credentials() {
+    const ret = await HaskellShelley.stakeAndVoteDelegationHasScriptCredentials(this.ptr);
     return ret;
   }
 
@@ -6056,7 +7825,7 @@ export class StakeDelegation extends Ptr {
 
   async stake_credential() {
     const ret = await HaskellShelley.stakeDelegationStakeCredential(this.ptr);
-    return Ptr._wrap(ret, StakeCredential);
+    return Ptr._wrap(ret, Credential);
   }
 
   async pool_keyhash() {
@@ -6065,10 +7834,15 @@ export class StakeDelegation extends Ptr {
   }
 
   static async new(stake_credential, pool_keyhash) {
-    const stake_credentialPtr = Ptr._assertClass(stake_credential, StakeCredential);
+    const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
     const pool_keyhashPtr = Ptr._assertClass(pool_keyhash, Ed25519KeyHash);
     const ret = await HaskellShelley.stakeDelegationNew(stake_credentialPtr, pool_keyhashPtr);
     return Ptr._wrap(ret, StakeDelegation);
+  }
+
+  async has_script_credentials() {
+    const ret = await HaskellShelley.stakeDelegationHasScriptCredentials(this.ptr);
+    return ret;
   }
 
 }
@@ -6107,13 +7881,30 @@ export class StakeDeregistration extends Ptr {
 
   async stake_credential() {
     const ret = await HaskellShelley.stakeDeregistrationStakeCredential(this.ptr);
-    return Ptr._wrap(ret, StakeCredential);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async coin() {
+    const ret = await HaskellShelley.stakeDeregistrationCoin(this.ptr);
+    return Ptr._wrap(ret, BigNum);
   }
 
   static async new(stake_credential) {
-    const stake_credentialPtr = Ptr._assertClass(stake_credential, StakeCredential);
+    const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
     const ret = await HaskellShelley.stakeDeregistrationNew(stake_credentialPtr);
     return Ptr._wrap(ret, StakeDeregistration);
+  }
+
+  static async new_with_coin(stake_credential, coin) {
+    const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
+    const coinPtr = Ptr._assertClass(coin, BigNum);
+    const ret = await HaskellShelley.stakeDeregistrationNewWithCoin(stake_credentialPtr, coinPtr);
+    return Ptr._wrap(ret, StakeDeregistration);
+  }
+
+  async has_script_credentials() {
+    const ret = await HaskellShelley.stakeDeregistrationHasScriptCredentials(this.ptr);
+    return ret;
   }
 
 }
@@ -6152,13 +7943,160 @@ export class StakeRegistration extends Ptr {
 
   async stake_credential() {
     const ret = await HaskellShelley.stakeRegistrationStakeCredential(this.ptr);
-    return Ptr._wrap(ret, StakeCredential);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async coin() {
+    const ret = await HaskellShelley.stakeRegistrationCoin(this.ptr);
+    return Ptr._wrap(ret, BigNum);
   }
 
   static async new(stake_credential) {
-    const stake_credentialPtr = Ptr._assertClass(stake_credential, StakeCredential);
+    const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
     const ret = await HaskellShelley.stakeRegistrationNew(stake_credentialPtr);
     return Ptr._wrap(ret, StakeRegistration);
+  }
+
+  static async new_with_coin(stake_credential, coin) {
+    const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
+    const coinPtr = Ptr._assertClass(coin, BigNum);
+    const ret = await HaskellShelley.stakeRegistrationNewWithCoin(stake_credentialPtr, coinPtr);
+    return Ptr._wrap(ret, StakeRegistration);
+  }
+
+  async has_script_credentials() {
+    const ret = await HaskellShelley.stakeRegistrationHasScriptCredentials(this.ptr);
+    return ret;
+  }
+
+}
+
+
+export class StakeRegistrationAndDelegation extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.stakeRegistrationAndDelegationToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.stakeRegistrationAndDelegationFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, StakeRegistrationAndDelegation);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.stakeRegistrationAndDelegationToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.stakeRegistrationAndDelegationFromHex(hex_str);
+    return Ptr._wrap(ret, StakeRegistrationAndDelegation);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.stakeRegistrationAndDelegationToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.stakeRegistrationAndDelegationFromJson(json);
+    return Ptr._wrap(ret, StakeRegistrationAndDelegation);
+  }
+
+  async stake_credential() {
+    const ret = await HaskellShelley.stakeRegistrationAndDelegationStakeCredential(this.ptr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async pool_keyhash() {
+    const ret = await HaskellShelley.stakeRegistrationAndDelegationPoolKeyhash(this.ptr);
+    return Ptr._wrap(ret, Ed25519KeyHash);
+  }
+
+  async coin() {
+    const ret = await HaskellShelley.stakeRegistrationAndDelegationCoin(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  static async new(stake_credential, pool_keyhash, coin) {
+    const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
+    const pool_keyhashPtr = Ptr._assertClass(pool_keyhash, Ed25519KeyHash);
+    const coinPtr = Ptr._assertClass(coin, BigNum);
+    const ret = await HaskellShelley.stakeRegistrationAndDelegationNew(stake_credentialPtr, pool_keyhashPtr, coinPtr);
+    return Ptr._wrap(ret, StakeRegistrationAndDelegation);
+  }
+
+  async has_script_credentials() {
+    const ret = await HaskellShelley.stakeRegistrationAndDelegationHasScriptCredentials(this.ptr);
+    return ret;
+  }
+
+}
+
+
+export class StakeVoteRegistrationAndDelegation extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, StakeVoteRegistrationAndDelegation);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationFromHex(hex_str);
+    return Ptr._wrap(ret, StakeVoteRegistrationAndDelegation);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationFromJson(json);
+    return Ptr._wrap(ret, StakeVoteRegistrationAndDelegation);
+  }
+
+  async stake_credential() {
+    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationStakeCredential(this.ptr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async pool_keyhash() {
+    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationPoolKeyhash(this.ptr);
+    return Ptr._wrap(ret, Ed25519KeyHash);
+  }
+
+  async drep() {
+    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationDrep(this.ptr);
+    return Ptr._wrap(ret, DRep);
+  }
+
+  async coin() {
+    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationCoin(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  static async new(stake_credential, pool_keyhash, drep, coin) {
+    const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
+    const pool_keyhashPtr = Ptr._assertClass(pool_keyhash, Ed25519KeyHash);
+    const drepPtr = Ptr._assertClass(drep, DRep);
+    const coinPtr = Ptr._assertClass(coin, BigNum);
+    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationNew(stake_credentialPtr, pool_keyhashPtr, drepPtr, coinPtr);
+    return Ptr._wrap(ret, StakeVoteRegistrationAndDelegation);
+  }
+
+  async has_script_credentials() {
+    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationHasScriptCredentials(this.ptr);
+    return ret;
   }
 
 }
@@ -6597,11 +8535,6 @@ export class TransactionBody extends Ptr {
     return Ptr._wrap(ret, Mint);
   }
 
-  async multiassets() {
-    const ret = await HaskellShelley.transactionBodyMultiassets(this.ptr);
-    return Ptr._wrap(ret, Mint);
-  }
-
   set_reference_inputs(reference_inputs) {
     const reference_inputsPtr = Ptr._assertClass(reference_inputs, TransactionInputs);
     const ret = HaskellShelley.transactionBodySetReferenceInputs(this.ptr, reference_inputsPtr);
@@ -6679,6 +8612,50 @@ export class TransactionBody extends Ptr {
     return Ptr._wrap(ret, BigNum);
   }
 
+  set_voting_procedures(voting_procedures) {
+    const voting_proceduresPtr = Ptr._assertClass(voting_procedures, VotingProcedures);
+    const ret = HaskellShelley.transactionBodySetVotingProcedures(this.ptr, voting_proceduresPtr);
+    return ret;
+  }
+
+  async voting_procedures() {
+    const ret = await HaskellShelley.transactionBodyVotingProcedures(this.ptr);
+    return Ptr._wrap(ret, VotingProcedures);
+  }
+
+  set_voting_proposals(voting_proposals) {
+    const voting_proposalsPtr = Ptr._assertClass(voting_proposals, VotingProposals);
+    const ret = HaskellShelley.transactionBodySetVotingProposals(this.ptr, voting_proposalsPtr);
+    return ret;
+  }
+
+  async voting_proposals() {
+    const ret = await HaskellShelley.transactionBodyVotingProposals(this.ptr);
+    return Ptr._wrap(ret, VotingProposals);
+  }
+
+  set_donation(donation) {
+    const donationPtr = Ptr._assertClass(donation, BigNum);
+    const ret = HaskellShelley.transactionBodySetDonation(this.ptr, donationPtr);
+    return ret;
+  }
+
+  async donation() {
+    const ret = await HaskellShelley.transactionBodyDonation(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  set_current_treasury_value(current_treasury_value) {
+    const current_treasury_valuePtr = Ptr._assertClass(current_treasury_value, BigNum);
+    const ret = HaskellShelley.transactionBodySetCurrentTreasuryValue(this.ptr, current_treasury_valuePtr);
+    return ret;
+  }
+
+  async current_treasury_value() {
+    const ret = await HaskellShelley.transactionBodyCurrentTreasuryValue(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
   static async new(inputs, outputs, fee, ttl) {
     const inputsPtr = Ptr._assertClass(inputs, TransactionInputs);
     const outputsPtr = Ptr._assertClass(outputs, TransactionOutputs);
@@ -6729,6 +8706,11 @@ export class TransactionBuilder extends Ptr {
     return ret;
   }
 
+  remove_collateral_return() {
+    const ret = HaskellShelley.transactionBuilderRemoveCollateralReturn(this.ptr);
+    return ret;
+  }
+
   set_collateral_return_and_total(collateral_return) {
     const collateral_returnPtr = Ptr._assertClass(collateral_return, TransactionOutput);
     const ret = HaskellShelley.transactionBuilderSetCollateralReturnAndTotal(this.ptr, collateral_returnPtr);
@@ -6738,6 +8720,11 @@ export class TransactionBuilder extends Ptr {
   set_total_collateral(total_collateral) {
     const total_collateralPtr = Ptr._assertClass(total_collateral, BigNum);
     const ret = HaskellShelley.transactionBuilderSetTotalCollateral(this.ptr, total_collateralPtr);
+    return ret;
+  }
+
+  remove_total_collateral() {
+    const ret = HaskellShelley.transactionBuilderRemoveTotalCollateral(this.ptr);
     return ret;
   }
 
@@ -6754,19 +8741,17 @@ export class TransactionBuilder extends Ptr {
     return ret;
   }
 
+  add_script_reference_input(reference_input, script_size) {
+    const reference_inputPtr = Ptr._assertClass(reference_input, TransactionInput);
+    const ret = HaskellShelley.transactionBuilderAddScriptReferenceInput(this.ptr, reference_inputPtr, script_size);
+    return ret;
+  }
+
   add_key_input(hash, input, amount) {
     const hashPtr = Ptr._assertClass(hash, Ed25519KeyHash);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
     const ret = HaskellShelley.transactionBuilderAddKeyInput(this.ptr, hashPtr, inputPtr, amountPtr);
-    return ret;
-  }
-
-  add_script_input(hash, input, amount) {
-    const hashPtr = Ptr._assertClass(hash, ScriptHash);
-    const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.transactionBuilderAddScriptInput(this.ptr, hashPtr, inputPtr, amountPtr);
     return ret;
   }
 
@@ -6794,28 +8779,25 @@ export class TransactionBuilder extends Ptr {
     return ret;
   }
 
-  add_input(address, input, amount) {
+  add_regular_input(address, input, amount) {
     const addressPtr = Ptr._assertClass(address, Address);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.transactionBuilderAddInput(this.ptr, addressPtr, inputPtr, amountPtr);
+    const ret = HaskellShelley.transactionBuilderAddRegularInput(this.ptr, addressPtr, inputPtr, amountPtr);
     return ret;
   }
 
-  async count_missing_input_scripts() {
-    const ret = await HaskellShelley.transactionBuilderCountMissingInputScripts(this.ptr);
+  async add_inputs_from_and_change(inputs, strategy, change_config) {
+    const inputsPtr = Ptr._assertClass(inputs, TransactionUnspentOutputs);
+    const change_configPtr = Ptr._assertClass(change_config, ChangeConfig);
+    const ret = await HaskellShelley.transactionBuilderAddInputsFromAndChange(this.ptr, inputsPtr, strategy, change_configPtr);
     return ret;
   }
 
-  async add_required_native_input_scripts(scripts) {
-    const scriptsPtr = Ptr._assertClass(scripts, NativeScripts);
-    const ret = await HaskellShelley.transactionBuilderAddRequiredNativeInputScripts(this.ptr, scriptsPtr);
-    return ret;
-  }
-
-  async add_required_plutus_input_scripts(scripts) {
-    const scriptsPtr = Ptr._assertClass(scripts, PlutusWitnesses);
-    const ret = await HaskellShelley.transactionBuilderAddRequiredPlutusInputScripts(this.ptr, scriptsPtr);
+  async add_inputs_from_and_change_with_collateral_return(inputs, strategy, change_config, collateral_percentage) {
+    const inputsPtr = Ptr._assertClass(inputs, TransactionUnspentOutputs);
+    const change_configPtr = Ptr._assertClass(change_config, ChangeConfig);
+    const ret = await HaskellShelley.transactionBuilderAddInputsFromAndChangeWithCollateralReturn(this.ptr, inputsPtr, strategy, change_configPtr, collateral_percentage);
     return ret;
   }
 
@@ -6866,6 +8848,11 @@ export class TransactionBuilder extends Ptr {
     return ret;
   }
 
+  remove_ttl() {
+    const ret = HaskellShelley.transactionBuilderRemoveTtl(this.ptr);
+    return ret;
+  }
+
   set_validity_start_interval(validity_start_interval) {
     const ret = HaskellShelley.transactionBuilderSetValidityStartInterval(this.ptr, validity_start_interval);
     return ret;
@@ -6877,15 +8864,54 @@ export class TransactionBuilder extends Ptr {
     return ret;
   }
 
+  remove_validity_start_interval() {
+    const ret = HaskellShelley.transactionBuilderRemoveValidityStartInterval(this.ptr);
+    return ret;
+  }
+
   set_certs(certs) {
     const certsPtr = Ptr._assertClass(certs, Certificates);
     const ret = HaskellShelley.transactionBuilderSetCerts(this.ptr, certsPtr);
     return ret;
   }
 
+  remove_certs() {
+    const ret = HaskellShelley.transactionBuilderRemoveCerts(this.ptr);
+    return ret;
+  }
+
+  set_certs_builder(certs) {
+    const certsPtr = Ptr._assertClass(certs, CertificatesBuilder);
+    const ret = HaskellShelley.transactionBuilderSetCertsBuilder(this.ptr, certsPtr);
+    return ret;
+  }
+
   set_withdrawals(withdrawals) {
     const withdrawalsPtr = Ptr._assertClass(withdrawals, Withdrawals);
     const ret = HaskellShelley.transactionBuilderSetWithdrawals(this.ptr, withdrawalsPtr);
+    return ret;
+  }
+
+  set_withdrawals_builder(withdrawals) {
+    const withdrawalsPtr = Ptr._assertClass(withdrawals, WithdrawalsBuilder);
+    const ret = HaskellShelley.transactionBuilderSetWithdrawalsBuilder(this.ptr, withdrawalsPtr);
+    return ret;
+  }
+
+  set_voting_builder(voting_builder) {
+    const voting_builderPtr = Ptr._assertClass(voting_builder, VotingBuilder);
+    const ret = HaskellShelley.transactionBuilderSetVotingBuilder(this.ptr, voting_builderPtr);
+    return ret;
+  }
+
+  set_voting_proposal_builder(voting_proposal_builder) {
+    const voting_proposal_builderPtr = Ptr._assertClass(voting_proposal_builder, VotingProposalBuilder);
+    const ret = HaskellShelley.transactionBuilderSetVotingProposalBuilder(this.ptr, voting_proposal_builderPtr);
+    return ret;
+  }
+
+  remove_withdrawals() {
+    const ret = HaskellShelley.transactionBuilderRemoveWithdrawals(this.ptr);
     return ret;
   }
 
@@ -6897,6 +8923,11 @@ export class TransactionBuilder extends Ptr {
   set_auxiliary_data(auxiliary_data) {
     const auxiliary_dataPtr = Ptr._assertClass(auxiliary_data, AuxiliaryData);
     const ret = HaskellShelley.transactionBuilderSetAuxiliaryData(this.ptr, auxiliary_dataPtr);
+    return ret;
+  }
+
+  remove_auxiliary_data() {
+    const ret = HaskellShelley.transactionBuilderRemoveAuxiliaryData(this.ptr);
     return ret;
   }
 
@@ -6928,6 +8959,11 @@ export class TransactionBuilder extends Ptr {
   set_mint_builder(mint_builder) {
     const mint_builderPtr = Ptr._assertClass(mint_builder, MintBuilder);
     const ret = HaskellShelley.transactionBuilderSetMintBuilder(this.ptr, mint_builderPtr);
+    return ret;
+  }
+
+  remove_mint_builder() {
+    const ret = HaskellShelley.transactionBuilderRemoveMintBuilder(this.ptr);
     return ret;
   }
 
@@ -6987,6 +9023,39 @@ export class TransactionBuilder extends Ptr {
     return ret;
   }
 
+  add_extra_witness_datum(datum) {
+    const datumPtr = Ptr._assertClass(datum, PlutusData);
+    const ret = HaskellShelley.transactionBuilderAddExtraWitnessDatum(this.ptr, datumPtr);
+    return ret;
+  }
+
+  async get_extra_witness_datums() {
+    const ret = await HaskellShelley.transactionBuilderGetExtraWitnessDatums(this.ptr);
+    return Ptr._wrap(ret, PlutusList);
+  }
+
+  set_donation(donation) {
+    const donationPtr = Ptr._assertClass(donation, BigNum);
+    const ret = HaskellShelley.transactionBuilderSetDonation(this.ptr, donationPtr);
+    return ret;
+  }
+
+  async get_donation() {
+    const ret = await HaskellShelley.transactionBuilderGetDonation(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  set_current_treasury_value(current_treasury_value) {
+    const current_treasury_valuePtr = Ptr._assertClass(current_treasury_value, BigNum);
+    const ret = HaskellShelley.transactionBuilderSetCurrentTreasuryValue(this.ptr, current_treasury_valuePtr);
+    return ret;
+  }
+
+  async get_current_treasury_value() {
+    const ret = await HaskellShelley.transactionBuilderGetCurrentTreasuryValue(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
   static async new(cfg) {
     const cfgPtr = Ptr._assertClass(cfg, TransactionBuilderConfig);
     const ret = await HaskellShelley.transactionBuilderNew(cfgPtr);
@@ -7036,6 +9105,13 @@ export class TransactionBuilder extends Ptr {
   async add_change_if_needed(address) {
     const addressPtr = Ptr._assertClass(address, Address);
     const ret = await HaskellShelley.transactionBuilderAddChangeIfNeeded(this.ptr, addressPtr);
+    return ret;
+  }
+
+  async add_change_if_needed_with_datum(address, plutus_data) {
+    const addressPtr = Ptr._assertClass(address, Address);
+    const plutus_dataPtr = Ptr._assertClass(plutus_data, OutputDatum);
+    const ret = await HaskellShelley.transactionBuilderAddChangeIfNeededWithDatum(this.ptr, addressPtr, plutus_dataPtr);
     return ret;
   }
 
@@ -7111,12 +9187,6 @@ export class TransactionBuilderConfigBuilder extends Ptr {
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
-  async coins_per_utxo_word(coins_per_utxo_word) {
-    const coins_per_utxo_wordPtr = Ptr._assertClass(coins_per_utxo_word, BigNum);
-    const ret = await HaskellShelley.transactionBuilderConfigBuilderCoinsPerUtxoWord(this.ptr, coins_per_utxo_wordPtr);
-    return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
-  }
-
   async coins_per_utxo_byte(coins_per_utxo_byte) {
     const coins_per_utxo_bytePtr = Ptr._assertClass(coins_per_utxo_byte, BigNum);
     const ret = await HaskellShelley.transactionBuilderConfigBuilderCoinsPerUtxoByte(this.ptr, coins_per_utxo_bytePtr);
@@ -7148,6 +9218,12 @@ export class TransactionBuilderConfigBuilder extends Ptr {
 
   async max_tx_size(max_tx_size) {
     const ret = await HaskellShelley.transactionBuilderConfigBuilderMaxTxSize(this.ptr, max_tx_size);
+    return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
+  }
+
+  async ref_script_coins_per_byte(ref_script_coins_per_byte) {
+    const ref_script_coins_per_bytePtr = Ptr._assertClass(ref_script_coins_per_byte, UnitInterval);
+    const ret = await HaskellShelley.transactionBuilderConfigBuilderRefScriptCoinsPerByte(this.ptr, ref_script_coins_per_bytePtr);
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
@@ -7559,13 +9635,6 @@ export class TransactionOutputAmountBuilder extends Ptr {
     return Ptr._wrap(ret, TransactionOutputAmountBuilder);
   }
 
-  async with_asset_and_min_required_coin(multiasset, coins_per_utxo_word) {
-    const multiassetPtr = Ptr._assertClass(multiasset, MultiAsset);
-    const coins_per_utxo_wordPtr = Ptr._assertClass(coins_per_utxo_word, BigNum);
-    const ret = await HaskellShelley.transactionOutputAmountBuilderWithAssetAndMinRequiredCoin(this.ptr, multiassetPtr, coins_per_utxo_wordPtr);
-    return Ptr._wrap(ret, TransactionOutputAmountBuilder);
-  }
-
   async with_asset_and_min_required_coin_by_utxo_cost(multiasset, data_cost) {
     const multiassetPtr = Ptr._assertClass(multiasset, MultiAsset);
     const data_costPtr = Ptr._assertClass(data_cost, DataCost);
@@ -7920,6 +9989,105 @@ export class TransactionWitnessSets extends Ptr {
 }
 
 
+export class TreasuryWithdrawals extends Ptr {
+  async to_json() {
+    const ret = await HaskellShelley.treasuryWithdrawalsToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.treasuryWithdrawalsFromJson(json);
+    return Ptr._wrap(ret, TreasuryWithdrawals);
+  }
+
+  static async new() {
+    const ret = await HaskellShelley.treasuryWithdrawalsNew();
+    return Ptr._wrap(ret, TreasuryWithdrawals);
+  }
+
+  async get(key) {
+    const keyPtr = Ptr._assertClass(key, RewardAddress);
+    const ret = await HaskellShelley.treasuryWithdrawalsGet(this.ptr, keyPtr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  insert(key, value) {
+    const keyPtr = Ptr._assertClass(key, RewardAddress);
+    const valuePtr = Ptr._assertClass(value, BigNum);
+    const ret = HaskellShelley.treasuryWithdrawalsInsert(this.ptr, keyPtr, valuePtr);
+    return ret;
+  }
+
+  async keys() {
+    const ret = await HaskellShelley.treasuryWithdrawalsKeys(this.ptr);
+    return Ptr._wrap(ret, RewardAddresses);
+  }
+
+  async len() {
+    const ret = await HaskellShelley.treasuryWithdrawalsLen(this.ptr);
+    return ret;
+  }
+
+}
+
+
+export class TreasuryWithdrawalsAction extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.treasuryWithdrawalsActionToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.treasuryWithdrawalsActionFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, TreasuryWithdrawalsAction);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.treasuryWithdrawalsActionToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.treasuryWithdrawalsActionFromHex(hex_str);
+    return Ptr._wrap(ret, TreasuryWithdrawalsAction);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.treasuryWithdrawalsActionToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.treasuryWithdrawalsActionFromJson(json);
+    return Ptr._wrap(ret, TreasuryWithdrawalsAction);
+  }
+
+  async withdrawals() {
+    const ret = await HaskellShelley.treasuryWithdrawalsActionWithdrawals(this.ptr);
+    return Ptr._wrap(ret, TreasuryWithdrawals);
+  }
+
+  async policy_hash() {
+    const ret = await HaskellShelley.treasuryWithdrawalsActionPolicyHash(this.ptr);
+    return Ptr._wrap(ret, ScriptHash);
+  }
+
+  static async new(withdrawals) {
+    const withdrawalsPtr = Ptr._assertClass(withdrawals, TreasuryWithdrawals);
+    const ret = await HaskellShelley.treasuryWithdrawalsActionNew(withdrawalsPtr);
+    return Ptr._wrap(ret, TreasuryWithdrawalsAction);
+  }
+
+  static async new_with_policy_hash(withdrawals, policy_hash) {
+    const withdrawalsPtr = Ptr._assertClass(withdrawals, TreasuryWithdrawals);
+    const policy_hashPtr = Ptr._assertClass(policy_hash, ScriptHash);
+    const ret = await HaskellShelley.treasuryWithdrawalsActionNewWithPolicyHash(withdrawalsPtr, policy_hashPtr);
+    return Ptr._wrap(ret, TreasuryWithdrawalsAction);
+  }
+
+}
+
+
 export class TxBuilderConstants extends Ptr {
   static async plutus_default_cost_models() {
     const ret = await HaskellShelley.txBuilderConstantsPlutusDefaultCostModels();
@@ -7953,14 +10121,6 @@ export class TxInputsBuilder extends Ptr {
     return ret;
   }
 
-  add_script_input(hash, input, amount) {
-    const hashPtr = Ptr._assertClass(hash, ScriptHash);
-    const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.txInputsBuilderAddScriptInput(this.ptr, hashPtr, inputPtr, amountPtr);
-    return ret;
-  }
-
   add_native_script_input(script, input, amount) {
     const scriptPtr = Ptr._assertClass(script, NativeScript);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
@@ -7985,34 +10145,11 @@ export class TxInputsBuilder extends Ptr {
     return ret;
   }
 
-  add_input(address, input, amount) {
+  add_regular_input(address, input, amount) {
     const addressPtr = Ptr._assertClass(address, Address);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.txInputsBuilderAddInput(this.ptr, addressPtr, inputPtr, amountPtr);
-    return ret;
-  }
-
-  async count_missing_input_scripts() {
-    const ret = await HaskellShelley.txInputsBuilderCountMissingInputScripts(this.ptr);
-    return ret;
-  }
-
-  async add_required_native_input_scripts(scripts) {
-    const scriptsPtr = Ptr._assertClass(scripts, NativeScripts);
-    const ret = await HaskellShelley.txInputsBuilderAddRequiredNativeInputScripts(this.ptr, scriptsPtr);
-    return ret;
-  }
-
-  async add_required_plutus_input_scripts(scripts) {
-    const scriptsPtr = Ptr._assertClass(scripts, PlutusWitnesses);
-    const ret = await HaskellShelley.txInputsBuilderAddRequiredPlutusInputScripts(this.ptr, scriptsPtr);
-    return ret;
-  }
-
-  async add_required_script_input_witnesses(inputs_with_wit) {
-    const inputs_with_witPtr = Ptr._assertClass(inputs_with_wit, InputsWithScriptWitness);
-    const ret = await HaskellShelley.txInputsBuilderAddRequiredScriptInputWitnesses(this.ptr, inputs_with_witPtr);
+    const ret = HaskellShelley.txInputsBuilderAddRegularInput(this.ptr, addressPtr, inputPtr, amountPtr);
     return ret;
   }
 
@@ -8206,6 +10343,70 @@ export class Update extends Ptr {
     const proposed_protocol_parameter_updatesPtr = Ptr._assertClass(proposed_protocol_parameter_updates, ProposedProtocolParameterUpdates);
     const ret = await HaskellShelley.updateNew(proposed_protocol_parameter_updatesPtr, epoch);
     return Ptr._wrap(ret, Update);
+  }
+
+}
+
+
+export class UpdateCommitteeAction extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.updateCommitteeActionToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.updateCommitteeActionFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, UpdateCommitteeAction);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.updateCommitteeActionToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.updateCommitteeActionFromHex(hex_str);
+    return Ptr._wrap(ret, UpdateCommitteeAction);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.updateCommitteeActionToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.updateCommitteeActionFromJson(json);
+    return Ptr._wrap(ret, UpdateCommitteeAction);
+  }
+
+  async gov_action_id() {
+    const ret = await HaskellShelley.updateCommitteeActionGovActionId(this.ptr);
+    return Ptr._wrap(ret, GovernanceActionId);
+  }
+
+  async committee() {
+    const ret = await HaskellShelley.updateCommitteeActionCommittee(this.ptr);
+    return Ptr._wrap(ret, Committee);
+  }
+
+  async members_to_remove() {
+    const ret = await HaskellShelley.updateCommitteeActionMembersToRemove(this.ptr);
+    return Ptr._wrap(ret, Credentials);
+  }
+
+  static async new(committee, members_to_remove) {
+    const committeePtr = Ptr._assertClass(committee, Committee);
+    const members_to_removePtr = Ptr._assertClass(members_to_remove, Credentials);
+    const ret = await HaskellShelley.updateCommitteeActionNew(committeePtr, members_to_removePtr);
+    return Ptr._wrap(ret, UpdateCommitteeAction);
+  }
+
+  static async new_with_action_id(gov_action_id, committee, members_to_remove) {
+    const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
+    const committeePtr = Ptr._assertClass(committee, Committee);
+    const members_to_removePtr = Ptr._assertClass(members_to_remove, Credentials);
+    const ret = await HaskellShelley.updateCommitteeActionNewWithActionId(gov_action_idPtr, committeePtr, members_to_removePtr);
+    return Ptr._wrap(ret, UpdateCommitteeAction);
   }
 
 }
@@ -8613,6 +10814,581 @@ export class Vkeywitnesses extends Ptr {
 }
 
 
+export class VoteDelegation extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.voteDelegationToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.voteDelegationFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, VoteDelegation);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.voteDelegationToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.voteDelegationFromHex(hex_str);
+    return Ptr._wrap(ret, VoteDelegation);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.voteDelegationToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.voteDelegationFromJson(json);
+    return Ptr._wrap(ret, VoteDelegation);
+  }
+
+  async stake_credential() {
+    const ret = await HaskellShelley.voteDelegationStakeCredential(this.ptr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async drep() {
+    const ret = await HaskellShelley.voteDelegationDrep(this.ptr);
+    return Ptr._wrap(ret, DRep);
+  }
+
+  static async new(stake_credential, drep) {
+    const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
+    const drepPtr = Ptr._assertClass(drep, DRep);
+    const ret = await HaskellShelley.voteDelegationNew(stake_credentialPtr, drepPtr);
+    return Ptr._wrap(ret, VoteDelegation);
+  }
+
+  async has_script_credentials() {
+    const ret = await HaskellShelley.voteDelegationHasScriptCredentials(this.ptr);
+    return ret;
+  }
+
+}
+
+
+export class VoteRegistrationAndDelegation extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.voteRegistrationAndDelegationToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.voteRegistrationAndDelegationFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, VoteRegistrationAndDelegation);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.voteRegistrationAndDelegationToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.voteRegistrationAndDelegationFromHex(hex_str);
+    return Ptr._wrap(ret, VoteRegistrationAndDelegation);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.voteRegistrationAndDelegationToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.voteRegistrationAndDelegationFromJson(json);
+    return Ptr._wrap(ret, VoteRegistrationAndDelegation);
+  }
+
+  async stake_credential() {
+    const ret = await HaskellShelley.voteRegistrationAndDelegationStakeCredential(this.ptr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async drep() {
+    const ret = await HaskellShelley.voteRegistrationAndDelegationDrep(this.ptr);
+    return Ptr._wrap(ret, DRep);
+  }
+
+  async coin() {
+    const ret = await HaskellShelley.voteRegistrationAndDelegationCoin(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  static async new(stake_credential, drep, coin) {
+    const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
+    const drepPtr = Ptr._assertClass(drep, DRep);
+    const coinPtr = Ptr._assertClass(coin, BigNum);
+    const ret = await HaskellShelley.voteRegistrationAndDelegationNew(stake_credentialPtr, drepPtr, coinPtr);
+    return Ptr._wrap(ret, VoteRegistrationAndDelegation);
+  }
+
+  async has_script_credentials() {
+    const ret = await HaskellShelley.voteRegistrationAndDelegationHasScriptCredentials(this.ptr);
+    return ret;
+  }
+
+}
+
+
+export class Voter extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.voterToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.voterFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, Voter);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.voterToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.voterFromHex(hex_str);
+    return Ptr._wrap(ret, Voter);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.voterToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.voterFromJson(json);
+    return Ptr._wrap(ret, Voter);
+  }
+
+  static async new_constitutional_committee_hot_key(cred) {
+    const credPtr = Ptr._assertClass(cred, Credential);
+    const ret = await HaskellShelley.voterNewConstitutionalCommitteeHotKey(credPtr);
+    return Ptr._wrap(ret, Voter);
+  }
+
+  static async new_drep(cred) {
+    const credPtr = Ptr._assertClass(cred, Credential);
+    const ret = await HaskellShelley.voterNewDrep(credPtr);
+    return Ptr._wrap(ret, Voter);
+  }
+
+  static async new_staking_pool(key_hash) {
+    const key_hashPtr = Ptr._assertClass(key_hash, Ed25519KeyHash);
+    const ret = await HaskellShelley.voterNewStakingPool(key_hashPtr);
+    return Ptr._wrap(ret, Voter);
+  }
+
+  async kind() {
+    const ret = await HaskellShelley.voterKind(this.ptr);
+    return ret;
+  }
+
+  async to_constitutional_committee_hot_cred() {
+    const ret = await HaskellShelley.voterToConstitutionalCommitteeHotCred(this.ptr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async to_drep_cred() {
+    const ret = await HaskellShelley.voterToDrepCred(this.ptr);
+    return Ptr._wrap(ret, Credential);
+  }
+
+  async to_staking_pool_key_hash() {
+    const ret = await HaskellShelley.voterToStakingPoolKeyHash(this.ptr);
+    return Ptr._wrap(ret, Ed25519KeyHash);
+  }
+
+  async has_script_credentials() {
+    const ret = await HaskellShelley.voterHasScriptCredentials(this.ptr);
+    return ret;
+  }
+
+  async to_key_hash() {
+    const ret = await HaskellShelley.voterToKeyHash(this.ptr);
+    return Ptr._wrap(ret, Ed25519KeyHash);
+  }
+
+}
+
+
+export class Voters extends Ptr {
+  async to_json() {
+    const ret = await HaskellShelley.votersToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.votersFromJson(json);
+    return Ptr._wrap(ret, Voters);
+  }
+
+  static async new() {
+    const ret = await HaskellShelley.votersNew();
+    return Ptr._wrap(ret, Voters);
+  }
+
+  add(voter) {
+    const voterPtr = Ptr._assertClass(voter, Voter);
+    const ret = HaskellShelley.votersAdd(this.ptr, voterPtr);
+    return ret;
+  }
+
+  async get(index) {
+    const ret = await HaskellShelley.votersGet(this.ptr, index);
+    return Ptr._wrap(ret, Voter);
+  }
+
+  async len() {
+    const ret = await HaskellShelley.votersLen(this.ptr);
+    return ret;
+  }
+
+}
+
+
+export class VotingBuilder extends Ptr {
+  static async new() {
+    const ret = await HaskellShelley.votingBuilderNew();
+    return Ptr._wrap(ret, VotingBuilder);
+  }
+
+  add(voter, gov_action_id, voting_procedure) {
+    const voterPtr = Ptr._assertClass(voter, Voter);
+    const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
+    const voting_procedurePtr = Ptr._assertClass(voting_procedure, VotingProcedure);
+    const ret = HaskellShelley.votingBuilderAdd(this.ptr, voterPtr, gov_action_idPtr, voting_procedurePtr);
+    return ret;
+  }
+
+  add_with_plutus_witness(voter, gov_action_id, voting_procedure, witness) {
+    const voterPtr = Ptr._assertClass(voter, Voter);
+    const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
+    const voting_procedurePtr = Ptr._assertClass(voting_procedure, VotingProcedure);
+    const witnessPtr = Ptr._assertClass(witness, PlutusWitness);
+    const ret = HaskellShelley.votingBuilderAddWithPlutusWitness(this.ptr, voterPtr, gov_action_idPtr, voting_procedurePtr, witnessPtr);
+    return ret;
+  }
+
+  add_with_native_script(voter, gov_action_id, voting_procedure, native_script_source) {
+    const voterPtr = Ptr._assertClass(voter, Voter);
+    const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
+    const voting_procedurePtr = Ptr._assertClass(voting_procedure, VotingProcedure);
+    const native_script_sourcePtr = Ptr._assertClass(native_script_source, NativeScriptSource);
+    const ret = HaskellShelley.votingBuilderAddWithNativeScript(this.ptr, voterPtr, gov_action_idPtr, voting_procedurePtr, native_script_sourcePtr);
+    return ret;
+  }
+
+  async get_plutus_witnesses() {
+    const ret = await HaskellShelley.votingBuilderGetPlutusWitnesses(this.ptr);
+    return Ptr._wrap(ret, PlutusWitnesses);
+  }
+
+  async get_ref_inputs() {
+    const ret = await HaskellShelley.votingBuilderGetRefInputs(this.ptr);
+    return Ptr._wrap(ret, TransactionInputs);
+  }
+
+  async get_native_scripts() {
+    const ret = await HaskellShelley.votingBuilderGetNativeScripts(this.ptr);
+    return Ptr._wrap(ret, NativeScripts);
+  }
+
+  async has_plutus_scripts() {
+    const ret = await HaskellShelley.votingBuilderHasPlutusScripts(this.ptr);
+    return ret;
+  }
+
+  async build() {
+    const ret = await HaskellShelley.votingBuilderBuild(this.ptr);
+    return Ptr._wrap(ret, VotingProcedures);
+  }
+
+}
+
+
+export class VotingProcedure extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.votingProcedureToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.votingProcedureFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, VotingProcedure);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.votingProcedureToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.votingProcedureFromHex(hex_str);
+    return Ptr._wrap(ret, VotingProcedure);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.votingProcedureToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.votingProcedureFromJson(json);
+    return Ptr._wrap(ret, VotingProcedure);
+  }
+
+  static async new(vote) {
+    const ret = await HaskellShelley.votingProcedureNew(vote);
+    return Ptr._wrap(ret, VotingProcedure);
+  }
+
+  static async new_with_anchor(vote, anchor) {
+    const anchorPtr = Ptr._assertClass(anchor, Anchor);
+    const ret = await HaskellShelley.votingProcedureNewWithAnchor(vote, anchorPtr);
+    return Ptr._wrap(ret, VotingProcedure);
+  }
+
+  async vote_kind() {
+    const ret = await HaskellShelley.votingProcedureVoteKind(this.ptr);
+    return ret;
+  }
+
+  async anchor() {
+    const ret = await HaskellShelley.votingProcedureAnchor(this.ptr);
+    return Ptr._wrap(ret, Anchor);
+  }
+
+}
+
+
+export class VotingProcedures extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.votingProceduresToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.votingProceduresFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, VotingProcedures);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.votingProceduresToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.votingProceduresFromHex(hex_str);
+    return Ptr._wrap(ret, VotingProcedures);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.votingProceduresToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.votingProceduresFromJson(json);
+    return Ptr._wrap(ret, VotingProcedures);
+  }
+
+  static async new() {
+    const ret = await HaskellShelley.votingProceduresNew();
+    return Ptr._wrap(ret, VotingProcedures);
+  }
+
+  insert(voter, governance_action_id, voting_procedure) {
+    const voterPtr = Ptr._assertClass(voter, Voter);
+    const governance_action_idPtr = Ptr._assertClass(governance_action_id, GovernanceActionId);
+    const voting_procedurePtr = Ptr._assertClass(voting_procedure, VotingProcedure);
+    const ret = HaskellShelley.votingProceduresInsert(this.ptr, voterPtr, governance_action_idPtr, voting_procedurePtr);
+    return ret;
+  }
+
+  async get(voter, governance_action_id) {
+    const voterPtr = Ptr._assertClass(voter, Voter);
+    const governance_action_idPtr = Ptr._assertClass(governance_action_id, GovernanceActionId);
+    const ret = await HaskellShelley.votingProceduresGet(this.ptr, voterPtr, governance_action_idPtr);
+    return Ptr._wrap(ret, VotingProcedure);
+  }
+
+  async get_voters() {
+    const ret = await HaskellShelley.votingProceduresGetVoters(this.ptr);
+    return Ptr._wrap(ret, Voters);
+  }
+
+  async get_governance_action_ids_by_voter(voter) {
+    const voterPtr = Ptr._assertClass(voter, Voter);
+    const ret = await HaskellShelley.votingProceduresGetGovernanceActionIdsByVoter(this.ptr, voterPtr);
+    return Ptr._wrap(ret, GovernanceActionIds);
+  }
+
+}
+
+
+export class VotingProposal extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.votingProposalToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.votingProposalFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, VotingProposal);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.votingProposalToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.votingProposalFromHex(hex_str);
+    return Ptr._wrap(ret, VotingProposal);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.votingProposalToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.votingProposalFromJson(json);
+    return Ptr._wrap(ret, VotingProposal);
+  }
+
+  async governance_action() {
+    const ret = await HaskellShelley.votingProposalGovernanceAction(this.ptr);
+    return Ptr._wrap(ret, GovernanceAction);
+  }
+
+  async anchor() {
+    const ret = await HaskellShelley.votingProposalAnchor(this.ptr);
+    return Ptr._wrap(ret, Anchor);
+  }
+
+  async reward_account() {
+    const ret = await HaskellShelley.votingProposalRewardAccount(this.ptr);
+    return Ptr._wrap(ret, RewardAddress);
+  }
+
+  async deposit() {
+    const ret = await HaskellShelley.votingProposalDeposit(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+  static async new(governance_action, anchor, reward_account, deposit) {
+    const governance_actionPtr = Ptr._assertClass(governance_action, GovernanceAction);
+    const anchorPtr = Ptr._assertClass(anchor, Anchor);
+    const reward_accountPtr = Ptr._assertClass(reward_account, RewardAddress);
+    const depositPtr = Ptr._assertClass(deposit, BigNum);
+    const ret = await HaskellShelley.votingProposalNew(governance_actionPtr, anchorPtr, reward_accountPtr, depositPtr);
+    return Ptr._wrap(ret, VotingProposal);
+  }
+
+}
+
+
+export class VotingProposalBuilder extends Ptr {
+  static async new() {
+    const ret = await HaskellShelley.votingProposalBuilderNew();
+    return Ptr._wrap(ret, VotingProposalBuilder);
+  }
+
+  add(proposal) {
+    const proposalPtr = Ptr._assertClass(proposal, VotingProposal);
+    const ret = HaskellShelley.votingProposalBuilderAdd(this.ptr, proposalPtr);
+    return ret;
+  }
+
+  add_with_plutus_witness(proposal, witness) {
+    const proposalPtr = Ptr._assertClass(proposal, VotingProposal);
+    const witnessPtr = Ptr._assertClass(witness, PlutusWitness);
+    const ret = HaskellShelley.votingProposalBuilderAddWithPlutusWitness(this.ptr, proposalPtr, witnessPtr);
+    return ret;
+  }
+
+  async get_plutus_witnesses() {
+    const ret = await HaskellShelley.votingProposalBuilderGetPlutusWitnesses(this.ptr);
+    return Ptr._wrap(ret, PlutusWitnesses);
+  }
+
+  async get_ref_inputs() {
+    const ret = await HaskellShelley.votingProposalBuilderGetRefInputs(this.ptr);
+    return Ptr._wrap(ret, TransactionInputs);
+  }
+
+  async has_plutus_scripts() {
+    const ret = await HaskellShelley.votingProposalBuilderHasPlutusScripts(this.ptr);
+    return ret;
+  }
+
+  async build() {
+    const ret = await HaskellShelley.votingProposalBuilderBuild(this.ptr);
+    return Ptr._wrap(ret, VotingProposals);
+  }
+
+}
+
+
+export class VotingProposals extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.votingProposalsToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.votingProposalsFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, VotingProposals);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.votingProposalsToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.votingProposalsFromHex(hex_str);
+    return Ptr._wrap(ret, VotingProposals);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.votingProposalsToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.votingProposalsFromJson(json);
+    return Ptr._wrap(ret, VotingProposals);
+  }
+
+  static async new() {
+    const ret = await HaskellShelley.votingProposalsNew();
+    return Ptr._wrap(ret, VotingProposals);
+  }
+
+  async len() {
+    const ret = await HaskellShelley.votingProposalsLen(this.ptr);
+    return ret;
+  }
+
+  async get(index) {
+    const ret = await HaskellShelley.votingProposalsGet(this.ptr, index);
+    return Ptr._wrap(ret, VotingProposal);
+  }
+
+  add(proposal) {
+    const proposalPtr = Ptr._assertClass(proposal, VotingProposal);
+    const ret = HaskellShelley.votingProposalsAdd(this.ptr, proposalPtr);
+    return ret;
+  }
+
+}
+
+
 export class Withdrawals extends Ptr {
   async to_bytes() {
     const ret = await HaskellShelley.withdrawalsToBytes(this.ptr);
@@ -8670,6 +11446,68 @@ export class Withdrawals extends Ptr {
   async keys() {
     const ret = await HaskellShelley.withdrawalsKeys(this.ptr);
     return Ptr._wrap(ret, RewardAddresses);
+  }
+
+}
+
+
+export class WithdrawalsBuilder extends Ptr {
+  static async new() {
+    const ret = await HaskellShelley.withdrawalsBuilderNew();
+    return Ptr._wrap(ret, WithdrawalsBuilder);
+  }
+
+  add(address, coin) {
+    const addressPtr = Ptr._assertClass(address, RewardAddress);
+    const coinPtr = Ptr._assertClass(coin, BigNum);
+    const ret = HaskellShelley.withdrawalsBuilderAdd(this.ptr, addressPtr, coinPtr);
+    return ret;
+  }
+
+  add_with_plutus_witness(address, coin, witness) {
+    const addressPtr = Ptr._assertClass(address, RewardAddress);
+    const coinPtr = Ptr._assertClass(coin, BigNum);
+    const witnessPtr = Ptr._assertClass(witness, PlutusWitness);
+    const ret = HaskellShelley.withdrawalsBuilderAddWithPlutusWitness(this.ptr, addressPtr, coinPtr, witnessPtr);
+    return ret;
+  }
+
+  add_with_native_script(address, coin, native_script_source) {
+    const addressPtr = Ptr._assertClass(address, RewardAddress);
+    const coinPtr = Ptr._assertClass(coin, BigNum);
+    const native_script_sourcePtr = Ptr._assertClass(native_script_source, NativeScriptSource);
+    const ret = HaskellShelley.withdrawalsBuilderAddWithNativeScript(this.ptr, addressPtr, coinPtr, native_script_sourcePtr);
+    return ret;
+  }
+
+  async get_plutus_witnesses() {
+    const ret = await HaskellShelley.withdrawalsBuilderGetPlutusWitnesses(this.ptr);
+    return Ptr._wrap(ret, PlutusWitnesses);
+  }
+
+  async get_ref_inputs() {
+    const ret = await HaskellShelley.withdrawalsBuilderGetRefInputs(this.ptr);
+    return Ptr._wrap(ret, TransactionInputs);
+  }
+
+  async get_native_scripts() {
+    const ret = await HaskellShelley.withdrawalsBuilderGetNativeScripts(this.ptr);
+    return Ptr._wrap(ret, NativeScripts);
+  }
+
+  async get_total_withdrawals() {
+    const ret = await HaskellShelley.withdrawalsBuilderGetTotalWithdrawals(this.ptr);
+    return Ptr._wrap(ret, Value);
+  }
+
+  async has_plutus_scripts() {
+    const ret = await HaskellShelley.withdrawalsBuilderHasPlutusScripts(this.ptr);
+    return ret;
+  }
+
+  async build() {
+    const ret = await HaskellShelley.withdrawalsBuilderBuild(this.ptr);
+    return Ptr._wrap(ret, Withdrawals);
   }
 
 }
@@ -8837,18 +11675,17 @@ export const min_ada_for_output = async (output, data_cost) => {
 };
 
 
-export const min_ada_required = async (assets, has_data_hash, coins_per_utxo_word) => {
-  const assetsPtr = Ptr._assertClass(assets, Value);
-  const coins_per_utxo_wordPtr = Ptr._assertClass(coins_per_utxo_word, BigNum);
-  const ret = await HaskellShelley.minAdaRequired(assetsPtr, has_data_hash, coins_per_utxo_wordPtr);
-  return Ptr._wrap(ret, BigNum);
-};
-
-
 export const min_fee = async (tx, linear_fee) => {
   const txPtr = Ptr._assertClass(tx, Transaction);
   const linear_feePtr = Ptr._assertClass(linear_fee, LinearFee);
   const ret = await HaskellShelley.minFee(txPtr, linear_feePtr);
+  return Ptr._wrap(ret, BigNum);
+};
+
+
+export const min_ref_script_fee = async (total_ref_scripts_size, ref_script_coins_per_byte) => {
+  const ref_script_coins_per_bytePtr = Ptr._assertClass(ref_script_coins_per_byte, UnitInterval);
+  const ret = await HaskellShelley.minRefScriptFee(total_ref_scripts_size, ref_script_coins_per_bytePtr);
   return Ptr._wrap(ret, BigNum);
 };
 
@@ -8859,6 +11696,16 @@ export const min_script_fee = async (tx, ex_unit_prices) => {
   const ret = await HaskellShelley.minScriptFee(txPtr, ex_unit_pricesPtr);
   return Ptr._wrap(ret, BigNum);
 };
+
+
+export const AddressKind = Object.freeze({
+  Base: 0,
+  Pointer: 1,
+  Enterprise: 2,
+  Reward: 3,
+  Byron: 4,
+  Malformed: 5,
+});
 
 
 export const CborContainerType = Object.freeze({
@@ -8875,6 +11722,16 @@ export const CertificateKind = Object.freeze({
   PoolRetirement: 4,
   GenesisKeyDelegation: 5,
   MoveInstantaneousRewardsCert: 6,
+  CommitteeHotAuth: 7,
+  CommitteeColdResign: 8,
+  DrepDeregistration: 9,
+  DrepRegistration: 10,
+  DrepUpdate: 11,
+  StakeAndVoteDelegation: 12,
+  StakeRegistrationAndDelegation: 13,
+  StakeVoteRegistrationAndDelegation: 14,
+  VoteDelegation: 15,
+  VoteRegistrationAndDelegation: 16,
 });
 
 
@@ -8886,9 +11743,35 @@ export const CoinSelectionStrategyCIP2 = Object.freeze({
 });
 
 
+export const CredKind = Object.freeze({
+  Key: 0,
+  Script: 1,
+});
+
+
+export const DRepKind = Object.freeze({
+  KeyHash: 0,
+  ScriptHash: 1,
+  AlwaysAbstain: 2,
+  AlwaysNoConfidence: 3,
+});
+
+
+export const GovernanceActionKind = Object.freeze({
+  ParameterChangeAction: 0,
+  HardForkInitiationAction: 1,
+  TreasuryWithdrawalsAction: 2,
+  NoConfidenceAction: 3,
+  UpdateCommitteeAction: 4,
+  NewConstitutionAction: 5,
+  InfoAction: 6,
+});
+
+
 export const LanguageKind = Object.freeze({
   PlutusV1: 0,
   PlutusV2: 1,
+  PlutusV3: 2,
 });
 
 
@@ -8947,6 +11830,8 @@ export const RedeemerTagKind = Object.freeze({
   Mint: 1,
   Cert: 2,
   Reward: 3,
+  Vote: 4,
+  VotingProposal: 5,
 });
 
 
@@ -8961,6 +11846,7 @@ export const ScriptHashNamespace = Object.freeze({
   NativeScript: 0,
   PlutusScript: 1,
   PlutusScriptV2: 2,
+  PlutusScriptV3: 3,
 });
 
 
@@ -8970,18 +11856,28 @@ export const ScriptSchema = Object.freeze({
 });
 
 
-export const StakeCredKind = Object.freeze({
-  Key: 0,
-  Script: 1,
-});
-
-
 export const TransactionMetadatumKind = Object.freeze({
   MetadataMap: 0,
   MetadataList: 1,
   Int: 2,
   Bytes: 3,
   Text: 4,
+});
+
+
+export const VoteKind = Object.freeze({
+  No: 0,
+  Yes: 1,
+  Abstain: 2,
+});
+
+
+export const VoterKind = Object.freeze({
+  ConstitutionalCommitteeHotKeyHash: 0,
+  ConstitutionalCommitteeHotScriptHash: 1,
+  DRepKeyHash: 2,
+  DRepScriptHash: 3,
+  StakingPoolKeyHash: 4,
 });
 
 
