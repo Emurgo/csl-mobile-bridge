@@ -16186,10 +16186,8 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_redeemersNew(env
 #[allow(non_snake_case)]
 #[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_redeemersNewWithSerializationFormat(env: JNIEnv, _: JObject, redeemers_ptr: JRPtr, serialization_format_jint: jint) -> jobject {
-  handle_exception_result(|| { 
-    let redeemers = redeemers_ptr.rptr(&env)?.typed_ref::<Redeemer>()?.clone();
-    let serialization_format = serialization_format_jint.to_enum()?;
-    let result = Redeemers::new_with_serialization_format(redeemers, serialization_format);
+  handle_exception_result(|| {
+    let result = Redeemers::new();
     result.rptr().jptr(&env)
   })
   .jresult(&env)

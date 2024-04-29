@@ -6918,8 +6918,7 @@ export class Redeemers extends Ptr {
   }
 
   static async new_with_serialization_format(redeemers, serialization_format) {
-    const ret = await HaskellShelley.redeemersNewWithSerializationFormat(redeemersPtr, serialization_format);
-    return Ptr._wrap(ret, Redeemers);
+    throw new Error('The function is broken. It will be removed in the next version.');
   }
 
   async len() {

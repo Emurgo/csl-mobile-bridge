@@ -13871,10 +13871,8 @@ pub unsafe extern "C" fn redeemers_new(result: &mut RPtr, error: &mut CharPtr) -
 
 #[no_mangle]
 pub unsafe extern "C" fn redeemers_new_with_serialization_format(redeemers_rptr: RPtr, serialization_format_int: i32, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let redeemers = redeemers_rptr.typed_ref::<Redeemer>()?.clone();
-    let serialization_format = serialization_format_int.to_enum()?;
-    let result = Redeemers::new_with_serialization_format(redeemers, serialization_format);
+  handle_exception_result(|| {
+    let result = Redeemers::new();
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
