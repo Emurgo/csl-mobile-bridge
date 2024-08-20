@@ -1,7 +1,7 @@
 {
   "name": "@emurgo/csl-mobile-bridge",
   "title": "CSL mobile bridge",
-  "version": "6.0.0-alpha.8",
+  "version": "6.0.0-beta.1",
   "description": "React-native bindings for Emurgo's cardano-serialization-lib (Cardano haskell Shelley)",
   "main": "index.js",
   "files": [
