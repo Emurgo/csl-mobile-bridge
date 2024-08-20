@@ -1,4 +1,5 @@
 use cardano_serialization_lib::AddressKind;
+use cardano_serialization_lib::BlockEra;
 use cardano_serialization_lib::CborContainerType;
 use cardano_serialization_lib::CertificateKind;
 use cardano_serialization_lib::CoinSelectionStrategyCIP2;
@@ -57,6 +58,37 @@ impl ToEnum<AddressKind> for i32 {
     }
 }
 
+impl ToPrimitive for BlockEra {
+    fn to_i32(&self) -> i32 {
+        match self {
+            BlockEra::Byron => 0,
+            BlockEra::Shelley => 1,
+            BlockEra::Allegra => 2,
+            BlockEra::Mary => 3,
+            BlockEra::Alonzo => 4,
+            BlockEra::Babbage => 5,
+            BlockEra::Conway => 6,
+            BlockEra::Unknown => 7,
+        }
+    }
+}
+
+impl ToEnum<BlockEra> for i32 {
+    fn to_enum(&self) -> Result<BlockEra> {
+        match self {
+            0 => Ok(BlockEra::Byron),
+            1 => Ok(BlockEra::Shelley),
+            2 => Ok(BlockEra::Allegra),
+            3 => Ok(BlockEra::Mary),
+            4 => Ok(BlockEra::Alonzo),
+            5 => Ok(BlockEra::Babbage),
+            6 => Ok(BlockEra::Conway),
+            7 => Ok(BlockEra::Unknown),
+            _ => Err("Invalid value for BlockEra".into()),
+        }
+    }
+}
+
 impl ToPrimitive for CborContainerType {
     fn to_i32(&self) -> i32 {
         match self {
@@ -88,9 +120,9 @@ impl ToPrimitive for CertificateKind {
             CertificateKind::MoveInstantaneousRewardsCert => 6,
             CertificateKind::CommitteeHotAuth => 7,
             CertificateKind::CommitteeColdResign => 8,
-            CertificateKind::DrepDeregistration => 9,
-            CertificateKind::DrepRegistration => 10,
-            CertificateKind::DrepUpdate => 11,
+            CertificateKind::DRepDeregistration => 9,
+            CertificateKind::DRepRegistration => 10,
+            CertificateKind::DRepUpdate => 11,
             CertificateKind::StakeAndVoteDelegation => 12,
             CertificateKind::StakeRegistrationAndDelegation => 13,
             CertificateKind::StakeVoteRegistrationAndDelegation => 14,
@@ -112,9 +144,9 @@ impl ToEnum<CertificateKind> for i32 {
             6 => Ok(CertificateKind::MoveInstantaneousRewardsCert),
             7 => Ok(CertificateKind::CommitteeHotAuth),
             8 => Ok(CertificateKind::CommitteeColdResign),
-            9 => Ok(CertificateKind::DrepDeregistration),
-            10 => Ok(CertificateKind::DrepRegistration),
-            11 => Ok(CertificateKind::DrepUpdate),
+            9 => Ok(CertificateKind::DRepDeregistration),
+            10 => Ok(CertificateKind::DRepRegistration),
+            11 => Ok(CertificateKind::DRepUpdate),
             12 => Ok(CertificateKind::StakeAndVoteDelegation),
             13 => Ok(CertificateKind::StakeRegistrationAndDelegation),
             14 => Ok(CertificateKind::StakeVoteRegistrationAndDelegation),

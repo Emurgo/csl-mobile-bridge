@@ -522,6 +522,11 @@ export class BaseAddress extends Ptr {
   */
   static from_address: (addr: Address) => Promise<Optional<BaseAddress>>;
 
+  /**
+  * @returns {Promise<number>}
+  */
+  network_id: () => Promise<number>;
+
 }
 
 
@@ -595,12 +600,34 @@ export class BigInt extends Ptr {
   * @param {BigInt} other
   * @returns {Promise<BigInt>}
   */
+  sub: (other: BigInt) => Promise<BigInt>;
+
+  /**
+  * @param {BigInt} other
+  * @returns {Promise<BigInt>}
+  */
   mul: (other: BigInt) => Promise<BigInt>;
+
+  /**
+  * @param {number} exp
+  * @returns {Promise<BigInt>}
+  */
+  pow: (exp: number) => Promise<BigInt>;
 
   /**
   * @returns {Promise<BigInt>}
   */
   static one: () => Promise<BigInt>;
+
+  /**
+  * @returns {Promise<BigInt>}
+  */
+  static zero: () => Promise<BigInt>;
+
+  /**
+  * @returns {Promise<BigInt>}
+  */
+  abs: () => Promise<BigInt>;
 
   /**
   * @returns {Promise<BigInt>}
@@ -612,6 +639,12 @@ export class BigInt extends Ptr {
   * @returns {Promise<BigInt>}
   */
   div_ceil: (other: BigInt) => Promise<BigInt>;
+
+  /**
+  * @param {BigInt} other
+  * @returns {Promise<BigInt>}
+  */
+  div_floor: (other: BigInt) => Promise<BigInt>;
 
 }
 
@@ -936,12 +969,6 @@ export class Block extends Ptr {
   */
   static new: (header: Header, transaction_bodies: TransactionBodies, transaction_witness_sets: TransactionWitnessSets, auxiliary_data_set: AuxiliaryDataSet, invalid_transactions: Uint32Array) => Promise<Block>;
 
-  /**
-  * @param {Uint8Array} data
-  * @returns {Promise<Block>}
-  */
-  static from_wrapped_bytes: (data: Uint8Array) => Promise<Block>;
-
 }
 
 
@@ -1051,6 +1078,39 @@ export class BootstrapWitness extends Ptr {
 
 export class BootstrapWitnesses extends Ptr {
   /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<BootstrapWitnesses>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<BootstrapWitnesses>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<BootstrapWitnesses>}
+  */
+  static from_hex: (hex_str: string) => Promise<BootstrapWitnesses>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_json: () => Promise<string>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<BootstrapWitnesses>}
+  */
+  static from_json: (json: string) => Promise<BootstrapWitnesses>;
+
+  /**
   * @returns {Promise<BootstrapWitnesses>}
   */
   static new: () => Promise<BootstrapWitnesses>;
@@ -1068,8 +1128,9 @@ export class BootstrapWitnesses extends Ptr {
 
   /**
   * @param {BootstrapWitness} elem
+  * @returns {Promise<boolean>}
   */
-  add: (elem: BootstrapWitness) => Promise<void>;
+  add: (elem: BootstrapWitness) => Promise<boolean>;
 
 }
 
@@ -1180,10 +1241,22 @@ export class Certificate extends Ptr {
   static new_stake_registration: (stake_registration: StakeRegistration) => Promise<Certificate>;
 
   /**
+  * @param {StakeRegistration} stake_registration
+  * @returns {Promise<Certificate>}
+  */
+  static new_reg_cert: (stake_registration: StakeRegistration) => Promise<Certificate>;
+
+  /**
   * @param {StakeDeregistration} stake_deregistration
   * @returns {Promise<Certificate>}
   */
   static new_stake_deregistration: (stake_deregistration: StakeDeregistration) => Promise<Certificate>;
+
+  /**
+  * @param {StakeDeregistration} stake_deregistration
+  * @returns {Promise<Certificate>}
+  */
+  static new_unreg_cert: (stake_deregistration: StakeDeregistration) => Promise<Certificate>;
 
   /**
   * @param {StakeDelegation} stake_delegation
@@ -1228,22 +1301,22 @@ export class Certificate extends Ptr {
   static new_committee_cold_resign: (committee_cold_resign: CommitteeColdResign) => Promise<Certificate>;
 
   /**
-  * @param {DrepDeregistration} drep_deregistration
+  * @param {DRepDeregistration} drep_deregistration
   * @returns {Promise<Certificate>}
   */
-  static new_drep_deregistration: (drep_deregistration: DrepDeregistration) => Promise<Certificate>;
+  static new_drep_deregistration: (drep_deregistration: DRepDeregistration) => Promise<Certificate>;
 
   /**
-  * @param {DrepRegistration} drep_registration
+  * @param {DRepRegistration} drep_registration
   * @returns {Promise<Certificate>}
   */
-  static new_drep_registration: (drep_registration: DrepRegistration) => Promise<Certificate>;
+  static new_drep_registration: (drep_registration: DRepRegistration) => Promise<Certificate>;
 
   /**
-  * @param {DrepUpdate} drep_update
+  * @param {DRepUpdate} drep_update
   * @returns {Promise<Certificate>}
   */
-  static new_drep_update: (drep_update: DrepUpdate) => Promise<Certificate>;
+  static new_drep_update: (drep_update: DRepUpdate) => Promise<Certificate>;
 
   /**
   * @param {StakeAndVoteDelegation} stake_and_vote_delegation
@@ -1286,9 +1359,19 @@ export class Certificate extends Ptr {
   as_stake_registration: () => Promise<Optional<StakeRegistration>>;
 
   /**
+  * @returns {Promise<Optional<StakeRegistration>>}
+  */
+  as_reg_cert: () => Promise<Optional<StakeRegistration>>;
+
+  /**
   * @returns {Promise<Optional<StakeDeregistration>>}
   */
   as_stake_deregistration: () => Promise<Optional<StakeDeregistration>>;
+
+  /**
+  * @returns {Promise<Optional<StakeDeregistration>>}
+  */
+  as_unreg_cert: () => Promise<Optional<StakeDeregistration>>;
 
   /**
   * @returns {Promise<Optional<StakeDelegation>>}
@@ -1326,19 +1409,19 @@ export class Certificate extends Ptr {
   as_committee_cold_resign: () => Promise<Optional<CommitteeColdResign>>;
 
   /**
-  * @returns {Promise<Optional<DrepDeregistration>>}
+  * @returns {Promise<Optional<DRepDeregistration>>}
   */
-  as_drep_deregistration: () => Promise<Optional<DrepDeregistration>>;
+  as_drep_deregistration: () => Promise<Optional<DRepDeregistration>>;
 
   /**
-  * @returns {Promise<Optional<DrepRegistration>>}
+  * @returns {Promise<Optional<DRepRegistration>>}
   */
-  as_drep_registration: () => Promise<Optional<DrepRegistration>>;
+  as_drep_registration: () => Promise<Optional<DRepRegistration>>;
 
   /**
-  * @returns {Promise<Optional<DrepUpdate>>}
+  * @returns {Promise<Optional<DRepUpdate>>}
   */
-  as_drep_update: () => Promise<Optional<DrepUpdate>>;
+  as_drep_update: () => Promise<Optional<DRepUpdate>>;
 
   /**
   * @returns {Promise<Optional<StakeAndVoteDelegation>>}
@@ -1425,8 +1508,9 @@ export class Certificates extends Ptr {
 
   /**
   * @param {Certificate} elem
+  * @returns {Promise<boolean>}
   */
-  add: (elem: Certificate) => Promise<void>;
+  add: (elem: Certificate) => Promise<boolean>;
 
 }
 
@@ -2071,8 +2155,9 @@ export class Credentials extends Ptr {
 
   /**
   * @param {Credential} elem
+  * @returns {Promise<boolean>}
   */
-  add: (elem: Credential) => Promise<void>;
+  add: (elem: Credential) => Promise<boolean>;
 
 }
 
@@ -2230,6 +2315,12 @@ export class DRep extends Ptr {
   static new_always_no_confidence: () => Promise<DRep>;
 
   /**
+  * @param {Credential} cred
+  * @returns {Promise<DRep>}
+  */
+  static new_from_credential: (cred: Credential) => Promise<DRep>;
+
+  /**
   * @returns {Promise<DRepKind>}
   */
   kind: () => Promise<DRepKind>;
@@ -2244,79 +2335,21 @@ export class DRep extends Ptr {
   */
   to_script_hash: () => Promise<Optional<ScriptHash>>;
 
-}
-
-
-export class DataCost extends Ptr {
-  /**
-  * @param {BigNum} coins_per_byte
-  * @returns {Promise<DataCost>}
-  */
-  static new_coins_per_byte: (coins_per_byte: BigNum) => Promise<DataCost>;
-
-  /**
-  * @returns {Promise<BigNum>}
-  */
-  coins_per_byte: () => Promise<BigNum>;
-
-}
-
-
-export class DataHash extends Ptr {
-  /**
-  * @param {Uint8Array} bytes
-  * @returns {Promise<DataHash>}
-  */
-  static from_bytes: (bytes: Uint8Array) => Promise<DataHash>;
-
-  /**
-  * @returns {Promise<Uint8Array>}
-  */
-  to_bytes: () => Promise<Uint8Array>;
-
-  /**
-  * @param {string} prefix
-  * @returns {Promise<string>}
-  */
-  to_bech32: (prefix: string) => Promise<string>;
-
-  /**
-  * @param {string} bech_str
-  * @returns {Promise<DataHash>}
-  */
-  static from_bech32: (bech_str: string) => Promise<DataHash>;
-
   /**
   * @returns {Promise<string>}
   */
-  to_hex: () => Promise<string>;
+  to_bech32: () => Promise<string>;
 
   /**
-  * @param {string} hex
-  * @returns {Promise<DataHash>}
+  * @param {string} bech32_str
+  * @returns {Promise<DRep>}
   */
-  static from_hex: (hex: string) => Promise<DataHash>;
+  static from_bech32: (bech32_str: string) => Promise<DRep>;
 
 }
 
 
-export class DatumSource extends Ptr {
-  /**
-  * @param {PlutusData} datum
-  * @returns {Promise<DatumSource>}
-  */
-  static new: (datum: PlutusData) => Promise<DatumSource>;
-
-  /**
-  * @param {TransactionInput} input
-  * @returns {Promise<DatumSource>}
-  */
-  static new_ref_input: (input: TransactionInput) => Promise<DatumSource>;
-
-}
-
-
-export class DrepDeregistration extends Ptr {
+export class DRepDeregistration extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
   */
@@ -2324,9 +2357,9 @@ export class DrepDeregistration extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<DrepDeregistration>}
+  * @returns {Promise<DRepDeregistration>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<DrepDeregistration>;
+  static from_bytes: (bytes: Uint8Array) => Promise<DRepDeregistration>;
 
   /**
   * @returns {Promise<string>}
@@ -2335,9 +2368,9 @@ export class DrepDeregistration extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<DrepDeregistration>}
+  * @returns {Promise<DRepDeregistration>}
   */
-  static from_hex: (hex_str: string) => Promise<DrepDeregistration>;
+  static from_hex: (hex_str: string) => Promise<DRepDeregistration>;
 
   /**
   * @returns {Promise<string>}
@@ -2346,9 +2379,9 @@ export class DrepDeregistration extends Ptr {
 
   /**
   * @param {string} json
-  * @returns {Promise<DrepDeregistration>}
+  * @returns {Promise<DRepDeregistration>}
   */
-  static from_json: (json: string) => Promise<DrepDeregistration>;
+  static from_json: (json: string) => Promise<DRepDeregistration>;
 
   /**
   * @returns {Promise<Credential>}
@@ -2363,9 +2396,9 @@ export class DrepDeregistration extends Ptr {
   /**
   * @param {Credential} voting_credential
   * @param {BigNum} coin
-  * @returns {Promise<DrepDeregistration>}
+  * @returns {Promise<DRepDeregistration>}
   */
-  static new: (voting_credential: Credential, coin: BigNum) => Promise<DrepDeregistration>;
+  static new: (voting_credential: Credential, coin: BigNum) => Promise<DRepDeregistration>;
 
   /**
   * @returns {Promise<boolean>}
@@ -2375,7 +2408,7 @@ export class DrepDeregistration extends Ptr {
 }
 
 
-export class DrepRegistration extends Ptr {
+export class DRepRegistration extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
   */
@@ -2383,9 +2416,9 @@ export class DrepRegistration extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<DrepRegistration>}
+  * @returns {Promise<DRepRegistration>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<DrepRegistration>;
+  static from_bytes: (bytes: Uint8Array) => Promise<DRepRegistration>;
 
   /**
   * @returns {Promise<string>}
@@ -2394,9 +2427,9 @@ export class DrepRegistration extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<DrepRegistration>}
+  * @returns {Promise<DRepRegistration>}
   */
-  static from_hex: (hex_str: string) => Promise<DrepRegistration>;
+  static from_hex: (hex_str: string) => Promise<DRepRegistration>;
 
   /**
   * @returns {Promise<string>}
@@ -2405,9 +2438,9 @@ export class DrepRegistration extends Ptr {
 
   /**
   * @param {string} json
-  * @returns {Promise<DrepRegistration>}
+  * @returns {Promise<DRepRegistration>}
   */
-  static from_json: (json: string) => Promise<DrepRegistration>;
+  static from_json: (json: string) => Promise<DRepRegistration>;
 
   /**
   * @returns {Promise<Credential>}
@@ -2427,17 +2460,17 @@ export class DrepRegistration extends Ptr {
   /**
   * @param {Credential} voting_credential
   * @param {BigNum} coin
-  * @returns {Promise<DrepRegistration>}
+  * @returns {Promise<DRepRegistration>}
   */
-  static new: (voting_credential: Credential, coin: BigNum) => Promise<DrepRegistration>;
+  static new: (voting_credential: Credential, coin: BigNum) => Promise<DRepRegistration>;
 
   /**
   * @param {Credential} voting_credential
   * @param {BigNum} coin
   * @param {Anchor} anchor
-  * @returns {Promise<DrepRegistration>}
+  * @returns {Promise<DRepRegistration>}
   */
-  static new_with_anchor: (voting_credential: Credential, coin: BigNum, anchor: Anchor) => Promise<DrepRegistration>;
+  static new_with_anchor: (voting_credential: Credential, coin: BigNum, anchor: Anchor) => Promise<DRepRegistration>;
 
   /**
   * @returns {Promise<boolean>}
@@ -2447,7 +2480,7 @@ export class DrepRegistration extends Ptr {
 }
 
 
-export class DrepUpdate extends Ptr {
+export class DRepUpdate extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
   */
@@ -2455,9 +2488,9 @@ export class DrepUpdate extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<DrepUpdate>}
+  * @returns {Promise<DRepUpdate>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<DrepUpdate>;
+  static from_bytes: (bytes: Uint8Array) => Promise<DRepUpdate>;
 
   /**
   * @returns {Promise<string>}
@@ -2466,9 +2499,9 @@ export class DrepUpdate extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<DrepUpdate>}
+  * @returns {Promise<DRepUpdate>}
   */
-  static from_hex: (hex_str: string) => Promise<DrepUpdate>;
+  static from_hex: (hex_str: string) => Promise<DRepUpdate>;
 
   /**
   * @returns {Promise<string>}
@@ -2477,9 +2510,9 @@ export class DrepUpdate extends Ptr {
 
   /**
   * @param {string} json
-  * @returns {Promise<DrepUpdate>}
+  * @returns {Promise<DRepUpdate>}
   */
-  static from_json: (json: string) => Promise<DrepUpdate>;
+  static from_json: (json: string) => Promise<DRepUpdate>;
 
   /**
   * @returns {Promise<Credential>}
@@ -2493,16 +2526,16 @@ export class DrepUpdate extends Ptr {
 
   /**
   * @param {Credential} voting_credential
-  * @returns {Promise<DrepUpdate>}
+  * @returns {Promise<DRepUpdate>}
   */
-  static new: (voting_credential: Credential) => Promise<DrepUpdate>;
+  static new: (voting_credential: Credential) => Promise<DRepUpdate>;
 
   /**
   * @param {Credential} voting_credential
   * @param {Anchor} anchor
-  * @returns {Promise<DrepUpdate>}
+  * @returns {Promise<DRepUpdate>}
   */
-  static new_with_anchor: (voting_credential: Credential, anchor: Anchor) => Promise<DrepUpdate>;
+  static new_with_anchor: (voting_credential: Credential, anchor: Anchor) => Promise<DRepUpdate>;
 
   /**
   * @returns {Promise<boolean>}
@@ -2512,7 +2545,7 @@ export class DrepUpdate extends Ptr {
 }
 
 
-export class DrepVotingThresholds extends Ptr {
+export class DRepVotingThresholds extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
   */
@@ -2520,9 +2553,9 @@ export class DrepVotingThresholds extends Ptr {
 
   /**
   * @param {Uint8Array} bytes
-  * @returns {Promise<DrepVotingThresholds>}
+  * @returns {Promise<DRepVotingThresholds>}
   */
-  static from_bytes: (bytes: Uint8Array) => Promise<DrepVotingThresholds>;
+  static from_bytes: (bytes: Uint8Array) => Promise<DRepVotingThresholds>;
 
   /**
   * @returns {Promise<string>}
@@ -2531,9 +2564,9 @@ export class DrepVotingThresholds extends Ptr {
 
   /**
   * @param {string} hex_str
-  * @returns {Promise<DrepVotingThresholds>}
+  * @returns {Promise<DRepVotingThresholds>}
   */
-  static from_hex: (hex_str: string) => Promise<DrepVotingThresholds>;
+  static from_hex: (hex_str: string) => Promise<DRepVotingThresholds>;
 
   /**
   * @returns {Promise<string>}
@@ -2542,9 +2575,9 @@ export class DrepVotingThresholds extends Ptr {
 
   /**
   * @param {string} json
-  * @returns {Promise<DrepVotingThresholds>}
+  * @returns {Promise<DRepVotingThresholds>}
   */
-  static from_json: (json: string) => Promise<DrepVotingThresholds>;
+  static from_json: (json: string) => Promise<DRepVotingThresholds>;
 
   /**
   * @param {UnitInterval} motion_no_confidence
@@ -2557,14 +2590,9 @@ export class DrepVotingThresholds extends Ptr {
   * @param {UnitInterval} pp_technical_group
   * @param {UnitInterval} pp_governance_group
   * @param {UnitInterval} treasury_withdrawal
-  * @returns {Promise<DrepVotingThresholds>}
+  * @returns {Promise<DRepVotingThresholds>}
   */
-  static new: (motion_no_confidence: UnitInterval, committee_normal: UnitInterval, committee_no_confidence: UnitInterval, update_constitution: UnitInterval, hard_fork_initiation: UnitInterval, pp_network_group: UnitInterval, pp_economic_group: UnitInterval, pp_technical_group: UnitInterval, pp_governance_group: UnitInterval, treasury_withdrawal: UnitInterval) => Promise<DrepVotingThresholds>;
-
-  /**
-  * @returns {Promise<DrepVotingThresholds>}
-  */
-  static new_default: () => Promise<DrepVotingThresholds>;
+  static new: (motion_no_confidence: UnitInterval, committee_normal: UnitInterval, committee_no_confidence: UnitInterval, update_constitution: UnitInterval, hard_fork_initiation: UnitInterval, pp_network_group: UnitInterval, pp_economic_group: UnitInterval, pp_technical_group: UnitInterval, pp_governance_group: UnitInterval, treasury_withdrawal: UnitInterval) => Promise<DRepVotingThresholds>;
 
   /**
   * @param {UnitInterval} motion_no_confidence
@@ -2669,6 +2697,75 @@ export class DrepVotingThresholds extends Ptr {
 }
 
 
+export class DataCost extends Ptr {
+  /**
+  * @param {BigNum} coins_per_byte
+  * @returns {Promise<DataCost>}
+  */
+  static new_coins_per_byte: (coins_per_byte: BigNum) => Promise<DataCost>;
+
+  /**
+  * @returns {Promise<BigNum>}
+  */
+  coins_per_byte: () => Promise<BigNum>;
+
+}
+
+
+export class DataHash extends Ptr {
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<DataHash>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<DataHash>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {string} prefix
+  * @returns {Promise<string>}
+  */
+  to_bech32: (prefix: string) => Promise<string>;
+
+  /**
+  * @param {string} bech_str
+  * @returns {Promise<DataHash>}
+  */
+  static from_bech32: (bech_str: string) => Promise<DataHash>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex
+  * @returns {Promise<DataHash>}
+  */
+  static from_hex: (hex: string) => Promise<DataHash>;
+
+}
+
+
+export class DatumSource extends Ptr {
+  /**
+  * @param {PlutusData} datum
+  * @returns {Promise<DatumSource>}
+  */
+  static new: (datum: PlutusData) => Promise<DatumSource>;
+
+  /**
+  * @param {TransactionInput} input
+  * @returns {Promise<DatumSource>}
+  */
+  static new_ref_input: (input: TransactionInput) => Promise<DatumSource>;
+
+}
+
+
 export class Ed25519KeyHash extends Ptr {
   /**
   * @param {Uint8Array} bytes
@@ -2759,8 +2856,9 @@ export class Ed25519KeyHashes extends Ptr {
 
   /**
   * @param {Ed25519KeyHash} elem
+  * @returns {Promise<boolean>}
   */
-  add: (elem: Ed25519KeyHash) => Promise<void>;
+  add: (elem: Ed25519KeyHash) => Promise<boolean>;
 
   /**
   * @param {Ed25519KeyHash} elem
@@ -2836,6 +2934,11 @@ export class EnterpriseAddress extends Ptr {
   * @returns {Promise<Optional<EnterpriseAddress>>}
   */
   static from_address: (addr: Address) => Promise<Optional<EnterpriseAddress>>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  network_id: () => Promise<number>;
 
 }
 
@@ -2948,6 +3051,52 @@ export class ExUnits extends Ptr {
 }
 
 
+export class FixedBlock extends Ptr {
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<FixedBlock>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<FixedBlock>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<FixedBlock>}
+  */
+  static from_hex: (hex_str: string) => Promise<FixedBlock>;
+
+  /**
+  * @returns {Promise<Header>}
+  */
+  header: () => Promise<Header>;
+
+  /**
+  * @returns {Promise<FixedTransactionBodies>}
+  */
+  transaction_bodies: () => Promise<FixedTransactionBodies>;
+
+  /**
+  * @returns {Promise<TransactionWitnessSets>}
+  */
+  transaction_witness_sets: () => Promise<TransactionWitnessSets>;
+
+  /**
+  * @returns {Promise<AuxiliaryDataSet>}
+  */
+  auxiliary_data_set: () => Promise<AuxiliaryDataSet>;
+
+  /**
+  * @returns {Promise<Uint32Array>}
+  */
+  invalid_transactions: () => Promise<Uint32Array>;
+
+  /**
+  * @returns {Promise<BlockHash>}
+  */
+  block_hash: () => Promise<BlockHash>;
+
+}
+
+
 export class FixedTransaction extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -3045,6 +3194,100 @@ export class FixedTransaction extends Ptr {
   * @returns {Promise<Optional<Uint8Array>>}
   */
   raw_auxiliary_data: () => Promise<Optional<Uint8Array>>;
+
+}
+
+
+export class FixedTransactionBodies extends Ptr {
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<FixedTransactionBodies>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<FixedTransactionBodies>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<FixedTransactionBodies>}
+  */
+  static from_hex: (hex_str: string) => Promise<FixedTransactionBodies>;
+
+  /**
+  * @returns {Promise<FixedTransactionBodies>}
+  */
+  static new: () => Promise<FixedTransactionBodies>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len: () => Promise<number>;
+
+  /**
+  * @param {number} index
+  * @returns {Promise<FixedTransactionBody>}
+  */
+  get: (index: number) => Promise<FixedTransactionBody>;
+
+  /**
+  * @param {FixedTransactionBody} elem
+  */
+  add: (elem: FixedTransactionBody) => Promise<void>;
+
+}
+
+
+export class FixedTransactionBody extends Ptr {
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<FixedTransactionBody>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<FixedTransactionBody>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<FixedTransactionBody>}
+  */
+  static from_hex: (hex_str: string) => Promise<FixedTransactionBody>;
+
+  /**
+  * @returns {Promise<TransactionBody>}
+  */
+  transaction_body: () => Promise<TransactionBody>;
+
+  /**
+  * @returns {Promise<TransactionHash>}
+  */
+  tx_hash: () => Promise<TransactionHash>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  original_bytes: () => Promise<Uint8Array>;
+
+}
+
+
+export class FixedVersionedBlock extends Ptr {
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<FixedVersionedBlock>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<FixedVersionedBlock>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<FixedVersionedBlock>}
+  */
+  static from_hex: (hex_str: string) => Promise<FixedVersionedBlock>;
+
+  /**
+  * @returns {Promise<FixedBlock>}
+  */
+  block: () => Promise<FixedBlock>;
+
+  /**
+  * @returns {Promise<BlockEra>}
+  */
+  era: () => Promise<BlockEra>;
 
 }
 
@@ -4556,10 +4799,10 @@ export class MintBuilder extends Ptr {
 
 export class MintWitness extends Ptr {
   /**
-  * @param {NativeScript} native_script
+  * @param {NativeScriptSource} native_script
   * @returns {Promise<MintWitness>}
   */
-  static new_native_script: (native_script: NativeScript) => Promise<MintWitness>;
+  static new_native_script: (native_script: NativeScriptSource) => Promise<MintWitness>;
 
   /**
   * @param {PlutusScriptSource} plutus_script
@@ -4988,14 +5231,20 @@ export class NativeScriptSource extends Ptr {
   /**
   * @param {ScriptHash} script_hash
   * @param {TransactionInput} input
+  * @param {number} script_size
   * @returns {Promise<NativeScriptSource>}
   */
-  static new_ref_input: (script_hash: ScriptHash, input: TransactionInput) => Promise<NativeScriptSource>;
+  static new_ref_input: (script_hash: ScriptHash, input: TransactionInput, script_size: number) => Promise<NativeScriptSource>;
 
   /**
   * @param {Ed25519KeyHashes} key_hashes
   */
   set_required_signers: (key_hashes: Ed25519KeyHashes) => Promise<void>;
+
+  /**
+  * @returns {Promise<Optional<number>>}
+  */
+  get_ref_script_size: () => Promise<Optional<number>>;
 
 }
 
@@ -5689,21 +5938,46 @@ export class PlutusMap extends Ptr {
 
   /**
   * @param {PlutusData} key
-  * @param {PlutusData} value
-  * @returns {Promise<Optional<PlutusData>>}
+  * @param {PlutusMapValues} values
+  * @returns {Promise<Optional<PlutusMapValues>>}
   */
-  insert: (key: PlutusData, value: PlutusData) => Promise<Optional<PlutusData>>;
+  insert: (key: PlutusData, values: PlutusMapValues) => Promise<Optional<PlutusMapValues>>;
 
   /**
   * @param {PlutusData} key
-  * @returns {Promise<Optional<PlutusData>>}
+  * @returns {Promise<Optional<PlutusMapValues>>}
   */
-  get: (key: PlutusData) => Promise<Optional<PlutusData>>;
+  get: (key: PlutusData) => Promise<Optional<PlutusMapValues>>;
 
   /**
   * @returns {Promise<PlutusList>}
   */
   keys: () => Promise<PlutusList>;
+
+}
+
+
+export class PlutusMapValues extends Ptr {
+  /**
+  * @returns {Promise<PlutusMapValues>}
+  */
+  static new: () => Promise<PlutusMapValues>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len: () => Promise<number>;
+
+  /**
+  * @param {number} index
+  * @returns {Promise<Optional<PlutusData>>}
+  */
+  get: (index: number) => Promise<Optional<PlutusData>>;
+
+  /**
+  * @param {PlutusData} elem
+  */
+  add: (elem: PlutusData) => Promise<void>;
 
 }
 
@@ -6040,6 +6314,11 @@ export class PointerAddress extends Ptr {
   * @returns {Promise<Optional<PointerAddress>>}
   */
   static from_address: (addr: Address) => Promise<Optional<PointerAddress>>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  network_id: () => Promise<number>;
 
 }
 
@@ -6397,6 +6676,11 @@ export class PoolVotingThresholds extends Ptr {
   * @returns {Promise<UnitInterval>}
   */
   hard_fork_initiation: () => Promise<UnitInterval>;
+
+  /**
+  * @returns {Promise<UnitInterval>}
+  */
+  security_relevant_threshold: () => Promise<UnitInterval>;
 
 }
 
@@ -6805,14 +7089,14 @@ export class ProtocolParamUpdate extends Ptr {
   pool_voting_thresholds: () => Promise<Optional<PoolVotingThresholds>>;
 
   /**
-  * @param {DrepVotingThresholds} drep_voting_thresholds
+  * @param {DRepVotingThresholds} drep_voting_thresholds
   */
-  set_drep_voting_thresholds: (drep_voting_thresholds: DrepVotingThresholds) => Promise<void>;
+  set_drep_voting_thresholds: (drep_voting_thresholds: DRepVotingThresholds) => Promise<void>;
 
   /**
-  * @returns {Promise<Optional<DrepVotingThresholds>>}
+  * @returns {Promise<Optional<DRepVotingThresholds>>}
   */
-  drep_voting_thresholds: () => Promise<Optional<DrepVotingThresholds>>;
+  drep_voting_thresholds: () => Promise<Optional<DRepVotingThresholds>>;
 
   /**
   * @param {number} min_committee_size
@@ -7378,6 +7662,11 @@ export class RewardAddress extends Ptr {
   */
   static from_address: (addr: Address) => Promise<Optional<RewardAddress>>;
 
+  /**
+  * @returns {Promise<number>}
+  */
+  network_id: () => Promise<number>;
+
 }
 
 
@@ -7837,6 +8126,11 @@ export class ScriptRef extends Ptr {
   */
   plutus_script: () => Promise<Optional<PlutusScript>>;
 
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_unwrapped_bytes: () => Promise<Uint8Array>;
+
 }
 
 
@@ -8133,7 +8427,7 @@ export class StakeDeregistration extends Ptr {
   * @param {BigNum} coin
   * @returns {Promise<StakeDeregistration>}
   */
-  static new_with_coin: (stake_credential: Credential, coin: BigNum) => Promise<StakeDeregistration>;
+  static new_with_explicit_refund: (stake_credential: Credential, coin: BigNum) => Promise<StakeDeregistration>;
 
   /**
   * @returns {Promise<boolean>}
@@ -8198,7 +8492,7 @@ export class StakeRegistration extends Ptr {
   * @param {BigNum} coin
   * @returns {Promise<StakeRegistration>}
   */
-  static new_with_coin: (stake_credential: Credential, coin: BigNum) => Promise<StakeRegistration>;
+  static new_with_explicit_deposit: (stake_credential: Credential, coin: BigNum) => Promise<StakeRegistration>;
 
   /**
   * @returns {Promise<boolean>}
@@ -9021,10 +9315,10 @@ export class TransactionBuilder extends Ptr {
   * @param {TransactionUnspentOutputs} inputs
   * @param {CoinSelectionStrategyCIP2} strategy
   * @param {ChangeConfig} change_config
-  * @param {number} collateral_percentage
-  * @returns {Promise<boolean>}
+  * @param {BigNum} collateral_percentage
+  * @returns {Promise<void>}
   */
-  add_inputs_from_and_change_with_collateral_return: (inputs: TransactionUnspentOutputs, strategy: CoinSelectionStrategyCIP2, change_config: ChangeConfig, collateral_percentage: number) => Promise<boolean>;
+  add_inputs_from_and_change_with_collateral_return: (inputs: TransactionUnspentOutputs, strategy: CoinSelectionStrategyCIP2, change_config: ChangeConfig, collateral_percentage: BigNum) => Promise<void>;
 
   /**
   * @returns {Promise<Optional<NativeScripts>>}
@@ -9203,6 +9497,7 @@ export class TransactionBuilder extends Ptr {
   /**
   * @param {NativeScript} policy_script
   * @param {MintAssets} mint_assets
+  * @returns {Promise<void>}
   */
   set_mint_asset: (policy_script: NativeScript, mint_assets: MintAssets) => Promise<void>;
 
@@ -9210,6 +9505,7 @@ export class TransactionBuilder extends Ptr {
   * @param {NativeScript} policy_script
   * @param {AssetName} asset_name
   * @param {Int} amount
+  * @returns {Promise<void>}
   */
   add_mint_asset: (policy_script: NativeScript, asset_name: AssetName, amount: Int) => Promise<void>;
 
@@ -9440,6 +9736,12 @@ export class TransactionBuilderConfigBuilder extends Ptr {
   prefer_pure_change: (prefer_pure_change: boolean) => Promise<TransactionBuilderConfigBuilder>;
 
   /**
+  * @param {boolean} deduplicate_explicit_ref_inputs_with_regular_inputs
+  * @returns {Promise<TransactionBuilderConfigBuilder>}
+  */
+  deduplicate_explicit_ref_inputs_with_regular_inputs: (deduplicate_explicit_ref_inputs_with_regular_inputs: boolean) => Promise<TransactionBuilderConfigBuilder>;
+
+  /**
   * @returns {Promise<TransactionBuilderConfig>}
   */
   build: () => Promise<TransactionBuilderConfig>;
@@ -9591,8 +9893,9 @@ export class TransactionInputs extends Ptr {
 
   /**
   * @param {TransactionInput} elem
+  * @returns {Promise<boolean>}
   */
-  add: (elem: TransactionInput) => Promise<void>;
+  add: (elem: TransactionInput) => Promise<boolean>;
 
   /**
   * @returns {Promise<Optional<TransactionInputs>>}
@@ -10338,6 +10641,11 @@ export class TxBuilderConstants extends Ptr {
   */
   static plutus_vasil_cost_models: () => Promise<Costmdls>;
 
+  /**
+  * @returns {Promise<Costmdls>}
+  */
+  static plutus_conway_cost_models: () => Promise<Costmdls>;
+
 }
 
 
@@ -10355,11 +10663,11 @@ export class TxInputsBuilder extends Ptr {
   add_key_input: (hash: Ed25519KeyHash, input: TransactionInput, amount: Value) => Promise<void>;
 
   /**
-  * @param {NativeScript} script
+  * @param {NativeScriptSource} script
   * @param {TransactionInput} input
   * @param {Value} amount
   */
-  add_native_script_input: (script: NativeScript, input: TransactionInput, amount: Value) => Promise<void>;
+  add_native_script_input: (script: NativeScriptSource, input: TransactionInput, amount: Value) => Promise<void>;
 
   /**
   * @param {PlutusWitness} witness
@@ -10369,11 +10677,11 @@ export class TxInputsBuilder extends Ptr {
   add_plutus_script_input: (witness: PlutusWitness, input: TransactionInput, amount: Value) => Promise<void>;
 
   /**
-  * @param {ByronAddress} hash
+  * @param {ByronAddress} address
   * @param {TransactionInput} input
   * @param {Value} amount
   */
-  add_bootstrap_input: (hash: ByronAddress, input: TransactionInput, amount: Value) => Promise<void>;
+  add_bootstrap_input: (address: ByronAddress, input: TransactionInput, amount: Value) => Promise<void>;
 
   /**
   * @param {Address} address
@@ -10894,6 +11202,60 @@ export class Value extends Ptr {
 }
 
 
+export class VersionedBlock extends Ptr {
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} bytes
+  * @returns {Promise<VersionedBlock>}
+  */
+  static from_bytes: (bytes: Uint8Array) => Promise<VersionedBlock>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_hex: () => Promise<string>;
+
+  /**
+  * @param {string} hex_str
+  * @returns {Promise<VersionedBlock>}
+  */
+  static from_hex: (hex_str: string) => Promise<VersionedBlock>;
+
+  /**
+  * @returns {Promise<string>}
+  */
+  to_json: () => Promise<string>;
+
+  /**
+  * @param {string} json
+  * @returns {Promise<VersionedBlock>}
+  */
+  static from_json: (json: string) => Promise<VersionedBlock>;
+
+  /**
+  * @param {Block} block
+  * @param {number} era_code
+  * @returns {Promise<VersionedBlock>}
+  */
+  static new: (block: Block, era_code: number) => Promise<VersionedBlock>;
+
+  /**
+  * @returns {Promise<Block>}
+  */
+  block: () => Promise<Block>;
+
+  /**
+  * @returns {Promise<BlockEra>}
+  */
+  era: () => Promise<BlockEra>;
+
+}
+
+
 export class Vkey extends Ptr {
   /**
   * @returns {Promise<Uint8Array>}
@@ -11073,8 +11435,9 @@ export class Vkeywitnesses extends Ptr {
 
   /**
   * @param {Vkeywitness} elem
+  * @returns {Promise<boolean>}
   */
-  add: (elem: Vkeywitness) => Promise<void>;
+  add: (elem: Vkeywitness) => Promise<boolean>;
 
 }
 
@@ -11263,7 +11626,7 @@ export class Voter extends Ptr {
   /**
   * @returns {Promise<Optional<Credential>>}
   */
-  to_constitutional_committee_hot_cred: () => Promise<Optional<Credential>>;
+  to_constitutional_committee_hot_key: () => Promise<Optional<Credential>>;
 
   /**
   * @returns {Promise<Optional<Credential>>}
@@ -11671,8 +12034,9 @@ export class VotingProposals extends Ptr {
 
   /**
   * @param {VotingProposal} proposal
+  * @returns {Promise<boolean>}
   */
-  add: (proposal: VotingProposal) => Promise<void>;
+  add: (proposal: VotingProposal) => Promise<boolean>;
 
 }
 
@@ -11986,6 +12350,18 @@ export enum AddressKind {
 }
 
 
+export enum BlockEra {
+  Byron = 0,
+  Shelley = 1,
+  Allegra = 2,
+  Mary = 3,
+  Alonzo = 4,
+  Babbage = 5,
+  Conway = 6,
+  Unknown = 7,
+}
+
+
 export enum CborContainerType {
   Array = 0,
   Map = 1,
@@ -12002,9 +12378,9 @@ export enum CertificateKind {
   MoveInstantaneousRewardsCert = 6,
   CommitteeHotAuth = 7,
   CommitteeColdResign = 8,
-  DrepDeregistration = 9,
-  DrepRegistration = 10,
-  DrepUpdate = 11,
+  DRepDeregistration = 9,
+  DRepRegistration = 10,
+  DRepUpdate = 11,
   StakeAndVoteDelegation = 12,
   StakeRegistrationAndDelegation = 13,
   StakeVoteRegistrationAndDelegation = 14,
