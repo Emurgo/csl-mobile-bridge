@@ -3507,10 +3507,10 @@ pub unsafe extern "C" fn csl_bridge_committee_cold_resign_from_json(json_str: Ch
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_committee_cold_resign_committee_cold_key(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_committee_cold_resign_committee_cold_credential(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<CommitteeColdResign>()?;
-    let result = self_ref.committee_cold_key();
+    let result = self_ref.committee_cold_credential();
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -3529,10 +3529,10 @@ pub unsafe extern "C" fn csl_bridge_committee_cold_resign_anchor(self_rptr: RPtr
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_committee_cold_resign_new(committee_cold_key_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_committee_cold_resign_new(committee_cold_credential_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
-    let committee_cold_key = committee_cold_key_rptr.typed_ref::<Credential>()?;
-    let result = CommitteeColdResign::new(committee_cold_key);
+    let committee_cold_credential = committee_cold_credential_rptr.typed_ref::<Credential>()?;
+    let result = CommitteeColdResign::new(committee_cold_credential);
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -3540,11 +3540,11 @@ pub unsafe extern "C" fn csl_bridge_committee_cold_resign_new(committee_cold_key
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_committee_cold_resign_new_with_anchor(committee_cold_key_rptr: RPtr, anchor_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_committee_cold_resign_new_with_anchor(committee_cold_credential_rptr: RPtr, anchor_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
-    let committee_cold_key = committee_cold_key_rptr.typed_ref::<Credential>()?;
+    let committee_cold_credential = committee_cold_credential_rptr.typed_ref::<Credential>()?;
     let anchor = anchor_rptr.typed_ref::<Anchor>()?;
-    let result = CommitteeColdResign::new_with_anchor(committee_cold_key, anchor);
+    let result = CommitteeColdResign::new_with_anchor(committee_cold_credential, anchor);
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -3630,10 +3630,10 @@ pub unsafe extern "C" fn csl_bridge_committee_hot_auth_from_json(json_str: CharP
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_committee_hot_auth_committee_cold_key(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_committee_hot_auth_committee_cold_credential(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<CommitteeHotAuth>()?;
-    let result = self_ref.committee_cold_key();
+    let result = self_ref.committee_cold_credential();
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -3641,10 +3641,10 @@ pub unsafe extern "C" fn csl_bridge_committee_hot_auth_committee_cold_key(self_r
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_committee_hot_auth_committee_hot_key(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_committee_hot_auth_committee_hot_credential(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<CommitteeHotAuth>()?;
-    let result = self_ref.committee_hot_key();
+    let result = self_ref.committee_hot_credential();
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -3652,11 +3652,11 @@ pub unsafe extern "C" fn csl_bridge_committee_hot_auth_committee_hot_key(self_rp
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_committee_hot_auth_new(committee_cold_key_rptr: RPtr, committee_hot_key_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_committee_hot_auth_new(committee_cold_credential_rptr: RPtr, committee_hot_credential_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
-    let committee_cold_key = committee_cold_key_rptr.typed_ref::<Credential>()?;
-    let committee_hot_key = committee_hot_key_rptr.typed_ref::<Credential>()?;
-    let result = CommitteeHotAuth::new(committee_cold_key, committee_hot_key);
+    let committee_cold_credential = committee_cold_credential_rptr.typed_ref::<Credential>()?;
+    let committee_hot_credential = committee_hot_credential_rptr.typed_ref::<Credential>()?;
+    let result = CommitteeHotAuth::new(committee_cold_credential, committee_hot_credential);
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -22667,10 +22667,10 @@ pub unsafe extern "C" fn csl_bridge_voter_from_json(json_str: CharPtr, result: &
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_voter_new_constitutional_committee_hot_key(cred_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_voter_new_constitutional_committee_hot_credential(cred_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let cred = cred_rptr.typed_ref::<Credential>()?;
-    let result = Voter::new_constitutional_committee_hot_key(cred);
+    let result = Voter::new_constitutional_committee_hot_credential(cred);
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -22678,10 +22678,10 @@ pub unsafe extern "C" fn csl_bridge_voter_new_constitutional_committee_hot_key(c
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_voter_new_drep(cred_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_voter_new_drep_credential(cred_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let cred = cred_rptr.typed_ref::<Credential>()?;
-    let result = Voter::new_drep(cred);
+    let result = Voter::new_drep_credential(cred);
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -22689,10 +22689,10 @@ pub unsafe extern "C" fn csl_bridge_voter_new_drep(cred_rptr: RPtr, result: &mut
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_voter_new_staking_pool(key_hash_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_voter_new_stake_pool_key_hash(key_hash_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let key_hash = key_hash_rptr.typed_ref::<Ed25519KeyHash>()?;
-    let result = Voter::new_staking_pool(key_hash);
+    let result = Voter::new_stake_pool_key_hash(key_hash);
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -22711,10 +22711,10 @@ pub unsafe extern "C" fn csl_bridge_voter_kind(self_rptr: RPtr, result: &mut i32
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_voter_to_constitutional_committee_hot_key(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_voter_to_constitutional_committee_hot_credential(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<Voter>()?;
-    let result = self_ref.to_constitutional_committee_hot_key();
+    let result = self_ref.to_constitutional_committee_hot_credential();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
   .response_nullable(result,  error)
@@ -22722,10 +22722,10 @@ pub unsafe extern "C" fn csl_bridge_voter_to_constitutional_committee_hot_key(se
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_voter_to_drep_cred(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_voter_to_drep_credential(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<Voter>()?;
-    let result = self_ref.to_drep_cred();
+    let result = self_ref.to_drep_credential();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
   .response_nullable(result,  error)
@@ -22733,10 +22733,10 @@ pub unsafe extern "C" fn csl_bridge_voter_to_drep_cred(self_rptr: RPtr, result: 
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_voter_to_staking_pool_key_hash(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_voter_to_stake_pool_key_hash(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<Voter>()?;
-    let result = self_ref.to_staking_pool_key_hash();
+    let result = self_ref.to_stake_pool_key_hash();
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })
   .response_nullable(result,  error)

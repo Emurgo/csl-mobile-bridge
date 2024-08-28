@@ -1713,7 +1713,7 @@ export class CommitteeColdResign extends Ptr {
   /**
   * @returns {Promise<Credential>}
   */
-  committee_cold_key: () => Promise<Credential>;
+  committee_cold_credential: () => Promise<Credential>;
 
   /**
   * @returns {Promise<Optional<Anchor>>}
@@ -1721,17 +1721,17 @@ export class CommitteeColdResign extends Ptr {
   anchor: () => Promise<Optional<Anchor>>;
 
   /**
-  * @param {Credential} committee_cold_key
+  * @param {Credential} committee_cold_credential
   * @returns {Promise<CommitteeColdResign>}
   */
-  static new: (committee_cold_key: Credential) => Promise<CommitteeColdResign>;
+  static new: (committee_cold_credential: Credential) => Promise<CommitteeColdResign>;
 
   /**
-  * @param {Credential} committee_cold_key
+  * @param {Credential} committee_cold_credential
   * @param {Anchor} anchor
   * @returns {Promise<CommitteeColdResign>}
   */
-  static new_with_anchor: (committee_cold_key: Credential, anchor: Anchor) => Promise<CommitteeColdResign>;
+  static new_with_anchor: (committee_cold_credential: Credential, anchor: Anchor) => Promise<CommitteeColdResign>;
 
   /**
   * @returns {Promise<boolean>}
@@ -1778,19 +1778,19 @@ export class CommitteeHotAuth extends Ptr {
   /**
   * @returns {Promise<Credential>}
   */
-  committee_cold_key: () => Promise<Credential>;
+  committee_cold_credential: () => Promise<Credential>;
 
   /**
   * @returns {Promise<Credential>}
   */
-  committee_hot_key: () => Promise<Credential>;
+  committee_hot_credential: () => Promise<Credential>;
 
   /**
-  * @param {Credential} committee_cold_key
-  * @param {Credential} committee_hot_key
+  * @param {Credential} committee_cold_credential
+  * @param {Credential} committee_hot_credential
   * @returns {Promise<CommitteeHotAuth>}
   */
-  static new: (committee_cold_key: Credential, committee_hot_key: Credential) => Promise<CommitteeHotAuth>;
+  static new: (committee_cold_credential: Credential, committee_hot_credential: Credential) => Promise<CommitteeHotAuth>;
 
   /**
   * @returns {Promise<boolean>}
@@ -11604,19 +11604,19 @@ export class Voter extends Ptr {
   * @param {Credential} cred
   * @returns {Promise<Voter>}
   */
-  static new_constitutional_committee_hot_key: (cred: Credential) => Promise<Voter>;
+  static new_constitutional_committee_hot_credential: (cred: Credential) => Promise<Voter>;
 
   /**
   * @param {Credential} cred
   * @returns {Promise<Voter>}
   */
-  static new_drep: (cred: Credential) => Promise<Voter>;
+  static new_drep_credential: (cred: Credential) => Promise<Voter>;
 
   /**
   * @param {Ed25519KeyHash} key_hash
   * @returns {Promise<Voter>}
   */
-  static new_staking_pool: (key_hash: Ed25519KeyHash) => Promise<Voter>;
+  static new_stake_pool_key_hash: (key_hash: Ed25519KeyHash) => Promise<Voter>;
 
   /**
   * @returns {Promise<VoterKind>}
@@ -11626,17 +11626,17 @@ export class Voter extends Ptr {
   /**
   * @returns {Promise<Optional<Credential>>}
   */
-  to_constitutional_committee_hot_key: () => Promise<Optional<Credential>>;
+  to_constitutional_committee_hot_credential: () => Promise<Optional<Credential>>;
 
   /**
   * @returns {Promise<Optional<Credential>>}
   */
-  to_drep_cred: () => Promise<Optional<Credential>>;
+  to_drep_credential: () => Promise<Optional<Credential>>;
 
   /**
   * @returns {Promise<Optional<Ed25519KeyHash>>}
   */
-  to_staking_pool_key_hash: () => Promise<Optional<Ed25519KeyHash>>;
+  to_stake_pool_key_hash: () => Promise<Optional<Ed25519KeyHash>>;
 
   /**
   * @returns {Promise<boolean>}

@@ -260,6 +260,7 @@ use cardano_serialization_lib::min_ada_for_output;
 use cardano_serialization_lib::min_fee;
 use cardano_serialization_lib::min_ref_script_fee;
 use cardano_serialization_lib::min_script_fee;
+use cardano_serialization_lib::u32;
 
 
 #[allow(non_snake_case)]
@@ -4083,11 +4084,11 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1com
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1committeeColdResignCommitteeColdKey(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1committeeColdResignCommitteeColdCredential(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
     let self_rptr = self_jrptr.typed_ref::<CommitteeColdResign>()?;
-    let result = self_rptr.committee_cold_key();
+    let result = self_rptr.committee_cold_credential();
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -4109,11 +4110,11 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1com
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1committeeColdResignNew(env: JNIEnv, _: JObject, committee_cold_key_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1committeeColdResignNew(env: JNIEnv, _: JObject, committee_cold_credential_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
-    let committee_cold_key_jrptr = committee_cold_key_ptr.rptr(&env)?;
-    let committee_cold_key = committee_cold_key_jrptr.typed_ref::<Credential>()?;
-    let result = CommitteeColdResign::new(committee_cold_key);
+    let committee_cold_credential_jrptr = committee_cold_credential_ptr.rptr(&env)?;
+    let committee_cold_credential = committee_cold_credential_jrptr.typed_ref::<Credential>()?;
+    let result = CommitteeColdResign::new(committee_cold_credential);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -4122,13 +4123,13 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1com
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1committeeColdResignNewWithAnchor(env: JNIEnv, _: JObject, committee_cold_key_ptr: JRPtr, anchor_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1committeeColdResignNewWithAnchor(env: JNIEnv, _: JObject, committee_cold_credential_ptr: JRPtr, anchor_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
-    let committee_cold_key_jrptr = committee_cold_key_ptr.rptr(&env)?;
-    let committee_cold_key = committee_cold_key_jrptr.typed_ref::<Credential>()?;
+    let committee_cold_credential_jrptr = committee_cold_credential_ptr.rptr(&env)?;
+    let committee_cold_credential = committee_cold_credential_jrptr.typed_ref::<Credential>()?;
     let anchor_jrptr = anchor_ptr.rptr(&env)?;
     let anchor = anchor_jrptr.typed_ref::<Anchor>()?;
-    let result = CommitteeColdResign::new_with_anchor(committee_cold_key, anchor);
+    let result = CommitteeColdResign::new_with_anchor(committee_cold_credential, anchor);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -4226,11 +4227,11 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1com
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1committeeHotAuthCommitteeColdKey(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1committeeHotAuthCommitteeColdCredential(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
     let self_rptr = self_jrptr.typed_ref::<CommitteeHotAuth>()?;
-    let result = self_rptr.committee_cold_key();
+    let result = self_rptr.committee_cold_credential();
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -4239,11 +4240,11 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1com
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1committeeHotAuthCommitteeHotKey(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1committeeHotAuthCommitteeHotCredential(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
     let self_rptr = self_jrptr.typed_ref::<CommitteeHotAuth>()?;
-    let result = self_rptr.committee_hot_key();
+    let result = self_rptr.committee_hot_credential();
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -4252,13 +4253,13 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1com
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1committeeHotAuthNew(env: JNIEnv, _: JObject, committee_cold_key_ptr: JRPtr, committee_hot_key_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1committeeHotAuthNew(env: JNIEnv, _: JObject, committee_cold_credential_ptr: JRPtr, committee_hot_credential_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
-    let committee_cold_key_jrptr = committee_cold_key_ptr.rptr(&env)?;
-    let committee_cold_key = committee_cold_key_jrptr.typed_ref::<Credential>()?;
-    let committee_hot_key_jrptr = committee_hot_key_ptr.rptr(&env)?;
-    let committee_hot_key = committee_hot_key_jrptr.typed_ref::<Credential>()?;
-    let result = CommitteeHotAuth::new(committee_cold_key, committee_hot_key);
+    let committee_cold_credential_jrptr = committee_cold_credential_ptr.rptr(&env)?;
+    let committee_cold_credential = committee_cold_credential_jrptr.typed_ref::<Credential>()?;
+    let committee_hot_credential_jrptr = committee_hot_credential_ptr.rptr(&env)?;
+    let committee_hot_credential = committee_hot_credential_jrptr.typed_ref::<Credential>()?;
+    let result = CommitteeHotAuth::new(committee_cold_credential, committee_hot_credential);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -26526,11 +26527,11 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1vot
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1voterNewConstitutionalCommitteeHotKey(env: JNIEnv, _: JObject, cred_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1voterNewConstitutionalCommitteeHotCredential(env: JNIEnv, _: JObject, cred_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let cred_jrptr = cred_ptr.rptr(&env)?;
     let cred = cred_jrptr.typed_ref::<Credential>()?;
-    let result = Voter::new_constitutional_committee_hot_key(cred);
+    let result = Voter::new_constitutional_committee_hot_credential(cred);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -26539,11 +26540,11 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1vot
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1voterNewDrep(env: JNIEnv, _: JObject, cred_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1voterNewDrepCredential(env: JNIEnv, _: JObject, cred_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let cred_jrptr = cred_ptr.rptr(&env)?;
     let cred = cred_jrptr.typed_ref::<Credential>()?;
-    let result = Voter::new_drep(cred);
+    let result = Voter::new_drep_credential(cred);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -26552,11 +26553,11 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1vot
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1voterNewStakingPool(env: JNIEnv, _: JObject, key_hash_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1voterNewStakePoolKeyHash(env: JNIEnv, _: JObject, key_hash_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let key_hash_jrptr = key_hash_ptr.rptr(&env)?;
     let key_hash = key_hash_jrptr.typed_ref::<Ed25519KeyHash>()?;
-    let result = Voter::new_staking_pool(key_hash);
+    let result = Voter::new_stake_pool_key_hash(key_hash);
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -26578,11 +26579,11 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1vot
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1voterToConstitutionalCommitteeHotKey(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1voterToConstitutionalCommitteeHotCredential(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
     let self_rptr = self_jrptr.typed_ref::<Voter>()?;
-    let result = self_rptr.to_constitutional_committee_hot_key();
+    let result = self_rptr.to_constitutional_committee_hot_credential();
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -26591,11 +26592,11 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1vot
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1voterToDrepCred(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1voterToDrepCredential(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
     let self_rptr = self_jrptr.typed_ref::<Voter>()?;
-    let result = self_rptr.to_drep_cred();
+    let result = self_rptr.to_drep_credential();
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -26604,11 +26605,11 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1vot
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1voterToStakingPoolKeyHash(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1voterToStakePoolKeyHash(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
     let self_rptr = self_jrptr.typed_ref::<Voter>()?;
-    let result = self_rptr.to_staking_pool_key_hash();
+    let result = self_rptr.to_stake_pool_key_hash();
     result.rptr().jptr(&env)
   })
   .jresult(&env)

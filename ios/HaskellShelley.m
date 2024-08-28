@@ -3281,12 +3281,12 @@ RCT_EXPORT_METHOD(csl_bridge_committeeColdResignFromJson:(nonnull NSString *)jso
     }] exec:jsonVal andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_committeeColdResignCommitteeColdKey:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_committeeColdResignCommitteeColdCredential:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
         RPtr result;
         RPtr self = [selfPtr  rPtr];
-        return csl_bridge_committee_cold_resign_committee_cold_key(self, &result, error)
+        return csl_bridge_committee_cold_resign_committee_cold_credential(self, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:selfPtr andResolve:resolve orReject:reject];
@@ -3303,27 +3303,27 @@ RCT_EXPORT_METHOD(csl_bridge_committeeColdResignAnchor:(nonnull NSString *)selfP
     }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_committeeColdResignNew:(nonnull NSString *)committeeColdKeyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_committeeColdResignNew:(nonnull NSString *)committeeColdCredentialPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
-    [[CSLCSafeOperation new:^NSString*(NSString* committeeColdKeyPtr, CharPtr* error) {
+    [[CSLCSafeOperation new:^NSString*(NSString* committeeColdCredentialPtr, CharPtr* error) {
         RPtr result;
-        RPtr committeeColdKey = [committeeColdKeyPtr  rPtr];
-        return csl_bridge_committee_cold_resign_new(committeeColdKey, &result, error)
+        RPtr committeeColdCredential = [committeeColdCredentialPtr  rPtr];
+        return csl_bridge_committee_cold_resign_new(committeeColdCredential, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
-    }] exec:committeeColdKeyPtr andResolve:resolve orReject:reject];
+    }] exec:committeeColdCredentialPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_committeeColdResignNewWithAnchor:(nonnull NSString *)committeeColdKeyPtr withAnchor:(nonnull NSString *)anchorPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_committeeColdResignNewWithAnchor:(nonnull NSString *)committeeColdCredentialPtr withAnchor:(nonnull NSString *)anchorPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr result;
-        RPtr committeeColdKey = [[params objectAtIndex:0]  rPtr];
+        RPtr committeeColdCredential = [[params objectAtIndex:0]  rPtr];
         RPtr anchor = [[params objectAtIndex:1]  rPtr];
-        return csl_bridge_committee_cold_resign_new_with_anchor(committeeColdKey, anchor, &result, error)
+        return csl_bridge_committee_cold_resign_new_with_anchor(committeeColdCredential, anchor, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
-    }] exec:@[committeeColdKeyPtr, anchorPtr] andResolve:resolve orReject:reject];
+    }] exec:@[committeeColdCredentialPtr, anchorPtr] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(csl_bridge_committeeColdResignHasScriptCredentials:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -3404,38 +3404,38 @@ RCT_EXPORT_METHOD(csl_bridge_committeeHotAuthFromJson:(nonnull NSString *)jsonVa
     }] exec:jsonVal andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_committeeHotAuthCommitteeColdKey:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_committeeHotAuthCommitteeColdCredential:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
         RPtr result;
         RPtr self = [selfPtr  rPtr];
-        return csl_bridge_committee_hot_auth_committee_cold_key(self, &result, error)
+        return csl_bridge_committee_hot_auth_committee_cold_credential(self, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_committeeHotAuthCommitteeHotKey:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_committeeHotAuthCommitteeHotCredential:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
         RPtr result;
         RPtr self = [selfPtr  rPtr];
-        return csl_bridge_committee_hot_auth_committee_hot_key(self, &result, error)
+        return csl_bridge_committee_hot_auth_committee_hot_credential(self, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_committeeHotAuthNew:(nonnull NSString *)committeeColdKeyPtr withCommitteeHotKey:(nonnull NSString *)committeeHotKeyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_committeeHotAuthNew:(nonnull NSString *)committeeColdCredentialPtr withCommitteeHotCredential:(nonnull NSString *)committeeHotCredentialPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr result;
-        RPtr committeeColdKey = [[params objectAtIndex:0]  rPtr];
-        RPtr committeeHotKey = [[params objectAtIndex:1]  rPtr];
-        return csl_bridge_committee_hot_auth_new(committeeColdKey, committeeHotKey, &result, error)
+        RPtr committeeColdCredential = [[params objectAtIndex:0]  rPtr];
+        RPtr committeeHotCredential = [[params objectAtIndex:1]  rPtr];
+        return csl_bridge_committee_hot_auth_new(committeeColdCredential, committeeHotCredential, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
-    }] exec:@[committeeColdKeyPtr, committeeHotKeyPtr] andResolve:resolve orReject:reject];
+    }] exec:@[committeeColdCredentialPtr, committeeHotCredentialPtr] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(csl_bridge_committeeHotAuthHasScriptCredentials:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -22117,34 +22117,34 @@ RCT_EXPORT_METHOD(csl_bridge_voterFromJson:(nonnull NSString *)jsonVal withResol
     }] exec:jsonVal andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_voterNewConstitutionalCommitteeHotKey:(nonnull NSString *)credPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_voterNewConstitutionalCommitteeHotCredential:(nonnull NSString *)credPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSString* credPtr, CharPtr* error) {
         RPtr result;
         RPtr cred = [credPtr  rPtr];
-        return csl_bridge_voter_new_constitutional_committee_hot_key(cred, &result, error)
+        return csl_bridge_voter_new_constitutional_committee_hot_credential(cred, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:credPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_voterNewDrep:(nonnull NSString *)credPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_voterNewDrepCredential:(nonnull NSString *)credPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSString* credPtr, CharPtr* error) {
         RPtr result;
         RPtr cred = [credPtr  rPtr];
-        return csl_bridge_voter_new_drep(cred, &result, error)
+        return csl_bridge_voter_new_drep_credential(cred, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:credPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_voterNewStakingPool:(nonnull NSString *)keyHashPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_voterNewStakePoolKeyHash:(nonnull NSString *)keyHashPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSString* keyHashPtr, CharPtr* error) {
         RPtr result;
         RPtr keyHash = [keyHashPtr  rPtr];
-        return csl_bridge_voter_new_staking_pool(keyHash, &result, error)
+        return csl_bridge_voter_new_stake_pool_key_hash(keyHash, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:keyHashPtr andResolve:resolve orReject:reject];
@@ -22161,34 +22161,34 @@ RCT_EXPORT_METHOD(csl_bridge_voterKind:(nonnull NSString *)selfPtr withResolve:(
     }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_voterToConstitutionalCommitteeHotKey:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_voterToConstitutionalCommitteeHotCredential:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
         RPtr result;
         RPtr self = [selfPtr  rPtr];
-        return csl_bridge_voter_to_constitutional_committee_hot_key(self, &result, error)
+        return csl_bridge_voter_to_constitutional_committee_hot_credential(self, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_voterToDrepCred:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_voterToDrepCredential:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
         RPtr result;
         RPtr self = [selfPtr  rPtr];
-        return csl_bridge_voter_to_drep_cred(self, &result, error)
+        return csl_bridge_voter_to_drep_credential(self, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_voterToStakingPoolKeyHash:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_voterToStakePoolKeyHash:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
         RPtr result;
         RPtr self = [selfPtr  rPtr];
-        return csl_bridge_voter_to_staking_pool_key_hash(self, &result, error)
+        return csl_bridge_voter_to_stake_pool_key_hash(self, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:selfPtr andResolve:resolve orReject:reject];

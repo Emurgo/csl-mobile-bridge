@@ -331,10 +331,10 @@ final class Native {
     public final native Result<RPtr> csl_bridge_committeeColdResignFromHex(String hexStr);
     public final native Result<String> csl_bridge_committeeColdResignToJson(RPtr self);
     public final native Result<RPtr> csl_bridge_committeeColdResignFromJson(String json);
-    public final native Result<RPtr> csl_bridge_committeeColdResignCommitteeColdKey(RPtr self);
+    public final native Result<RPtr> csl_bridge_committeeColdResignCommitteeColdCredential(RPtr self);
     public final native Result<RPtr> csl_bridge_committeeColdResignAnchor(RPtr self);
-    public final native Result<RPtr> csl_bridge_committeeColdResignNew(RPtr committeeColdKey);
-    public final native Result<RPtr> csl_bridge_committeeColdResignNewWithAnchor(RPtr committeeColdKey, RPtr anchor);
+    public final native Result<RPtr> csl_bridge_committeeColdResignNew(RPtr committeeColdCredential);
+    public final native Result<RPtr> csl_bridge_committeeColdResignNewWithAnchor(RPtr committeeColdCredential, RPtr anchor);
     public final native Result<Boolean> csl_bridge_committeeColdResignHasScriptCredentials(RPtr self);
 
     public final native Result<byte[]> csl_bridge_committeeHotAuthToBytes(RPtr self);
@@ -343,9 +343,9 @@ final class Native {
     public final native Result<RPtr> csl_bridge_committeeHotAuthFromHex(String hexStr);
     public final native Result<String> csl_bridge_committeeHotAuthToJson(RPtr self);
     public final native Result<RPtr> csl_bridge_committeeHotAuthFromJson(String json);
-    public final native Result<RPtr> csl_bridge_committeeHotAuthCommitteeColdKey(RPtr self);
-    public final native Result<RPtr> csl_bridge_committeeHotAuthCommitteeHotKey(RPtr self);
-    public final native Result<RPtr> csl_bridge_committeeHotAuthNew(RPtr committeeColdKey, RPtr committeeHotKey);
+    public final native Result<RPtr> csl_bridge_committeeHotAuthCommitteeColdCredential(RPtr self);
+    public final native Result<RPtr> csl_bridge_committeeHotAuthCommitteeHotCredential(RPtr self);
+    public final native Result<RPtr> csl_bridge_committeeHotAuthNew(RPtr committeeColdCredential, RPtr committeeHotCredential);
     public final native Result<Boolean> csl_bridge_committeeHotAuthHasScriptCredentials(RPtr self);
 
     public final native Result<byte[]> csl_bridge_constitutionToBytes(RPtr self);
@@ -2189,13 +2189,13 @@ final class Native {
     public final native Result<RPtr> csl_bridge_voterFromHex(String hexStr);
     public final native Result<String> csl_bridge_voterToJson(RPtr self);
     public final native Result<RPtr> csl_bridge_voterFromJson(String json);
-    public final native Result<RPtr> csl_bridge_voterNewConstitutionalCommitteeHotKey(RPtr cred);
-    public final native Result<RPtr> csl_bridge_voterNewDrep(RPtr cred);
-    public final native Result<RPtr> csl_bridge_voterNewStakingPool(RPtr keyHash);
+    public final native Result<RPtr> csl_bridge_voterNewConstitutionalCommitteeHotCredential(RPtr cred);
+    public final native Result<RPtr> csl_bridge_voterNewDrepCredential(RPtr cred);
+    public final native Result<RPtr> csl_bridge_voterNewStakePoolKeyHash(RPtr keyHash);
     public final native Result<Integer> csl_bridge_voterKind(RPtr self);
-    public final native Result<RPtr> csl_bridge_voterToConstitutionalCommitteeHotKey(RPtr self);
-    public final native Result<RPtr> csl_bridge_voterToDrepCred(RPtr self);
-    public final native Result<RPtr> csl_bridge_voterToStakingPoolKeyHash(RPtr self);
+    public final native Result<RPtr> csl_bridge_voterToConstitutionalCommitteeHotCredential(RPtr self);
+    public final native Result<RPtr> csl_bridge_voterToDrepCredential(RPtr self);
+    public final native Result<RPtr> csl_bridge_voterToStakePoolKeyHash(RPtr self);
     public final native Result<Boolean> csl_bridge_voterHasScriptCredentials(RPtr self);
     public final native Result<RPtr> csl_bridge_voterToKeyHash(RPtr self);
 

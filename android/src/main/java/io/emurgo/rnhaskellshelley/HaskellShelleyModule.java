@@ -2318,9 +2318,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void csl_bridge_committeeColdResignCommitteeColdKey(String self, Promise promise) {
+    public final void csl_bridge_committeeColdResignCommitteeColdCredential(String self, Promise promise) {
         Native.I
-            .csl_bridge_committeeColdResignCommitteeColdKey(new RPtr(self))
+            .csl_bridge_committeeColdResignCommitteeColdCredential(new RPtr(self))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2334,17 +2334,17 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void csl_bridge_committeeColdResignNew(String committeeColdKey, Promise promise) {
+    public final void csl_bridge_committeeColdResignNew(String committeeColdCredential, Promise promise) {
         Native.I
-            .csl_bridge_committeeColdResignNew(new RPtr(committeeColdKey))
+            .csl_bridge_committeeColdResignNew(new RPtr(committeeColdCredential))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void csl_bridge_committeeColdResignNewWithAnchor(String committeeColdKey, String anchor, Promise promise) {
+    public final void csl_bridge_committeeColdResignNewWithAnchor(String committeeColdCredential, String anchor, Promise promise) {
         Native.I
-            .csl_bridge_committeeColdResignNewWithAnchor(new RPtr(committeeColdKey), new RPtr(anchor))
+            .csl_bridge_committeeColdResignNewWithAnchor(new RPtr(committeeColdCredential), new RPtr(anchor))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -2404,25 +2404,25 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void csl_bridge_committeeHotAuthCommitteeColdKey(String self, Promise promise) {
+    public final void csl_bridge_committeeHotAuthCommitteeColdCredential(String self, Promise promise) {
         Native.I
-            .csl_bridge_committeeHotAuthCommitteeColdKey(new RPtr(self))
+            .csl_bridge_committeeHotAuthCommitteeColdCredential(new RPtr(self))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void csl_bridge_committeeHotAuthCommitteeHotKey(String self, Promise promise) {
+    public final void csl_bridge_committeeHotAuthCommitteeHotCredential(String self, Promise promise) {
         Native.I
-            .csl_bridge_committeeHotAuthCommitteeHotKey(new RPtr(self))
+            .csl_bridge_committeeHotAuthCommitteeHotCredential(new RPtr(self))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void csl_bridge_committeeHotAuthNew(String committeeColdKey, String committeeHotKey, Promise promise) {
+    public final void csl_bridge_committeeHotAuthNew(String committeeColdCredential, String committeeHotCredential, Promise promise) {
         Native.I
-            .csl_bridge_committeeHotAuthNew(new RPtr(committeeColdKey), new RPtr(committeeHotKey))
+            .csl_bridge_committeeHotAuthNew(new RPtr(committeeColdCredential), new RPtr(committeeHotCredential))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -15528,25 +15528,25 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void csl_bridge_voterNewConstitutionalCommitteeHotKey(String cred, Promise promise) {
+    public final void csl_bridge_voterNewConstitutionalCommitteeHotCredential(String cred, Promise promise) {
         Native.I
-            .csl_bridge_voterNewConstitutionalCommitteeHotKey(new RPtr(cred))
+            .csl_bridge_voterNewConstitutionalCommitteeHotCredential(new RPtr(cred))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void csl_bridge_voterNewDrep(String cred, Promise promise) {
+    public final void csl_bridge_voterNewDrepCredential(String cred, Promise promise) {
         Native.I
-            .csl_bridge_voterNewDrep(new RPtr(cred))
+            .csl_bridge_voterNewDrepCredential(new RPtr(cred))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void csl_bridge_voterNewStakingPool(String keyHash, Promise promise) {
+    public final void csl_bridge_voterNewStakePoolKeyHash(String keyHash, Promise promise) {
         Native.I
-            .csl_bridge_voterNewStakingPool(new RPtr(keyHash))
+            .csl_bridge_voterNewStakePoolKeyHash(new RPtr(keyHash))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -15559,25 +15559,25 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void csl_bridge_voterToConstitutionalCommitteeHotKey(String self, Promise promise) {
+    public final void csl_bridge_voterToConstitutionalCommitteeHotCredential(String self, Promise promise) {
         Native.I
-            .csl_bridge_voterToConstitutionalCommitteeHotKey(new RPtr(self))
+            .csl_bridge_voterToConstitutionalCommitteeHotCredential(new RPtr(self))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void csl_bridge_voterToDrepCred(String self, Promise promise) {
+    public final void csl_bridge_voterToDrepCredential(String self, Promise promise) {
         Native.I
-            .csl_bridge_voterToDrepCred(new RPtr(self))
+            .csl_bridge_voterToDrepCredential(new RPtr(self))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
     @ReactMethod
-    public final void csl_bridge_voterToStakingPoolKeyHash(String self, Promise promise) {
+    public final void csl_bridge_voterToStakePoolKeyHash(String self, Promise promise) {
         Native.I
-            .csl_bridge_voterToStakingPoolKeyHash(new RPtr(self))
+            .csl_bridge_voterToStakePoolKeyHash(new RPtr(self))
             .map(RPtr::toJs)
             .pour(promise);
     }

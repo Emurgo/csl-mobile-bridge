@@ -1715,8 +1715,8 @@ export class CommitteeColdResign extends Ptr {
     return Ptr._wrap(ret, CommitteeColdResign);
   }
 
-  async committee_cold_key() {
-    const ret = await HaskellShelley.csl_bridge_committeeColdResignCommitteeColdKey(this.ptr);
+  async committee_cold_credential() {
+    const ret = await HaskellShelley.csl_bridge_committeeColdResignCommitteeColdCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
@@ -1725,16 +1725,16 @@ export class CommitteeColdResign extends Ptr {
     return Ptr._wrap(ret, Anchor);
   }
 
-  static async new(committee_cold_key) {
-    const committee_cold_keyPtr = Ptr._assertClass(committee_cold_key, Credential);
-    const ret = await HaskellShelley.csl_bridge_committeeColdResignNew(committee_cold_keyPtr);
+  static async new(committee_cold_credential) {
+    const committee_cold_credentialPtr = Ptr._assertClass(committee_cold_credential, Credential);
+    const ret = await HaskellShelley.csl_bridge_committeeColdResignNew(committee_cold_credentialPtr);
     return Ptr._wrap(ret, CommitteeColdResign);
   }
 
-  static async new_with_anchor(committee_cold_key, anchor) {
-    const committee_cold_keyPtr = Ptr._assertClass(committee_cold_key, Credential);
+  static async new_with_anchor(committee_cold_credential, anchor) {
+    const committee_cold_credentialPtr = Ptr._assertClass(committee_cold_credential, Credential);
     const anchorPtr = Ptr._assertClass(anchor, Anchor);
-    const ret = await HaskellShelley.csl_bridge_committeeColdResignNewWithAnchor(committee_cold_keyPtr, anchorPtr);
+    const ret = await HaskellShelley.csl_bridge_committeeColdResignNewWithAnchor(committee_cold_credentialPtr, anchorPtr);
     return Ptr._wrap(ret, CommitteeColdResign);
   }
 
@@ -1777,20 +1777,20 @@ export class CommitteeHotAuth extends Ptr {
     return Ptr._wrap(ret, CommitteeHotAuth);
   }
 
-  async committee_cold_key() {
-    const ret = await HaskellShelley.csl_bridge_committeeHotAuthCommitteeColdKey(this.ptr);
+  async committee_cold_credential() {
+    const ret = await HaskellShelley.csl_bridge_committeeHotAuthCommitteeColdCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
-  async committee_hot_key() {
-    const ret = await HaskellShelley.csl_bridge_committeeHotAuthCommitteeHotKey(this.ptr);
+  async committee_hot_credential() {
+    const ret = await HaskellShelley.csl_bridge_committeeHotAuthCommitteeHotCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
-  static async new(committee_cold_key, committee_hot_key) {
-    const committee_cold_keyPtr = Ptr._assertClass(committee_cold_key, Credential);
-    const committee_hot_keyPtr = Ptr._assertClass(committee_hot_key, Credential);
-    const ret = await HaskellShelley.csl_bridge_committeeHotAuthNew(committee_cold_keyPtr, committee_hot_keyPtr);
+  static async new(committee_cold_credential, committee_hot_credential) {
+    const committee_cold_credentialPtr = Ptr._assertClass(committee_cold_credential, Credential);
+    const committee_hot_credentialPtr = Ptr._assertClass(committee_hot_credential, Credential);
+    const ret = await HaskellShelley.csl_bridge_committeeHotAuthNew(committee_cold_credentialPtr, committee_hot_credentialPtr);
     return Ptr._wrap(ret, CommitteeHotAuth);
   }
 
@@ -11301,21 +11301,21 @@ export class Voter extends Ptr {
     return Ptr._wrap(ret, Voter);
   }
 
-  static async new_constitutional_committee_hot_key(cred) {
+  static async new_constitutional_committee_hot_credential(cred) {
     const credPtr = Ptr._assertClass(cred, Credential);
-    const ret = await HaskellShelley.csl_bridge_voterNewConstitutionalCommitteeHotKey(credPtr);
+    const ret = await HaskellShelley.csl_bridge_voterNewConstitutionalCommitteeHotCredential(credPtr);
     return Ptr._wrap(ret, Voter);
   }
 
-  static async new_drep(cred) {
+  static async new_drep_credential(cred) {
     const credPtr = Ptr._assertClass(cred, Credential);
-    const ret = await HaskellShelley.csl_bridge_voterNewDrep(credPtr);
+    const ret = await HaskellShelley.csl_bridge_voterNewDrepCredential(credPtr);
     return Ptr._wrap(ret, Voter);
   }
 
-  static async new_staking_pool(key_hash) {
+  static async new_stake_pool_key_hash(key_hash) {
     const key_hashPtr = Ptr._assertClass(key_hash, Ed25519KeyHash);
-    const ret = await HaskellShelley.csl_bridge_voterNewStakingPool(key_hashPtr);
+    const ret = await HaskellShelley.csl_bridge_voterNewStakePoolKeyHash(key_hashPtr);
     return Ptr._wrap(ret, Voter);
   }
 
@@ -11324,18 +11324,18 @@ export class Voter extends Ptr {
     return ret;
   }
 
-  async to_constitutional_committee_hot_key() {
-    const ret = await HaskellShelley.csl_bridge_voterToConstitutionalCommitteeHotKey(this.ptr);
+  async to_constitutional_committee_hot_credential() {
+    const ret = await HaskellShelley.csl_bridge_voterToConstitutionalCommitteeHotCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
-  async to_drep_cred() {
-    const ret = await HaskellShelley.csl_bridge_voterToDrepCred(this.ptr);
+  async to_drep_credential() {
+    const ret = await HaskellShelley.csl_bridge_voterToDrepCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
-  async to_staking_pool_key_hash() {
-    const ret = await HaskellShelley.csl_bridge_voterToStakingPoolKeyHash(this.ptr);
+  async to_stake_pool_key_hash() {
+    const ret = await HaskellShelley.csl_bridge_voterToStakePoolKeyHash(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
