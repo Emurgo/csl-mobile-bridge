@@ -92,68 +92,68 @@ class Ptr {
 
 export class Address extends Ptr {
   static async from_bytes(data) {
-    const ret = await HaskellShelley.addressFromBytes(b64FromUint8Array(data));
+    const ret = await HaskellShelley.csl_bridge_addressFromBytes(b64FromUint8Array(data));
     return Ptr._wrap(ret, Address);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.addressToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_addressToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.addressFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_addressFromJson(json);
     return Ptr._wrap(ret, Address);
   }
 
   async kind() {
-    const ret = await HaskellShelley.addressKind(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_addressKind(this.ptr);
     return ret;
   }
 
   async payment_cred() {
-    const ret = await HaskellShelley.addressPaymentCred(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_addressPaymentCred(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async is_malformed() {
-    const ret = await HaskellShelley.addressIsMalformed(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_addressIsMalformed(this.ptr);
     return ret;
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.addressToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_addressToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.addressFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_addressFromHex(hex_str);
     return Ptr._wrap(ret, Address);
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.addressToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_addressToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_bech32(prefix) {
     if(prefix == null) {
-      const ret = await HaskellShelley.addressToBech32(this.ptr);
+      const ret = await HaskellShelley.csl_bridge_addressToBech32(this.ptr);
       return ret;
     }
     if(prefix != null) {
-      const ret = await HaskellShelley.addressToBech32WithPrefix(this.ptr, prefix);
+      const ret = await HaskellShelley.csl_bridge_addressToBech32WithPrefix(this.ptr, prefix);
       return ret;
     }
   }
 
   static async from_bech32(bech_str) {
-    const ret = await HaskellShelley.addressFromBech32(bech_str);
+    const ret = await HaskellShelley.csl_bridge_addressFromBech32(bech_str);
     return Ptr._wrap(ret, Address);
   }
 
   async network_id() {
-    const ret = await HaskellShelley.addressNetworkId(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_addressNetworkId(this.ptr);
     return ret;
   }
 
@@ -162,49 +162,49 @@ export class Address extends Ptr {
 
 export class Anchor extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.anchorToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_anchorToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.anchorFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_anchorFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Anchor);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.anchorToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_anchorToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.anchorFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_anchorFromHex(hex_str);
     return Ptr._wrap(ret, Anchor);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.anchorToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_anchorToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.anchorFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_anchorFromJson(json);
     return Ptr._wrap(ret, Anchor);
   }
 
   async url() {
-    const ret = await HaskellShelley.anchorUrl(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_anchorUrl(this.ptr);
     return Ptr._wrap(ret, URL);
   }
 
   async anchor_data_hash() {
-    const ret = await HaskellShelley.anchorAnchorDataHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_anchorAnchorDataHash(this.ptr);
     return Ptr._wrap(ret, AnchorDataHash);
   }
 
   static async new(anchor_url, anchor_data_hash) {
     const anchor_urlPtr = Ptr._assertClass(anchor_url, URL);
     const anchor_data_hashPtr = Ptr._assertClass(anchor_data_hash, AnchorDataHash);
-    const ret = await HaskellShelley.anchorNew(anchor_urlPtr, anchor_data_hashPtr);
+    const ret = await HaskellShelley.csl_bridge_anchorNew(anchor_urlPtr, anchor_data_hashPtr);
     return Ptr._wrap(ret, Anchor);
   }
 
@@ -213,32 +213,32 @@ export class Anchor extends Ptr {
 
 export class AnchorDataHash extends Ptr {
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.anchorDataHashFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_anchorDataHashFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, AnchorDataHash);
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.anchorDataHashToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_anchorDataHashToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_bech32(prefix) {
-    const ret = await HaskellShelley.anchorDataHashToBech32(this.ptr, prefix);
+    const ret = await HaskellShelley.csl_bridge_anchorDataHashToBech32(this.ptr, prefix);
     return ret;
   }
 
   static async from_bech32(bech_str) {
-    const ret = await HaskellShelley.anchorDataHashFromBech32(bech_str);
+    const ret = await HaskellShelley.csl_bridge_anchorDataHashFromBech32(bech_str);
     return Ptr._wrap(ret, AnchorDataHash);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.anchorDataHashToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_anchorDataHashToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex) {
-    const ret = await HaskellShelley.anchorDataHashFromHex(hex);
+    const ret = await HaskellShelley.csl_bridge_anchorDataHashFromHex(hex);
     return Ptr._wrap(ret, AnchorDataHash);
   }
 
@@ -247,42 +247,42 @@ export class AnchorDataHash extends Ptr {
 
 export class AssetName extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.assetNameToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_assetNameToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.assetNameFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_assetNameFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, AssetName);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.assetNameToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_assetNameToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.assetNameFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_assetNameFromHex(hex_str);
     return Ptr._wrap(ret, AssetName);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.assetNameToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_assetNameToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.assetNameFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_assetNameFromJson(json);
     return Ptr._wrap(ret, AssetName);
   }
 
   static async new(name) {
-    const ret = await HaskellShelley.assetNameNew(b64FromUint8Array(name));
+    const ret = await HaskellShelley.csl_bridge_assetNameNew(b64FromUint8Array(name));
     return Ptr._wrap(ret, AssetName);
   }
 
   async name() {
-    const ret = await HaskellShelley.assetNameName(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_assetNameName(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
@@ -291,53 +291,53 @@ export class AssetName extends Ptr {
 
 export class AssetNames extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.assetNamesToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_assetNamesToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.assetNamesFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_assetNamesFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, AssetNames);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.assetNamesToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_assetNamesToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.assetNamesFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_assetNamesFromHex(hex_str);
     return Ptr._wrap(ret, AssetNames);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.assetNamesToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_assetNamesToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.assetNamesFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_assetNamesFromJson(json);
     return Ptr._wrap(ret, AssetNames);
   }
 
   static async new() {
-    const ret = await HaskellShelley.assetNamesNew();
+    const ret = await HaskellShelley.csl_bridge_assetNamesNew();
     return Ptr._wrap(ret, AssetNames);
   }
 
   async len() {
-    const ret = await HaskellShelley.assetNamesLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_assetNamesLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.assetNamesGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_assetNamesGet(this.ptr, index);
     return Ptr._wrap(ret, AssetName);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, AssetName);
-    const ret = HaskellShelley.assetNamesAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_assetNamesAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -346,60 +346,60 @@ export class AssetNames extends Ptr {
 
 export class Assets extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.assetsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_assetsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.assetsFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_assetsFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Assets);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.assetsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_assetsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.assetsFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_assetsFromHex(hex_str);
     return Ptr._wrap(ret, Assets);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.assetsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_assetsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.assetsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_assetsFromJson(json);
     return Ptr._wrap(ret, Assets);
   }
 
   static async new() {
-    const ret = await HaskellShelley.assetsNew();
+    const ret = await HaskellShelley.csl_bridge_assetsNew();
     return Ptr._wrap(ret, Assets);
   }
 
   async len() {
-    const ret = await HaskellShelley.assetsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_assetsLen(this.ptr);
     return ret;
   }
 
   async insert(key, value) {
     const keyPtr = Ptr._assertClass(key, AssetName);
     const valuePtr = Ptr._assertClass(value, BigNum);
-    const ret = await HaskellShelley.assetsInsert(this.ptr, keyPtr, valuePtr);
+    const ret = await HaskellShelley.csl_bridge_assetsInsert(this.ptr, keyPtr, valuePtr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async get(key) {
     const keyPtr = Ptr._assertClass(key, AssetName);
-    const ret = await HaskellShelley.assetsGet(this.ptr, keyPtr);
+    const ret = await HaskellShelley.csl_bridge_assetsGet(this.ptr, keyPtr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async keys() {
-    const ret = await HaskellShelley.assetsKeys(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_assetsKeys(this.ptr);
     return Ptr._wrap(ret, AssetNames);
   }
 
@@ -408,80 +408,80 @@ export class Assets extends Ptr {
 
 export class AuxiliaryData extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.auxiliaryDataToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.auxiliaryDataFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, AuxiliaryData);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.auxiliaryDataToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.auxiliaryDataFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataFromHex(hex_str);
     return Ptr._wrap(ret, AuxiliaryData);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.auxiliaryDataToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.auxiliaryDataFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataFromJson(json);
     return Ptr._wrap(ret, AuxiliaryData);
   }
 
   static async new() {
-    const ret = await HaskellShelley.auxiliaryDataNew();
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataNew();
     return Ptr._wrap(ret, AuxiliaryData);
   }
 
   async metadata() {
-    const ret = await HaskellShelley.auxiliaryDataMetadata(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataMetadata(this.ptr);
     return Ptr._wrap(ret, GeneralTransactionMetadata);
   }
 
   set_metadata(metadata) {
     const metadataPtr = Ptr._assertClass(metadata, GeneralTransactionMetadata);
-    const ret = HaskellShelley.auxiliaryDataSetMetadata(this.ptr, metadataPtr);
+    const ret = HaskellShelley.csl_bridge_auxiliaryDataSetMetadata(this.ptr, metadataPtr);
     return ret;
   }
 
   async native_scripts() {
-    const ret = await HaskellShelley.auxiliaryDataNativeScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataNativeScripts(this.ptr);
     return Ptr._wrap(ret, NativeScripts);
   }
 
   set_native_scripts(native_scripts) {
     const native_scriptsPtr = Ptr._assertClass(native_scripts, NativeScripts);
-    const ret = HaskellShelley.auxiliaryDataSetNativeScripts(this.ptr, native_scriptsPtr);
+    const ret = HaskellShelley.csl_bridge_auxiliaryDataSetNativeScripts(this.ptr, native_scriptsPtr);
     return ret;
   }
 
   async plutus_scripts() {
-    const ret = await HaskellShelley.auxiliaryDataPlutusScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataPlutusScripts(this.ptr);
     return Ptr._wrap(ret, PlutusScripts);
   }
 
   set_plutus_scripts(plutus_scripts) {
     const plutus_scriptsPtr = Ptr._assertClass(plutus_scripts, PlutusScripts);
-    const ret = HaskellShelley.auxiliaryDataSetPlutusScripts(this.ptr, plutus_scriptsPtr);
+    const ret = HaskellShelley.csl_bridge_auxiliaryDataSetPlutusScripts(this.ptr, plutus_scriptsPtr);
     return ret;
   }
 
   async prefer_alonzo_format() {
-    const ret = await HaskellShelley.auxiliaryDataPreferAlonzoFormat(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataPreferAlonzoFormat(this.ptr);
     return ret;
   }
 
   set_prefer_alonzo_format(prefer) {
-    const ret = HaskellShelley.auxiliaryDataSetPreferAlonzoFormat(this.ptr, prefer);
+    const ret = HaskellShelley.csl_bridge_auxiliaryDataSetPreferAlonzoFormat(this.ptr, prefer);
     return ret;
   }
 
@@ -490,32 +490,32 @@ export class AuxiliaryData extends Ptr {
 
 export class AuxiliaryDataHash extends Ptr {
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.auxiliaryDataHashFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataHashFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, AuxiliaryDataHash);
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.auxiliaryDataHashToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataHashToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_bech32(prefix) {
-    const ret = await HaskellShelley.auxiliaryDataHashToBech32(this.ptr, prefix);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataHashToBech32(this.ptr, prefix);
     return ret;
   }
 
   static async from_bech32(bech_str) {
-    const ret = await HaskellShelley.auxiliaryDataHashFromBech32(bech_str);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataHashFromBech32(bech_str);
     return Ptr._wrap(ret, AuxiliaryDataHash);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.auxiliaryDataHashToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataHashToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex) {
-    const ret = await HaskellShelley.auxiliaryDataHashFromHex(hex);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataHashFromHex(hex);
     return Ptr._wrap(ret, AuxiliaryDataHash);
   }
 
@@ -524,28 +524,28 @@ export class AuxiliaryDataHash extends Ptr {
 
 export class AuxiliaryDataSet extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.auxiliaryDataSetNew();
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataSetNew();
     return Ptr._wrap(ret, AuxiliaryDataSet);
   }
 
   async len() {
-    const ret = await HaskellShelley.auxiliaryDataSetLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataSetLen(this.ptr);
     return ret;
   }
 
   async insert(tx_index, data) {
     const dataPtr = Ptr._assertClass(data, AuxiliaryData);
-    const ret = await HaskellShelley.auxiliaryDataSetInsert(this.ptr, tx_index, dataPtr);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataSetInsert(this.ptr, tx_index, dataPtr);
     return Ptr._wrap(ret, AuxiliaryData);
   }
 
   async get(tx_index) {
-    const ret = await HaskellShelley.auxiliaryDataSetGet(this.ptr, tx_index);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataSetGet(this.ptr, tx_index);
     return Ptr._wrap(ret, AuxiliaryData);
   }
 
   async indices() {
-    const ret = await HaskellShelley.auxiliaryDataSetIndices(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_auxiliaryDataSetIndices(this.ptr);
     return base64ToUint32Array(ret);
   }
 
@@ -556,29 +556,34 @@ export class BaseAddress extends Ptr {
   static async new(network, payment, stake) {
     const paymentPtr = Ptr._assertClass(payment, Credential);
     const stakePtr = Ptr._assertClass(stake, Credential);
-    const ret = await HaskellShelley.baseAddressNew(network, paymentPtr, stakePtr);
+    const ret = await HaskellShelley.csl_bridge_baseAddressNew(network, paymentPtr, stakePtr);
     return Ptr._wrap(ret, BaseAddress);
   }
 
   async payment_cred() {
-    const ret = await HaskellShelley.baseAddressPaymentCred(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_baseAddressPaymentCred(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async stake_cred() {
-    const ret = await HaskellShelley.baseAddressStakeCred(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_baseAddressStakeCred(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async to_address() {
-    const ret = await HaskellShelley.baseAddressToAddress(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_baseAddressToAddress(this.ptr);
     return Ptr._wrap(ret, Address);
   }
 
   static async from_address(addr) {
     const addrPtr = Ptr._assertClass(addr, Address);
-    const ret = await HaskellShelley.baseAddressFromAddress(addrPtr);
+    const ret = await HaskellShelley.csl_bridge_baseAddressFromAddress(addrPtr);
     return Ptr._wrap(ret, BaseAddress);
+  }
+
+  async network_id() {
+    const ret = await HaskellShelley.csl_bridge_baseAddressNetworkId(this.ptr);
+    return ret;
   }
 
 }
@@ -586,85 +591,112 @@ export class BaseAddress extends Ptr {
 
 export class BigInt extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.bigIntToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bigIntToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.bigIntFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_bigIntFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, BigInt);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.bigIntToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bigIntToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.bigIntFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_bigIntFromHex(hex_str);
     return Ptr._wrap(ret, BigInt);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.bigIntToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bigIntToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.bigIntFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_bigIntFromJson(json);
     return Ptr._wrap(ret, BigInt);
   }
 
   async is_zero() {
-    const ret = await HaskellShelley.bigIntIsZero(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bigIntIsZero(this.ptr);
     return ret;
   }
 
   async as_u64() {
-    const ret = await HaskellShelley.bigIntAsU64(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bigIntAsU64(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async as_int() {
-    const ret = await HaskellShelley.bigIntAsInt(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bigIntAsInt(this.ptr);
     return Ptr._wrap(ret, Int);
   }
 
   static async from_str(text) {
-    const ret = await HaskellShelley.bigIntFromStr(text);
+    const ret = await HaskellShelley.csl_bridge_bigIntFromStr(text);
     return Ptr._wrap(ret, BigInt);
   }
 
   async to_str() {
-    const ret = await HaskellShelley.bigIntToStr(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bigIntToStr(this.ptr);
     return ret;
   }
 
   async add(other) {
     const otherPtr = Ptr._assertClass(other, BigInt);
-    const ret = await HaskellShelley.bigIntAdd(this.ptr, otherPtr);
+    const ret = await HaskellShelley.csl_bridge_bigIntAdd(this.ptr, otherPtr);
+    return Ptr._wrap(ret, BigInt);
+  }
+
+  async sub(other) {
+    const otherPtr = Ptr._assertClass(other, BigInt);
+    const ret = await HaskellShelley.csl_bridge_bigIntSub(this.ptr, otherPtr);
     return Ptr._wrap(ret, BigInt);
   }
 
   async mul(other) {
     const otherPtr = Ptr._assertClass(other, BigInt);
-    const ret = await HaskellShelley.bigIntMul(this.ptr, otherPtr);
+    const ret = await HaskellShelley.csl_bridge_bigIntMul(this.ptr, otherPtr);
+    return Ptr._wrap(ret, BigInt);
+  }
+
+  async pow(exp) {
+    const ret = await HaskellShelley.csl_bridge_bigIntPow(this.ptr, exp);
     return Ptr._wrap(ret, BigInt);
   }
 
   static async one() {
-    const ret = await HaskellShelley.bigIntOne();
+    const ret = await HaskellShelley.csl_bridge_bigIntOne();
+    return Ptr._wrap(ret, BigInt);
+  }
+
+  static async zero() {
+    const ret = await HaskellShelley.csl_bridge_bigIntZero();
+    return Ptr._wrap(ret, BigInt);
+  }
+
+  async abs() {
+    const ret = await HaskellShelley.csl_bridge_bigIntAbs(this.ptr);
     return Ptr._wrap(ret, BigInt);
   }
 
   async increment() {
-    const ret = await HaskellShelley.bigIntIncrement(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bigIntIncrement(this.ptr);
     return Ptr._wrap(ret, BigInt);
   }
 
   async div_ceil(other) {
     const otherPtr = Ptr._assertClass(other, BigInt);
-    const ret = await HaskellShelley.bigIntDivCeil(this.ptr, otherPtr);
+    const ret = await HaskellShelley.csl_bridge_bigIntDivCeil(this.ptr, otherPtr);
+    return Ptr._wrap(ret, BigInt);
+  }
+
+  async div_floor(other) {
+    const otherPtr = Ptr._assertClass(other, BigInt);
+    const ret = await HaskellShelley.csl_bridge_bigIntDivFloor(this.ptr, otherPtr);
     return Ptr._wrap(ret, BigInt);
   }
 
@@ -673,111 +705,111 @@ export class BigInt extends Ptr {
 
 export class BigNum extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.bigNumToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bigNumToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.bigNumFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_bigNumFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, BigNum);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.bigNumToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bigNumToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.bigNumFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_bigNumFromHex(hex_str);
     return Ptr._wrap(ret, BigNum);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.bigNumToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bigNumToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.bigNumFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_bigNumFromJson(json);
     return Ptr._wrap(ret, BigNum);
   }
 
   static async from_str(string) {
-    const ret = await HaskellShelley.bigNumFromStr(string);
+    const ret = await HaskellShelley.csl_bridge_bigNumFromStr(string);
     return Ptr._wrap(ret, BigNum);
   }
 
   async to_str() {
-    const ret = await HaskellShelley.bigNumToStr(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bigNumToStr(this.ptr);
     return ret;
   }
 
   static async zero() {
-    const ret = await HaskellShelley.bigNumZero();
+    const ret = await HaskellShelley.csl_bridge_bigNumZero();
     return Ptr._wrap(ret, BigNum);
   }
 
   static async one() {
-    const ret = await HaskellShelley.bigNumOne();
+    const ret = await HaskellShelley.csl_bridge_bigNumOne();
     return Ptr._wrap(ret, BigNum);
   }
 
   async is_zero() {
-    const ret = await HaskellShelley.bigNumIsZero(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bigNumIsZero(this.ptr);
     return ret;
   }
 
   async div_floor(other) {
     const otherPtr = Ptr._assertClass(other, BigNum);
-    const ret = await HaskellShelley.bigNumDivFloor(this.ptr, otherPtr);
+    const ret = await HaskellShelley.csl_bridge_bigNumDivFloor(this.ptr, otherPtr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async checked_mul(other) {
     const otherPtr = Ptr._assertClass(other, BigNum);
-    const ret = await HaskellShelley.bigNumCheckedMul(this.ptr, otherPtr);
+    const ret = await HaskellShelley.csl_bridge_bigNumCheckedMul(this.ptr, otherPtr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async checked_add(other) {
     const otherPtr = Ptr._assertClass(other, BigNum);
-    const ret = await HaskellShelley.bigNumCheckedAdd(this.ptr, otherPtr);
+    const ret = await HaskellShelley.csl_bridge_bigNumCheckedAdd(this.ptr, otherPtr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async checked_sub(other) {
     const otherPtr = Ptr._assertClass(other, BigNum);
-    const ret = await HaskellShelley.bigNumCheckedSub(this.ptr, otherPtr);
+    const ret = await HaskellShelley.csl_bridge_bigNumCheckedSub(this.ptr, otherPtr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async clamped_sub(other) {
     const otherPtr = Ptr._assertClass(other, BigNum);
-    const ret = await HaskellShelley.bigNumClampedSub(this.ptr, otherPtr);
+    const ret = await HaskellShelley.csl_bridge_bigNumClampedSub(this.ptr, otherPtr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async compare(rhs_value) {
     const rhs_valuePtr = Ptr._assertClass(rhs_value, BigNum);
-    const ret = await HaskellShelley.bigNumCompare(this.ptr, rhs_valuePtr);
+    const ret = await HaskellShelley.csl_bridge_bigNumCompare(this.ptr, rhs_valuePtr);
     return ret;
   }
 
   async less_than(rhs_value) {
     const rhs_valuePtr = Ptr._assertClass(rhs_value, BigNum);
-    const ret = await HaskellShelley.bigNumLessThan(this.ptr, rhs_valuePtr);
+    const ret = await HaskellShelley.csl_bridge_bigNumLessThan(this.ptr, rhs_valuePtr);
     return ret;
   }
 
   static async max_value() {
-    const ret = await HaskellShelley.bigNumMaxValue();
+    const ret = await HaskellShelley.csl_bridge_bigNumMaxValue();
     return Ptr._wrap(ret, BigNum);
   }
 
   static async max(a, b) {
     const aPtr = Ptr._assertClass(a, BigNum);
     const bPtr = Ptr._assertClass(b, BigNum);
-    const ret = await HaskellShelley.bigNumMax(aPtr, bPtr);
+    const ret = await HaskellShelley.csl_bridge_bigNumMax(aPtr, bPtr);
     return Ptr._wrap(ret, BigNum);
   }
 
@@ -786,72 +818,72 @@ export class BigNum extends Ptr {
 
 export class Bip32PrivateKey extends Ptr {
   async derive(index) {
-    const ret = await HaskellShelley.bip32PrivateKeyDerive(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_bip32PrivateKeyDerive(this.ptr, index);
     return Ptr._wrap(ret, Bip32PrivateKey);
   }
 
   static async from_128_xprv(bytes) {
-    const ret = await HaskellShelley.bip32PrivateKeyFrom_128Xprv(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_bip32PrivateKeyFrom_128Xprv(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Bip32PrivateKey);
   }
 
   async to_128_xprv() {
-    const ret = await HaskellShelley.bip32PrivateKeyTo_128Xprv(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bip32PrivateKeyTo_128Xprv(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async generate_ed25519_bip32() {
-    const ret = await HaskellShelley.bip32PrivateKeyGenerateEd25519Bip32();
+    const ret = await HaskellShelley.csl_bridge_bip32PrivateKeyGenerateEd25519Bip32();
     return Ptr._wrap(ret, Bip32PrivateKey);
   }
 
   async to_raw_key() {
-    const ret = await HaskellShelley.bip32PrivateKeyToRawKey(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bip32PrivateKeyToRawKey(this.ptr);
     return Ptr._wrap(ret, PrivateKey);
   }
 
   async to_public() {
-    const ret = await HaskellShelley.bip32PrivateKeyToPublic(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bip32PrivateKeyToPublic(this.ptr);
     return Ptr._wrap(ret, Bip32PublicKey);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.bip32PrivateKeyFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_bip32PrivateKeyFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Bip32PrivateKey);
   }
 
   async as_bytes() {
-    const ret = await HaskellShelley.bip32PrivateKeyAsBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bip32PrivateKeyAsBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bech32(bech32_str) {
-    const ret = await HaskellShelley.bip32PrivateKeyFromBech32(bech32_str);
+    const ret = await HaskellShelley.csl_bridge_bip32PrivateKeyFromBech32(bech32_str);
     return Ptr._wrap(ret, Bip32PrivateKey);
   }
 
   async to_bech32() {
-    const ret = await HaskellShelley.bip32PrivateKeyToBech32(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bip32PrivateKeyToBech32(this.ptr);
     return ret;
   }
 
   static async from_bip39_entropy(entropy, password) {
-    const ret = await HaskellShelley.bip32PrivateKeyFromBip39Entropy(b64FromUint8Array(entropy), b64FromUint8Array(password));
+    const ret = await HaskellShelley.csl_bridge_bip32PrivateKeyFromBip39Entropy(b64FromUint8Array(entropy), b64FromUint8Array(password));
     return Ptr._wrap(ret, Bip32PrivateKey);
   }
 
   async chaincode() {
-    const ret = await HaskellShelley.bip32PrivateKeyChaincode(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bip32PrivateKeyChaincode(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.bip32PrivateKeyToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bip32PrivateKeyToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.bip32PrivateKeyFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_bip32PrivateKeyFromHex(hex_str);
     return Ptr._wrap(ret, Bip32PrivateKey);
   }
 
@@ -860,47 +892,47 @@ export class Bip32PrivateKey extends Ptr {
 
 export class Bip32PublicKey extends Ptr {
   async derive(index) {
-    const ret = await HaskellShelley.bip32PublicKeyDerive(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_bip32PublicKeyDerive(this.ptr, index);
     return Ptr._wrap(ret, Bip32PublicKey);
   }
 
   async to_raw_key() {
-    const ret = await HaskellShelley.bip32PublicKeyToRawKey(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bip32PublicKeyToRawKey(this.ptr);
     return Ptr._wrap(ret, PublicKey);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.bip32PublicKeyFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_bip32PublicKeyFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Bip32PublicKey);
   }
 
   async as_bytes() {
-    const ret = await HaskellShelley.bip32PublicKeyAsBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bip32PublicKeyAsBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bech32(bech32_str) {
-    const ret = await HaskellShelley.bip32PublicKeyFromBech32(bech32_str);
+    const ret = await HaskellShelley.csl_bridge_bip32PublicKeyFromBech32(bech32_str);
     return Ptr._wrap(ret, Bip32PublicKey);
   }
 
   async to_bech32() {
-    const ret = await HaskellShelley.bip32PublicKeyToBech32(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bip32PublicKeyToBech32(this.ptr);
     return ret;
   }
 
   async chaincode() {
-    const ret = await HaskellShelley.bip32PublicKeyChaincode(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bip32PublicKeyChaincode(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.bip32PublicKeyToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bip32PublicKeyToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.bip32PublicKeyFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_bip32PublicKeyFromHex(hex_str);
     return Ptr._wrap(ret, Bip32PublicKey);
   }
 
@@ -909,57 +941,57 @@ export class Bip32PublicKey extends Ptr {
 
 export class Block extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.blockToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_blockToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.blockFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_blockFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Block);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.blockToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_blockToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.blockFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_blockFromHex(hex_str);
     return Ptr._wrap(ret, Block);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.blockToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_blockToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.blockFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_blockFromJson(json);
     return Ptr._wrap(ret, Block);
   }
 
   async header() {
-    const ret = await HaskellShelley.blockHeader(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_blockHeader(this.ptr);
     return Ptr._wrap(ret, Header);
   }
 
   async transaction_bodies() {
-    const ret = await HaskellShelley.blockTransactionBodies(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_blockTransactionBodies(this.ptr);
     return Ptr._wrap(ret, TransactionBodies);
   }
 
   async transaction_witness_sets() {
-    const ret = await HaskellShelley.blockTransactionWitnessSets(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_blockTransactionWitnessSets(this.ptr);
     return Ptr._wrap(ret, TransactionWitnessSets);
   }
 
   async auxiliary_data_set() {
-    const ret = await HaskellShelley.blockAuxiliaryDataSet(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_blockAuxiliaryDataSet(this.ptr);
     return Ptr._wrap(ret, AuxiliaryDataSet);
   }
 
   async invalid_transactions() {
-    const ret = await HaskellShelley.blockInvalidTransactions(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_blockInvalidTransactions(this.ptr);
     return base64ToUint32Array(ret);
   }
 
@@ -968,12 +1000,7 @@ export class Block extends Ptr {
     const transaction_bodiesPtr = Ptr._assertClass(transaction_bodies, TransactionBodies);
     const transaction_witness_setsPtr = Ptr._assertClass(transaction_witness_sets, TransactionWitnessSets);
     const auxiliary_data_setPtr = Ptr._assertClass(auxiliary_data_set, AuxiliaryDataSet);
-    const ret = await HaskellShelley.blockNew(headerPtr, transaction_bodiesPtr, transaction_witness_setsPtr, auxiliary_data_setPtr, uint32ArrayToBase64(invalid_transactions));
-    return Ptr._wrap(ret, Block);
-  }
-
-  static async from_wrapped_bytes(data) {
-    const ret = await HaskellShelley.blockFromWrappedBytes(b64FromUint8Array(data));
+    const ret = await HaskellShelley.csl_bridge_blockNew(headerPtr, transaction_bodiesPtr, transaction_witness_setsPtr, auxiliary_data_setPtr, uint32ArrayToBase64(invalid_transactions));
     return Ptr._wrap(ret, Block);
   }
 
@@ -982,32 +1009,32 @@ export class Block extends Ptr {
 
 export class BlockHash extends Ptr {
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.blockHashFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_blockHashFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, BlockHash);
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.blockHashToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_blockHashToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_bech32(prefix) {
-    const ret = await HaskellShelley.blockHashToBech32(this.ptr, prefix);
+    const ret = await HaskellShelley.csl_bridge_blockHashToBech32(this.ptr, prefix);
     return ret;
   }
 
   static async from_bech32(bech_str) {
-    const ret = await HaskellShelley.blockHashFromBech32(bech_str);
+    const ret = await HaskellShelley.csl_bridge_blockHashFromBech32(bech_str);
     return Ptr._wrap(ret, BlockHash);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.blockHashToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_blockHashToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex) {
-    const ret = await HaskellShelley.blockHashFromHex(hex);
+    const ret = await HaskellShelley.csl_bridge_blockHashFromHex(hex);
     return Ptr._wrap(ret, BlockHash);
   }
 
@@ -1016,59 +1043,59 @@ export class BlockHash extends Ptr {
 
 export class BootstrapWitness extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.bootstrapWitnessToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.bootstrapWitnessFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, BootstrapWitness);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.bootstrapWitnessToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.bootstrapWitnessFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessFromHex(hex_str);
     return Ptr._wrap(ret, BootstrapWitness);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.bootstrapWitnessToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.bootstrapWitnessFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessFromJson(json);
     return Ptr._wrap(ret, BootstrapWitness);
   }
 
   async vkey() {
-    const ret = await HaskellShelley.bootstrapWitnessVkey(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessVkey(this.ptr);
     return Ptr._wrap(ret, Vkey);
   }
 
   async signature() {
-    const ret = await HaskellShelley.bootstrapWitnessSignature(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessSignature(this.ptr);
     return Ptr._wrap(ret, Ed25519Signature);
   }
 
   async chain_code() {
-    const ret = await HaskellShelley.bootstrapWitnessChainCode(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessChainCode(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async attributes() {
-    const ret = await HaskellShelley.bootstrapWitnessAttributes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessAttributes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async new(vkey, signature, chain_code, attributes) {
     const vkeyPtr = Ptr._assertClass(vkey, Vkey);
     const signaturePtr = Ptr._assertClass(signature, Ed25519Signature);
-    const ret = await HaskellShelley.bootstrapWitnessNew(vkeyPtr, signaturePtr, b64FromUint8Array(chain_code), b64FromUint8Array(attributes));
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessNew(vkeyPtr, signaturePtr, b64FromUint8Array(chain_code), b64FromUint8Array(attributes));
     return Ptr._wrap(ret, BootstrapWitness);
   }
 
@@ -1076,24 +1103,54 @@ export class BootstrapWitness extends Ptr {
 
 
 export class BootstrapWitnesses extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessesToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessesFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, BootstrapWitnesses);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessesToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessesFromHex(hex_str);
+    return Ptr._wrap(ret, BootstrapWitnesses);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessesToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessesFromJson(json);
+    return Ptr._wrap(ret, BootstrapWitnesses);
+  }
+
   static async new() {
-    const ret = await HaskellShelley.bootstrapWitnessesNew();
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessesNew();
     return Ptr._wrap(ret, BootstrapWitnesses);
   }
 
   async len() {
-    const ret = await HaskellShelley.bootstrapWitnessesLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessesLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.bootstrapWitnessesGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessesGet(this.ptr, index);
     return Ptr._wrap(ret, BootstrapWitness);
   }
 
-  add(elem) {
+  async add(elem) {
     const elemPtr = Ptr._assertClass(elem, BootstrapWitness);
-    const ret = HaskellShelley.bootstrapWitnessesAdd(this.ptr, elemPtr);
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessesAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -1102,59 +1159,59 @@ export class BootstrapWitnesses extends Ptr {
 
 export class ByronAddress extends Ptr {
   async to_base58() {
-    const ret = await HaskellShelley.byronAddressToBase58(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_byronAddressToBase58(this.ptr);
     return ret;
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.byronAddressToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_byronAddressToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.byronAddressFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_byronAddressFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ByronAddress);
   }
 
   async byron_protocol_magic() {
-    const ret = await HaskellShelley.byronAddressByronProtocolMagic(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_byronAddressByronProtocolMagic(this.ptr);
     return ret;
   }
 
   async attributes() {
-    const ret = await HaskellShelley.byronAddressAttributes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_byronAddressAttributes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async network_id() {
-    const ret = await HaskellShelley.byronAddressNetworkId(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_byronAddressNetworkId(this.ptr);
     return ret;
   }
 
   static async from_base58(s) {
-    const ret = await HaskellShelley.byronAddressFromBase58(s);
+    const ret = await HaskellShelley.csl_bridge_byronAddressFromBase58(s);
     return Ptr._wrap(ret, ByronAddress);
   }
 
   static async icarus_from_key(key, protocol_magic) {
     const keyPtr = Ptr._assertClass(key, Bip32PublicKey);
-    const ret = await HaskellShelley.byronAddressIcarusFromKey(keyPtr, protocol_magic);
+    const ret = await HaskellShelley.csl_bridge_byronAddressIcarusFromKey(keyPtr, protocol_magic);
     return Ptr._wrap(ret, ByronAddress);
   }
 
   static async is_valid(s) {
-    const ret = await HaskellShelley.byronAddressIsValid(s);
+    const ret = await HaskellShelley.csl_bridge_byronAddressIsValid(s);
     return ret;
   }
 
   async to_address() {
-    const ret = await HaskellShelley.byronAddressToAddress(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_byronAddressToAddress(this.ptr);
     return Ptr._wrap(ret, Address);
   }
 
   static async from_address(addr) {
     const addrPtr = Ptr._assertClass(addr, Address);
-    const ret = await HaskellShelley.byronAddressFromAddress(addrPtr);
+    const ret = await HaskellShelley.csl_bridge_byronAddressFromAddress(addrPtr);
     return Ptr._wrap(ret, ByronAddress);
   }
 
@@ -1163,229 +1220,251 @@ export class ByronAddress extends Ptr {
 
 export class Certificate extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.certificateToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.certificateFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_certificateFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Certificate);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.certificateToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.certificateFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_certificateFromHex(hex_str);
     return Ptr._wrap(ret, Certificate);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.certificateToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.certificateFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_certificateFromJson(json);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_stake_registration(stake_registration) {
     const stake_registrationPtr = Ptr._assertClass(stake_registration, StakeRegistration);
-    const ret = await HaskellShelley.certificateNewStakeRegistration(stake_registrationPtr);
+    const ret = await HaskellShelley.csl_bridge_certificateNewStakeRegistration(stake_registrationPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  static async new_reg_cert(stake_registration) {
+    const stake_registrationPtr = Ptr._assertClass(stake_registration, StakeRegistration);
+    const ret = await HaskellShelley.csl_bridge_certificateNewRegCert(stake_registrationPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_stake_deregistration(stake_deregistration) {
     const stake_deregistrationPtr = Ptr._assertClass(stake_deregistration, StakeDeregistration);
-    const ret = await HaskellShelley.certificateNewStakeDeregistration(stake_deregistrationPtr);
+    const ret = await HaskellShelley.csl_bridge_certificateNewStakeDeregistration(stake_deregistrationPtr);
+    return Ptr._wrap(ret, Certificate);
+  }
+
+  static async new_unreg_cert(stake_deregistration) {
+    const stake_deregistrationPtr = Ptr._assertClass(stake_deregistration, StakeDeregistration);
+    const ret = await HaskellShelley.csl_bridge_certificateNewUnregCert(stake_deregistrationPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_stake_delegation(stake_delegation) {
     const stake_delegationPtr = Ptr._assertClass(stake_delegation, StakeDelegation);
-    const ret = await HaskellShelley.certificateNewStakeDelegation(stake_delegationPtr);
+    const ret = await HaskellShelley.csl_bridge_certificateNewStakeDelegation(stake_delegationPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_pool_registration(pool_registration) {
     const pool_registrationPtr = Ptr._assertClass(pool_registration, PoolRegistration);
-    const ret = await HaskellShelley.certificateNewPoolRegistration(pool_registrationPtr);
+    const ret = await HaskellShelley.csl_bridge_certificateNewPoolRegistration(pool_registrationPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_pool_retirement(pool_retirement) {
     const pool_retirementPtr = Ptr._assertClass(pool_retirement, PoolRetirement);
-    const ret = await HaskellShelley.certificateNewPoolRetirement(pool_retirementPtr);
+    const ret = await HaskellShelley.csl_bridge_certificateNewPoolRetirement(pool_retirementPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_genesis_key_delegation(genesis_key_delegation) {
     const genesis_key_delegationPtr = Ptr._assertClass(genesis_key_delegation, GenesisKeyDelegation);
-    const ret = await HaskellShelley.certificateNewGenesisKeyDelegation(genesis_key_delegationPtr);
+    const ret = await HaskellShelley.csl_bridge_certificateNewGenesisKeyDelegation(genesis_key_delegationPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_move_instantaneous_rewards_cert(move_instantaneous_rewards_cert) {
     const move_instantaneous_rewards_certPtr = Ptr._assertClass(move_instantaneous_rewards_cert, MoveInstantaneousRewardsCert);
-    const ret = await HaskellShelley.certificateNewMoveInstantaneousRewardsCert(move_instantaneous_rewards_certPtr);
+    const ret = await HaskellShelley.csl_bridge_certificateNewMoveInstantaneousRewardsCert(move_instantaneous_rewards_certPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_committee_hot_auth(committee_hot_auth) {
     const committee_hot_authPtr = Ptr._assertClass(committee_hot_auth, CommitteeHotAuth);
-    const ret = await HaskellShelley.certificateNewCommitteeHotAuth(committee_hot_authPtr);
+    const ret = await HaskellShelley.csl_bridge_certificateNewCommitteeHotAuth(committee_hot_authPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_committee_cold_resign(committee_cold_resign) {
     const committee_cold_resignPtr = Ptr._assertClass(committee_cold_resign, CommitteeColdResign);
-    const ret = await HaskellShelley.certificateNewCommitteeColdResign(committee_cold_resignPtr);
+    const ret = await HaskellShelley.csl_bridge_certificateNewCommitteeColdResign(committee_cold_resignPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_drep_deregistration(drep_deregistration) {
-    const drep_deregistrationPtr = Ptr._assertClass(drep_deregistration, DrepDeregistration);
-    const ret = await HaskellShelley.certificateNewDrepDeregistration(drep_deregistrationPtr);
+    const drep_deregistrationPtr = Ptr._assertClass(drep_deregistration, DRepDeregistration);
+    const ret = await HaskellShelley.csl_bridge_certificateNewDrepDeregistration(drep_deregistrationPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_drep_registration(drep_registration) {
-    const drep_registrationPtr = Ptr._assertClass(drep_registration, DrepRegistration);
-    const ret = await HaskellShelley.certificateNewDrepRegistration(drep_registrationPtr);
+    const drep_registrationPtr = Ptr._assertClass(drep_registration, DRepRegistration);
+    const ret = await HaskellShelley.csl_bridge_certificateNewDrepRegistration(drep_registrationPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_drep_update(drep_update) {
-    const drep_updatePtr = Ptr._assertClass(drep_update, DrepUpdate);
-    const ret = await HaskellShelley.certificateNewDrepUpdate(drep_updatePtr);
+    const drep_updatePtr = Ptr._assertClass(drep_update, DRepUpdate);
+    const ret = await HaskellShelley.csl_bridge_certificateNewDrepUpdate(drep_updatePtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_stake_and_vote_delegation(stake_and_vote_delegation) {
     const stake_and_vote_delegationPtr = Ptr._assertClass(stake_and_vote_delegation, StakeAndVoteDelegation);
-    const ret = await HaskellShelley.certificateNewStakeAndVoteDelegation(stake_and_vote_delegationPtr);
+    const ret = await HaskellShelley.csl_bridge_certificateNewStakeAndVoteDelegation(stake_and_vote_delegationPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_stake_registration_and_delegation(stake_registration_and_delegation) {
     const stake_registration_and_delegationPtr = Ptr._assertClass(stake_registration_and_delegation, StakeRegistrationAndDelegation);
-    const ret = await HaskellShelley.certificateNewStakeRegistrationAndDelegation(stake_registration_and_delegationPtr);
+    const ret = await HaskellShelley.csl_bridge_certificateNewStakeRegistrationAndDelegation(stake_registration_and_delegationPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_stake_vote_registration_and_delegation(stake_vote_registration_and_delegation) {
     const stake_vote_registration_and_delegationPtr = Ptr._assertClass(stake_vote_registration_and_delegation, StakeVoteRegistrationAndDelegation);
-    const ret = await HaskellShelley.certificateNewStakeVoteRegistrationAndDelegation(stake_vote_registration_and_delegationPtr);
+    const ret = await HaskellShelley.csl_bridge_certificateNewStakeVoteRegistrationAndDelegation(stake_vote_registration_and_delegationPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_vote_delegation(vote_delegation) {
     const vote_delegationPtr = Ptr._assertClass(vote_delegation, VoteDelegation);
-    const ret = await HaskellShelley.certificateNewVoteDelegation(vote_delegationPtr);
+    const ret = await HaskellShelley.csl_bridge_certificateNewVoteDelegation(vote_delegationPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   static async new_vote_registration_and_delegation(vote_registration_and_delegation) {
     const vote_registration_and_delegationPtr = Ptr._assertClass(vote_registration_and_delegation, VoteRegistrationAndDelegation);
-    const ret = await HaskellShelley.certificateNewVoteRegistrationAndDelegation(vote_registration_and_delegationPtr);
+    const ret = await HaskellShelley.csl_bridge_certificateNewVoteRegistrationAndDelegation(vote_registration_and_delegationPtr);
     return Ptr._wrap(ret, Certificate);
   }
 
   async kind() {
-    const ret = await HaskellShelley.certificateKind(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateKind(this.ptr);
     return ret;
   }
 
   async as_stake_registration() {
-    const ret = await HaskellShelley.certificateAsStakeRegistration(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateAsStakeRegistration(this.ptr);
+    return Ptr._wrap(ret, StakeRegistration);
+  }
+
+  async as_reg_cert() {
+    const ret = await HaskellShelley.csl_bridge_certificateAsRegCert(this.ptr);
     return Ptr._wrap(ret, StakeRegistration);
   }
 
   async as_stake_deregistration() {
-    const ret = await HaskellShelley.certificateAsStakeDeregistration(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateAsStakeDeregistration(this.ptr);
+    return Ptr._wrap(ret, StakeDeregistration);
+  }
+
+  async as_unreg_cert() {
+    const ret = await HaskellShelley.csl_bridge_certificateAsUnregCert(this.ptr);
     return Ptr._wrap(ret, StakeDeregistration);
   }
 
   async as_stake_delegation() {
-    const ret = await HaskellShelley.certificateAsStakeDelegation(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateAsStakeDelegation(this.ptr);
     return Ptr._wrap(ret, StakeDelegation);
   }
 
   async as_pool_registration() {
-    const ret = await HaskellShelley.certificateAsPoolRegistration(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateAsPoolRegistration(this.ptr);
     return Ptr._wrap(ret, PoolRegistration);
   }
 
   async as_pool_retirement() {
-    const ret = await HaskellShelley.certificateAsPoolRetirement(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateAsPoolRetirement(this.ptr);
     return Ptr._wrap(ret, PoolRetirement);
   }
 
   async as_genesis_key_delegation() {
-    const ret = await HaskellShelley.certificateAsGenesisKeyDelegation(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateAsGenesisKeyDelegation(this.ptr);
     return Ptr._wrap(ret, GenesisKeyDelegation);
   }
 
   async as_move_instantaneous_rewards_cert() {
-    const ret = await HaskellShelley.certificateAsMoveInstantaneousRewardsCert(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateAsMoveInstantaneousRewardsCert(this.ptr);
     return Ptr._wrap(ret, MoveInstantaneousRewardsCert);
   }
 
   async as_committee_hot_auth() {
-    const ret = await HaskellShelley.certificateAsCommitteeHotAuth(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateAsCommitteeHotAuth(this.ptr);
     return Ptr._wrap(ret, CommitteeHotAuth);
   }
 
   async as_committee_cold_resign() {
-    const ret = await HaskellShelley.certificateAsCommitteeColdResign(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateAsCommitteeColdResign(this.ptr);
     return Ptr._wrap(ret, CommitteeColdResign);
   }
 
   async as_drep_deregistration() {
-    const ret = await HaskellShelley.certificateAsDrepDeregistration(this.ptr);
-    return Ptr._wrap(ret, DrepDeregistration);
+    const ret = await HaskellShelley.csl_bridge_certificateAsDrepDeregistration(this.ptr);
+    return Ptr._wrap(ret, DRepDeregistration);
   }
 
   async as_drep_registration() {
-    const ret = await HaskellShelley.certificateAsDrepRegistration(this.ptr);
-    return Ptr._wrap(ret, DrepRegistration);
+    const ret = await HaskellShelley.csl_bridge_certificateAsDrepRegistration(this.ptr);
+    return Ptr._wrap(ret, DRepRegistration);
   }
 
   async as_drep_update() {
-    const ret = await HaskellShelley.certificateAsDrepUpdate(this.ptr);
-    return Ptr._wrap(ret, DrepUpdate);
+    const ret = await HaskellShelley.csl_bridge_certificateAsDrepUpdate(this.ptr);
+    return Ptr._wrap(ret, DRepUpdate);
   }
 
   async as_stake_and_vote_delegation() {
-    const ret = await HaskellShelley.certificateAsStakeAndVoteDelegation(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateAsStakeAndVoteDelegation(this.ptr);
     return Ptr._wrap(ret, StakeAndVoteDelegation);
   }
 
   async as_stake_registration_and_delegation() {
-    const ret = await HaskellShelley.certificateAsStakeRegistrationAndDelegation(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateAsStakeRegistrationAndDelegation(this.ptr);
     return Ptr._wrap(ret, StakeRegistrationAndDelegation);
   }
 
   async as_stake_vote_registration_and_delegation() {
-    const ret = await HaskellShelley.certificateAsStakeVoteRegistrationAndDelegation(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateAsStakeVoteRegistrationAndDelegation(this.ptr);
     return Ptr._wrap(ret, StakeVoteRegistrationAndDelegation);
   }
 
   async as_vote_delegation() {
-    const ret = await HaskellShelley.certificateAsVoteDelegation(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateAsVoteDelegation(this.ptr);
     return Ptr._wrap(ret, VoteDelegation);
   }
 
   async as_vote_registration_and_delegation() {
-    const ret = await HaskellShelley.certificateAsVoteRegistrationAndDelegation(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateAsVoteRegistrationAndDelegation(this.ptr);
     return Ptr._wrap(ret, VoteRegistrationAndDelegation);
   }
 
   async has_required_script_witness() {
-    const ret = await HaskellShelley.certificateHasRequiredScriptWitness(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificateHasRequiredScriptWitness(this.ptr);
     return ret;
   }
 
@@ -1394,53 +1473,53 @@ export class Certificate extends Ptr {
 
 export class Certificates extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.certificatesToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificatesToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.certificatesFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_certificatesFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Certificates);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.certificatesToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificatesToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.certificatesFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_certificatesFromHex(hex_str);
     return Ptr._wrap(ret, Certificates);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.certificatesToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificatesToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.certificatesFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_certificatesFromJson(json);
     return Ptr._wrap(ret, Certificates);
   }
 
   static async new() {
-    const ret = await HaskellShelley.certificatesNew();
+    const ret = await HaskellShelley.csl_bridge_certificatesNew();
     return Ptr._wrap(ret, Certificates);
   }
 
   async len() {
-    const ret = await HaskellShelley.certificatesLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificatesLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.certificatesGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_certificatesGet(this.ptr, index);
     return Ptr._wrap(ret, Certificate);
   }
 
-  add(elem) {
+  async add(elem) {
     const elemPtr = Ptr._assertClass(elem, Certificate);
-    const ret = HaskellShelley.certificatesAdd(this.ptr, elemPtr);
+    const ret = await HaskellShelley.csl_bridge_certificatesAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -1449,66 +1528,66 @@ export class Certificates extends Ptr {
 
 export class CertificatesBuilder extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.certificatesBuilderNew();
+    const ret = await HaskellShelley.csl_bridge_certificatesBuilderNew();
     return Ptr._wrap(ret, CertificatesBuilder);
   }
 
   add(cert) {
     const certPtr = Ptr._assertClass(cert, Certificate);
-    const ret = HaskellShelley.certificatesBuilderAdd(this.ptr, certPtr);
+    const ret = HaskellShelley.csl_bridge_certificatesBuilderAdd(this.ptr, certPtr);
     return ret;
   }
 
   add_with_plutus_witness(cert, witness) {
     const certPtr = Ptr._assertClass(cert, Certificate);
     const witnessPtr = Ptr._assertClass(witness, PlutusWitness);
-    const ret = HaskellShelley.certificatesBuilderAddWithPlutusWitness(this.ptr, certPtr, witnessPtr);
+    const ret = HaskellShelley.csl_bridge_certificatesBuilderAddWithPlutusWitness(this.ptr, certPtr, witnessPtr);
     return ret;
   }
 
   add_with_native_script(cert, native_script_source) {
     const certPtr = Ptr._assertClass(cert, Certificate);
     const native_script_sourcePtr = Ptr._assertClass(native_script_source, NativeScriptSource);
-    const ret = HaskellShelley.certificatesBuilderAddWithNativeScript(this.ptr, certPtr, native_script_sourcePtr);
+    const ret = HaskellShelley.csl_bridge_certificatesBuilderAddWithNativeScript(this.ptr, certPtr, native_script_sourcePtr);
     return ret;
   }
 
   async get_plutus_witnesses() {
-    const ret = await HaskellShelley.certificatesBuilderGetPlutusWitnesses(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificatesBuilderGetPlutusWitnesses(this.ptr);
     return Ptr._wrap(ret, PlutusWitnesses);
   }
 
   async get_ref_inputs() {
-    const ret = await HaskellShelley.certificatesBuilderGetRefInputs(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificatesBuilderGetRefInputs(this.ptr);
     return Ptr._wrap(ret, TransactionInputs);
   }
 
   async get_native_scripts() {
-    const ret = await HaskellShelley.certificatesBuilderGetNativeScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificatesBuilderGetNativeScripts(this.ptr);
     return Ptr._wrap(ret, NativeScripts);
   }
 
   async get_certificates_refund(pool_deposit, key_deposit) {
     const pool_depositPtr = Ptr._assertClass(pool_deposit, BigNum);
     const key_depositPtr = Ptr._assertClass(key_deposit, BigNum);
-    const ret = await HaskellShelley.certificatesBuilderGetCertificatesRefund(this.ptr, pool_depositPtr, key_depositPtr);
+    const ret = await HaskellShelley.csl_bridge_certificatesBuilderGetCertificatesRefund(this.ptr, pool_depositPtr, key_depositPtr);
     return Ptr._wrap(ret, Value);
   }
 
   async get_certificates_deposit(pool_deposit, key_deposit) {
     const pool_depositPtr = Ptr._assertClass(pool_deposit, BigNum);
     const key_depositPtr = Ptr._assertClass(key_deposit, BigNum);
-    const ret = await HaskellShelley.certificatesBuilderGetCertificatesDeposit(this.ptr, pool_depositPtr, key_depositPtr);
+    const ret = await HaskellShelley.csl_bridge_certificatesBuilderGetCertificatesDeposit(this.ptr, pool_depositPtr, key_depositPtr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async has_plutus_scripts() {
-    const ret = await HaskellShelley.certificatesBuilderHasPlutusScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificatesBuilderHasPlutusScripts(this.ptr);
     return ret;
   }
 
   async build() {
-    const ret = await HaskellShelley.certificatesBuilderBuild(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_certificatesBuilderBuild(this.ptr);
     return Ptr._wrap(ret, Certificates);
   }
 
@@ -1518,25 +1597,25 @@ export class CertificatesBuilder extends Ptr {
 export class ChangeConfig extends Ptr {
   static async new(address) {
     const addressPtr = Ptr._assertClass(address, Address);
-    const ret = await HaskellShelley.changeConfigNew(addressPtr);
+    const ret = await HaskellShelley.csl_bridge_changeConfigNew(addressPtr);
     return Ptr._wrap(ret, ChangeConfig);
   }
 
   async change_address(address) {
     const addressPtr = Ptr._assertClass(address, Address);
-    const ret = await HaskellShelley.changeConfigChangeAddress(this.ptr, addressPtr);
+    const ret = await HaskellShelley.csl_bridge_changeConfigChangeAddress(this.ptr, addressPtr);
     return Ptr._wrap(ret, ChangeConfig);
   }
 
   async change_plutus_data(plutus_data) {
     const plutus_dataPtr = Ptr._assertClass(plutus_data, OutputDatum);
-    const ret = await HaskellShelley.changeConfigChangePlutusData(this.ptr, plutus_dataPtr);
+    const ret = await HaskellShelley.csl_bridge_changeConfigChangePlutusData(this.ptr, plutus_dataPtr);
     return Ptr._wrap(ret, ChangeConfig);
   }
 
   async change_script_ref(script_ref) {
     const script_refPtr = Ptr._assertClass(script_ref, ScriptRef);
-    const ret = await HaskellShelley.changeConfigChangeScriptRef(this.ptr, script_refPtr);
+    const ret = await HaskellShelley.csl_bridge_changeConfigChangeScriptRef(this.ptr, script_refPtr);
     return Ptr._wrap(ret, ChangeConfig);
   }
 
@@ -1545,60 +1624,60 @@ export class ChangeConfig extends Ptr {
 
 export class Committee extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.committeeToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_committeeToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.committeeFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_committeeFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Committee);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.committeeToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_committeeToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.committeeFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_committeeFromHex(hex_str);
     return Ptr._wrap(ret, Committee);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.committeeToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_committeeToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.committeeFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_committeeFromJson(json);
     return Ptr._wrap(ret, Committee);
   }
 
   static async new(quorum_threshold) {
     const quorum_thresholdPtr = Ptr._assertClass(quorum_threshold, UnitInterval);
-    const ret = await HaskellShelley.committeeNew(quorum_thresholdPtr);
+    const ret = await HaskellShelley.csl_bridge_committeeNew(quorum_thresholdPtr);
     return Ptr._wrap(ret, Committee);
   }
 
   async members_keys() {
-    const ret = await HaskellShelley.committeeMembersKeys(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_committeeMembersKeys(this.ptr);
     return Ptr._wrap(ret, Credentials);
   }
 
   async quorum_threshold() {
-    const ret = await HaskellShelley.committeeQuorumThreshold(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_committeeQuorumThreshold(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   add_member(committee_cold_credential, epoch) {
     const committee_cold_credentialPtr = Ptr._assertClass(committee_cold_credential, Credential);
-    const ret = HaskellShelley.committeeAddMember(this.ptr, committee_cold_credentialPtr, epoch);
+    const ret = HaskellShelley.csl_bridge_committeeAddMember(this.ptr, committee_cold_credentialPtr, epoch);
     return ret;
   }
 
   async get_member_epoch(committee_cold_credential) {
     const committee_cold_credentialPtr = Ptr._assertClass(committee_cold_credential, Credential);
-    const ret = await HaskellShelley.committeeGetMemberEpoch(this.ptr, committee_cold_credentialPtr);
+    const ret = await HaskellShelley.csl_bridge_committeeGetMemberEpoch(this.ptr, committee_cold_credentialPtr);
     return ret;
   }
 
@@ -1607,60 +1686,60 @@ export class Committee extends Ptr {
 
 export class CommitteeColdResign extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.committeeColdResignToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_committeeColdResignToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.committeeColdResignFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_committeeColdResignFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, CommitteeColdResign);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.committeeColdResignToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_committeeColdResignToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.committeeColdResignFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_committeeColdResignFromHex(hex_str);
     return Ptr._wrap(ret, CommitteeColdResign);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.committeeColdResignToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_committeeColdResignToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.committeeColdResignFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_committeeColdResignFromJson(json);
     return Ptr._wrap(ret, CommitteeColdResign);
   }
 
-  async committee_cold_key() {
-    const ret = await HaskellShelley.committeeColdResignCommitteeColdKey(this.ptr);
+  async committee_cold_credential() {
+    const ret = await HaskellShelley.csl_bridge_committeeColdResignCommitteeColdCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async anchor() {
-    const ret = await HaskellShelley.committeeColdResignAnchor(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_committeeColdResignAnchor(this.ptr);
     return Ptr._wrap(ret, Anchor);
   }
 
-  static async new(committee_cold_key) {
-    const committee_cold_keyPtr = Ptr._assertClass(committee_cold_key, Credential);
-    const ret = await HaskellShelley.committeeColdResignNew(committee_cold_keyPtr);
+  static async new(committee_cold_credential) {
+    const committee_cold_credentialPtr = Ptr._assertClass(committee_cold_credential, Credential);
+    const ret = await HaskellShelley.csl_bridge_committeeColdResignNew(committee_cold_credentialPtr);
     return Ptr._wrap(ret, CommitteeColdResign);
   }
 
-  static async new_with_anchor(committee_cold_key, anchor) {
-    const committee_cold_keyPtr = Ptr._assertClass(committee_cold_key, Credential);
+  static async new_with_anchor(committee_cold_credential, anchor) {
+    const committee_cold_credentialPtr = Ptr._assertClass(committee_cold_credential, Credential);
     const anchorPtr = Ptr._assertClass(anchor, Anchor);
-    const ret = await HaskellShelley.committeeColdResignNewWithAnchor(committee_cold_keyPtr, anchorPtr);
+    const ret = await HaskellShelley.csl_bridge_committeeColdResignNewWithAnchor(committee_cold_credentialPtr, anchorPtr);
     return Ptr._wrap(ret, CommitteeColdResign);
   }
 
   async has_script_credentials() {
-    const ret = await HaskellShelley.committeeColdResignHasScriptCredentials(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_committeeColdResignHasScriptCredentials(this.ptr);
     return ret;
   }
 
@@ -1669,54 +1748,54 @@ export class CommitteeColdResign extends Ptr {
 
 export class CommitteeHotAuth extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.committeeHotAuthToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_committeeHotAuthToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.committeeHotAuthFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_committeeHotAuthFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, CommitteeHotAuth);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.committeeHotAuthToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_committeeHotAuthToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.committeeHotAuthFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_committeeHotAuthFromHex(hex_str);
     return Ptr._wrap(ret, CommitteeHotAuth);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.committeeHotAuthToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_committeeHotAuthToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.committeeHotAuthFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_committeeHotAuthFromJson(json);
     return Ptr._wrap(ret, CommitteeHotAuth);
   }
 
-  async committee_cold_key() {
-    const ret = await HaskellShelley.committeeHotAuthCommitteeColdKey(this.ptr);
+  async committee_cold_credential() {
+    const ret = await HaskellShelley.csl_bridge_committeeHotAuthCommitteeColdCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
-  async committee_hot_key() {
-    const ret = await HaskellShelley.committeeHotAuthCommitteeHotKey(this.ptr);
+  async committee_hot_credential() {
+    const ret = await HaskellShelley.csl_bridge_committeeHotAuthCommitteeHotCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
-  static async new(committee_cold_key, committee_hot_key) {
-    const committee_cold_keyPtr = Ptr._assertClass(committee_cold_key, Credential);
-    const committee_hot_keyPtr = Ptr._assertClass(committee_hot_key, Credential);
-    const ret = await HaskellShelley.committeeHotAuthNew(committee_cold_keyPtr, committee_hot_keyPtr);
+  static async new(committee_cold_credential, committee_hot_credential) {
+    const committee_cold_credentialPtr = Ptr._assertClass(committee_cold_credential, Credential);
+    const committee_hot_credentialPtr = Ptr._assertClass(committee_hot_credential, Credential);
+    const ret = await HaskellShelley.csl_bridge_committeeHotAuthNew(committee_cold_credentialPtr, committee_hot_credentialPtr);
     return Ptr._wrap(ret, CommitteeHotAuth);
   }
 
   async has_script_credentials() {
-    const ret = await HaskellShelley.committeeHotAuthHasScriptCredentials(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_committeeHotAuthHasScriptCredentials(this.ptr);
     return ret;
   }
 
@@ -1725,55 +1804,55 @@ export class CommitteeHotAuth extends Ptr {
 
 export class Constitution extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.constitutionToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_constitutionToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.constitutionFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_constitutionFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Constitution);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.constitutionToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_constitutionToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.constitutionFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_constitutionFromHex(hex_str);
     return Ptr._wrap(ret, Constitution);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.constitutionToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_constitutionToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.constitutionFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_constitutionFromJson(json);
     return Ptr._wrap(ret, Constitution);
   }
 
   async anchor() {
-    const ret = await HaskellShelley.constitutionAnchor(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_constitutionAnchor(this.ptr);
     return Ptr._wrap(ret, Anchor);
   }
 
   async script_hash() {
-    const ret = await HaskellShelley.constitutionScriptHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_constitutionScriptHash(this.ptr);
     return Ptr._wrap(ret, ScriptHash);
   }
 
   static async new(anchor) {
     const anchorPtr = Ptr._assertClass(anchor, Anchor);
-    const ret = await HaskellShelley.constitutionNew(anchorPtr);
+    const ret = await HaskellShelley.csl_bridge_constitutionNew(anchorPtr);
     return Ptr._wrap(ret, Constitution);
   }
 
   static async new_with_script_hash(anchor, script_hash) {
     const anchorPtr = Ptr._assertClass(anchor, Anchor);
     const script_hashPtr = Ptr._assertClass(script_hash, ScriptHash);
-    const ret = await HaskellShelley.constitutionNewWithScriptHash(anchorPtr, script_hashPtr);
+    const ret = await HaskellShelley.csl_bridge_constitutionNewWithScriptHash(anchorPtr, script_hashPtr);
     return Ptr._wrap(ret, Constitution);
   }
 
@@ -1782,39 +1861,39 @@ export class Constitution extends Ptr {
 
 export class ConstrPlutusData extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.constrPlutusDataToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_constrPlutusDataToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.constrPlutusDataFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_constrPlutusDataFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ConstrPlutusData);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.constrPlutusDataToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_constrPlutusDataToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.constrPlutusDataFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_constrPlutusDataFromHex(hex_str);
     return Ptr._wrap(ret, ConstrPlutusData);
   }
 
   async alternative() {
-    const ret = await HaskellShelley.constrPlutusDataAlternative(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_constrPlutusDataAlternative(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async data() {
-    const ret = await HaskellShelley.constrPlutusDataData(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_constrPlutusDataData(this.ptr);
     return Ptr._wrap(ret, PlutusList);
   }
 
   static async new(alternative, data) {
     const alternativePtr = Ptr._assertClass(alternative, BigNum);
     const dataPtr = Ptr._assertClass(data, PlutusList);
-    const ret = await HaskellShelley.constrPlutusDataNew(alternativePtr, dataPtr);
+    const ret = await HaskellShelley.csl_bridge_constrPlutusDataNew(alternativePtr, dataPtr);
     return Ptr._wrap(ret, ConstrPlutusData);
   }
 
@@ -1823,53 +1902,53 @@ export class ConstrPlutusData extends Ptr {
 
 export class CostModel extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.costModelToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_costModelToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.costModelFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_costModelFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, CostModel);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.costModelToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_costModelToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.costModelFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_costModelFromHex(hex_str);
     return Ptr._wrap(ret, CostModel);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.costModelToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_costModelToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.costModelFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_costModelFromJson(json);
     return Ptr._wrap(ret, CostModel);
   }
 
   static async new() {
-    const ret = await HaskellShelley.costModelNew();
+    const ret = await HaskellShelley.csl_bridge_costModelNew();
     return Ptr._wrap(ret, CostModel);
   }
 
   async set(operation, cost) {
     const costPtr = Ptr._assertClass(cost, Int);
-    const ret = await HaskellShelley.costModelSet(this.ptr, operation, costPtr);
+    const ret = await HaskellShelley.csl_bridge_costModelSet(this.ptr, operation, costPtr);
     return Ptr._wrap(ret, Int);
   }
 
   async get(operation) {
-    const ret = await HaskellShelley.costModelGet(this.ptr, operation);
+    const ret = await HaskellShelley.csl_bridge_costModelGet(this.ptr, operation);
     return Ptr._wrap(ret, Int);
   }
 
   async len() {
-    const ret = await HaskellShelley.costModelLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_costModelLen(this.ptr);
     return ret;
   }
 
@@ -1878,66 +1957,66 @@ export class CostModel extends Ptr {
 
 export class Costmdls extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.costmdlsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_costmdlsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.costmdlsFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_costmdlsFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Costmdls);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.costmdlsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_costmdlsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.costmdlsFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_costmdlsFromHex(hex_str);
     return Ptr._wrap(ret, Costmdls);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.costmdlsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_costmdlsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.costmdlsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_costmdlsFromJson(json);
     return Ptr._wrap(ret, Costmdls);
   }
 
   static async new() {
-    const ret = await HaskellShelley.costmdlsNew();
+    const ret = await HaskellShelley.csl_bridge_costmdlsNew();
     return Ptr._wrap(ret, Costmdls);
   }
 
   async len() {
-    const ret = await HaskellShelley.costmdlsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_costmdlsLen(this.ptr);
     return ret;
   }
 
   async insert(key, value) {
     const keyPtr = Ptr._assertClass(key, Language);
     const valuePtr = Ptr._assertClass(value, CostModel);
-    const ret = await HaskellShelley.costmdlsInsert(this.ptr, keyPtr, valuePtr);
+    const ret = await HaskellShelley.csl_bridge_costmdlsInsert(this.ptr, keyPtr, valuePtr);
     return Ptr._wrap(ret, CostModel);
   }
 
   async get(key) {
     const keyPtr = Ptr._assertClass(key, Language);
-    const ret = await HaskellShelley.costmdlsGet(this.ptr, keyPtr);
+    const ret = await HaskellShelley.csl_bridge_costmdlsGet(this.ptr, keyPtr);
     return Ptr._wrap(ret, CostModel);
   }
 
   async keys() {
-    const ret = await HaskellShelley.costmdlsKeys(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_costmdlsKeys(this.ptr);
     return Ptr._wrap(ret, Languages);
   }
 
   async retain_language_versions(languages) {
     const languagesPtr = Ptr._assertClass(languages, Languages);
-    const ret = await HaskellShelley.costmdlsRetainLanguageVersions(this.ptr, languagesPtr);
+    const ret = await HaskellShelley.csl_bridge_costmdlsRetainLanguageVersions(this.ptr, languagesPtr);
     return Ptr._wrap(ret, Costmdls);
   }
 
@@ -1947,63 +2026,63 @@ export class Costmdls extends Ptr {
 export class Credential extends Ptr {
   static async from_keyhash(hash) {
     const hashPtr = Ptr._assertClass(hash, Ed25519KeyHash);
-    const ret = await HaskellShelley.credentialFromKeyhash(hashPtr);
+    const ret = await HaskellShelley.csl_bridge_credentialFromKeyhash(hashPtr);
     return Ptr._wrap(ret, Credential);
   }
 
   static async from_scripthash(hash) {
     const hashPtr = Ptr._assertClass(hash, ScriptHash);
-    const ret = await HaskellShelley.credentialFromScripthash(hashPtr);
+    const ret = await HaskellShelley.csl_bridge_credentialFromScripthash(hashPtr);
     return Ptr._wrap(ret, Credential);
   }
 
   async to_keyhash() {
-    const ret = await HaskellShelley.credentialToKeyhash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_credentialToKeyhash(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
   async to_scripthash() {
-    const ret = await HaskellShelley.credentialToScripthash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_credentialToScripthash(this.ptr);
     return Ptr._wrap(ret, ScriptHash);
   }
 
   async kind() {
-    const ret = await HaskellShelley.credentialKind(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_credentialKind(this.ptr);
     return ret;
   }
 
   async has_script_hash() {
-    const ret = await HaskellShelley.credentialHasScriptHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_credentialHasScriptHash(this.ptr);
     return ret;
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.credentialToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_credentialToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.credentialFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_credentialFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Credential);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.credentialToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_credentialToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.credentialFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_credentialFromHex(hex_str);
     return Ptr._wrap(ret, Credential);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.credentialToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_credentialToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.credentialFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_credentialFromJson(json);
     return Ptr._wrap(ret, Credential);
   }
 
@@ -2012,53 +2091,53 @@ export class Credential extends Ptr {
 
 export class Credentials extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.credentialsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_credentialsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.credentialsFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_credentialsFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Credentials);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.credentialsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_credentialsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.credentialsFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_credentialsFromHex(hex_str);
     return Ptr._wrap(ret, Credentials);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.credentialsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_credentialsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.credentialsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_credentialsFromJson(json);
     return Ptr._wrap(ret, Credentials);
   }
 
   static async new() {
-    const ret = await HaskellShelley.credentialsNew();
+    const ret = await HaskellShelley.csl_bridge_credentialsNew();
     return Ptr._wrap(ret, Credentials);
   }
 
   async len() {
-    const ret = await HaskellShelley.credentialsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_credentialsLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.credentialsGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_credentialsGet(this.ptr, index);
     return Ptr._wrap(ret, Credential);
   }
 
-  add(elem) {
+  async add(elem) {
     const elemPtr = Ptr._assertClass(elem, Credential);
-    const ret = HaskellShelley.credentialsAdd(this.ptr, elemPtr);
+    const ret = await HaskellShelley.csl_bridge_credentialsAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -2067,42 +2146,42 @@ export class Credentials extends Ptr {
 
 export class DNSRecordAorAAAA extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.dNSRecordAorAAAAToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dNSRecordAorAAAAToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.dNSRecordAorAAAAFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_dNSRecordAorAAAAFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, DNSRecordAorAAAA);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.dNSRecordAorAAAAToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dNSRecordAorAAAAToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.dNSRecordAorAAAAFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_dNSRecordAorAAAAFromHex(hex_str);
     return Ptr._wrap(ret, DNSRecordAorAAAA);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.dNSRecordAorAAAAToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dNSRecordAorAAAAToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.dNSRecordAorAAAAFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_dNSRecordAorAAAAFromJson(json);
     return Ptr._wrap(ret, DNSRecordAorAAAA);
   }
 
   static async new(dns_name) {
-    const ret = await HaskellShelley.dNSRecordAorAAAANew(dns_name);
+    const ret = await HaskellShelley.csl_bridge_dNSRecordAorAAAANew(dns_name);
     return Ptr._wrap(ret, DNSRecordAorAAAA);
   }
 
   async record() {
-    const ret = await HaskellShelley.dNSRecordAorAAAARecord(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dNSRecordAorAAAARecord(this.ptr);
     return ret;
   }
 
@@ -2111,42 +2190,42 @@ export class DNSRecordAorAAAA extends Ptr {
 
 export class DNSRecordSRV extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.dNSRecordSRVToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dNSRecordSRVToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.dNSRecordSRVFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_dNSRecordSRVFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, DNSRecordSRV);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.dNSRecordSRVToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dNSRecordSRVToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.dNSRecordSRVFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_dNSRecordSRVFromHex(hex_str);
     return Ptr._wrap(ret, DNSRecordSRV);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.dNSRecordSRVToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dNSRecordSRVToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.dNSRecordSRVFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_dNSRecordSRVFromJson(json);
     return Ptr._wrap(ret, DNSRecordSRV);
   }
 
   static async new(dns_name) {
-    const ret = await HaskellShelley.dNSRecordSRVNew(dns_name);
+    const ret = await HaskellShelley.csl_bridge_dNSRecordSRVNew(dns_name);
     return Ptr._wrap(ret, DNSRecordSRV);
   }
 
   async record() {
-    const ret = await HaskellShelley.dNSRecordSRVRecord(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dNSRecordSRVRecord(this.ptr);
     return ret;
   }
 
@@ -2155,356 +2234,307 @@ export class DNSRecordSRV extends Ptr {
 
 export class DRep extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.dRepToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.dRepFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_dRepFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, DRep);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.dRepToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.dRepFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_dRepFromHex(hex_str);
     return Ptr._wrap(ret, DRep);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.dRepToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.dRepFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_dRepFromJson(json);
     return Ptr._wrap(ret, DRep);
   }
 
   static async new_key_hash(key_hash) {
     const key_hashPtr = Ptr._assertClass(key_hash, Ed25519KeyHash);
-    const ret = await HaskellShelley.dRepNewKeyHash(key_hashPtr);
+    const ret = await HaskellShelley.csl_bridge_dRepNewKeyHash(key_hashPtr);
     return Ptr._wrap(ret, DRep);
   }
 
   static async new_script_hash(script_hash) {
     const script_hashPtr = Ptr._assertClass(script_hash, ScriptHash);
-    const ret = await HaskellShelley.dRepNewScriptHash(script_hashPtr);
+    const ret = await HaskellShelley.csl_bridge_dRepNewScriptHash(script_hashPtr);
     return Ptr._wrap(ret, DRep);
   }
 
   static async new_always_abstain() {
-    const ret = await HaskellShelley.dRepNewAlwaysAbstain();
+    const ret = await HaskellShelley.csl_bridge_dRepNewAlwaysAbstain();
     return Ptr._wrap(ret, DRep);
   }
 
   static async new_always_no_confidence() {
-    const ret = await HaskellShelley.dRepNewAlwaysNoConfidence();
+    const ret = await HaskellShelley.csl_bridge_dRepNewAlwaysNoConfidence();
+    return Ptr._wrap(ret, DRep);
+  }
+
+  static async new_from_credential(cred) {
+    const credPtr = Ptr._assertClass(cred, Credential);
+    const ret = await HaskellShelley.csl_bridge_dRepNewFromCredential(credPtr);
     return Ptr._wrap(ret, DRep);
   }
 
   async kind() {
-    const ret = await HaskellShelley.dRepKind(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepKind(this.ptr);
     return ret;
   }
 
   async to_key_hash() {
-    const ret = await HaskellShelley.dRepToKeyHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepToKeyHash(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
   async to_script_hash() {
-    const ret = await HaskellShelley.dRepToScriptHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepToScriptHash(this.ptr);
     return Ptr._wrap(ret, ScriptHash);
   }
 
-}
-
-
-export class DataCost extends Ptr {
-  static async new_coins_per_byte(coins_per_byte) {
-    const coins_per_bytePtr = Ptr._assertClass(coins_per_byte, BigNum);
-    const ret = await HaskellShelley.dataCostNewCoinsPerByte(coins_per_bytePtr);
-    return Ptr._wrap(ret, DataCost);
-  }
-
-  async coins_per_byte() {
-    const ret = await HaskellShelley.dataCostCoinsPerByte(this.ptr);
-    return Ptr._wrap(ret, BigNum);
-  }
-
-}
-
-
-export class DataHash extends Ptr {
-  static async from_bytes(bytes) {
-    const ret = await HaskellShelley.dataHashFromBytes(b64FromUint8Array(bytes));
-    return Ptr._wrap(ret, DataHash);
-  }
-
-  async to_bytes() {
-    const ret = await HaskellShelley.dataHashToBytes(this.ptr);
-    return uint8ArrayFromB64(ret);
-  }
-
-  async to_bech32(prefix) {
-    const ret = await HaskellShelley.dataHashToBech32(this.ptr, prefix);
+  async to_bech32() {
+    const ret = await HaskellShelley.csl_bridge_dRepToBech32(this.ptr);
     return ret;
   }
 
-  static async from_bech32(bech_str) {
-    const ret = await HaskellShelley.dataHashFromBech32(bech_str);
-    return Ptr._wrap(ret, DataHash);
-  }
-
-  async to_hex() {
-    const ret = await HaskellShelley.dataHashToHex(this.ptr);
-    return ret;
-  }
-
-  static async from_hex(hex) {
-    const ret = await HaskellShelley.dataHashFromHex(hex);
-    return Ptr._wrap(ret, DataHash);
+  static async from_bech32(bech32_str) {
+    const ret = await HaskellShelley.csl_bridge_dRepFromBech32(bech32_str);
+    return Ptr._wrap(ret, DRep);
   }
 
 }
 
 
-export class DatumSource extends Ptr {
-  static async new(datum) {
-    const datumPtr = Ptr._assertClass(datum, PlutusData);
-    const ret = await HaskellShelley.datumSourceNew(datumPtr);
-    return Ptr._wrap(ret, DatumSource);
-  }
-
-  static async new_ref_input(input) {
-    const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const ret = await HaskellShelley.datumSourceNewRefInput(inputPtr);
-    return Ptr._wrap(ret, DatumSource);
-  }
-
-}
-
-
-export class DrepDeregistration extends Ptr {
+export class DRepDeregistration extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.drepDeregistrationToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepDeregistrationToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.drepDeregistrationFromBytes(b64FromUint8Array(bytes));
-    return Ptr._wrap(ret, DrepDeregistration);
+    const ret = await HaskellShelley.csl_bridge_dRepDeregistrationFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, DRepDeregistration);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.drepDeregistrationToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepDeregistrationToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.drepDeregistrationFromHex(hex_str);
-    return Ptr._wrap(ret, DrepDeregistration);
+    const ret = await HaskellShelley.csl_bridge_dRepDeregistrationFromHex(hex_str);
+    return Ptr._wrap(ret, DRepDeregistration);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.drepDeregistrationToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepDeregistrationToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.drepDeregistrationFromJson(json);
-    return Ptr._wrap(ret, DrepDeregistration);
+    const ret = await HaskellShelley.csl_bridge_dRepDeregistrationFromJson(json);
+    return Ptr._wrap(ret, DRepDeregistration);
   }
 
   async voting_credential() {
-    const ret = await HaskellShelley.drepDeregistrationVotingCredential(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepDeregistrationVotingCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async coin() {
-    const ret = await HaskellShelley.drepDeregistrationCoin(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepDeregistrationCoin(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   static async new(voting_credential, coin) {
     const voting_credentialPtr = Ptr._assertClass(voting_credential, Credential);
     const coinPtr = Ptr._assertClass(coin, BigNum);
-    const ret = await HaskellShelley.drepDeregistrationNew(voting_credentialPtr, coinPtr);
-    return Ptr._wrap(ret, DrepDeregistration);
+    const ret = await HaskellShelley.csl_bridge_dRepDeregistrationNew(voting_credentialPtr, coinPtr);
+    return Ptr._wrap(ret, DRepDeregistration);
   }
 
   async has_script_credentials() {
-    const ret = await HaskellShelley.drepDeregistrationHasScriptCredentials(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepDeregistrationHasScriptCredentials(this.ptr);
     return ret;
   }
 
 }
 
 
-export class DrepRegistration extends Ptr {
+export class DRepRegistration extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.drepRegistrationToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepRegistrationToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.drepRegistrationFromBytes(b64FromUint8Array(bytes));
-    return Ptr._wrap(ret, DrepRegistration);
+    const ret = await HaskellShelley.csl_bridge_dRepRegistrationFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, DRepRegistration);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.drepRegistrationToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepRegistrationToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.drepRegistrationFromHex(hex_str);
-    return Ptr._wrap(ret, DrepRegistration);
+    const ret = await HaskellShelley.csl_bridge_dRepRegistrationFromHex(hex_str);
+    return Ptr._wrap(ret, DRepRegistration);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.drepRegistrationToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepRegistrationToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.drepRegistrationFromJson(json);
-    return Ptr._wrap(ret, DrepRegistration);
+    const ret = await HaskellShelley.csl_bridge_dRepRegistrationFromJson(json);
+    return Ptr._wrap(ret, DRepRegistration);
   }
 
   async voting_credential() {
-    const ret = await HaskellShelley.drepRegistrationVotingCredential(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepRegistrationVotingCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async coin() {
-    const ret = await HaskellShelley.drepRegistrationCoin(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepRegistrationCoin(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async anchor() {
-    const ret = await HaskellShelley.drepRegistrationAnchor(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepRegistrationAnchor(this.ptr);
     return Ptr._wrap(ret, Anchor);
   }
 
   static async new(voting_credential, coin) {
     const voting_credentialPtr = Ptr._assertClass(voting_credential, Credential);
     const coinPtr = Ptr._assertClass(coin, BigNum);
-    const ret = await HaskellShelley.drepRegistrationNew(voting_credentialPtr, coinPtr);
-    return Ptr._wrap(ret, DrepRegistration);
+    const ret = await HaskellShelley.csl_bridge_dRepRegistrationNew(voting_credentialPtr, coinPtr);
+    return Ptr._wrap(ret, DRepRegistration);
   }
 
   static async new_with_anchor(voting_credential, coin, anchor) {
     const voting_credentialPtr = Ptr._assertClass(voting_credential, Credential);
     const coinPtr = Ptr._assertClass(coin, BigNum);
     const anchorPtr = Ptr._assertClass(anchor, Anchor);
-    const ret = await HaskellShelley.drepRegistrationNewWithAnchor(voting_credentialPtr, coinPtr, anchorPtr);
-    return Ptr._wrap(ret, DrepRegistration);
+    const ret = await HaskellShelley.csl_bridge_dRepRegistrationNewWithAnchor(voting_credentialPtr, coinPtr, anchorPtr);
+    return Ptr._wrap(ret, DRepRegistration);
   }
 
   async has_script_credentials() {
-    const ret = await HaskellShelley.drepRegistrationHasScriptCredentials(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepRegistrationHasScriptCredentials(this.ptr);
     return ret;
   }
 
 }
 
 
-export class DrepUpdate extends Ptr {
+export class DRepUpdate extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.drepUpdateToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepUpdateToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.drepUpdateFromBytes(b64FromUint8Array(bytes));
-    return Ptr._wrap(ret, DrepUpdate);
+    const ret = await HaskellShelley.csl_bridge_dRepUpdateFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, DRepUpdate);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.drepUpdateToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepUpdateToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.drepUpdateFromHex(hex_str);
-    return Ptr._wrap(ret, DrepUpdate);
+    const ret = await HaskellShelley.csl_bridge_dRepUpdateFromHex(hex_str);
+    return Ptr._wrap(ret, DRepUpdate);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.drepUpdateToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepUpdateToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.drepUpdateFromJson(json);
-    return Ptr._wrap(ret, DrepUpdate);
+    const ret = await HaskellShelley.csl_bridge_dRepUpdateFromJson(json);
+    return Ptr._wrap(ret, DRepUpdate);
   }
 
   async voting_credential() {
-    const ret = await HaskellShelley.drepUpdateVotingCredential(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepUpdateVotingCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async anchor() {
-    const ret = await HaskellShelley.drepUpdateAnchor(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepUpdateAnchor(this.ptr);
     return Ptr._wrap(ret, Anchor);
   }
 
   static async new(voting_credential) {
     const voting_credentialPtr = Ptr._assertClass(voting_credential, Credential);
-    const ret = await HaskellShelley.drepUpdateNew(voting_credentialPtr);
-    return Ptr._wrap(ret, DrepUpdate);
+    const ret = await HaskellShelley.csl_bridge_dRepUpdateNew(voting_credentialPtr);
+    return Ptr._wrap(ret, DRepUpdate);
   }
 
   static async new_with_anchor(voting_credential, anchor) {
     const voting_credentialPtr = Ptr._assertClass(voting_credential, Credential);
     const anchorPtr = Ptr._assertClass(anchor, Anchor);
-    const ret = await HaskellShelley.drepUpdateNewWithAnchor(voting_credentialPtr, anchorPtr);
-    return Ptr._wrap(ret, DrepUpdate);
+    const ret = await HaskellShelley.csl_bridge_dRepUpdateNewWithAnchor(voting_credentialPtr, anchorPtr);
+    return Ptr._wrap(ret, DRepUpdate);
   }
 
   async has_script_credentials() {
-    const ret = await HaskellShelley.drepUpdateHasScriptCredentials(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepUpdateHasScriptCredentials(this.ptr);
     return ret;
   }
 
 }
 
 
-export class DrepVotingThresholds extends Ptr {
+export class DRepVotingThresholds extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.drepVotingThresholdsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.drepVotingThresholdsFromBytes(b64FromUint8Array(bytes));
-    return Ptr._wrap(ret, DrepVotingThresholds);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, DRepVotingThresholds);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.drepVotingThresholdsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.drepVotingThresholdsFromHex(hex_str);
-    return Ptr._wrap(ret, DrepVotingThresholds);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsFromHex(hex_str);
+    return Ptr._wrap(ret, DRepVotingThresholds);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.drepVotingThresholdsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.drepVotingThresholdsFromJson(json);
-    return Ptr._wrap(ret, DrepVotingThresholds);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsFromJson(json);
+    return Ptr._wrap(ret, DRepVotingThresholds);
   }
 
   static async new(motion_no_confidence, committee_normal, committee_no_confidence, update_constitution, hard_fork_initiation, pp_network_group, pp_economic_group, pp_technical_group, pp_governance_group, treasury_withdrawal) {
@@ -2518,123 +2548,183 @@ export class DrepVotingThresholds extends Ptr {
     const pp_technical_groupPtr = Ptr._assertClass(pp_technical_group, UnitInterval);
     const pp_governance_groupPtr = Ptr._assertClass(pp_governance_group, UnitInterval);
     const treasury_withdrawalPtr = Ptr._assertClass(treasury_withdrawal, UnitInterval);
-    const ret = await HaskellShelley.drepVotingThresholdsNew(motion_no_confidencePtr, committee_normalPtr, committee_no_confidencePtr, update_constitutionPtr, hard_fork_initiationPtr, pp_network_groupPtr, pp_economic_groupPtr, pp_technical_groupPtr, pp_governance_groupPtr, treasury_withdrawalPtr);
-    return Ptr._wrap(ret, DrepVotingThresholds);
-  }
-
-  static async new_default() {
-    const ret = await HaskellShelley.drepVotingThresholdsNewDefault();
-    return Ptr._wrap(ret, DrepVotingThresholds);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsNew(motion_no_confidencePtr, committee_normalPtr, committee_no_confidencePtr, update_constitutionPtr, hard_fork_initiationPtr, pp_network_groupPtr, pp_economic_groupPtr, pp_technical_groupPtr, pp_governance_groupPtr, treasury_withdrawalPtr);
+    return Ptr._wrap(ret, DRepVotingThresholds);
   }
 
   set_motion_no_confidence(motion_no_confidence) {
     const motion_no_confidencePtr = Ptr._assertClass(motion_no_confidence, UnitInterval);
-    const ret = HaskellShelley.drepVotingThresholdsSetMotionNoConfidence(this.ptr, motion_no_confidencePtr);
+    const ret = HaskellShelley.csl_bridge_dRepVotingThresholdsSetMotionNoConfidence(this.ptr, motion_no_confidencePtr);
     return ret;
   }
 
   set_committee_normal(committee_normal) {
     const committee_normalPtr = Ptr._assertClass(committee_normal, UnitInterval);
-    const ret = HaskellShelley.drepVotingThresholdsSetCommitteeNormal(this.ptr, committee_normalPtr);
+    const ret = HaskellShelley.csl_bridge_dRepVotingThresholdsSetCommitteeNormal(this.ptr, committee_normalPtr);
     return ret;
   }
 
   set_committee_no_confidence(committee_no_confidence) {
     const committee_no_confidencePtr = Ptr._assertClass(committee_no_confidence, UnitInterval);
-    const ret = HaskellShelley.drepVotingThresholdsSetCommitteeNoConfidence(this.ptr, committee_no_confidencePtr);
+    const ret = HaskellShelley.csl_bridge_dRepVotingThresholdsSetCommitteeNoConfidence(this.ptr, committee_no_confidencePtr);
     return ret;
   }
 
   set_update_constitution(update_constitution) {
     const update_constitutionPtr = Ptr._assertClass(update_constitution, UnitInterval);
-    const ret = HaskellShelley.drepVotingThresholdsSetUpdateConstitution(this.ptr, update_constitutionPtr);
+    const ret = HaskellShelley.csl_bridge_dRepVotingThresholdsSetUpdateConstitution(this.ptr, update_constitutionPtr);
     return ret;
   }
 
   set_hard_fork_initiation(hard_fork_initiation) {
     const hard_fork_initiationPtr = Ptr._assertClass(hard_fork_initiation, UnitInterval);
-    const ret = HaskellShelley.drepVotingThresholdsSetHardForkInitiation(this.ptr, hard_fork_initiationPtr);
+    const ret = HaskellShelley.csl_bridge_dRepVotingThresholdsSetHardForkInitiation(this.ptr, hard_fork_initiationPtr);
     return ret;
   }
 
   set_pp_network_group(pp_network_group) {
     const pp_network_groupPtr = Ptr._assertClass(pp_network_group, UnitInterval);
-    const ret = HaskellShelley.drepVotingThresholdsSetPpNetworkGroup(this.ptr, pp_network_groupPtr);
+    const ret = HaskellShelley.csl_bridge_dRepVotingThresholdsSetPpNetworkGroup(this.ptr, pp_network_groupPtr);
     return ret;
   }
 
   set_pp_economic_group(pp_economic_group) {
     const pp_economic_groupPtr = Ptr._assertClass(pp_economic_group, UnitInterval);
-    const ret = HaskellShelley.drepVotingThresholdsSetPpEconomicGroup(this.ptr, pp_economic_groupPtr);
+    const ret = HaskellShelley.csl_bridge_dRepVotingThresholdsSetPpEconomicGroup(this.ptr, pp_economic_groupPtr);
     return ret;
   }
 
   set_pp_technical_group(pp_technical_group) {
     const pp_technical_groupPtr = Ptr._assertClass(pp_technical_group, UnitInterval);
-    const ret = HaskellShelley.drepVotingThresholdsSetPpTechnicalGroup(this.ptr, pp_technical_groupPtr);
+    const ret = HaskellShelley.csl_bridge_dRepVotingThresholdsSetPpTechnicalGroup(this.ptr, pp_technical_groupPtr);
     return ret;
   }
 
   set_pp_governance_group(pp_governance_group) {
     const pp_governance_groupPtr = Ptr._assertClass(pp_governance_group, UnitInterval);
-    const ret = HaskellShelley.drepVotingThresholdsSetPpGovernanceGroup(this.ptr, pp_governance_groupPtr);
+    const ret = HaskellShelley.csl_bridge_dRepVotingThresholdsSetPpGovernanceGroup(this.ptr, pp_governance_groupPtr);
     return ret;
   }
 
   set_treasury_withdrawal(treasury_withdrawal) {
     const treasury_withdrawalPtr = Ptr._assertClass(treasury_withdrawal, UnitInterval);
-    const ret = HaskellShelley.drepVotingThresholdsSetTreasuryWithdrawal(this.ptr, treasury_withdrawalPtr);
+    const ret = HaskellShelley.csl_bridge_dRepVotingThresholdsSetTreasuryWithdrawal(this.ptr, treasury_withdrawalPtr);
     return ret;
   }
 
   async motion_no_confidence() {
-    const ret = await HaskellShelley.drepVotingThresholdsMotionNoConfidence(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsMotionNoConfidence(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async committee_normal() {
-    const ret = await HaskellShelley.drepVotingThresholdsCommitteeNormal(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsCommitteeNormal(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async committee_no_confidence() {
-    const ret = await HaskellShelley.drepVotingThresholdsCommitteeNoConfidence(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsCommitteeNoConfidence(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async update_constitution() {
-    const ret = await HaskellShelley.drepVotingThresholdsUpdateConstitution(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsUpdateConstitution(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async hard_fork_initiation() {
-    const ret = await HaskellShelley.drepVotingThresholdsHardForkInitiation(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsHardForkInitiation(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async pp_network_group() {
-    const ret = await HaskellShelley.drepVotingThresholdsPpNetworkGroup(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsPpNetworkGroup(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async pp_economic_group() {
-    const ret = await HaskellShelley.drepVotingThresholdsPpEconomicGroup(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsPpEconomicGroup(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async pp_technical_group() {
-    const ret = await HaskellShelley.drepVotingThresholdsPpTechnicalGroup(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsPpTechnicalGroup(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async pp_governance_group() {
-    const ret = await HaskellShelley.drepVotingThresholdsPpGovernanceGroup(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsPpGovernanceGroup(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async treasury_withdrawal() {
-    const ret = await HaskellShelley.drepVotingThresholdsTreasuryWithdrawal(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_dRepVotingThresholdsTreasuryWithdrawal(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
+  }
+
+}
+
+
+export class DataCost extends Ptr {
+  static async new_coins_per_byte(coins_per_byte) {
+    const coins_per_bytePtr = Ptr._assertClass(coins_per_byte, BigNum);
+    const ret = await HaskellShelley.csl_bridge_dataCostNewCoinsPerByte(coins_per_bytePtr);
+    return Ptr._wrap(ret, DataCost);
+  }
+
+  async coins_per_byte() {
+    const ret = await HaskellShelley.csl_bridge_dataCostCoinsPerByte(this.ptr);
+    return Ptr._wrap(ret, BigNum);
+  }
+
+}
+
+
+export class DataHash extends Ptr {
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.csl_bridge_dataHashFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, DataHash);
+  }
+
+  async to_bytes() {
+    const ret = await HaskellShelley.csl_bridge_dataHashToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  async to_bech32(prefix) {
+    const ret = await HaskellShelley.csl_bridge_dataHashToBech32(this.ptr, prefix);
+    return ret;
+  }
+
+  static async from_bech32(bech_str) {
+    const ret = await HaskellShelley.csl_bridge_dataHashFromBech32(bech_str);
+    return Ptr._wrap(ret, DataHash);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.csl_bridge_dataHashToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex) {
+    const ret = await HaskellShelley.csl_bridge_dataHashFromHex(hex);
+    return Ptr._wrap(ret, DataHash);
+  }
+
+}
+
+
+export class DatumSource extends Ptr {
+  static async new(datum) {
+    const datumPtr = Ptr._assertClass(datum, PlutusData);
+    const ret = await HaskellShelley.csl_bridge_datumSourceNew(datumPtr);
+    return Ptr._wrap(ret, DatumSource);
+  }
+
+  static async new_ref_input(input) {
+    const inputPtr = Ptr._assertClass(input, TransactionInput);
+    const ret = await HaskellShelley.csl_bridge_datumSourceNewRefInput(inputPtr);
+    return Ptr._wrap(ret, DatumSource);
   }
 
 }
@@ -2642,32 +2732,32 @@ export class DrepVotingThresholds extends Ptr {
 
 export class Ed25519KeyHash extends Ptr {
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.ed25519KeyHashFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.ed25519KeyHashToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_bech32(prefix) {
-    const ret = await HaskellShelley.ed25519KeyHashToBech32(this.ptr, prefix);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashToBech32(this.ptr, prefix);
     return ret;
   }
 
   static async from_bech32(bech_str) {
-    const ret = await HaskellShelley.ed25519KeyHashFromBech32(bech_str);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashFromBech32(bech_str);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.ed25519KeyHashToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex) {
-    const ret = await HaskellShelley.ed25519KeyHashFromHex(hex);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashFromHex(hex);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
@@ -2676,64 +2766,64 @@ export class Ed25519KeyHash extends Ptr {
 
 export class Ed25519KeyHashes extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.ed25519KeyHashesToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashesToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.ed25519KeyHashesFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashesFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Ed25519KeyHashes);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.ed25519KeyHashesToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashesToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.ed25519KeyHashesFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashesFromHex(hex_str);
     return Ptr._wrap(ret, Ed25519KeyHashes);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.ed25519KeyHashesToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashesToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.ed25519KeyHashesFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashesFromJson(json);
     return Ptr._wrap(ret, Ed25519KeyHashes);
   }
 
   static async new() {
-    const ret = await HaskellShelley.ed25519KeyHashesNew();
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashesNew();
     return Ptr._wrap(ret, Ed25519KeyHashes);
   }
 
   async len() {
-    const ret = await HaskellShelley.ed25519KeyHashesLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashesLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.ed25519KeyHashesGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashesGet(this.ptr, index);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
-  add(elem) {
+  async add(elem) {
     const elemPtr = Ptr._assertClass(elem, Ed25519KeyHash);
-    const ret = HaskellShelley.ed25519KeyHashesAdd(this.ptr, elemPtr);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashesAdd(this.ptr, elemPtr);
     return ret;
   }
 
   async contains(elem) {
     const elemPtr = Ptr._assertClass(elem, Ed25519KeyHash);
-    const ret = await HaskellShelley.ed25519KeyHashesContains(this.ptr, elemPtr);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashesContains(this.ptr, elemPtr);
     return ret;
   }
 
   async to_option() {
-    const ret = await HaskellShelley.ed25519KeyHashesToOption(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashesToOption(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHashes);
   }
 
@@ -2742,32 +2832,32 @@ export class Ed25519KeyHashes extends Ptr {
 
 export class Ed25519Signature extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.ed25519SignatureToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ed25519SignatureToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_bech32() {
-    const ret = await HaskellShelley.ed25519SignatureToBech32(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ed25519SignatureToBech32(this.ptr);
     return ret;
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.ed25519SignatureToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ed25519SignatureToHex(this.ptr);
     return ret;
   }
 
   static async from_bech32(bech32_str) {
-    const ret = await HaskellShelley.ed25519SignatureFromBech32(bech32_str);
+    const ret = await HaskellShelley.csl_bridge_ed25519SignatureFromBech32(bech32_str);
     return Ptr._wrap(ret, Ed25519Signature);
   }
 
   static async from_hex(input) {
-    const ret = await HaskellShelley.ed25519SignatureFromHex(input);
+    const ret = await HaskellShelley.csl_bridge_ed25519SignatureFromHex(input);
     return Ptr._wrap(ret, Ed25519Signature);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.ed25519SignatureFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_ed25519SignatureFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Ed25519Signature);
   }
 
@@ -2777,24 +2867,29 @@ export class Ed25519Signature extends Ptr {
 export class EnterpriseAddress extends Ptr {
   static async new(network, payment) {
     const paymentPtr = Ptr._assertClass(payment, Credential);
-    const ret = await HaskellShelley.enterpriseAddressNew(network, paymentPtr);
+    const ret = await HaskellShelley.csl_bridge_enterpriseAddressNew(network, paymentPtr);
     return Ptr._wrap(ret, EnterpriseAddress);
   }
 
   async payment_cred() {
-    const ret = await HaskellShelley.enterpriseAddressPaymentCred(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_enterpriseAddressPaymentCred(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async to_address() {
-    const ret = await HaskellShelley.enterpriseAddressToAddress(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_enterpriseAddressToAddress(this.ptr);
     return Ptr._wrap(ret, Address);
   }
 
   static async from_address(addr) {
     const addrPtr = Ptr._assertClass(addr, Address);
-    const ret = await HaskellShelley.enterpriseAddressFromAddress(addrPtr);
+    const ret = await HaskellShelley.csl_bridge_enterpriseAddressFromAddress(addrPtr);
     return Ptr._wrap(ret, EnterpriseAddress);
+  }
+
+  async network_id() {
+    const ret = await HaskellShelley.csl_bridge_enterpriseAddressNetworkId(this.ptr);
+    return ret;
   }
 
 }
@@ -2802,49 +2897,49 @@ export class EnterpriseAddress extends Ptr {
 
 export class ExUnitPrices extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.exUnitPricesToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_exUnitPricesToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.exUnitPricesFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_exUnitPricesFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ExUnitPrices);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.exUnitPricesToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_exUnitPricesToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.exUnitPricesFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_exUnitPricesFromHex(hex_str);
     return Ptr._wrap(ret, ExUnitPrices);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.exUnitPricesToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_exUnitPricesToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.exUnitPricesFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_exUnitPricesFromJson(json);
     return Ptr._wrap(ret, ExUnitPrices);
   }
 
   async mem_price() {
-    const ret = await HaskellShelley.exUnitPricesMemPrice(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_exUnitPricesMemPrice(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async step_price() {
-    const ret = await HaskellShelley.exUnitPricesStepPrice(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_exUnitPricesStepPrice(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   static async new(mem_price, step_price) {
     const mem_pricePtr = Ptr._assertClass(mem_price, UnitInterval);
     const step_pricePtr = Ptr._assertClass(step_price, UnitInterval);
-    const ret = await HaskellShelley.exUnitPricesNew(mem_pricePtr, step_pricePtr);
+    const ret = await HaskellShelley.csl_bridge_exUnitPricesNew(mem_pricePtr, step_pricePtr);
     return Ptr._wrap(ret, ExUnitPrices);
   }
 
@@ -2853,50 +2948,94 @@ export class ExUnitPrices extends Ptr {
 
 export class ExUnits extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.exUnitsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_exUnitsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.exUnitsFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_exUnitsFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ExUnits);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.exUnitsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_exUnitsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.exUnitsFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_exUnitsFromHex(hex_str);
     return Ptr._wrap(ret, ExUnits);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.exUnitsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_exUnitsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.exUnitsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_exUnitsFromJson(json);
     return Ptr._wrap(ret, ExUnits);
   }
 
   async mem() {
-    const ret = await HaskellShelley.exUnitsMem(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_exUnitsMem(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async steps() {
-    const ret = await HaskellShelley.exUnitsSteps(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_exUnitsSteps(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   static async new(mem, steps) {
     const memPtr = Ptr._assertClass(mem, BigNum);
     const stepsPtr = Ptr._assertClass(steps, BigNum);
-    const ret = await HaskellShelley.exUnitsNew(memPtr, stepsPtr);
+    const ret = await HaskellShelley.csl_bridge_exUnitsNew(memPtr, stepsPtr);
     return Ptr._wrap(ret, ExUnits);
+  }
+
+}
+
+
+export class FixedBlock extends Ptr {
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.csl_bridge_fixedBlockFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, FixedBlock);
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.csl_bridge_fixedBlockFromHex(hex_str);
+    return Ptr._wrap(ret, FixedBlock);
+  }
+
+  async header() {
+    const ret = await HaskellShelley.csl_bridge_fixedBlockHeader(this.ptr);
+    return Ptr._wrap(ret, Header);
+  }
+
+  async transaction_bodies() {
+    const ret = await HaskellShelley.csl_bridge_fixedBlockTransactionBodies(this.ptr);
+    return Ptr._wrap(ret, FixedTransactionBodies);
+  }
+
+  async transaction_witness_sets() {
+    const ret = await HaskellShelley.csl_bridge_fixedBlockTransactionWitnessSets(this.ptr);
+    return Ptr._wrap(ret, TransactionWitnessSets);
+  }
+
+  async auxiliary_data_set() {
+    const ret = await HaskellShelley.csl_bridge_fixedBlockAuxiliaryDataSet(this.ptr);
+    return Ptr._wrap(ret, AuxiliaryDataSet);
+  }
+
+  async invalid_transactions() {
+    const ret = await HaskellShelley.csl_bridge_fixedBlockInvalidTransactions(this.ptr);
+    return base64ToUint32Array(ret);
+  }
+
+  async block_hash() {
+    const ret = await HaskellShelley.csl_bridge_fixedBlockBlockHash(this.ptr);
+    return Ptr._wrap(ret, BlockHash);
   }
 
 }
@@ -2904,88 +3043,176 @@ export class ExUnits extends Ptr {
 
 export class FixedTransaction extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.fixedTransactionToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.fixedTransactionFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, FixedTransaction);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.fixedTransactionToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.fixedTransactionFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionFromHex(hex_str);
     return Ptr._wrap(ret, FixedTransaction);
   }
 
   static async new(raw_body, raw_witness_set, is_valid) {
-    const ret = await HaskellShelley.fixedTransactionNew(b64FromUint8Array(raw_body), b64FromUint8Array(raw_witness_set), is_valid);
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionNew(b64FromUint8Array(raw_body), b64FromUint8Array(raw_witness_set), is_valid);
     return Ptr._wrap(ret, FixedTransaction);
   }
 
   static async new_with_auxiliary(raw_body, raw_witness_set, raw_auxiliary_data, is_valid) {
-    const ret = await HaskellShelley.fixedTransactionNewWithAuxiliary(b64FromUint8Array(raw_body), b64FromUint8Array(raw_witness_set), b64FromUint8Array(raw_auxiliary_data), is_valid);
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionNewWithAuxiliary(b64FromUint8Array(raw_body), b64FromUint8Array(raw_witness_set), b64FromUint8Array(raw_auxiliary_data), is_valid);
     return Ptr._wrap(ret, FixedTransaction);
   }
 
   async body() {
-    const ret = await HaskellShelley.fixedTransactionBody(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionBody(this.ptr);
     return Ptr._wrap(ret, TransactionBody);
   }
 
   async raw_body() {
-    const ret = await HaskellShelley.fixedTransactionRawBody(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionRawBody(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   set_body(raw_body) {
-    const ret = HaskellShelley.fixedTransactionSetBody(this.ptr, b64FromUint8Array(raw_body));
+    const ret = HaskellShelley.csl_bridge_fixedTransactionSetBody(this.ptr, b64FromUint8Array(raw_body));
     return ret;
   }
 
   set_witness_set(raw_witness_set) {
-    const ret = HaskellShelley.fixedTransactionSetWitnessSet(this.ptr, b64FromUint8Array(raw_witness_set));
+    const ret = HaskellShelley.csl_bridge_fixedTransactionSetWitnessSet(this.ptr, b64FromUint8Array(raw_witness_set));
     return ret;
   }
 
   async witness_set() {
-    const ret = await HaskellShelley.fixedTransactionWitnessSet(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionWitnessSet(this.ptr);
     return Ptr._wrap(ret, TransactionWitnessSet);
   }
 
   async raw_witness_set() {
-    const ret = await HaskellShelley.fixedTransactionRawWitnessSet(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionRawWitnessSet(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   set_is_valid(valid) {
-    const ret = HaskellShelley.fixedTransactionSetIsValid(this.ptr, valid);
+    const ret = HaskellShelley.csl_bridge_fixedTransactionSetIsValid(this.ptr, valid);
     return ret;
   }
 
   async is_valid() {
-    const ret = await HaskellShelley.fixedTransactionIsValid(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionIsValid(this.ptr);
     return ret;
   }
 
   set_auxiliary_data(raw_auxiliary_data) {
-    const ret = HaskellShelley.fixedTransactionSetAuxiliaryData(this.ptr, b64FromUint8Array(raw_auxiliary_data));
+    const ret = HaskellShelley.csl_bridge_fixedTransactionSetAuxiliaryData(this.ptr, b64FromUint8Array(raw_auxiliary_data));
     return ret;
   }
 
   async auxiliary_data() {
-    const ret = await HaskellShelley.fixedTransactionAuxiliaryData(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionAuxiliaryData(this.ptr);
     return Ptr._wrap(ret, AuxiliaryData);
   }
 
   async raw_auxiliary_data() {
-    const ret = await HaskellShelley.fixedTransactionRawAuxiliaryData(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionRawAuxiliaryData(this.ptr);
     return uint8ArrayFromB64(ret);
+  }
+
+}
+
+
+export class FixedTransactionBodies extends Ptr {
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionBodiesFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, FixedTransactionBodies);
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionBodiesFromHex(hex_str);
+    return Ptr._wrap(ret, FixedTransactionBodies);
+  }
+
+  static async new() {
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionBodiesNew();
+    return Ptr._wrap(ret, FixedTransactionBodies);
+  }
+
+  async len() {
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionBodiesLen(this.ptr);
+    return ret;
+  }
+
+  async get(index) {
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionBodiesGet(this.ptr, index);
+    return Ptr._wrap(ret, FixedTransactionBody);
+  }
+
+  add(elem) {
+    const elemPtr = Ptr._assertClass(elem, FixedTransactionBody);
+    const ret = HaskellShelley.csl_bridge_fixedTransactionBodiesAdd(this.ptr, elemPtr);
+    return ret;
+  }
+
+}
+
+
+export class FixedTransactionBody extends Ptr {
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionBodyFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, FixedTransactionBody);
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionBodyFromHex(hex_str);
+    return Ptr._wrap(ret, FixedTransactionBody);
+  }
+
+  async transaction_body() {
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionBodyTransactionBody(this.ptr);
+    return Ptr._wrap(ret, TransactionBody);
+  }
+
+  async tx_hash() {
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionBodyTxHash(this.ptr);
+    return Ptr._wrap(ret, TransactionHash);
+  }
+
+  async original_bytes() {
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionBodyOriginalBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+}
+
+
+export class FixedVersionedBlock extends Ptr {
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.csl_bridge_fixedVersionedBlockFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, FixedVersionedBlock);
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.csl_bridge_fixedVersionedBlockFromHex(hex_str);
+    return Ptr._wrap(ret, FixedVersionedBlock);
+  }
+
+  async block() {
+    const ret = await HaskellShelley.csl_bridge_fixedVersionedBlockBlock(this.ptr);
+    return Ptr._wrap(ret, FixedBlock);
+  }
+
+  async era() {
+    const ret = await HaskellShelley.csl_bridge_fixedVersionedBlockEra(this.ptr);
+    return ret;
   }
 
 }
@@ -2993,60 +3220,60 @@ export class FixedTransaction extends Ptr {
 
 export class GeneralTransactionMetadata extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.generalTransactionMetadataToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_generalTransactionMetadataToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.generalTransactionMetadataFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_generalTransactionMetadataFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, GeneralTransactionMetadata);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.generalTransactionMetadataToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_generalTransactionMetadataToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.generalTransactionMetadataFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_generalTransactionMetadataFromHex(hex_str);
     return Ptr._wrap(ret, GeneralTransactionMetadata);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.generalTransactionMetadataToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_generalTransactionMetadataToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.generalTransactionMetadataFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_generalTransactionMetadataFromJson(json);
     return Ptr._wrap(ret, GeneralTransactionMetadata);
   }
 
   static async new() {
-    const ret = await HaskellShelley.generalTransactionMetadataNew();
+    const ret = await HaskellShelley.csl_bridge_generalTransactionMetadataNew();
     return Ptr._wrap(ret, GeneralTransactionMetadata);
   }
 
   async len() {
-    const ret = await HaskellShelley.generalTransactionMetadataLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_generalTransactionMetadataLen(this.ptr);
     return ret;
   }
 
   async insert(key, value) {
     const keyPtr = Ptr._assertClass(key, BigNum);
     const valuePtr = Ptr._assertClass(value, TransactionMetadatum);
-    const ret = await HaskellShelley.generalTransactionMetadataInsert(this.ptr, keyPtr, valuePtr);
+    const ret = await HaskellShelley.csl_bridge_generalTransactionMetadataInsert(this.ptr, keyPtr, valuePtr);
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   async get(key) {
     const keyPtr = Ptr._assertClass(key, BigNum);
-    const ret = await HaskellShelley.generalTransactionMetadataGet(this.ptr, keyPtr);
+    const ret = await HaskellShelley.csl_bridge_generalTransactionMetadataGet(this.ptr, keyPtr);
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   async keys() {
-    const ret = await HaskellShelley.generalTransactionMetadataKeys(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_generalTransactionMetadataKeys(this.ptr);
     return Ptr._wrap(ret, TransactionMetadatumLabels);
   }
 
@@ -3055,32 +3282,32 @@ export class GeneralTransactionMetadata extends Ptr {
 
 export class GenesisDelegateHash extends Ptr {
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.genesisDelegateHashFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_genesisDelegateHashFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, GenesisDelegateHash);
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.genesisDelegateHashToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_genesisDelegateHashToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_bech32(prefix) {
-    const ret = await HaskellShelley.genesisDelegateHashToBech32(this.ptr, prefix);
+    const ret = await HaskellShelley.csl_bridge_genesisDelegateHashToBech32(this.ptr, prefix);
     return ret;
   }
 
   static async from_bech32(bech_str) {
-    const ret = await HaskellShelley.genesisDelegateHashFromBech32(bech_str);
+    const ret = await HaskellShelley.csl_bridge_genesisDelegateHashFromBech32(bech_str);
     return Ptr._wrap(ret, GenesisDelegateHash);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.genesisDelegateHashToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_genesisDelegateHashToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex) {
-    const ret = await HaskellShelley.genesisDelegateHashFromHex(hex);
+    const ret = await HaskellShelley.csl_bridge_genesisDelegateHashFromHex(hex);
     return Ptr._wrap(ret, GenesisDelegateHash);
   }
 
@@ -3089,32 +3316,32 @@ export class GenesisDelegateHash extends Ptr {
 
 export class GenesisHash extends Ptr {
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.genesisHashFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_genesisHashFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, GenesisHash);
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.genesisHashToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_genesisHashToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_bech32(prefix) {
-    const ret = await HaskellShelley.genesisHashToBech32(this.ptr, prefix);
+    const ret = await HaskellShelley.csl_bridge_genesisHashToBech32(this.ptr, prefix);
     return ret;
   }
 
   static async from_bech32(bech_str) {
-    const ret = await HaskellShelley.genesisHashFromBech32(bech_str);
+    const ret = await HaskellShelley.csl_bridge_genesisHashFromBech32(bech_str);
     return Ptr._wrap(ret, GenesisHash);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.genesisHashToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_genesisHashToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex) {
-    const ret = await HaskellShelley.genesisHashFromHex(hex);
+    const ret = await HaskellShelley.csl_bridge_genesisHashFromHex(hex);
     return Ptr._wrap(ret, GenesisHash);
   }
 
@@ -3123,53 +3350,53 @@ export class GenesisHash extends Ptr {
 
 export class GenesisHashes extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.genesisHashesToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_genesisHashesToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.genesisHashesFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_genesisHashesFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, GenesisHashes);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.genesisHashesToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_genesisHashesToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.genesisHashesFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_genesisHashesFromHex(hex_str);
     return Ptr._wrap(ret, GenesisHashes);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.genesisHashesToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_genesisHashesToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.genesisHashesFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_genesisHashesFromJson(json);
     return Ptr._wrap(ret, GenesisHashes);
   }
 
   static async new() {
-    const ret = await HaskellShelley.genesisHashesNew();
+    const ret = await HaskellShelley.csl_bridge_genesisHashesNew();
     return Ptr._wrap(ret, GenesisHashes);
   }
 
   async len() {
-    const ret = await HaskellShelley.genesisHashesLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_genesisHashesLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.genesisHashesGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_genesisHashesGet(this.ptr, index);
     return Ptr._wrap(ret, GenesisHash);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, GenesisHash);
-    const ret = HaskellShelley.genesisHashesAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_genesisHashesAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -3178,47 +3405,47 @@ export class GenesisHashes extends Ptr {
 
 export class GenesisKeyDelegation extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.genesisKeyDelegationToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_genesisKeyDelegationToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.genesisKeyDelegationFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_genesisKeyDelegationFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, GenesisKeyDelegation);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.genesisKeyDelegationToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_genesisKeyDelegationToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.genesisKeyDelegationFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_genesisKeyDelegationFromHex(hex_str);
     return Ptr._wrap(ret, GenesisKeyDelegation);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.genesisKeyDelegationToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_genesisKeyDelegationToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.genesisKeyDelegationFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_genesisKeyDelegationFromJson(json);
     return Ptr._wrap(ret, GenesisKeyDelegation);
   }
 
   async genesishash() {
-    const ret = await HaskellShelley.genesisKeyDelegationGenesishash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_genesisKeyDelegationGenesishash(this.ptr);
     return Ptr._wrap(ret, GenesisHash);
   }
 
   async genesis_delegate_hash() {
-    const ret = await HaskellShelley.genesisKeyDelegationGenesisDelegateHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_genesisKeyDelegationGenesisDelegateHash(this.ptr);
     return Ptr._wrap(ret, GenesisDelegateHash);
   }
 
   async vrf_keyhash() {
-    const ret = await HaskellShelley.genesisKeyDelegationVrfKeyhash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_genesisKeyDelegationVrfKeyhash(this.ptr);
     return Ptr._wrap(ret, VRFKeyHash);
   }
 
@@ -3226,7 +3453,7 @@ export class GenesisKeyDelegation extends Ptr {
     const genesishashPtr = Ptr._assertClass(genesishash, GenesisHash);
     const genesis_delegate_hashPtr = Ptr._assertClass(genesis_delegate_hash, GenesisDelegateHash);
     const vrf_keyhashPtr = Ptr._assertClass(vrf_keyhash, VRFKeyHash);
-    const ret = await HaskellShelley.genesisKeyDelegationNew(genesishashPtr, genesis_delegate_hashPtr, vrf_keyhashPtr);
+    const ret = await HaskellShelley.csl_bridge_genesisKeyDelegationNew(genesishashPtr, genesis_delegate_hashPtr, vrf_keyhashPtr);
     return Ptr._wrap(ret, GenesisKeyDelegation);
   }
 
@@ -3235,114 +3462,114 @@ export class GenesisKeyDelegation extends Ptr {
 
 export class GovernanceAction extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.governanceActionToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.governanceActionFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_governanceActionFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, GovernanceAction);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.governanceActionToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.governanceActionFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_governanceActionFromHex(hex_str);
     return Ptr._wrap(ret, GovernanceAction);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.governanceActionToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.governanceActionFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_governanceActionFromJson(json);
     return Ptr._wrap(ret, GovernanceAction);
   }
 
   static async new_parameter_change_action(parameter_change_action) {
     const parameter_change_actionPtr = Ptr._assertClass(parameter_change_action, ParameterChangeAction);
-    const ret = await HaskellShelley.governanceActionNewParameterChangeAction(parameter_change_actionPtr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionNewParameterChangeAction(parameter_change_actionPtr);
     return Ptr._wrap(ret, GovernanceAction);
   }
 
   static async new_hard_fork_initiation_action(hard_fork_initiation_action) {
     const hard_fork_initiation_actionPtr = Ptr._assertClass(hard_fork_initiation_action, HardForkInitiationAction);
-    const ret = await HaskellShelley.governanceActionNewHardForkInitiationAction(hard_fork_initiation_actionPtr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionNewHardForkInitiationAction(hard_fork_initiation_actionPtr);
     return Ptr._wrap(ret, GovernanceAction);
   }
 
   static async new_treasury_withdrawals_action(treasury_withdrawals_action) {
     const treasury_withdrawals_actionPtr = Ptr._assertClass(treasury_withdrawals_action, TreasuryWithdrawalsAction);
-    const ret = await HaskellShelley.governanceActionNewTreasuryWithdrawalsAction(treasury_withdrawals_actionPtr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionNewTreasuryWithdrawalsAction(treasury_withdrawals_actionPtr);
     return Ptr._wrap(ret, GovernanceAction);
   }
 
   static async new_no_confidence_action(no_confidence_action) {
     const no_confidence_actionPtr = Ptr._assertClass(no_confidence_action, NoConfidenceAction);
-    const ret = await HaskellShelley.governanceActionNewNoConfidenceAction(no_confidence_actionPtr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionNewNoConfidenceAction(no_confidence_actionPtr);
     return Ptr._wrap(ret, GovernanceAction);
   }
 
   static async new_new_committee_action(new_committee_action) {
     const new_committee_actionPtr = Ptr._assertClass(new_committee_action, UpdateCommitteeAction);
-    const ret = await HaskellShelley.governanceActionNewNewCommitteeAction(new_committee_actionPtr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionNewNewCommitteeAction(new_committee_actionPtr);
     return Ptr._wrap(ret, GovernanceAction);
   }
 
   static async new_new_constitution_action(new_constitution_action) {
     const new_constitution_actionPtr = Ptr._assertClass(new_constitution_action, NewConstitutionAction);
-    const ret = await HaskellShelley.governanceActionNewNewConstitutionAction(new_constitution_actionPtr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionNewNewConstitutionAction(new_constitution_actionPtr);
     return Ptr._wrap(ret, GovernanceAction);
   }
 
   static async new_info_action(info_action) {
     const info_actionPtr = Ptr._assertClass(info_action, InfoAction);
-    const ret = await HaskellShelley.governanceActionNewInfoAction(info_actionPtr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionNewInfoAction(info_actionPtr);
     return Ptr._wrap(ret, GovernanceAction);
   }
 
   async kind() {
-    const ret = await HaskellShelley.governanceActionKind(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionKind(this.ptr);
     return ret;
   }
 
   async as_parameter_change_action() {
-    const ret = await HaskellShelley.governanceActionAsParameterChangeAction(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionAsParameterChangeAction(this.ptr);
     return Ptr._wrap(ret, ParameterChangeAction);
   }
 
   async as_hard_fork_initiation_action() {
-    const ret = await HaskellShelley.governanceActionAsHardForkInitiationAction(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionAsHardForkInitiationAction(this.ptr);
     return Ptr._wrap(ret, HardForkInitiationAction);
   }
 
   async as_treasury_withdrawals_action() {
-    const ret = await HaskellShelley.governanceActionAsTreasuryWithdrawalsAction(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionAsTreasuryWithdrawalsAction(this.ptr);
     return Ptr._wrap(ret, TreasuryWithdrawalsAction);
   }
 
   async as_no_confidence_action() {
-    const ret = await HaskellShelley.governanceActionAsNoConfidenceAction(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionAsNoConfidenceAction(this.ptr);
     return Ptr._wrap(ret, NoConfidenceAction);
   }
 
   async as_new_committee_action() {
-    const ret = await HaskellShelley.governanceActionAsNewCommitteeAction(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionAsNewCommitteeAction(this.ptr);
     return Ptr._wrap(ret, UpdateCommitteeAction);
   }
 
   async as_new_constitution_action() {
-    const ret = await HaskellShelley.governanceActionAsNewConstitutionAction(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionAsNewConstitutionAction(this.ptr);
     return Ptr._wrap(ret, NewConstitutionAction);
   }
 
   async as_info_action() {
-    const ret = await HaskellShelley.governanceActionAsInfoAction(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionAsInfoAction(this.ptr);
     return Ptr._wrap(ret, InfoAction);
   }
 
@@ -3351,48 +3578,48 @@ export class GovernanceAction extends Ptr {
 
 export class GovernanceActionId extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.governanceActionIdToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionIdToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.governanceActionIdFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_governanceActionIdFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, GovernanceActionId);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.governanceActionIdToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionIdToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.governanceActionIdFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_governanceActionIdFromHex(hex_str);
     return Ptr._wrap(ret, GovernanceActionId);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.governanceActionIdToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionIdToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.governanceActionIdFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_governanceActionIdFromJson(json);
     return Ptr._wrap(ret, GovernanceActionId);
   }
 
   async transaction_id() {
-    const ret = await HaskellShelley.governanceActionIdTransactionId(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionIdTransactionId(this.ptr);
     return Ptr._wrap(ret, TransactionHash);
   }
 
   async index() {
-    const ret = await HaskellShelley.governanceActionIdIndex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionIdIndex(this.ptr);
     return ret;
   }
 
   static async new(transaction_id, index) {
     const transaction_idPtr = Ptr._assertClass(transaction_id, TransactionHash);
-    const ret = await HaskellShelley.governanceActionIdNew(transaction_idPtr, index);
+    const ret = await HaskellShelley.csl_bridge_governanceActionIdNew(transaction_idPtr, index);
     return Ptr._wrap(ret, GovernanceActionId);
   }
 
@@ -3401,33 +3628,33 @@ export class GovernanceActionId extends Ptr {
 
 export class GovernanceActionIds extends Ptr {
   async to_json() {
-    const ret = await HaskellShelley.governanceActionIdsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionIdsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.governanceActionIdsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_governanceActionIdsFromJson(json);
     return Ptr._wrap(ret, GovernanceActionIds);
   }
 
   static async new() {
-    const ret = await HaskellShelley.governanceActionIdsNew();
+    const ret = await HaskellShelley.csl_bridge_governanceActionIdsNew();
     return Ptr._wrap(ret, GovernanceActionIds);
   }
 
   add(governance_action_id) {
     const governance_action_idPtr = Ptr._assertClass(governance_action_id, GovernanceActionId);
-    const ret = HaskellShelley.governanceActionIdsAdd(this.ptr, governance_action_idPtr);
+    const ret = HaskellShelley.csl_bridge_governanceActionIdsAdd(this.ptr, governance_action_idPtr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.governanceActionIdsGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_governanceActionIdsGet(this.ptr, index);
     return Ptr._wrap(ret, GovernanceActionId);
   }
 
   async len() {
-    const ret = await HaskellShelley.governanceActionIdsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_governanceActionIdsLen(this.ptr);
     return ret;
   }
 
@@ -3436,55 +3663,55 @@ export class GovernanceActionIds extends Ptr {
 
 export class HardForkInitiationAction extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.hardForkInitiationActionToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_hardForkInitiationActionToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.hardForkInitiationActionFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_hardForkInitiationActionFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, HardForkInitiationAction);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.hardForkInitiationActionToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_hardForkInitiationActionToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.hardForkInitiationActionFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_hardForkInitiationActionFromHex(hex_str);
     return Ptr._wrap(ret, HardForkInitiationAction);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.hardForkInitiationActionToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_hardForkInitiationActionToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.hardForkInitiationActionFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_hardForkInitiationActionFromJson(json);
     return Ptr._wrap(ret, HardForkInitiationAction);
   }
 
   async gov_action_id() {
-    const ret = await HaskellShelley.hardForkInitiationActionGovActionId(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_hardForkInitiationActionGovActionId(this.ptr);
     return Ptr._wrap(ret, GovernanceActionId);
   }
 
   async protocol_version() {
-    const ret = await HaskellShelley.hardForkInitiationActionProtocolVersion(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_hardForkInitiationActionProtocolVersion(this.ptr);
     return Ptr._wrap(ret, ProtocolVersion);
   }
 
   static async new(protocol_version) {
     const protocol_versionPtr = Ptr._assertClass(protocol_version, ProtocolVersion);
-    const ret = await HaskellShelley.hardForkInitiationActionNew(protocol_versionPtr);
+    const ret = await HaskellShelley.csl_bridge_hardForkInitiationActionNew(protocol_versionPtr);
     return Ptr._wrap(ret, HardForkInitiationAction);
   }
 
   static async new_with_action_id(gov_action_id, protocol_version) {
     const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
     const protocol_versionPtr = Ptr._assertClass(protocol_version, ProtocolVersion);
-    const ret = await HaskellShelley.hardForkInitiationActionNewWithActionId(gov_action_idPtr, protocol_versionPtr);
+    const ret = await HaskellShelley.csl_bridge_hardForkInitiationActionNewWithActionId(gov_action_idPtr, protocol_versionPtr);
     return Ptr._wrap(ret, HardForkInitiationAction);
   }
 
@@ -3493,49 +3720,49 @@ export class HardForkInitiationAction extends Ptr {
 
 export class Header extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.headerToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.headerFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_headerFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Header);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.headerToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.headerFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_headerFromHex(hex_str);
     return Ptr._wrap(ret, Header);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.headerToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.headerFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_headerFromJson(json);
     return Ptr._wrap(ret, Header);
   }
 
   async header_body() {
-    const ret = await HaskellShelley.headerHeaderBody(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerHeaderBody(this.ptr);
     return Ptr._wrap(ret, HeaderBody);
   }
 
   async body_signature() {
-    const ret = await HaskellShelley.headerBodySignature(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodySignature(this.ptr);
     return Ptr._wrap(ret, KESSignature);
   }
 
   static async new(header_body, body_signature) {
     const header_bodyPtr = Ptr._assertClass(header_body, HeaderBody);
     const body_signaturePtr = Ptr._assertClass(body_signature, KESSignature);
-    const ret = await HaskellShelley.headerNew(header_bodyPtr, body_signaturePtr);
+    const ret = await HaskellShelley.csl_bridge_headerNew(header_bodyPtr, body_signaturePtr);
     return Ptr._wrap(ret, Header);
   }
 
@@ -3544,107 +3771,107 @@ export class Header extends Ptr {
 
 export class HeaderBody extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.headerBodyToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.headerBodyFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_headerBodyFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, HeaderBody);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.headerBodyToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.headerBodyFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_headerBodyFromHex(hex_str);
     return Ptr._wrap(ret, HeaderBody);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.headerBodyToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.headerBodyFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_headerBodyFromJson(json);
     return Ptr._wrap(ret, HeaderBody);
   }
 
   async block_number() {
-    const ret = await HaskellShelley.headerBodyBlockNumber(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyBlockNumber(this.ptr);
     return ret;
   }
 
   async slot() {
-    const ret = await HaskellShelley.headerBodySlot(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodySlot(this.ptr);
     return ret;
   }
 
   async slot_bignum() {
-    const ret = await HaskellShelley.headerBodySlotBignum(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodySlotBignum(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async prev_hash() {
-    const ret = await HaskellShelley.headerBodyPrevHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyPrevHash(this.ptr);
     return Ptr._wrap(ret, BlockHash);
   }
 
   async issuer_vkey() {
-    const ret = await HaskellShelley.headerBodyIssuerVkey(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyIssuerVkey(this.ptr);
     return Ptr._wrap(ret, Vkey);
   }
 
   async vrf_vkey() {
-    const ret = await HaskellShelley.headerBodyVrfVkey(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyVrfVkey(this.ptr);
     return Ptr._wrap(ret, VRFVKey);
   }
 
   async has_nonce_and_leader_vrf() {
-    const ret = await HaskellShelley.headerBodyHasNonceAndLeaderVrf(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyHasNonceAndLeaderVrf(this.ptr);
     return ret;
   }
 
   async nonce_vrf_or_nothing() {
-    const ret = await HaskellShelley.headerBodyNonceVrfOrNothing(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyNonceVrfOrNothing(this.ptr);
     return Ptr._wrap(ret, VRFCert);
   }
 
   async leader_vrf_or_nothing() {
-    const ret = await HaskellShelley.headerBodyLeaderVrfOrNothing(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyLeaderVrfOrNothing(this.ptr);
     return Ptr._wrap(ret, VRFCert);
   }
 
   async has_vrf_result() {
-    const ret = await HaskellShelley.headerBodyHasVrfResult(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyHasVrfResult(this.ptr);
     return ret;
   }
 
   async vrf_result_or_nothing() {
-    const ret = await HaskellShelley.headerBodyVrfResultOrNothing(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyVrfResultOrNothing(this.ptr);
     return Ptr._wrap(ret, VRFCert);
   }
 
   async block_body_size() {
-    const ret = await HaskellShelley.headerBodyBlockBodySize(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyBlockBodySize(this.ptr);
     return ret;
   }
 
   async block_body_hash() {
-    const ret = await HaskellShelley.headerBodyBlockBodyHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyBlockBodyHash(this.ptr);
     return Ptr._wrap(ret, BlockHash);
   }
 
   async operational_cert() {
-    const ret = await HaskellShelley.headerBodyOperationalCert(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyOperationalCert(this.ptr);
     return Ptr._wrap(ret, OperationalCert);
   }
 
   async protocol_version() {
-    const ret = await HaskellShelley.headerBodyProtocolVersion(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_headerBodyProtocolVersion(this.ptr);
     return Ptr._wrap(ret, ProtocolVersion);
   }
 
@@ -3657,11 +3884,11 @@ export class HeaderBody extends Ptr {
     const operational_certPtr = Ptr._assertClass(operational_cert, OperationalCert);
     const protocol_versionPtr = Ptr._assertClass(protocol_version, ProtocolVersion);
     if(prev_hash == null) {
-      const ret = await HaskellShelley.headerBodyNew(block_number, slot, issuer_vkeyPtr, vrf_vkeyPtr, vrf_resultPtr, block_body_size, block_body_hashPtr, operational_certPtr, protocol_versionPtr);
+      const ret = await HaskellShelley.csl_bridge_headerBodyNew(block_number, slot, issuer_vkeyPtr, vrf_vkeyPtr, vrf_resultPtr, block_body_size, block_body_hashPtr, operational_certPtr, protocol_versionPtr);
       return Ptr._wrap(ret, HeaderBody);
     }
     if(prev_hash != null) {
-      const ret = await HaskellShelley.headerBodyNewWithPrevHash(block_number, slot, prev_hashPtr, issuer_vkeyPtr, vrf_vkeyPtr, vrf_resultPtr, block_body_size, block_body_hashPtr, operational_certPtr, protocol_versionPtr);
+      const ret = await HaskellShelley.csl_bridge_headerBodyNewWithPrevHash(block_number, slot, prev_hashPtr, issuer_vkeyPtr, vrf_vkeyPtr, vrf_resultPtr, block_body_size, block_body_hashPtr, operational_certPtr, protocol_versionPtr);
       return Ptr._wrap(ret, HeaderBody);
     }
   }
@@ -3676,11 +3903,11 @@ export class HeaderBody extends Ptr {
     const operational_certPtr = Ptr._assertClass(operational_cert, OperationalCert);
     const protocol_versionPtr = Ptr._assertClass(protocol_version, ProtocolVersion);
     if(prev_hash == null) {
-      const ret = await HaskellShelley.headerBodyNewHeaderbody(block_number, slotPtr, issuer_vkeyPtr, vrf_vkeyPtr, vrf_resultPtr, block_body_size, block_body_hashPtr, operational_certPtr, protocol_versionPtr);
+      const ret = await HaskellShelley.csl_bridge_headerBodyNewHeaderbody(block_number, slotPtr, issuer_vkeyPtr, vrf_vkeyPtr, vrf_resultPtr, block_body_size, block_body_hashPtr, operational_certPtr, protocol_versionPtr);
       return Ptr._wrap(ret, HeaderBody);
     }
     if(prev_hash != null) {
-      const ret = await HaskellShelley.headerBodyNewHeaderbodyWithPrevHash(block_number, slotPtr, prev_hashPtr, issuer_vkeyPtr, vrf_vkeyPtr, vrf_resultPtr, block_body_size, block_body_hashPtr, operational_certPtr, protocol_versionPtr);
+      const ret = await HaskellShelley.csl_bridge_headerBodyNewHeaderbodyWithPrevHash(block_number, slotPtr, prev_hashPtr, issuer_vkeyPtr, vrf_vkeyPtr, vrf_resultPtr, block_body_size, block_body_hashPtr, operational_certPtr, protocol_versionPtr);
       return Ptr._wrap(ret, HeaderBody);
     }
   }
@@ -3690,7 +3917,7 @@ export class HeaderBody extends Ptr {
 
 export class InfoAction extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.infoActionNew();
+    const ret = await HaskellShelley.csl_bridge_infoActionNew();
     return Ptr._wrap(ret, InfoAction);
   }
 
@@ -3699,89 +3926,89 @@ export class InfoAction extends Ptr {
 
 export class Int extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.intToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_intToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.intFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_intFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Int);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.intToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_intToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.intFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_intFromHex(hex_str);
     return Ptr._wrap(ret, Int);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.intToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_intToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.intFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_intFromJson(json);
     return Ptr._wrap(ret, Int);
   }
 
   static async new(x) {
     const xPtr = Ptr._assertClass(x, BigNum);
-    const ret = await HaskellShelley.intNew(xPtr);
+    const ret = await HaskellShelley.csl_bridge_intNew(xPtr);
     return Ptr._wrap(ret, Int);
   }
 
   static async new_negative(x) {
     const xPtr = Ptr._assertClass(x, BigNum);
-    const ret = await HaskellShelley.intNewNegative(xPtr);
+    const ret = await HaskellShelley.csl_bridge_intNewNegative(xPtr);
     return Ptr._wrap(ret, Int);
   }
 
   static async new_i32(x) {
-    const ret = await HaskellShelley.intNewI32(x);
+    const ret = await HaskellShelley.csl_bridge_intNewI32(x);
     return Ptr._wrap(ret, Int);
   }
 
   async is_positive() {
-    const ret = await HaskellShelley.intIsPositive(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_intIsPositive(this.ptr);
     return ret;
   }
 
   async as_positive() {
-    const ret = await HaskellShelley.intAsPositive(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_intAsPositive(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async as_negative() {
-    const ret = await HaskellShelley.intAsNegative(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_intAsNegative(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async as_i32() {
-    const ret = await HaskellShelley.intAsI32(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_intAsI32(this.ptr);
     return ret;
   }
 
   async as_i32_or_nothing() {
-    const ret = await HaskellShelley.intAsI32OrNothing(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_intAsI32OrNothing(this.ptr);
     return ret;
   }
 
   async as_i32_or_fail() {
-    const ret = await HaskellShelley.intAsI32OrFail(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_intAsI32OrFail(this.ptr);
     return ret;
   }
 
   async to_str() {
-    const ret = await HaskellShelley.intToStr(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_intToStr(this.ptr);
     return ret;
   }
 
   static async from_str(string) {
-    const ret = await HaskellShelley.intFromStr(string);
+    const ret = await HaskellShelley.csl_bridge_intFromStr(string);
     return Ptr._wrap(ret, Int);
   }
 
@@ -3790,42 +4017,42 @@ export class Int extends Ptr {
 
 export class Ipv4 extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.ipv4ToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ipv4ToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.ipv4FromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_ipv4FromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Ipv4);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.ipv4ToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ipv4ToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.ipv4FromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_ipv4FromHex(hex_str);
     return Ptr._wrap(ret, Ipv4);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.ipv4ToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ipv4ToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.ipv4FromJson(json);
+    const ret = await HaskellShelley.csl_bridge_ipv4FromJson(json);
     return Ptr._wrap(ret, Ipv4);
   }
 
   static async new(data) {
-    const ret = await HaskellShelley.ipv4New(b64FromUint8Array(data));
+    const ret = await HaskellShelley.csl_bridge_ipv4New(b64FromUint8Array(data));
     return Ptr._wrap(ret, Ipv4);
   }
 
   async ip() {
-    const ret = await HaskellShelley.ipv4Ip(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ipv4Ip(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
@@ -3834,42 +4061,42 @@ export class Ipv4 extends Ptr {
 
 export class Ipv6 extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.ipv6ToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ipv6ToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.ipv6FromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_ipv6FromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Ipv6);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.ipv6ToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ipv6ToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.ipv6FromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_ipv6FromHex(hex_str);
     return Ptr._wrap(ret, Ipv6);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.ipv6ToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ipv6ToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.ipv6FromJson(json);
+    const ret = await HaskellShelley.csl_bridge_ipv6FromJson(json);
     return Ptr._wrap(ret, Ipv6);
   }
 
   static async new(data) {
-    const ret = await HaskellShelley.ipv6New(b64FromUint8Array(data));
+    const ret = await HaskellShelley.csl_bridge_ipv6New(b64FromUint8Array(data));
     return Ptr._wrap(ret, Ipv6);
   }
 
   async ip() {
-    const ret = await HaskellShelley.ipv6Ip(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_ipv6Ip(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
@@ -3878,12 +4105,12 @@ export class Ipv6 extends Ptr {
 
 export class KESSignature extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.kESSignatureToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_kESSignatureToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.kESSignatureFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_kESSignatureFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, KESSignature);
   }
 
@@ -3892,32 +4119,32 @@ export class KESSignature extends Ptr {
 
 export class KESVKey extends Ptr {
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.kESVKeyFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_kESVKeyFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, KESVKey);
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.kESVKeyToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_kESVKeyToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_bech32(prefix) {
-    const ret = await HaskellShelley.kESVKeyToBech32(this.ptr, prefix);
+    const ret = await HaskellShelley.csl_bridge_kESVKeyToBech32(this.ptr, prefix);
     return ret;
   }
 
   static async from_bech32(bech_str) {
-    const ret = await HaskellShelley.kESVKeyFromBech32(bech_str);
+    const ret = await HaskellShelley.csl_bridge_kESVKeyFromBech32(bech_str);
     return Ptr._wrap(ret, KESVKey);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.kESVKeyToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_kESVKeyToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex) {
-    const ret = await HaskellShelley.kESVKeyFromHex(hex);
+    const ret = await HaskellShelley.csl_bridge_kESVKeyFromHex(hex);
     return Ptr._wrap(ret, KESVKey);
   }
 
@@ -3926,52 +4153,52 @@ export class KESVKey extends Ptr {
 
 export class Language extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.languageToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_languageToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.languageFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_languageFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Language);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.languageToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_languageToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.languageFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_languageFromHex(hex_str);
     return Ptr._wrap(ret, Language);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.languageToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_languageToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.languageFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_languageFromJson(json);
     return Ptr._wrap(ret, Language);
   }
 
   static async new_plutus_v1() {
-    const ret = await HaskellShelley.languageNewPlutusV1();
+    const ret = await HaskellShelley.csl_bridge_languageNewPlutusV1();
     return Ptr._wrap(ret, Language);
   }
 
   static async new_plutus_v2() {
-    const ret = await HaskellShelley.languageNewPlutusV2();
+    const ret = await HaskellShelley.csl_bridge_languageNewPlutusV2();
     return Ptr._wrap(ret, Language);
   }
 
   static async new_plutus_v3() {
-    const ret = await HaskellShelley.languageNewPlutusV3();
+    const ret = await HaskellShelley.csl_bridge_languageNewPlutusV3();
     return Ptr._wrap(ret, Language);
   }
 
   async kind() {
-    const ret = await HaskellShelley.languageKind(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_languageKind(this.ptr);
     return ret;
   }
 
@@ -3980,28 +4207,28 @@ export class Language extends Ptr {
 
 export class Languages extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.languagesNew();
+    const ret = await HaskellShelley.csl_bridge_languagesNew();
     return Ptr._wrap(ret, Languages);
   }
 
   async len() {
-    const ret = await HaskellShelley.languagesLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_languagesLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.languagesGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_languagesGet(this.ptr, index);
     return Ptr._wrap(ret, Language);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, Language);
-    const ret = HaskellShelley.languagesAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_languagesAdd(this.ptr, elemPtr);
     return ret;
   }
 
   static async list() {
-    const ret = await HaskellShelley.languagesList();
+    const ret = await HaskellShelley.csl_bridge_languagesList();
     return Ptr._wrap(ret, Languages);
   }
 
@@ -4010,17 +4237,17 @@ export class Languages extends Ptr {
 
 export class LegacyDaedalusPrivateKey extends Ptr {
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.legacyDaedalusPrivateKeyFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_legacyDaedalusPrivateKeyFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, LegacyDaedalusPrivateKey);
   }
 
   async as_bytes() {
-    const ret = await HaskellShelley.legacyDaedalusPrivateKeyAsBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_legacyDaedalusPrivateKeyAsBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async chaincode() {
-    const ret = await HaskellShelley.legacyDaedalusPrivateKeyChaincode(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_legacyDaedalusPrivateKeyChaincode(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
@@ -4029,19 +4256,19 @@ export class LegacyDaedalusPrivateKey extends Ptr {
 
 export class LinearFee extends Ptr {
   async constant() {
-    const ret = await HaskellShelley.linearFeeConstant(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_linearFeeConstant(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async coefficient() {
-    const ret = await HaskellShelley.linearFeeCoefficient(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_linearFeeCoefficient(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   static async new(coefficient, constant) {
     const coefficientPtr = Ptr._assertClass(coefficient, BigNum);
     const constantPtr = Ptr._assertClass(constant, BigNum);
-    const ret = await HaskellShelley.linearFeeNew(coefficientPtr, constantPtr);
+    const ret = await HaskellShelley.csl_bridge_linearFeeNew(coefficientPtr, constantPtr);
     return Ptr._wrap(ret, LinearFee);
   }
 
@@ -4050,60 +4277,60 @@ export class LinearFee extends Ptr {
 
 export class MIRToStakeCredentials extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.mIRToStakeCredentialsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mIRToStakeCredentialsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.mIRToStakeCredentialsFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_mIRToStakeCredentialsFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, MIRToStakeCredentials);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.mIRToStakeCredentialsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mIRToStakeCredentialsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.mIRToStakeCredentialsFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_mIRToStakeCredentialsFromHex(hex_str);
     return Ptr._wrap(ret, MIRToStakeCredentials);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.mIRToStakeCredentialsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mIRToStakeCredentialsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.mIRToStakeCredentialsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_mIRToStakeCredentialsFromJson(json);
     return Ptr._wrap(ret, MIRToStakeCredentials);
   }
 
   static async new() {
-    const ret = await HaskellShelley.mIRToStakeCredentialsNew();
+    const ret = await HaskellShelley.csl_bridge_mIRToStakeCredentialsNew();
     return Ptr._wrap(ret, MIRToStakeCredentials);
   }
 
   async len() {
-    const ret = await HaskellShelley.mIRToStakeCredentialsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mIRToStakeCredentialsLen(this.ptr);
     return ret;
   }
 
   async insert(cred, delta) {
     const credPtr = Ptr._assertClass(cred, Credential);
     const deltaPtr = Ptr._assertClass(delta, Int);
-    const ret = await HaskellShelley.mIRToStakeCredentialsInsert(this.ptr, credPtr, deltaPtr);
+    const ret = await HaskellShelley.csl_bridge_mIRToStakeCredentialsInsert(this.ptr, credPtr, deltaPtr);
     return Ptr._wrap(ret, Int);
   }
 
   async get(cred) {
     const credPtr = Ptr._assertClass(cred, Credential);
-    const ret = await HaskellShelley.mIRToStakeCredentialsGet(this.ptr, credPtr);
+    const ret = await HaskellShelley.csl_bridge_mIRToStakeCredentialsGet(this.ptr, credPtr);
     return Ptr._wrap(ret, Int);
   }
 
   async keys() {
-    const ret = await HaskellShelley.mIRToStakeCredentialsKeys(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mIRToStakeCredentialsKeys(this.ptr);
     return Ptr._wrap(ret, Credentials);
   }
 
@@ -4112,18 +4339,18 @@ export class MIRToStakeCredentials extends Ptr {
 
 export class MalformedAddress extends Ptr {
   async original_bytes() {
-    const ret = await HaskellShelley.malformedAddressOriginalBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_malformedAddressOriginalBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_address() {
-    const ret = await HaskellShelley.malformedAddressToAddress(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_malformedAddressToAddress(this.ptr);
     return Ptr._wrap(ret, Address);
   }
 
   static async from_address(addr) {
     const addrPtr = Ptr._assertClass(addr, Address);
-    const ret = await HaskellShelley.malformedAddressFromAddress(addrPtr);
+    const ret = await HaskellShelley.csl_bridge_malformedAddressFromAddress(addrPtr);
     return Ptr._wrap(ret, MalformedAddress);
   }
 
@@ -4132,43 +4359,43 @@ export class MalformedAddress extends Ptr {
 
 export class MetadataList extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.metadataListToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_metadataListToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.metadataListFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_metadataListFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, MetadataList);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.metadataListToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_metadataListToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.metadataListFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_metadataListFromHex(hex_str);
     return Ptr._wrap(ret, MetadataList);
   }
 
   static async new() {
-    const ret = await HaskellShelley.metadataListNew();
+    const ret = await HaskellShelley.csl_bridge_metadataListNew();
     return Ptr._wrap(ret, MetadataList);
   }
 
   async len() {
-    const ret = await HaskellShelley.metadataListLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_metadataListLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.metadataListGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_metadataListGet(this.ptr, index);
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, TransactionMetadatum);
-    const ret = HaskellShelley.metadataListAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_metadataListAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -4177,78 +4404,78 @@ export class MetadataList extends Ptr {
 
 export class MetadataMap extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.metadataMapToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_metadataMapToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.metadataMapFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_metadataMapFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, MetadataMap);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.metadataMapToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_metadataMapToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.metadataMapFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_metadataMapFromHex(hex_str);
     return Ptr._wrap(ret, MetadataMap);
   }
 
   static async new() {
-    const ret = await HaskellShelley.metadataMapNew();
+    const ret = await HaskellShelley.csl_bridge_metadataMapNew();
     return Ptr._wrap(ret, MetadataMap);
   }
 
   async len() {
-    const ret = await HaskellShelley.metadataMapLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_metadataMapLen(this.ptr);
     return ret;
   }
 
   async insert(key, value) {
     const keyPtr = Ptr._assertClass(key, TransactionMetadatum);
     const valuePtr = Ptr._assertClass(value, TransactionMetadatum);
-    const ret = await HaskellShelley.metadataMapInsert(this.ptr, keyPtr, valuePtr);
+    const ret = await HaskellShelley.csl_bridge_metadataMapInsert(this.ptr, keyPtr, valuePtr);
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   async insert_str(key, value) {
     const valuePtr = Ptr._assertClass(value, TransactionMetadatum);
-    const ret = await HaskellShelley.metadataMapInsertStr(this.ptr, key, valuePtr);
+    const ret = await HaskellShelley.csl_bridge_metadataMapInsertStr(this.ptr, key, valuePtr);
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   async insert_i32(key, value) {
     const valuePtr = Ptr._assertClass(value, TransactionMetadatum);
-    const ret = await HaskellShelley.metadataMapInsertI32(this.ptr, key, valuePtr);
+    const ret = await HaskellShelley.csl_bridge_metadataMapInsertI32(this.ptr, key, valuePtr);
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   async get(key) {
     const keyPtr = Ptr._assertClass(key, TransactionMetadatum);
-    const ret = await HaskellShelley.metadataMapGet(this.ptr, keyPtr);
+    const ret = await HaskellShelley.csl_bridge_metadataMapGet(this.ptr, keyPtr);
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   async get_str(key) {
-    const ret = await HaskellShelley.metadataMapGetStr(this.ptr, key);
+    const ret = await HaskellShelley.csl_bridge_metadataMapGetStr(this.ptr, key);
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   async get_i32(key) {
-    const ret = await HaskellShelley.metadataMapGetI32(this.ptr, key);
+    const ret = await HaskellShelley.csl_bridge_metadataMapGetI32(this.ptr, key);
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   async has(key) {
     const keyPtr = Ptr._assertClass(key, TransactionMetadatum);
-    const ret = await HaskellShelley.metadataMapHas(this.ptr, keyPtr);
+    const ret = await HaskellShelley.csl_bridge_metadataMapHas(this.ptr, keyPtr);
     return ret;
   }
 
   async keys() {
-    const ret = await HaskellShelley.metadataMapKeys(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_metadataMapKeys(this.ptr);
     return Ptr._wrap(ret, MetadataList);
   }
 
@@ -4257,77 +4484,77 @@ export class MetadataMap extends Ptr {
 
 export class Mint extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.mintToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.mintFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_mintFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Mint);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.mintToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.mintFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_mintFromHex(hex_str);
     return Ptr._wrap(ret, Mint);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.mintToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.mintFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_mintFromJson(json);
     return Ptr._wrap(ret, Mint);
   }
 
   static async new() {
-    const ret = await HaskellShelley.mintNew();
+    const ret = await HaskellShelley.csl_bridge_mintNew();
     return Ptr._wrap(ret, Mint);
   }
 
   static async new_from_entry(key, value) {
     const keyPtr = Ptr._assertClass(key, ScriptHash);
     const valuePtr = Ptr._assertClass(value, MintAssets);
-    const ret = await HaskellShelley.mintNewFromEntry(keyPtr, valuePtr);
+    const ret = await HaskellShelley.csl_bridge_mintNewFromEntry(keyPtr, valuePtr);
     return Ptr._wrap(ret, Mint);
   }
 
   async len() {
-    const ret = await HaskellShelley.mintLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintLen(this.ptr);
     return ret;
   }
 
   async insert(key, value) {
     const keyPtr = Ptr._assertClass(key, ScriptHash);
     const valuePtr = Ptr._assertClass(value, MintAssets);
-    const ret = await HaskellShelley.mintInsert(this.ptr, keyPtr, valuePtr);
+    const ret = await HaskellShelley.csl_bridge_mintInsert(this.ptr, keyPtr, valuePtr);
     return Ptr._wrap(ret, MintAssets);
   }
 
   async get(key) {
     const keyPtr = Ptr._assertClass(key, ScriptHash);
-    const ret = await HaskellShelley.mintGet(this.ptr, keyPtr);
+    const ret = await HaskellShelley.csl_bridge_mintGet(this.ptr, keyPtr);
     return Ptr._wrap(ret, MintsAssets);
   }
 
   async keys() {
-    const ret = await HaskellShelley.mintKeys(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintKeys(this.ptr);
     return Ptr._wrap(ret, ScriptHashes);
   }
 
   async as_positive_multiasset() {
-    const ret = await HaskellShelley.mintAsPositiveMultiasset(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintAsPositiveMultiasset(this.ptr);
     return Ptr._wrap(ret, MultiAsset);
   }
 
   async as_negative_multiasset() {
-    const ret = await HaskellShelley.mintAsNegativeMultiasset(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintAsNegativeMultiasset(this.ptr);
     return Ptr._wrap(ret, MultiAsset);
   }
 
@@ -4336,37 +4563,37 @@ export class Mint extends Ptr {
 
 export class MintAssets extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.mintAssetsNew();
+    const ret = await HaskellShelley.csl_bridge_mintAssetsNew();
     return Ptr._wrap(ret, MintAssets);
   }
 
   static async new_from_entry(key, value) {
     const keyPtr = Ptr._assertClass(key, AssetName);
     const valuePtr = Ptr._assertClass(value, Int);
-    const ret = await HaskellShelley.mintAssetsNewFromEntry(keyPtr, valuePtr);
+    const ret = await HaskellShelley.csl_bridge_mintAssetsNewFromEntry(keyPtr, valuePtr);
     return Ptr._wrap(ret, MintAssets);
   }
 
   async len() {
-    const ret = await HaskellShelley.mintAssetsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintAssetsLen(this.ptr);
     return ret;
   }
 
   async insert(key, value) {
     const keyPtr = Ptr._assertClass(key, AssetName);
     const valuePtr = Ptr._assertClass(value, Int);
-    const ret = await HaskellShelley.mintAssetsInsert(this.ptr, keyPtr, valuePtr);
+    const ret = await HaskellShelley.csl_bridge_mintAssetsInsert(this.ptr, keyPtr, valuePtr);
     return Ptr._wrap(ret, Int);
   }
 
   async get(key) {
     const keyPtr = Ptr._assertClass(key, AssetName);
-    const ret = await HaskellShelley.mintAssetsGet(this.ptr, keyPtr);
+    const ret = await HaskellShelley.csl_bridge_mintAssetsGet(this.ptr, keyPtr);
     return Ptr._wrap(ret, Int);
   }
 
   async keys() {
-    const ret = await HaskellShelley.mintAssetsKeys(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintAssetsKeys(this.ptr);
     return Ptr._wrap(ret, AssetNames);
   }
 
@@ -4375,7 +4602,7 @@ export class MintAssets extends Ptr {
 
 export class MintBuilder extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.mintBuilderNew();
+    const ret = await HaskellShelley.csl_bridge_mintBuilderNew();
     return Ptr._wrap(ret, MintBuilder);
   }
 
@@ -4383,7 +4610,7 @@ export class MintBuilder extends Ptr {
     const mintPtr = Ptr._assertClass(mint, MintWitness);
     const asset_namePtr = Ptr._assertClass(asset_name, AssetName);
     const amountPtr = Ptr._assertClass(amount, Int);
-    const ret = HaskellShelley.mintBuilderAddAsset(this.ptr, mintPtr, asset_namePtr, amountPtr);
+    const ret = HaskellShelley.csl_bridge_mintBuilderAddAsset(this.ptr, mintPtr, asset_namePtr, amountPtr);
     return ret;
   }
 
@@ -4391,42 +4618,42 @@ export class MintBuilder extends Ptr {
     const mintPtr = Ptr._assertClass(mint, MintWitness);
     const asset_namePtr = Ptr._assertClass(asset_name, AssetName);
     const amountPtr = Ptr._assertClass(amount, Int);
-    const ret = HaskellShelley.mintBuilderSetAsset(this.ptr, mintPtr, asset_namePtr, amountPtr);
+    const ret = HaskellShelley.csl_bridge_mintBuilderSetAsset(this.ptr, mintPtr, asset_namePtr, amountPtr);
     return ret;
   }
 
   async build() {
-    const ret = await HaskellShelley.mintBuilderBuild(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintBuilderBuild(this.ptr);
     return Ptr._wrap(ret, Mint);
   }
 
   async get_native_scripts() {
-    const ret = await HaskellShelley.mintBuilderGetNativeScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintBuilderGetNativeScripts(this.ptr);
     return Ptr._wrap(ret, NativeScripts);
   }
 
   async get_plutus_witnesses() {
-    const ret = await HaskellShelley.mintBuilderGetPlutusWitnesses(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintBuilderGetPlutusWitnesses(this.ptr);
     return Ptr._wrap(ret, PlutusWitnesses);
   }
 
   async get_ref_inputs() {
-    const ret = await HaskellShelley.mintBuilderGetRefInputs(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintBuilderGetRefInputs(this.ptr);
     return Ptr._wrap(ret, TransactionInputs);
   }
 
   async get_redeemers() {
-    const ret = await HaskellShelley.mintBuilderGetRedeemers(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintBuilderGetRedeemers(this.ptr);
     return Ptr._wrap(ret, Redeemers);
   }
 
   async has_plutus_scripts() {
-    const ret = await HaskellShelley.mintBuilderHasPlutusScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintBuilderHasPlutusScripts(this.ptr);
     return ret;
   }
 
   async has_native_scripts() {
-    const ret = await HaskellShelley.mintBuilderHasNativeScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintBuilderHasNativeScripts(this.ptr);
     return ret;
   }
 
@@ -4435,15 +4662,15 @@ export class MintBuilder extends Ptr {
 
 export class MintWitness extends Ptr {
   static async new_native_script(native_script) {
-    const native_scriptPtr = Ptr._assertClass(native_script, NativeScript);
-    const ret = await HaskellShelley.mintWitnessNewNativeScript(native_scriptPtr);
+    const native_scriptPtr = Ptr._assertClass(native_script, NativeScriptSource);
+    const ret = await HaskellShelley.csl_bridge_mintWitnessNewNativeScript(native_scriptPtr);
     return Ptr._wrap(ret, MintWitness);
   }
 
   static async new_plutus_script(plutus_script, redeemer) {
     const plutus_scriptPtr = Ptr._assertClass(plutus_script, PlutusScriptSource);
     const redeemerPtr = Ptr._assertClass(redeemer, Redeemer);
-    const ret = await HaskellShelley.mintWitnessNewPlutusScript(plutus_scriptPtr, redeemerPtr);
+    const ret = await HaskellShelley.csl_bridge_mintWitnessNewPlutusScript(plutus_scriptPtr, redeemerPtr);
     return Ptr._wrap(ret, MintWitness);
   }
 
@@ -4452,33 +4679,33 @@ export class MintWitness extends Ptr {
 
 export class MintsAssets extends Ptr {
   async to_json() {
-    const ret = await HaskellShelley.mintsAssetsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintsAssetsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.mintsAssetsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_mintsAssetsFromJson(json);
     return Ptr._wrap(ret, MintsAssets);
   }
 
   static async new() {
-    const ret = await HaskellShelley.mintsAssetsNew();
+    const ret = await HaskellShelley.csl_bridge_mintsAssetsNew();
     return Ptr._wrap(ret, MintsAssets);
   }
 
   add(mint_assets) {
     const mint_assetsPtr = Ptr._assertClass(mint_assets, MintAssets);
-    const ret = HaskellShelley.mintsAssetsAdd(this.ptr, mint_assetsPtr);
+    const ret = HaskellShelley.csl_bridge_mintsAssetsAdd(this.ptr, mint_assetsPtr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.mintsAssetsGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_mintsAssetsGet(this.ptr, index);
     return Ptr._wrap(ret, MintAssets);
   }
 
   async len() {
-    const ret = await HaskellShelley.mintsAssetsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_mintsAssetsLen(this.ptr);
     return ret;
   }
 
@@ -4487,64 +4714,64 @@ export class MintsAssets extends Ptr {
 
 export class MoveInstantaneousReward extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.moveInstantaneousRewardToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.moveInstantaneousRewardFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, MoveInstantaneousReward);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.moveInstantaneousRewardToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.moveInstantaneousRewardFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardFromHex(hex_str);
     return Ptr._wrap(ret, MoveInstantaneousReward);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.moveInstantaneousRewardToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.moveInstantaneousRewardFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardFromJson(json);
     return Ptr._wrap(ret, MoveInstantaneousReward);
   }
 
   static async new_to_other_pot(pot, amount) {
     const amountPtr = Ptr._assertClass(amount, BigNum);
-    const ret = await HaskellShelley.moveInstantaneousRewardNewToOtherPot(pot, amountPtr);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardNewToOtherPot(pot, amountPtr);
     return Ptr._wrap(ret, MoveInstantaneousReward);
   }
 
   static async new_to_stake_creds(pot, amounts) {
     const amountsPtr = Ptr._assertClass(amounts, MIRToStakeCredentials);
-    const ret = await HaskellShelley.moveInstantaneousRewardNewToStakeCreds(pot, amountsPtr);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardNewToStakeCreds(pot, amountsPtr);
     return Ptr._wrap(ret, MoveInstantaneousReward);
   }
 
   async pot() {
-    const ret = await HaskellShelley.moveInstantaneousRewardPot(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardPot(this.ptr);
     return ret;
   }
 
   async kind() {
-    const ret = await HaskellShelley.moveInstantaneousRewardKind(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardKind(this.ptr);
     return ret;
   }
 
   async as_to_other_pot() {
-    const ret = await HaskellShelley.moveInstantaneousRewardAsToOtherPot(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardAsToOtherPot(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async as_to_stake_creds() {
-    const ret = await HaskellShelley.moveInstantaneousRewardAsToStakeCreds(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardAsToStakeCreds(this.ptr);
     return Ptr._wrap(ret, MIRToStakeCredentials);
   }
 
@@ -4553,43 +4780,43 @@ export class MoveInstantaneousReward extends Ptr {
 
 export class MoveInstantaneousRewardsCert extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.moveInstantaneousRewardsCertToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardsCertToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.moveInstantaneousRewardsCertFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardsCertFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, MoveInstantaneousRewardsCert);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.moveInstantaneousRewardsCertToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardsCertToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.moveInstantaneousRewardsCertFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardsCertFromHex(hex_str);
     return Ptr._wrap(ret, MoveInstantaneousRewardsCert);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.moveInstantaneousRewardsCertToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardsCertToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.moveInstantaneousRewardsCertFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardsCertFromJson(json);
     return Ptr._wrap(ret, MoveInstantaneousRewardsCert);
   }
 
   async move_instantaneous_reward() {
-    const ret = await HaskellShelley.moveInstantaneousRewardsCertMoveInstantaneousReward(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardsCertMoveInstantaneousReward(this.ptr);
     return Ptr._wrap(ret, MoveInstantaneousReward);
   }
 
   static async new(move_instantaneous_reward) {
     const move_instantaneous_rewardPtr = Ptr._assertClass(move_instantaneous_reward, MoveInstantaneousReward);
-    const ret = await HaskellShelley.moveInstantaneousRewardsCertNew(move_instantaneous_rewardPtr);
+    const ret = await HaskellShelley.csl_bridge_moveInstantaneousRewardsCertNew(move_instantaneous_rewardPtr);
     return Ptr._wrap(ret, MoveInstantaneousRewardsCert);
   }
 
@@ -4598,55 +4825,55 @@ export class MoveInstantaneousRewardsCert extends Ptr {
 
 export class MultiAsset extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.multiAssetToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_multiAssetToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.multiAssetFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_multiAssetFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, MultiAsset);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.multiAssetToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_multiAssetToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.multiAssetFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_multiAssetFromHex(hex_str);
     return Ptr._wrap(ret, MultiAsset);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.multiAssetToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_multiAssetToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.multiAssetFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_multiAssetFromJson(json);
     return Ptr._wrap(ret, MultiAsset);
   }
 
   static async new() {
-    const ret = await HaskellShelley.multiAssetNew();
+    const ret = await HaskellShelley.csl_bridge_multiAssetNew();
     return Ptr._wrap(ret, MultiAsset);
   }
 
   async len() {
-    const ret = await HaskellShelley.multiAssetLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_multiAssetLen(this.ptr);
     return ret;
   }
 
   async insert(policy_id, assets) {
     const policy_idPtr = Ptr._assertClass(policy_id, ScriptHash);
     const assetsPtr = Ptr._assertClass(assets, Assets);
-    const ret = await HaskellShelley.multiAssetInsert(this.ptr, policy_idPtr, assetsPtr);
+    const ret = await HaskellShelley.csl_bridge_multiAssetInsert(this.ptr, policy_idPtr, assetsPtr);
     return Ptr._wrap(ret, Assets);
   }
 
   async get(policy_id) {
     const policy_idPtr = Ptr._assertClass(policy_id, ScriptHash);
-    const ret = await HaskellShelley.multiAssetGet(this.ptr, policy_idPtr);
+    const ret = await HaskellShelley.csl_bridge_multiAssetGet(this.ptr, policy_idPtr);
     return Ptr._wrap(ret, Assets);
   }
 
@@ -4654,25 +4881,25 @@ export class MultiAsset extends Ptr {
     const policy_idPtr = Ptr._assertClass(policy_id, ScriptHash);
     const asset_namePtr = Ptr._assertClass(asset_name, AssetName);
     const valuePtr = Ptr._assertClass(value, BigNum);
-    const ret = await HaskellShelley.multiAssetSetAsset(this.ptr, policy_idPtr, asset_namePtr, valuePtr);
+    const ret = await HaskellShelley.csl_bridge_multiAssetSetAsset(this.ptr, policy_idPtr, asset_namePtr, valuePtr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async get_asset(policy_id, asset_name) {
     const policy_idPtr = Ptr._assertClass(policy_id, ScriptHash);
     const asset_namePtr = Ptr._assertClass(asset_name, AssetName);
-    const ret = await HaskellShelley.multiAssetGetAsset(this.ptr, policy_idPtr, asset_namePtr);
+    const ret = await HaskellShelley.csl_bridge_multiAssetGetAsset(this.ptr, policy_idPtr, asset_namePtr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async keys() {
-    const ret = await HaskellShelley.multiAssetKeys(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_multiAssetKeys(this.ptr);
     return Ptr._wrap(ret, ScriptHashes);
   }
 
   async sub(rhs_ma) {
     const rhs_maPtr = Ptr._assertClass(rhs_ma, MultiAsset);
-    const ret = await HaskellShelley.multiAssetSub(this.ptr, rhs_maPtr);
+    const ret = await HaskellShelley.csl_bridge_multiAssetSub(this.ptr, rhs_maPtr);
     return Ptr._wrap(ret, MultiAsset);
   }
 
@@ -4681,43 +4908,43 @@ export class MultiAsset extends Ptr {
 
 export class MultiHostName extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.multiHostNameToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_multiHostNameToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.multiHostNameFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_multiHostNameFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, MultiHostName);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.multiHostNameToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_multiHostNameToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.multiHostNameFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_multiHostNameFromHex(hex_str);
     return Ptr._wrap(ret, MultiHostName);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.multiHostNameToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_multiHostNameToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.multiHostNameFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_multiHostNameFromJson(json);
     return Ptr._wrap(ret, MultiHostName);
   }
 
   async dns_name() {
-    const ret = await HaskellShelley.multiHostNameDnsName(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_multiHostNameDnsName(this.ptr);
     return Ptr._wrap(ret, DNSRecordSRV);
   }
 
   static async new(dns_name) {
     const dns_namePtr = Ptr._assertClass(dns_name, DNSRecordSRV);
-    const ret = await HaskellShelley.multiHostNameNew(dns_namePtr);
+    const ret = await HaskellShelley.csl_bridge_multiHostNameNew(dns_namePtr);
     return Ptr._wrap(ret, MultiHostName);
   }
 
@@ -4726,113 +4953,113 @@ export class MultiHostName extends Ptr {
 
 export class NativeScript extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.nativeScriptToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.nativeScriptFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_nativeScriptFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, NativeScript);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.nativeScriptToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.nativeScriptFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptFromHex(hex_str);
     return Ptr._wrap(ret, NativeScript);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.nativeScriptToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.nativeScriptFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptFromJson(json);
     return Ptr._wrap(ret, NativeScript);
   }
 
   async hash() {
-    const ret = await HaskellShelley.nativeScriptHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptHash(this.ptr);
     return Ptr._wrap(ret, ScriptHash);
   }
 
   static async new_script_pubkey(script_pubkey) {
     const script_pubkeyPtr = Ptr._assertClass(script_pubkey, ScriptPubkey);
-    const ret = await HaskellShelley.nativeScriptNewScriptPubkey(script_pubkeyPtr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptNewScriptPubkey(script_pubkeyPtr);
     return Ptr._wrap(ret, NativeScript);
   }
 
   static async new_script_all(script_all) {
     const script_allPtr = Ptr._assertClass(script_all, ScriptAll);
-    const ret = await HaskellShelley.nativeScriptNewScriptAll(script_allPtr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptNewScriptAll(script_allPtr);
     return Ptr._wrap(ret, NativeScript);
   }
 
   static async new_script_any(script_any) {
     const script_anyPtr = Ptr._assertClass(script_any, ScriptAny);
-    const ret = await HaskellShelley.nativeScriptNewScriptAny(script_anyPtr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptNewScriptAny(script_anyPtr);
     return Ptr._wrap(ret, NativeScript);
   }
 
   static async new_script_n_of_k(script_n_of_k) {
     const script_n_of_kPtr = Ptr._assertClass(script_n_of_k, ScriptNOfK);
-    const ret = await HaskellShelley.nativeScriptNewScriptNOfK(script_n_of_kPtr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptNewScriptNOfK(script_n_of_kPtr);
     return Ptr._wrap(ret, NativeScript);
   }
 
   static async new_timelock_start(timelock_start) {
     const timelock_startPtr = Ptr._assertClass(timelock_start, TimelockStart);
-    const ret = await HaskellShelley.nativeScriptNewTimelockStart(timelock_startPtr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptNewTimelockStart(timelock_startPtr);
     return Ptr._wrap(ret, NativeScript);
   }
 
   static async new_timelock_expiry(timelock_expiry) {
     const timelock_expiryPtr = Ptr._assertClass(timelock_expiry, TimelockExpiry);
-    const ret = await HaskellShelley.nativeScriptNewTimelockExpiry(timelock_expiryPtr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptNewTimelockExpiry(timelock_expiryPtr);
     return Ptr._wrap(ret, NativeScript);
   }
 
   async kind() {
-    const ret = await HaskellShelley.nativeScriptKind(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptKind(this.ptr);
     return ret;
   }
 
   async as_script_pubkey() {
-    const ret = await HaskellShelley.nativeScriptAsScriptPubkey(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptAsScriptPubkey(this.ptr);
     return Ptr._wrap(ret, ScriptPubkey);
   }
 
   async as_script_all() {
-    const ret = await HaskellShelley.nativeScriptAsScriptAll(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptAsScriptAll(this.ptr);
     return Ptr._wrap(ret, ScriptAll);
   }
 
   async as_script_any() {
-    const ret = await HaskellShelley.nativeScriptAsScriptAny(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptAsScriptAny(this.ptr);
     return Ptr._wrap(ret, ScriptAny);
   }
 
   async as_script_n_of_k() {
-    const ret = await HaskellShelley.nativeScriptAsScriptNOfK(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptAsScriptNOfK(this.ptr);
     return Ptr._wrap(ret, ScriptNOfK);
   }
 
   async as_timelock_start() {
-    const ret = await HaskellShelley.nativeScriptAsTimelockStart(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptAsTimelockStart(this.ptr);
     return Ptr._wrap(ret, TimelockStart);
   }
 
   async as_timelock_expiry() {
-    const ret = await HaskellShelley.nativeScriptAsTimelockExpiry(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptAsTimelockExpiry(this.ptr);
     return Ptr._wrap(ret, TimelockExpiry);
   }
 
   async get_required_signers() {
-    const ret = await HaskellShelley.nativeScriptGetRequiredSigners(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptGetRequiredSigners(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHashes);
   }
 
@@ -4842,20 +5069,25 @@ export class NativeScript extends Ptr {
 export class NativeScriptSource extends Ptr {
   static async new(script) {
     const scriptPtr = Ptr._assertClass(script, NativeScript);
-    const ret = await HaskellShelley.nativeScriptSourceNew(scriptPtr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptSourceNew(scriptPtr);
     return Ptr._wrap(ret, NativeScriptSource);
   }
 
-  static async new_ref_input(script_hash, input) {
+  static async new_ref_input(script_hash, input, script_size) {
     const script_hashPtr = Ptr._assertClass(script_hash, ScriptHash);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
-    const ret = await HaskellShelley.nativeScriptSourceNewRefInput(script_hashPtr, inputPtr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptSourceNewRefInput(script_hashPtr, inputPtr, script_size);
     return Ptr._wrap(ret, NativeScriptSource);
   }
 
   set_required_signers(key_hashes) {
     const key_hashesPtr = Ptr._assertClass(key_hashes, Ed25519KeyHashes);
-    const ret = HaskellShelley.nativeScriptSourceSetRequiredSigners(this.ptr, key_hashesPtr);
+    const ret = HaskellShelley.csl_bridge_nativeScriptSourceSetRequiredSigners(this.ptr, key_hashesPtr);
+    return ret;
+  }
+
+  async get_ref_script_size() {
+    const ret = await HaskellShelley.csl_bridge_nativeScriptSourceGetRefScriptSize(this.ptr);
     return ret;
   }
 
@@ -4864,53 +5096,53 @@ export class NativeScriptSource extends Ptr {
 
 export class NativeScripts extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.nativeScriptsNew();
+    const ret = await HaskellShelley.csl_bridge_nativeScriptsNew();
     return Ptr._wrap(ret, NativeScripts);
   }
 
   async len() {
-    const ret = await HaskellShelley.nativeScriptsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptsLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.nativeScriptsGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptsGet(this.ptr, index);
     return Ptr._wrap(ret, NativeScript);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, NativeScript);
-    const ret = HaskellShelley.nativeScriptsAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_nativeScriptsAdd(this.ptr, elemPtr);
     return ret;
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.nativeScriptsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.nativeScriptsFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_nativeScriptsFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, NativeScripts);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.nativeScriptsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.nativeScriptsFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptsFromHex(hex_str);
     return Ptr._wrap(ret, NativeScripts);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.nativeScriptsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.nativeScriptsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_nativeScriptsFromJson(json);
     return Ptr._wrap(ret, NativeScripts);
   }
 
@@ -4919,47 +5151,47 @@ export class NativeScripts extends Ptr {
 
 export class NetworkId extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.networkIdToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_networkIdToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.networkIdFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_networkIdFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, NetworkId);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.networkIdToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_networkIdToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.networkIdFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_networkIdFromHex(hex_str);
     return Ptr._wrap(ret, NetworkId);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.networkIdToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_networkIdToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.networkIdFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_networkIdFromJson(json);
     return Ptr._wrap(ret, NetworkId);
   }
 
   static async testnet() {
-    const ret = await HaskellShelley.networkIdTestnet();
+    const ret = await HaskellShelley.csl_bridge_networkIdTestnet();
     return Ptr._wrap(ret, NetworkId);
   }
 
   static async mainnet() {
-    const ret = await HaskellShelley.networkIdMainnet();
+    const ret = await HaskellShelley.csl_bridge_networkIdMainnet();
     return Ptr._wrap(ret, NetworkId);
   }
 
   async kind() {
-    const ret = await HaskellShelley.networkIdKind(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_networkIdKind(this.ptr);
     return ret;
   }
 
@@ -4968,32 +5200,32 @@ export class NetworkId extends Ptr {
 
 export class NetworkInfo extends Ptr {
   static async new(network_id, protocol_magic) {
-    const ret = await HaskellShelley.networkInfoNew(network_id, protocol_magic);
+    const ret = await HaskellShelley.csl_bridge_networkInfoNew(network_id, protocol_magic);
     return Ptr._wrap(ret, NetworkInfo);
   }
 
   async network_id() {
-    const ret = await HaskellShelley.networkInfoNetworkId(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_networkInfoNetworkId(this.ptr);
     return ret;
   }
 
   async protocol_magic() {
-    const ret = await HaskellShelley.networkInfoProtocolMagic(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_networkInfoProtocolMagic(this.ptr);
     return ret;
   }
 
   static async testnet_preview() {
-    const ret = await HaskellShelley.networkInfoTestnetPreview();
+    const ret = await HaskellShelley.csl_bridge_networkInfoTestnetPreview();
     return Ptr._wrap(ret, NetworkInfo);
   }
 
   static async testnet_preprod() {
-    const ret = await HaskellShelley.networkInfoTestnetPreprod();
+    const ret = await HaskellShelley.csl_bridge_networkInfoTestnetPreprod();
     return Ptr._wrap(ret, NetworkInfo);
   }
 
   static async mainnet() {
-    const ret = await HaskellShelley.networkInfoMainnet();
+    const ret = await HaskellShelley.csl_bridge_networkInfoMainnet();
     return Ptr._wrap(ret, NetworkInfo);
   }
 
@@ -5002,60 +5234,60 @@ export class NetworkInfo extends Ptr {
 
 export class NewConstitutionAction extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.newConstitutionActionToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_newConstitutionActionToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.newConstitutionActionFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_newConstitutionActionFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, NewConstitutionAction);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.newConstitutionActionToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_newConstitutionActionToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.newConstitutionActionFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_newConstitutionActionFromHex(hex_str);
     return Ptr._wrap(ret, NewConstitutionAction);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.newConstitutionActionToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_newConstitutionActionToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.newConstitutionActionFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_newConstitutionActionFromJson(json);
     return Ptr._wrap(ret, NewConstitutionAction);
   }
 
   async gov_action_id() {
-    const ret = await HaskellShelley.newConstitutionActionGovActionId(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_newConstitutionActionGovActionId(this.ptr);
     return Ptr._wrap(ret, GovernanceActionId);
   }
 
   async constitution() {
-    const ret = await HaskellShelley.newConstitutionActionConstitution(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_newConstitutionActionConstitution(this.ptr);
     return Ptr._wrap(ret, Constitution);
   }
 
   static async new(constitution) {
     const constitutionPtr = Ptr._assertClass(constitution, Constitution);
-    const ret = await HaskellShelley.newConstitutionActionNew(constitutionPtr);
+    const ret = await HaskellShelley.csl_bridge_newConstitutionActionNew(constitutionPtr);
     return Ptr._wrap(ret, NewConstitutionAction);
   }
 
   static async new_with_action_id(gov_action_id, constitution) {
     const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
     const constitutionPtr = Ptr._assertClass(constitution, Constitution);
-    const ret = await HaskellShelley.newConstitutionActionNewWithActionId(gov_action_idPtr, constitutionPtr);
+    const ret = await HaskellShelley.csl_bridge_newConstitutionActionNewWithActionId(gov_action_idPtr, constitutionPtr);
     return Ptr._wrap(ret, NewConstitutionAction);
   }
 
   async has_script_hash() {
-    const ret = await HaskellShelley.newConstitutionActionHasScriptHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_newConstitutionActionHasScriptHash(this.ptr);
     return ret;
   }
 
@@ -5064,48 +5296,48 @@ export class NewConstitutionAction extends Ptr {
 
 export class NoConfidenceAction extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.noConfidenceActionToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_noConfidenceActionToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.noConfidenceActionFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_noConfidenceActionFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, NoConfidenceAction);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.noConfidenceActionToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_noConfidenceActionToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.noConfidenceActionFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_noConfidenceActionFromHex(hex_str);
     return Ptr._wrap(ret, NoConfidenceAction);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.noConfidenceActionToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_noConfidenceActionToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.noConfidenceActionFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_noConfidenceActionFromJson(json);
     return Ptr._wrap(ret, NoConfidenceAction);
   }
 
   async gov_action_id() {
-    const ret = await HaskellShelley.noConfidenceActionGovActionId(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_noConfidenceActionGovActionId(this.ptr);
     return Ptr._wrap(ret, GovernanceActionId);
   }
 
   static async new() {
-    const ret = await HaskellShelley.noConfidenceActionNew();
+    const ret = await HaskellShelley.csl_bridge_noConfidenceActionNew();
     return Ptr._wrap(ret, NoConfidenceAction);
   }
 
   static async new_with_action_id(gov_action_id) {
     const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
-    const ret = await HaskellShelley.noConfidenceActionNewWithActionId(gov_action_idPtr);
+    const ret = await HaskellShelley.csl_bridge_noConfidenceActionNewWithActionId(gov_action_idPtr);
     return Ptr._wrap(ret, NoConfidenceAction);
   }
 
@@ -5114,47 +5346,47 @@ export class NoConfidenceAction extends Ptr {
 
 export class Nonce extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.nonceToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nonceToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.nonceFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_nonceFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Nonce);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.nonceToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nonceToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.nonceFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_nonceFromHex(hex_str);
     return Ptr._wrap(ret, Nonce);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.nonceToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nonceToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.nonceFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_nonceFromJson(json);
     return Ptr._wrap(ret, Nonce);
   }
 
   static async new_identity() {
-    const ret = await HaskellShelley.nonceNewIdentity();
+    const ret = await HaskellShelley.csl_bridge_nonceNewIdentity();
     return Ptr._wrap(ret, Nonce);
   }
 
   static async new_from_hash(hash) {
-    const ret = await HaskellShelley.nonceNewFromHash(b64FromUint8Array(hash));
+    const ret = await HaskellShelley.csl_bridge_nonceNewFromHash(b64FromUint8Array(hash));
     return Ptr._wrap(ret, Nonce);
   }
 
   async get_hash() {
-    const ret = await HaskellShelley.nonceGetHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_nonceGetHash(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
@@ -5163,59 +5395,59 @@ export class Nonce extends Ptr {
 
 export class OperationalCert extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.operationalCertToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_operationalCertToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.operationalCertFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_operationalCertFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, OperationalCert);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.operationalCertToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_operationalCertToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.operationalCertFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_operationalCertFromHex(hex_str);
     return Ptr._wrap(ret, OperationalCert);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.operationalCertToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_operationalCertToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.operationalCertFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_operationalCertFromJson(json);
     return Ptr._wrap(ret, OperationalCert);
   }
 
   async hot_vkey() {
-    const ret = await HaskellShelley.operationalCertHotVkey(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_operationalCertHotVkey(this.ptr);
     return Ptr._wrap(ret, KESVKey);
   }
 
   async sequence_number() {
-    const ret = await HaskellShelley.operationalCertSequenceNumber(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_operationalCertSequenceNumber(this.ptr);
     return ret;
   }
 
   async kes_period() {
-    const ret = await HaskellShelley.operationalCertKesPeriod(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_operationalCertKesPeriod(this.ptr);
     return ret;
   }
 
   async sigma() {
-    const ret = await HaskellShelley.operationalCertSigma(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_operationalCertSigma(this.ptr);
     return Ptr._wrap(ret, Ed25519Signature);
   }
 
   static async new(hot_vkey, sequence_number, kes_period, sigma) {
     const hot_vkeyPtr = Ptr._assertClass(hot_vkey, KESVKey);
     const sigmaPtr = Ptr._assertClass(sigma, Ed25519Signature);
-    const ret = await HaskellShelley.operationalCertNew(hot_vkeyPtr, sequence_number, kes_period, sigmaPtr);
+    const ret = await HaskellShelley.csl_bridge_operationalCertNew(hot_vkeyPtr, sequence_number, kes_period, sigmaPtr);
     return Ptr._wrap(ret, OperationalCert);
   }
 
@@ -5225,23 +5457,23 @@ export class OperationalCert extends Ptr {
 export class OutputDatum extends Ptr {
   static async new_data_hash(data_hash) {
     const data_hashPtr = Ptr._assertClass(data_hash, DataHash);
-    const ret = await HaskellShelley.outputDatumNewDataHash(data_hashPtr);
+    const ret = await HaskellShelley.csl_bridge_outputDatumNewDataHash(data_hashPtr);
     return Ptr._wrap(ret, OutputDatum);
   }
 
   static async new_data(data) {
     const dataPtr = Ptr._assertClass(data, PlutusData);
-    const ret = await HaskellShelley.outputDatumNewData(dataPtr);
+    const ret = await HaskellShelley.csl_bridge_outputDatumNewData(dataPtr);
     return Ptr._wrap(ret, OutputDatum);
   }
 
   async data_hash() {
-    const ret = await HaskellShelley.outputDatumDataHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_outputDatumDataHash(this.ptr);
     return Ptr._wrap(ret, DataHash);
   }
 
   async data() {
-    const ret = await HaskellShelley.outputDatumData(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_outputDatumData(this.ptr);
     return Ptr._wrap(ret, PlutusData);
   }
 
@@ -5250,67 +5482,67 @@ export class OutputDatum extends Ptr {
 
 export class ParameterChangeAction extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.parameterChangeActionToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_parameterChangeActionToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.parameterChangeActionFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_parameterChangeActionFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ParameterChangeAction);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.parameterChangeActionToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_parameterChangeActionToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.parameterChangeActionFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_parameterChangeActionFromHex(hex_str);
     return Ptr._wrap(ret, ParameterChangeAction);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.parameterChangeActionToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_parameterChangeActionToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.parameterChangeActionFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_parameterChangeActionFromJson(json);
     return Ptr._wrap(ret, ParameterChangeAction);
   }
 
   async gov_action_id() {
-    const ret = await HaskellShelley.parameterChangeActionGovActionId(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_parameterChangeActionGovActionId(this.ptr);
     return Ptr._wrap(ret, GovernanceActionId);
   }
 
   async protocol_param_updates() {
-    const ret = await HaskellShelley.parameterChangeActionProtocolParamUpdates(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_parameterChangeActionProtocolParamUpdates(this.ptr);
     return Ptr._wrap(ret, ProtocolParamUpdate);
   }
 
   async policy_hash() {
-    const ret = await HaskellShelley.parameterChangeActionPolicyHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_parameterChangeActionPolicyHash(this.ptr);
     return Ptr._wrap(ret, ScriptHash);
   }
 
   static async new(protocol_param_updates) {
     const protocol_param_updatesPtr = Ptr._assertClass(protocol_param_updates, ProtocolParamUpdate);
-    const ret = await HaskellShelley.parameterChangeActionNew(protocol_param_updatesPtr);
+    const ret = await HaskellShelley.csl_bridge_parameterChangeActionNew(protocol_param_updatesPtr);
     return Ptr._wrap(ret, ParameterChangeAction);
   }
 
   static async new_with_action_id(gov_action_id, protocol_param_updates) {
     const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
     const protocol_param_updatesPtr = Ptr._assertClass(protocol_param_updates, ProtocolParamUpdate);
-    const ret = await HaskellShelley.parameterChangeActionNewWithActionId(gov_action_idPtr, protocol_param_updatesPtr);
+    const ret = await HaskellShelley.csl_bridge_parameterChangeActionNewWithActionId(gov_action_idPtr, protocol_param_updatesPtr);
     return Ptr._wrap(ret, ParameterChangeAction);
   }
 
   static async new_with_policy_hash(protocol_param_updates, policy_hash) {
     const protocol_param_updatesPtr = Ptr._assertClass(protocol_param_updates, ProtocolParamUpdate);
     const policy_hashPtr = Ptr._assertClass(policy_hash, ScriptHash);
-    const ret = await HaskellShelley.parameterChangeActionNewWithPolicyHash(protocol_param_updatesPtr, policy_hashPtr);
+    const ret = await HaskellShelley.csl_bridge_parameterChangeActionNewWithPolicyHash(protocol_param_updatesPtr, policy_hashPtr);
     return Ptr._wrap(ret, ParameterChangeAction);
   }
 
@@ -5318,7 +5550,7 @@ export class ParameterChangeAction extends Ptr {
     const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
     const protocol_param_updatesPtr = Ptr._assertClass(protocol_param_updates, ProtocolParamUpdate);
     const policy_hashPtr = Ptr._assertClass(policy_hash, ScriptHash);
-    const ret = await HaskellShelley.parameterChangeActionNewWithPolicyHashAndActionId(gov_action_idPtr, protocol_param_updatesPtr, policy_hashPtr);
+    const ret = await HaskellShelley.csl_bridge_parameterChangeActionNewWithPolicyHashAndActionId(gov_action_idPtr, protocol_param_updatesPtr, policy_hashPtr);
     return Ptr._wrap(ret, ParameterChangeAction);
   }
 
@@ -5327,110 +5559,110 @@ export class ParameterChangeAction extends Ptr {
 
 export class PlutusData extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.plutusDataToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusDataToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.plutusDataFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_plutusDataFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PlutusData);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.plutusDataToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusDataToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.plutusDataFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_plutusDataFromHex(hex_str);
     return Ptr._wrap(ret, PlutusData);
   }
 
   static async new_constr_plutus_data(constr_plutus_data) {
     const constr_plutus_dataPtr = Ptr._assertClass(constr_plutus_data, ConstrPlutusData);
-    const ret = await HaskellShelley.plutusDataNewConstrPlutusData(constr_plutus_dataPtr);
+    const ret = await HaskellShelley.csl_bridge_plutusDataNewConstrPlutusData(constr_plutus_dataPtr);
     return Ptr._wrap(ret, PlutusData);
   }
 
   static async new_empty_constr_plutus_data(alternative) {
     const alternativePtr = Ptr._assertClass(alternative, BigNum);
-    const ret = await HaskellShelley.plutusDataNewEmptyConstrPlutusData(alternativePtr);
+    const ret = await HaskellShelley.csl_bridge_plutusDataNewEmptyConstrPlutusData(alternativePtr);
     return Ptr._wrap(ret, PlutusData);
   }
 
   static async new_single_value_constr_plutus_data(alternative, plutus_data) {
     const alternativePtr = Ptr._assertClass(alternative, BigNum);
     const plutus_dataPtr = Ptr._assertClass(plutus_data, PlutusData);
-    const ret = await HaskellShelley.plutusDataNewSingleValueConstrPlutusData(alternativePtr, plutus_dataPtr);
+    const ret = await HaskellShelley.csl_bridge_plutusDataNewSingleValueConstrPlutusData(alternativePtr, plutus_dataPtr);
     return Ptr._wrap(ret, PlutusData);
   }
 
   static async new_map(map) {
     const mapPtr = Ptr._assertClass(map, PlutusMap);
-    const ret = await HaskellShelley.plutusDataNewMap(mapPtr);
+    const ret = await HaskellShelley.csl_bridge_plutusDataNewMap(mapPtr);
     return Ptr._wrap(ret, PlutusData);
   }
 
   static async new_list(list) {
     const listPtr = Ptr._assertClass(list, PlutusList);
-    const ret = await HaskellShelley.plutusDataNewList(listPtr);
+    const ret = await HaskellShelley.csl_bridge_plutusDataNewList(listPtr);
     return Ptr._wrap(ret, PlutusData);
   }
 
   static async new_integer(integer) {
     const integerPtr = Ptr._assertClass(integer, BigInt);
-    const ret = await HaskellShelley.plutusDataNewInteger(integerPtr);
+    const ret = await HaskellShelley.csl_bridge_plutusDataNewInteger(integerPtr);
     return Ptr._wrap(ret, PlutusData);
   }
 
   static async new_bytes(bytes) {
-    const ret = await HaskellShelley.plutusDataNewBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_plutusDataNewBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PlutusData);
   }
 
   async kind() {
-    const ret = await HaskellShelley.plutusDataKind(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusDataKind(this.ptr);
     return ret;
   }
 
   async as_constr_plutus_data() {
-    const ret = await HaskellShelley.plutusDataAsConstrPlutusData(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusDataAsConstrPlutusData(this.ptr);
     return Ptr._wrap(ret, ConstrPlutusData);
   }
 
   async as_map() {
-    const ret = await HaskellShelley.plutusDataAsMap(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusDataAsMap(this.ptr);
     return Ptr._wrap(ret, PlutusMap);
   }
 
   async as_list() {
-    const ret = await HaskellShelley.plutusDataAsList(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusDataAsList(this.ptr);
     return Ptr._wrap(ret, PlutusList);
   }
 
   async as_integer() {
-    const ret = await HaskellShelley.plutusDataAsInteger(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusDataAsInteger(this.ptr);
     return Ptr._wrap(ret, BigInt);
   }
 
   async as_bytes() {
-    const ret = await HaskellShelley.plutusDataAsBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusDataAsBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_json(schema) {
-    const ret = await HaskellShelley.plutusDataToJson(this.ptr, schema);
+    const ret = await HaskellShelley.csl_bridge_plutusDataToJson(this.ptr, schema);
     return ret;
   }
 
   static async from_json(json, schema) {
-    const ret = await HaskellShelley.plutusDataFromJson(json, schema);
+    const ret = await HaskellShelley.csl_bridge_plutusDataFromJson(json, schema);
     return Ptr._wrap(ret, PlutusData);
   }
 
   static async from_address(address) {
     const addressPtr = Ptr._assertClass(address, Address);
-    const ret = await HaskellShelley.plutusDataFromAddress(addressPtr);
+    const ret = await HaskellShelley.csl_bridge_plutusDataFromAddress(addressPtr);
     return Ptr._wrap(ret, PlutusData);
   }
 
@@ -5439,43 +5671,43 @@ export class PlutusData extends Ptr {
 
 export class PlutusList extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.plutusListToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusListToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.plutusListFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_plutusListFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PlutusList);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.plutusListToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusListToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.plutusListFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_plutusListFromHex(hex_str);
     return Ptr._wrap(ret, PlutusList);
   }
 
   static async new() {
-    const ret = await HaskellShelley.plutusListNew();
+    const ret = await HaskellShelley.csl_bridge_plutusListNew();
     return Ptr._wrap(ret, PlutusList);
   }
 
   async len() {
-    const ret = await HaskellShelley.plutusListLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusListLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.plutusListGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_plutusListGet(this.ptr, index);
     return Ptr._wrap(ret, PlutusData);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, PlutusData);
-    const ret = HaskellShelley.plutusListAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_plutusListAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -5484,51 +5716,76 @@ export class PlutusList extends Ptr {
 
 export class PlutusMap extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.plutusMapToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusMapToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.plutusMapFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_plutusMapFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PlutusMap);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.plutusMapToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusMapToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.plutusMapFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_plutusMapFromHex(hex_str);
     return Ptr._wrap(ret, PlutusMap);
   }
 
   static async new() {
-    const ret = await HaskellShelley.plutusMapNew();
+    const ret = await HaskellShelley.csl_bridge_plutusMapNew();
     return Ptr._wrap(ret, PlutusMap);
   }
 
   async len() {
-    const ret = await HaskellShelley.plutusMapLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusMapLen(this.ptr);
     return ret;
   }
 
-  async insert(key, value) {
+  async insert(key, values) {
     const keyPtr = Ptr._assertClass(key, PlutusData);
-    const valuePtr = Ptr._assertClass(value, PlutusData);
-    const ret = await HaskellShelley.plutusMapInsert(this.ptr, keyPtr, valuePtr);
-    return Ptr._wrap(ret, PlutusData);
+    const valuesPtr = Ptr._assertClass(values, PlutusMapValues);
+    const ret = await HaskellShelley.csl_bridge_plutusMapInsert(this.ptr, keyPtr, valuesPtr);
+    return Ptr._wrap(ret, PlutusMapValues);
   }
 
   async get(key) {
     const keyPtr = Ptr._assertClass(key, PlutusData);
-    const ret = await HaskellShelley.plutusMapGet(this.ptr, keyPtr);
-    return Ptr._wrap(ret, PlutusData);
+    const ret = await HaskellShelley.csl_bridge_plutusMapGet(this.ptr, keyPtr);
+    return Ptr._wrap(ret, PlutusMapValues);
   }
 
   async keys() {
-    const ret = await HaskellShelley.plutusMapKeys(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusMapKeys(this.ptr);
     return Ptr._wrap(ret, PlutusList);
+  }
+
+}
+
+
+export class PlutusMapValues extends Ptr {
+  static async new() {
+    const ret = await HaskellShelley.csl_bridge_plutusMapValuesNew();
+    return Ptr._wrap(ret, PlutusMapValues);
+  }
+
+  async len() {
+    const ret = await HaskellShelley.csl_bridge_plutusMapValuesLen(this.ptr);
+    return ret;
+  }
+
+  async get(index) {
+    const ret = await HaskellShelley.csl_bridge_plutusMapValuesGet(this.ptr, index);
+    return Ptr._wrap(ret, PlutusData);
+  }
+
+  add(elem) {
+    const elemPtr = Ptr._assertClass(elem, PlutusData);
+    const ret = HaskellShelley.csl_bridge_plutusMapValuesAdd(this.ptr, elemPtr);
+    return ret;
   }
 
 }
@@ -5536,80 +5793,80 @@ export class PlutusMap extends Ptr {
 
 export class PlutusScript extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.plutusScriptToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.plutusScriptFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_plutusScriptFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PlutusScript);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.plutusScriptToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.plutusScriptFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptFromHex(hex_str);
     return Ptr._wrap(ret, PlutusScript);
   }
 
   static async new(bytes) {
-    const ret = await HaskellShelley.plutusScriptNew(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_plutusScriptNew(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PlutusScript);
   }
 
   static async new_v2(bytes) {
-    const ret = await HaskellShelley.plutusScriptNewV2(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_plutusScriptNewV2(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PlutusScript);
   }
 
   static async new_v3(bytes) {
-    const ret = await HaskellShelley.plutusScriptNewV3(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_plutusScriptNewV3(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PlutusScript);
   }
 
   static async new_with_version(bytes, language) {
     const languagePtr = Ptr._assertClass(language, Language);
-    const ret = await HaskellShelley.plutusScriptNewWithVersion(b64FromUint8Array(bytes), languagePtr);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptNewWithVersion(b64FromUint8Array(bytes), languagePtr);
     return Ptr._wrap(ret, PlutusScript);
   }
 
   async bytes() {
-    const ret = await HaskellShelley.plutusScriptBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes_v2(bytes) {
-    const ret = await HaskellShelley.plutusScriptFromBytesV2(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_plutusScriptFromBytesV2(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PlutusScript);
   }
 
   static async from_bytes_v3(bytes) {
-    const ret = await HaskellShelley.plutusScriptFromBytesV3(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_plutusScriptFromBytesV3(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PlutusScript);
   }
 
   static async from_bytes_with_version(bytes, language) {
     const languagePtr = Ptr._assertClass(language, Language);
-    const ret = await HaskellShelley.plutusScriptFromBytesWithVersion(b64FromUint8Array(bytes), languagePtr);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptFromBytesWithVersion(b64FromUint8Array(bytes), languagePtr);
     return Ptr._wrap(ret, PlutusScript);
   }
 
   static async from_hex_with_version(hex_str, language) {
     const languagePtr = Ptr._assertClass(language, Language);
-    const ret = await HaskellShelley.plutusScriptFromHexWithVersion(hex_str, languagePtr);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptFromHexWithVersion(hex_str, languagePtr);
     return Ptr._wrap(ret, PlutusScript);
   }
 
   async hash() {
-    const ret = await HaskellShelley.plutusScriptHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptHash(this.ptr);
     return Ptr._wrap(ret, ScriptHash);
   }
 
   async language_version() {
-    const ret = await HaskellShelley.plutusScriptLanguageVersion(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptLanguageVersion(this.ptr);
     return Ptr._wrap(ret, Language);
   }
 
@@ -5619,7 +5876,7 @@ export class PlutusScript extends Ptr {
 export class PlutusScriptSource extends Ptr {
   static async new(script) {
     const scriptPtr = Ptr._assertClass(script, PlutusScript);
-    const ret = await HaskellShelley.plutusScriptSourceNew(scriptPtr);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptSourceNew(scriptPtr);
     return Ptr._wrap(ret, PlutusScriptSource);
   }
 
@@ -5627,18 +5884,18 @@ export class PlutusScriptSource extends Ptr {
     const script_hashPtr = Ptr._assertClass(script_hash, ScriptHash);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const lang_verPtr = Ptr._assertClass(lang_ver, Language);
-    const ret = await HaskellShelley.plutusScriptSourceNewRefInput(script_hashPtr, inputPtr, lang_verPtr, script_size);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptSourceNewRefInput(script_hashPtr, inputPtr, lang_verPtr, script_size);
     return Ptr._wrap(ret, PlutusScriptSource);
   }
 
   set_required_signers(key_hashes) {
     const key_hashesPtr = Ptr._assertClass(key_hashes, Ed25519KeyHashes);
-    const ret = HaskellShelley.plutusScriptSourceSetRequiredSigners(this.ptr, key_hashesPtr);
+    const ret = HaskellShelley.csl_bridge_plutusScriptSourceSetRequiredSigners(this.ptr, key_hashesPtr);
     return ret;
   }
 
   async get_ref_script_size() {
-    const ret = await HaskellShelley.plutusScriptSourceGetRefScriptSize(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptSourceGetRefScriptSize(this.ptr);
     return ret;
   }
 
@@ -5647,53 +5904,53 @@ export class PlutusScriptSource extends Ptr {
 
 export class PlutusScripts extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.plutusScriptsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.plutusScriptsFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_plutusScriptsFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PlutusScripts);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.plutusScriptsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.plutusScriptsFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptsFromHex(hex_str);
     return Ptr._wrap(ret, PlutusScripts);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.plutusScriptsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.plutusScriptsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptsFromJson(json);
     return Ptr._wrap(ret, PlutusScripts);
   }
 
   static async new() {
-    const ret = await HaskellShelley.plutusScriptsNew();
+    const ret = await HaskellShelley.csl_bridge_plutusScriptsNew();
     return Ptr._wrap(ret, PlutusScripts);
   }
 
   async len() {
-    const ret = await HaskellShelley.plutusScriptsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptsLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.plutusScriptsGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_plutusScriptsGet(this.ptr, index);
     return Ptr._wrap(ret, PlutusScript);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, PlutusScript);
-    const ret = HaskellShelley.plutusScriptsAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_plutusScriptsAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -5705,7 +5962,7 @@ export class PlutusWitness extends Ptr {
     const scriptPtr = Ptr._assertClass(script, PlutusScript);
     const datumPtr = Ptr._assertClass(datum, PlutusData);
     const redeemerPtr = Ptr._assertClass(redeemer, Redeemer);
-    const ret = await HaskellShelley.plutusWitnessNew(scriptPtr, datumPtr, redeemerPtr);
+    const ret = await HaskellShelley.csl_bridge_plutusWitnessNew(scriptPtr, datumPtr, redeemerPtr);
     return Ptr._wrap(ret, PlutusWitness);
   }
 
@@ -5713,36 +5970,36 @@ export class PlutusWitness extends Ptr {
     const scriptPtr = Ptr._assertClass(script, PlutusScriptSource);
     const datumPtr = Ptr._assertClass(datum, DatumSource);
     const redeemerPtr = Ptr._assertClass(redeemer, Redeemer);
-    const ret = await HaskellShelley.plutusWitnessNewWithRef(scriptPtr, datumPtr, redeemerPtr);
+    const ret = await HaskellShelley.csl_bridge_plutusWitnessNewWithRef(scriptPtr, datumPtr, redeemerPtr);
     return Ptr._wrap(ret, PlutusWitness);
   }
 
   static async new_without_datum(script, redeemer) {
     const scriptPtr = Ptr._assertClass(script, PlutusScript);
     const redeemerPtr = Ptr._assertClass(redeemer, Redeemer);
-    const ret = await HaskellShelley.plutusWitnessNewWithoutDatum(scriptPtr, redeemerPtr);
+    const ret = await HaskellShelley.csl_bridge_plutusWitnessNewWithoutDatum(scriptPtr, redeemerPtr);
     return Ptr._wrap(ret, PlutusWitness);
   }
 
   static async new_with_ref_without_datum(script, redeemer) {
     const scriptPtr = Ptr._assertClass(script, PlutusScriptSource);
     const redeemerPtr = Ptr._assertClass(redeemer, Redeemer);
-    const ret = await HaskellShelley.plutusWitnessNewWithRefWithoutDatum(scriptPtr, redeemerPtr);
+    const ret = await HaskellShelley.csl_bridge_plutusWitnessNewWithRefWithoutDatum(scriptPtr, redeemerPtr);
     return Ptr._wrap(ret, PlutusWitness);
   }
 
   async script() {
-    const ret = await HaskellShelley.plutusWitnessScript(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusWitnessScript(this.ptr);
     return Ptr._wrap(ret, PlutusScript);
   }
 
   async datum() {
-    const ret = await HaskellShelley.plutusWitnessDatum(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusWitnessDatum(this.ptr);
     return Ptr._wrap(ret, PlutusData);
   }
 
   async redeemer() {
-    const ret = await HaskellShelley.plutusWitnessRedeemer(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusWitnessRedeemer(this.ptr);
     return Ptr._wrap(ret, Redeemer);
   }
 
@@ -5751,23 +6008,23 @@ export class PlutusWitness extends Ptr {
 
 export class PlutusWitnesses extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.plutusWitnessesNew();
+    const ret = await HaskellShelley.csl_bridge_plutusWitnessesNew();
     return Ptr._wrap(ret, PlutusWitnesses);
   }
 
   async len() {
-    const ret = await HaskellShelley.plutusWitnessesLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_plutusWitnessesLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.plutusWitnessesGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_plutusWitnessesGet(this.ptr, index);
     return Ptr._wrap(ret, PlutusWitness);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, PlutusWitness);
-    const ret = HaskellShelley.plutusWitnessesAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_plutusWitnessesAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -5776,7 +6033,7 @@ export class PlutusWitnesses extends Ptr {
 
 export class Pointer extends Ptr {
   static async new(slot, tx_index, cert_index) {
-    const ret = await HaskellShelley.pointerNew(slot, tx_index, cert_index);
+    const ret = await HaskellShelley.csl_bridge_pointerNew(slot, tx_index, cert_index);
     return Ptr._wrap(ret, Pointer);
   }
 
@@ -5784,37 +6041,37 @@ export class Pointer extends Ptr {
     const slotPtr = Ptr._assertClass(slot, BigNum);
     const tx_indexPtr = Ptr._assertClass(tx_index, BigNum);
     const cert_indexPtr = Ptr._assertClass(cert_index, BigNum);
-    const ret = await HaskellShelley.pointerNewPointer(slotPtr, tx_indexPtr, cert_indexPtr);
+    const ret = await HaskellShelley.csl_bridge_pointerNewPointer(slotPtr, tx_indexPtr, cert_indexPtr);
     return Ptr._wrap(ret, Pointer);
   }
 
   async slot() {
-    const ret = await HaskellShelley.pointerSlot(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_pointerSlot(this.ptr);
     return ret;
   }
 
   async tx_index() {
-    const ret = await HaskellShelley.pointerTxIndex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_pointerTxIndex(this.ptr);
     return ret;
   }
 
   async cert_index() {
-    const ret = await HaskellShelley.pointerCertIndex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_pointerCertIndex(this.ptr);
     return ret;
   }
 
   async slot_bignum() {
-    const ret = await HaskellShelley.pointerSlotBignum(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_pointerSlotBignum(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async tx_index_bignum() {
-    const ret = await HaskellShelley.pointerTxIndexBignum(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_pointerTxIndexBignum(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async cert_index_bignum() {
-    const ret = await HaskellShelley.pointerCertIndexBignum(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_pointerCertIndexBignum(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
@@ -5825,29 +6082,34 @@ export class PointerAddress extends Ptr {
   static async new(network, payment, stake) {
     const paymentPtr = Ptr._assertClass(payment, Credential);
     const stakePtr = Ptr._assertClass(stake, Pointer);
-    const ret = await HaskellShelley.pointerAddressNew(network, paymentPtr, stakePtr);
+    const ret = await HaskellShelley.csl_bridge_pointerAddressNew(network, paymentPtr, stakePtr);
     return Ptr._wrap(ret, PointerAddress);
   }
 
   async payment_cred() {
-    const ret = await HaskellShelley.pointerAddressPaymentCred(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_pointerAddressPaymentCred(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async stake_pointer() {
-    const ret = await HaskellShelley.pointerAddressStakePointer(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_pointerAddressStakePointer(this.ptr);
     return Ptr._wrap(ret, Pointer);
   }
 
   async to_address() {
-    const ret = await HaskellShelley.pointerAddressToAddress(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_pointerAddressToAddress(this.ptr);
     return Ptr._wrap(ret, Address);
   }
 
   static async from_address(addr) {
     const addrPtr = Ptr._assertClass(addr, Address);
-    const ret = await HaskellShelley.pointerAddressFromAddress(addrPtr);
+    const ret = await HaskellShelley.csl_bridge_pointerAddressFromAddress(addrPtr);
     return Ptr._wrap(ret, PointerAddress);
+  }
+
+  async network_id() {
+    const ret = await HaskellShelley.csl_bridge_pointerAddressNetworkId(this.ptr);
+    return ret;
   }
 
 }
@@ -5855,49 +6117,49 @@ export class PointerAddress extends Ptr {
 
 export class PoolMetadata extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.poolMetadataToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolMetadataToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.poolMetadataFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_poolMetadataFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PoolMetadata);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.poolMetadataToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolMetadataToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.poolMetadataFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_poolMetadataFromHex(hex_str);
     return Ptr._wrap(ret, PoolMetadata);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.poolMetadataToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolMetadataToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.poolMetadataFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_poolMetadataFromJson(json);
     return Ptr._wrap(ret, PoolMetadata);
   }
 
   async url() {
-    const ret = await HaskellShelley.poolMetadataUrl(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolMetadataUrl(this.ptr);
     return Ptr._wrap(ret, URL);
   }
 
   async pool_metadata_hash() {
-    const ret = await HaskellShelley.poolMetadataPoolMetadataHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolMetadataPoolMetadataHash(this.ptr);
     return Ptr._wrap(ret, PoolMetadataHash);
   }
 
   static async new(url, pool_metadata_hash) {
     const urlPtr = Ptr._assertClass(url, URL);
     const pool_metadata_hashPtr = Ptr._assertClass(pool_metadata_hash, PoolMetadataHash);
-    const ret = await HaskellShelley.poolMetadataNew(urlPtr, pool_metadata_hashPtr);
+    const ret = await HaskellShelley.csl_bridge_poolMetadataNew(urlPtr, pool_metadata_hashPtr);
     return Ptr._wrap(ret, PoolMetadata);
   }
 
@@ -5906,32 +6168,32 @@ export class PoolMetadata extends Ptr {
 
 export class PoolMetadataHash extends Ptr {
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.poolMetadataHashFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_poolMetadataHashFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PoolMetadataHash);
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.poolMetadataHashToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolMetadataHashToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_bech32(prefix) {
-    const ret = await HaskellShelley.poolMetadataHashToBech32(this.ptr, prefix);
+    const ret = await HaskellShelley.csl_bridge_poolMetadataHashToBech32(this.ptr, prefix);
     return ret;
   }
 
   static async from_bech32(bech_str) {
-    const ret = await HaskellShelley.poolMetadataHashFromBech32(bech_str);
+    const ret = await HaskellShelley.csl_bridge_poolMetadataHashFromBech32(bech_str);
     return Ptr._wrap(ret, PoolMetadataHash);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.poolMetadataHashToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolMetadataHashToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex) {
-    const ret = await HaskellShelley.poolMetadataHashFromHex(hex);
+    const ret = await HaskellShelley.csl_bridge_poolMetadataHashFromHex(hex);
     return Ptr._wrap(ret, PoolMetadataHash);
   }
 
@@ -5940,77 +6202,77 @@ export class PoolMetadataHash extends Ptr {
 
 export class PoolParams extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.poolParamsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolParamsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.poolParamsFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_poolParamsFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PoolParams);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.poolParamsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolParamsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.poolParamsFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_poolParamsFromHex(hex_str);
     return Ptr._wrap(ret, PoolParams);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.poolParamsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolParamsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.poolParamsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_poolParamsFromJson(json);
     return Ptr._wrap(ret, PoolParams);
   }
 
   async operator() {
-    const ret = await HaskellShelley.poolParamsOperator(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolParamsOperator(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
   async vrf_keyhash() {
-    const ret = await HaskellShelley.poolParamsVrfKeyhash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolParamsVrfKeyhash(this.ptr);
     return Ptr._wrap(ret, VRFKeyHash);
   }
 
   async pledge() {
-    const ret = await HaskellShelley.poolParamsPledge(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolParamsPledge(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async cost() {
-    const ret = await HaskellShelley.poolParamsCost(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolParamsCost(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async margin() {
-    const ret = await HaskellShelley.poolParamsMargin(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolParamsMargin(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async reward_account() {
-    const ret = await HaskellShelley.poolParamsRewardAccount(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolParamsRewardAccount(this.ptr);
     return Ptr._wrap(ret, RewardAddress);
   }
 
   async pool_owners() {
-    const ret = await HaskellShelley.poolParamsPoolOwners(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolParamsPoolOwners(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHashes);
   }
 
   async relays() {
-    const ret = await HaskellShelley.poolParamsRelays(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolParamsRelays(this.ptr);
     return Ptr._wrap(ret, Relays);
   }
 
   async pool_metadata() {
-    const ret = await HaskellShelley.poolParamsPoolMetadata(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolParamsPoolMetadata(this.ptr);
     return Ptr._wrap(ret, PoolMetadata);
   }
 
@@ -6025,11 +6287,11 @@ export class PoolParams extends Ptr {
     const relaysPtr = Ptr._assertClass(relays, Relays);
     const pool_metadataPtr = Ptr._assertOptionalClass(pool_metadata, PoolMetadata);
     if(pool_metadata == null) {
-      const ret = await HaskellShelley.poolParamsNew(operatorPtr, vrf_keyhashPtr, pledgePtr, costPtr, marginPtr, reward_accountPtr, pool_ownersPtr, relaysPtr);
+      const ret = await HaskellShelley.csl_bridge_poolParamsNew(operatorPtr, vrf_keyhashPtr, pledgePtr, costPtr, marginPtr, reward_accountPtr, pool_ownersPtr, relaysPtr);
       return Ptr._wrap(ret, PoolParams);
     }
     if(pool_metadata != null) {
-      const ret = await HaskellShelley.poolParamsNewWithPoolMetadata(operatorPtr, vrf_keyhashPtr, pledgePtr, costPtr, marginPtr, reward_accountPtr, pool_ownersPtr, relaysPtr, pool_metadataPtr);
+      const ret = await HaskellShelley.csl_bridge_poolParamsNewWithPoolMetadata(operatorPtr, vrf_keyhashPtr, pledgePtr, costPtr, marginPtr, reward_accountPtr, pool_ownersPtr, relaysPtr, pool_metadataPtr);
       return Ptr._wrap(ret, PoolParams);
     }
   }
@@ -6039,43 +6301,43 @@ export class PoolParams extends Ptr {
 
 export class PoolRegistration extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.poolRegistrationToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolRegistrationToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.poolRegistrationFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_poolRegistrationFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PoolRegistration);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.poolRegistrationToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolRegistrationToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.poolRegistrationFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_poolRegistrationFromHex(hex_str);
     return Ptr._wrap(ret, PoolRegistration);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.poolRegistrationToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolRegistrationToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.poolRegistrationFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_poolRegistrationFromJson(json);
     return Ptr._wrap(ret, PoolRegistration);
   }
 
   async pool_params() {
-    const ret = await HaskellShelley.poolRegistrationPoolParams(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolRegistrationPoolParams(this.ptr);
     return Ptr._wrap(ret, PoolParams);
   }
 
   static async new(pool_params) {
     const pool_paramsPtr = Ptr._assertClass(pool_params, PoolParams);
-    const ret = await HaskellShelley.poolRegistrationNew(pool_paramsPtr);
+    const ret = await HaskellShelley.csl_bridge_poolRegistrationNew(pool_paramsPtr);
     return Ptr._wrap(ret, PoolRegistration);
   }
 
@@ -6084,48 +6346,48 @@ export class PoolRegistration extends Ptr {
 
 export class PoolRetirement extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.poolRetirementToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolRetirementToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.poolRetirementFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_poolRetirementFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PoolRetirement);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.poolRetirementToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolRetirementToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.poolRetirementFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_poolRetirementFromHex(hex_str);
     return Ptr._wrap(ret, PoolRetirement);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.poolRetirementToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolRetirementToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.poolRetirementFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_poolRetirementFromJson(json);
     return Ptr._wrap(ret, PoolRetirement);
   }
 
   async pool_keyhash() {
-    const ret = await HaskellShelley.poolRetirementPoolKeyhash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolRetirementPoolKeyhash(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
   async epoch() {
-    const ret = await HaskellShelley.poolRetirementEpoch(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolRetirementEpoch(this.ptr);
     return ret;
   }
 
   static async new(pool_keyhash, epoch) {
     const pool_keyhashPtr = Ptr._assertClass(pool_keyhash, Ed25519KeyHash);
-    const ret = await HaskellShelley.poolRetirementNew(pool_keyhashPtr, epoch);
+    const ret = await HaskellShelley.csl_bridge_poolRetirementNew(pool_keyhashPtr, epoch);
     return Ptr._wrap(ret, PoolRetirement);
   }
 
@@ -6134,32 +6396,32 @@ export class PoolRetirement extends Ptr {
 
 export class PoolVotingThresholds extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.poolVotingThresholdsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolVotingThresholdsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.poolVotingThresholdsFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_poolVotingThresholdsFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PoolVotingThresholds);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.poolVotingThresholdsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolVotingThresholdsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.poolVotingThresholdsFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_poolVotingThresholdsFromHex(hex_str);
     return Ptr._wrap(ret, PoolVotingThresholds);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.poolVotingThresholdsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolVotingThresholdsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.poolVotingThresholdsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_poolVotingThresholdsFromJson(json);
     return Ptr._wrap(ret, PoolVotingThresholds);
   }
 
@@ -6169,27 +6431,32 @@ export class PoolVotingThresholds extends Ptr {
     const committee_no_confidencePtr = Ptr._assertClass(committee_no_confidence, UnitInterval);
     const hard_fork_initiationPtr = Ptr._assertClass(hard_fork_initiation, UnitInterval);
     const security_relevant_thresholdPtr = Ptr._assertClass(security_relevant_threshold, UnitInterval);
-    const ret = await HaskellShelley.poolVotingThresholdsNew(motion_no_confidencePtr, committee_normalPtr, committee_no_confidencePtr, hard_fork_initiationPtr, security_relevant_thresholdPtr);
+    const ret = await HaskellShelley.csl_bridge_poolVotingThresholdsNew(motion_no_confidencePtr, committee_normalPtr, committee_no_confidencePtr, hard_fork_initiationPtr, security_relevant_thresholdPtr);
     return Ptr._wrap(ret, PoolVotingThresholds);
   }
 
   async motion_no_confidence() {
-    const ret = await HaskellShelley.poolVotingThresholdsMotionNoConfidence(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolVotingThresholdsMotionNoConfidence(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async committee_normal() {
-    const ret = await HaskellShelley.poolVotingThresholdsCommitteeNormal(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolVotingThresholdsCommitteeNormal(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async committee_no_confidence() {
-    const ret = await HaskellShelley.poolVotingThresholdsCommitteeNoConfidence(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolVotingThresholdsCommitteeNoConfidence(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async hard_fork_initiation() {
-    const ret = await HaskellShelley.poolVotingThresholdsHardForkInitiation(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_poolVotingThresholdsHardForkInitiation(this.ptr);
+    return Ptr._wrap(ret, UnitInterval);
+  }
+
+  async security_relevant_threshold() {
+    const ret = await HaskellShelley.csl_bridge_poolVotingThresholdsSecurityRelevantThreshold(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
@@ -6198,57 +6465,57 @@ export class PoolVotingThresholds extends Ptr {
 
 export class PrivateKey extends Ptr {
   async to_public() {
-    const ret = await HaskellShelley.privateKeyToPublic(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_privateKeyToPublic(this.ptr);
     return Ptr._wrap(ret, PublicKey);
   }
 
   static async generate_ed25519() {
-    const ret = await HaskellShelley.privateKeyGenerateEd25519();
+    const ret = await HaskellShelley.csl_bridge_privateKeyGenerateEd25519();
     return Ptr._wrap(ret, PrivateKey);
   }
 
   static async generate_ed25519extended() {
-    const ret = await HaskellShelley.privateKeyGenerateEd25519extended();
+    const ret = await HaskellShelley.csl_bridge_privateKeyGenerateEd25519extended();
     return Ptr._wrap(ret, PrivateKey);
   }
 
   static async from_bech32(bech32_str) {
-    const ret = await HaskellShelley.privateKeyFromBech32(bech32_str);
+    const ret = await HaskellShelley.csl_bridge_privateKeyFromBech32(bech32_str);
     return Ptr._wrap(ret, PrivateKey);
   }
 
   async to_bech32() {
-    const ret = await HaskellShelley.privateKeyToBech32(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_privateKeyToBech32(this.ptr);
     return ret;
   }
 
   async as_bytes() {
-    const ret = await HaskellShelley.privateKeyAsBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_privateKeyAsBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_extended_bytes(bytes) {
-    const ret = await HaskellShelley.privateKeyFromExtendedBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_privateKeyFromExtendedBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PrivateKey);
   }
 
   static async from_normal_bytes(bytes) {
-    const ret = await HaskellShelley.privateKeyFromNormalBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_privateKeyFromNormalBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PrivateKey);
   }
 
   async sign(message) {
-    const ret = await HaskellShelley.privateKeySign(this.ptr, b64FromUint8Array(message));
+    const ret = await HaskellShelley.csl_bridge_privateKeySign(this.ptr, b64FromUint8Array(message));
     return Ptr._wrap(ret, Ed25519Signature);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.privateKeyToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_privateKeyToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.privateKeyFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_privateKeyFromHex(hex_str);
     return Ptr._wrap(ret, PrivateKey);
   }
 
@@ -6257,60 +6524,60 @@ export class PrivateKey extends Ptr {
 
 export class ProposedProtocolParameterUpdates extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.proposedProtocolParameterUpdatesToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_proposedProtocolParameterUpdatesToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.proposedProtocolParameterUpdatesFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_proposedProtocolParameterUpdatesFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ProposedProtocolParameterUpdates);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.proposedProtocolParameterUpdatesToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_proposedProtocolParameterUpdatesToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.proposedProtocolParameterUpdatesFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_proposedProtocolParameterUpdatesFromHex(hex_str);
     return Ptr._wrap(ret, ProposedProtocolParameterUpdates);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.proposedProtocolParameterUpdatesToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_proposedProtocolParameterUpdatesToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.proposedProtocolParameterUpdatesFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_proposedProtocolParameterUpdatesFromJson(json);
     return Ptr._wrap(ret, ProposedProtocolParameterUpdates);
   }
 
   static async new() {
-    const ret = await HaskellShelley.proposedProtocolParameterUpdatesNew();
+    const ret = await HaskellShelley.csl_bridge_proposedProtocolParameterUpdatesNew();
     return Ptr._wrap(ret, ProposedProtocolParameterUpdates);
   }
 
   async len() {
-    const ret = await HaskellShelley.proposedProtocolParameterUpdatesLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_proposedProtocolParameterUpdatesLen(this.ptr);
     return ret;
   }
 
   async insert(key, value) {
     const keyPtr = Ptr._assertClass(key, GenesisHash);
     const valuePtr = Ptr._assertClass(value, ProtocolParamUpdate);
-    const ret = await HaskellShelley.proposedProtocolParameterUpdatesInsert(this.ptr, keyPtr, valuePtr);
+    const ret = await HaskellShelley.csl_bridge_proposedProtocolParameterUpdatesInsert(this.ptr, keyPtr, valuePtr);
     return Ptr._wrap(ret, ProtocolParamUpdate);
   }
 
   async get(key) {
     const keyPtr = Ptr._assertClass(key, GenesisHash);
-    const ret = await HaskellShelley.proposedProtocolParameterUpdatesGet(this.ptr, keyPtr);
+    const ret = await HaskellShelley.csl_bridge_proposedProtocolParameterUpdatesGet(this.ptr, keyPtr);
     return Ptr._wrap(ret, ProtocolParamUpdate);
   }
 
   async keys() {
-    const ret = await HaskellShelley.proposedProtocolParameterUpdatesKeys(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_proposedProtocolParameterUpdatesKeys(this.ptr);
     return Ptr._wrap(ret, GenesisHashes);
   }
 
@@ -6319,376 +6586,376 @@ export class ProposedProtocolParameterUpdates extends Ptr {
 
 export class ProtocolParamUpdate extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.protocolParamUpdateToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.protocolParamUpdateFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ProtocolParamUpdate);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.protocolParamUpdateToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.protocolParamUpdateFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateFromHex(hex_str);
     return Ptr._wrap(ret, ProtocolParamUpdate);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.protocolParamUpdateToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.protocolParamUpdateFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateFromJson(json);
     return Ptr._wrap(ret, ProtocolParamUpdate);
   }
 
   set_minfee_a(minfee_a) {
     const minfee_aPtr = Ptr._assertClass(minfee_a, BigNum);
-    const ret = HaskellShelley.protocolParamUpdateSetMinfeeA(this.ptr, minfee_aPtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetMinfeeA(this.ptr, minfee_aPtr);
     return ret;
   }
 
   async minfee_a() {
-    const ret = await HaskellShelley.protocolParamUpdateMinfeeA(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateMinfeeA(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   set_minfee_b(minfee_b) {
     const minfee_bPtr = Ptr._assertClass(minfee_b, BigNum);
-    const ret = HaskellShelley.protocolParamUpdateSetMinfeeB(this.ptr, minfee_bPtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetMinfeeB(this.ptr, minfee_bPtr);
     return ret;
   }
 
   async minfee_b() {
-    const ret = await HaskellShelley.protocolParamUpdateMinfeeB(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateMinfeeB(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   set_max_block_body_size(max_block_body_size) {
-    const ret = HaskellShelley.protocolParamUpdateSetMaxBlockBodySize(this.ptr, max_block_body_size);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetMaxBlockBodySize(this.ptr, max_block_body_size);
     return ret;
   }
 
   async max_block_body_size() {
-    const ret = await HaskellShelley.protocolParamUpdateMaxBlockBodySize(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateMaxBlockBodySize(this.ptr);
     return ret;
   }
 
   set_max_tx_size(max_tx_size) {
-    const ret = HaskellShelley.protocolParamUpdateSetMaxTxSize(this.ptr, max_tx_size);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetMaxTxSize(this.ptr, max_tx_size);
     return ret;
   }
 
   async max_tx_size() {
-    const ret = await HaskellShelley.protocolParamUpdateMaxTxSize(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateMaxTxSize(this.ptr);
     return ret;
   }
 
   set_max_block_header_size(max_block_header_size) {
-    const ret = HaskellShelley.protocolParamUpdateSetMaxBlockHeaderSize(this.ptr, max_block_header_size);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetMaxBlockHeaderSize(this.ptr, max_block_header_size);
     return ret;
   }
 
   async max_block_header_size() {
-    const ret = await HaskellShelley.protocolParamUpdateMaxBlockHeaderSize(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateMaxBlockHeaderSize(this.ptr);
     return ret;
   }
 
   set_key_deposit(key_deposit) {
     const key_depositPtr = Ptr._assertClass(key_deposit, BigNum);
-    const ret = HaskellShelley.protocolParamUpdateSetKeyDeposit(this.ptr, key_depositPtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetKeyDeposit(this.ptr, key_depositPtr);
     return ret;
   }
 
   async key_deposit() {
-    const ret = await HaskellShelley.protocolParamUpdateKeyDeposit(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateKeyDeposit(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   set_pool_deposit(pool_deposit) {
     const pool_depositPtr = Ptr._assertClass(pool_deposit, BigNum);
-    const ret = HaskellShelley.protocolParamUpdateSetPoolDeposit(this.ptr, pool_depositPtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetPoolDeposit(this.ptr, pool_depositPtr);
     return ret;
   }
 
   async pool_deposit() {
-    const ret = await HaskellShelley.protocolParamUpdatePoolDeposit(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdatePoolDeposit(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   set_max_epoch(max_epoch) {
-    const ret = HaskellShelley.protocolParamUpdateSetMaxEpoch(this.ptr, max_epoch);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetMaxEpoch(this.ptr, max_epoch);
     return ret;
   }
 
   async max_epoch() {
-    const ret = await HaskellShelley.protocolParamUpdateMaxEpoch(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateMaxEpoch(this.ptr);
     return ret;
   }
 
   set_n_opt(n_opt) {
-    const ret = HaskellShelley.protocolParamUpdateSetNOpt(this.ptr, n_opt);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetNOpt(this.ptr, n_opt);
     return ret;
   }
 
   async n_opt() {
-    const ret = await HaskellShelley.protocolParamUpdateNOpt(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateNOpt(this.ptr);
     return ret;
   }
 
   set_pool_pledge_influence(pool_pledge_influence) {
     const pool_pledge_influencePtr = Ptr._assertClass(pool_pledge_influence, UnitInterval);
-    const ret = HaskellShelley.protocolParamUpdateSetPoolPledgeInfluence(this.ptr, pool_pledge_influencePtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetPoolPledgeInfluence(this.ptr, pool_pledge_influencePtr);
     return ret;
   }
 
   async pool_pledge_influence() {
-    const ret = await HaskellShelley.protocolParamUpdatePoolPledgeInfluence(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdatePoolPledgeInfluence(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   set_expansion_rate(expansion_rate) {
     const expansion_ratePtr = Ptr._assertClass(expansion_rate, UnitInterval);
-    const ret = HaskellShelley.protocolParamUpdateSetExpansionRate(this.ptr, expansion_ratePtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetExpansionRate(this.ptr, expansion_ratePtr);
     return ret;
   }
 
   async expansion_rate() {
-    const ret = await HaskellShelley.protocolParamUpdateExpansionRate(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateExpansionRate(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   set_treasury_growth_rate(treasury_growth_rate) {
     const treasury_growth_ratePtr = Ptr._assertClass(treasury_growth_rate, UnitInterval);
-    const ret = HaskellShelley.protocolParamUpdateSetTreasuryGrowthRate(this.ptr, treasury_growth_ratePtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetTreasuryGrowthRate(this.ptr, treasury_growth_ratePtr);
     return ret;
   }
 
   async treasury_growth_rate() {
-    const ret = await HaskellShelley.protocolParamUpdateTreasuryGrowthRate(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateTreasuryGrowthRate(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async d() {
-    const ret = await HaskellShelley.protocolParamUpdateD(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateD(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async extra_entropy() {
-    const ret = await HaskellShelley.protocolParamUpdateExtraEntropy(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateExtraEntropy(this.ptr);
     return Ptr._wrap(ret, Nonce);
   }
 
   set_protocol_version(protocol_version) {
     const protocol_versionPtr = Ptr._assertClass(protocol_version, ProtocolVersion);
-    const ret = HaskellShelley.protocolParamUpdateSetProtocolVersion(this.ptr, protocol_versionPtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetProtocolVersion(this.ptr, protocol_versionPtr);
     return ret;
   }
 
   async protocol_version() {
-    const ret = await HaskellShelley.protocolParamUpdateProtocolVersion(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateProtocolVersion(this.ptr);
     return Ptr._wrap(ret, ProtocolVersion);
   }
 
   set_min_pool_cost(min_pool_cost) {
     const min_pool_costPtr = Ptr._assertClass(min_pool_cost, BigNum);
-    const ret = HaskellShelley.protocolParamUpdateSetMinPoolCost(this.ptr, min_pool_costPtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetMinPoolCost(this.ptr, min_pool_costPtr);
     return ret;
   }
 
   async min_pool_cost() {
-    const ret = await HaskellShelley.protocolParamUpdateMinPoolCost(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateMinPoolCost(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   set_ada_per_utxo_byte(ada_per_utxo_byte) {
     const ada_per_utxo_bytePtr = Ptr._assertClass(ada_per_utxo_byte, BigNum);
-    const ret = HaskellShelley.protocolParamUpdateSetAdaPerUtxoByte(this.ptr, ada_per_utxo_bytePtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetAdaPerUtxoByte(this.ptr, ada_per_utxo_bytePtr);
     return ret;
   }
 
   async ada_per_utxo_byte() {
-    const ret = await HaskellShelley.protocolParamUpdateAdaPerUtxoByte(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateAdaPerUtxoByte(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   set_cost_models(cost_models) {
     const cost_modelsPtr = Ptr._assertClass(cost_models, Costmdls);
-    const ret = HaskellShelley.protocolParamUpdateSetCostModels(this.ptr, cost_modelsPtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetCostModels(this.ptr, cost_modelsPtr);
     return ret;
   }
 
   async cost_models() {
-    const ret = await HaskellShelley.protocolParamUpdateCostModels(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateCostModels(this.ptr);
     return Ptr._wrap(ret, Costmdls);
   }
 
   set_execution_costs(execution_costs) {
     const execution_costsPtr = Ptr._assertClass(execution_costs, ExUnitPrices);
-    const ret = HaskellShelley.protocolParamUpdateSetExecutionCosts(this.ptr, execution_costsPtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetExecutionCosts(this.ptr, execution_costsPtr);
     return ret;
   }
 
   async execution_costs() {
-    const ret = await HaskellShelley.protocolParamUpdateExecutionCosts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateExecutionCosts(this.ptr);
     return Ptr._wrap(ret, ExUnitPrices);
   }
 
   set_max_tx_ex_units(max_tx_ex_units) {
     const max_tx_ex_unitsPtr = Ptr._assertClass(max_tx_ex_units, ExUnits);
-    const ret = HaskellShelley.protocolParamUpdateSetMaxTxExUnits(this.ptr, max_tx_ex_unitsPtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetMaxTxExUnits(this.ptr, max_tx_ex_unitsPtr);
     return ret;
   }
 
   async max_tx_ex_units() {
-    const ret = await HaskellShelley.protocolParamUpdateMaxTxExUnits(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateMaxTxExUnits(this.ptr);
     return Ptr._wrap(ret, ExUnits);
   }
 
   set_max_block_ex_units(max_block_ex_units) {
     const max_block_ex_unitsPtr = Ptr._assertClass(max_block_ex_units, ExUnits);
-    const ret = HaskellShelley.protocolParamUpdateSetMaxBlockExUnits(this.ptr, max_block_ex_unitsPtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetMaxBlockExUnits(this.ptr, max_block_ex_unitsPtr);
     return ret;
   }
 
   async max_block_ex_units() {
-    const ret = await HaskellShelley.protocolParamUpdateMaxBlockExUnits(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateMaxBlockExUnits(this.ptr);
     return Ptr._wrap(ret, ExUnits);
   }
 
   set_max_value_size(max_value_size) {
-    const ret = HaskellShelley.protocolParamUpdateSetMaxValueSize(this.ptr, max_value_size);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetMaxValueSize(this.ptr, max_value_size);
     return ret;
   }
 
   async max_value_size() {
-    const ret = await HaskellShelley.protocolParamUpdateMaxValueSize(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateMaxValueSize(this.ptr);
     return ret;
   }
 
   set_collateral_percentage(collateral_percentage) {
-    const ret = HaskellShelley.protocolParamUpdateSetCollateralPercentage(this.ptr, collateral_percentage);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetCollateralPercentage(this.ptr, collateral_percentage);
     return ret;
   }
 
   async collateral_percentage() {
-    const ret = await HaskellShelley.protocolParamUpdateCollateralPercentage(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateCollateralPercentage(this.ptr);
     return ret;
   }
 
   set_max_collateral_inputs(max_collateral_inputs) {
-    const ret = HaskellShelley.protocolParamUpdateSetMaxCollateralInputs(this.ptr, max_collateral_inputs);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetMaxCollateralInputs(this.ptr, max_collateral_inputs);
     return ret;
   }
 
   async max_collateral_inputs() {
-    const ret = await HaskellShelley.protocolParamUpdateMaxCollateralInputs(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateMaxCollateralInputs(this.ptr);
     return ret;
   }
 
   set_pool_voting_thresholds(pool_voting_thresholds) {
     const pool_voting_thresholdsPtr = Ptr._assertClass(pool_voting_thresholds, PoolVotingThresholds);
-    const ret = HaskellShelley.protocolParamUpdateSetPoolVotingThresholds(this.ptr, pool_voting_thresholdsPtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetPoolVotingThresholds(this.ptr, pool_voting_thresholdsPtr);
     return ret;
   }
 
   async pool_voting_thresholds() {
-    const ret = await HaskellShelley.protocolParamUpdatePoolVotingThresholds(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdatePoolVotingThresholds(this.ptr);
     return Ptr._wrap(ret, PoolVotingThresholds);
   }
 
   set_drep_voting_thresholds(drep_voting_thresholds) {
-    const drep_voting_thresholdsPtr = Ptr._assertClass(drep_voting_thresholds, DrepVotingThresholds);
-    const ret = HaskellShelley.protocolParamUpdateSetDrepVotingThresholds(this.ptr, drep_voting_thresholdsPtr);
+    const drep_voting_thresholdsPtr = Ptr._assertClass(drep_voting_thresholds, DRepVotingThresholds);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetDrepVotingThresholds(this.ptr, drep_voting_thresholdsPtr);
     return ret;
   }
 
   async drep_voting_thresholds() {
-    const ret = await HaskellShelley.protocolParamUpdateDrepVotingThresholds(this.ptr);
-    return Ptr._wrap(ret, DrepVotingThresholds);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateDrepVotingThresholds(this.ptr);
+    return Ptr._wrap(ret, DRepVotingThresholds);
   }
 
   set_min_committee_size(min_committee_size) {
-    const ret = HaskellShelley.protocolParamUpdateSetMinCommitteeSize(this.ptr, min_committee_size);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetMinCommitteeSize(this.ptr, min_committee_size);
     return ret;
   }
 
   async min_committee_size() {
-    const ret = await HaskellShelley.protocolParamUpdateMinCommitteeSize(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateMinCommitteeSize(this.ptr);
     return ret;
   }
 
   set_committee_term_limit(committee_term_limit) {
-    const ret = HaskellShelley.protocolParamUpdateSetCommitteeTermLimit(this.ptr, committee_term_limit);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetCommitteeTermLimit(this.ptr, committee_term_limit);
     return ret;
   }
 
   async committee_term_limit() {
-    const ret = await HaskellShelley.protocolParamUpdateCommitteeTermLimit(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateCommitteeTermLimit(this.ptr);
     return ret;
   }
 
   set_governance_action_validity_period(governance_action_validity_period) {
-    const ret = HaskellShelley.protocolParamUpdateSetGovernanceActionValidityPeriod(this.ptr, governance_action_validity_period);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetGovernanceActionValidityPeriod(this.ptr, governance_action_validity_period);
     return ret;
   }
 
   async governance_action_validity_period() {
-    const ret = await HaskellShelley.protocolParamUpdateGovernanceActionValidityPeriod(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateGovernanceActionValidityPeriod(this.ptr);
     return ret;
   }
 
   set_governance_action_deposit(governance_action_deposit) {
     const governance_action_depositPtr = Ptr._assertClass(governance_action_deposit, BigNum);
-    const ret = HaskellShelley.protocolParamUpdateSetGovernanceActionDeposit(this.ptr, governance_action_depositPtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetGovernanceActionDeposit(this.ptr, governance_action_depositPtr);
     return ret;
   }
 
   async governance_action_deposit() {
-    const ret = await HaskellShelley.protocolParamUpdateGovernanceActionDeposit(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateGovernanceActionDeposit(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   set_drep_deposit(drep_deposit) {
     const drep_depositPtr = Ptr._assertClass(drep_deposit, BigNum);
-    const ret = HaskellShelley.protocolParamUpdateSetDrepDeposit(this.ptr, drep_depositPtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetDrepDeposit(this.ptr, drep_depositPtr);
     return ret;
   }
 
   async drep_deposit() {
-    const ret = await HaskellShelley.protocolParamUpdateDrepDeposit(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateDrepDeposit(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   set_drep_inactivity_period(drep_inactivity_period) {
-    const ret = HaskellShelley.protocolParamUpdateSetDrepInactivityPeriod(this.ptr, drep_inactivity_period);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetDrepInactivityPeriod(this.ptr, drep_inactivity_period);
     return ret;
   }
 
   async drep_inactivity_period() {
-    const ret = await HaskellShelley.protocolParamUpdateDrepInactivityPeriod(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateDrepInactivityPeriod(this.ptr);
     return ret;
   }
 
   set_ref_script_coins_per_byte(ref_script_coins_per_byte) {
     const ref_script_coins_per_bytePtr = Ptr._assertClass(ref_script_coins_per_byte, UnitInterval);
-    const ret = HaskellShelley.protocolParamUpdateSetRefScriptCoinsPerByte(this.ptr, ref_script_coins_per_bytePtr);
+    const ret = HaskellShelley.csl_bridge_protocolParamUpdateSetRefScriptCoinsPerByte(this.ptr, ref_script_coins_per_bytePtr);
     return ret;
   }
 
   async ref_script_coins_per_byte() {
-    const ret = await HaskellShelley.protocolParamUpdateRefScriptCoinsPerByte(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateRefScriptCoinsPerByte(this.ptr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   static async new() {
-    const ret = await HaskellShelley.protocolParamUpdateNew();
+    const ret = await HaskellShelley.csl_bridge_protocolParamUpdateNew();
     return Ptr._wrap(ret, ProtocolParamUpdate);
   }
 
@@ -6697,47 +6964,47 @@ export class ProtocolParamUpdate extends Ptr {
 
 export class ProtocolVersion extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.protocolVersionToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolVersionToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.protocolVersionFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_protocolVersionFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ProtocolVersion);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.protocolVersionToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolVersionToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.protocolVersionFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_protocolVersionFromHex(hex_str);
     return Ptr._wrap(ret, ProtocolVersion);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.protocolVersionToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolVersionToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.protocolVersionFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_protocolVersionFromJson(json);
     return Ptr._wrap(ret, ProtocolVersion);
   }
 
   async major() {
-    const ret = await HaskellShelley.protocolVersionMajor(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolVersionMajor(this.ptr);
     return ret;
   }
 
   async minor() {
-    const ret = await HaskellShelley.protocolVersionMinor(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_protocolVersionMinor(this.ptr);
     return ret;
   }
 
   static async new(major, minor) {
-    const ret = await HaskellShelley.protocolVersionNew(major, minor);
+    const ret = await HaskellShelley.csl_bridge_protocolVersionNew(major, minor);
     return Ptr._wrap(ret, ProtocolVersion);
   }
 
@@ -6746,43 +7013,43 @@ export class ProtocolVersion extends Ptr {
 
 export class PublicKey extends Ptr {
   static async from_bech32(bech32_str) {
-    const ret = await HaskellShelley.publicKeyFromBech32(bech32_str);
+    const ret = await HaskellShelley.csl_bridge_publicKeyFromBech32(bech32_str);
     return Ptr._wrap(ret, PublicKey);
   }
 
   async to_bech32() {
-    const ret = await HaskellShelley.publicKeyToBech32(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_publicKeyToBech32(this.ptr);
     return ret;
   }
 
   async as_bytes() {
-    const ret = await HaskellShelley.publicKeyAsBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_publicKeyAsBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.publicKeyFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_publicKeyFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, PublicKey);
   }
 
   async verify(data, signature) {
     const signaturePtr = Ptr._assertClass(signature, Ed25519Signature);
-    const ret = await HaskellShelley.publicKeyVerify(this.ptr, b64FromUint8Array(data), signaturePtr);
+    const ret = await HaskellShelley.csl_bridge_publicKeyVerify(this.ptr, b64FromUint8Array(data), signaturePtr);
     return ret;
   }
 
   async hash() {
-    const ret = await HaskellShelley.publicKeyHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_publicKeyHash(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.publicKeyToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_publicKeyToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.publicKeyFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_publicKeyFromHex(hex_str);
     return Ptr._wrap(ret, PublicKey);
   }
 
@@ -6791,23 +7058,23 @@ export class PublicKey extends Ptr {
 
 export class PublicKeys extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.publicKeysNew();
+    const ret = await HaskellShelley.csl_bridge_publicKeysNew();
     return Ptr._wrap(ret, PublicKeys);
   }
 
   async size() {
-    const ret = await HaskellShelley.publicKeysSize(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_publicKeysSize(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.publicKeysGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_publicKeysGet(this.ptr, index);
     return Ptr._wrap(ret, PublicKey);
   }
 
   add(key) {
     const keyPtr = Ptr._assertClass(key, PublicKey);
-    const ret = HaskellShelley.publicKeysAdd(this.ptr, keyPtr);
+    const ret = HaskellShelley.csl_bridge_publicKeysAdd(this.ptr, keyPtr);
     return ret;
   }
 
@@ -6816,52 +7083,52 @@ export class PublicKeys extends Ptr {
 
 export class Redeemer extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.redeemerToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemerToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.redeemerFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_redeemerFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Redeemer);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.redeemerToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemerToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.redeemerFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_redeemerFromHex(hex_str);
     return Ptr._wrap(ret, Redeemer);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.redeemerToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemerToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.redeemerFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_redeemerFromJson(json);
     return Ptr._wrap(ret, Redeemer);
   }
 
   async tag() {
-    const ret = await HaskellShelley.redeemerTag(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemerTag(this.ptr);
     return Ptr._wrap(ret, RedeemerTag);
   }
 
   async index() {
-    const ret = await HaskellShelley.redeemerIndex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemerIndex(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async data() {
-    const ret = await HaskellShelley.redeemerData(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemerData(this.ptr);
     return Ptr._wrap(ret, PlutusData);
   }
 
   async ex_units() {
-    const ret = await HaskellShelley.redeemerExUnits(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemerExUnits(this.ptr);
     return Ptr._wrap(ret, ExUnits);
   }
 
@@ -6870,7 +7137,7 @@ export class Redeemer extends Ptr {
     const indexPtr = Ptr._assertClass(index, BigNum);
     const dataPtr = Ptr._assertClass(data, PlutusData);
     const ex_unitsPtr = Ptr._assertClass(ex_units, ExUnits);
-    const ret = await HaskellShelley.redeemerNew(tagPtr, indexPtr, dataPtr, ex_unitsPtr);
+    const ret = await HaskellShelley.csl_bridge_redeemerNew(tagPtr, indexPtr, dataPtr, ex_unitsPtr);
     return Ptr._wrap(ret, Redeemer);
   }
 
@@ -6879,67 +7146,67 @@ export class Redeemer extends Ptr {
 
 export class RedeemerTag extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.redeemerTagToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemerTagToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.redeemerTagFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_redeemerTagFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, RedeemerTag);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.redeemerTagToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemerTagToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.redeemerTagFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_redeemerTagFromHex(hex_str);
     return Ptr._wrap(ret, RedeemerTag);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.redeemerTagToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemerTagToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.redeemerTagFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_redeemerTagFromJson(json);
     return Ptr._wrap(ret, RedeemerTag);
   }
 
   static async new_spend() {
-    const ret = await HaskellShelley.redeemerTagNewSpend();
+    const ret = await HaskellShelley.csl_bridge_redeemerTagNewSpend();
     return Ptr._wrap(ret, RedeemerTag);
   }
 
   static async new_mint() {
-    const ret = await HaskellShelley.redeemerTagNewMint();
+    const ret = await HaskellShelley.csl_bridge_redeemerTagNewMint();
     return Ptr._wrap(ret, RedeemerTag);
   }
 
   static async new_cert() {
-    const ret = await HaskellShelley.redeemerTagNewCert();
+    const ret = await HaskellShelley.csl_bridge_redeemerTagNewCert();
     return Ptr._wrap(ret, RedeemerTag);
   }
 
   static async new_reward() {
-    const ret = await HaskellShelley.redeemerTagNewReward();
+    const ret = await HaskellShelley.csl_bridge_redeemerTagNewReward();
     return Ptr._wrap(ret, RedeemerTag);
   }
 
   static async new_vote() {
-    const ret = await HaskellShelley.redeemerTagNewVote();
+    const ret = await HaskellShelley.csl_bridge_redeemerTagNewVote();
     return Ptr._wrap(ret, RedeemerTag);
   }
 
   static async new_voting_proposal() {
-    const ret = await HaskellShelley.redeemerTagNewVotingProposal();
+    const ret = await HaskellShelley.csl_bridge_redeemerTagNewVotingProposal();
     return Ptr._wrap(ret, RedeemerTag);
   }
 
   async kind() {
-    const ret = await HaskellShelley.redeemerTagKind(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemerTagKind(this.ptr);
     return ret;
   }
 
@@ -6948,58 +7215,58 @@ export class RedeemerTag extends Ptr {
 
 export class Redeemers extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.redeemersToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemersToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.redeemersFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_redeemersFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Redeemers);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.redeemersToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemersToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.redeemersFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_redeemersFromHex(hex_str);
     return Ptr._wrap(ret, Redeemers);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.redeemersToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemersToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.redeemersFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_redeemersFromJson(json);
     return Ptr._wrap(ret, Redeemers);
   }
 
   static async new() {
-    const ret = await HaskellShelley.redeemersNew();
+    const ret = await HaskellShelley.csl_bridge_redeemersNew();
     return Ptr._wrap(ret, Redeemers);
   }
 
   async len() {
-    const ret = await HaskellShelley.redeemersLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemersLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.redeemersGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_redeemersGet(this.ptr, index);
     return Ptr._wrap(ret, Redeemer);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, Redeemer);
-    const ret = HaskellShelley.redeemersAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_redeemersAdd(this.ptr, elemPtr);
     return ret;
   }
 
   async total_ex_units() {
-    const ret = await HaskellShelley.redeemersTotalExUnits(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_redeemersTotalExUnits(this.ptr);
     return Ptr._wrap(ret, ExUnits);
   }
 
@@ -7008,70 +7275,70 @@ export class Redeemers extends Ptr {
 
 export class Relay extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.relayToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_relayToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.relayFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_relayFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Relay);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.relayToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_relayToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.relayFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_relayFromHex(hex_str);
     return Ptr._wrap(ret, Relay);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.relayToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_relayToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.relayFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_relayFromJson(json);
     return Ptr._wrap(ret, Relay);
   }
 
   static async new_single_host_addr(single_host_addr) {
     const single_host_addrPtr = Ptr._assertClass(single_host_addr, SingleHostAddr);
-    const ret = await HaskellShelley.relayNewSingleHostAddr(single_host_addrPtr);
+    const ret = await HaskellShelley.csl_bridge_relayNewSingleHostAddr(single_host_addrPtr);
     return Ptr._wrap(ret, Relay);
   }
 
   static async new_single_host_name(single_host_name) {
     const single_host_namePtr = Ptr._assertClass(single_host_name, SingleHostName);
-    const ret = await HaskellShelley.relayNewSingleHostName(single_host_namePtr);
+    const ret = await HaskellShelley.csl_bridge_relayNewSingleHostName(single_host_namePtr);
     return Ptr._wrap(ret, Relay);
   }
 
   static async new_multi_host_name(multi_host_name) {
     const multi_host_namePtr = Ptr._assertClass(multi_host_name, MultiHostName);
-    const ret = await HaskellShelley.relayNewMultiHostName(multi_host_namePtr);
+    const ret = await HaskellShelley.csl_bridge_relayNewMultiHostName(multi_host_namePtr);
     return Ptr._wrap(ret, Relay);
   }
 
   async kind() {
-    const ret = await HaskellShelley.relayKind(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_relayKind(this.ptr);
     return ret;
   }
 
   async as_single_host_addr() {
-    const ret = await HaskellShelley.relayAsSingleHostAddr(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_relayAsSingleHostAddr(this.ptr);
     return Ptr._wrap(ret, SingleHostAddr);
   }
 
   async as_single_host_name() {
-    const ret = await HaskellShelley.relayAsSingleHostName(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_relayAsSingleHostName(this.ptr);
     return Ptr._wrap(ret, SingleHostName);
   }
 
   async as_multi_host_name() {
-    const ret = await HaskellShelley.relayAsMultiHostName(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_relayAsMultiHostName(this.ptr);
     return Ptr._wrap(ret, MultiHostName);
   }
 
@@ -7080,53 +7347,53 @@ export class Relay extends Ptr {
 
 export class Relays extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.relaysToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_relaysToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.relaysFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_relaysFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Relays);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.relaysToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_relaysToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.relaysFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_relaysFromHex(hex_str);
     return Ptr._wrap(ret, Relays);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.relaysToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_relaysToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.relaysFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_relaysFromJson(json);
     return Ptr._wrap(ret, Relays);
   }
 
   static async new() {
-    const ret = await HaskellShelley.relaysNew();
+    const ret = await HaskellShelley.csl_bridge_relaysNew();
     return Ptr._wrap(ret, Relays);
   }
 
   async len() {
-    const ret = await HaskellShelley.relaysLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_relaysLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.relaysGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_relaysGet(this.ptr, index);
     return Ptr._wrap(ret, Relay);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, Relay);
-    const ret = HaskellShelley.relaysAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_relaysAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -7136,24 +7403,29 @@ export class Relays extends Ptr {
 export class RewardAddress extends Ptr {
   static async new(network, payment) {
     const paymentPtr = Ptr._assertClass(payment, Credential);
-    const ret = await HaskellShelley.rewardAddressNew(network, paymentPtr);
+    const ret = await HaskellShelley.csl_bridge_rewardAddressNew(network, paymentPtr);
     return Ptr._wrap(ret, RewardAddress);
   }
 
   async payment_cred() {
-    const ret = await HaskellShelley.rewardAddressPaymentCred(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_rewardAddressPaymentCred(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async to_address() {
-    const ret = await HaskellShelley.rewardAddressToAddress(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_rewardAddressToAddress(this.ptr);
     return Ptr._wrap(ret, Address);
   }
 
   static async from_address(addr) {
     const addrPtr = Ptr._assertClass(addr, Address);
-    const ret = await HaskellShelley.rewardAddressFromAddress(addrPtr);
+    const ret = await HaskellShelley.csl_bridge_rewardAddressFromAddress(addrPtr);
     return Ptr._wrap(ret, RewardAddress);
+  }
+
+  async network_id() {
+    const ret = await HaskellShelley.csl_bridge_rewardAddressNetworkId(this.ptr);
+    return ret;
   }
 
 }
@@ -7161,53 +7433,53 @@ export class RewardAddress extends Ptr {
 
 export class RewardAddresses extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.rewardAddressesToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_rewardAddressesToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.rewardAddressesFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_rewardAddressesFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, RewardAddresses);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.rewardAddressesToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_rewardAddressesToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.rewardAddressesFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_rewardAddressesFromHex(hex_str);
     return Ptr._wrap(ret, RewardAddresses);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.rewardAddressesToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_rewardAddressesToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.rewardAddressesFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_rewardAddressesFromJson(json);
     return Ptr._wrap(ret, RewardAddresses);
   }
 
   static async new() {
-    const ret = await HaskellShelley.rewardAddressesNew();
+    const ret = await HaskellShelley.csl_bridge_rewardAddressesNew();
     return Ptr._wrap(ret, RewardAddresses);
   }
 
   async len() {
-    const ret = await HaskellShelley.rewardAddressesLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_rewardAddressesLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.rewardAddressesGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_rewardAddressesGet(this.ptr, index);
     return Ptr._wrap(ret, RewardAddress);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, RewardAddress);
-    const ret = HaskellShelley.rewardAddressesAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_rewardAddressesAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -7216,43 +7488,43 @@ export class RewardAddresses extends Ptr {
 
 export class ScriptAll extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.scriptAllToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptAllToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.scriptAllFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_scriptAllFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ScriptAll);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.scriptAllToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptAllToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.scriptAllFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_scriptAllFromHex(hex_str);
     return Ptr._wrap(ret, ScriptAll);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.scriptAllToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptAllToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.scriptAllFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_scriptAllFromJson(json);
     return Ptr._wrap(ret, ScriptAll);
   }
 
   async native_scripts() {
-    const ret = await HaskellShelley.scriptAllNativeScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptAllNativeScripts(this.ptr);
     return Ptr._wrap(ret, NativeScripts);
   }
 
   static async new(native_scripts) {
     const native_scriptsPtr = Ptr._assertClass(native_scripts, NativeScripts);
-    const ret = await HaskellShelley.scriptAllNew(native_scriptsPtr);
+    const ret = await HaskellShelley.csl_bridge_scriptAllNew(native_scriptsPtr);
     return Ptr._wrap(ret, ScriptAll);
   }
 
@@ -7261,43 +7533,43 @@ export class ScriptAll extends Ptr {
 
 export class ScriptAny extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.scriptAnyToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptAnyToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.scriptAnyFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_scriptAnyFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ScriptAny);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.scriptAnyToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptAnyToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.scriptAnyFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_scriptAnyFromHex(hex_str);
     return Ptr._wrap(ret, ScriptAny);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.scriptAnyToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptAnyToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.scriptAnyFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_scriptAnyFromJson(json);
     return Ptr._wrap(ret, ScriptAny);
   }
 
   async native_scripts() {
-    const ret = await HaskellShelley.scriptAnyNativeScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptAnyNativeScripts(this.ptr);
     return Ptr._wrap(ret, NativeScripts);
   }
 
   static async new(native_scripts) {
     const native_scriptsPtr = Ptr._assertClass(native_scripts, NativeScripts);
-    const ret = await HaskellShelley.scriptAnyNew(native_scriptsPtr);
+    const ret = await HaskellShelley.csl_bridge_scriptAnyNew(native_scriptsPtr);
     return Ptr._wrap(ret, ScriptAny);
   }
 
@@ -7306,32 +7578,32 @@ export class ScriptAny extends Ptr {
 
 export class ScriptDataHash extends Ptr {
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.scriptDataHashFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_scriptDataHashFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ScriptDataHash);
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.scriptDataHashToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptDataHashToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_bech32(prefix) {
-    const ret = await HaskellShelley.scriptDataHashToBech32(this.ptr, prefix);
+    const ret = await HaskellShelley.csl_bridge_scriptDataHashToBech32(this.ptr, prefix);
     return ret;
   }
 
   static async from_bech32(bech_str) {
-    const ret = await HaskellShelley.scriptDataHashFromBech32(bech_str);
+    const ret = await HaskellShelley.csl_bridge_scriptDataHashFromBech32(bech_str);
     return Ptr._wrap(ret, ScriptDataHash);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.scriptDataHashToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptDataHashToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex) {
-    const ret = await HaskellShelley.scriptDataHashFromHex(hex);
+    const ret = await HaskellShelley.csl_bridge_scriptDataHashFromHex(hex);
     return Ptr._wrap(ret, ScriptDataHash);
   }
 
@@ -7340,32 +7612,32 @@ export class ScriptDataHash extends Ptr {
 
 export class ScriptHash extends Ptr {
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.scriptHashFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_scriptHashFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ScriptHash);
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.scriptHashToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptHashToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_bech32(prefix) {
-    const ret = await HaskellShelley.scriptHashToBech32(this.ptr, prefix);
+    const ret = await HaskellShelley.csl_bridge_scriptHashToBech32(this.ptr, prefix);
     return ret;
   }
 
   static async from_bech32(bech_str) {
-    const ret = await HaskellShelley.scriptHashFromBech32(bech_str);
+    const ret = await HaskellShelley.csl_bridge_scriptHashFromBech32(bech_str);
     return Ptr._wrap(ret, ScriptHash);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.scriptHashToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptHashToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex) {
-    const ret = await HaskellShelley.scriptHashFromHex(hex);
+    const ret = await HaskellShelley.csl_bridge_scriptHashFromHex(hex);
     return Ptr._wrap(ret, ScriptHash);
   }
 
@@ -7374,53 +7646,53 @@ export class ScriptHash extends Ptr {
 
 export class ScriptHashes extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.scriptHashesToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptHashesToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.scriptHashesFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_scriptHashesFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ScriptHashes);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.scriptHashesToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptHashesToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.scriptHashesFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_scriptHashesFromHex(hex_str);
     return Ptr._wrap(ret, ScriptHashes);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.scriptHashesToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptHashesToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.scriptHashesFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_scriptHashesFromJson(json);
     return Ptr._wrap(ret, ScriptHashes);
   }
 
   static async new() {
-    const ret = await HaskellShelley.scriptHashesNew();
+    const ret = await HaskellShelley.csl_bridge_scriptHashesNew();
     return Ptr._wrap(ret, ScriptHashes);
   }
 
   async len() {
-    const ret = await HaskellShelley.scriptHashesLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptHashesLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.scriptHashesGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_scriptHashesGet(this.ptr, index);
     return Ptr._wrap(ret, ScriptHash);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, ScriptHash);
-    const ret = HaskellShelley.scriptHashesAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_scriptHashesAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -7429,48 +7701,48 @@ export class ScriptHashes extends Ptr {
 
 export class ScriptNOfK extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.scriptNOfKToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptNOfKToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.scriptNOfKFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_scriptNOfKFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ScriptNOfK);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.scriptNOfKToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptNOfKToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.scriptNOfKFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_scriptNOfKFromHex(hex_str);
     return Ptr._wrap(ret, ScriptNOfK);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.scriptNOfKToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptNOfKToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.scriptNOfKFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_scriptNOfKFromJson(json);
     return Ptr._wrap(ret, ScriptNOfK);
   }
 
   async n() {
-    const ret = await HaskellShelley.scriptNOfKN(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptNOfKN(this.ptr);
     return ret;
   }
 
   async native_scripts() {
-    const ret = await HaskellShelley.scriptNOfKNativeScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptNOfKNativeScripts(this.ptr);
     return Ptr._wrap(ret, NativeScripts);
   }
 
   static async new(n, native_scripts) {
     const native_scriptsPtr = Ptr._assertClass(native_scripts, NativeScripts);
-    const ret = await HaskellShelley.scriptNOfKNew(n, native_scriptsPtr);
+    const ret = await HaskellShelley.csl_bridge_scriptNOfKNew(n, native_scriptsPtr);
     return Ptr._wrap(ret, ScriptNOfK);
   }
 
@@ -7479,43 +7751,43 @@ export class ScriptNOfK extends Ptr {
 
 export class ScriptPubkey extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.scriptPubkeyToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptPubkeyToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.scriptPubkeyFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_scriptPubkeyFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ScriptPubkey);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.scriptPubkeyToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptPubkeyToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.scriptPubkeyFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_scriptPubkeyFromHex(hex_str);
     return Ptr._wrap(ret, ScriptPubkey);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.scriptPubkeyToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptPubkeyToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.scriptPubkeyFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_scriptPubkeyFromJson(json);
     return Ptr._wrap(ret, ScriptPubkey);
   }
 
   async addr_keyhash() {
-    const ret = await HaskellShelley.scriptPubkeyAddrKeyhash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptPubkeyAddrKeyhash(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
   static async new(addr_keyhash) {
     const addr_keyhashPtr = Ptr._assertClass(addr_keyhash, Ed25519KeyHash);
-    const ret = await HaskellShelley.scriptPubkeyNew(addr_keyhashPtr);
+    const ret = await HaskellShelley.csl_bridge_scriptPubkeyNew(addr_keyhashPtr);
     return Ptr._wrap(ret, ScriptPubkey);
   }
 
@@ -7524,65 +7796,70 @@ export class ScriptPubkey extends Ptr {
 
 export class ScriptRef extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.scriptRefToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptRefToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.scriptRefFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_scriptRefFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, ScriptRef);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.scriptRefToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptRefToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.scriptRefFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_scriptRefFromHex(hex_str);
     return Ptr._wrap(ret, ScriptRef);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.scriptRefToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptRefToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.scriptRefFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_scriptRefFromJson(json);
     return Ptr._wrap(ret, ScriptRef);
   }
 
   static async new_native_script(native_script) {
     const native_scriptPtr = Ptr._assertClass(native_script, NativeScript);
-    const ret = await HaskellShelley.scriptRefNewNativeScript(native_scriptPtr);
+    const ret = await HaskellShelley.csl_bridge_scriptRefNewNativeScript(native_scriptPtr);
     return Ptr._wrap(ret, ScriptRef);
   }
 
   static async new_plutus_script(plutus_script) {
     const plutus_scriptPtr = Ptr._assertClass(plutus_script, PlutusScript);
-    const ret = await HaskellShelley.scriptRefNewPlutusScript(plutus_scriptPtr);
+    const ret = await HaskellShelley.csl_bridge_scriptRefNewPlutusScript(plutus_scriptPtr);
     return Ptr._wrap(ret, ScriptRef);
   }
 
   async is_native_script() {
-    const ret = await HaskellShelley.scriptRefIsNativeScript(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptRefIsNativeScript(this.ptr);
     return ret;
   }
 
   async is_plutus_script() {
-    const ret = await HaskellShelley.scriptRefIsPlutusScript(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptRefIsPlutusScript(this.ptr);
     return ret;
   }
 
   async native_script() {
-    const ret = await HaskellShelley.scriptRefNativeScript(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptRefNativeScript(this.ptr);
     return Ptr._wrap(ret, NativeScript);
   }
 
   async plutus_script() {
-    const ret = await HaskellShelley.scriptRefPlutusScript(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_scriptRefPlutusScript(this.ptr);
     return Ptr._wrap(ret, PlutusScript);
+  }
+
+  async to_unwrapped_bytes() {
+    const ret = await HaskellShelley.csl_bridge_scriptRefToUnwrappedBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
   }
 
 }
@@ -7590,47 +7867,47 @@ export class ScriptRef extends Ptr {
 
 export class SingleHostAddr extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.singleHostAddrToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_singleHostAddrToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.singleHostAddrFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_singleHostAddrFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, SingleHostAddr);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.singleHostAddrToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_singleHostAddrToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.singleHostAddrFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_singleHostAddrFromHex(hex_str);
     return Ptr._wrap(ret, SingleHostAddr);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.singleHostAddrToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_singleHostAddrToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.singleHostAddrFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_singleHostAddrFromJson(json);
     return Ptr._wrap(ret, SingleHostAddr);
   }
 
   async port() {
-    const ret = await HaskellShelley.singleHostAddrPort(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_singleHostAddrPort(this.ptr);
     return ret;
   }
 
   async ipv4() {
-    const ret = await HaskellShelley.singleHostAddrIpv4(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_singleHostAddrIpv4(this.ptr);
     return Ptr._wrap(ret, Ipv4);
   }
 
   async ipv6() {
-    const ret = await HaskellShelley.singleHostAddrIpv6(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_singleHostAddrIpv6(this.ptr);
     return Ptr._wrap(ret, Ipv6);
   }
 
@@ -7638,35 +7915,35 @@ export class SingleHostAddr extends Ptr {
     const ipv4Ptr = Ptr._assertOptionalClass(ipv4, Ipv4);
     const ipv6Ptr = Ptr._assertOptionalClass(ipv6, Ipv6);
     if(port == null && ipv4 == null && ipv6 == null) {
-      const ret = await HaskellShelley.singleHostAddrNew();
+      const ret = await HaskellShelley.csl_bridge_singleHostAddrNew();
       return Ptr._wrap(ret, SingleHostAddr);
     }
     if(port != null && ipv4 == null && ipv6 == null) {
-      const ret = await HaskellShelley.singleHostAddrNewWithPort(port);
+      const ret = await HaskellShelley.csl_bridge_singleHostAddrNewWithPort(port);
       return Ptr._wrap(ret, SingleHostAddr);
     }
     if(port == null && ipv4 != null && ipv6 == null) {
-      const ret = await HaskellShelley.singleHostAddrNewWithIpv4(ipv4Ptr);
+      const ret = await HaskellShelley.csl_bridge_singleHostAddrNewWithIpv4(ipv4Ptr);
       return Ptr._wrap(ret, SingleHostAddr);
     }
     if(port != null && ipv4 != null && ipv6 == null) {
-      const ret = await HaskellShelley.singleHostAddrNewWithPortIpv4(port, ipv4Ptr);
+      const ret = await HaskellShelley.csl_bridge_singleHostAddrNewWithPortIpv4(port, ipv4Ptr);
       return Ptr._wrap(ret, SingleHostAddr);
     }
     if(port == null && ipv4 == null && ipv6 != null) {
-      const ret = await HaskellShelley.singleHostAddrNewWithIpv6(ipv6Ptr);
+      const ret = await HaskellShelley.csl_bridge_singleHostAddrNewWithIpv6(ipv6Ptr);
       return Ptr._wrap(ret, SingleHostAddr);
     }
     if(port != null && ipv4 == null && ipv6 != null) {
-      const ret = await HaskellShelley.singleHostAddrNewWithPortIpv6(port, ipv6Ptr);
+      const ret = await HaskellShelley.csl_bridge_singleHostAddrNewWithPortIpv6(port, ipv6Ptr);
       return Ptr._wrap(ret, SingleHostAddr);
     }
     if(port == null && ipv4 != null && ipv6 != null) {
-      const ret = await HaskellShelley.singleHostAddrNewWithIpv4Ipv6(ipv4Ptr, ipv6Ptr);
+      const ret = await HaskellShelley.csl_bridge_singleHostAddrNewWithIpv4Ipv6(ipv4Ptr, ipv6Ptr);
       return Ptr._wrap(ret, SingleHostAddr);
     }
     if(port != null && ipv4 != null && ipv6 != null) {
-      const ret = await HaskellShelley.singleHostAddrNewWithPortIpv4Ipv6(port, ipv4Ptr, ipv6Ptr);
+      const ret = await HaskellShelley.csl_bridge_singleHostAddrNewWithPortIpv4Ipv6(port, ipv4Ptr, ipv6Ptr);
       return Ptr._wrap(ret, SingleHostAddr);
     }
   }
@@ -7676,53 +7953,53 @@ export class SingleHostAddr extends Ptr {
 
 export class SingleHostName extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.singleHostNameToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_singleHostNameToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.singleHostNameFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_singleHostNameFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, SingleHostName);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.singleHostNameToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_singleHostNameToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.singleHostNameFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_singleHostNameFromHex(hex_str);
     return Ptr._wrap(ret, SingleHostName);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.singleHostNameToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_singleHostNameToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.singleHostNameFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_singleHostNameFromJson(json);
     return Ptr._wrap(ret, SingleHostName);
   }
 
   async port() {
-    const ret = await HaskellShelley.singleHostNamePort(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_singleHostNamePort(this.ptr);
     return ret;
   }
 
   async dns_name() {
-    const ret = await HaskellShelley.singleHostNameDnsName(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_singleHostNameDnsName(this.ptr);
     return Ptr._wrap(ret, DNSRecordAorAAAA);
   }
 
   static async new(port, dns_name) {
     const dns_namePtr = Ptr._assertClass(dns_name, DNSRecordAorAAAA);
     if(port == null) {
-      const ret = await HaskellShelley.singleHostNameNew(dns_namePtr);
+      const ret = await HaskellShelley.csl_bridge_singleHostNameNew(dns_namePtr);
       return Ptr._wrap(ret, SingleHostName);
     }
     if(port != null) {
-      const ret = await HaskellShelley.singleHostNameNewWithPort(port, dns_namePtr);
+      const ret = await HaskellShelley.csl_bridge_singleHostNameNewWithPort(port, dns_namePtr);
       return Ptr._wrap(ret, SingleHostName);
     }
   }
@@ -7732,47 +8009,47 @@ export class SingleHostName extends Ptr {
 
 export class StakeAndVoteDelegation extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.stakeAndVoteDelegationToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeAndVoteDelegationToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.stakeAndVoteDelegationFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_stakeAndVoteDelegationFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, StakeAndVoteDelegation);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.stakeAndVoteDelegationToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeAndVoteDelegationToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.stakeAndVoteDelegationFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_stakeAndVoteDelegationFromHex(hex_str);
     return Ptr._wrap(ret, StakeAndVoteDelegation);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.stakeAndVoteDelegationToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeAndVoteDelegationToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.stakeAndVoteDelegationFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_stakeAndVoteDelegationFromJson(json);
     return Ptr._wrap(ret, StakeAndVoteDelegation);
   }
 
   async stake_credential() {
-    const ret = await HaskellShelley.stakeAndVoteDelegationStakeCredential(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeAndVoteDelegationStakeCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async pool_keyhash() {
-    const ret = await HaskellShelley.stakeAndVoteDelegationPoolKeyhash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeAndVoteDelegationPoolKeyhash(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
   async drep() {
-    const ret = await HaskellShelley.stakeAndVoteDelegationDrep(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeAndVoteDelegationDrep(this.ptr);
     return Ptr._wrap(ret, DRep);
   }
 
@@ -7780,12 +8057,12 @@ export class StakeAndVoteDelegation extends Ptr {
     const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
     const pool_keyhashPtr = Ptr._assertClass(pool_keyhash, Ed25519KeyHash);
     const drepPtr = Ptr._assertClass(drep, DRep);
-    const ret = await HaskellShelley.stakeAndVoteDelegationNew(stake_credentialPtr, pool_keyhashPtr, drepPtr);
+    const ret = await HaskellShelley.csl_bridge_stakeAndVoteDelegationNew(stake_credentialPtr, pool_keyhashPtr, drepPtr);
     return Ptr._wrap(ret, StakeAndVoteDelegation);
   }
 
   async has_script_credentials() {
-    const ret = await HaskellShelley.stakeAndVoteDelegationHasScriptCredentials(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeAndVoteDelegationHasScriptCredentials(this.ptr);
     return ret;
   }
 
@@ -7794,54 +8071,54 @@ export class StakeAndVoteDelegation extends Ptr {
 
 export class StakeDelegation extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.stakeDelegationToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeDelegationToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.stakeDelegationFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_stakeDelegationFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, StakeDelegation);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.stakeDelegationToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeDelegationToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.stakeDelegationFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_stakeDelegationFromHex(hex_str);
     return Ptr._wrap(ret, StakeDelegation);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.stakeDelegationToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeDelegationToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.stakeDelegationFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_stakeDelegationFromJson(json);
     return Ptr._wrap(ret, StakeDelegation);
   }
 
   async stake_credential() {
-    const ret = await HaskellShelley.stakeDelegationStakeCredential(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeDelegationStakeCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async pool_keyhash() {
-    const ret = await HaskellShelley.stakeDelegationPoolKeyhash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeDelegationPoolKeyhash(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
   static async new(stake_credential, pool_keyhash) {
     const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
     const pool_keyhashPtr = Ptr._assertClass(pool_keyhash, Ed25519KeyHash);
-    const ret = await HaskellShelley.stakeDelegationNew(stake_credentialPtr, pool_keyhashPtr);
+    const ret = await HaskellShelley.csl_bridge_stakeDelegationNew(stake_credentialPtr, pool_keyhashPtr);
     return Ptr._wrap(ret, StakeDelegation);
   }
 
   async has_script_credentials() {
-    const ret = await HaskellShelley.stakeDelegationHasScriptCredentials(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeDelegationHasScriptCredentials(this.ptr);
     return ret;
   }
 
@@ -7850,60 +8127,60 @@ export class StakeDelegation extends Ptr {
 
 export class StakeDeregistration extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.stakeDeregistrationToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeDeregistrationToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.stakeDeregistrationFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_stakeDeregistrationFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, StakeDeregistration);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.stakeDeregistrationToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeDeregistrationToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.stakeDeregistrationFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_stakeDeregistrationFromHex(hex_str);
     return Ptr._wrap(ret, StakeDeregistration);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.stakeDeregistrationToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeDeregistrationToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.stakeDeregistrationFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_stakeDeregistrationFromJson(json);
     return Ptr._wrap(ret, StakeDeregistration);
   }
 
   async stake_credential() {
-    const ret = await HaskellShelley.stakeDeregistrationStakeCredential(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeDeregistrationStakeCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async coin() {
-    const ret = await HaskellShelley.stakeDeregistrationCoin(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeDeregistrationCoin(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   static async new(stake_credential) {
     const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
-    const ret = await HaskellShelley.stakeDeregistrationNew(stake_credentialPtr);
+    const ret = await HaskellShelley.csl_bridge_stakeDeregistrationNew(stake_credentialPtr);
     return Ptr._wrap(ret, StakeDeregistration);
   }
 
-  static async new_with_coin(stake_credential, coin) {
+  static async new_with_explicit_refund(stake_credential, coin) {
     const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
     const coinPtr = Ptr._assertClass(coin, BigNum);
-    const ret = await HaskellShelley.stakeDeregistrationNewWithCoin(stake_credentialPtr, coinPtr);
+    const ret = await HaskellShelley.csl_bridge_stakeDeregistrationNewWithExplicitRefund(stake_credentialPtr, coinPtr);
     return Ptr._wrap(ret, StakeDeregistration);
   }
 
   async has_script_credentials() {
-    const ret = await HaskellShelley.stakeDeregistrationHasScriptCredentials(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeDeregistrationHasScriptCredentials(this.ptr);
     return ret;
   }
 
@@ -7912,60 +8189,60 @@ export class StakeDeregistration extends Ptr {
 
 export class StakeRegistration extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.stakeRegistrationToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.stakeRegistrationFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, StakeRegistration);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.stakeRegistrationToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.stakeRegistrationFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationFromHex(hex_str);
     return Ptr._wrap(ret, StakeRegistration);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.stakeRegistrationToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.stakeRegistrationFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationFromJson(json);
     return Ptr._wrap(ret, StakeRegistration);
   }
 
   async stake_credential() {
-    const ret = await HaskellShelley.stakeRegistrationStakeCredential(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationStakeCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async coin() {
-    const ret = await HaskellShelley.stakeRegistrationCoin(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationCoin(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   static async new(stake_credential) {
     const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
-    const ret = await HaskellShelley.stakeRegistrationNew(stake_credentialPtr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationNew(stake_credentialPtr);
     return Ptr._wrap(ret, StakeRegistration);
   }
 
-  static async new_with_coin(stake_credential, coin) {
+  static async new_with_explicit_deposit(stake_credential, coin) {
     const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
     const coinPtr = Ptr._assertClass(coin, BigNum);
-    const ret = await HaskellShelley.stakeRegistrationNewWithCoin(stake_credentialPtr, coinPtr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationNewWithExplicitDeposit(stake_credentialPtr, coinPtr);
     return Ptr._wrap(ret, StakeRegistration);
   }
 
   async has_script_credentials() {
-    const ret = await HaskellShelley.stakeRegistrationHasScriptCredentials(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationHasScriptCredentials(this.ptr);
     return ret;
   }
 
@@ -7974,47 +8251,47 @@ export class StakeRegistration extends Ptr {
 
 export class StakeRegistrationAndDelegation extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.stakeRegistrationAndDelegationToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationAndDelegationToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.stakeRegistrationAndDelegationFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationAndDelegationFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, StakeRegistrationAndDelegation);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.stakeRegistrationAndDelegationToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationAndDelegationToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.stakeRegistrationAndDelegationFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationAndDelegationFromHex(hex_str);
     return Ptr._wrap(ret, StakeRegistrationAndDelegation);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.stakeRegistrationAndDelegationToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationAndDelegationToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.stakeRegistrationAndDelegationFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationAndDelegationFromJson(json);
     return Ptr._wrap(ret, StakeRegistrationAndDelegation);
   }
 
   async stake_credential() {
-    const ret = await HaskellShelley.stakeRegistrationAndDelegationStakeCredential(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationAndDelegationStakeCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async pool_keyhash() {
-    const ret = await HaskellShelley.stakeRegistrationAndDelegationPoolKeyhash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationAndDelegationPoolKeyhash(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
   async coin() {
-    const ret = await HaskellShelley.stakeRegistrationAndDelegationCoin(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationAndDelegationCoin(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
@@ -8022,12 +8299,12 @@ export class StakeRegistrationAndDelegation extends Ptr {
     const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
     const pool_keyhashPtr = Ptr._assertClass(pool_keyhash, Ed25519KeyHash);
     const coinPtr = Ptr._assertClass(coin, BigNum);
-    const ret = await HaskellShelley.stakeRegistrationAndDelegationNew(stake_credentialPtr, pool_keyhashPtr, coinPtr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationAndDelegationNew(stake_credentialPtr, pool_keyhashPtr, coinPtr);
     return Ptr._wrap(ret, StakeRegistrationAndDelegation);
   }
 
   async has_script_credentials() {
-    const ret = await HaskellShelley.stakeRegistrationAndDelegationHasScriptCredentials(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeRegistrationAndDelegationHasScriptCredentials(this.ptr);
     return ret;
   }
 
@@ -8036,52 +8313,52 @@ export class StakeRegistrationAndDelegation extends Ptr {
 
 export class StakeVoteRegistrationAndDelegation extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeVoteRegistrationAndDelegationToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_stakeVoteRegistrationAndDelegationFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, StakeVoteRegistrationAndDelegation);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeVoteRegistrationAndDelegationToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_stakeVoteRegistrationAndDelegationFromHex(hex_str);
     return Ptr._wrap(ret, StakeVoteRegistrationAndDelegation);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeVoteRegistrationAndDelegationToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_stakeVoteRegistrationAndDelegationFromJson(json);
     return Ptr._wrap(ret, StakeVoteRegistrationAndDelegation);
   }
 
   async stake_credential() {
-    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationStakeCredential(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeVoteRegistrationAndDelegationStakeCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async pool_keyhash() {
-    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationPoolKeyhash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeVoteRegistrationAndDelegationPoolKeyhash(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
   async drep() {
-    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationDrep(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeVoteRegistrationAndDelegationDrep(this.ptr);
     return Ptr._wrap(ret, DRep);
   }
 
   async coin() {
-    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationCoin(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeVoteRegistrationAndDelegationCoin(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
@@ -8090,12 +8367,12 @@ export class StakeVoteRegistrationAndDelegation extends Ptr {
     const pool_keyhashPtr = Ptr._assertClass(pool_keyhash, Ed25519KeyHash);
     const drepPtr = Ptr._assertClass(drep, DRep);
     const coinPtr = Ptr._assertClass(coin, BigNum);
-    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationNew(stake_credentialPtr, pool_keyhashPtr, drepPtr, coinPtr);
+    const ret = await HaskellShelley.csl_bridge_stakeVoteRegistrationAndDelegationNew(stake_credentialPtr, pool_keyhashPtr, drepPtr, coinPtr);
     return Ptr._wrap(ret, StakeVoteRegistrationAndDelegation);
   }
 
   async has_script_credentials() {
-    const ret = await HaskellShelley.stakeVoteRegistrationAndDelegationHasScriptCredentials(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stakeVoteRegistrationAndDelegationHasScriptCredentials(this.ptr);
     return ret;
   }
 
@@ -8104,22 +8381,22 @@ export class StakeVoteRegistrationAndDelegation extends Ptr {
 
 export class Strings extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.stringsNew();
+    const ret = await HaskellShelley.csl_bridge_stringsNew();
     return Ptr._wrap(ret, Strings);
   }
 
   async len() {
-    const ret = await HaskellShelley.stringsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_stringsLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.stringsGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_stringsGet(this.ptr, index);
     return ret;
   }
 
   add(elem) {
-    const ret = HaskellShelley.stringsAdd(this.ptr, elem);
+    const ret = HaskellShelley.csl_bridge_stringsAdd(this.ptr, elem);
     return ret;
   }
 
@@ -8128,53 +8405,53 @@ export class Strings extends Ptr {
 
 export class TimelockExpiry extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.timelockExpiryToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_timelockExpiryToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.timelockExpiryFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_timelockExpiryFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TimelockExpiry);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.timelockExpiryToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_timelockExpiryToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.timelockExpiryFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_timelockExpiryFromHex(hex_str);
     return Ptr._wrap(ret, TimelockExpiry);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.timelockExpiryToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_timelockExpiryToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.timelockExpiryFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_timelockExpiryFromJson(json);
     return Ptr._wrap(ret, TimelockExpiry);
   }
 
   async slot() {
-    const ret = await HaskellShelley.timelockExpirySlot(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_timelockExpirySlot(this.ptr);
     return ret;
   }
 
   async slot_bignum() {
-    const ret = await HaskellShelley.timelockExpirySlotBignum(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_timelockExpirySlotBignum(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   static async new(slot) {
-    const ret = await HaskellShelley.timelockExpiryNew(slot);
+    const ret = await HaskellShelley.csl_bridge_timelockExpiryNew(slot);
     return Ptr._wrap(ret, TimelockExpiry);
   }
 
   static async new_timelockexpiry(slot) {
     const slotPtr = Ptr._assertClass(slot, BigNum);
-    const ret = await HaskellShelley.timelockExpiryNewTimelockexpiry(slotPtr);
+    const ret = await HaskellShelley.csl_bridge_timelockExpiryNewTimelockexpiry(slotPtr);
     return Ptr._wrap(ret, TimelockExpiry);
   }
 
@@ -8183,53 +8460,53 @@ export class TimelockExpiry extends Ptr {
 
 export class TimelockStart extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.timelockStartToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_timelockStartToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.timelockStartFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_timelockStartFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TimelockStart);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.timelockStartToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_timelockStartToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.timelockStartFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_timelockStartFromHex(hex_str);
     return Ptr._wrap(ret, TimelockStart);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.timelockStartToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_timelockStartToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.timelockStartFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_timelockStartFromJson(json);
     return Ptr._wrap(ret, TimelockStart);
   }
 
   async slot() {
-    const ret = await HaskellShelley.timelockStartSlot(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_timelockStartSlot(this.ptr);
     return ret;
   }
 
   async slot_bignum() {
-    const ret = await HaskellShelley.timelockStartSlotBignum(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_timelockStartSlotBignum(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   static async new(slot) {
-    const ret = await HaskellShelley.timelockStartNew(slot);
+    const ret = await HaskellShelley.csl_bridge_timelockStartNew(slot);
     return Ptr._wrap(ret, TimelockStart);
   }
 
   static async new_timelockstart(slot) {
     const slotPtr = Ptr._assertClass(slot, BigNum);
-    const ret = await HaskellShelley.timelockStartNewTimelockstart(slotPtr);
+    const ret = await HaskellShelley.csl_bridge_timelockStartNewTimelockstart(slotPtr);
     return Ptr._wrap(ret, TimelockStart);
   }
 
@@ -8238,57 +8515,57 @@ export class TimelockStart extends Ptr {
 
 export class Transaction extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.transactionToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.transactionFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_transactionFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Transaction);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.transactionToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.transactionFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_transactionFromHex(hex_str);
     return Ptr._wrap(ret, Transaction);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.transactionToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.transactionFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_transactionFromJson(json);
     return Ptr._wrap(ret, Transaction);
   }
 
   async body() {
-    const ret = await HaskellShelley.transactionBody(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBody(this.ptr);
     return Ptr._wrap(ret, TransactionBody);
   }
 
   async witness_set() {
-    const ret = await HaskellShelley.transactionWitnessSet(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSet(this.ptr);
     return Ptr._wrap(ret, TransactionWitnessSet);
   }
 
   async is_valid() {
-    const ret = await HaskellShelley.transactionIsValid(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionIsValid(this.ptr);
     return ret;
   }
 
   async auxiliary_data() {
-    const ret = await HaskellShelley.transactionAuxiliaryData(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionAuxiliaryData(this.ptr);
     return Ptr._wrap(ret, AuxiliaryData);
   }
 
   set_is_valid(valid) {
-    const ret = HaskellShelley.transactionSetIsValid(this.ptr, valid);
+    const ret = HaskellShelley.csl_bridge_transactionSetIsValid(this.ptr, valid);
     return ret;
   }
 
@@ -8297,11 +8574,11 @@ export class Transaction extends Ptr {
     const witness_setPtr = Ptr._assertClass(witness_set, TransactionWitnessSet);
     const auxiliary_dataPtr = Ptr._assertOptionalClass(auxiliary_data, AuxiliaryData);
     if(auxiliary_data == null) {
-      const ret = await HaskellShelley.transactionNew(bodyPtr, witness_setPtr);
+      const ret = await HaskellShelley.csl_bridge_transactionNew(bodyPtr, witness_setPtr);
       return Ptr._wrap(ret, Transaction);
     }
     if(auxiliary_data != null) {
-      const ret = await HaskellShelley.transactionNewWithAuxiliaryData(bodyPtr, witness_setPtr, auxiliary_dataPtr);
+      const ret = await HaskellShelley.csl_bridge_transactionNewWithAuxiliaryData(bodyPtr, witness_setPtr, auxiliary_dataPtr);
       return Ptr._wrap(ret, Transaction);
     }
   }
@@ -8311,12 +8588,12 @@ export class Transaction extends Ptr {
 
 export class TransactionBatch extends Ptr {
   async len() {
-    const ret = await HaskellShelley.transactionBatchLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBatchLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.transactionBatchGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_transactionBatchGet(this.ptr, index);
     return Ptr._wrap(ret, Transaction);
   }
 
@@ -8325,12 +8602,12 @@ export class TransactionBatch extends Ptr {
 
 export class TransactionBatchList extends Ptr {
   async len() {
-    const ret = await HaskellShelley.transactionBatchListLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBatchListLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.transactionBatchListGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_transactionBatchListGet(this.ptr, index);
     return Ptr._wrap(ret, TransactionBatch);
   }
 
@@ -8339,53 +8616,53 @@ export class TransactionBatchList extends Ptr {
 
 export class TransactionBodies extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.transactionBodiesToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodiesToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.transactionBodiesFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_transactionBodiesFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionBodies);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.transactionBodiesToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodiesToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.transactionBodiesFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_transactionBodiesFromHex(hex_str);
     return Ptr._wrap(ret, TransactionBodies);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.transactionBodiesToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodiesToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.transactionBodiesFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_transactionBodiesFromJson(json);
     return Ptr._wrap(ret, TransactionBodies);
   }
 
   static async new() {
-    const ret = await HaskellShelley.transactionBodiesNew();
+    const ret = await HaskellShelley.csl_bridge_transactionBodiesNew();
     return Ptr._wrap(ret, TransactionBodies);
   }
 
   async len() {
-    const ret = await HaskellShelley.transactionBodiesLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodiesLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.transactionBodiesGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_transactionBodiesGet(this.ptr, index);
     return Ptr._wrap(ret, TransactionBody);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, TransactionBody);
-    const ret = HaskellShelley.transactionBodiesAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodiesAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -8394,265 +8671,265 @@ export class TransactionBodies extends Ptr {
 
 export class TransactionBody extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.transactionBodyToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.transactionBodyFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_transactionBodyFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionBody);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.transactionBodyToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.transactionBodyFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyFromHex(hex_str);
     return Ptr._wrap(ret, TransactionBody);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.transactionBodyToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.transactionBodyFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyFromJson(json);
     return Ptr._wrap(ret, TransactionBody);
   }
 
   async inputs() {
-    const ret = await HaskellShelley.transactionBodyInputs(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyInputs(this.ptr);
     return Ptr._wrap(ret, TransactionInputs);
   }
 
   async outputs() {
-    const ret = await HaskellShelley.transactionBodyOutputs(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyOutputs(this.ptr);
     return Ptr._wrap(ret, TransactionOutputs);
   }
 
   async fee() {
-    const ret = await HaskellShelley.transactionBodyFee(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyFee(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async ttl() {
-    const ret = await HaskellShelley.transactionBodyTtl(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyTtl(this.ptr);
     return ret;
   }
 
   async ttl_bignum() {
-    const ret = await HaskellShelley.transactionBodyTtlBignum(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyTtlBignum(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   set_ttl(ttl) {
     const ttlPtr = Ptr._assertClass(ttl, BigNum);
-    const ret = HaskellShelley.transactionBodySetTtl(this.ptr, ttlPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetTtl(this.ptr, ttlPtr);
     return ret;
   }
 
   remove_ttl() {
-    const ret = HaskellShelley.transactionBodyRemoveTtl(this.ptr);
+    const ret = HaskellShelley.csl_bridge_transactionBodyRemoveTtl(this.ptr);
     return ret;
   }
 
   set_certs(certs) {
     const certsPtr = Ptr._assertClass(certs, Certificates);
-    const ret = HaskellShelley.transactionBodySetCerts(this.ptr, certsPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetCerts(this.ptr, certsPtr);
     return ret;
   }
 
   async certs() {
-    const ret = await HaskellShelley.transactionBodyCerts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyCerts(this.ptr);
     return Ptr._wrap(ret, Certificates);
   }
 
   set_withdrawals(withdrawals) {
     const withdrawalsPtr = Ptr._assertClass(withdrawals, Withdrawals);
-    const ret = HaskellShelley.transactionBodySetWithdrawals(this.ptr, withdrawalsPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetWithdrawals(this.ptr, withdrawalsPtr);
     return ret;
   }
 
   async withdrawals() {
-    const ret = await HaskellShelley.transactionBodyWithdrawals(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyWithdrawals(this.ptr);
     return Ptr._wrap(ret, Withdrawals);
   }
 
   set_update(update) {
     const updatePtr = Ptr._assertClass(update, Update);
-    const ret = HaskellShelley.transactionBodySetUpdate(this.ptr, updatePtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetUpdate(this.ptr, updatePtr);
     return ret;
   }
 
   async update() {
-    const ret = await HaskellShelley.transactionBodyUpdate(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyUpdate(this.ptr);
     return Ptr._wrap(ret, Update);
   }
 
   set_auxiliary_data_hash(auxiliary_data_hash) {
     const auxiliary_data_hashPtr = Ptr._assertClass(auxiliary_data_hash, AuxiliaryDataHash);
-    const ret = HaskellShelley.transactionBodySetAuxiliaryDataHash(this.ptr, auxiliary_data_hashPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetAuxiliaryDataHash(this.ptr, auxiliary_data_hashPtr);
     return ret;
   }
 
   async auxiliary_data_hash() {
-    const ret = await HaskellShelley.transactionBodyAuxiliaryDataHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyAuxiliaryDataHash(this.ptr);
     return Ptr._wrap(ret, AuxiliaryDataHash);
   }
 
   set_validity_start_interval(validity_start_interval) {
-    const ret = HaskellShelley.transactionBodySetValidityStartInterval(this.ptr, validity_start_interval);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetValidityStartInterval(this.ptr, validity_start_interval);
     return ret;
   }
 
   set_validity_start_interval_bignum(validity_start_interval) {
     const validity_start_intervalPtr = Ptr._assertClass(validity_start_interval, BigNum);
-    const ret = HaskellShelley.transactionBodySetValidityStartIntervalBignum(this.ptr, validity_start_intervalPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetValidityStartIntervalBignum(this.ptr, validity_start_intervalPtr);
     return ret;
   }
 
   async validity_start_interval_bignum() {
-    const ret = await HaskellShelley.transactionBodyValidityStartIntervalBignum(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyValidityStartIntervalBignum(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async validity_start_interval() {
-    const ret = await HaskellShelley.transactionBodyValidityStartInterval(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyValidityStartInterval(this.ptr);
     return ret;
   }
 
   set_mint(mint) {
     const mintPtr = Ptr._assertClass(mint, Mint);
-    const ret = HaskellShelley.transactionBodySetMint(this.ptr, mintPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetMint(this.ptr, mintPtr);
     return ret;
   }
 
   async mint() {
-    const ret = await HaskellShelley.transactionBodyMint(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyMint(this.ptr);
     return Ptr._wrap(ret, Mint);
   }
 
   set_reference_inputs(reference_inputs) {
     const reference_inputsPtr = Ptr._assertClass(reference_inputs, TransactionInputs);
-    const ret = HaskellShelley.transactionBodySetReferenceInputs(this.ptr, reference_inputsPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetReferenceInputs(this.ptr, reference_inputsPtr);
     return ret;
   }
 
   async reference_inputs() {
-    const ret = await HaskellShelley.transactionBodyReferenceInputs(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyReferenceInputs(this.ptr);
     return Ptr._wrap(ret, TransactionInputs);
   }
 
   set_script_data_hash(script_data_hash) {
     const script_data_hashPtr = Ptr._assertClass(script_data_hash, ScriptDataHash);
-    const ret = HaskellShelley.transactionBodySetScriptDataHash(this.ptr, script_data_hashPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetScriptDataHash(this.ptr, script_data_hashPtr);
     return ret;
   }
 
   async script_data_hash() {
-    const ret = await HaskellShelley.transactionBodyScriptDataHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyScriptDataHash(this.ptr);
     return Ptr._wrap(ret, ScriptDataHash);
   }
 
   set_collateral(collateral) {
     const collateralPtr = Ptr._assertClass(collateral, TransactionInputs);
-    const ret = HaskellShelley.transactionBodySetCollateral(this.ptr, collateralPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetCollateral(this.ptr, collateralPtr);
     return ret;
   }
 
   async collateral() {
-    const ret = await HaskellShelley.transactionBodyCollateral(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyCollateral(this.ptr);
     return Ptr._wrap(ret, TransactionInputs);
   }
 
   set_required_signers(required_signers) {
     const required_signersPtr = Ptr._assertClass(required_signers, Ed25519KeyHashes);
-    const ret = HaskellShelley.transactionBodySetRequiredSigners(this.ptr, required_signersPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetRequiredSigners(this.ptr, required_signersPtr);
     return ret;
   }
 
   async required_signers() {
-    const ret = await HaskellShelley.transactionBodyRequiredSigners(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyRequiredSigners(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHashes);
   }
 
   set_network_id(network_id) {
     const network_idPtr = Ptr._assertClass(network_id, NetworkId);
-    const ret = HaskellShelley.transactionBodySetNetworkId(this.ptr, network_idPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetNetworkId(this.ptr, network_idPtr);
     return ret;
   }
 
   async network_id() {
-    const ret = await HaskellShelley.transactionBodyNetworkId(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyNetworkId(this.ptr);
     return Ptr._wrap(ret, NetworkId);
   }
 
   set_collateral_return(collateral_return) {
     const collateral_returnPtr = Ptr._assertClass(collateral_return, TransactionOutput);
-    const ret = HaskellShelley.transactionBodySetCollateralReturn(this.ptr, collateral_returnPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetCollateralReturn(this.ptr, collateral_returnPtr);
     return ret;
   }
 
   async collateral_return() {
-    const ret = await HaskellShelley.transactionBodyCollateralReturn(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyCollateralReturn(this.ptr);
     return Ptr._wrap(ret, TransactionOutput);
   }
 
   set_total_collateral(total_collateral) {
     const total_collateralPtr = Ptr._assertClass(total_collateral, BigNum);
-    const ret = HaskellShelley.transactionBodySetTotalCollateral(this.ptr, total_collateralPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetTotalCollateral(this.ptr, total_collateralPtr);
     return ret;
   }
 
   async total_collateral() {
-    const ret = await HaskellShelley.transactionBodyTotalCollateral(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyTotalCollateral(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   set_voting_procedures(voting_procedures) {
     const voting_proceduresPtr = Ptr._assertClass(voting_procedures, VotingProcedures);
-    const ret = HaskellShelley.transactionBodySetVotingProcedures(this.ptr, voting_proceduresPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetVotingProcedures(this.ptr, voting_proceduresPtr);
     return ret;
   }
 
   async voting_procedures() {
-    const ret = await HaskellShelley.transactionBodyVotingProcedures(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyVotingProcedures(this.ptr);
     return Ptr._wrap(ret, VotingProcedures);
   }
 
   set_voting_proposals(voting_proposals) {
     const voting_proposalsPtr = Ptr._assertClass(voting_proposals, VotingProposals);
-    const ret = HaskellShelley.transactionBodySetVotingProposals(this.ptr, voting_proposalsPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetVotingProposals(this.ptr, voting_proposalsPtr);
     return ret;
   }
 
   async voting_proposals() {
-    const ret = await HaskellShelley.transactionBodyVotingProposals(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyVotingProposals(this.ptr);
     return Ptr._wrap(ret, VotingProposals);
   }
 
   set_donation(donation) {
     const donationPtr = Ptr._assertClass(donation, BigNum);
-    const ret = HaskellShelley.transactionBodySetDonation(this.ptr, donationPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetDonation(this.ptr, donationPtr);
     return ret;
   }
 
   async donation() {
-    const ret = await HaskellShelley.transactionBodyDonation(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyDonation(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   set_current_treasury_value(current_treasury_value) {
     const current_treasury_valuePtr = Ptr._assertClass(current_treasury_value, BigNum);
-    const ret = HaskellShelley.transactionBodySetCurrentTreasuryValue(this.ptr, current_treasury_valuePtr);
+    const ret = HaskellShelley.csl_bridge_transactionBodySetCurrentTreasuryValue(this.ptr, current_treasury_valuePtr);
     return ret;
   }
 
   async current_treasury_value() {
-    const ret = await HaskellShelley.transactionBodyCurrentTreasuryValue(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyCurrentTreasuryValue(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
@@ -8661,11 +8938,11 @@ export class TransactionBody extends Ptr {
     const outputsPtr = Ptr._assertClass(outputs, TransactionOutputs);
     const feePtr = Ptr._assertClass(fee, BigNum);
     if(ttl == null) {
-      const ret = await HaskellShelley.transactionBodyNew(inputsPtr, outputsPtr, feePtr);
+      const ret = await HaskellShelley.csl_bridge_transactionBodyNew(inputsPtr, outputsPtr, feePtr);
       return Ptr._wrap(ret, TransactionBody);
     }
     if(ttl != null) {
-      const ret = await HaskellShelley.transactionBodyNewWithTtl(inputsPtr, outputsPtr, feePtr, ttl);
+      const ret = await HaskellShelley.csl_bridge_transactionBodyNewWithTtl(inputsPtr, outputsPtr, feePtr, ttl);
       return Ptr._wrap(ret, TransactionBody);
     }
   }
@@ -8674,7 +8951,7 @@ export class TransactionBody extends Ptr {
     const inputsPtr = Ptr._assertClass(inputs, TransactionInputs);
     const outputsPtr = Ptr._assertClass(outputs, TransactionOutputs);
     const feePtr = Ptr._assertClass(fee, BigNum);
-    const ret = await HaskellShelley.transactionBodyNewTxBody(inputsPtr, outputsPtr, feePtr);
+    const ret = await HaskellShelley.csl_bridge_transactionBodyNewTxBody(inputsPtr, outputsPtr, feePtr);
     return Ptr._wrap(ret, TransactionBody);
   }
 
@@ -8684,66 +8961,66 @@ export class TransactionBody extends Ptr {
 export class TransactionBuilder extends Ptr {
   add_inputs_from(inputs, strategy) {
     const inputsPtr = Ptr._assertClass(inputs, TransactionUnspentOutputs);
-    const ret = HaskellShelley.transactionBuilderAddInputsFrom(this.ptr, inputsPtr, strategy);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddInputsFrom(this.ptr, inputsPtr, strategy);
     return ret;
   }
 
   set_inputs(inputs) {
     const inputsPtr = Ptr._assertClass(inputs, TxInputsBuilder);
-    const ret = HaskellShelley.transactionBuilderSetInputs(this.ptr, inputsPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetInputs(this.ptr, inputsPtr);
     return ret;
   }
 
   set_collateral(collateral) {
     const collateralPtr = Ptr._assertClass(collateral, TxInputsBuilder);
-    const ret = HaskellShelley.transactionBuilderSetCollateral(this.ptr, collateralPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetCollateral(this.ptr, collateralPtr);
     return ret;
   }
 
   set_collateral_return(collateral_return) {
     const collateral_returnPtr = Ptr._assertClass(collateral_return, TransactionOutput);
-    const ret = HaskellShelley.transactionBuilderSetCollateralReturn(this.ptr, collateral_returnPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetCollateralReturn(this.ptr, collateral_returnPtr);
     return ret;
   }
 
   remove_collateral_return() {
-    const ret = HaskellShelley.transactionBuilderRemoveCollateralReturn(this.ptr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderRemoveCollateralReturn(this.ptr);
     return ret;
   }
 
   set_collateral_return_and_total(collateral_return) {
     const collateral_returnPtr = Ptr._assertClass(collateral_return, TransactionOutput);
-    const ret = HaskellShelley.transactionBuilderSetCollateralReturnAndTotal(this.ptr, collateral_returnPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetCollateralReturnAndTotal(this.ptr, collateral_returnPtr);
     return ret;
   }
 
   set_total_collateral(total_collateral) {
     const total_collateralPtr = Ptr._assertClass(total_collateral, BigNum);
-    const ret = HaskellShelley.transactionBuilderSetTotalCollateral(this.ptr, total_collateralPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetTotalCollateral(this.ptr, total_collateralPtr);
     return ret;
   }
 
   remove_total_collateral() {
-    const ret = HaskellShelley.transactionBuilderRemoveTotalCollateral(this.ptr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderRemoveTotalCollateral(this.ptr);
     return ret;
   }
 
   set_total_collateral_and_return(total_collateral, return_address) {
     const total_collateralPtr = Ptr._assertClass(total_collateral, BigNum);
     const return_addressPtr = Ptr._assertClass(return_address, Address);
-    const ret = HaskellShelley.transactionBuilderSetTotalCollateralAndReturn(this.ptr, total_collateralPtr, return_addressPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetTotalCollateralAndReturn(this.ptr, total_collateralPtr, return_addressPtr);
     return ret;
   }
 
   add_reference_input(reference_input) {
     const reference_inputPtr = Ptr._assertClass(reference_input, TransactionInput);
-    const ret = HaskellShelley.transactionBuilderAddReferenceInput(this.ptr, reference_inputPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddReferenceInput(this.ptr, reference_inputPtr);
     return ret;
   }
 
   add_script_reference_input(reference_input, script_size) {
     const reference_inputPtr = Ptr._assertClass(reference_input, TransactionInput);
-    const ret = HaskellShelley.transactionBuilderAddScriptReferenceInput(this.ptr, reference_inputPtr, script_size);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddScriptReferenceInput(this.ptr, reference_inputPtr, script_size);
     return ret;
   }
 
@@ -8751,7 +9028,7 @@ export class TransactionBuilder extends Ptr {
     const hashPtr = Ptr._assertClass(hash, Ed25519KeyHash);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.transactionBuilderAddKeyInput(this.ptr, hashPtr, inputPtr, amountPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddKeyInput(this.ptr, hashPtr, inputPtr, amountPtr);
     return ret;
   }
 
@@ -8759,7 +9036,7 @@ export class TransactionBuilder extends Ptr {
     const scriptPtr = Ptr._assertClass(script, NativeScript);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.transactionBuilderAddNativeScriptInput(this.ptr, scriptPtr, inputPtr, amountPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddNativeScriptInput(this.ptr, scriptPtr, inputPtr, amountPtr);
     return ret;
   }
 
@@ -8767,7 +9044,7 @@ export class TransactionBuilder extends Ptr {
     const witnessPtr = Ptr._assertClass(witness, PlutusWitness);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.transactionBuilderAddPlutusScriptInput(this.ptr, witnessPtr, inputPtr, amountPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddPlutusScriptInput(this.ptr, witnessPtr, inputPtr, amountPtr);
     return ret;
   }
 
@@ -8775,7 +9052,7 @@ export class TransactionBuilder extends Ptr {
     const hashPtr = Ptr._assertClass(hash, ByronAddress);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.transactionBuilderAddBootstrapInput(this.ptr, hashPtr, inputPtr, amountPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddBootstrapInput(this.ptr, hashPtr, inputPtr, amountPtr);
     return ret;
   }
 
@@ -8783,31 +9060,32 @@ export class TransactionBuilder extends Ptr {
     const addressPtr = Ptr._assertClass(address, Address);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.transactionBuilderAddRegularInput(this.ptr, addressPtr, inputPtr, amountPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddRegularInput(this.ptr, addressPtr, inputPtr, amountPtr);
     return ret;
   }
 
   async add_inputs_from_and_change(inputs, strategy, change_config) {
     const inputsPtr = Ptr._assertClass(inputs, TransactionUnspentOutputs);
     const change_configPtr = Ptr._assertClass(change_config, ChangeConfig);
-    const ret = await HaskellShelley.transactionBuilderAddInputsFromAndChange(this.ptr, inputsPtr, strategy, change_configPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderAddInputsFromAndChange(this.ptr, inputsPtr, strategy, change_configPtr);
     return ret;
   }
 
-  async add_inputs_from_and_change_with_collateral_return(inputs, strategy, change_config, collateral_percentage) {
+  add_inputs_from_and_change_with_collateral_return(inputs, strategy, change_config, collateral_percentage) {
     const inputsPtr = Ptr._assertClass(inputs, TransactionUnspentOutputs);
     const change_configPtr = Ptr._assertClass(change_config, ChangeConfig);
-    const ret = await HaskellShelley.transactionBuilderAddInputsFromAndChangeWithCollateralReturn(this.ptr, inputsPtr, strategy, change_configPtr, collateral_percentage);
+    const collateral_percentagePtr = Ptr._assertClass(collateral_percentage, BigNum);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddInputsFromAndChangeWithCollateralReturn(this.ptr, inputsPtr, strategy, change_configPtr, collateral_percentagePtr);
     return ret;
   }
 
   async get_native_input_scripts() {
-    const ret = await HaskellShelley.transactionBuilderGetNativeInputScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetNativeInputScripts(this.ptr);
     return Ptr._wrap(ret, NativeScripts);
   }
 
   async get_plutus_input_scripts() {
-    const ret = await HaskellShelley.transactionBuilderGetPlutusInputScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetPlutusInputScripts(this.ptr);
     return Ptr._wrap(ret, PlutusWitnesses);
   }
 
@@ -8815,184 +9093,184 @@ export class TransactionBuilder extends Ptr {
     const addressPtr = Ptr._assertClass(address, Address);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = await HaskellShelley.transactionBuilderFeeForInput(this.ptr, addressPtr, inputPtr, amountPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderFeeForInput(this.ptr, addressPtr, inputPtr, amountPtr);
     return Ptr._wrap(ret, BigNum);
   }
 
   add_output(output) {
     const outputPtr = Ptr._assertClass(output, TransactionOutput);
-    const ret = HaskellShelley.transactionBuilderAddOutput(this.ptr, outputPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddOutput(this.ptr, outputPtr);
     return ret;
   }
 
   async fee_for_output(output) {
     const outputPtr = Ptr._assertClass(output, TransactionOutput);
-    const ret = await HaskellShelley.transactionBuilderFeeForOutput(this.ptr, outputPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderFeeForOutput(this.ptr, outputPtr);
     return Ptr._wrap(ret, BigNum);
   }
 
   set_fee(fee) {
     const feePtr = Ptr._assertClass(fee, BigNum);
-    const ret = HaskellShelley.transactionBuilderSetFee(this.ptr, feePtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetFee(this.ptr, feePtr);
     return ret;
   }
 
   set_ttl(ttl) {
-    const ret = HaskellShelley.transactionBuilderSetTtl(this.ptr, ttl);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetTtl(this.ptr, ttl);
     return ret;
   }
 
   set_ttl_bignum(ttl) {
     const ttlPtr = Ptr._assertClass(ttl, BigNum);
-    const ret = HaskellShelley.transactionBuilderSetTtlBignum(this.ptr, ttlPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetTtlBignum(this.ptr, ttlPtr);
     return ret;
   }
 
   remove_ttl() {
-    const ret = HaskellShelley.transactionBuilderRemoveTtl(this.ptr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderRemoveTtl(this.ptr);
     return ret;
   }
 
   set_validity_start_interval(validity_start_interval) {
-    const ret = HaskellShelley.transactionBuilderSetValidityStartInterval(this.ptr, validity_start_interval);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetValidityStartInterval(this.ptr, validity_start_interval);
     return ret;
   }
 
   set_validity_start_interval_bignum(validity_start_interval) {
     const validity_start_intervalPtr = Ptr._assertClass(validity_start_interval, BigNum);
-    const ret = HaskellShelley.transactionBuilderSetValidityStartIntervalBignum(this.ptr, validity_start_intervalPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetValidityStartIntervalBignum(this.ptr, validity_start_intervalPtr);
     return ret;
   }
 
   remove_validity_start_interval() {
-    const ret = HaskellShelley.transactionBuilderRemoveValidityStartInterval(this.ptr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderRemoveValidityStartInterval(this.ptr);
     return ret;
   }
 
   set_certs(certs) {
     const certsPtr = Ptr._assertClass(certs, Certificates);
-    const ret = HaskellShelley.transactionBuilderSetCerts(this.ptr, certsPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetCerts(this.ptr, certsPtr);
     return ret;
   }
 
   remove_certs() {
-    const ret = HaskellShelley.transactionBuilderRemoveCerts(this.ptr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderRemoveCerts(this.ptr);
     return ret;
   }
 
   set_certs_builder(certs) {
     const certsPtr = Ptr._assertClass(certs, CertificatesBuilder);
-    const ret = HaskellShelley.transactionBuilderSetCertsBuilder(this.ptr, certsPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetCertsBuilder(this.ptr, certsPtr);
     return ret;
   }
 
   set_withdrawals(withdrawals) {
     const withdrawalsPtr = Ptr._assertClass(withdrawals, Withdrawals);
-    const ret = HaskellShelley.transactionBuilderSetWithdrawals(this.ptr, withdrawalsPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetWithdrawals(this.ptr, withdrawalsPtr);
     return ret;
   }
 
   set_withdrawals_builder(withdrawals) {
     const withdrawalsPtr = Ptr._assertClass(withdrawals, WithdrawalsBuilder);
-    const ret = HaskellShelley.transactionBuilderSetWithdrawalsBuilder(this.ptr, withdrawalsPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetWithdrawalsBuilder(this.ptr, withdrawalsPtr);
     return ret;
   }
 
   set_voting_builder(voting_builder) {
     const voting_builderPtr = Ptr._assertClass(voting_builder, VotingBuilder);
-    const ret = HaskellShelley.transactionBuilderSetVotingBuilder(this.ptr, voting_builderPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetVotingBuilder(this.ptr, voting_builderPtr);
     return ret;
   }
 
   set_voting_proposal_builder(voting_proposal_builder) {
     const voting_proposal_builderPtr = Ptr._assertClass(voting_proposal_builder, VotingProposalBuilder);
-    const ret = HaskellShelley.transactionBuilderSetVotingProposalBuilder(this.ptr, voting_proposal_builderPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetVotingProposalBuilder(this.ptr, voting_proposal_builderPtr);
     return ret;
   }
 
   remove_withdrawals() {
-    const ret = HaskellShelley.transactionBuilderRemoveWithdrawals(this.ptr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderRemoveWithdrawals(this.ptr);
     return ret;
   }
 
   async get_auxiliary_data() {
-    const ret = await HaskellShelley.transactionBuilderGetAuxiliaryData(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetAuxiliaryData(this.ptr);
     return Ptr._wrap(ret, AuxiliaryData);
   }
 
   set_auxiliary_data(auxiliary_data) {
     const auxiliary_dataPtr = Ptr._assertClass(auxiliary_data, AuxiliaryData);
-    const ret = HaskellShelley.transactionBuilderSetAuxiliaryData(this.ptr, auxiliary_dataPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetAuxiliaryData(this.ptr, auxiliary_dataPtr);
     return ret;
   }
 
   remove_auxiliary_data() {
-    const ret = HaskellShelley.transactionBuilderRemoveAuxiliaryData(this.ptr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderRemoveAuxiliaryData(this.ptr);
     return ret;
   }
 
   set_metadata(metadata) {
     const metadataPtr = Ptr._assertClass(metadata, GeneralTransactionMetadata);
-    const ret = HaskellShelley.transactionBuilderSetMetadata(this.ptr, metadataPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetMetadata(this.ptr, metadataPtr);
     return ret;
   }
 
   add_metadatum(key, val) {
     const keyPtr = Ptr._assertClass(key, BigNum);
     const valPtr = Ptr._assertClass(val, TransactionMetadatum);
-    const ret = HaskellShelley.transactionBuilderAddMetadatum(this.ptr, keyPtr, valPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddMetadatum(this.ptr, keyPtr, valPtr);
     return ret;
   }
 
   add_json_metadatum(key, val) {
     const keyPtr = Ptr._assertClass(key, BigNum);
-    const ret = HaskellShelley.transactionBuilderAddJsonMetadatum(this.ptr, keyPtr, val);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddJsonMetadatum(this.ptr, keyPtr, val);
     return ret;
   }
 
   add_json_metadatum_with_schema(key, val, schema) {
     const keyPtr = Ptr._assertClass(key, BigNum);
-    const ret = HaskellShelley.transactionBuilderAddJsonMetadatumWithSchema(this.ptr, keyPtr, val, schema);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddJsonMetadatumWithSchema(this.ptr, keyPtr, val, schema);
     return ret;
   }
 
   set_mint_builder(mint_builder) {
     const mint_builderPtr = Ptr._assertClass(mint_builder, MintBuilder);
-    const ret = HaskellShelley.transactionBuilderSetMintBuilder(this.ptr, mint_builderPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetMintBuilder(this.ptr, mint_builderPtr);
     return ret;
   }
 
   remove_mint_builder() {
-    const ret = HaskellShelley.transactionBuilderRemoveMintBuilder(this.ptr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderRemoveMintBuilder(this.ptr);
     return ret;
   }
 
   async get_mint_builder() {
-    const ret = await HaskellShelley.transactionBuilderGetMintBuilder(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetMintBuilder(this.ptr);
     return Ptr._wrap(ret, MintBuilder);
   }
 
   set_mint(mint, mint_scripts) {
     const mintPtr = Ptr._assertClass(mint, Mint);
     const mint_scriptsPtr = Ptr._assertClass(mint_scripts, NativeScripts);
-    const ret = HaskellShelley.transactionBuilderSetMint(this.ptr, mintPtr, mint_scriptsPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetMint(this.ptr, mintPtr, mint_scriptsPtr);
     return ret;
   }
 
   async get_mint() {
-    const ret = await HaskellShelley.transactionBuilderGetMint(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetMint(this.ptr);
     return Ptr._wrap(ret, Mint);
   }
 
   async get_mint_scripts() {
-    const ret = await HaskellShelley.transactionBuilderGetMintScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetMintScripts(this.ptr);
     return Ptr._wrap(ret, NativeScripts);
   }
 
   set_mint_asset(policy_script, mint_assets) {
     const policy_scriptPtr = Ptr._assertClass(policy_script, NativeScript);
     const mint_assetsPtr = Ptr._assertClass(mint_assets, MintAssets);
-    const ret = HaskellShelley.transactionBuilderSetMintAsset(this.ptr, policy_scriptPtr, mint_assetsPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetMintAsset(this.ptr, policy_scriptPtr, mint_assetsPtr);
     return ret;
   }
 
@@ -9000,7 +9278,7 @@ export class TransactionBuilder extends Ptr {
     const policy_scriptPtr = Ptr._assertClass(policy_script, NativeScript);
     const asset_namePtr = Ptr._assertClass(asset_name, AssetName);
     const amountPtr = Ptr._assertClass(amount, Int);
-    const ret = HaskellShelley.transactionBuilderAddMintAsset(this.ptr, policy_scriptPtr, asset_namePtr, amountPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddMintAsset(this.ptr, policy_scriptPtr, asset_namePtr, amountPtr);
     return ret;
   }
 
@@ -9010,7 +9288,7 @@ export class TransactionBuilder extends Ptr {
     const amountPtr = Ptr._assertClass(amount, Int);
     const output_builderPtr = Ptr._assertClass(output_builder, TransactionOutputAmountBuilder);
     const output_coinPtr = Ptr._assertClass(output_coin, BigNum);
-    const ret = HaskellShelley.transactionBuilderAddMintAssetAndOutput(this.ptr, policy_scriptPtr, asset_namePtr, amountPtr, output_builderPtr, output_coinPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddMintAssetAndOutput(this.ptr, policy_scriptPtr, asset_namePtr, amountPtr, output_builderPtr, output_coinPtr);
     return ret;
   }
 
@@ -9019,152 +9297,152 @@ export class TransactionBuilder extends Ptr {
     const asset_namePtr = Ptr._assertClass(asset_name, AssetName);
     const amountPtr = Ptr._assertClass(amount, Int);
     const output_builderPtr = Ptr._assertClass(output_builder, TransactionOutputAmountBuilder);
-    const ret = HaskellShelley.transactionBuilderAddMintAssetAndOutputMinRequiredCoin(this.ptr, policy_scriptPtr, asset_namePtr, amountPtr, output_builderPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddMintAssetAndOutputMinRequiredCoin(this.ptr, policy_scriptPtr, asset_namePtr, amountPtr, output_builderPtr);
     return ret;
   }
 
   add_extra_witness_datum(datum) {
     const datumPtr = Ptr._assertClass(datum, PlutusData);
-    const ret = HaskellShelley.transactionBuilderAddExtraWitnessDatum(this.ptr, datumPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddExtraWitnessDatum(this.ptr, datumPtr);
     return ret;
   }
 
   async get_extra_witness_datums() {
-    const ret = await HaskellShelley.transactionBuilderGetExtraWitnessDatums(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetExtraWitnessDatums(this.ptr);
     return Ptr._wrap(ret, PlutusList);
   }
 
   set_donation(donation) {
     const donationPtr = Ptr._assertClass(donation, BigNum);
-    const ret = HaskellShelley.transactionBuilderSetDonation(this.ptr, donationPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetDonation(this.ptr, donationPtr);
     return ret;
   }
 
   async get_donation() {
-    const ret = await HaskellShelley.transactionBuilderGetDonation(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetDonation(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   set_current_treasury_value(current_treasury_value) {
     const current_treasury_valuePtr = Ptr._assertClass(current_treasury_value, BigNum);
-    const ret = HaskellShelley.transactionBuilderSetCurrentTreasuryValue(this.ptr, current_treasury_valuePtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetCurrentTreasuryValue(this.ptr, current_treasury_valuePtr);
     return ret;
   }
 
   async get_current_treasury_value() {
-    const ret = await HaskellShelley.transactionBuilderGetCurrentTreasuryValue(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetCurrentTreasuryValue(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   static async new(cfg) {
     const cfgPtr = Ptr._assertClass(cfg, TransactionBuilderConfig);
-    const ret = await HaskellShelley.transactionBuilderNew(cfgPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderNew(cfgPtr);
     return Ptr._wrap(ret, TransactionBuilder);
   }
 
   async get_reference_inputs() {
-    const ret = await HaskellShelley.transactionBuilderGetReferenceInputs(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetReferenceInputs(this.ptr);
     return Ptr._wrap(ret, TransactionInputs);
   }
 
   async get_explicit_input() {
-    const ret = await HaskellShelley.transactionBuilderGetExplicitInput(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetExplicitInput(this.ptr);
     return Ptr._wrap(ret, Value);
   }
 
   async get_implicit_input() {
-    const ret = await HaskellShelley.transactionBuilderGetImplicitInput(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetImplicitInput(this.ptr);
     return Ptr._wrap(ret, Value);
   }
 
   async get_total_input() {
-    const ret = await HaskellShelley.transactionBuilderGetTotalInput(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetTotalInput(this.ptr);
     return Ptr._wrap(ret, Value);
   }
 
   async get_total_output() {
-    const ret = await HaskellShelley.transactionBuilderGetTotalOutput(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetTotalOutput(this.ptr);
     return Ptr._wrap(ret, Value);
   }
 
   async get_explicit_output() {
-    const ret = await HaskellShelley.transactionBuilderGetExplicitOutput(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetExplicitOutput(this.ptr);
     return Ptr._wrap(ret, Value);
   }
 
   async get_deposit() {
-    const ret = await HaskellShelley.transactionBuilderGetDeposit(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetDeposit(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async get_fee_if_set() {
-    const ret = await HaskellShelley.transactionBuilderGetFeeIfSet(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderGetFeeIfSet(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async add_change_if_needed(address) {
     const addressPtr = Ptr._assertClass(address, Address);
-    const ret = await HaskellShelley.transactionBuilderAddChangeIfNeeded(this.ptr, addressPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderAddChangeIfNeeded(this.ptr, addressPtr);
     return ret;
   }
 
   async add_change_if_needed_with_datum(address, plutus_data) {
     const addressPtr = Ptr._assertClass(address, Address);
     const plutus_dataPtr = Ptr._assertClass(plutus_data, OutputDatum);
-    const ret = await HaskellShelley.transactionBuilderAddChangeIfNeededWithDatum(this.ptr, addressPtr, plutus_dataPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderAddChangeIfNeededWithDatum(this.ptr, addressPtr, plutus_dataPtr);
     return ret;
   }
 
   calc_script_data_hash(cost_models) {
     const cost_modelsPtr = Ptr._assertClass(cost_models, Costmdls);
-    const ret = HaskellShelley.transactionBuilderCalcScriptDataHash(this.ptr, cost_modelsPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderCalcScriptDataHash(this.ptr, cost_modelsPtr);
     return ret;
   }
 
   set_script_data_hash(hash) {
     const hashPtr = Ptr._assertClass(hash, ScriptDataHash);
-    const ret = HaskellShelley.transactionBuilderSetScriptDataHash(this.ptr, hashPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetScriptDataHash(this.ptr, hashPtr);
     return ret;
   }
 
   remove_script_data_hash() {
-    const ret = HaskellShelley.transactionBuilderRemoveScriptDataHash(this.ptr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderRemoveScriptDataHash(this.ptr);
     return ret;
   }
 
   add_required_signer(key) {
     const keyPtr = Ptr._assertClass(key, Ed25519KeyHash);
-    const ret = HaskellShelley.transactionBuilderAddRequiredSigner(this.ptr, keyPtr);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderAddRequiredSigner(this.ptr, keyPtr);
     return ret;
   }
 
   async full_size() {
-    const ret = await HaskellShelley.transactionBuilderFullSize(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderFullSize(this.ptr);
     return ret;
   }
 
   async output_sizes() {
-    const ret = await HaskellShelley.transactionBuilderOutputSizes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderOutputSizes(this.ptr);
     return base64ToUint32Array(ret);
   }
 
   async build() {
-    const ret = await HaskellShelley.transactionBuilderBuild(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderBuild(this.ptr);
     return Ptr._wrap(ret, TransactionBody);
   }
 
   async build_tx() {
-    const ret = await HaskellShelley.transactionBuilderBuildTx(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderBuildTx(this.ptr);
     return Ptr._wrap(ret, Transaction);
   }
 
   async build_tx_unsafe() {
-    const ret = await HaskellShelley.transactionBuilderBuildTxUnsafe(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderBuildTxUnsafe(this.ptr);
     return Ptr._wrap(ret, Transaction);
   }
 
   async min_fee() {
-    const ret = await HaskellShelley.transactionBuilderMinFee(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderMinFee(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
@@ -9177,63 +9455,68 @@ export class TransactionBuilderConfig extends Ptr {
 
 export class TransactionBuilderConfigBuilder extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.transactionBuilderConfigBuilderNew();
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderConfigBuilderNew();
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
   async fee_algo(fee_algo) {
     const fee_algoPtr = Ptr._assertClass(fee_algo, LinearFee);
-    const ret = await HaskellShelley.transactionBuilderConfigBuilderFeeAlgo(this.ptr, fee_algoPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderConfigBuilderFeeAlgo(this.ptr, fee_algoPtr);
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
   async coins_per_utxo_byte(coins_per_utxo_byte) {
     const coins_per_utxo_bytePtr = Ptr._assertClass(coins_per_utxo_byte, BigNum);
-    const ret = await HaskellShelley.transactionBuilderConfigBuilderCoinsPerUtxoByte(this.ptr, coins_per_utxo_bytePtr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderConfigBuilderCoinsPerUtxoByte(this.ptr, coins_per_utxo_bytePtr);
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
   async ex_unit_prices(ex_unit_prices) {
     const ex_unit_pricesPtr = Ptr._assertClass(ex_unit_prices, ExUnitPrices);
-    const ret = await HaskellShelley.transactionBuilderConfigBuilderExUnitPrices(this.ptr, ex_unit_pricesPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderConfigBuilderExUnitPrices(this.ptr, ex_unit_pricesPtr);
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
   async pool_deposit(pool_deposit) {
     const pool_depositPtr = Ptr._assertClass(pool_deposit, BigNum);
-    const ret = await HaskellShelley.transactionBuilderConfigBuilderPoolDeposit(this.ptr, pool_depositPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderConfigBuilderPoolDeposit(this.ptr, pool_depositPtr);
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
   async key_deposit(key_deposit) {
     const key_depositPtr = Ptr._assertClass(key_deposit, BigNum);
-    const ret = await HaskellShelley.transactionBuilderConfigBuilderKeyDeposit(this.ptr, key_depositPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderConfigBuilderKeyDeposit(this.ptr, key_depositPtr);
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
   async max_value_size(max_value_size) {
-    const ret = await HaskellShelley.transactionBuilderConfigBuilderMaxValueSize(this.ptr, max_value_size);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderConfigBuilderMaxValueSize(this.ptr, max_value_size);
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
   async max_tx_size(max_tx_size) {
-    const ret = await HaskellShelley.transactionBuilderConfigBuilderMaxTxSize(this.ptr, max_tx_size);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderConfigBuilderMaxTxSize(this.ptr, max_tx_size);
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
   async ref_script_coins_per_byte(ref_script_coins_per_byte) {
     const ref_script_coins_per_bytePtr = Ptr._assertClass(ref_script_coins_per_byte, UnitInterval);
-    const ret = await HaskellShelley.transactionBuilderConfigBuilderRefScriptCoinsPerByte(this.ptr, ref_script_coins_per_bytePtr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderConfigBuilderRefScriptCoinsPerByte(this.ptr, ref_script_coins_per_bytePtr);
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
   async prefer_pure_change(prefer_pure_change) {
-    const ret = await HaskellShelley.transactionBuilderConfigBuilderPreferPureChange(this.ptr, prefer_pure_change);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderConfigBuilderPreferPureChange(this.ptr, prefer_pure_change);
+    return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
+  }
+
+  async deduplicate_explicit_ref_inputs_with_regular_inputs(deduplicate_explicit_ref_inputs_with_regular_inputs) {
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderConfigBuilderDeduplicateExplicitRefInputsWithRegularInputs(this.ptr, deduplicate_explicit_ref_inputs_with_regular_inputs);
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
   async build() {
-    const ret = await HaskellShelley.transactionBuilderConfigBuilderBuild(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderConfigBuilderBuild(this.ptr);
     return Ptr._wrap(ret, TransactionBuilderConfig);
   }
 
@@ -9242,32 +9525,32 @@ export class TransactionBuilderConfigBuilder extends Ptr {
 
 export class TransactionHash extends Ptr {
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.transactionHashFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_transactionHashFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionHash);
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.transactionHashToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionHashToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_bech32(prefix) {
-    const ret = await HaskellShelley.transactionHashToBech32(this.ptr, prefix);
+    const ret = await HaskellShelley.csl_bridge_transactionHashToBech32(this.ptr, prefix);
     return ret;
   }
 
   static async from_bech32(bech_str) {
-    const ret = await HaskellShelley.transactionHashFromBech32(bech_str);
+    const ret = await HaskellShelley.csl_bridge_transactionHashFromBech32(bech_str);
     return Ptr._wrap(ret, TransactionHash);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.transactionHashToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionHashToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex) {
-    const ret = await HaskellShelley.transactionHashFromHex(hex);
+    const ret = await HaskellShelley.csl_bridge_transactionHashFromHex(hex);
     return Ptr._wrap(ret, TransactionHash);
   }
 
@@ -9276,48 +9559,48 @@ export class TransactionHash extends Ptr {
 
 export class TransactionInput extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.transactionInputToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionInputToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.transactionInputFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_transactionInputFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionInput);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.transactionInputToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionInputToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.transactionInputFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_transactionInputFromHex(hex_str);
     return Ptr._wrap(ret, TransactionInput);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.transactionInputToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionInputToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.transactionInputFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_transactionInputFromJson(json);
     return Ptr._wrap(ret, TransactionInput);
   }
 
   async transaction_id() {
-    const ret = await HaskellShelley.transactionInputTransactionId(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionInputTransactionId(this.ptr);
     return Ptr._wrap(ret, TransactionHash);
   }
 
   async index() {
-    const ret = await HaskellShelley.transactionInputIndex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionInputIndex(this.ptr);
     return ret;
   }
 
   static async new(transaction_id, index) {
     const transaction_idPtr = Ptr._assertClass(transaction_id, TransactionHash);
-    const ret = await HaskellShelley.transactionInputNew(transaction_idPtr, index);
+    const ret = await HaskellShelley.csl_bridge_transactionInputNew(transaction_idPtr, index);
     return Ptr._wrap(ret, TransactionInput);
   }
 
@@ -9326,58 +9609,58 @@ export class TransactionInput extends Ptr {
 
 export class TransactionInputs extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.transactionInputsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionInputsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.transactionInputsFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_transactionInputsFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionInputs);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.transactionInputsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionInputsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.transactionInputsFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_transactionInputsFromHex(hex_str);
     return Ptr._wrap(ret, TransactionInputs);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.transactionInputsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionInputsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.transactionInputsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_transactionInputsFromJson(json);
     return Ptr._wrap(ret, TransactionInputs);
   }
 
   static async new() {
-    const ret = await HaskellShelley.transactionInputsNew();
+    const ret = await HaskellShelley.csl_bridge_transactionInputsNew();
     return Ptr._wrap(ret, TransactionInputs);
   }
 
   async len() {
-    const ret = await HaskellShelley.transactionInputsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionInputsLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.transactionInputsGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_transactionInputsGet(this.ptr, index);
     return Ptr._wrap(ret, TransactionInput);
   }
 
-  add(elem) {
+  async add(elem) {
     const elemPtr = Ptr._assertClass(elem, TransactionInput);
-    const ret = HaskellShelley.transactionInputsAdd(this.ptr, elemPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionInputsAdd(this.ptr, elemPtr);
     return ret;
   }
 
   async to_option() {
-    const ret = await HaskellShelley.transactionInputsToOption(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionInputsToOption(this.ptr);
     return Ptr._wrap(ret, TransactionInputs);
   }
 
@@ -9386,80 +9669,80 @@ export class TransactionInputs extends Ptr {
 
 export class TransactionMetadatum extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.transactionMetadatumToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.transactionMetadatumFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.transactionMetadatumToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.transactionMetadatumFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumFromHex(hex_str);
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   static async new_map(map) {
     const mapPtr = Ptr._assertClass(map, MetadataMap);
-    const ret = await HaskellShelley.transactionMetadatumNewMap(mapPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumNewMap(mapPtr);
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   static async new_list(list) {
     const listPtr = Ptr._assertClass(list, MetadataList);
-    const ret = await HaskellShelley.transactionMetadatumNewList(listPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumNewList(listPtr);
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   static async new_int(int_value) {
     const int_valuePtr = Ptr._assertClass(int_value, Int);
-    const ret = await HaskellShelley.transactionMetadatumNewInt(int_valuePtr);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumNewInt(int_valuePtr);
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   static async new_bytes(bytes) {
-    const ret = await HaskellShelley.transactionMetadatumNewBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumNewBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   static async new_text(text) {
-    const ret = await HaskellShelley.transactionMetadatumNewText(text);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumNewText(text);
     return Ptr._wrap(ret, TransactionMetadatum);
   }
 
   async kind() {
-    const ret = await HaskellShelley.transactionMetadatumKind(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumKind(this.ptr);
     return ret;
   }
 
   async as_map() {
-    const ret = await HaskellShelley.transactionMetadatumAsMap(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumAsMap(this.ptr);
     return Ptr._wrap(ret, MetadataMap);
   }
 
   async as_list() {
-    const ret = await HaskellShelley.transactionMetadatumAsList(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumAsList(this.ptr);
     return Ptr._wrap(ret, MetadataList);
   }
 
   async as_int() {
-    const ret = await HaskellShelley.transactionMetadatumAsInt(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumAsInt(this.ptr);
     return Ptr._wrap(ret, Int);
   }
 
   async as_bytes() {
-    const ret = await HaskellShelley.transactionMetadatumAsBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumAsBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async as_text() {
-    const ret = await HaskellShelley.transactionMetadatumAsText(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumAsText(this.ptr);
     return ret;
   }
 
@@ -9468,43 +9751,43 @@ export class TransactionMetadatum extends Ptr {
 
 export class TransactionMetadatumLabels extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.transactionMetadatumLabelsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumLabelsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.transactionMetadatumLabelsFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumLabelsFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionMetadatumLabels);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.transactionMetadatumLabelsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumLabelsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.transactionMetadatumLabelsFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumLabelsFromHex(hex_str);
     return Ptr._wrap(ret, TransactionMetadatumLabels);
   }
 
   static async new() {
-    const ret = await HaskellShelley.transactionMetadatumLabelsNew();
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumLabelsNew();
     return Ptr._wrap(ret, TransactionMetadatumLabels);
   }
 
   async len() {
-    const ret = await HaskellShelley.transactionMetadatumLabelsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumLabelsLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.transactionMetadatumLabelsGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_transactionMetadatumLabelsGet(this.ptr, index);
     return Ptr._wrap(ret, BigNum);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, BigNum);
-    const ret = HaskellShelley.transactionMetadatumLabelsAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_transactionMetadatumLabelsAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -9513,102 +9796,102 @@ export class TransactionMetadatumLabels extends Ptr {
 
 export class TransactionOutput extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.transactionOutputToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.transactionOutputFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_transactionOutputFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionOutput);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.transactionOutputToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.transactionOutputFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputFromHex(hex_str);
     return Ptr._wrap(ret, TransactionOutput);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.transactionOutputToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.transactionOutputFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputFromJson(json);
     return Ptr._wrap(ret, TransactionOutput);
   }
 
   async address() {
-    const ret = await HaskellShelley.transactionOutputAddress(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputAddress(this.ptr);
     return Ptr._wrap(ret, Address);
   }
 
   async amount() {
-    const ret = await HaskellShelley.transactionOutputAmount(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputAmount(this.ptr);
     return Ptr._wrap(ret, Value);
   }
 
   async data_hash() {
-    const ret = await HaskellShelley.transactionOutputDataHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputDataHash(this.ptr);
     return Ptr._wrap(ret, DataHash);
   }
 
   async plutus_data() {
-    const ret = await HaskellShelley.transactionOutputPlutusData(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputPlutusData(this.ptr);
     return Ptr._wrap(ret, PlutusData);
   }
 
   async script_ref() {
-    const ret = await HaskellShelley.transactionOutputScriptRef(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputScriptRef(this.ptr);
     return Ptr._wrap(ret, ScriptRef);
   }
 
   set_script_ref(script_ref) {
     const script_refPtr = Ptr._assertClass(script_ref, ScriptRef);
-    const ret = HaskellShelley.transactionOutputSetScriptRef(this.ptr, script_refPtr);
+    const ret = HaskellShelley.csl_bridge_transactionOutputSetScriptRef(this.ptr, script_refPtr);
     return ret;
   }
 
   set_plutus_data(data) {
     const dataPtr = Ptr._assertClass(data, PlutusData);
-    const ret = HaskellShelley.transactionOutputSetPlutusData(this.ptr, dataPtr);
+    const ret = HaskellShelley.csl_bridge_transactionOutputSetPlutusData(this.ptr, dataPtr);
     return ret;
   }
 
   set_data_hash(data_hash) {
     const data_hashPtr = Ptr._assertClass(data_hash, DataHash);
-    const ret = HaskellShelley.transactionOutputSetDataHash(this.ptr, data_hashPtr);
+    const ret = HaskellShelley.csl_bridge_transactionOutputSetDataHash(this.ptr, data_hashPtr);
     return ret;
   }
 
   async has_plutus_data() {
-    const ret = await HaskellShelley.transactionOutputHasPlutusData(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputHasPlutusData(this.ptr);
     return ret;
   }
 
   async has_data_hash() {
-    const ret = await HaskellShelley.transactionOutputHasDataHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputHasDataHash(this.ptr);
     return ret;
   }
 
   async has_script_ref() {
-    const ret = await HaskellShelley.transactionOutputHasScriptRef(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputHasScriptRef(this.ptr);
     return ret;
   }
 
   static async new(address, amount) {
     const addressPtr = Ptr._assertClass(address, Address);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = await HaskellShelley.transactionOutputNew(addressPtr, amountPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputNew(addressPtr, amountPtr);
     return Ptr._wrap(ret, TransactionOutput);
   }
 
   async serialization_format() {
-    const ret = await HaskellShelley.transactionOutputSerializationFormat(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputSerializationFormat(this.ptr);
     return ret;
   }
 
@@ -9618,32 +9901,32 @@ export class TransactionOutput extends Ptr {
 export class TransactionOutputAmountBuilder extends Ptr {
   async with_value(amount) {
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = await HaskellShelley.transactionOutputAmountBuilderWithValue(this.ptr, amountPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputAmountBuilderWithValue(this.ptr, amountPtr);
     return Ptr._wrap(ret, TransactionOutputAmountBuilder);
   }
 
   async with_coin(coin) {
     const coinPtr = Ptr._assertClass(coin, BigNum);
-    const ret = await HaskellShelley.transactionOutputAmountBuilderWithCoin(this.ptr, coinPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputAmountBuilderWithCoin(this.ptr, coinPtr);
     return Ptr._wrap(ret, TransactionOutputAmountBuilder);
   }
 
   async with_coin_and_asset(coin, multiasset) {
     const coinPtr = Ptr._assertClass(coin, BigNum);
     const multiassetPtr = Ptr._assertClass(multiasset, MultiAsset);
-    const ret = await HaskellShelley.transactionOutputAmountBuilderWithCoinAndAsset(this.ptr, coinPtr, multiassetPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputAmountBuilderWithCoinAndAsset(this.ptr, coinPtr, multiassetPtr);
     return Ptr._wrap(ret, TransactionOutputAmountBuilder);
   }
 
   async with_asset_and_min_required_coin_by_utxo_cost(multiasset, data_cost) {
     const multiassetPtr = Ptr._assertClass(multiasset, MultiAsset);
     const data_costPtr = Ptr._assertClass(data_cost, DataCost);
-    const ret = await HaskellShelley.transactionOutputAmountBuilderWithAssetAndMinRequiredCoinByUtxoCost(this.ptr, multiassetPtr, data_costPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputAmountBuilderWithAssetAndMinRequiredCoinByUtxoCost(this.ptr, multiassetPtr, data_costPtr);
     return Ptr._wrap(ret, TransactionOutputAmountBuilder);
   }
 
   async build() {
-    const ret = await HaskellShelley.transactionOutputAmountBuilderBuild(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputAmountBuilderBuild(this.ptr);
     return Ptr._wrap(ret, TransactionOutput);
   }
 
@@ -9652,36 +9935,36 @@ export class TransactionOutputAmountBuilder extends Ptr {
 
 export class TransactionOutputBuilder extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.transactionOutputBuilderNew();
+    const ret = await HaskellShelley.csl_bridge_transactionOutputBuilderNew();
     return Ptr._wrap(ret, TransactionOutputBuilder);
   }
 
   async with_address(address) {
     const addressPtr = Ptr._assertClass(address, Address);
-    const ret = await HaskellShelley.transactionOutputBuilderWithAddress(this.ptr, addressPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputBuilderWithAddress(this.ptr, addressPtr);
     return Ptr._wrap(ret, TransactionOutputBuilder);
   }
 
   async with_data_hash(data_hash) {
     const data_hashPtr = Ptr._assertClass(data_hash, DataHash);
-    const ret = await HaskellShelley.transactionOutputBuilderWithDataHash(this.ptr, data_hashPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputBuilderWithDataHash(this.ptr, data_hashPtr);
     return Ptr._wrap(ret, TransactionOutputBuilder);
   }
 
   async with_plutus_data(data) {
     const dataPtr = Ptr._assertClass(data, PlutusData);
-    const ret = await HaskellShelley.transactionOutputBuilderWithPlutusData(this.ptr, dataPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputBuilderWithPlutusData(this.ptr, dataPtr);
     return Ptr._wrap(ret, TransactionOutputBuilder);
   }
 
   async with_script_ref(script_ref) {
     const script_refPtr = Ptr._assertClass(script_ref, ScriptRef);
-    const ret = await HaskellShelley.transactionOutputBuilderWithScriptRef(this.ptr, script_refPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputBuilderWithScriptRef(this.ptr, script_refPtr);
     return Ptr._wrap(ret, TransactionOutputBuilder);
   }
 
   async next() {
-    const ret = await HaskellShelley.transactionOutputBuilderNext(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputBuilderNext(this.ptr);
     return Ptr._wrap(ret, TransactionOutputAmountBuilder);
   }
 
@@ -9690,53 +9973,53 @@ export class TransactionOutputBuilder extends Ptr {
 
 export class TransactionOutputs extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.transactionOutputsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.transactionOutputsFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_transactionOutputsFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionOutputs);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.transactionOutputsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.transactionOutputsFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputsFromHex(hex_str);
     return Ptr._wrap(ret, TransactionOutputs);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.transactionOutputsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.transactionOutputsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputsFromJson(json);
     return Ptr._wrap(ret, TransactionOutputs);
   }
 
   static async new() {
-    const ret = await HaskellShelley.transactionOutputsNew();
+    const ret = await HaskellShelley.csl_bridge_transactionOutputsNew();
     return Ptr._wrap(ret, TransactionOutputs);
   }
 
   async len() {
-    const ret = await HaskellShelley.transactionOutputsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputsLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.transactionOutputsGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_transactionOutputsGet(this.ptr, index);
     return Ptr._wrap(ret, TransactionOutput);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, TransactionOutput);
-    const ret = HaskellShelley.transactionOutputsAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_transactionOutputsAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -9745,49 +10028,49 @@ export class TransactionOutputs extends Ptr {
 
 export class TransactionUnspentOutput extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.transactionUnspentOutputToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionUnspentOutputToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.transactionUnspentOutputFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_transactionUnspentOutputFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionUnspentOutput);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.transactionUnspentOutputToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionUnspentOutputToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.transactionUnspentOutputFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_transactionUnspentOutputFromHex(hex_str);
     return Ptr._wrap(ret, TransactionUnspentOutput);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.transactionUnspentOutputToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionUnspentOutputToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.transactionUnspentOutputFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_transactionUnspentOutputFromJson(json);
     return Ptr._wrap(ret, TransactionUnspentOutput);
   }
 
   static async new(input, output) {
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const outputPtr = Ptr._assertClass(output, TransactionOutput);
-    const ret = await HaskellShelley.transactionUnspentOutputNew(inputPtr, outputPtr);
+    const ret = await HaskellShelley.csl_bridge_transactionUnspentOutputNew(inputPtr, outputPtr);
     return Ptr._wrap(ret, TransactionUnspentOutput);
   }
 
   async input() {
-    const ret = await HaskellShelley.transactionUnspentOutputInput(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionUnspentOutputInput(this.ptr);
     return Ptr._wrap(ret, TransactionInput);
   }
 
   async output() {
-    const ret = await HaskellShelley.transactionUnspentOutputOutput(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionUnspentOutputOutput(this.ptr);
     return Ptr._wrap(ret, TransactionOutput);
   }
 
@@ -9796,33 +10079,33 @@ export class TransactionUnspentOutput extends Ptr {
 
 export class TransactionUnspentOutputs extends Ptr {
   async to_json() {
-    const ret = await HaskellShelley.transactionUnspentOutputsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionUnspentOutputsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.transactionUnspentOutputsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_transactionUnspentOutputsFromJson(json);
     return Ptr._wrap(ret, TransactionUnspentOutputs);
   }
 
   static async new() {
-    const ret = await HaskellShelley.transactionUnspentOutputsNew();
+    const ret = await HaskellShelley.csl_bridge_transactionUnspentOutputsNew();
     return Ptr._wrap(ret, TransactionUnspentOutputs);
   }
 
   async len() {
-    const ret = await HaskellShelley.transactionUnspentOutputsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionUnspentOutputsLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.transactionUnspentOutputsGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_transactionUnspentOutputsGet(this.ptr, index);
     return Ptr._wrap(ret, TransactionUnspentOutput);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, TransactionUnspentOutput);
-    const ret = HaskellShelley.transactionUnspentOutputsAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_transactionUnspentOutputsAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -9831,103 +10114,103 @@ export class TransactionUnspentOutputs extends Ptr {
 
 export class TransactionWitnessSet extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.transactionWitnessSetToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.transactionWitnessSetFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionWitnessSet);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.transactionWitnessSetToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.transactionWitnessSetFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetFromHex(hex_str);
     return Ptr._wrap(ret, TransactionWitnessSet);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.transactionWitnessSetToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.transactionWitnessSetFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetFromJson(json);
     return Ptr._wrap(ret, TransactionWitnessSet);
   }
 
   set_vkeys(vkeys) {
     const vkeysPtr = Ptr._assertClass(vkeys, Vkeywitnesses);
-    const ret = HaskellShelley.transactionWitnessSetSetVkeys(this.ptr, vkeysPtr);
+    const ret = HaskellShelley.csl_bridge_transactionWitnessSetSetVkeys(this.ptr, vkeysPtr);
     return ret;
   }
 
   async vkeys() {
-    const ret = await HaskellShelley.transactionWitnessSetVkeys(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetVkeys(this.ptr);
     return Ptr._wrap(ret, Vkeywitnesses);
   }
 
   set_native_scripts(native_scripts) {
     const native_scriptsPtr = Ptr._assertClass(native_scripts, NativeScripts);
-    const ret = HaskellShelley.transactionWitnessSetSetNativeScripts(this.ptr, native_scriptsPtr);
+    const ret = HaskellShelley.csl_bridge_transactionWitnessSetSetNativeScripts(this.ptr, native_scriptsPtr);
     return ret;
   }
 
   async native_scripts() {
-    const ret = await HaskellShelley.transactionWitnessSetNativeScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetNativeScripts(this.ptr);
     return Ptr._wrap(ret, NativeScripts);
   }
 
   set_bootstraps(bootstraps) {
     const bootstrapsPtr = Ptr._assertClass(bootstraps, BootstrapWitnesses);
-    const ret = HaskellShelley.transactionWitnessSetSetBootstraps(this.ptr, bootstrapsPtr);
+    const ret = HaskellShelley.csl_bridge_transactionWitnessSetSetBootstraps(this.ptr, bootstrapsPtr);
     return ret;
   }
 
   async bootstraps() {
-    const ret = await HaskellShelley.transactionWitnessSetBootstraps(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetBootstraps(this.ptr);
     return Ptr._wrap(ret, BootstrapWitnesses);
   }
 
   set_plutus_scripts(plutus_scripts) {
     const plutus_scriptsPtr = Ptr._assertClass(plutus_scripts, PlutusScripts);
-    const ret = HaskellShelley.transactionWitnessSetSetPlutusScripts(this.ptr, plutus_scriptsPtr);
+    const ret = HaskellShelley.csl_bridge_transactionWitnessSetSetPlutusScripts(this.ptr, plutus_scriptsPtr);
     return ret;
   }
 
   async plutus_scripts() {
-    const ret = await HaskellShelley.transactionWitnessSetPlutusScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetPlutusScripts(this.ptr);
     return Ptr._wrap(ret, PlutusScripts);
   }
 
   set_plutus_data(plutus_data) {
     const plutus_dataPtr = Ptr._assertClass(plutus_data, PlutusList);
-    const ret = HaskellShelley.transactionWitnessSetSetPlutusData(this.ptr, plutus_dataPtr);
+    const ret = HaskellShelley.csl_bridge_transactionWitnessSetSetPlutusData(this.ptr, plutus_dataPtr);
     return ret;
   }
 
   async plutus_data() {
-    const ret = await HaskellShelley.transactionWitnessSetPlutusData(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetPlutusData(this.ptr);
     return Ptr._wrap(ret, PlutusList);
   }
 
   set_redeemers(redeemers) {
     const redeemersPtr = Ptr._assertClass(redeemers, Redeemers);
-    const ret = HaskellShelley.transactionWitnessSetSetRedeemers(this.ptr, redeemersPtr);
+    const ret = HaskellShelley.csl_bridge_transactionWitnessSetSetRedeemers(this.ptr, redeemersPtr);
     return ret;
   }
 
   async redeemers() {
-    const ret = await HaskellShelley.transactionWitnessSetRedeemers(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetRedeemers(this.ptr);
     return Ptr._wrap(ret, Redeemers);
   }
 
   static async new() {
-    const ret = await HaskellShelley.transactionWitnessSetNew();
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetNew();
     return Ptr._wrap(ret, TransactionWitnessSet);
   }
 
@@ -9936,53 +10219,53 @@ export class TransactionWitnessSet extends Ptr {
 
 export class TransactionWitnessSets extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.transactionWitnessSetsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.transactionWitnessSetsFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetsFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TransactionWitnessSets);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.transactionWitnessSetsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.transactionWitnessSetsFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetsFromHex(hex_str);
     return Ptr._wrap(ret, TransactionWitnessSets);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.transactionWitnessSetsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.transactionWitnessSetsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetsFromJson(json);
     return Ptr._wrap(ret, TransactionWitnessSets);
   }
 
   static async new() {
-    const ret = await HaskellShelley.transactionWitnessSetsNew();
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetsNew();
     return Ptr._wrap(ret, TransactionWitnessSets);
   }
 
   async len() {
-    const ret = await HaskellShelley.transactionWitnessSetsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetsLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.transactionWitnessSetsGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_transactionWitnessSetsGet(this.ptr, index);
     return Ptr._wrap(ret, TransactionWitnessSet);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, TransactionWitnessSet);
-    const ret = HaskellShelley.transactionWitnessSetsAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_transactionWitnessSetsAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -9991,40 +10274,40 @@ export class TransactionWitnessSets extends Ptr {
 
 export class TreasuryWithdrawals extends Ptr {
   async to_json() {
-    const ret = await HaskellShelley.treasuryWithdrawalsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.treasuryWithdrawalsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsFromJson(json);
     return Ptr._wrap(ret, TreasuryWithdrawals);
   }
 
   static async new() {
-    const ret = await HaskellShelley.treasuryWithdrawalsNew();
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsNew();
     return Ptr._wrap(ret, TreasuryWithdrawals);
   }
 
   async get(key) {
     const keyPtr = Ptr._assertClass(key, RewardAddress);
-    const ret = await HaskellShelley.treasuryWithdrawalsGet(this.ptr, keyPtr);
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsGet(this.ptr, keyPtr);
     return Ptr._wrap(ret, BigNum);
   }
 
   insert(key, value) {
     const keyPtr = Ptr._assertClass(key, RewardAddress);
     const valuePtr = Ptr._assertClass(value, BigNum);
-    const ret = HaskellShelley.treasuryWithdrawalsInsert(this.ptr, keyPtr, valuePtr);
+    const ret = HaskellShelley.csl_bridge_treasuryWithdrawalsInsert(this.ptr, keyPtr, valuePtr);
     return ret;
   }
 
   async keys() {
-    const ret = await HaskellShelley.treasuryWithdrawalsKeys(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsKeys(this.ptr);
     return Ptr._wrap(ret, RewardAddresses);
   }
 
   async len() {
-    const ret = await HaskellShelley.treasuryWithdrawalsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsLen(this.ptr);
     return ret;
   }
 
@@ -10033,55 +10316,55 @@ export class TreasuryWithdrawals extends Ptr {
 
 export class TreasuryWithdrawalsAction extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.treasuryWithdrawalsActionToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsActionToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.treasuryWithdrawalsActionFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsActionFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, TreasuryWithdrawalsAction);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.treasuryWithdrawalsActionToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsActionToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.treasuryWithdrawalsActionFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsActionFromHex(hex_str);
     return Ptr._wrap(ret, TreasuryWithdrawalsAction);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.treasuryWithdrawalsActionToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsActionToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.treasuryWithdrawalsActionFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsActionFromJson(json);
     return Ptr._wrap(ret, TreasuryWithdrawalsAction);
   }
 
   async withdrawals() {
-    const ret = await HaskellShelley.treasuryWithdrawalsActionWithdrawals(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsActionWithdrawals(this.ptr);
     return Ptr._wrap(ret, TreasuryWithdrawals);
   }
 
   async policy_hash() {
-    const ret = await HaskellShelley.treasuryWithdrawalsActionPolicyHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsActionPolicyHash(this.ptr);
     return Ptr._wrap(ret, ScriptHash);
   }
 
   static async new(withdrawals) {
     const withdrawalsPtr = Ptr._assertClass(withdrawals, TreasuryWithdrawals);
-    const ret = await HaskellShelley.treasuryWithdrawalsActionNew(withdrawalsPtr);
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsActionNew(withdrawalsPtr);
     return Ptr._wrap(ret, TreasuryWithdrawalsAction);
   }
 
   static async new_with_policy_hash(withdrawals, policy_hash) {
     const withdrawalsPtr = Ptr._assertClass(withdrawals, TreasuryWithdrawals);
     const policy_hashPtr = Ptr._assertClass(policy_hash, ScriptHash);
-    const ret = await HaskellShelley.treasuryWithdrawalsActionNewWithPolicyHash(withdrawalsPtr, policy_hashPtr);
+    const ret = await HaskellShelley.csl_bridge_treasuryWithdrawalsActionNewWithPolicyHash(withdrawalsPtr, policy_hashPtr);
     return Ptr._wrap(ret, TreasuryWithdrawalsAction);
   }
 
@@ -10090,17 +10373,22 @@ export class TreasuryWithdrawalsAction extends Ptr {
 
 export class TxBuilderConstants extends Ptr {
   static async plutus_default_cost_models() {
-    const ret = await HaskellShelley.txBuilderConstantsPlutusDefaultCostModels();
+    const ret = await HaskellShelley.csl_bridge_txBuilderConstantsPlutusDefaultCostModels();
     return Ptr._wrap(ret, Costmdls);
   }
 
   static async plutus_alonzo_cost_models() {
-    const ret = await HaskellShelley.txBuilderConstantsPlutusAlonzoCostModels();
+    const ret = await HaskellShelley.csl_bridge_txBuilderConstantsPlutusAlonzoCostModels();
     return Ptr._wrap(ret, Costmdls);
   }
 
   static async plutus_vasil_cost_models() {
-    const ret = await HaskellShelley.txBuilderConstantsPlutusVasilCostModels();
+    const ret = await HaskellShelley.csl_bridge_txBuilderConstantsPlutusVasilCostModels();
+    return Ptr._wrap(ret, Costmdls);
+  }
+
+  static async plutus_conway_cost_models() {
+    const ret = await HaskellShelley.csl_bridge_txBuilderConstantsPlutusConwayCostModels();
     return Ptr._wrap(ret, Costmdls);
   }
 
@@ -10109,7 +10397,7 @@ export class TxBuilderConstants extends Ptr {
 
 export class TxInputsBuilder extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.txInputsBuilderNew();
+    const ret = await HaskellShelley.csl_bridge_txInputsBuilderNew();
     return Ptr._wrap(ret, TxInputsBuilder);
   }
 
@@ -10117,15 +10405,15 @@ export class TxInputsBuilder extends Ptr {
     const hashPtr = Ptr._assertClass(hash, Ed25519KeyHash);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.txInputsBuilderAddKeyInput(this.ptr, hashPtr, inputPtr, amountPtr);
+    const ret = HaskellShelley.csl_bridge_txInputsBuilderAddKeyInput(this.ptr, hashPtr, inputPtr, amountPtr);
     return ret;
   }
 
   add_native_script_input(script, input, amount) {
-    const scriptPtr = Ptr._assertClass(script, NativeScript);
+    const scriptPtr = Ptr._assertClass(script, NativeScriptSource);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.txInputsBuilderAddNativeScriptInput(this.ptr, scriptPtr, inputPtr, amountPtr);
+    const ret = HaskellShelley.csl_bridge_txInputsBuilderAddNativeScriptInput(this.ptr, scriptPtr, inputPtr, amountPtr);
     return ret;
   }
 
@@ -10133,15 +10421,15 @@ export class TxInputsBuilder extends Ptr {
     const witnessPtr = Ptr._assertClass(witness, PlutusWitness);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.txInputsBuilderAddPlutusScriptInput(this.ptr, witnessPtr, inputPtr, amountPtr);
+    const ret = HaskellShelley.csl_bridge_txInputsBuilderAddPlutusScriptInput(this.ptr, witnessPtr, inputPtr, amountPtr);
     return ret;
   }
 
-  add_bootstrap_input(hash, input, amount) {
-    const hashPtr = Ptr._assertClass(hash, ByronAddress);
+  add_bootstrap_input(address, input, amount) {
+    const addressPtr = Ptr._assertClass(address, ByronAddress);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.txInputsBuilderAddBootstrapInput(this.ptr, hashPtr, inputPtr, amountPtr);
+    const ret = HaskellShelley.csl_bridge_txInputsBuilderAddBootstrapInput(this.ptr, addressPtr, inputPtr, amountPtr);
     return ret;
   }
 
@@ -10149,54 +10437,54 @@ export class TxInputsBuilder extends Ptr {
     const addressPtr = Ptr._assertClass(address, Address);
     const inputPtr = Ptr._assertClass(input, TransactionInput);
     const amountPtr = Ptr._assertClass(amount, Value);
-    const ret = HaskellShelley.txInputsBuilderAddRegularInput(this.ptr, addressPtr, inputPtr, amountPtr);
+    const ret = HaskellShelley.csl_bridge_txInputsBuilderAddRegularInput(this.ptr, addressPtr, inputPtr, amountPtr);
     return ret;
   }
 
   async get_ref_inputs() {
-    const ret = await HaskellShelley.txInputsBuilderGetRefInputs(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_txInputsBuilderGetRefInputs(this.ptr);
     return Ptr._wrap(ret, TransactionInputs);
   }
 
   async get_native_input_scripts() {
-    const ret = await HaskellShelley.txInputsBuilderGetNativeInputScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_txInputsBuilderGetNativeInputScripts(this.ptr);
     return Ptr._wrap(ret, NativeScripts);
   }
 
   async get_plutus_input_scripts() {
-    const ret = await HaskellShelley.txInputsBuilderGetPlutusInputScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_txInputsBuilderGetPlutusInputScripts(this.ptr);
     return Ptr._wrap(ret, PlutusWitnesses);
   }
 
   async len() {
-    const ret = await HaskellShelley.txInputsBuilderLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_txInputsBuilderLen(this.ptr);
     return ret;
   }
 
   add_required_signer(key) {
     const keyPtr = Ptr._assertClass(key, Ed25519KeyHash);
-    const ret = HaskellShelley.txInputsBuilderAddRequiredSigner(this.ptr, keyPtr);
+    const ret = HaskellShelley.csl_bridge_txInputsBuilderAddRequiredSigner(this.ptr, keyPtr);
     return ret;
   }
 
   add_required_signers(keys) {
     const keysPtr = Ptr._assertClass(keys, Ed25519KeyHashes);
-    const ret = HaskellShelley.txInputsBuilderAddRequiredSigners(this.ptr, keysPtr);
+    const ret = HaskellShelley.csl_bridge_txInputsBuilderAddRequiredSigners(this.ptr, keysPtr);
     return ret;
   }
 
   async total_value() {
-    const ret = await HaskellShelley.txInputsBuilderTotalValue(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_txInputsBuilderTotalValue(this.ptr);
     return Ptr._wrap(ret, Value);
   }
 
   async inputs() {
-    const ret = await HaskellShelley.txInputsBuilderInputs(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_txInputsBuilderInputs(this.ptr);
     return Ptr._wrap(ret, TransactionInputs);
   }
 
   async inputs_option() {
-    const ret = await HaskellShelley.txInputsBuilderInputsOption(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_txInputsBuilderInputsOption(this.ptr);
     return Ptr._wrap(ret, TransactionInputs);
   }
 
@@ -10205,42 +10493,42 @@ export class TxInputsBuilder extends Ptr {
 
 export class URL extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.uRLToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_uRLToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.uRLFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_uRLFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, URL);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.uRLToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_uRLToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.uRLFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_uRLFromHex(hex_str);
     return Ptr._wrap(ret, URL);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.uRLToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_uRLToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.uRLFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_uRLFromJson(json);
     return Ptr._wrap(ret, URL);
   }
 
   static async new(url) {
-    const ret = await HaskellShelley.uRLNew(url);
+    const ret = await HaskellShelley.csl_bridge_uRLNew(url);
     return Ptr._wrap(ret, URL);
   }
 
   async url() {
-    const ret = await HaskellShelley.uRLUrl(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_uRLUrl(this.ptr);
     return ret;
   }
 
@@ -10249,49 +10537,49 @@ export class URL extends Ptr {
 
 export class UnitInterval extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.unitIntervalToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_unitIntervalToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.unitIntervalFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_unitIntervalFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.unitIntervalToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_unitIntervalToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.unitIntervalFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_unitIntervalFromHex(hex_str);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.unitIntervalToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_unitIntervalToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.unitIntervalFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_unitIntervalFromJson(json);
     return Ptr._wrap(ret, UnitInterval);
   }
 
   async numerator() {
-    const ret = await HaskellShelley.unitIntervalNumerator(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_unitIntervalNumerator(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async denominator() {
-    const ret = await HaskellShelley.unitIntervalDenominator(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_unitIntervalDenominator(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   static async new(numerator, denominator) {
     const numeratorPtr = Ptr._assertClass(numerator, BigNum);
     const denominatorPtr = Ptr._assertClass(denominator, BigNum);
-    const ret = await HaskellShelley.unitIntervalNew(numeratorPtr, denominatorPtr);
+    const ret = await HaskellShelley.csl_bridge_unitIntervalNew(numeratorPtr, denominatorPtr);
     return Ptr._wrap(ret, UnitInterval);
   }
 
@@ -10300,48 +10588,48 @@ export class UnitInterval extends Ptr {
 
 export class Update extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.updateToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_updateToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.updateFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_updateFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Update);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.updateToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_updateToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.updateFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_updateFromHex(hex_str);
     return Ptr._wrap(ret, Update);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.updateToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_updateToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.updateFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_updateFromJson(json);
     return Ptr._wrap(ret, Update);
   }
 
   async proposed_protocol_parameter_updates() {
-    const ret = await HaskellShelley.updateProposedProtocolParameterUpdates(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_updateProposedProtocolParameterUpdates(this.ptr);
     return Ptr._wrap(ret, ProposedProtocolParameterUpdates);
   }
 
   async epoch() {
-    const ret = await HaskellShelley.updateEpoch(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_updateEpoch(this.ptr);
     return ret;
   }
 
   static async new(proposed_protocol_parameter_updates, epoch) {
     const proposed_protocol_parameter_updatesPtr = Ptr._assertClass(proposed_protocol_parameter_updates, ProposedProtocolParameterUpdates);
-    const ret = await HaskellShelley.updateNew(proposed_protocol_parameter_updatesPtr, epoch);
+    const ret = await HaskellShelley.csl_bridge_updateNew(proposed_protocol_parameter_updatesPtr, epoch);
     return Ptr._wrap(ret, Update);
   }
 
@@ -10350,54 +10638,54 @@ export class Update extends Ptr {
 
 export class UpdateCommitteeAction extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.updateCommitteeActionToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_updateCommitteeActionToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.updateCommitteeActionFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_updateCommitteeActionFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, UpdateCommitteeAction);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.updateCommitteeActionToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_updateCommitteeActionToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.updateCommitteeActionFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_updateCommitteeActionFromHex(hex_str);
     return Ptr._wrap(ret, UpdateCommitteeAction);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.updateCommitteeActionToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_updateCommitteeActionToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.updateCommitteeActionFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_updateCommitteeActionFromJson(json);
     return Ptr._wrap(ret, UpdateCommitteeAction);
   }
 
   async gov_action_id() {
-    const ret = await HaskellShelley.updateCommitteeActionGovActionId(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_updateCommitteeActionGovActionId(this.ptr);
     return Ptr._wrap(ret, GovernanceActionId);
   }
 
   async committee() {
-    const ret = await HaskellShelley.updateCommitteeActionCommittee(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_updateCommitteeActionCommittee(this.ptr);
     return Ptr._wrap(ret, Committee);
   }
 
   async members_to_remove() {
-    const ret = await HaskellShelley.updateCommitteeActionMembersToRemove(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_updateCommitteeActionMembersToRemove(this.ptr);
     return Ptr._wrap(ret, Credentials);
   }
 
   static async new(committee, members_to_remove) {
     const committeePtr = Ptr._assertClass(committee, Committee);
     const members_to_removePtr = Ptr._assertClass(members_to_remove, Credentials);
-    const ret = await HaskellShelley.updateCommitteeActionNew(committeePtr, members_to_removePtr);
+    const ret = await HaskellShelley.csl_bridge_updateCommitteeActionNew(committeePtr, members_to_removePtr);
     return Ptr._wrap(ret, UpdateCommitteeAction);
   }
 
@@ -10405,7 +10693,7 @@ export class UpdateCommitteeAction extends Ptr {
     const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
     const committeePtr = Ptr._assertClass(committee, Committee);
     const members_to_removePtr = Ptr._assertClass(members_to_remove, Credentials);
-    const ret = await HaskellShelley.updateCommitteeActionNewWithActionId(gov_action_idPtr, committeePtr, members_to_removePtr);
+    const ret = await HaskellShelley.csl_bridge_updateCommitteeActionNewWithActionId(gov_action_idPtr, committeePtr, members_to_removePtr);
     return Ptr._wrap(ret, UpdateCommitteeAction);
   }
 
@@ -10414,47 +10702,47 @@ export class UpdateCommitteeAction extends Ptr {
 
 export class VRFCert extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.vRFCertToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vRFCertToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.vRFCertFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_vRFCertFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, VRFCert);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.vRFCertToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vRFCertToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.vRFCertFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_vRFCertFromHex(hex_str);
     return Ptr._wrap(ret, VRFCert);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.vRFCertToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vRFCertToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.vRFCertFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_vRFCertFromJson(json);
     return Ptr._wrap(ret, VRFCert);
   }
 
   async output() {
-    const ret = await HaskellShelley.vRFCertOutput(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vRFCertOutput(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async proof() {
-    const ret = await HaskellShelley.vRFCertProof(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vRFCertProof(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async new(output, proof) {
-    const ret = await HaskellShelley.vRFCertNew(b64FromUint8Array(output), b64FromUint8Array(proof));
+    const ret = await HaskellShelley.csl_bridge_vRFCertNew(b64FromUint8Array(output), b64FromUint8Array(proof));
     return Ptr._wrap(ret, VRFCert);
   }
 
@@ -10463,32 +10751,32 @@ export class VRFCert extends Ptr {
 
 export class VRFKeyHash extends Ptr {
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.vRFKeyHashFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_vRFKeyHashFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, VRFKeyHash);
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.vRFKeyHashToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vRFKeyHashToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_bech32(prefix) {
-    const ret = await HaskellShelley.vRFKeyHashToBech32(this.ptr, prefix);
+    const ret = await HaskellShelley.csl_bridge_vRFKeyHashToBech32(this.ptr, prefix);
     return ret;
   }
 
   static async from_bech32(bech_str) {
-    const ret = await HaskellShelley.vRFKeyHashFromBech32(bech_str);
+    const ret = await HaskellShelley.csl_bridge_vRFKeyHashFromBech32(bech_str);
     return Ptr._wrap(ret, VRFKeyHash);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.vRFKeyHashToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vRFKeyHashToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex) {
-    const ret = await HaskellShelley.vRFKeyHashFromHex(hex);
+    const ret = await HaskellShelley.csl_bridge_vRFKeyHashFromHex(hex);
     return Ptr._wrap(ret, VRFKeyHash);
   }
 
@@ -10497,32 +10785,32 @@ export class VRFKeyHash extends Ptr {
 
 export class VRFVKey extends Ptr {
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.vRFVKeyFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_vRFVKeyFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, VRFVKey);
   }
 
   async to_bytes() {
-    const ret = await HaskellShelley.vRFVKeyToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vRFVKeyToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   async to_bech32(prefix) {
-    const ret = await HaskellShelley.vRFVKeyToBech32(this.ptr, prefix);
+    const ret = await HaskellShelley.csl_bridge_vRFVKeyToBech32(this.ptr, prefix);
     return ret;
   }
 
   static async from_bech32(bech_str) {
-    const ret = await HaskellShelley.vRFVKeyFromBech32(bech_str);
+    const ret = await HaskellShelley.csl_bridge_vRFVKeyFromBech32(bech_str);
     return Ptr._wrap(ret, VRFVKey);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.vRFVKeyToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vRFVKeyToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex) {
-    const ret = await HaskellShelley.vRFVKeyFromHex(hex);
+    const ret = await HaskellShelley.csl_bridge_vRFVKeyFromHex(hex);
     return Ptr._wrap(ret, VRFVKey);
   }
 
@@ -10531,107 +10819,157 @@ export class VRFVKey extends Ptr {
 
 export class Value extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.valueToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_valueToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.valueFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_valueFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Value);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.valueToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_valueToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.valueFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_valueFromHex(hex_str);
     return Ptr._wrap(ret, Value);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.valueToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_valueToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.valueFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_valueFromJson(json);
     return Ptr._wrap(ret, Value);
   }
 
   static async new(coin) {
     const coinPtr = Ptr._assertClass(coin, BigNum);
-    const ret = await HaskellShelley.valueNew(coinPtr);
+    const ret = await HaskellShelley.csl_bridge_valueNew(coinPtr);
     return Ptr._wrap(ret, Value);
   }
 
   static async new_from_assets(multiasset) {
     const multiassetPtr = Ptr._assertClass(multiasset, MultiAsset);
-    const ret = await HaskellShelley.valueNewFromAssets(multiassetPtr);
+    const ret = await HaskellShelley.csl_bridge_valueNewFromAssets(multiassetPtr);
     return Ptr._wrap(ret, Value);
   }
 
   static async new_with_assets(coin, multiasset) {
     const coinPtr = Ptr._assertClass(coin, BigNum);
     const multiassetPtr = Ptr._assertClass(multiasset, MultiAsset);
-    const ret = await HaskellShelley.valueNewWithAssets(coinPtr, multiassetPtr);
+    const ret = await HaskellShelley.csl_bridge_valueNewWithAssets(coinPtr, multiassetPtr);
     return Ptr._wrap(ret, Value);
   }
 
   static async zero() {
-    const ret = await HaskellShelley.valueZero();
+    const ret = await HaskellShelley.csl_bridge_valueZero();
     return Ptr._wrap(ret, Value);
   }
 
   async is_zero() {
-    const ret = await HaskellShelley.valueIsZero(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_valueIsZero(this.ptr);
     return ret;
   }
 
   async coin() {
-    const ret = await HaskellShelley.valueCoin(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_valueCoin(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
   set_coin(coin) {
     const coinPtr = Ptr._assertClass(coin, BigNum);
-    const ret = HaskellShelley.valueSetCoin(this.ptr, coinPtr);
+    const ret = HaskellShelley.csl_bridge_valueSetCoin(this.ptr, coinPtr);
     return ret;
   }
 
   async multiasset() {
-    const ret = await HaskellShelley.valueMultiasset(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_valueMultiasset(this.ptr);
     return Ptr._wrap(ret, MultiAsset);
   }
 
   set_multiasset(multiasset) {
     const multiassetPtr = Ptr._assertClass(multiasset, MultiAsset);
-    const ret = HaskellShelley.valueSetMultiasset(this.ptr, multiassetPtr);
+    const ret = HaskellShelley.csl_bridge_valueSetMultiasset(this.ptr, multiassetPtr);
     return ret;
   }
 
   async checked_add(rhs) {
     const rhsPtr = Ptr._assertClass(rhs, Value);
-    const ret = await HaskellShelley.valueCheckedAdd(this.ptr, rhsPtr);
+    const ret = await HaskellShelley.csl_bridge_valueCheckedAdd(this.ptr, rhsPtr);
     return Ptr._wrap(ret, Value);
   }
 
   async checked_sub(rhs_value) {
     const rhs_valuePtr = Ptr._assertClass(rhs_value, Value);
-    const ret = await HaskellShelley.valueCheckedSub(this.ptr, rhs_valuePtr);
+    const ret = await HaskellShelley.csl_bridge_valueCheckedSub(this.ptr, rhs_valuePtr);
     return Ptr._wrap(ret, Value);
   }
 
   async clamped_sub(rhs_value) {
     const rhs_valuePtr = Ptr._assertClass(rhs_value, Value);
-    const ret = await HaskellShelley.valueClampedSub(this.ptr, rhs_valuePtr);
+    const ret = await HaskellShelley.csl_bridge_valueClampedSub(this.ptr, rhs_valuePtr);
     return Ptr._wrap(ret, Value);
   }
 
   async compare(rhs_value) {
     const rhs_valuePtr = Ptr._assertClass(rhs_value, Value);
-    const ret = await HaskellShelley.valueCompare(this.ptr, rhs_valuePtr);
+    const ret = await HaskellShelley.csl_bridge_valueCompare(this.ptr, rhs_valuePtr);
+    return ret;
+  }
+
+}
+
+
+export class VersionedBlock extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.csl_bridge_versionedBlockToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.csl_bridge_versionedBlockFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, VersionedBlock);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.csl_bridge_versionedBlockToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.csl_bridge_versionedBlockFromHex(hex_str);
+    return Ptr._wrap(ret, VersionedBlock);
+  }
+
+  async to_json() {
+    const ret = await HaskellShelley.csl_bridge_versionedBlockToJson(this.ptr);
+    return ret;
+  }
+
+  static async from_json(json) {
+    const ret = await HaskellShelley.csl_bridge_versionedBlockFromJson(json);
+    return Ptr._wrap(ret, VersionedBlock);
+  }
+
+  static async new(block, era_code) {
+    const blockPtr = Ptr._assertClass(block, Block);
+    const ret = await HaskellShelley.csl_bridge_versionedBlockNew(blockPtr, era_code);
+    return Ptr._wrap(ret, VersionedBlock);
+  }
+
+  async block() {
+    const ret = await HaskellShelley.csl_bridge_versionedBlockBlock(this.ptr);
+    return Ptr._wrap(ret, Block);
+  }
+
+  async era() {
+    const ret = await HaskellShelley.csl_bridge_versionedBlockEra(this.ptr);
     return ret;
   }
 
@@ -10640,43 +10978,43 @@ export class Value extends Ptr {
 
 export class Vkey extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.vkeyToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vkeyToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.vkeyFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_vkeyFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Vkey);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.vkeyToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vkeyToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.vkeyFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_vkeyFromHex(hex_str);
     return Ptr._wrap(ret, Vkey);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.vkeyToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vkeyToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.vkeyFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_vkeyFromJson(json);
     return Ptr._wrap(ret, Vkey);
   }
 
   static async new(pk) {
     const pkPtr = Ptr._assertClass(pk, PublicKey);
-    const ret = await HaskellShelley.vkeyNew(pkPtr);
+    const ret = await HaskellShelley.csl_bridge_vkeyNew(pkPtr);
     return Ptr._wrap(ret, Vkey);
   }
 
   async public_key() {
-    const ret = await HaskellShelley.vkeyPublicKey(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vkeyPublicKey(this.ptr);
     return Ptr._wrap(ret, PublicKey);
   }
 
@@ -10685,23 +11023,23 @@ export class Vkey extends Ptr {
 
 export class Vkeys extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.vkeysNew();
+    const ret = await HaskellShelley.csl_bridge_vkeysNew();
     return Ptr._wrap(ret, Vkeys);
   }
 
   async len() {
-    const ret = await HaskellShelley.vkeysLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vkeysLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.vkeysGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_vkeysGet(this.ptr, index);
     return Ptr._wrap(ret, Vkey);
   }
 
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, Vkey);
-    const ret = HaskellShelley.vkeysAdd(this.ptr, elemPtr);
+    const ret = HaskellShelley.csl_bridge_vkeysAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -10710,49 +11048,49 @@ export class Vkeys extends Ptr {
 
 export class Vkeywitness extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.vkeywitnessToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.vkeywitnessFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Vkeywitness);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.vkeywitnessToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.vkeywitnessFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessFromHex(hex_str);
     return Ptr._wrap(ret, Vkeywitness);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.vkeywitnessToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.vkeywitnessFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessFromJson(json);
     return Ptr._wrap(ret, Vkeywitness);
   }
 
   static async new(vkey, signature) {
     const vkeyPtr = Ptr._assertClass(vkey, Vkey);
     const signaturePtr = Ptr._assertClass(signature, Ed25519Signature);
-    const ret = await HaskellShelley.vkeywitnessNew(vkeyPtr, signaturePtr);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessNew(vkeyPtr, signaturePtr);
     return Ptr._wrap(ret, Vkeywitness);
   }
 
   async vkey() {
-    const ret = await HaskellShelley.vkeywitnessVkey(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessVkey(this.ptr);
     return Ptr._wrap(ret, Vkey);
   }
 
   async signature() {
-    const ret = await HaskellShelley.vkeywitnessSignature(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessSignature(this.ptr);
     return Ptr._wrap(ret, Ed25519Signature);
   }
 
@@ -10761,53 +11099,53 @@ export class Vkeywitness extends Ptr {
 
 export class Vkeywitnesses extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.vkeywitnessesToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessesToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.vkeywitnessesFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessesFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Vkeywitnesses);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.vkeywitnessesToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessesToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.vkeywitnessesFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessesFromHex(hex_str);
     return Ptr._wrap(ret, Vkeywitnesses);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.vkeywitnessesToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessesToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.vkeywitnessesFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessesFromJson(json);
     return Ptr._wrap(ret, Vkeywitnesses);
   }
 
   static async new() {
-    const ret = await HaskellShelley.vkeywitnessesNew();
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessesNew();
     return Ptr._wrap(ret, Vkeywitnesses);
   }
 
   async len() {
-    const ret = await HaskellShelley.vkeywitnessesLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessesLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.vkeywitnessesGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessesGet(this.ptr, index);
     return Ptr._wrap(ret, Vkeywitness);
   }
 
-  add(elem) {
+  async add(elem) {
     const elemPtr = Ptr._assertClass(elem, Vkeywitness);
-    const ret = HaskellShelley.vkeywitnessesAdd(this.ptr, elemPtr);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessesAdd(this.ptr, elemPtr);
     return ret;
   }
 
@@ -10816,54 +11154,54 @@ export class Vkeywitnesses extends Ptr {
 
 export class VoteDelegation extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.voteDelegationToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voteDelegationToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.voteDelegationFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_voteDelegationFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, VoteDelegation);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.voteDelegationToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voteDelegationToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.voteDelegationFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_voteDelegationFromHex(hex_str);
     return Ptr._wrap(ret, VoteDelegation);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.voteDelegationToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voteDelegationToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.voteDelegationFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_voteDelegationFromJson(json);
     return Ptr._wrap(ret, VoteDelegation);
   }
 
   async stake_credential() {
-    const ret = await HaskellShelley.voteDelegationStakeCredential(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voteDelegationStakeCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async drep() {
-    const ret = await HaskellShelley.voteDelegationDrep(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voteDelegationDrep(this.ptr);
     return Ptr._wrap(ret, DRep);
   }
 
   static async new(stake_credential, drep) {
     const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
     const drepPtr = Ptr._assertClass(drep, DRep);
-    const ret = await HaskellShelley.voteDelegationNew(stake_credentialPtr, drepPtr);
+    const ret = await HaskellShelley.csl_bridge_voteDelegationNew(stake_credentialPtr, drepPtr);
     return Ptr._wrap(ret, VoteDelegation);
   }
 
   async has_script_credentials() {
-    const ret = await HaskellShelley.voteDelegationHasScriptCredentials(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voteDelegationHasScriptCredentials(this.ptr);
     return ret;
   }
 
@@ -10872,47 +11210,47 @@ export class VoteDelegation extends Ptr {
 
 export class VoteRegistrationAndDelegation extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.voteRegistrationAndDelegationToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voteRegistrationAndDelegationToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.voteRegistrationAndDelegationFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_voteRegistrationAndDelegationFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, VoteRegistrationAndDelegation);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.voteRegistrationAndDelegationToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voteRegistrationAndDelegationToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.voteRegistrationAndDelegationFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_voteRegistrationAndDelegationFromHex(hex_str);
     return Ptr._wrap(ret, VoteRegistrationAndDelegation);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.voteRegistrationAndDelegationToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voteRegistrationAndDelegationToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.voteRegistrationAndDelegationFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_voteRegistrationAndDelegationFromJson(json);
     return Ptr._wrap(ret, VoteRegistrationAndDelegation);
   }
 
   async stake_credential() {
-    const ret = await HaskellShelley.voteRegistrationAndDelegationStakeCredential(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voteRegistrationAndDelegationStakeCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
   async drep() {
-    const ret = await HaskellShelley.voteRegistrationAndDelegationDrep(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voteRegistrationAndDelegationDrep(this.ptr);
     return Ptr._wrap(ret, DRep);
   }
 
   async coin() {
-    const ret = await HaskellShelley.voteRegistrationAndDelegationCoin(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voteRegistrationAndDelegationCoin(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
@@ -10920,12 +11258,12 @@ export class VoteRegistrationAndDelegation extends Ptr {
     const stake_credentialPtr = Ptr._assertClass(stake_credential, Credential);
     const drepPtr = Ptr._assertClass(drep, DRep);
     const coinPtr = Ptr._assertClass(coin, BigNum);
-    const ret = await HaskellShelley.voteRegistrationAndDelegationNew(stake_credentialPtr, drepPtr, coinPtr);
+    const ret = await HaskellShelley.csl_bridge_voteRegistrationAndDelegationNew(stake_credentialPtr, drepPtr, coinPtr);
     return Ptr._wrap(ret, VoteRegistrationAndDelegation);
   }
 
   async has_script_credentials() {
-    const ret = await HaskellShelley.voteRegistrationAndDelegationHasScriptCredentials(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voteRegistrationAndDelegationHasScriptCredentials(this.ptr);
     return ret;
   }
 
@@ -10934,80 +11272,80 @@ export class VoteRegistrationAndDelegation extends Ptr {
 
 export class Voter extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.voterToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voterToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.voterFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_voterFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Voter);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.voterToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voterToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.voterFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_voterFromHex(hex_str);
     return Ptr._wrap(ret, Voter);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.voterToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voterToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.voterFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_voterFromJson(json);
     return Ptr._wrap(ret, Voter);
   }
 
-  static async new_constitutional_committee_hot_key(cred) {
+  static async new_constitutional_committee_hot_credential(cred) {
     const credPtr = Ptr._assertClass(cred, Credential);
-    const ret = await HaskellShelley.voterNewConstitutionalCommitteeHotKey(credPtr);
+    const ret = await HaskellShelley.csl_bridge_voterNewConstitutionalCommitteeHotCredential(credPtr);
     return Ptr._wrap(ret, Voter);
   }
 
-  static async new_drep(cred) {
+  static async new_drep_credential(cred) {
     const credPtr = Ptr._assertClass(cred, Credential);
-    const ret = await HaskellShelley.voterNewDrep(credPtr);
+    const ret = await HaskellShelley.csl_bridge_voterNewDrepCredential(credPtr);
     return Ptr._wrap(ret, Voter);
   }
 
-  static async new_staking_pool(key_hash) {
+  static async new_stake_pool_key_hash(key_hash) {
     const key_hashPtr = Ptr._assertClass(key_hash, Ed25519KeyHash);
-    const ret = await HaskellShelley.voterNewStakingPool(key_hashPtr);
+    const ret = await HaskellShelley.csl_bridge_voterNewStakePoolKeyHash(key_hashPtr);
     return Ptr._wrap(ret, Voter);
   }
 
   async kind() {
-    const ret = await HaskellShelley.voterKind(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voterKind(this.ptr);
     return ret;
   }
 
-  async to_constitutional_committee_hot_cred() {
-    const ret = await HaskellShelley.voterToConstitutionalCommitteeHotCred(this.ptr);
+  async to_constitutional_committee_hot_credential() {
+    const ret = await HaskellShelley.csl_bridge_voterToConstitutionalCommitteeHotCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
-  async to_drep_cred() {
-    const ret = await HaskellShelley.voterToDrepCred(this.ptr);
+  async to_drep_credential() {
+    const ret = await HaskellShelley.csl_bridge_voterToDrepCredential(this.ptr);
     return Ptr._wrap(ret, Credential);
   }
 
-  async to_staking_pool_key_hash() {
-    const ret = await HaskellShelley.voterToStakingPoolKeyHash(this.ptr);
+  async to_stake_pool_key_hash() {
+    const ret = await HaskellShelley.csl_bridge_voterToStakePoolKeyHash(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
   async has_script_credentials() {
-    const ret = await HaskellShelley.voterHasScriptCredentials(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voterHasScriptCredentials(this.ptr);
     return ret;
   }
 
   async to_key_hash() {
-    const ret = await HaskellShelley.voterToKeyHash(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_voterToKeyHash(this.ptr);
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
@@ -11016,33 +11354,33 @@ export class Voter extends Ptr {
 
 export class Voters extends Ptr {
   async to_json() {
-    const ret = await HaskellShelley.votersToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votersToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.votersFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_votersFromJson(json);
     return Ptr._wrap(ret, Voters);
   }
 
   static async new() {
-    const ret = await HaskellShelley.votersNew();
+    const ret = await HaskellShelley.csl_bridge_votersNew();
     return Ptr._wrap(ret, Voters);
   }
 
   add(voter) {
     const voterPtr = Ptr._assertClass(voter, Voter);
-    const ret = HaskellShelley.votersAdd(this.ptr, voterPtr);
+    const ret = HaskellShelley.csl_bridge_votersAdd(this.ptr, voterPtr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.votersGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_votersGet(this.ptr, index);
     return Ptr._wrap(ret, Voter);
   }
 
   async len() {
-    const ret = await HaskellShelley.votersLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votersLen(this.ptr);
     return ret;
   }
 
@@ -11051,7 +11389,7 @@ export class Voters extends Ptr {
 
 export class VotingBuilder extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.votingBuilderNew();
+    const ret = await HaskellShelley.csl_bridge_votingBuilderNew();
     return Ptr._wrap(ret, VotingBuilder);
   }
 
@@ -11059,7 +11397,7 @@ export class VotingBuilder extends Ptr {
     const voterPtr = Ptr._assertClass(voter, Voter);
     const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
     const voting_procedurePtr = Ptr._assertClass(voting_procedure, VotingProcedure);
-    const ret = HaskellShelley.votingBuilderAdd(this.ptr, voterPtr, gov_action_idPtr, voting_procedurePtr);
+    const ret = HaskellShelley.csl_bridge_votingBuilderAdd(this.ptr, voterPtr, gov_action_idPtr, voting_procedurePtr);
     return ret;
   }
 
@@ -11068,7 +11406,7 @@ export class VotingBuilder extends Ptr {
     const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
     const voting_procedurePtr = Ptr._assertClass(voting_procedure, VotingProcedure);
     const witnessPtr = Ptr._assertClass(witness, PlutusWitness);
-    const ret = HaskellShelley.votingBuilderAddWithPlutusWitness(this.ptr, voterPtr, gov_action_idPtr, voting_procedurePtr, witnessPtr);
+    const ret = HaskellShelley.csl_bridge_votingBuilderAddWithPlutusWitness(this.ptr, voterPtr, gov_action_idPtr, voting_procedurePtr, witnessPtr);
     return ret;
   }
 
@@ -11077,32 +11415,32 @@ export class VotingBuilder extends Ptr {
     const gov_action_idPtr = Ptr._assertClass(gov_action_id, GovernanceActionId);
     const voting_procedurePtr = Ptr._assertClass(voting_procedure, VotingProcedure);
     const native_script_sourcePtr = Ptr._assertClass(native_script_source, NativeScriptSource);
-    const ret = HaskellShelley.votingBuilderAddWithNativeScript(this.ptr, voterPtr, gov_action_idPtr, voting_procedurePtr, native_script_sourcePtr);
+    const ret = HaskellShelley.csl_bridge_votingBuilderAddWithNativeScript(this.ptr, voterPtr, gov_action_idPtr, voting_procedurePtr, native_script_sourcePtr);
     return ret;
   }
 
   async get_plutus_witnesses() {
-    const ret = await HaskellShelley.votingBuilderGetPlutusWitnesses(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingBuilderGetPlutusWitnesses(this.ptr);
     return Ptr._wrap(ret, PlutusWitnesses);
   }
 
   async get_ref_inputs() {
-    const ret = await HaskellShelley.votingBuilderGetRefInputs(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingBuilderGetRefInputs(this.ptr);
     return Ptr._wrap(ret, TransactionInputs);
   }
 
   async get_native_scripts() {
-    const ret = await HaskellShelley.votingBuilderGetNativeScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingBuilderGetNativeScripts(this.ptr);
     return Ptr._wrap(ret, NativeScripts);
   }
 
   async has_plutus_scripts() {
-    const ret = await HaskellShelley.votingBuilderHasPlutusScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingBuilderHasPlutusScripts(this.ptr);
     return ret;
   }
 
   async build() {
-    const ret = await HaskellShelley.votingBuilderBuild(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingBuilderBuild(this.ptr);
     return Ptr._wrap(ret, VotingProcedures);
   }
 
@@ -11111,53 +11449,53 @@ export class VotingBuilder extends Ptr {
 
 export class VotingProcedure extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.votingProcedureToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProcedureToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.votingProcedureFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_votingProcedureFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, VotingProcedure);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.votingProcedureToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProcedureToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.votingProcedureFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_votingProcedureFromHex(hex_str);
     return Ptr._wrap(ret, VotingProcedure);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.votingProcedureToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProcedureToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.votingProcedureFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_votingProcedureFromJson(json);
     return Ptr._wrap(ret, VotingProcedure);
   }
 
   static async new(vote) {
-    const ret = await HaskellShelley.votingProcedureNew(vote);
+    const ret = await HaskellShelley.csl_bridge_votingProcedureNew(vote);
     return Ptr._wrap(ret, VotingProcedure);
   }
 
   static async new_with_anchor(vote, anchor) {
     const anchorPtr = Ptr._assertClass(anchor, Anchor);
-    const ret = await HaskellShelley.votingProcedureNewWithAnchor(vote, anchorPtr);
+    const ret = await HaskellShelley.csl_bridge_votingProcedureNewWithAnchor(vote, anchorPtr);
     return Ptr._wrap(ret, VotingProcedure);
   }
 
   async vote_kind() {
-    const ret = await HaskellShelley.votingProcedureVoteKind(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProcedureVoteKind(this.ptr);
     return ret;
   }
 
   async anchor() {
-    const ret = await HaskellShelley.votingProcedureAnchor(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProcedureAnchor(this.ptr);
     return Ptr._wrap(ret, Anchor);
   }
 
@@ -11166,37 +11504,37 @@ export class VotingProcedure extends Ptr {
 
 export class VotingProcedures extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.votingProceduresToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProceduresToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.votingProceduresFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_votingProceduresFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, VotingProcedures);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.votingProceduresToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProceduresToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.votingProceduresFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_votingProceduresFromHex(hex_str);
     return Ptr._wrap(ret, VotingProcedures);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.votingProceduresToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProceduresToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.votingProceduresFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_votingProceduresFromJson(json);
     return Ptr._wrap(ret, VotingProcedures);
   }
 
   static async new() {
-    const ret = await HaskellShelley.votingProceduresNew();
+    const ret = await HaskellShelley.csl_bridge_votingProceduresNew();
     return Ptr._wrap(ret, VotingProcedures);
   }
 
@@ -11204,25 +11542,25 @@ export class VotingProcedures extends Ptr {
     const voterPtr = Ptr._assertClass(voter, Voter);
     const governance_action_idPtr = Ptr._assertClass(governance_action_id, GovernanceActionId);
     const voting_procedurePtr = Ptr._assertClass(voting_procedure, VotingProcedure);
-    const ret = HaskellShelley.votingProceduresInsert(this.ptr, voterPtr, governance_action_idPtr, voting_procedurePtr);
+    const ret = HaskellShelley.csl_bridge_votingProceduresInsert(this.ptr, voterPtr, governance_action_idPtr, voting_procedurePtr);
     return ret;
   }
 
   async get(voter, governance_action_id) {
     const voterPtr = Ptr._assertClass(voter, Voter);
     const governance_action_idPtr = Ptr._assertClass(governance_action_id, GovernanceActionId);
-    const ret = await HaskellShelley.votingProceduresGet(this.ptr, voterPtr, governance_action_idPtr);
+    const ret = await HaskellShelley.csl_bridge_votingProceduresGet(this.ptr, voterPtr, governance_action_idPtr);
     return Ptr._wrap(ret, VotingProcedure);
   }
 
   async get_voters() {
-    const ret = await HaskellShelley.votingProceduresGetVoters(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProceduresGetVoters(this.ptr);
     return Ptr._wrap(ret, Voters);
   }
 
   async get_governance_action_ids_by_voter(voter) {
     const voterPtr = Ptr._assertClass(voter, Voter);
-    const ret = await HaskellShelley.votingProceduresGetGovernanceActionIdsByVoter(this.ptr, voterPtr);
+    const ret = await HaskellShelley.csl_bridge_votingProceduresGetGovernanceActionIdsByVoter(this.ptr, voterPtr);
     return Ptr._wrap(ret, GovernanceActionIds);
   }
 
@@ -11231,52 +11569,52 @@ export class VotingProcedures extends Ptr {
 
 export class VotingProposal extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.votingProposalToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.votingProposalFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_votingProposalFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, VotingProposal);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.votingProposalToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.votingProposalFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_votingProposalFromHex(hex_str);
     return Ptr._wrap(ret, VotingProposal);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.votingProposalToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.votingProposalFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_votingProposalFromJson(json);
     return Ptr._wrap(ret, VotingProposal);
   }
 
   async governance_action() {
-    const ret = await HaskellShelley.votingProposalGovernanceAction(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalGovernanceAction(this.ptr);
     return Ptr._wrap(ret, GovernanceAction);
   }
 
   async anchor() {
-    const ret = await HaskellShelley.votingProposalAnchor(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalAnchor(this.ptr);
     return Ptr._wrap(ret, Anchor);
   }
 
   async reward_account() {
-    const ret = await HaskellShelley.votingProposalRewardAccount(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalRewardAccount(this.ptr);
     return Ptr._wrap(ret, RewardAddress);
   }
 
   async deposit() {
-    const ret = await HaskellShelley.votingProposalDeposit(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalDeposit(this.ptr);
     return Ptr._wrap(ret, BigNum);
   }
 
@@ -11285,7 +11623,7 @@ export class VotingProposal extends Ptr {
     const anchorPtr = Ptr._assertClass(anchor, Anchor);
     const reward_accountPtr = Ptr._assertClass(reward_account, RewardAddress);
     const depositPtr = Ptr._assertClass(deposit, BigNum);
-    const ret = await HaskellShelley.votingProposalNew(governance_actionPtr, anchorPtr, reward_accountPtr, depositPtr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalNew(governance_actionPtr, anchorPtr, reward_accountPtr, depositPtr);
     return Ptr._wrap(ret, VotingProposal);
   }
 
@@ -11294,40 +11632,40 @@ export class VotingProposal extends Ptr {
 
 export class VotingProposalBuilder extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.votingProposalBuilderNew();
+    const ret = await HaskellShelley.csl_bridge_votingProposalBuilderNew();
     return Ptr._wrap(ret, VotingProposalBuilder);
   }
 
   add(proposal) {
     const proposalPtr = Ptr._assertClass(proposal, VotingProposal);
-    const ret = HaskellShelley.votingProposalBuilderAdd(this.ptr, proposalPtr);
+    const ret = HaskellShelley.csl_bridge_votingProposalBuilderAdd(this.ptr, proposalPtr);
     return ret;
   }
 
   add_with_plutus_witness(proposal, witness) {
     const proposalPtr = Ptr._assertClass(proposal, VotingProposal);
     const witnessPtr = Ptr._assertClass(witness, PlutusWitness);
-    const ret = HaskellShelley.votingProposalBuilderAddWithPlutusWitness(this.ptr, proposalPtr, witnessPtr);
+    const ret = HaskellShelley.csl_bridge_votingProposalBuilderAddWithPlutusWitness(this.ptr, proposalPtr, witnessPtr);
     return ret;
   }
 
   async get_plutus_witnesses() {
-    const ret = await HaskellShelley.votingProposalBuilderGetPlutusWitnesses(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalBuilderGetPlutusWitnesses(this.ptr);
     return Ptr._wrap(ret, PlutusWitnesses);
   }
 
   async get_ref_inputs() {
-    const ret = await HaskellShelley.votingProposalBuilderGetRefInputs(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalBuilderGetRefInputs(this.ptr);
     return Ptr._wrap(ret, TransactionInputs);
   }
 
   async has_plutus_scripts() {
-    const ret = await HaskellShelley.votingProposalBuilderHasPlutusScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalBuilderHasPlutusScripts(this.ptr);
     return ret;
   }
 
   async build() {
-    const ret = await HaskellShelley.votingProposalBuilderBuild(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalBuilderBuild(this.ptr);
     return Ptr._wrap(ret, VotingProposals);
   }
 
@@ -11336,53 +11674,53 @@ export class VotingProposalBuilder extends Ptr {
 
 export class VotingProposals extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.votingProposalsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.votingProposalsFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_votingProposalsFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, VotingProposals);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.votingProposalsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.votingProposalsFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_votingProposalsFromHex(hex_str);
     return Ptr._wrap(ret, VotingProposals);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.votingProposalsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.votingProposalsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_votingProposalsFromJson(json);
     return Ptr._wrap(ret, VotingProposals);
   }
 
   static async new() {
-    const ret = await HaskellShelley.votingProposalsNew();
+    const ret = await HaskellShelley.csl_bridge_votingProposalsNew();
     return Ptr._wrap(ret, VotingProposals);
   }
 
   async len() {
-    const ret = await HaskellShelley.votingProposalsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalsLen(this.ptr);
     return ret;
   }
 
   async get(index) {
-    const ret = await HaskellShelley.votingProposalsGet(this.ptr, index);
+    const ret = await HaskellShelley.csl_bridge_votingProposalsGet(this.ptr, index);
     return Ptr._wrap(ret, VotingProposal);
   }
 
-  add(proposal) {
+  async add(proposal) {
     const proposalPtr = Ptr._assertClass(proposal, VotingProposal);
-    const ret = HaskellShelley.votingProposalsAdd(this.ptr, proposalPtr);
+    const ret = await HaskellShelley.csl_bridge_votingProposalsAdd(this.ptr, proposalPtr);
     return ret;
   }
 
@@ -11391,60 +11729,60 @@ export class VotingProposals extends Ptr {
 
 export class Withdrawals extends Ptr {
   async to_bytes() {
-    const ret = await HaskellShelley.withdrawalsToBytes(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_withdrawalsToBytes(this.ptr);
     return uint8ArrayFromB64(ret);
   }
 
   static async from_bytes(bytes) {
-    const ret = await HaskellShelley.withdrawalsFromBytes(b64FromUint8Array(bytes));
+    const ret = await HaskellShelley.csl_bridge_withdrawalsFromBytes(b64FromUint8Array(bytes));
     return Ptr._wrap(ret, Withdrawals);
   }
 
   async to_hex() {
-    const ret = await HaskellShelley.withdrawalsToHex(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_withdrawalsToHex(this.ptr);
     return ret;
   }
 
   static async from_hex(hex_str) {
-    const ret = await HaskellShelley.withdrawalsFromHex(hex_str);
+    const ret = await HaskellShelley.csl_bridge_withdrawalsFromHex(hex_str);
     return Ptr._wrap(ret, Withdrawals);
   }
 
   async to_json() {
-    const ret = await HaskellShelley.withdrawalsToJson(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_withdrawalsToJson(this.ptr);
     return ret;
   }
 
   static async from_json(json) {
-    const ret = await HaskellShelley.withdrawalsFromJson(json);
+    const ret = await HaskellShelley.csl_bridge_withdrawalsFromJson(json);
     return Ptr._wrap(ret, Withdrawals);
   }
 
   static async new() {
-    const ret = await HaskellShelley.withdrawalsNew();
+    const ret = await HaskellShelley.csl_bridge_withdrawalsNew();
     return Ptr._wrap(ret, Withdrawals);
   }
 
   async len() {
-    const ret = await HaskellShelley.withdrawalsLen(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_withdrawalsLen(this.ptr);
     return ret;
   }
 
   async insert(key, value) {
     const keyPtr = Ptr._assertClass(key, RewardAddress);
     const valuePtr = Ptr._assertClass(value, BigNum);
-    const ret = await HaskellShelley.withdrawalsInsert(this.ptr, keyPtr, valuePtr);
+    const ret = await HaskellShelley.csl_bridge_withdrawalsInsert(this.ptr, keyPtr, valuePtr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async get(key) {
     const keyPtr = Ptr._assertClass(key, RewardAddress);
-    const ret = await HaskellShelley.withdrawalsGet(this.ptr, keyPtr);
+    const ret = await HaskellShelley.csl_bridge_withdrawalsGet(this.ptr, keyPtr);
     return Ptr._wrap(ret, BigNum);
   }
 
   async keys() {
-    const ret = await HaskellShelley.withdrawalsKeys(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_withdrawalsKeys(this.ptr);
     return Ptr._wrap(ret, RewardAddresses);
   }
 
@@ -11453,14 +11791,14 @@ export class Withdrawals extends Ptr {
 
 export class WithdrawalsBuilder extends Ptr {
   static async new() {
-    const ret = await HaskellShelley.withdrawalsBuilderNew();
+    const ret = await HaskellShelley.csl_bridge_withdrawalsBuilderNew();
     return Ptr._wrap(ret, WithdrawalsBuilder);
   }
 
   add(address, coin) {
     const addressPtr = Ptr._assertClass(address, RewardAddress);
     const coinPtr = Ptr._assertClass(coin, BigNum);
-    const ret = HaskellShelley.withdrawalsBuilderAdd(this.ptr, addressPtr, coinPtr);
+    const ret = HaskellShelley.csl_bridge_withdrawalsBuilderAdd(this.ptr, addressPtr, coinPtr);
     return ret;
   }
 
@@ -11468,7 +11806,7 @@ export class WithdrawalsBuilder extends Ptr {
     const addressPtr = Ptr._assertClass(address, RewardAddress);
     const coinPtr = Ptr._assertClass(coin, BigNum);
     const witnessPtr = Ptr._assertClass(witness, PlutusWitness);
-    const ret = HaskellShelley.withdrawalsBuilderAddWithPlutusWitness(this.ptr, addressPtr, coinPtr, witnessPtr);
+    const ret = HaskellShelley.csl_bridge_withdrawalsBuilderAddWithPlutusWitness(this.ptr, addressPtr, coinPtr, witnessPtr);
     return ret;
   }
 
@@ -11476,37 +11814,37 @@ export class WithdrawalsBuilder extends Ptr {
     const addressPtr = Ptr._assertClass(address, RewardAddress);
     const coinPtr = Ptr._assertClass(coin, BigNum);
     const native_script_sourcePtr = Ptr._assertClass(native_script_source, NativeScriptSource);
-    const ret = HaskellShelley.withdrawalsBuilderAddWithNativeScript(this.ptr, addressPtr, coinPtr, native_script_sourcePtr);
+    const ret = HaskellShelley.csl_bridge_withdrawalsBuilderAddWithNativeScript(this.ptr, addressPtr, coinPtr, native_script_sourcePtr);
     return ret;
   }
 
   async get_plutus_witnesses() {
-    const ret = await HaskellShelley.withdrawalsBuilderGetPlutusWitnesses(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_withdrawalsBuilderGetPlutusWitnesses(this.ptr);
     return Ptr._wrap(ret, PlutusWitnesses);
   }
 
   async get_ref_inputs() {
-    const ret = await HaskellShelley.withdrawalsBuilderGetRefInputs(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_withdrawalsBuilderGetRefInputs(this.ptr);
     return Ptr._wrap(ret, TransactionInputs);
   }
 
   async get_native_scripts() {
-    const ret = await HaskellShelley.withdrawalsBuilderGetNativeScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_withdrawalsBuilderGetNativeScripts(this.ptr);
     return Ptr._wrap(ret, NativeScripts);
   }
 
   async get_total_withdrawals() {
-    const ret = await HaskellShelley.withdrawalsBuilderGetTotalWithdrawals(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_withdrawalsBuilderGetTotalWithdrawals(this.ptr);
     return Ptr._wrap(ret, Value);
   }
 
   async has_plutus_scripts() {
-    const ret = await HaskellShelley.withdrawalsBuilderHasPlutusScripts(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_withdrawalsBuilderHasPlutusScripts(this.ptr);
     return ret;
   }
 
   async build() {
-    const ret = await HaskellShelley.withdrawalsBuilderBuild(this.ptr);
+    const ret = await HaskellShelley.csl_bridge_withdrawalsBuilderBuild(this.ptr);
     return Ptr._wrap(ret, Withdrawals);
   }
 
@@ -11516,7 +11854,7 @@ export class WithdrawalsBuilder extends Ptr {
 export const calculate_ex_units_ceil_cost = async (ex_units, ex_unit_prices) => {
   const ex_unitsPtr = Ptr._assertClass(ex_units, ExUnits);
   const ex_unit_pricesPtr = Ptr._assertClass(ex_unit_prices, ExUnitPrices);
-  const ret = await HaskellShelley.calculateExUnitsCeilCost(ex_unitsPtr, ex_unit_pricesPtr);
+  const ret = await HaskellShelley.csl_bridge_calculateExUnitsCeilCost(ex_unitsPtr, ex_unit_pricesPtr);
   return Ptr._wrap(ret, BigNum);
 };
 
@@ -11525,64 +11863,64 @@ export const create_send_all = async (address, utxos, config) => {
   const addressPtr = Ptr._assertClass(address, Address);
   const utxosPtr = Ptr._assertClass(utxos, TransactionUnspentOutputs);
   const configPtr = Ptr._assertClass(config, TransactionBuilderConfig);
-  const ret = await HaskellShelley.createSendAll(addressPtr, utxosPtr, configPtr);
+  const ret = await HaskellShelley.csl_bridge_createSendAll(addressPtr, utxosPtr, configPtr);
   return Ptr._wrap(ret, TransactionBatchList);
 };
 
 
 export const decode_arbitrary_bytes_from_metadatum = async (metadata) => {
   const metadataPtr = Ptr._assertClass(metadata, TransactionMetadatum);
-  const ret = await HaskellShelley.decodeArbitraryBytesFromMetadatum(metadataPtr);
+  const ret = await HaskellShelley.csl_bridge_decodeArbitraryBytesFromMetadatum(metadataPtr);
   return uint8ArrayFromB64(ret);
 };
 
 
 export const decode_metadatum_to_json_str = async (metadatum, schema) => {
   const metadatumPtr = Ptr._assertClass(metadatum, TransactionMetadatum);
-  const ret = await HaskellShelley.decodeMetadatumToJsonStr(metadatumPtr, schema);
+  const ret = await HaskellShelley.csl_bridge_decodeMetadatumToJsonStr(metadatumPtr, schema);
   return ret;
 };
 
 
 export const decode_plutus_datum_to_json_str = async (datum, schema) => {
   const datumPtr = Ptr._assertClass(datum, PlutusData);
-  const ret = await HaskellShelley.decodePlutusDatumToJsonStr(datumPtr, schema);
+  const ret = await HaskellShelley.csl_bridge_decodePlutusDatumToJsonStr(datumPtr, schema);
   return ret;
 };
 
 
 export const decrypt_with_password = async (password, data) => {
-  const ret = await HaskellShelley.decryptWithPassword(password, data);
+  const ret = await HaskellShelley.csl_bridge_decryptWithPassword(password, data);
   return ret;
 };
 
 
 export const encode_arbitrary_bytes_as_metadatum = async (bytes) => {
-  const ret = await HaskellShelley.encodeArbitraryBytesAsMetadatum(b64FromUint8Array(bytes));
+  const ret = await HaskellShelley.csl_bridge_encodeArbitraryBytesAsMetadatum(b64FromUint8Array(bytes));
   return Ptr._wrap(ret, TransactionMetadatum);
 };
 
 
 export const encode_json_str_to_metadatum = async (json, schema) => {
-  const ret = await HaskellShelley.encodeJsonStrToMetadatum(json, schema);
+  const ret = await HaskellShelley.csl_bridge_encodeJsonStrToMetadatum(json, schema);
   return Ptr._wrap(ret, TransactionMetadatum);
 };
 
 
 export const encode_json_str_to_native_script = async (json, self_xpub, schema) => {
-  const ret = await HaskellShelley.encodeJsonStrToNativeScript(json, self_xpub, schema);
+  const ret = await HaskellShelley.csl_bridge_encodeJsonStrToNativeScript(json, self_xpub, schema);
   return Ptr._wrap(ret, NativeScript);
 };
 
 
 export const encode_json_str_to_plutus_datum = async (json, schema) => {
-  const ret = await HaskellShelley.encodeJsonStrToPlutusDatum(json, schema);
+  const ret = await HaskellShelley.csl_bridge_encodeJsonStrToPlutusDatum(json, schema);
   return Ptr._wrap(ret, PlutusData);
 };
 
 
 export const encrypt_with_password = async (password, salt, nonce, data) => {
-  const ret = await HaskellShelley.encryptWithPassword(password, salt, nonce, data);
+  const ret = await HaskellShelley.csl_bridge_encryptWithPassword(password, salt, nonce, data);
   return ret;
 };
 
@@ -11591,7 +11929,7 @@ export const get_deposit = async (txbody, pool_deposit, key_deposit) => {
   const txbodyPtr = Ptr._assertClass(txbody, TransactionBody);
   const pool_depositPtr = Ptr._assertClass(pool_deposit, BigNum);
   const key_depositPtr = Ptr._assertClass(key_deposit, BigNum);
-  const ret = await HaskellShelley.getDeposit(txbodyPtr, pool_depositPtr, key_depositPtr);
+  const ret = await HaskellShelley.csl_bridge_getDeposit(txbodyPtr, pool_depositPtr, key_depositPtr);
   return Ptr._wrap(ret, BigNum);
 };
 
@@ -11600,21 +11938,21 @@ export const get_implicit_input = async (txbody, pool_deposit, key_deposit) => {
   const txbodyPtr = Ptr._assertClass(txbody, TransactionBody);
   const pool_depositPtr = Ptr._assertClass(pool_deposit, BigNum);
   const key_depositPtr = Ptr._assertClass(key_deposit, BigNum);
-  const ret = await HaskellShelley.getImplicitInput(txbodyPtr, pool_depositPtr, key_depositPtr);
+  const ret = await HaskellShelley.csl_bridge_getImplicitInput(txbodyPtr, pool_depositPtr, key_depositPtr);
   return Ptr._wrap(ret, Value);
 };
 
 
 export const hash_auxiliary_data = async (auxiliary_data) => {
   const auxiliary_dataPtr = Ptr._assertClass(auxiliary_data, AuxiliaryData);
-  const ret = await HaskellShelley.hashAuxiliaryData(auxiliary_dataPtr);
+  const ret = await HaskellShelley.csl_bridge_hashAuxiliaryData(auxiliary_dataPtr);
   return Ptr._wrap(ret, AuxiliaryDataHash);
 };
 
 
 export const hash_plutus_data = async (plutus_data) => {
   const plutus_dataPtr = Ptr._assertClass(plutus_data, PlutusData);
-  const ret = await HaskellShelley.hashPlutusData(plutus_dataPtr);
+  const ret = await HaskellShelley.csl_bridge_hashPlutusData(plutus_dataPtr);
   return Ptr._wrap(ret, DataHash);
 };
 
@@ -11624,11 +11962,11 @@ export const hash_script_data = async (redeemers, cost_models, datums) => {
   const cost_modelsPtr = Ptr._assertClass(cost_models, Costmdls);
   const datumsPtr = Ptr._assertOptionalClass(datums, PlutusList);
   if(datums == null) {
-    const ret = await HaskellShelley.hashScriptData(redeemersPtr, cost_modelsPtr);
+    const ret = await HaskellShelley.csl_bridge_hashScriptData(redeemersPtr, cost_modelsPtr);
     return Ptr._wrap(ret, ScriptDataHash);
   }
   if(datums != null) {
-    const ret = await HaskellShelley.hashScriptDataWithDatums(redeemersPtr, cost_modelsPtr, datumsPtr);
+    const ret = await HaskellShelley.csl_bridge_hashScriptDataWithDatums(redeemersPtr, cost_modelsPtr, datumsPtr);
     return Ptr._wrap(ret, ScriptDataHash);
   }
 };
@@ -11636,7 +11974,7 @@ export const hash_script_data = async (redeemers, cost_models, datums) => {
 
 export const hash_transaction = async (tx_body) => {
   const tx_bodyPtr = Ptr._assertClass(tx_body, TransactionBody);
-  const ret = await HaskellShelley.hashTransaction(tx_bodyPtr);
+  const ret = await HaskellShelley.csl_bridge_hashTransaction(tx_bodyPtr);
   return Ptr._wrap(ret, TransactionHash);
 };
 
@@ -11645,7 +11983,7 @@ export const make_daedalus_bootstrap_witness = async (tx_body_hash, addr, key) =
   const tx_body_hashPtr = Ptr._assertClass(tx_body_hash, TransactionHash);
   const addrPtr = Ptr._assertClass(addr, ByronAddress);
   const keyPtr = Ptr._assertClass(key, LegacyDaedalusPrivateKey);
-  const ret = await HaskellShelley.makeDaedalusBootstrapWitness(tx_body_hashPtr, addrPtr, keyPtr);
+  const ret = await HaskellShelley.csl_bridge_makeDaedalusBootstrapWitness(tx_body_hashPtr, addrPtr, keyPtr);
   return Ptr._wrap(ret, BootstrapWitness);
 };
 
@@ -11654,7 +11992,7 @@ export const make_icarus_bootstrap_witness = async (tx_body_hash, addr, key) => 
   const tx_body_hashPtr = Ptr._assertClass(tx_body_hash, TransactionHash);
   const addrPtr = Ptr._assertClass(addr, ByronAddress);
   const keyPtr = Ptr._assertClass(key, Bip32PrivateKey);
-  const ret = await HaskellShelley.makeIcarusBootstrapWitness(tx_body_hashPtr, addrPtr, keyPtr);
+  const ret = await HaskellShelley.csl_bridge_makeIcarusBootstrapWitness(tx_body_hashPtr, addrPtr, keyPtr);
   return Ptr._wrap(ret, BootstrapWitness);
 };
 
@@ -11662,7 +12000,7 @@ export const make_icarus_bootstrap_witness = async (tx_body_hash, addr, key) => 
 export const make_vkey_witness = async (tx_body_hash, sk) => {
   const tx_body_hashPtr = Ptr._assertClass(tx_body_hash, TransactionHash);
   const skPtr = Ptr._assertClass(sk, PrivateKey);
-  const ret = await HaskellShelley.makeVkeyWitness(tx_body_hashPtr, skPtr);
+  const ret = await HaskellShelley.csl_bridge_makeVkeyWitness(tx_body_hashPtr, skPtr);
   return Ptr._wrap(ret, Vkeywitness);
 };
 
@@ -11670,7 +12008,7 @@ export const make_vkey_witness = async (tx_body_hash, sk) => {
 export const min_ada_for_output = async (output, data_cost) => {
   const outputPtr = Ptr._assertClass(output, TransactionOutput);
   const data_costPtr = Ptr._assertClass(data_cost, DataCost);
-  const ret = await HaskellShelley.minAdaForOutput(outputPtr, data_costPtr);
+  const ret = await HaskellShelley.csl_bridge_minAdaForOutput(outputPtr, data_costPtr);
   return Ptr._wrap(ret, BigNum);
 };
 
@@ -11678,14 +12016,14 @@ export const min_ada_for_output = async (output, data_cost) => {
 export const min_fee = async (tx, linear_fee) => {
   const txPtr = Ptr._assertClass(tx, Transaction);
   const linear_feePtr = Ptr._assertClass(linear_fee, LinearFee);
-  const ret = await HaskellShelley.minFee(txPtr, linear_feePtr);
+  const ret = await HaskellShelley.csl_bridge_minFee(txPtr, linear_feePtr);
   return Ptr._wrap(ret, BigNum);
 };
 
 
 export const min_ref_script_fee = async (total_ref_scripts_size, ref_script_coins_per_byte) => {
   const ref_script_coins_per_bytePtr = Ptr._assertClass(ref_script_coins_per_byte, UnitInterval);
-  const ret = await HaskellShelley.minRefScriptFee(total_ref_scripts_size, ref_script_coins_per_bytePtr);
+  const ret = await HaskellShelley.csl_bridge_minRefScriptFee(total_ref_scripts_size, ref_script_coins_per_bytePtr);
   return Ptr._wrap(ret, BigNum);
 };
 
@@ -11693,7 +12031,7 @@ export const min_ref_script_fee = async (total_ref_scripts_size, ref_script_coin
 export const min_script_fee = async (tx, ex_unit_prices) => {
   const txPtr = Ptr._assertClass(tx, Transaction);
   const ex_unit_pricesPtr = Ptr._assertClass(ex_unit_prices, ExUnitPrices);
-  const ret = await HaskellShelley.minScriptFee(txPtr, ex_unit_pricesPtr);
+  const ret = await HaskellShelley.csl_bridge_minScriptFee(txPtr, ex_unit_pricesPtr);
   return Ptr._wrap(ret, BigNum);
 };
 
@@ -11705,6 +12043,18 @@ export const AddressKind = Object.freeze({
   Reward: 3,
   Byron: 4,
   Malformed: 5,
+});
+
+
+export const BlockEra = Object.freeze({
+  Byron: 0,
+  Shelley: 1,
+  Allegra: 2,
+  Mary: 3,
+  Alonzo: 4,
+  Babbage: 5,
+  Conway: 6,
+  Unknown: 7,
 });
 
 
@@ -11724,9 +12074,9 @@ export const CertificateKind = Object.freeze({
   MoveInstantaneousRewardsCert: 6,
   CommitteeHotAuth: 7,
   CommitteeColdResign: 8,
-  DrepDeregistration: 9,
-  DrepRegistration: 10,
-  DrepUpdate: 11,
+  DRepDeregistration: 9,
+  DRepRegistration: 10,
+  DRepUpdate: 11,
   StakeAndVoteDelegation: 12,
   StakeRegistrationAndDelegation: 13,
   StakeVoteRegistrationAndDelegation: 14,
