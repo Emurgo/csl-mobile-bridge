@@ -9216,7 +9216,7 @@ pub unsafe extern "C" fn csl_bridge_mint_assets_insert(self_rptr: RPtr, key_rptr
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<MintAssets>()?;
     let key = key_rptr.typed_ref::<AssetName>()?;
-    let value = value_rptr.typed_ref::<Int>()?.clone();
+    let value = value_rptr.typed_ref::<Int>()?;
     let result = self_ref.insert(key, value).into_result()?;
     Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
   })

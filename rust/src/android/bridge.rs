@@ -10738,7 +10738,8 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1min
     let self_rptr = self_jrptr.typed_ref::<MintAssets>()?;
     let key_jrptr = key_ptr.rptr(&env)?;
     let key = key_jrptr.typed_ref::<AssetName>()?;
-    let value = value_ptr.rptr(&env)?.typed_ref::<Int>()?.clone();
+    let value_jrptr = value_ptr.rptr(&env)?;
+    let value = value_jrptr.typed_ref::<Int>()?;
     let result = self_rptr.insert(key, value).into_result()?;
     result.rptr().jptr(&env)
   })
