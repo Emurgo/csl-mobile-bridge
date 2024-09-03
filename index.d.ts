@@ -3195,6 +3195,26 @@ export class FixedTransaction extends Ptr {
   */
   raw_auxiliary_data: () => Promise<Optional<Uint8Array>>;
 
+  /**
+  * @param {PrivateKey} private_key
+  * @returns {Promise<void>}
+  */
+  sign_and_add_vkey_signature: (private_key: PrivateKey) => Promise<void>;
+
+  /**
+  * @param {ByronAddress} addr
+  * @param {Bip32PrivateKey} private_key
+  * @returns {Promise<void>}
+  */
+  sign_and_add_icarus_bootstrap_signature: (addr: ByronAddress, private_key: Bip32PrivateKey) => Promise<void>;
+
+  /**
+  * @param {ByronAddress} addr
+  * @param {LegacyDaedalusPrivateKey} private_key
+  * @returns {Promise<void>}
+  */
+  sign_and_add_daedalus_bootstrap_signature: (addr: ByronAddress, private_key: LegacyDaedalusPrivateKey) => Promise<void>;
+
 }
 
 

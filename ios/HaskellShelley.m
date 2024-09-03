@@ -6076,6 +6076,38 @@ RCT_EXPORT_METHOD(csl_bridge_fixedTransactionRawAuxiliaryData:(nonnull NSString 
     }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(csl_bridge_fixedTransactionSignAndAddVkeySignature:(nonnull NSString *)selfPtr withPrivateKey:(nonnull NSString *)privateKeyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr privateKey = [[params objectAtIndex:1]  rPtr];
+        csl_bridge_fixed_transaction_sign_and_add_vkey_signature(self, privateKey, error);
+        return nil;
+    }] exec:@[selfPtr, privateKeyPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_fixedTransactionSignAndAddIcarusBootstrapSignature:(nonnull NSString *)selfPtr withAddr:(nonnull NSString *)addrPtr withPrivateKey:(nonnull NSString *)privateKeyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr addr = [[params objectAtIndex:1]  rPtr];
+        RPtr privateKey = [[params objectAtIndex:2]  rPtr];
+        csl_bridge_fixed_transaction_sign_and_add_icarus_bootstrap_signature(self, addr, privateKey, error);
+        return nil;
+    }] exec:@[selfPtr, addrPtr, privateKeyPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_fixedTransactionSignAndAddDaedalusBootstrapSignature:(nonnull NSString *)selfPtr withAddr:(nonnull NSString *)addrPtr withPrivateKey:(nonnull NSString *)privateKeyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr addr = [[params objectAtIndex:1]  rPtr];
+        RPtr privateKey = [[params objectAtIndex:2]  rPtr];
+        csl_bridge_fixed_transaction_sign_and_add_daedalus_bootstrap_signature(self, addr, privateKey, error);
+        return nil;
+    }] exec:@[selfPtr, addrPtr, privateKeyPtr] andResolve:resolve orReject:reject];
+}
+
 
 RCT_EXPORT_METHOD(csl_bridge_fixedTransactionBodiesFromBytes:(nonnull NSString *)bytesVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {

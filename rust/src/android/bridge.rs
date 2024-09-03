@@ -7371,6 +7371,55 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fix
 }
 
 
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fixedTransactionSignAndAddVkeySignature(env: JNIEnv, _: JObject, self_ptr: JRPtr, private_key_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<FixedTransaction>()?;
+    let private_key_jrptr = private_key_ptr.rptr(&env)?;
+    let private_key = private_key_jrptr.typed_ref::<PrivateKey>()?;
+    self_rptr.sign_and_add_vkey_signature(private_key).into_result()?;
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fixedTransactionSignAndAddIcarusBootstrapSignature(env: JNIEnv, _: JObject, self_ptr: JRPtr, addr_ptr: JRPtr, private_key_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<FixedTransaction>()?;
+    let addr_jrptr = addr_ptr.rptr(&env)?;
+    let addr = addr_jrptr.typed_ref::<ByronAddress>()?;
+    let private_key_jrptr = private_key_ptr.rptr(&env)?;
+    let private_key = private_key_jrptr.typed_ref::<Bip32PrivateKey>()?;
+    self_rptr.sign_and_add_icarus_bootstrap_signature(addr, private_key).into_result()?;
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fixedTransactionSignAndAddDaedalusBootstrapSignature(env: JNIEnv, _: JObject, self_ptr: JRPtr, addr_ptr: JRPtr, private_key_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<FixedTransaction>()?;
+    let addr_jrptr = addr_ptr.rptr(&env)?;
+    let addr = addr_jrptr.typed_ref::<ByronAddress>()?;
+    let private_key_jrptr = private_key_ptr.rptr(&env)?;
+    let private_key = private_key_jrptr.typed_ref::<LegacyDaedalusPrivateKey>()?;
+    self_rptr.sign_and_add_daedalus_bootstrap_signature(addr, private_key).into_result()?;
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
 
 #[allow(non_snake_case)]
 #[no_mangle]

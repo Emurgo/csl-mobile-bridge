@@ -6326,6 +6326,44 @@ pub unsafe extern "C" fn csl_bridge_fixed_transaction_raw_auxiliary_data(self_rp
 }
 
 
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_fixed_transaction_sign_and_add_vkey_signature(self_rptr: RPtr, private_key_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<FixedTransaction>()?;
+    let private_key = private_key_rptr.typed_ref::<PrivateKey>()?;
+    self_ref.sign_and_add_vkey_signature(private_key).into_result()?;
+    Ok(())
+  })
+  .response(&mut (),  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_fixed_transaction_sign_and_add_icarus_bootstrap_signature(self_rptr: RPtr, addr_rptr: RPtr, private_key_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<FixedTransaction>()?;
+    let addr = addr_rptr.typed_ref::<ByronAddress>()?;
+    let private_key = private_key_rptr.typed_ref::<Bip32PrivateKey>()?;
+    self_ref.sign_and_add_icarus_bootstrap_signature(addr, private_key).into_result()?;
+    Ok(())
+  })
+  .response(&mut (),  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_fixed_transaction_sign_and_add_daedalus_bootstrap_signature(self_rptr: RPtr, addr_rptr: RPtr, private_key_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<FixedTransaction>()?;
+    let addr = addr_rptr.typed_ref::<ByronAddress>()?;
+    let private_key = private_key_rptr.typed_ref::<LegacyDaedalusPrivateKey>()?;
+    self_ref.sign_and_add_daedalus_bootstrap_signature(addr, private_key).into_result()?;
+    Ok(())
+  })
+  .response(&mut (),  error)
+}
+
+
 
 #[no_mangle]
 pub unsafe extern "C" fn csl_bridge_fixed_transaction_bodies_from_bytes(bytes_data: *const u8, bytes_len: usize, result: &mut RPtr, error: &mut CharPtr) -> bool {

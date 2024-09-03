@@ -4272,6 +4272,27 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
             .pour(promise);
     }
 
+    @ReactMethod
+    public final void csl_bridge_fixedTransactionSignAndAddVkeySignature(String self, String privateKey, Promise promise) {
+        Native.I
+            .csl_bridge_fixedTransactionSignAndAddVkeySignature(new RPtr(self), new RPtr(privateKey))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_fixedTransactionSignAndAddIcarusBootstrapSignature(String self, String addr, String privateKey, Promise promise) {
+        Native.I
+            .csl_bridge_fixedTransactionSignAndAddIcarusBootstrapSignature(new RPtr(self), new RPtr(addr), new RPtr(privateKey))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_fixedTransactionSignAndAddDaedalusBootstrapSignature(String self, String addr, String privateKey, Promise promise) {
+        Native.I
+            .csl_bridge_fixedTransactionSignAndAddDaedalusBootstrapSignature(new RPtr(self), new RPtr(addr), new RPtr(privateKey))
+            .pour(promise);
+    }
+
 
     @ReactMethod
     public final void csl_bridge_fixedTransactionBodiesFromBytes(String bytes, Promise promise) {

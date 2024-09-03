@@ -3127,6 +3127,26 @@ export class FixedTransaction extends Ptr {
     return uint8ArrayFromB64(ret);
   }
 
+  sign_and_add_vkey_signature(private_key) {
+    const private_keyPtr = Ptr._assertClass(private_key, PrivateKey);
+    const ret = HaskellShelley.csl_bridge_fixedTransactionSignAndAddVkeySignature(this.ptr, private_keyPtr);
+    return ret;
+  }
+
+  sign_and_add_icarus_bootstrap_signature(addr, private_key) {
+    const addrPtr = Ptr._assertClass(addr, ByronAddress);
+    const private_keyPtr = Ptr._assertClass(private_key, Bip32PrivateKey);
+    const ret = HaskellShelley.csl_bridge_fixedTransactionSignAndAddIcarusBootstrapSignature(this.ptr, addrPtr, private_keyPtr);
+    return ret;
+  }
+
+  sign_and_add_daedalus_bootstrap_signature(addr, private_key) {
+    const addrPtr = Ptr._assertClass(addr, ByronAddress);
+    const private_keyPtr = Ptr._assertClass(private_key, LegacyDaedalusPrivateKey);
+    const ret = HaskellShelley.csl_bridge_fixedTransactionSignAndAddDaedalusBootstrapSignature(this.ptr, addrPtr, private_keyPtr);
+    return ret;
+  }
+
 }
 
 
