@@ -260,7 +260,6 @@ use cardano_serialization_lib::min_ada_for_output;
 use cardano_serialization_lib::min_fee;
 use cardano_serialization_lib::min_ref_script_fee;
 use cardano_serialization_lib::min_script_fee;
-use cardano_serialization_lib::u32;
 
 
 #[allow(non_snake_case)]

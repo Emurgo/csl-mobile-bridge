@@ -132,3 +132,50 @@ impl IntoBool for jboolean {
         self != 0
     }
 }
+
+pub trait JBooleanConvertible {
+    fn try_from_jboolean(value: jboolean) -> Result<Self> where Self: Sized;
+    fn from_jboolean(value: jboolean) -> Self;
+    fn into_jboolean(self) -> jboolean;
+}
+
+impl JBooleanConvertible for bool {
+    fn try_from_jboolean(value: jboolean) -> Result<Self> {
+        Ok(Self::from_jboolean(value))
+    }
+
+    fn from_jboolean(value: jboolean) -> Self {
+        value.into_bool()
+    }
+
+    fn into_jboolean(self) -> jboolean {
+        self as jboolean
+    }
+}
+
+pub trait JBooleanOptionConvertible {
+    fn try_from_jboolean(value: Option<jboolean>) -> Result<Self> where Self: Sized;
+    fn into_jboolean(self) -> Option<jboolean>;
+    fn from_jboolean(value: jboolean) -> Self;
+}
+
+impl<T: JBooleanConvertible> JBooleanOptionConvertible for Option<T> {
+
+    fn try_from_jboolean(value: Option<jboolean>) -> Result<Self> {
+        match value {
+            Some(value) => Ok(Some(T::try_from_jboolean(value)?)),
+            None => Ok(None)
+        }
+    }
+
+    fn into_jboolean(self: Option<T>) -> Option<jboolean> {
+        match self {
+            Some(value) => Some(value.into_jboolean()),
+            None => None,
+        }
+    }
+
+    fn from_jboolean(value: jboolean) -> Self {
+        Some(T::from_jboolean(value))
+    }
+}
