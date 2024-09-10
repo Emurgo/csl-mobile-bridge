@@ -87,9 +87,9 @@ checksum = "dfb24e866b15a1af2a1b663f10c6b6b8f397a84aadb828f12e5b289ec23a3a3c"
 
 [[package]]
 name = "cardano-serialization-lib"
-version = "12.1.0-beta.1"
+version = "12.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f550f90b4e8d1dc1e56e95a8a562286361e01c402ccadc882d3d6ed9bd8e212d"
+checksum = "abfd14f5a2250d86a3c673a70c49851c21207ee8537f9f11b3dba9cc67095ef7"
 dependencies = [
  "bech32",
  "cbor_event",

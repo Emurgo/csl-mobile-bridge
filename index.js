@@ -3127,6 +3127,23 @@ export class FixedTransaction extends Ptr {
     return uint8ArrayFromB64(ret);
   }
 
+  async transaction_hash() {
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionTransactionHash(this.ptr);
+    return Ptr._wrap(ret, TransactionHash);
+  }
+
+  add_vkey_witness(vkey_witness) {
+    const vkey_witnessPtr = Ptr._assertClass(vkey_witness, Vkeywitness);
+    const ret = HaskellShelley.csl_bridge_fixedTransactionAddVkeyWitness(this.ptr, vkey_witnessPtr);
+    return ret;
+  }
+
+  add_bootstrap_witness(bootstrap_witness) {
+    const bootstrap_witnessPtr = Ptr._assertClass(bootstrap_witness, BootstrapWitness);
+    const ret = HaskellShelley.csl_bridge_fixedTransactionAddBootstrapWitness(this.ptr, bootstrap_witnessPtr);
+    return ret;
+  }
+
   sign_and_add_vkey_signature(private_key) {
     const private_keyPtr = Ptr._assertClass(private_key, PrivateKey);
     const ret = HaskellShelley.csl_bridge_fixedTransactionSignAndAddVkeySignature(this.ptr, private_keyPtr);
@@ -3209,6 +3226,37 @@ export class FixedTransactionBody extends Ptr {
   async original_bytes() {
     const ret = await HaskellShelley.csl_bridge_fixedTransactionBodyOriginalBytes(this.ptr);
     return uint8ArrayFromB64(ret);
+  }
+
+}
+
+
+export class FixedTxWitnessesSet extends Ptr {
+  async tx_witnesses_set() {
+    const ret = await HaskellShelley.csl_bridge_fixedTxWitnessesSetTxWitnessesSet(this.ptr);
+    return Ptr._wrap(ret, TransactionWitnessSet);
+  }
+
+  add_vkey_witness(vkey_witness) {
+    const vkey_witnessPtr = Ptr._assertClass(vkey_witness, Vkeywitness);
+    const ret = HaskellShelley.csl_bridge_fixedTxWitnessesSetAddVkeyWitness(this.ptr, vkey_witnessPtr);
+    return ret;
+  }
+
+  add_bootstrap_witness(bootstrap_witness) {
+    const bootstrap_witnessPtr = Ptr._assertClass(bootstrap_witness, BootstrapWitness);
+    const ret = HaskellShelley.csl_bridge_fixedTxWitnessesSetAddBootstrapWitness(this.ptr, bootstrap_witnessPtr);
+    return ret;
+  }
+
+  async to_bytes() {
+    const ret = await HaskellShelley.csl_bridge_fixedTxWitnessesSetToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(data) {
+    const ret = await HaskellShelley.csl_bridge_fixedTxWitnessesSetFromBytes(b64FromUint8Array(data));
+    return Ptr._wrap(ret, FixedTxWitnessesSet);
   }
 
 }

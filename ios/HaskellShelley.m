@@ -6076,6 +6076,37 @@ RCT_EXPORT_METHOD(csl_bridge_fixedTransactionRawAuxiliaryData:(nonnull NSString 
     }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(csl_bridge_fixedTransactionTransactionHash:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
+        RPtr result;
+        RPtr self = [selfPtr  rPtr];
+        return csl_bridge_fixed_transaction_transaction_hash(self, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_fixedTransactionAddVkeyWitness:(nonnull NSString *)selfPtr withVkeyWitness:(nonnull NSString *)vkeyWitnessPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr vkeyWitness = [[params objectAtIndex:1]  rPtr];
+        csl_bridge_fixed_transaction_add_vkey_witness(self, vkeyWitness, error);
+        return nil;
+    }] exec:@[selfPtr, vkeyWitnessPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_fixedTransactionAddBootstrapWitness:(nonnull NSString *)selfPtr withBootstrapWitness:(nonnull NSString *)bootstrapWitnessPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr bootstrapWitness = [[params objectAtIndex:1]  rPtr];
+        csl_bridge_fixed_transaction_add_bootstrap_witness(self, bootstrapWitness, error);
+        return nil;
+    }] exec:@[selfPtr, bootstrapWitnessPtr] andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(csl_bridge_fixedTransactionSignAndAddVkeySignature:(nonnull NSString *)selfPtr withPrivateKey:(nonnull NSString *)privateKeyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
@@ -6228,6 +6259,60 @@ RCT_EXPORT_METHOD(csl_bridge_fixedTransactionBodyOriginalBytes:(nonnull NSString
             ? [[NSData fromDataPtr:&result] base64]
             : nil;
     }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
+
+RCT_EXPORT_METHOD(csl_bridge_fixedTxWitnessesSetTxWitnessesSet:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
+        RPtr result;
+        RPtr self = [selfPtr  rPtr];
+        return csl_bridge_fixed_tx_witnesses_set_tx_witnesses_set(self, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_fixedTxWitnessesSetAddVkeyWitness:(nonnull NSString *)selfPtr withVkeyWitness:(nonnull NSString *)vkeyWitnessPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr vkeyWitness = [[params objectAtIndex:1]  rPtr];
+        csl_bridge_fixed_tx_witnesses_set_add_vkey_witness(self, vkeyWitness, error);
+        return nil;
+    }] exec:@[selfPtr, vkeyWitnessPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_fixedTxWitnessesSetAddBootstrapWitness:(nonnull NSString *)selfPtr withBootstrapWitness:(nonnull NSString *)bootstrapWitnessPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr bootstrapWitness = [[params objectAtIndex:1]  rPtr];
+        csl_bridge_fixed_tx_witnesses_set_add_bootstrap_witness(self, bootstrapWitness, error);
+        return nil;
+    }] exec:@[selfPtr, bootstrapWitnessPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_fixedTxWitnessesSetToBytes:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
+        DataPtr result;
+        RPtr self = [selfPtr  rPtr];
+        return csl_bridge_fixed_tx_witnesses_set_to_bytes(self, &result, error)
+            ? [[NSData fromDataPtr:&result] base64]
+            : nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_fixedTxWitnessesSetFromBytes:(nonnull NSString *)dataVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSString* dataVal, CharPtr* error) {
+        RPtr result;
+        NSData* dataData = [NSData fromBase64:dataVal];
+        return csl_bridge_fixed_tx_witnesses_set_from_bytes((uint8_t*)dataData.bytes, dataData.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:dataVal andResolve:resolve orReject:reject];
 }
 
 

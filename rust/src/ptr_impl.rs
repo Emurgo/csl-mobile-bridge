@@ -51,6 +51,7 @@ use cardano_serialization_lib::FixedBlock;
 use cardano_serialization_lib::FixedTransaction;
 use cardano_serialization_lib::FixedTransactionBodies;
 use cardano_serialization_lib::FixedTransactionBody;
+use cardano_serialization_lib::FixedTxWitnessesSet;
 use cardano_serialization_lib::FixedVersionedBlock;
 use cardano_serialization_lib::GeneralTransactionMetadata;
 use cardano_serialization_lib::GenesisDelegateHash;
@@ -250,6 +251,7 @@ impl RPtrRepresentable for FixedBlock {}
 impl RPtrRepresentable for FixedTransaction {}
 impl RPtrRepresentable for FixedTransactionBodies {}
 impl RPtrRepresentable for FixedTransactionBody {}
+impl RPtrRepresentable for FixedTxWitnessesSet {}
 impl RPtrRepresentable for FixedVersionedBlock {}
 impl RPtrRepresentable for GeneralTransactionMetadata {}
 impl RPtrRepresentable for GenesisDelegateHash {}

@@ -4273,6 +4273,28 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void csl_bridge_fixedTransactionTransactionHash(String self, Promise promise) {
+        Native.I
+            .csl_bridge_fixedTransactionTransactionHash(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_fixedTransactionAddVkeyWitness(String self, String vkeyWitness, Promise promise) {
+        Native.I
+            .csl_bridge_fixedTransactionAddVkeyWitness(new RPtr(self), new RPtr(vkeyWitness))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_fixedTransactionAddBootstrapWitness(String self, String bootstrapWitness, Promise promise) {
+        Native.I
+            .csl_bridge_fixedTransactionAddBootstrapWitness(new RPtr(self), new RPtr(bootstrapWitness))
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void csl_bridge_fixedTransactionSignAndAddVkeySignature(String self, String privateKey, Promise promise) {
         Native.I
             .csl_bridge_fixedTransactionSignAndAddVkeySignature(new RPtr(self), new RPtr(privateKey))
@@ -4379,6 +4401,45 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
         Native.I
             .csl_bridge_fixedTransactionBodyOriginalBytes(new RPtr(self))
             .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+
+    @ReactMethod
+    public final void csl_bridge_fixedTxWitnessesSetTxWitnessesSet(String self, Promise promise) {
+        Native.I
+            .csl_bridge_fixedTxWitnessesSetTxWitnessesSet(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_fixedTxWitnessesSetAddVkeyWitness(String self, String vkeyWitness, Promise promise) {
+        Native.I
+            .csl_bridge_fixedTxWitnessesSetAddVkeyWitness(new RPtr(self), new RPtr(vkeyWitness))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_fixedTxWitnessesSetAddBootstrapWitness(String self, String bootstrapWitness, Promise promise) {
+        Native.I
+            .csl_bridge_fixedTxWitnessesSetAddBootstrapWitness(new RPtr(self), new RPtr(bootstrapWitness))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_fixedTxWitnessesSetToBytes(String self, Promise promise) {
+        Native.I
+            .csl_bridge_fixedTxWitnessesSetToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_fixedTxWitnessesSetFromBytes(String data, Promise promise) {
+        Native.I
+            .csl_bridge_fixedTxWitnessesSetFromBytes(Base64.decode(data, Base64.DEFAULT))
+            .map(RPtr::toJs)
             .pour(promise);
     }
 

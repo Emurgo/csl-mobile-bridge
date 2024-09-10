@@ -606,6 +606,9 @@ final class Native {
     public final native Result<Void> csl_bridge_fixedTransactionSetAuxiliaryData(RPtr self, byte[] rawAuxiliaryData);
     public final native Result<RPtr> csl_bridge_fixedTransactionAuxiliaryData(RPtr self);
     public final native Result<byte[]> csl_bridge_fixedTransactionRawAuxiliaryData(RPtr self);
+    public final native Result<RPtr> csl_bridge_fixedTransactionTransactionHash(RPtr self);
+    public final native Result<Void> csl_bridge_fixedTransactionAddVkeyWitness(RPtr self, RPtr vkeyWitness);
+    public final native Result<Void> csl_bridge_fixedTransactionAddBootstrapWitness(RPtr self, RPtr bootstrapWitness);
     public final native Result<Void> csl_bridge_fixedTransactionSignAndAddVkeySignature(RPtr self, RPtr privateKey);
     public final native Result<Void> csl_bridge_fixedTransactionSignAndAddIcarusBootstrapSignature(RPtr self, RPtr addr, RPtr privateKey);
     public final native Result<Void> csl_bridge_fixedTransactionSignAndAddDaedalusBootstrapSignature(RPtr self, RPtr addr, RPtr privateKey);
@@ -622,6 +625,12 @@ final class Native {
     public final native Result<RPtr> csl_bridge_fixedTransactionBodyTransactionBody(RPtr self);
     public final native Result<RPtr> csl_bridge_fixedTransactionBodyTxHash(RPtr self);
     public final native Result<byte[]> csl_bridge_fixedTransactionBodyOriginalBytes(RPtr self);
+
+    public final native Result<RPtr> csl_bridge_fixedTxWitnessesSetTxWitnessesSet(RPtr self);
+    public final native Result<Void> csl_bridge_fixedTxWitnessesSetAddVkeyWitness(RPtr self, RPtr vkeyWitness);
+    public final native Result<Void> csl_bridge_fixedTxWitnessesSetAddBootstrapWitness(RPtr self, RPtr bootstrapWitness);
+    public final native Result<byte[]> csl_bridge_fixedTxWitnessesSetToBytes(RPtr self);
+    public final native Result<RPtr> csl_bridge_fixedTxWitnessesSetFromBytes(byte[] data);
 
     public final native Result<RPtr> csl_bridge_fixedVersionedBlockFromBytes(byte[] bytes);
     public final native Result<RPtr> csl_bridge_fixedVersionedBlockFromHex(String hexStr);
