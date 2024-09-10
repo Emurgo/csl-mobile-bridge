@@ -3195,6 +3195,41 @@ export class FixedTransaction extends Ptr {
   */
   raw_auxiliary_data: () => Promise<Optional<Uint8Array>>;
 
+  /**
+  * @returns {Promise<TransactionHash>}
+  */
+  transaction_hash: () => Promise<TransactionHash>;
+
+  /**
+  * @param {Vkeywitness} vkey_witness
+  */
+  add_vkey_witness: (vkey_witness: Vkeywitness) => Promise<void>;
+
+  /**
+  * @param {BootstrapWitness} bootstrap_witness
+  */
+  add_bootstrap_witness: (bootstrap_witness: BootstrapWitness) => Promise<void>;
+
+  /**
+  * @param {PrivateKey} private_key
+  * @returns {Promise<void>}
+  */
+  sign_and_add_vkey_signature: (private_key: PrivateKey) => Promise<void>;
+
+  /**
+  * @param {ByronAddress} addr
+  * @param {Bip32PrivateKey} private_key
+  * @returns {Promise<void>}
+  */
+  sign_and_add_icarus_bootstrap_signature: (addr: ByronAddress, private_key: Bip32PrivateKey) => Promise<void>;
+
+  /**
+  * @param {ByronAddress} addr
+  * @param {LegacyDaedalusPrivateKey} private_key
+  * @returns {Promise<void>}
+  */
+  sign_and_add_daedalus_bootstrap_signature: (addr: ByronAddress, private_key: LegacyDaedalusPrivateKey) => Promise<void>;
+
 }
 
 
@@ -3262,6 +3297,36 @@ export class FixedTransactionBody extends Ptr {
   * @returns {Promise<Uint8Array>}
   */
   original_bytes: () => Promise<Uint8Array>;
+
+}
+
+
+export class FixedTxWitnessesSet extends Ptr {
+  /**
+  * @returns {Promise<TransactionWitnessSet>}
+  */
+  tx_witnesses_set: () => Promise<TransactionWitnessSet>;
+
+  /**
+  * @param {Vkeywitness} vkey_witness
+  */
+  add_vkey_witness: (vkey_witness: Vkeywitness) => Promise<void>;
+
+  /**
+  * @param {BootstrapWitness} bootstrap_witness
+  */
+  add_bootstrap_witness: (bootstrap_witness: BootstrapWitness) => Promise<void>;
+
+  /**
+  * @returns {Promise<Uint8Array>}
+  */
+  to_bytes: () => Promise<Uint8Array>;
+
+  /**
+  * @param {Uint8Array} data
+  * @returns {Promise<FixedTxWitnessesSet>}
+  */
+  static from_bytes: (data: Uint8Array) => Promise<FixedTxWitnessesSet>;
 
 }
 

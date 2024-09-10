@@ -5,7 +5,7 @@
 #import "SafeOperation.h"
 #import "NSString+RPtr.h"
 
-@implementation BaseSafeOperation
+@implementation CSLBaseSafeOperation
 
 - (void)exec:(_Nullable id)param andResolve:(RCTPromiseResolveBlock)resolve orReject:(RCTPromiseRejectBlock)reject {
     @try {
@@ -32,19 +32,19 @@
 
 @end
 
-@interface SafeOperation<In, Out> (/* Private */)
+@interface CSLSafeOperation<In, Out> (/* Private */)
 
 @property (copy) Out (^callback)(In param, NSError** error);
 
 @end
 
-@implementation SafeOperation
+@implementation CSLSafeOperation
 
-+ (BaseSafeOperation *)new:(_Nullable id (^)(_Nullable id param, NSError** error))cb {
-    return [[SafeOperation alloc] initWithCallback: cb];
++ (CSLBaseSafeOperation *)new:(_Nullable id (^)(_Nullable id param, NSError** error))cb {
+    return [[CSLSafeOperation alloc] initWithCallback: cb];
 }
 
-- (SafeOperation *)initWithCallback:(_Nullable id(^)(_Nullable id param, NSError** error))cb {
+- (CSLSafeOperation *)initWithCallback:(_Nullable id(^)(_Nullable id param, NSError** error))cb {
     if (self = [super init]) {
         self.callback = cb;
     }
@@ -57,13 +57,13 @@
 
 @end
 
-@implementation CSafeOperation
+@implementation CSLCSafeOperation
 
-+ (BaseSafeOperation *)new:(_Nullable id(^)(_Nullable id param, CharPtr _Nullable* _Nonnull error))cb {
-    return [[CSafeOperation alloc] initWithCallback:cb];
++ (CSLBaseSafeOperation *)new:(_Nullable id(^)(_Nullable id param, CharPtr _Nullable* _Nonnull error))cb {
+    return [[CSLCSafeOperation alloc] initWithCallback:cb];
 }
 
-- (CSafeOperation *)initWithCallback:(_Nullable id(^)(_Nullable id param, CharPtr _Nullable* _Nonnull error))cb {
+- (CSLCSafeOperation *)initWithCallback:(_Nullable id(^)(_Nullable id param, CharPtr _Nullable* _Nonnull error))cb {
     return [super initWithCallback:^_Nullable id(_Nullable id param, NSError **error) {
         CharPtr cError = NULL;
         id result = cb(param, &cError);
@@ -76,20 +76,20 @@
 
 @end
 
-@interface SafeOperationCombined (/* Private */)
+@interface CSLSafeOperationCombined (/* Private */)
 
-@property (strong) SafeOperation* op1;
-@property (strong) SafeOperation* op2;
+@property (strong) CSLSafeOperation* op1;
+@property (strong) CSLSafeOperation* op2;
 
 @end
 
-@implementation SafeOperationCombined
+@implementation CSLSafeOperationCombined
 
-+ (BaseSafeOperation* )combine:(SafeOperation *)op1 with:(SafeOperation *)op2 {
++ (CSLBaseSafeOperation* )combine:(CSLSafeOperation *)op1 with:(CSLSafeOperation *)op2 {
     return [[self alloc] init:op1 and: op2];
 }
 
-- (SafeOperationCombined* )init:(SafeOperation *)op1 and:(SafeOperation *)op2 {
+- (CSLSafeOperationCombined* )init:(CSLSafeOperation *)op1 and:(CSLSafeOperation *)op2 {
     if (self = [super init]) {
         self.op1 = op1;
         self.op2 = op2;

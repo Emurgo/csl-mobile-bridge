@@ -66,6 +66,7 @@ use cardano_serialization_lib::FixedBlock;
 use cardano_serialization_lib::FixedTransaction;
 use cardano_serialization_lib::FixedTransactionBodies;
 use cardano_serialization_lib::FixedTransactionBody;
+use cardano_serialization_lib::FixedTxWitnessesSet;
 use cardano_serialization_lib::FixedVersionedBlock;
 use cardano_serialization_lib::GeneralTransactionMetadata;
 use cardano_serialization_lib::GenesisDelegateHash;
@@ -6326,6 +6327,79 @@ pub unsafe extern "C" fn csl_bridge_fixed_transaction_raw_auxiliary_data(self_rp
 }
 
 
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_fixed_transaction_transaction_hash(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<FixedTransaction>()?;
+    let result = self_ref.transaction_hash();
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_fixed_transaction_add_vkey_witness(self_rptr: RPtr, vkey_witness_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<FixedTransaction>()?;
+    let vkey_witness = vkey_witness_rptr.typed_ref::<Vkeywitness>()?;
+    self_ref.add_vkey_witness(vkey_witness);
+    Ok(())
+  })
+  .response(&mut (),  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_fixed_transaction_add_bootstrap_witness(self_rptr: RPtr, bootstrap_witness_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<FixedTransaction>()?;
+    let bootstrap_witness = bootstrap_witness_rptr.typed_ref::<BootstrapWitness>()?;
+    self_ref.add_bootstrap_witness(bootstrap_witness);
+    Ok(())
+  })
+  .response(&mut (),  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_fixed_transaction_sign_and_add_vkey_signature(self_rptr: RPtr, private_key_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<FixedTransaction>()?;
+    let private_key = private_key_rptr.typed_ref::<PrivateKey>()?;
+    self_ref.sign_and_add_vkey_signature(private_key).into_result()?;
+    Ok(())
+  })
+  .response(&mut (),  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_fixed_transaction_sign_and_add_icarus_bootstrap_signature(self_rptr: RPtr, addr_rptr: RPtr, private_key_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<FixedTransaction>()?;
+    let addr = addr_rptr.typed_ref::<ByronAddress>()?;
+    let private_key = private_key_rptr.typed_ref::<Bip32PrivateKey>()?;
+    self_ref.sign_and_add_icarus_bootstrap_signature(addr, private_key).into_result()?;
+    Ok(())
+  })
+  .response(&mut (),  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_fixed_transaction_sign_and_add_daedalus_bootstrap_signature(self_rptr: RPtr, addr_rptr: RPtr, private_key_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<FixedTransaction>()?;
+    let addr = addr_rptr.typed_ref::<ByronAddress>()?;
+    let private_key = private_key_rptr.typed_ref::<LegacyDaedalusPrivateKey>()?;
+    self_ref.sign_and_add_daedalus_bootstrap_signature(addr, private_key).into_result()?;
+    Ok(())
+  })
+  .response(&mut (),  error)
+}
+
+
 
 #[no_mangle]
 pub unsafe extern "C" fn csl_bridge_fixed_transaction_bodies_from_bytes(bytes_data: *const u8, bytes_len: usize, result: &mut RPtr, error: &mut CharPtr) -> bool {
@@ -6445,6 +6519,64 @@ pub unsafe extern "C" fn csl_bridge_fixed_transaction_body_original_bytes(self_r
     let self_ref = self_rptr.typed_ref::<FixedTransactionBody>()?;
     let result = self_ref.original_bytes();
     Ok::<DataPtr, String>(result.into())
+  })
+  .response(result,  error)
+}
+
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_fixed_tx_witnesses_set_tx_witnesses_set(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<FixedTxWitnessesSet>()?;
+    let result = self_ref.tx_witnesses_set();
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_fixed_tx_witnesses_set_add_vkey_witness(self_rptr: RPtr, vkey_witness_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<FixedTxWitnessesSet>()?;
+    let vkey_witness = vkey_witness_rptr.typed_ref::<Vkeywitness>()?;
+    self_ref.add_vkey_witness(vkey_witness);
+    Ok(())
+  })
+  .response(&mut (),  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_fixed_tx_witnesses_set_add_bootstrap_witness(self_rptr: RPtr, bootstrap_witness_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<FixedTxWitnessesSet>()?;
+    let bootstrap_witness = bootstrap_witness_rptr.typed_ref::<BootstrapWitness>()?;
+    self_ref.add_bootstrap_witness(bootstrap_witness);
+    Ok(())
+  })
+  .response(&mut (),  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_fixed_tx_witnesses_set_to_bytes(self_rptr: RPtr, result: &mut DataPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<FixedTxWitnessesSet>()?;
+    let result = self_ref.to_bytes();
+    Ok::<DataPtr, String>(result.into())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_fixed_tx_witnesses_set_from_bytes(data_data: *const u8, data_len: usize, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let data = from_raw_parts(data_data, data_len).to_vec();
+    let result = FixedTxWitnessesSet::from_bytes(data).into_result()?;
+    Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
 }

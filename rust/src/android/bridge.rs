@@ -73,6 +73,7 @@ use cardano_serialization_lib::FixedBlock;
 use cardano_serialization_lib::FixedTransaction;
 use cardano_serialization_lib::FixedTransactionBodies;
 use cardano_serialization_lib::FixedTransactionBody;
+use cardano_serialization_lib::FixedTxWitnessesSet;
 use cardano_serialization_lib::FixedVersionedBlock;
 use cardano_serialization_lib::GeneralTransactionMetadata;
 use cardano_serialization_lib::GenesisDelegateHash;
@@ -260,7 +261,6 @@ use cardano_serialization_lib::min_ada_for_output;
 use cardano_serialization_lib::min_fee;
 use cardano_serialization_lib::min_ref_script_fee;
 use cardano_serialization_lib::min_script_fee;
-use cardano_serialization_lib::u32;
 
 
 #[allow(non_snake_case)]
@@ -7372,6 +7372,98 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fix
 }
 
 
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fixedTransactionTransactionHash(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<FixedTransaction>()?;
+    let result = self_rptr.transaction_hash();
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fixedTransactionAddVkeyWitness(env: JNIEnv, _: JObject, self_ptr: JRPtr, vkey_witness_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<FixedTransaction>()?;
+    let vkey_witness_jrptr = vkey_witness_ptr.rptr(&env)?;
+    let vkey_witness = vkey_witness_jrptr.typed_ref::<Vkeywitness>()?;
+    self_rptr.add_vkey_witness(vkey_witness);
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fixedTransactionAddBootstrapWitness(env: JNIEnv, _: JObject, self_ptr: JRPtr, bootstrap_witness_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<FixedTransaction>()?;
+    let bootstrap_witness_jrptr = bootstrap_witness_ptr.rptr(&env)?;
+    let bootstrap_witness = bootstrap_witness_jrptr.typed_ref::<BootstrapWitness>()?;
+    self_rptr.add_bootstrap_witness(bootstrap_witness);
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fixedTransactionSignAndAddVkeySignature(env: JNIEnv, _: JObject, self_ptr: JRPtr, private_key_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<FixedTransaction>()?;
+    let private_key_jrptr = private_key_ptr.rptr(&env)?;
+    let private_key = private_key_jrptr.typed_ref::<PrivateKey>()?;
+    self_rptr.sign_and_add_vkey_signature(private_key).into_result()?;
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fixedTransactionSignAndAddIcarusBootstrapSignature(env: JNIEnv, _: JObject, self_ptr: JRPtr, addr_ptr: JRPtr, private_key_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<FixedTransaction>()?;
+    let addr_jrptr = addr_ptr.rptr(&env)?;
+    let addr = addr_jrptr.typed_ref::<ByronAddress>()?;
+    let private_key_jrptr = private_key_ptr.rptr(&env)?;
+    let private_key = private_key_jrptr.typed_ref::<Bip32PrivateKey>()?;
+    self_rptr.sign_and_add_icarus_bootstrap_signature(addr, private_key).into_result()?;
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fixedTransactionSignAndAddDaedalusBootstrapSignature(env: JNIEnv, _: JObject, self_ptr: JRPtr, addr_ptr: JRPtr, private_key_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<FixedTransaction>()?;
+    let addr_jrptr = addr_ptr.rptr(&env)?;
+    let addr = addr_jrptr.typed_ref::<ByronAddress>()?;
+    let private_key_jrptr = private_key_ptr.rptr(&env)?;
+    let private_key = private_key_jrptr.typed_ref::<LegacyDaedalusPrivateKey>()?;
+    self_rptr.sign_and_add_daedalus_bootstrap_signature(addr, private_key).into_result()?;
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
 
 #[allow(non_snake_case)]
 #[no_mangle]
@@ -7509,6 +7601,75 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fix
     let self_rptr = self_jrptr.typed_ref::<FixedTransactionBody>()?;
     let result = self_rptr.original_bytes();
     Ok(JObject::from_raw(env.byte_array_from_slice(&result).into_result()?))
+  })
+  .jresult(&env)
+}
+
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fixedTxWitnessesSetTxWitnessesSet(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<FixedTxWitnessesSet>()?;
+    let result = self_rptr.tx_witnesses_set();
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fixedTxWitnessesSetAddVkeyWitness(env: JNIEnv, _: JObject, self_ptr: JRPtr, vkey_witness_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<FixedTxWitnessesSet>()?;
+    let vkey_witness_jrptr = vkey_witness_ptr.rptr(&env)?;
+    let vkey_witness = vkey_witness_jrptr.typed_ref::<Vkeywitness>()?;
+    self_rptr.add_vkey_witness(vkey_witness);
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fixedTxWitnessesSetAddBootstrapWitness(env: JNIEnv, _: JObject, self_ptr: JRPtr, bootstrap_witness_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<FixedTxWitnessesSet>()?;
+    let bootstrap_witness_jrptr = bootstrap_witness_ptr.rptr(&env)?;
+    let bootstrap_witness = bootstrap_witness_jrptr.typed_ref::<BootstrapWitness>()?;
+    self_rptr.add_bootstrap_witness(bootstrap_witness);
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fixedTxWitnessesSetToBytes(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<FixedTxWitnessesSet>()?;
+    let result = self_rptr.to_bytes();
+    Ok(JObject::from_raw(env.byte_array_from_slice(&result).into_result()?))
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fixedTxWitnessesSetFromBytes(env: JNIEnv, _: JObject, data_jarray: jbyteArray) -> jobject {
+  handle_exception_result(|| { 
+    let data = env.convert_byte_array(data_jarray).into_result()?;
+    let result = FixedTxWitnessesSet::from_bytes(data).into_result()?;
+    result.rptr().jptr(&env)
   })
   .jresult(&env)
 }

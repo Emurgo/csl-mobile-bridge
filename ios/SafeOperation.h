@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface BaseSafeOperation<In, Out> : NSObject
+@interface CSLBaseSafeOperation<In, Out> : NSObject
 
 - (Out)exec:(In)param error:(NSError **)error;
 
@@ -32,29 +32,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface SafeOperation<In, Out> : BaseSafeOperation<In, Out>
+@interface CSLSafeOperation<In, Out> : CSLBaseSafeOperation<In, Out>
 
-+ (BaseSafeOperation<In, Out> *)new:(Out(^)(In param, NSError** error))cb;
++ (CSLBaseSafeOperation<In, Out> *)new:(Out(^)(In param, NSError** error))cb;
 
-- (SafeOperation<In, Out> *)initWithCallback:(Out(^)(In param, NSError** error))cb;
-
-@end
-
-@interface CSafeOperation<In, Out> : SafeOperation<In, Out>
-
-+ (BaseSafeOperation *)new:(Out(^)(In param, CharPtr _Nullable* _Nonnull error))cb;
-
-- (CSafeOperation *)initWithCallback:(Out(^)(In param, CharPtr _Nullable* _Nonnull error))cb;
+- (CSLSafeOperation<In, Out> *)initWithCallback:(Out(^)(In param, NSError** error))cb;
 
 @end
 
-@interface SafeOperationCombined<In1, Out1, Out2> : BaseSafeOperation<In1, Out2>
+@interface CSLCSafeOperation<In, Out> : CSLSafeOperation<In, Out>
 
-+ (BaseSafeOperation<In1, Out2>* )combine:(BaseSafeOperation<In1, Out1> *)op1
-                                    with:(BaseSafeOperation<Out1, Out2> *)op2;
++ (CSLBaseSafeOperation *)new:(Out(^)(In param, CharPtr _Nullable* _Nonnull error))cb;
 
-- (SafeOperationCombined<In1, Out1, Out2> *)init:(BaseSafeOperation<In1, Out1> *)op1
-                                                and:(BaseSafeOperation<Out1, Out2> *)op2;
+- (CSLCSafeOperation *)initWithCallback:(Out(^)(In param, CharPtr _Nullable* _Nonnull error))cb;
+
+@end
+
+@interface CSLSafeOperationCombined<In1, Out1, Out2> : CSLBaseSafeOperation<In1, Out2>
+
++ (CSLBaseSafeOperation<In1, Out2>* )combine:(CSLBaseSafeOperation<In1, Out1> *)op1
+                                    with:(CSLBaseSafeOperation<Out1, Out2> *)op2;
+
+- (CSLSafeOperationCombined<In1, Out1, Out2> *)init:(CSLBaseSafeOperation<In1, Out1> *)op1
+                                                and:(CSLBaseSafeOperation<Out1, Out2> *)op2;
 
 @end
 
