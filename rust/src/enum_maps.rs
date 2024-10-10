@@ -1,6 +1,7 @@
 use cardano_serialization_lib::AddressKind;
 use cardano_serialization_lib::BlockEra;
 use cardano_serialization_lib::CborContainerType;
+use cardano_serialization_lib::CborSetType;
 use cardano_serialization_lib::CertificateKind;
 use cardano_serialization_lib::CoinSelectionStrategyCIP2;
 use cardano_serialization_lib::CredKind;
@@ -19,6 +20,7 @@ use cardano_serialization_lib::RelayKind;
 use cardano_serialization_lib::ScriptHashNamespace;
 use cardano_serialization_lib::ScriptSchema;
 use cardano_serialization_lib::TransactionMetadatumKind;
+use cardano_serialization_lib::TransactionSetsState;
 use cardano_serialization_lib::VoteKind;
 use cardano_serialization_lib::VoterKind;
 
@@ -104,6 +106,25 @@ impl ToEnum<CborContainerType> for i32 {
             0 => Ok(CborContainerType::Array),
             1 => Ok(CborContainerType::Map),
             _ => Err("Invalid value for CborContainerType".into()),
+        }
+    }
+}
+
+impl ToPrimitive for CborSetType {
+    fn to_i32(&self) -> i32 {
+        match self {
+            CborSetType::Tagged => 0,
+            CborSetType::Untagged => 1,
+        }
+    }
+}
+
+impl ToEnum<CborSetType> for i32 {
+    fn to_enum(&self) -> Result<CborSetType> {
+        match self {
+            0 => Ok(CborSetType::Tagged),
+            1 => Ok(CborSetType::Untagged),
+            _ => Err("Invalid value for CborSetType".into()),
         }
     }
 }
@@ -532,6 +553,27 @@ impl ToEnum<TransactionMetadatumKind> for i32 {
             3 => Ok(TransactionMetadatumKind::Bytes),
             4 => Ok(TransactionMetadatumKind::Text),
             _ => Err("Invalid value for TransactionMetadatumKind".into()),
+        }
+    }
+}
+
+impl ToPrimitive for TransactionSetsState {
+    fn to_i32(&self) -> i32 {
+        match self {
+            TransactionSetsState::AllSetsHaveTag => 0,
+            TransactionSetsState::AllSetsHaveNoTag => 1,
+            TransactionSetsState::MixedSets => 2,
+        }
+    }
+}
+
+impl ToEnum<TransactionSetsState> for i32 {
+    fn to_enum(&self) -> Result<TransactionSetsState> {
+        match self {
+            0 => Ok(TransactionSetsState::AllSetsHaveTag),
+            1 => Ok(TransactionSetsState::AllSetsHaveNoTag),
+            2 => Ok(TransactionSetsState::MixedSets),
+            _ => Err("Invalid value for TransactionSetsState".into()),
         }
     }
 }

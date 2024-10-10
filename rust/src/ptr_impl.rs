@@ -199,6 +199,7 @@ use cardano_serialization_lib::VotingProposalBuilder;
 use cardano_serialization_lib::VotingProposals;
 use cardano_serialization_lib::Withdrawals;
 use cardano_serialization_lib::WithdrawalsBuilder;
+use cardano_serialization_lib::u32;
 impl RPtrRepresentable for Address {}
 impl RPtrRepresentable for Anchor {}
 impl RPtrRepresentable for AnchorDataHash {}
