@@ -29,6 +29,7 @@ use cardano_serialization_lib::BootstrapWitness;
 use cardano_serialization_lib::BootstrapWitnesses;
 use cardano_serialization_lib::ByronAddress;
 use cardano_serialization_lib::CborContainerType;
+use cardano_serialization_lib::CborSetType;
 use cardano_serialization_lib::Certificate;
 use cardano_serialization_lib::CertificateKind;
 use cardano_serialization_lib::Certificates;
@@ -195,6 +196,7 @@ use cardano_serialization_lib::TransactionOutput;
 use cardano_serialization_lib::TransactionOutputAmountBuilder;
 use cardano_serialization_lib::TransactionOutputBuilder;
 use cardano_serialization_lib::TransactionOutputs;
+use cardano_serialization_lib::TransactionSetsState;
 use cardano_serialization_lib::TransactionUnspentOutput;
 use cardano_serialization_lib::TransactionUnspentOutputs;
 use cardano_serialization_lib::TransactionWitnessSet;
@@ -2384,11 +2386,11 @@ pub unsafe extern "C" fn csl_bridge_bootstrap_witnesses_get(self_rptr: RPtr, ind
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_bootstrap_witnesses_add(self_rptr: RPtr, elem_rptr: RPtr, result: &mut bool, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_bootstrap_witnesses_add(self_rptr: RPtr, witness_rptr: RPtr, result: &mut bool, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<BootstrapWitnesses>()?;
-    let elem = elem_rptr.typed_ref::<BootstrapWitness>()?;
-    let result = self_ref.add(elem);
+    let witness = witness_rptr.typed_ref::<BootstrapWitness>()?;
+    let result = self_ref.add(witness);
     Ok::<bool, String>(result)
   })
   .response(result,  error)
@@ -4349,11 +4351,11 @@ pub unsafe extern "C" fn csl_bridge_credentials_get(self_rptr: RPtr, index_long:
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_credentials_add(self_rptr: RPtr, elem_rptr: RPtr, result: &mut bool, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_credentials_add(self_rptr: RPtr, credential_rptr: RPtr, result: &mut bool, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<Credentials>()?;
-    let elem = elem_rptr.typed_ref::<Credential>()?;
-    let result = self_ref.add(elem);
+    let credential = credential_rptr.typed_ref::<Credential>()?;
+    let result = self_ref.add(credential);
     Ok::<bool, String>(result)
   })
   .response(result,  error)
@@ -5684,11 +5686,11 @@ pub unsafe extern "C" fn csl_bridge_ed25519_key_hashes_get(self_rptr: RPtr, inde
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_ed25519_key_hashes_add(self_rptr: RPtr, elem_rptr: RPtr, result: &mut bool, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_ed25519_key_hashes_add(self_rptr: RPtr, keyhash_rptr: RPtr, result: &mut bool, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<Ed25519KeyHashes>()?;
-    let elem = elem_rptr.typed_ref::<Ed25519KeyHash>()?;
-    let result = self_ref.add(elem);
+    let keyhash = keyhash_rptr.typed_ref::<Ed25519KeyHash>()?;
+    let result = self_ref.add(keyhash);
     Ok::<bool, String>(result)
   })
   .response(result,  error)
@@ -6197,6 +6199,17 @@ pub unsafe extern "C" fn csl_bridge_fixed_transaction_new_with_auxiliary(raw_bod
     let raw_witness_set = from_raw_parts(raw_witness_set_data, raw_witness_set_len);
     let raw_auxiliary_data = from_raw_parts(raw_auxiliary_data_data, raw_auxiliary_data_len);
     let result = FixedTransaction::new_with_auxiliary(raw_body, raw_witness_set, raw_auxiliary_data, is_valid).into_result()?;
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_fixed_transaction_new_from_body_bytes(raw_body_data: *const u8, raw_body_len: usize, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let raw_body = from_raw_parts(raw_body_data, raw_body_len);
+    let result = FixedTransaction::new_from_body_bytes(raw_body).into_result()?;
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
@@ -11483,50 +11496,6 @@ pub unsafe extern "C" fn csl_bridge_plutus_data_from_address(address_rptr: RPtr,
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_plutus_list_to_bytes(self_rptr: RPtr, result: &mut DataPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<PlutusList>()?;
-    let result = self_ref.to_bytes();
-    Ok::<DataPtr, String>(result.into())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn csl_bridge_plutus_list_from_bytes(bytes_data: *const u8, bytes_len: usize, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let bytes = from_raw_parts(bytes_data, bytes_len).to_vec();
-    let result = PlutusList::from_bytes(bytes).into_result()?;
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn csl_bridge_plutus_list_to_hex(self_rptr: RPtr, result: &mut CharPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<PlutusList>()?;
-    let result = self_ref.to_hex();
-    Ok::<CharPtr, String>(result.into_cstr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn csl_bridge_plutus_list_from_hex(hex_str_str: CharPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let hex_str: &str = hex_str_str.into_str();
-    let result = PlutusList::from_hex(hex_str).into_result()?;
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
 pub unsafe extern "C" fn csl_bridge_plutus_list_new(result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let result = PlutusList::new();
@@ -11568,6 +11537,50 @@ pub unsafe extern "C" fn csl_bridge_plutus_list_add(self_rptr: RPtr, elem_rptr: 
     Ok(())
   })
   .response(&mut (),  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_plutus_list_to_bytes(self_rptr: RPtr, result: &mut DataPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<PlutusList>()?;
+    let result = self_ref.to_bytes();
+    Ok::<DataPtr, String>(result.into())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_plutus_list_from_bytes(bytes_data: *const u8, bytes_len: usize, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let bytes = from_raw_parts(bytes_data, bytes_len).to_vec();
+    let result = PlutusList::from_bytes(bytes).into_result()?;
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_plutus_list_to_hex(self_rptr: RPtr, result: &mut CharPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<PlutusList>()?;
+    let result = self_ref.to_hex();
+    Ok::<CharPtr, String>(result.into_cstr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_plutus_list_from_hex(hex_str_str: CharPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let hex_str: &str = hex_str_str.into_str();
+    let result = PlutusList::from_hex(hex_str).into_result()?;
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
 }
 
 
@@ -14708,6 +14721,17 @@ pub unsafe extern "C" fn csl_bridge_redeemers_add(self_rptr: RPtr, elem_rptr: RP
     Ok(())
   })
   .response(&mut (),  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_redeemers_get_container_type(self_rptr: RPtr, result: &mut i32, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<Redeemers>()?;
+    let result = self_ref.get_container_type();
+    Ok::<i32, String>(result as i32)
+  })
+  .response(result,  error)
 }
 
 
@@ -19530,11 +19554,11 @@ pub unsafe extern "C" fn csl_bridge_transaction_inputs_get(self_rptr: RPtr, inde
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_transaction_inputs_add(self_rptr: RPtr, elem_rptr: RPtr, result: &mut bool, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_transaction_inputs_add(self_rptr: RPtr, input_rptr: RPtr, result: &mut bool, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<TransactionInputs>()?;
-    let elem = elem_rptr.typed_ref::<TransactionInput>()?;
-    let result = self_ref.add(elem);
+    let input = input_rptr.typed_ref::<TransactionInput>()?;
+    let result = self_ref.add(input);
     Ok::<bool, String>(result)
   })
   .response(result,  error)
@@ -22484,11 +22508,11 @@ pub unsafe extern "C" fn csl_bridge_vkeywitnesses_get(self_rptr: RPtr, index_lon
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_vkeywitnesses_add(self_rptr: RPtr, elem_rptr: RPtr, result: &mut bool, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_vkeywitnesses_add(self_rptr: RPtr, witness_rptr: RPtr, result: &mut bool, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<Vkeywitnesses>()?;
-    let elem = elem_rptr.typed_ref::<Vkeywitness>()?;
-    let result = self_ref.add(elem);
+    let witness = witness_rptr.typed_ref::<Vkeywitness>()?;
+    let result = self_ref.add(witness);
     Ok::<bool, String>(result)
   })
   .response(result,  error)
@@ -23631,6 +23655,29 @@ pub unsafe extern "C" fn csl_bridge_voting_proposals_add(self_rptr: RPtr, propos
 }
 
 
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_voting_proposals_contains(self_rptr: RPtr, elem_rptr: RPtr, result: &mut bool, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<VotingProposals>()?;
+    let elem = elem_rptr.typed_ref::<VotingProposal>()?;
+    let result = self_ref.contains(elem);
+    Ok::<bool, String>(result)
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_voting_proposals_to_option(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<VotingProposals>()?;
+    let result = self_ref.to_option();
+    Ok::<Option<RPtr>, String>(result.map(|v| v.rptr()))
+  })
+  .response_nullable(result,  error)
+}
+
+
 
 #[no_mangle]
 pub unsafe extern "C" fn csl_bridge_withdrawals_to_bytes(self_rptr: RPtr, result: &mut DataPtr, error: &mut CharPtr) -> bool {
@@ -24035,6 +24082,17 @@ pub unsafe extern "C" fn csl_bridge_get_implicit_input(txbody_rptr: RPtr, pool_d
 
 
 #[no_mangle]
+pub unsafe extern "C" fn csl_bridge_has_transaction_set_tag(tx_bytes_data: *const u8, tx_bytes_len: usize, result: &mut i32, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let tx_bytes = from_raw_parts(tx_bytes_data, tx_bytes_len).to_vec();
+    let result = cardano_serialization_lib::has_transaction_set_tag(tx_bytes).into_result()?;
+    Ok::<i32, String>(result as i32)
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
 pub unsafe extern "C" fn csl_bridge_hash_auxiliary_data(auxiliary_data_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let auxiliary_data = auxiliary_data_rptr.typed_ref::<AuxiliaryData>()?;
@@ -24080,17 +24138,6 @@ pub unsafe extern "C" fn csl_bridge_hash_script_data_with_datums(redeemers_rptr:
   .response(result,  error)
 }
 
-
-
-#[no_mangle]
-pub unsafe extern "C" fn csl_bridge_hash_transaction(tx_body_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let tx_body = tx_body_rptr.typed_ref::<TransactionBody>()?;
-    let result = cardano_serialization_lib::hash_transaction(tx_body);
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
 
 
 #[no_mangle]

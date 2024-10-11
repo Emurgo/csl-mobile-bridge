@@ -1148,9 +1148,9 @@ export class BootstrapWitnesses extends Ptr {
     return Ptr._wrap(ret, BootstrapWitness);
   }
 
-  async add(elem) {
-    const elemPtr = Ptr._assertClass(elem, BootstrapWitness);
-    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessesAdd(this.ptr, elemPtr);
+  async add(witness) {
+    const witnessPtr = Ptr._assertClass(witness, BootstrapWitness);
+    const ret = await HaskellShelley.csl_bridge_bootstrapWitnessesAdd(this.ptr, witnessPtr);
     return ret;
   }
 
@@ -2135,9 +2135,9 @@ export class Credentials extends Ptr {
     return Ptr._wrap(ret, Credential);
   }
 
-  async add(elem) {
-    const elemPtr = Ptr._assertClass(elem, Credential);
-    const ret = await HaskellShelley.csl_bridge_credentialsAdd(this.ptr, elemPtr);
+  async add(credential) {
+    const credentialPtr = Ptr._assertClass(credential, Credential);
+    const ret = await HaskellShelley.csl_bridge_credentialsAdd(this.ptr, credentialPtr);
     return ret;
   }
 
@@ -2810,9 +2810,9 @@ export class Ed25519KeyHashes extends Ptr {
     return Ptr._wrap(ret, Ed25519KeyHash);
   }
 
-  async add(elem) {
-    const elemPtr = Ptr._assertClass(elem, Ed25519KeyHash);
-    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashesAdd(this.ptr, elemPtr);
+  async add(keyhash) {
+    const keyhashPtr = Ptr._assertClass(keyhash, Ed25519KeyHash);
+    const ret = await HaskellShelley.csl_bridge_ed25519KeyHashesAdd(this.ptr, keyhashPtr);
     return ret;
   }
 
@@ -3069,6 +3069,11 @@ export class FixedTransaction extends Ptr {
 
   static async new_with_auxiliary(raw_body, raw_witness_set, raw_auxiliary_data, is_valid) {
     const ret = await HaskellShelley.csl_bridge_fixedTransactionNewWithAuxiliary(b64FromUint8Array(raw_body), b64FromUint8Array(raw_witness_set), b64FromUint8Array(raw_auxiliary_data), is_valid);
+    return Ptr._wrap(ret, FixedTransaction);
+  }
+
+  static async new_from_body_bytes(raw_body) {
+    const ret = await HaskellShelley.csl_bridge_fixedTransactionNewFromBodyBytes(b64FromUint8Array(raw_body));
     return Ptr._wrap(ret, FixedTransaction);
   }
 
@@ -5738,26 +5743,6 @@ export class PlutusData extends Ptr {
 
 
 export class PlutusList extends Ptr {
-  async to_bytes() {
-    const ret = await HaskellShelley.csl_bridge_plutusListToBytes(this.ptr);
-    return uint8ArrayFromB64(ret);
-  }
-
-  static async from_bytes(bytes) {
-    const ret = await HaskellShelley.csl_bridge_plutusListFromBytes(b64FromUint8Array(bytes));
-    return Ptr._wrap(ret, PlutusList);
-  }
-
-  async to_hex() {
-    const ret = await HaskellShelley.csl_bridge_plutusListToHex(this.ptr);
-    return ret;
-  }
-
-  static async from_hex(hex_str) {
-    const ret = await HaskellShelley.csl_bridge_plutusListFromHex(hex_str);
-    return Ptr._wrap(ret, PlutusList);
-  }
-
   static async new() {
     const ret = await HaskellShelley.csl_bridge_plutusListNew();
     return Ptr._wrap(ret, PlutusList);
@@ -5777,6 +5762,26 @@ export class PlutusList extends Ptr {
     const elemPtr = Ptr._assertClass(elem, PlutusData);
     const ret = HaskellShelley.csl_bridge_plutusListAdd(this.ptr, elemPtr);
     return ret;
+  }
+
+  async to_bytes() {
+    const ret = await HaskellShelley.csl_bridge_plutusListToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.csl_bridge_plutusListFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, PlutusList);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.csl_bridge_plutusListToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.csl_bridge_plutusListFromHex(hex_str);
+    return Ptr._wrap(ret, PlutusList);
   }
 
 }
@@ -7330,6 +7335,11 @@ export class Redeemers extends Ptr {
   add(elem) {
     const elemPtr = Ptr._assertClass(elem, Redeemer);
     const ret = HaskellShelley.csl_bridge_redeemersAdd(this.ptr, elemPtr);
+    return ret;
+  }
+
+  async get_container_type() {
+    const ret = await HaskellShelley.csl_bridge_redeemersGetContainerType(this.ptr);
     return ret;
   }
 
@@ -9721,9 +9731,9 @@ export class TransactionInputs extends Ptr {
     return Ptr._wrap(ret, TransactionInput);
   }
 
-  async add(elem) {
-    const elemPtr = Ptr._assertClass(elem, TransactionInput);
-    const ret = await HaskellShelley.csl_bridge_transactionInputsAdd(this.ptr, elemPtr);
+  async add(input) {
+    const inputPtr = Ptr._assertClass(input, TransactionInput);
+    const ret = await HaskellShelley.csl_bridge_transactionInputsAdd(this.ptr, inputPtr);
     return ret;
   }
 
@@ -11211,9 +11221,9 @@ export class Vkeywitnesses extends Ptr {
     return Ptr._wrap(ret, Vkeywitness);
   }
 
-  async add(elem) {
-    const elemPtr = Ptr._assertClass(elem, Vkeywitness);
-    const ret = await HaskellShelley.csl_bridge_vkeywitnessesAdd(this.ptr, elemPtr);
+  async add(witness) {
+    const witnessPtr = Ptr._assertClass(witness, Vkeywitness);
+    const ret = await HaskellShelley.csl_bridge_vkeywitnessesAdd(this.ptr, witnessPtr);
     return ret;
   }
 
@@ -11792,6 +11802,17 @@ export class VotingProposals extends Ptr {
     return ret;
   }
 
+  async contains(elem) {
+    const elemPtr = Ptr._assertClass(elem, VotingProposal);
+    const ret = await HaskellShelley.csl_bridge_votingProposalsContains(this.ptr, elemPtr);
+    return ret;
+  }
+
+  async to_option() {
+    const ret = await HaskellShelley.csl_bridge_votingProposalsToOption(this.ptr);
+    return Ptr._wrap(ret, VotingProposals);
+  }
+
 }
 
 
@@ -12011,6 +12032,12 @@ export const get_implicit_input = async (txbody, pool_deposit, key_deposit) => {
 };
 
 
+export const has_transaction_set_tag = async (tx_bytes) => {
+  const ret = await HaskellShelley.csl_bridge_hasTransactionSetTag(b64FromUint8Array(tx_bytes));
+  return ret;
+};
+
+
 export const hash_auxiliary_data = async (auxiliary_data) => {
   const auxiliary_dataPtr = Ptr._assertClass(auxiliary_data, AuxiliaryData);
   const ret = await HaskellShelley.csl_bridge_hashAuxiliaryData(auxiliary_dataPtr);
@@ -12037,13 +12064,6 @@ export const hash_script_data = async (redeemers, cost_models, datums) => {
     const ret = await HaskellShelley.csl_bridge_hashScriptDataWithDatums(redeemersPtr, cost_modelsPtr, datumsPtr);
     return Ptr._wrap(ret, ScriptDataHash);
   }
-};
-
-
-export const hash_transaction = async (tx_body) => {
-  const tx_bodyPtr = Ptr._assertClass(tx_body, TransactionBody);
-  const ret = await HaskellShelley.csl_bridge_hashTransaction(tx_bodyPtr);
-  return Ptr._wrap(ret, TransactionHash);
 };
 
 
@@ -12129,6 +12149,12 @@ export const BlockEra = Object.freeze({
 export const CborContainerType = Object.freeze({
   Array: 0,
   Map: 1,
+});
+
+
+export const CborSetType = Object.freeze({
+  Tagged: 0,
+  Untagged: 1,
 });
 
 
@@ -12280,6 +12306,13 @@ export const TransactionMetadatumKind = Object.freeze({
   Int: 2,
   Bytes: 3,
   Text: 4,
+});
+
+
+export const TransactionSetsState = Object.freeze({
+  AllSetsHaveTag: 0,
+  AllSetsHaveNoTag: 1,
+  MixedSets: 2,
 });
 
 
