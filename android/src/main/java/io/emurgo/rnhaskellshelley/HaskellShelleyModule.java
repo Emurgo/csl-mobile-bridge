@@ -1530,9 +1530,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void csl_bridge_bootstrapWitnessesAdd(String self, String elem, Promise promise) {
+    public final void csl_bridge_bootstrapWitnessesAdd(String self, String witness, Promise promise) {
         Native.I
-            .csl_bridge_bootstrapWitnessesAdd(new RPtr(self), new RPtr(elem))
+            .csl_bridge_bootstrapWitnessesAdd(new RPtr(self), new RPtr(witness))
             .pour(promise);
     }
 
@@ -2908,9 +2908,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void csl_bridge_credentialsAdd(String self, String elem, Promise promise) {
+    public final void csl_bridge_credentialsAdd(String self, String credential, Promise promise) {
         Native.I
-            .csl_bridge_credentialsAdd(new RPtr(self), new RPtr(elem))
+            .csl_bridge_credentialsAdd(new RPtr(self), new RPtr(credential))
             .pour(promise);
     }
 
@@ -3826,9 +3826,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void csl_bridge_ed25519KeyHashesAdd(String self, String elem, Promise promise) {
+    public final void csl_bridge_ed25519KeyHashesAdd(String self, String keyhash, Promise promise) {
         Native.I
-            .csl_bridge_ed25519KeyHashesAdd(new RPtr(self), new RPtr(elem))
+            .csl_bridge_ed25519KeyHashesAdd(new RPtr(self), new RPtr(keyhash))
             .pour(promise);
     }
 
@@ -4185,6 +4185,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void csl_bridge_fixedTransactionNewWithAuxiliary(String rawBody, String rawWitnessSet, String rawAuxiliaryData, Boolean isValid, Promise promise) {
         Native.I
             .csl_bridge_fixedTransactionNewWithAuxiliary(Base64.decode(rawBody, Base64.DEFAULT), Base64.decode(rawWitnessSet, Base64.DEFAULT), Base64.decode(rawAuxiliaryData, Base64.DEFAULT), isValid)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_fixedTransactionNewFromBodyBytes(String rawBody, Promise promise) {
+        Native.I
+            .csl_bridge_fixedTransactionNewFromBodyBytes(Base64.decode(rawBody, Base64.DEFAULT))
             .map(RPtr::toJs)
             .pour(promise);
     }
@@ -7869,37 +7877,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public final void csl_bridge_plutusListToBytes(String self, Promise promise) {
-        Native.I
-            .csl_bridge_plutusListToBytes(new RPtr(self))
-            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void csl_bridge_plutusListFromBytes(String bytes, Promise promise) {
-        Native.I
-            .csl_bridge_plutusListFromBytes(Base64.decode(bytes, Base64.DEFAULT))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void csl_bridge_plutusListToHex(String self, Promise promise) {
-        Native.I
-            .csl_bridge_plutusListToHex(new RPtr(self))
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void csl_bridge_plutusListFromHex(String hexStr, Promise promise) {
-        Native.I
-            .csl_bridge_plutusListFromHex(hexStr)
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
     public final void csl_bridge_plutusListNew( Promise promise) {
         Native.I
             .csl_bridge_plutusListNew()
@@ -7927,6 +7904,37 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void csl_bridge_plutusListAdd(String self, String elem, Promise promise) {
         Native.I
             .csl_bridge_plutusListAdd(new RPtr(self), new RPtr(elem))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_plutusListToBytes(String self, Promise promise) {
+        Native.I
+            .csl_bridge_plutusListToBytes(new RPtr(self))
+            .map(bytes -> Base64.encodeToString(bytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_plutusListFromBytes(String bytes, Promise promise) {
+        Native.I
+            .csl_bridge_plutusListFromBytes(Base64.decode(bytes, Base64.DEFAULT))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_plutusListToHex(String self, Promise promise) {
+        Native.I
+            .csl_bridge_plutusListToHex(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_plutusListFromHex(String hexStr, Promise promise) {
+        Native.I
+            .csl_bridge_plutusListFromHex(hexStr)
+            .map(RPtr::toJs)
             .pour(promise);
     }
 
@@ -10089,6 +10097,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     public final void csl_bridge_redeemersAdd(String self, String elem, Promise promise) {
         Native.I
             .csl_bridge_redeemersAdd(new RPtr(self), new RPtr(elem))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_redeemersGetContainerType(String self, Promise promise) {
+        Native.I
+            .csl_bridge_redeemersGetContainerType(new RPtr(self))
             .pour(promise);
     }
 
@@ -13351,9 +13366,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void csl_bridge_transactionInputsAdd(String self, String elem, Promise promise) {
+    public final void csl_bridge_transactionInputsAdd(String self, String input, Promise promise) {
         Native.I
-            .csl_bridge_transactionInputsAdd(new RPtr(self), new RPtr(elem))
+            .csl_bridge_transactionInputsAdd(new RPtr(self), new RPtr(input))
             .pour(promise);
     }
 
@@ -15392,9 +15407,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void csl_bridge_vkeywitnessesAdd(String self, String elem, Promise promise) {
+    public final void csl_bridge_vkeywitnessesAdd(String self, String witness, Promise promise) {
         Native.I
-            .csl_bridge_vkeywitnessesAdd(new RPtr(self), new RPtr(elem))
+            .csl_bridge_vkeywitnessesAdd(new RPtr(self), new RPtr(witness))
             .pour(promise);
     }
 
@@ -16178,6 +16193,21 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
             .pour(promise);
     }
 
+    @ReactMethod
+    public final void csl_bridge_votingProposalsContains(String self, String elem, Promise promise) {
+        Native.I
+            .csl_bridge_votingProposalsContains(new RPtr(self), new RPtr(elem))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_votingProposalsToOption(String self, Promise promise) {
+        Native.I
+            .csl_bridge_votingProposalsToOption(new RPtr(self))
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
 
     @ReactMethod
     public final void csl_bridge_withdrawalsToBytes(String self, Promise promise) {
@@ -16444,6 +16474,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void csl_bridge_hasTransactionSetTag(String txBytes, Promise promise) {
+        Native.I
+            .csl_bridge_hasTransactionSetTag(Base64.decode(txBytes, Base64.DEFAULT))
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void csl_bridge_hashAuxiliaryData(String auxiliaryData, Promise promise) {
         Native.I
             .csl_bridge_hashAuxiliaryData(new RPtr(auxiliaryData))
@@ -16475,14 +16512,6 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
             .pour(promise);
     }
 
-
-    @ReactMethod
-    public final void csl_bridge_hashTransaction(String txBody, Promise promise) {
-        Native.I
-            .csl_bridge_hashTransaction(new RPtr(txBody))
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
 
     @ReactMethod
     public final void csl_bridge_makeDaedalusBootstrapWitness(String txBodyHash, String addr, String key, Promise promise) {

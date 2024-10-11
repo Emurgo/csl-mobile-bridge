@@ -224,7 +224,7 @@ final class Native {
     public final native Result<RPtr> csl_bridge_bootstrapWitnessesNew();
     public final native Result<Long> csl_bridge_bootstrapWitnessesLen(RPtr self);
     public final native Result<RPtr> csl_bridge_bootstrapWitnessesGet(RPtr self, long index);
-    public final native Result<Boolean> csl_bridge_bootstrapWitnessesAdd(RPtr self, RPtr elem);
+    public final native Result<Boolean> csl_bridge_bootstrapWitnessesAdd(RPtr self, RPtr witness);
 
     public final native Result<String> csl_bridge_byronAddressToBase58(RPtr self);
     public final native Result<byte[]> csl_bridge_byronAddressToBytes(RPtr self);
@@ -413,7 +413,7 @@ final class Native {
     public final native Result<RPtr> csl_bridge_credentialsNew();
     public final native Result<Long> csl_bridge_credentialsLen(RPtr self);
     public final native Result<RPtr> csl_bridge_credentialsGet(RPtr self, long index);
-    public final native Result<Boolean> csl_bridge_credentialsAdd(RPtr self, RPtr elem);
+    public final native Result<Boolean> csl_bridge_credentialsAdd(RPtr self, RPtr credential);
 
     public final native Result<byte[]> csl_bridge_dNSRecordAorAAAAToBytes(RPtr self);
     public final native Result<RPtr> csl_bridge_dNSRecordAorAAAAFromBytes(byte[] bytes);
@@ -543,7 +543,7 @@ final class Native {
     public final native Result<RPtr> csl_bridge_ed25519KeyHashesNew();
     public final native Result<Long> csl_bridge_ed25519KeyHashesLen(RPtr self);
     public final native Result<RPtr> csl_bridge_ed25519KeyHashesGet(RPtr self, long index);
-    public final native Result<Boolean> csl_bridge_ed25519KeyHashesAdd(RPtr self, RPtr elem);
+    public final native Result<Boolean> csl_bridge_ed25519KeyHashesAdd(RPtr self, RPtr keyhash);
     public final native Result<Boolean> csl_bridge_ed25519KeyHashesContains(RPtr self, RPtr elem);
     public final native Result<RPtr> csl_bridge_ed25519KeyHashesToOption(RPtr self);
 
@@ -595,6 +595,7 @@ final class Native {
     public final native Result<RPtr> csl_bridge_fixedTransactionFromHex(String hexStr);
     public final native Result<RPtr> csl_bridge_fixedTransactionNew(byte[] rawBody, byte[] rawWitnessSet, boolean isValid);
     public final native Result<RPtr> csl_bridge_fixedTransactionNewWithAuxiliary(byte[] rawBody, byte[] rawWitnessSet, byte[] rawAuxiliaryData, boolean isValid);
+    public final native Result<RPtr> csl_bridge_fixedTransactionNewFromBodyBytes(byte[] rawBody);
     public final native Result<RPtr> csl_bridge_fixedTransactionBody(RPtr self);
     public final native Result<byte[]> csl_bridge_fixedTransactionRawBody(RPtr self);
     public final native Result<Void> csl_bridge_fixedTransactionSetBody(RPtr self, byte[] rawBody);
@@ -1114,14 +1115,14 @@ final class Native {
     public final native Result<RPtr> csl_bridge_plutusDataFromJson(String json, int schema);
     public final native Result<RPtr> csl_bridge_plutusDataFromAddress(RPtr address);
 
-    public final native Result<byte[]> csl_bridge_plutusListToBytes(RPtr self);
-    public final native Result<RPtr> csl_bridge_plutusListFromBytes(byte[] bytes);
-    public final native Result<String> csl_bridge_plutusListToHex(RPtr self);
-    public final native Result<RPtr> csl_bridge_plutusListFromHex(String hexStr);
     public final native Result<RPtr> csl_bridge_plutusListNew();
     public final native Result<Long> csl_bridge_plutusListLen(RPtr self);
     public final native Result<RPtr> csl_bridge_plutusListGet(RPtr self, long index);
     public final native Result<Void> csl_bridge_plutusListAdd(RPtr self, RPtr elem);
+    public final native Result<byte[]> csl_bridge_plutusListToBytes(RPtr self);
+    public final native Result<RPtr> csl_bridge_plutusListFromBytes(byte[] bytes);
+    public final native Result<String> csl_bridge_plutusListToHex(RPtr self);
+    public final native Result<RPtr> csl_bridge_plutusListFromHex(String hexStr);
 
     public final native Result<byte[]> csl_bridge_plutusMapToBytes(RPtr self);
     public final native Result<RPtr> csl_bridge_plutusMapFromBytes(byte[] bytes);
@@ -1423,6 +1424,7 @@ final class Native {
     public final native Result<Long> csl_bridge_redeemersLen(RPtr self);
     public final native Result<RPtr> csl_bridge_redeemersGet(RPtr self, long index);
     public final native Result<Void> csl_bridge_redeemersAdd(RPtr self, RPtr elem);
+    public final native Result<Integer> csl_bridge_redeemersGetContainerType(RPtr self);
     public final native Result<RPtr> csl_bridge_redeemersTotalExUnits(RPtr self);
 
     public final native Result<byte[]> csl_bridge_relayToBytes(RPtr self);
@@ -1882,7 +1884,7 @@ final class Native {
     public final native Result<RPtr> csl_bridge_transactionInputsNew();
     public final native Result<Long> csl_bridge_transactionInputsLen(RPtr self);
     public final native Result<RPtr> csl_bridge_transactionInputsGet(RPtr self, long index);
-    public final native Result<Boolean> csl_bridge_transactionInputsAdd(RPtr self, RPtr elem);
+    public final native Result<Boolean> csl_bridge_transactionInputsAdd(RPtr self, RPtr input);
     public final native Result<RPtr> csl_bridge_transactionInputsToOption(RPtr self);
 
     public final native Result<byte[]> csl_bridge_transactionMetadatumToBytes(RPtr self);
@@ -2170,7 +2172,7 @@ final class Native {
     public final native Result<RPtr> csl_bridge_vkeywitnessesNew();
     public final native Result<Long> csl_bridge_vkeywitnessesLen(RPtr self);
     public final native Result<RPtr> csl_bridge_vkeywitnessesGet(RPtr self, long index);
-    public final native Result<Boolean> csl_bridge_vkeywitnessesAdd(RPtr self, RPtr elem);
+    public final native Result<Boolean> csl_bridge_vkeywitnessesAdd(RPtr self, RPtr witness);
 
     public final native Result<byte[]> csl_bridge_voteDelegationToBytes(RPtr self);
     public final native Result<RPtr> csl_bridge_voteDelegationFromBytes(byte[] bytes);
@@ -2281,6 +2283,8 @@ final class Native {
     public final native Result<Long> csl_bridge_votingProposalsLen(RPtr self);
     public final native Result<RPtr> csl_bridge_votingProposalsGet(RPtr self, long index);
     public final native Result<Boolean> csl_bridge_votingProposalsAdd(RPtr self, RPtr proposal);
+    public final native Result<Boolean> csl_bridge_votingProposalsContains(RPtr self, RPtr elem);
+    public final native Result<RPtr> csl_bridge_votingProposalsToOption(RPtr self);
 
     public final native Result<byte[]> csl_bridge_withdrawalsToBytes(RPtr self);
     public final native Result<RPtr> csl_bridge_withdrawalsFromBytes(byte[] bytes);
@@ -2318,12 +2322,12 @@ final class Native {
     public final native Result<String> csl_bridge_encryptWithPassword(String password, String salt, String nonce, String data);
     public final native Result<RPtr> csl_bridge_getDeposit(RPtr txbody, RPtr poolDeposit, RPtr keyDeposit);
     public final native Result<RPtr> csl_bridge_getImplicitInput(RPtr txbody, RPtr poolDeposit, RPtr keyDeposit);
+    public final native Result<Integer> csl_bridge_hasTransactionSetTag(byte[] txBytes);
     public final native Result<RPtr> csl_bridge_hashAuxiliaryData(RPtr auxiliaryData);
     public final native Result<RPtr> csl_bridge_hashPlutusData(RPtr plutusData);
     public final native Result<RPtr> csl_bridge_hashScriptData(RPtr redeemers, RPtr costModels);
     public final native Result<RPtr> csl_bridge_hashScriptDataWithDatums(RPtr redeemers, RPtr costModels, RPtr datums);
 
-    public final native Result<RPtr> csl_bridge_hashTransaction(RPtr txBody);
     public final native Result<RPtr> csl_bridge_makeDaedalusBootstrapWitness(RPtr txBodyHash, RPtr addr, RPtr key);
     public final native Result<RPtr> csl_bridge_makeIcarusBootstrapWitness(RPtr txBodyHash, RPtr addr, RPtr key);
     public final native Result<RPtr> csl_bridge_makeVkeyWitness(RPtr txBodyHash, RPtr sk);

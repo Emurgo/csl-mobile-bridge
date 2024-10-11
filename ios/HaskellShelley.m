@@ -2165,16 +2165,16 @@ RCT_EXPORT_METHOD(csl_bridge_bootstrapWitnessesGet:(nonnull NSString *)selfPtr w
     }] exec:@[selfPtr, indexVal] andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_bootstrapWitnessesAdd:(nonnull NSString *)selfPtr withElem:(nonnull NSString *)elemPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_bootstrapWitnessesAdd:(nonnull NSString *)selfPtr withWitness:(nonnull NSString *)witnessPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSNumber*(NSArray* params, CharPtr* error) {
         BOOL result;
         RPtr self = [[params objectAtIndex:0]  rPtr];
-        RPtr elem = [[params objectAtIndex:1]  rPtr];
-        return csl_bridge_bootstrap_witnesses_add(self, elem, &result, error)
+        RPtr witness = [[params objectAtIndex:1]  rPtr];
+        return csl_bridge_bootstrap_witnesses_add(self, witness, &result, error)
             ? [NSNumber numberWithBool:result]
             : nil;
-    }] exec:@[selfPtr, elemPtr] andResolve:resolve orReject:reject];
+    }] exec:@[selfPtr, witnessPtr] andResolve:resolve orReject:reject];
 }
 
 
@@ -4122,16 +4122,16 @@ RCT_EXPORT_METHOD(csl_bridge_credentialsGet:(nonnull NSString *)selfPtr withInde
     }] exec:@[selfPtr, indexVal] andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_credentialsAdd:(nonnull NSString *)selfPtr withElem:(nonnull NSString *)elemPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_credentialsAdd:(nonnull NSString *)selfPtr withCredential:(nonnull NSString *)credentialPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSNumber*(NSArray* params, CharPtr* error) {
         BOOL result;
         RPtr self = [[params objectAtIndex:0]  rPtr];
-        RPtr elem = [[params objectAtIndex:1]  rPtr];
-        return csl_bridge_credentials_add(self, elem, &result, error)
+        RPtr credential = [[params objectAtIndex:1]  rPtr];
+        return csl_bridge_credentials_add(self, credential, &result, error)
             ? [NSNumber numberWithBool:result]
             : nil;
-    }] exec:@[selfPtr, elemPtr] andResolve:resolve orReject:reject];
+    }] exec:@[selfPtr, credentialPtr] andResolve:resolve orReject:reject];
 }
 
 
@@ -5437,16 +5437,16 @@ RCT_EXPORT_METHOD(csl_bridge_ed25519KeyHashesGet:(nonnull NSString *)selfPtr wit
     }] exec:@[selfPtr, indexVal] andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_ed25519KeyHashesAdd:(nonnull NSString *)selfPtr withElem:(nonnull NSString *)elemPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_ed25519KeyHashesAdd:(nonnull NSString *)selfPtr withKeyhash:(nonnull NSString *)keyhashPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSNumber*(NSArray* params, CharPtr* error) {
         BOOL result;
         RPtr self = [[params objectAtIndex:0]  rPtr];
-        RPtr elem = [[params objectAtIndex:1]  rPtr];
-        return csl_bridge_ed25519_key_hashes_add(self, elem, &result, error)
+        RPtr keyhash = [[params objectAtIndex:1]  rPtr];
+        return csl_bridge_ed25519_key_hashes_add(self, keyhash, &result, error)
             ? [NSNumber numberWithBool:result]
             : nil;
-    }] exec:@[selfPtr, elemPtr] andResolve:resolve orReject:reject];
+    }] exec:@[selfPtr, keyhashPtr] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(csl_bridge_ed25519KeyHashesContains:(nonnull NSString *)selfPtr withElem:(nonnull NSString *)elemPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -5957,6 +5957,17 @@ RCT_EXPORT_METHOD(csl_bridge_fixedTransactionNewWithAuxiliary:(nonnull NSString 
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:@[rawBodyVal, rawWitnessSetVal, rawAuxiliaryDataVal, isValidVal] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_fixedTransactionNewFromBodyBytes:(nonnull NSString *)rawBodyVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSString* rawBodyVal, CharPtr* error) {
+        RPtr result;
+        NSData* dataRawBody = [NSData fromBase64:rawBodyVal];
+        return csl_bridge_fixed_transaction_new_from_body_bytes((uint8_t*)dataRawBody.bytes, dataRawBody.length, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:rawBodyVal andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(csl_bridge_fixedTransactionBody:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -11197,6 +11208,49 @@ RCT_EXPORT_METHOD(csl_bridge_plutusDataFromAddress:(nonnull NSString *)addressPt
 }
 
 
+RCT_EXPORT_METHOD(csl_bridge_plutusListNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return csl_bridge_plutus_list_new(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_plutusListLen:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSNumber*(NSString* selfPtr, CharPtr* error) {
+        int64_t result;
+        RPtr self = [selfPtr  rPtr];
+        return csl_bridge_plutus_list_len(self, &result, error)
+            ? [NSNumber numberWithLongLong:result]
+            : nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_plutusListGet:(nonnull NSString *)selfPtr withIndex:(nonnull NSNumber *)indexVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        int64_t index = [[params objectAtIndex:1]  longLongValue];
+        return csl_bridge_plutus_list_get(self, index, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[selfPtr, indexVal] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_plutusListAdd:(nonnull NSString *)selfPtr withElem:(nonnull NSString *)elemPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr elem = [[params objectAtIndex:1]  rPtr];
+        csl_bridge_plutus_list_add(self, elem, error);
+        return nil;
+    }] exec:@[selfPtr, elemPtr] andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(csl_bridge_plutusListToBytes:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
@@ -11239,49 +11293,6 @@ RCT_EXPORT_METHOD(csl_bridge_plutusListFromHex:(nonnull NSString *)hexStrVal wit
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:hexStrVal andResolve:resolve orReject:reject];
-}
-
-RCT_EXPORT_METHOD(csl_bridge_plutusListNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
-{
-    [[CSLCSafeOperation new:^NSString*(id _void, CharPtr* error) {
-        RPtr result;
-        return csl_bridge_plutus_list_new(&result, error)
-            ? [NSString stringFromPtr:result]
-            : nil;
-    }] exec:nil andResolve:resolve orReject:reject];
-}
-
-RCT_EXPORT_METHOD(csl_bridge_plutusListLen:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
-{
-    [[CSLCSafeOperation new:^NSNumber*(NSString* selfPtr, CharPtr* error) {
-        int64_t result;
-        RPtr self = [selfPtr  rPtr];
-        return csl_bridge_plutus_list_len(self, &result, error)
-            ? [NSNumber numberWithLongLong:result]
-            : nil;
-    }] exec:selfPtr andResolve:resolve orReject:reject];
-}
-
-RCT_EXPORT_METHOD(csl_bridge_plutusListGet:(nonnull NSString *)selfPtr withIndex:(nonnull NSNumber *)indexVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
-{
-    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
-        RPtr result;
-        RPtr self = [[params objectAtIndex:0]  rPtr];
-        int64_t index = [[params objectAtIndex:1]  longLongValue];
-        return csl_bridge_plutus_list_get(self, index, &result, error)
-            ? [NSString stringFromPtr:result]
-            : nil;
-    }] exec:@[selfPtr, indexVal] andResolve:resolve orReject:reject];
-}
-
-RCT_EXPORT_METHOD(csl_bridge_plutusListAdd:(nonnull NSString *)selfPtr withElem:(nonnull NSString *)elemPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
-{
-    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
-        RPtr self = [[params objectAtIndex:0]  rPtr];
-        RPtr elem = [[params objectAtIndex:1]  rPtr];
-        csl_bridge_plutus_list_add(self, elem, error);
-        return nil;
-    }] exec:@[selfPtr, elemPtr] andResolve:resolve orReject:reject];
 }
 
 
@@ -14348,6 +14359,17 @@ RCT_EXPORT_METHOD(csl_bridge_redeemersAdd:(nonnull NSString *)selfPtr withElem:(
         csl_bridge_redeemers_add(self, elem, error);
         return nil;
     }] exec:@[selfPtr, elemPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_redeemersGetContainerType:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSNumber*(NSString* selfPtr, CharPtr* error) {
+        int32_t result;
+        RPtr self = [selfPtr  rPtr];
+        return csl_bridge_redeemers_get_container_type(self, &result, error)
+            ? [NSNumber numberWithLong:result]
+            : nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(csl_bridge_redeemersTotalExUnits:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -19013,16 +19035,16 @@ RCT_EXPORT_METHOD(csl_bridge_transactionInputsGet:(nonnull NSString *)selfPtr wi
     }] exec:@[selfPtr, indexVal] andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_transactionInputsAdd:(nonnull NSString *)selfPtr withElem:(nonnull NSString *)elemPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_transactionInputsAdd:(nonnull NSString *)selfPtr withInput:(nonnull NSString *)inputPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSNumber*(NSArray* params, CharPtr* error) {
         BOOL result;
         RPtr self = [[params objectAtIndex:0]  rPtr];
-        RPtr elem = [[params objectAtIndex:1]  rPtr];
-        return csl_bridge_transaction_inputs_add(self, elem, &result, error)
+        RPtr input = [[params objectAtIndex:1]  rPtr];
+        return csl_bridge_transaction_inputs_add(self, input, &result, error)
             ? [NSNumber numberWithBool:result]
             : nil;
-    }] exec:@[selfPtr, elemPtr] andResolve:resolve orReject:reject];
+    }] exec:@[selfPtr, inputPtr] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(csl_bridge_transactionInputsToOption:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -21919,16 +21941,16 @@ RCT_EXPORT_METHOD(csl_bridge_vkeywitnessesGet:(nonnull NSString *)selfPtr withIn
     }] exec:@[selfPtr, indexVal] andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_vkeywitnessesAdd:(nonnull NSString *)selfPtr withElem:(nonnull NSString *)elemPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_vkeywitnessesAdd:(nonnull NSString *)selfPtr withWitness:(nonnull NSString *)witnessPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSNumber*(NSArray* params, CharPtr* error) {
         BOOL result;
         RPtr self = [[params objectAtIndex:0]  rPtr];
-        RPtr elem = [[params objectAtIndex:1]  rPtr];
-        return csl_bridge_vkeywitnesses_add(self, elem, &result, error)
+        RPtr witness = [[params objectAtIndex:1]  rPtr];
+        return csl_bridge_vkeywitnesses_add(self, witness, &result, error)
             ? [NSNumber numberWithBool:result]
             : nil;
-    }] exec:@[selfPtr, elemPtr] andResolve:resolve orReject:reject];
+    }] exec:@[selfPtr, witnessPtr] andResolve:resolve orReject:reject];
 }
 
 
@@ -23053,6 +23075,29 @@ RCT_EXPORT_METHOD(csl_bridge_votingProposalsAdd:(nonnull NSString *)selfPtr with
     }] exec:@[selfPtr, proposalPtr] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(csl_bridge_votingProposalsContains:(nonnull NSString *)selfPtr withElem:(nonnull NSString *)elemPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSNumber*(NSArray* params, CharPtr* error) {
+        BOOL result;
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr elem = [[params objectAtIndex:1]  rPtr];
+        return csl_bridge_voting_proposals_contains(self, elem, &result, error)
+            ? [NSNumber numberWithBool:result]
+            : nil;
+    }] exec:@[selfPtr, elemPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_votingProposalsToOption:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
+        RPtr result;
+        RPtr self = [selfPtr  rPtr];
+        return csl_bridge_voting_proposals_to_option(self, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
 
 RCT_EXPORT_METHOD(csl_bridge_withdrawalsToBytes:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
@@ -23450,6 +23495,17 @@ RCT_EXPORT_METHOD(csl_bridge_getImplicitInput:(nonnull NSString *)txbodyPtr with
     }] exec:@[txbodyPtr, poolDepositPtr, keyDepositPtr] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(csl_bridge_hasTransactionSetTag:(nonnull NSString *)txBytesVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSNumber*(NSString* txBytesVal, CharPtr* error) {
+        int32_t result;
+        NSData* dataTxBytes = [NSData fromBase64:txBytesVal];
+        return csl_bridge_has_transaction_set_tag((uint8_t*)dataTxBytes.bytes, dataTxBytes.length, &result, error)
+            ? [NSNumber numberWithLong:result]
+            : nil;
+    }] exec:txBytesVal andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(csl_bridge_hashAuxiliaryData:(nonnull NSString *)auxiliaryDataPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSString* auxiliaryDataPtr, CharPtr* error) {
@@ -23497,17 +23553,6 @@ RCT_EXPORT_METHOD(csl_bridge_hashScriptDataWithDatums:(nonnull NSString *)redeem
     }] exec:@[redeemersPtr, costModelsPtr, datumsPtr] andResolve:resolve orReject:reject];
 }
 
-
-RCT_EXPORT_METHOD(csl_bridge_hashTransaction:(nonnull NSString *)txBodyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
-{
-    [[CSLCSafeOperation new:^NSString*(NSString* txBodyPtr, CharPtr* error) {
-        RPtr result;
-        RPtr txBody = [txBodyPtr  rPtr];
-        return csl_bridge_hash_transaction(txBody, &result, error)
-            ? [NSString stringFromPtr:result]
-            : nil;
-    }] exec:txBodyPtr andResolve:resolve orReject:reject];
-}
 
 RCT_EXPORT_METHOD(csl_bridge_makeDaedalusBootstrapWitness:(nonnull NSString *)txBodyHashPtr withAddr:(nonnull NSString *)addrPtr withKey:(nonnull NSString *)keyPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {

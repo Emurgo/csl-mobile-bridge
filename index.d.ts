@@ -1127,10 +1127,10 @@ export class BootstrapWitnesses extends Ptr {
   get: (index: number) => Promise<BootstrapWitness>;
 
   /**
-  * @param {BootstrapWitness} elem
+  * @param {BootstrapWitness} witness
   * @returns {Promise<boolean>}
   */
-  add: (elem: BootstrapWitness) => Promise<boolean>;
+  add: (witness: BootstrapWitness) => Promise<boolean>;
 
 }
 
@@ -2154,10 +2154,10 @@ export class Credentials extends Ptr {
   get: (index: number) => Promise<Credential>;
 
   /**
-  * @param {Credential} elem
+  * @param {Credential} credential
   * @returns {Promise<boolean>}
   */
-  add: (elem: Credential) => Promise<boolean>;
+  add: (credential: Credential) => Promise<boolean>;
 
 }
 
@@ -2855,10 +2855,10 @@ export class Ed25519KeyHashes extends Ptr {
   get: (index: number) => Promise<Ed25519KeyHash>;
 
   /**
-  * @param {Ed25519KeyHash} elem
+  * @param {Ed25519KeyHash} keyhash
   * @returns {Promise<boolean>}
   */
-  add: (elem: Ed25519KeyHash) => Promise<boolean>;
+  add: (keyhash: Ed25519KeyHash) => Promise<boolean>;
 
   /**
   * @param {Ed25519KeyHash} elem
@@ -3136,6 +3136,12 @@ export class FixedTransaction extends Ptr {
   * @returns {Promise<FixedTransaction>}
   */
   static new_with_auxiliary: (raw_body: Uint8Array, raw_witness_set: Uint8Array, raw_auxiliary_data: Uint8Array, is_valid: boolean) => Promise<FixedTransaction>;
+
+  /**
+  * @param {Uint8Array} raw_body
+  * @returns {Promise<FixedTransaction>}
+  */
+  static new_from_body_bytes: (raw_body: Uint8Array) => Promise<FixedTransaction>;
 
   /**
   * @returns {Promise<TransactionBody>}
@@ -5923,6 +5929,27 @@ export class PlutusData extends Ptr {
 
 export class PlutusList extends Ptr {
   /**
+  * @returns {Promise<PlutusList>}
+  */
+  static new: () => Promise<PlutusList>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len: () => Promise<number>;
+
+  /**
+  * @param {number} index
+  * @returns {Promise<PlutusData>}
+  */
+  get: (index: number) => Promise<PlutusData>;
+
+  /**
+  * @param {PlutusData} elem
+  */
+  add: (elem: PlutusData) => Promise<void>;
+
+  /**
   * @returns {Promise<Uint8Array>}
   */
   to_bytes: () => Promise<Uint8Array>;
@@ -5943,27 +5970,6 @@ export class PlutusList extends Ptr {
   * @returns {Promise<PlutusList>}
   */
   static from_hex: (hex_str: string) => Promise<PlutusList>;
-
-  /**
-  * @returns {Promise<PlutusList>}
-  */
-  static new: () => Promise<PlutusList>;
-
-  /**
-  * @returns {Promise<number>}
-  */
-  len: () => Promise<number>;
-
-  /**
-  * @param {number} index
-  * @returns {Promise<PlutusData>}
-  */
-  get: (index: number) => Promise<PlutusData>;
-
-  /**
-  * @param {PlutusData} elem
-  */
-  add: (elem: PlutusData) => Promise<void>;
 
 }
 
@@ -7561,6 +7567,11 @@ export class Redeemers extends Ptr {
   * @param {Redeemer} elem
   */
   add: (elem: Redeemer) => Promise<void>;
+
+  /**
+  * @returns {Promise<CborContainerType>}
+  */
+  get_container_type: () => Promise<CborContainerType>;
 
   /**
   * @returns {Promise<ExUnits>}
@@ -9957,10 +9968,10 @@ export class TransactionInputs extends Ptr {
   get: (index: number) => Promise<TransactionInput>;
 
   /**
-  * @param {TransactionInput} elem
+  * @param {TransactionInput} input
   * @returns {Promise<boolean>}
   */
-  add: (elem: TransactionInput) => Promise<boolean>;
+  add: (input: TransactionInput) => Promise<boolean>;
 
   /**
   * @returns {Promise<Optional<TransactionInputs>>}
@@ -11499,10 +11510,10 @@ export class Vkeywitnesses extends Ptr {
   get: (index: number) => Promise<Vkeywitness>;
 
   /**
-  * @param {Vkeywitness} elem
+  * @param {Vkeywitness} witness
   * @returns {Promise<boolean>}
   */
-  add: (elem: Vkeywitness) => Promise<boolean>;
+  add: (witness: Vkeywitness) => Promise<boolean>;
 
 }
 
@@ -12103,6 +12114,17 @@ export class VotingProposals extends Ptr {
   */
   add: (proposal: VotingProposal) => Promise<boolean>;
 
+  /**
+  * @param {VotingProposal} elem
+  * @returns {Promise<boolean>}
+  */
+  contains: (elem: VotingProposal) => Promise<boolean>;
+
+  /**
+  * @returns {Promise<Optional<VotingProposals>>}
+  */
+  to_option: () => Promise<Optional<VotingProposals>>;
+
 }
 
 
@@ -12329,6 +12351,12 @@ export const get_deposit: (txbody: TransactionBody, pool_deposit: BigNum, key_de
 export const get_implicit_input: (txbody: TransactionBody, pool_deposit: BigNum, key_deposit: BigNum) => Promise<Value>;
 
 /**
+* @param {Uint8Array} tx_bytes
+* @returns {Promise<TransactionSetsState>}
+*/
+export const has_transaction_set_tag: (tx_bytes: Uint8Array) => Promise<TransactionSetsState>;
+
+/**
 * @param {AuxiliaryData} auxiliary_data
 * @returns {Promise<AuxiliaryDataHash>}
 */
@@ -12347,12 +12375,6 @@ export const hash_plutus_data: (plutus_data: PlutusData) => Promise<DataHash>;
 * @returns {Promise<ScriptDataHash>}
 */
 export const hash_script_data: (redeemers: Redeemers, cost_models: Costmdls, datums: Optional<PlutusList>) => Promise<ScriptDataHash>;
-
-/**
-* @param {TransactionBody} tx_body
-* @returns {Promise<TransactionHash>}
-*/
-export const hash_transaction: (tx_body: TransactionBody) => Promise<TransactionHash>;
 
 /**
 * @param {TransactionHash} tx_body_hash
@@ -12430,6 +12452,12 @@ export enum BlockEra {
 export enum CborContainerType {
   Array = 0,
   Map = 1,
+}
+
+
+export enum CborSetType {
+  Tagged = 0,
+  Untagged = 1,
 }
 
 
@@ -12581,6 +12609,13 @@ export enum TransactionMetadatumKind {
   Int = 2,
   Bytes = 3,
   Text = 4,
+}
+
+
+export enum TransactionSetsState {
+  AllSetsHaveTag = 0,
+  AllSetsHaveNoTag = 1,
+  MixedSets = 2,
 }
 
 

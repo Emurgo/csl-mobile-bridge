@@ -36,6 +36,7 @@ use cardano_serialization_lib::BootstrapWitness;
 use cardano_serialization_lib::BootstrapWitnesses;
 use cardano_serialization_lib::ByronAddress;
 use cardano_serialization_lib::CborContainerType;
+use cardano_serialization_lib::CborSetType;
 use cardano_serialization_lib::Certificate;
 use cardano_serialization_lib::CertificateKind;
 use cardano_serialization_lib::Certificates;
@@ -202,6 +203,7 @@ use cardano_serialization_lib::TransactionOutput;
 use cardano_serialization_lib::TransactionOutputAmountBuilder;
 use cardano_serialization_lib::TransactionOutputBuilder;
 use cardano_serialization_lib::TransactionOutputs;
+use cardano_serialization_lib::TransactionSetsState;
 use cardano_serialization_lib::TransactionUnspentOutput;
 use cardano_serialization_lib::TransactionUnspentOutputs;
 use cardano_serialization_lib::TransactionWitnessSet;
@@ -250,10 +252,10 @@ use cardano_serialization_lib::encode_json_str_to_plutus_datum;
 use cardano_serialization_lib::encrypt_with_password;
 use cardano_serialization_lib::get_deposit;
 use cardano_serialization_lib::get_implicit_input;
+use cardano_serialization_lib::has_transaction_set_tag;
 use cardano_serialization_lib::hash_auxiliary_data;
 use cardano_serialization_lib::hash_plutus_data;
 use cardano_serialization_lib::hash_script_data;
-use cardano_serialization_lib::hash_transaction;
 use cardano_serialization_lib::make_daedalus_bootstrap_witness;
 use cardano_serialization_lib::make_icarus_bootstrap_witness;
 use cardano_serialization_lib::make_vkey_witness;
@@ -2761,13 +2763,13 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1boo
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1bootstrapWitnessesAdd(env: JNIEnv, _: JObject, self_ptr: JRPtr, elem_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1bootstrapWitnessesAdd(env: JNIEnv, _: JObject, self_ptr: JRPtr, witness_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
     let self_rptr = self_jrptr.typed_ref::<BootstrapWitnesses>()?;
-    let elem_jrptr = elem_ptr.rptr(&env)?;
-    let elem = elem_jrptr.typed_ref::<BootstrapWitness>()?;
-    let result = self_rptr.add(elem);
+    let witness_jrptr = witness_ptr.rptr(&env)?;
+    let witness = witness_jrptr.typed_ref::<BootstrapWitness>()?;
+    let result = self_rptr.add(witness);
     result.into_jboolean().jobject(&env)
   })
   .jresult(&env)
@@ -5061,13 +5063,13 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1cre
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1credentialsAdd(env: JNIEnv, _: JObject, self_ptr: JRPtr, elem_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1credentialsAdd(env: JNIEnv, _: JObject, self_ptr: JRPtr, credential_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
     let self_rptr = self_jrptr.typed_ref::<Credentials>()?;
-    let elem_jrptr = elem_ptr.rptr(&env)?;
-    let elem = elem_jrptr.typed_ref::<Credential>()?;
-    let result = self_rptr.add(elem);
+    let credential_jrptr = credential_ptr.rptr(&env)?;
+    let credential = credential_jrptr.typed_ref::<Credential>()?;
+    let result = self_rptr.add(credential);
     result.into_jboolean().jobject(&env)
   })
   .jresult(&env)
@@ -6621,13 +6623,13 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1ed2
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1ed25519KeyHashesAdd(env: JNIEnv, _: JObject, self_ptr: JRPtr, elem_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1ed25519KeyHashesAdd(env: JNIEnv, _: JObject, self_ptr: JRPtr, keyhash_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
     let self_rptr = self_jrptr.typed_ref::<Ed25519KeyHashes>()?;
-    let elem_jrptr = elem_ptr.rptr(&env)?;
-    let elem = elem_jrptr.typed_ref::<Ed25519KeyHash>()?;
-    let result = self_rptr.add(elem);
+    let keyhash_jrptr = keyhash_ptr.rptr(&env)?;
+    let keyhash = keyhash_jrptr.typed_ref::<Ed25519KeyHash>()?;
+    let result = self_rptr.add(keyhash);
     result.into_jboolean().jobject(&env)
   })
   .jresult(&env)
@@ -7216,6 +7218,18 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fix
     let raw_auxiliary_data = env.convert_byte_array(raw_auxiliary_data_jarray).into_result()?;
     let is_valid = is_valid_jboolean.into_bool();
     let result = FixedTransaction::new_with_auxiliary(&raw_body, &raw_witness_set, &raw_auxiliary_data, is_valid).into_result()?;
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1fixedTransactionNewFromBodyBytes(env: JNIEnv, _: JObject, raw_body_jarray: jbyteArray) -> jobject {
+  handle_exception_result(|| { 
+    let raw_body = env.convert_byte_array(raw_body_jarray).into_result()?;
+    let result = FixedTransaction::new_from_body_bytes(&raw_body).into_result()?;
     result.rptr().jptr(&env)
   })
   .jresult(&env)
@@ -13394,56 +13408,6 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plu
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListToBytes(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
-  handle_exception_result(|| { 
-    let self_jrptr = self_ptr.rptr(&env)?;
-    let self_rptr = self_jrptr.typed_ref::<PlutusList>()?;
-    let result = self_rptr.to_bytes();
-    Ok(JObject::from_raw(env.byte_array_from_slice(&result).into_result()?))
-  })
-  .jresult(&env)
-}
-
-
-#[allow(non_snake_case)]
-#[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListFromBytes(env: JNIEnv, _: JObject, bytes_jarray: jbyteArray) -> jobject {
-  handle_exception_result(|| { 
-    let bytes = env.convert_byte_array(bytes_jarray).into_result()?;
-    let result = PlutusList::from_bytes(bytes).into_result()?;
-    result.rptr().jptr(&env)
-  })
-  .jresult(&env)
-}
-
-
-#[allow(non_snake_case)]
-#[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListToHex(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
-  handle_exception_result(|| { 
-    let self_jrptr = self_ptr.rptr(&env)?;
-    let self_rptr = self_jrptr.typed_ref::<PlutusList>()?;
-    let result = self_rptr.to_hex();
-    result.jstring(&env)
-  })
-  .jresult(&env)
-}
-
-
-#[allow(non_snake_case)]
-#[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListFromHex(env: JNIEnv, _: JObject, hex_str_str: JString) -> jobject {
-  handle_exception_result(|| { 
-    let hex_str = hex_str_str.string(&env)?;
-    let result = PlutusList::from_hex(&hex_str).into_result()?;
-    result.rptr().jptr(&env)
-  })
-  .jresult(&env)
-}
-
-
-#[allow(non_snake_case)]
-#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListNew(env: JNIEnv, _: JObject) -> jobject {
   handle_exception_result(|| { 
     let result = PlutusList::new();
@@ -13490,6 +13454,56 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plu
     let elem = elem_jrptr.typed_ref::<PlutusData>()?;
     self_rptr.add(elem);
     Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListToBytes(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<PlutusList>()?;
+    let result = self_rptr.to_bytes();
+    Ok(JObject::from_raw(env.byte_array_from_slice(&result).into_result()?))
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListFromBytes(env: JNIEnv, _: JObject, bytes_jarray: jbyteArray) -> jobject {
+  handle_exception_result(|| { 
+    let bytes = env.convert_byte_array(bytes_jarray).into_result()?;
+    let result = PlutusList::from_bytes(bytes).into_result()?;
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListToHex(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<PlutusList>()?;
+    let result = self_rptr.to_hex();
+    result.jstring(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListFromHex(env: JNIEnv, _: JObject, hex_str_str: JString) -> jobject {
+  handle_exception_result(|| { 
+    let hex_str = hex_str_str.string(&env)?;
+    let result = PlutusList::from_hex(&hex_str).into_result()?;
+    result.rptr().jptr(&env)
   })
   .jresult(&env)
 }
@@ -17174,6 +17188,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1red
     let elem = elem_jrptr.typed_ref::<Redeemer>()?;
     self_rptr.add(elem);
     Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1redeemersGetContainerType(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<Redeemers>()?;
+    let result = self_rptr.get_container_type();
+    (result.to_i32() as jint).jobject(&env)
   })
   .jresult(&env)
 }
@@ -22867,13 +22894,13 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1tra
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1transactionInputsAdd(env: JNIEnv, _: JObject, self_ptr: JRPtr, elem_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1transactionInputsAdd(env: JNIEnv, _: JObject, self_ptr: JRPtr, input_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
     let self_rptr = self_jrptr.typed_ref::<TransactionInputs>()?;
-    let elem_jrptr = elem_ptr.rptr(&env)?;
-    let elem = elem_jrptr.typed_ref::<TransactionInput>()?;
-    let result = self_rptr.add(elem);
+    let input_jrptr = input_ptr.rptr(&env)?;
+    let input = input_jrptr.typed_ref::<TransactionInput>()?;
+    let result = self_rptr.add(input);
     result.into_jboolean().jobject(&env)
   })
   .jresult(&env)
@@ -26323,13 +26350,13 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1vke
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1vkeywitnessesAdd(env: JNIEnv, _: JObject, self_ptr: JRPtr, elem_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1vkeywitnessesAdd(env: JNIEnv, _: JObject, self_ptr: JRPtr, witness_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
     let self_rptr = self_jrptr.typed_ref::<Vkeywitnesses>()?;
-    let elem_jrptr = elem_ptr.rptr(&env)?;
-    let elem = elem_jrptr.typed_ref::<Vkeywitness>()?;
-    let result = self_rptr.add(elem);
+    let witness_jrptr = witness_ptr.rptr(&env)?;
+    let witness = witness_jrptr.typed_ref::<Vkeywitness>()?;
+    let result = self_rptr.add(witness);
     result.into_jboolean().jobject(&env)
   })
   .jresult(&env)
@@ -27672,6 +27699,34 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1vot
 }
 
 
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1votingProposalsContains(env: JNIEnv, _: JObject, self_ptr: JRPtr, elem_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<VotingProposals>()?;
+    let elem_jrptr = elem_ptr.rptr(&env)?;
+    let elem = elem_jrptr.typed_ref::<VotingProposal>()?;
+    let result = self_rptr.contains(elem);
+    result.into_jboolean().jobject(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1votingProposalsToOption(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<VotingProposals>()?;
+    let result = self_rptr.to_option();
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
 
 #[allow(non_snake_case)]
 #[no_mangle]
@@ -28152,6 +28207,18 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1get
 
 #[allow(non_snake_case)]
 #[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1hasTransactionSetTag(env: JNIEnv, _: JObject, tx_bytes_jarray: jbyteArray) -> jobject {
+  handle_exception_result(|| { 
+    let tx_bytes = env.convert_byte_array(tx_bytes_jarray).into_result()?;
+    let result = has_transaction_set_tag(tx_bytes).into_result()?;
+    (result.to_i32() as jint).jobject(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1hashAuxiliaryData(env: JNIEnv, _: JObject, auxiliary_data_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let auxiliary_data_jrptr = auxiliary_data_ptr.rptr(&env)?;
@@ -28206,19 +28273,6 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1has
   .jresult(&env)
 }
 
-
-
-#[allow(non_snake_case)]
-#[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1hashTransaction(env: JNIEnv, _: JObject, tx_body_ptr: JRPtr) -> jobject {
-  handle_exception_result(|| { 
-    let tx_body_jrptr = tx_body_ptr.rptr(&env)?;
-    let tx_body = tx_body_jrptr.typed_ref::<TransactionBody>()?;
-    let result = hash_transaction(tx_body);
-    result.rptr().jptr(&env)
-  })
-  .jresult(&env)
-}
 
 
 #[allow(non_snake_case)]
