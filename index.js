@@ -5739,10 +5739,36 @@ export class PlutusData extends Ptr {
     return Ptr._wrap(ret, PlutusData);
   }
 
+  async as_address(network) {
+    const networkPtr = Ptr._assertClass(network, NetworkInfo);
+    const ret = await HaskellShelley.csl_bridge_plutusDataAsAddress(this.ptr, networkPtr);
+    return Ptr._wrap(ret, Address);
+  }
+
 }
 
 
 export class PlutusList extends Ptr {
+  async to_bytes() {
+    const ret = await HaskellShelley.csl_bridge_plutusListToBytes(this.ptr);
+    return uint8ArrayFromB64(ret);
+  }
+
+  static async from_bytes(bytes) {
+    const ret = await HaskellShelley.csl_bridge_plutusListFromBytes(b64FromUint8Array(bytes));
+    return Ptr._wrap(ret, PlutusList);
+  }
+
+  async to_hex() {
+    const ret = await HaskellShelley.csl_bridge_plutusListToHex(this.ptr);
+    return ret;
+  }
+
+  static async from_hex(hex_str) {
+    const ret = await HaskellShelley.csl_bridge_plutusListFromHex(hex_str);
+    return Ptr._wrap(ret, PlutusList);
+  }
+
   static async new() {
     const ret = await HaskellShelley.csl_bridge_plutusListNew();
     return Ptr._wrap(ret, PlutusList);
@@ -5762,26 +5788,6 @@ export class PlutusList extends Ptr {
     const elemPtr = Ptr._assertClass(elem, PlutusData);
     const ret = HaskellShelley.csl_bridge_plutusListAdd(this.ptr, elemPtr);
     return ret;
-  }
-
-  async to_bytes() {
-    const ret = await HaskellShelley.csl_bridge_plutusListToBytes(this.ptr);
-    return uint8ArrayFromB64(ret);
-  }
-
-  static async from_bytes(bytes) {
-    const ret = await HaskellShelley.csl_bridge_plutusListFromBytes(b64FromUint8Array(bytes));
-    return Ptr._wrap(ret, PlutusList);
-  }
-
-  async to_hex() {
-    const ret = await HaskellShelley.csl_bridge_plutusListToHex(this.ptr);
-    return ret;
-  }
-
-  static async from_hex(hex_str) {
-    const ret = await HaskellShelley.csl_bridge_plutusListFromHex(hex_str);
-    return Ptr._wrap(ret, PlutusList);
   }
 
 }

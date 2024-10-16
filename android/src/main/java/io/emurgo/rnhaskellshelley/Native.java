@@ -1114,15 +1114,16 @@ final class Native {
     public final native Result<String> csl_bridge_plutusDataToJson(RPtr self, int schema);
     public final native Result<RPtr> csl_bridge_plutusDataFromJson(String json, int schema);
     public final native Result<RPtr> csl_bridge_plutusDataFromAddress(RPtr address);
+    public final native Result<RPtr> csl_bridge_plutusDataAsAddress(RPtr self, RPtr network);
 
-    public final native Result<RPtr> csl_bridge_plutusListNew();
-    public final native Result<Long> csl_bridge_plutusListLen(RPtr self);
-    public final native Result<RPtr> csl_bridge_plutusListGet(RPtr self, long index);
-    public final native Result<Void> csl_bridge_plutusListAdd(RPtr self, RPtr elem);
     public final native Result<byte[]> csl_bridge_plutusListToBytes(RPtr self);
     public final native Result<RPtr> csl_bridge_plutusListFromBytes(byte[] bytes);
     public final native Result<String> csl_bridge_plutusListToHex(RPtr self);
     public final native Result<RPtr> csl_bridge_plutusListFromHex(String hexStr);
+    public final native Result<RPtr> csl_bridge_plutusListNew();
+    public final native Result<Long> csl_bridge_plutusListLen(RPtr self);
+    public final native Result<RPtr> csl_bridge_plutusListGet(RPtr self, long index);
+    public final native Result<Void> csl_bridge_plutusListAdd(RPtr self, RPtr elem);
 
     public final native Result<byte[]> csl_bridge_plutusMapToBytes(RPtr self);
     public final native Result<RPtr> csl_bridge_plutusMapFromBytes(byte[] bytes);
