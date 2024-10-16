@@ -13405,6 +13405,71 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plu
 }
 
 
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusDataAsAddress(env: JNIEnv, _: JObject, self_ptr: JRPtr, network_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<PlutusData>()?;
+    let network_jrptr = network_ptr.rptr(&env)?;
+    let network = network_jrptr.typed_ref::<NetworkInfo>()?;
+    let result = self_rptr.as_address(network).into_result()?;
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListToBytes(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<PlutusList>()?;
+    let result = self_rptr.to_bytes();
+    Ok(JObject::from_raw(env.byte_array_from_slice(&result).into_result()?))
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListFromBytes(env: JNIEnv, _: JObject, bytes_jarray: jbyteArray) -> jobject {
+  handle_exception_result(|| { 
+    let bytes = env.convert_byte_array(bytes_jarray).into_result()?;
+    let result = PlutusList::from_bytes(bytes).into_result()?;
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListToHex(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<PlutusList>()?;
+    let result = self_rptr.to_hex();
+    result.jstring(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListFromHex(env: JNIEnv, _: JObject, hex_str_str: JString) -> jobject {
+  handle_exception_result(|| { 
+    let hex_str = hex_str_str.string(&env)?;
+    let result = PlutusList::from_hex(&hex_str).into_result()?;
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
 
 #[allow(non_snake_case)]
 #[no_mangle]
@@ -13454,56 +13519,6 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plu
     let elem = elem_jrptr.typed_ref::<PlutusData>()?;
     self_rptr.add(elem);
     Ok(JObject::null())
-  })
-  .jresult(&env)
-}
-
-
-#[allow(non_snake_case)]
-#[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListToBytes(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
-  handle_exception_result(|| { 
-    let self_jrptr = self_ptr.rptr(&env)?;
-    let self_rptr = self_jrptr.typed_ref::<PlutusList>()?;
-    let result = self_rptr.to_bytes();
-    Ok(JObject::from_raw(env.byte_array_from_slice(&result).into_result()?))
-  })
-  .jresult(&env)
-}
-
-
-#[allow(non_snake_case)]
-#[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListFromBytes(env: JNIEnv, _: JObject, bytes_jarray: jbyteArray) -> jobject {
-  handle_exception_result(|| { 
-    let bytes = env.convert_byte_array(bytes_jarray).into_result()?;
-    let result = PlutusList::from_bytes(bytes).into_result()?;
-    result.rptr().jptr(&env)
-  })
-  .jresult(&env)
-}
-
-
-#[allow(non_snake_case)]
-#[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListToHex(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
-  handle_exception_result(|| { 
-    let self_jrptr = self_ptr.rptr(&env)?;
-    let self_rptr = self_jrptr.typed_ref::<PlutusList>()?;
-    let result = self_rptr.to_hex();
-    result.jstring(&env)
-  })
-  .jresult(&env)
-}
-
-
-#[allow(non_snake_case)]
-#[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1plutusListFromHex(env: JNIEnv, _: JObject, hex_str_str: JString) -> jobject {
-  handle_exception_result(|| { 
-    let hex_str = hex_str_str.string(&env)?;
-    let result = PlutusList::from_hex(&hex_str).into_result()?;
-    result.rptr().jptr(&env)
   })
   .jresult(&env)
 }

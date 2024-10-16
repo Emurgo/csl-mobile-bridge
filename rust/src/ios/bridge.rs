@@ -11494,50 +11494,17 @@ pub unsafe extern "C" fn csl_bridge_plutus_data_from_address(address_rptr: RPtr,
 }
 
 
-
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_plutus_list_new(result: &mut RPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_plutus_data_as_address(self_rptr: RPtr, network_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
-    let result = PlutusList::new();
+    let self_ref = self_rptr.typed_ref::<PlutusData>()?;
+    let network = network_rptr.typed_ref::<NetworkInfo>()?;
+    let result = self_ref.as_address(network).into_result()?;
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
 }
 
-
-#[no_mangle]
-pub unsafe extern "C" fn csl_bridge_plutus_list_len(self_rptr: RPtr, result: &mut i64, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<PlutusList>()?;
-    let result = self_ref.len();
-    Ok::<i64, String>(result as i64)
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn csl_bridge_plutus_list_get(self_rptr: RPtr, index_long: i64, result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<PlutusList>()?;
-    let index  = index_long as usize;
-    let result = self_ref.get(index);
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn csl_bridge_plutus_list_add(self_rptr: RPtr, elem_rptr: RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let self_ref = self_rptr.typed_ref::<PlutusList>()?;
-    let elem = elem_rptr.typed_ref::<PlutusData>()?;
-    self_ref.add(elem);
-    Ok(())
-  })
-  .response(&mut (),  error)
-}
 
 
 #[no_mangle]
@@ -11581,6 +11548,51 @@ pub unsafe extern "C" fn csl_bridge_plutus_list_from_hex(hex_str_str: CharPtr, r
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_plutus_list_new(result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let result = PlutusList::new();
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_plutus_list_len(self_rptr: RPtr, result: &mut i64, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<PlutusList>()?;
+    let result = self_ref.len();
+    Ok::<i64, String>(result as i64)
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_plutus_list_get(self_rptr: RPtr, index_long: i64, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<PlutusList>()?;
+    let index  = index_long as usize;
+    let result = self_ref.get(index);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_plutus_list_add(self_rptr: RPtr, elem_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<PlutusList>()?;
+    let elem = elem_rptr.typed_ref::<PlutusData>()?;
+    self_ref.add(elem);
+    Ok(())
+  })
+  .response(&mut (),  error)
 }
 
 
