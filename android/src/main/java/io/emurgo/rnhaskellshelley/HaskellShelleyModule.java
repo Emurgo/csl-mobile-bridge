@@ -7875,37 +7875,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
             .pour(promise);
     }
 
-
     @ReactMethod
-    public final void csl_bridge_plutusListNew( Promise promise) {
+    public final void csl_bridge_plutusDataAsAddress(String self, String network, Promise promise) {
         Native.I
-            .csl_bridge_plutusListNew()
+            .csl_bridge_plutusDataAsAddress(new RPtr(self), new RPtr(network))
             .map(RPtr::toJs)
             .pour(promise);
     }
 
-    @ReactMethod
-    public final void csl_bridge_plutusListLen(String self, Promise promise) {
-        Native.I
-            .csl_bridge_plutusListLen(new RPtr(self))
-            .map(Utils::boxedLongToDouble)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void csl_bridge_plutusListGet(String self, Double index, Promise promise) {
-        Native.I
-            .csl_bridge_plutusListGet(new RPtr(self), index.longValue())
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void csl_bridge_plutusListAdd(String self, String elem, Promise promise) {
-        Native.I
-            .csl_bridge_plutusListAdd(new RPtr(self), new RPtr(elem))
-            .pour(promise);
-    }
 
     @ReactMethod
     public final void csl_bridge_plutusListToBytes(String self, Promise promise) {
@@ -7935,6 +7912,37 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
         Native.I
             .csl_bridge_plutusListFromHex(hexStr)
             .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_plutusListNew( Promise promise) {
+        Native.I
+            .csl_bridge_plutusListNew()
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_plutusListLen(String self, Promise promise) {
+        Native.I
+            .csl_bridge_plutusListLen(new RPtr(self))
+            .map(Utils::boxedLongToDouble)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_plutusListGet(String self, Double index, Promise promise) {
+        Native.I
+            .csl_bridge_plutusListGet(new RPtr(self), index.longValue())
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_plutusListAdd(String self, String elem, Promise promise) {
+        Native.I
+            .csl_bridge_plutusListAdd(new RPtr(self), new RPtr(elem))
             .pour(promise);
     }
 

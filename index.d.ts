@@ -5924,31 +5924,16 @@ export class PlutusData extends Ptr {
   */
   static from_address: (address: Address) => Promise<PlutusData>;
 
+  /**
+  * @param {NetworkInfo} network
+  * @returns {Promise<Address>}
+  */
+  as_address: (network: NetworkInfo) => Promise<Address>;
+
 }
 
 
 export class PlutusList extends Ptr {
-  /**
-  * @returns {Promise<PlutusList>}
-  */
-  static new: () => Promise<PlutusList>;
-
-  /**
-  * @returns {Promise<number>}
-  */
-  len: () => Promise<number>;
-
-  /**
-  * @param {number} index
-  * @returns {Promise<PlutusData>}
-  */
-  get: (index: number) => Promise<PlutusData>;
-
-  /**
-  * @param {PlutusData} elem
-  */
-  add: (elem: PlutusData) => Promise<void>;
-
   /**
   * @returns {Promise<Uint8Array>}
   */
@@ -5970,6 +5955,27 @@ export class PlutusList extends Ptr {
   * @returns {Promise<PlutusList>}
   */
   static from_hex: (hex_str: string) => Promise<PlutusList>;
+
+  /**
+  * @returns {Promise<PlutusList>}
+  */
+  static new: () => Promise<PlutusList>;
+
+  /**
+  * @returns {Promise<number>}
+  */
+  len: () => Promise<number>;
+
+  /**
+  * @param {number} index
+  * @returns {Promise<PlutusData>}
+  */
+  get: (index: number) => Promise<PlutusData>;
+
+  /**
+  * @param {PlutusData} elem
+  */
+  add: (elem: PlutusData) => Promise<void>;
 
 }
 

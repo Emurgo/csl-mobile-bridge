@@ -11207,49 +11207,18 @@ RCT_EXPORT_METHOD(csl_bridge_plutusDataFromAddress:(nonnull NSString *)addressPt
     }] exec:addressPtr andResolve:resolve orReject:reject];
 }
 
-
-RCT_EXPORT_METHOD(csl_bridge_plutusListNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
-{
-    [[CSLCSafeOperation new:^NSString*(id _void, CharPtr* error) {
-        RPtr result;
-        return csl_bridge_plutus_list_new(&result, error)
-            ? [NSString stringFromPtr:result]
-            : nil;
-    }] exec:nil andResolve:resolve orReject:reject];
-}
-
-RCT_EXPORT_METHOD(csl_bridge_plutusListLen:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
-{
-    [[CSLCSafeOperation new:^NSNumber*(NSString* selfPtr, CharPtr* error) {
-        int64_t result;
-        RPtr self = [selfPtr  rPtr];
-        return csl_bridge_plutus_list_len(self, &result, error)
-            ? [NSNumber numberWithLongLong:result]
-            : nil;
-    }] exec:selfPtr andResolve:resolve orReject:reject];
-}
-
-RCT_EXPORT_METHOD(csl_bridge_plutusListGet:(nonnull NSString *)selfPtr withIndex:(nonnull NSNumber *)indexVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_plutusDataAsAddress:(nonnull NSString *)selfPtr withNetwork:(nonnull NSString *)networkPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         RPtr result;
         RPtr self = [[params objectAtIndex:0]  rPtr];
-        int64_t index = [[params objectAtIndex:1]  longLongValue];
-        return csl_bridge_plutus_list_get(self, index, &result, error)
+        RPtr network = [[params objectAtIndex:1]  rPtr];
+        return csl_bridge_plutus_data_as_address(self, network, &result, error)
             ? [NSString stringFromPtr:result]
             : nil;
-    }] exec:@[selfPtr, indexVal] andResolve:resolve orReject:reject];
+    }] exec:@[selfPtr, networkPtr] andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_plutusListAdd:(nonnull NSString *)selfPtr withElem:(nonnull NSString *)elemPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
-{
-    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
-        RPtr self = [[params objectAtIndex:0]  rPtr];
-        RPtr elem = [[params objectAtIndex:1]  rPtr];
-        csl_bridge_plutus_list_add(self, elem, error);
-        return nil;
-    }] exec:@[selfPtr, elemPtr] andResolve:resolve orReject:reject];
-}
 
 RCT_EXPORT_METHOD(csl_bridge_plutusListToBytes:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
@@ -11293,6 +11262,49 @@ RCT_EXPORT_METHOD(csl_bridge_plutusListFromHex:(nonnull NSString *)hexStrVal wit
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:hexStrVal andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_plutusListNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(id _void, CharPtr* error) {
+        RPtr result;
+        return csl_bridge_plutus_list_new(&result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_plutusListLen:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSNumber*(NSString* selfPtr, CharPtr* error) {
+        int64_t result;
+        RPtr self = [selfPtr  rPtr];
+        return csl_bridge_plutus_list_len(self, &result, error)
+            ? [NSNumber numberWithLongLong:result]
+            : nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_plutusListGet:(nonnull NSString *)selfPtr withIndex:(nonnull NSNumber *)indexVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        int64_t index = [[params objectAtIndex:1]  longLongValue];
+        return csl_bridge_plutus_list_get(self, index, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[selfPtr, indexVal] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_plutusListAdd:(nonnull NSString *)selfPtr withElem:(nonnull NSString *)elemPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr elem = [[params objectAtIndex:1]  rPtr];
+        csl_bridge_plutus_list_add(self, elem, error);
+        return nil;
+    }] exec:@[selfPtr, elemPtr] andResolve:resolve orReject:reject];
 }
 
 
