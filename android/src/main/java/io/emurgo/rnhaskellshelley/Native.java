@@ -1786,6 +1786,7 @@ final class Native {
     public final native Result<Void> csl_bridge_transactionBuilderAddOutput(RPtr self, RPtr output);
     public final native Result<RPtr> csl_bridge_transactionBuilderFeeForOutput(RPtr self, RPtr output);
     public final native Result<Void> csl_bridge_transactionBuilderSetFee(RPtr self, RPtr fee);
+    public final native Result<Void> csl_bridge_transactionBuilderSetMinFee(RPtr self, RPtr fee);
     public final native Result<Void> csl_bridge_transactionBuilderSetTtl(RPtr self, long ttl);
     public final native Result<Void> csl_bridge_transactionBuilderSetTtlBignum(RPtr self, RPtr ttl);
     public final native Result<Void> csl_bridge_transactionBuilderRemoveTtl(RPtr self);

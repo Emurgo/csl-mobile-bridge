@@ -18020,6 +18020,16 @@ RCT_EXPORT_METHOD(csl_bridge_transactionBuilderSetFee:(nonnull NSString *)selfPt
     }] exec:@[selfPtr, feePtr] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(csl_bridge_transactionBuilderSetMinFee:(nonnull NSString *)selfPtr withFee:(nonnull NSString *)feePtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr fee = [[params objectAtIndex:1]  rPtr];
+        csl_bridge_transaction_builder_set_min_fee(self, fee, error);
+        return nil;
+    }] exec:@[selfPtr, feePtr] andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(csl_bridge_transactionBuilderSetTtl:(nonnull NSString *)selfPtr withTtl:(nonnull NSNumber *)ttlVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
