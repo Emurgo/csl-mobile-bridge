@@ -9438,6 +9438,11 @@ export class TransactionBuilder extends Ptr {
   set_fee: (fee: BigNum) => Promise<void>;
 
   /**
+  * @param {BigNum} fee
+  */
+  set_min_fee: (fee: BigNum) => Promise<void>;
+
+  /**
   * @param {number} ttl
   */
   set_ttl: (ttl: number) => Promise<void>;
