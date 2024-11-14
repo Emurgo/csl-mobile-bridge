@@ -9199,6 +9199,12 @@ export class TransactionBuilder extends Ptr {
     return ret;
   }
 
+  set_min_fee(fee) {
+    const feePtr = Ptr._assertClass(fee, BigNum);
+    const ret = HaskellShelley.csl_bridge_transactionBuilderSetMinFee(this.ptr, feePtr);
+    return ret;
+  }
+
   set_ttl(ttl) {
     const ret = HaskellShelley.csl_bridge_transactionBuilderSetTtl(this.ptr, ttl);
     return ret;

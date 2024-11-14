@@ -18473,6 +18473,18 @@ pub unsafe extern "C" fn csl_bridge_transaction_builder_set_fee(self_rptr: RPtr,
 
 
 #[no_mangle]
+pub unsafe extern "C" fn csl_bridge_transaction_builder_set_min_fee(self_rptr: RPtr, fee_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<TransactionBuilder>()?;
+    let fee = fee_rptr.typed_ref::<BigNum>()?;
+    self_ref.set_min_fee(fee);
+    Ok(())
+  })
+  .response(&mut (),  error)
+}
+
+
+#[no_mangle]
 pub unsafe extern "C" fn csl_bridge_transaction_builder_set_ttl(self_rptr: RPtr, ttl_long: i64, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<TransactionBuilder>()?;

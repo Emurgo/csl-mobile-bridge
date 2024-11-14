@@ -12660,6 +12660,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void csl_bridge_transactionBuilderSetMinFee(String self, String fee, Promise promise) {
+        Native.I
+            .csl_bridge_transactionBuilderSetMinFee(new RPtr(self), new RPtr(fee))
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void csl_bridge_transactionBuilderSetTtl(String self, Double ttl, Promise promise) {
         Native.I
             .csl_bridge_transactionBuilderSetTtl(new RPtr(self), ttl.longValue())
