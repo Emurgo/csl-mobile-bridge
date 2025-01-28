@@ -447,7 +447,7 @@ final class Native {
     public final native Result<Integer> csl_bridge_dRepKind(RPtr self);
     public final native Result<RPtr> csl_bridge_dRepToKeyHash(RPtr self);
     public final native Result<RPtr> csl_bridge_dRepToScriptHash(RPtr self);
-    public final native Result<String> csl_bridge_dRepToBech32(RPtr self);
+    public final native Result<String> csl_bridge_dRepToBech32(RPtr self, boolean cip_129Format);
     public final native Result<RPtr> csl_bridge_dRepFromBech32(String bech32Str);
 
     public final native Result<byte[]> csl_bridge_dRepDeregistrationToBytes(RPtr self);
@@ -1858,6 +1858,7 @@ final class Native {
     public final native Result<RPtr> csl_bridge_transactionBuilderConfigBuilderRefScriptCoinsPerByte(RPtr self, RPtr refScriptCoinsPerByte);
     public final native Result<RPtr> csl_bridge_transactionBuilderConfigBuilderPreferPureChange(RPtr self, boolean preferPureChange);
     public final native Result<RPtr> csl_bridge_transactionBuilderConfigBuilderDeduplicateExplicitRefInputsWithRegularInputs(RPtr self, boolean deduplicateExplicitRefInputsWithRegularInputs);
+    public final native Result<RPtr> csl_bridge_transactionBuilderConfigBuilderDoNotBurnExtraChange(RPtr self, boolean doNotBurnExtraChange);
     public final native Result<RPtr> csl_bridge_transactionBuilderConfigBuilderBuild(RPtr self);
 
     public final native Result<RPtr> csl_bridge_transactionHashFromBytes(byte[] bytes);
@@ -2025,12 +2026,10 @@ final class Native {
     public final native Result<RPtr> csl_bridge_treasuryWithdrawalsActionNew(RPtr withdrawals);
     public final native Result<RPtr> csl_bridge_treasuryWithdrawalsActionNewWithPolicyHash(RPtr withdrawals, RPtr policyHash);
 
-    public final native Result<RPtr> csl_bridge_txBuilderConstantsPlutusDefaultCostModels();
-    public final native Result<RPtr> csl_bridge_txBuilderConstantsPlutusAlonzoCostModels();
-    public final native Result<RPtr> csl_bridge_txBuilderConstantsPlutusVasilCostModels();
-    public final native Result<RPtr> csl_bridge_txBuilderConstantsPlutusConwayCostModels();
-
     public final native Result<RPtr> csl_bridge_txInputsBuilderNew();
+    public final native Result<Void> csl_bridge_txInputsBuilderAddRegularUtxo(RPtr self, RPtr utxo);
+    public final native Result<Void> csl_bridge_txInputsBuilderAddPlutusScriptUtxo(RPtr self, RPtr utxo, RPtr witness);
+    public final native Result<Void> csl_bridge_txInputsBuilderAddNativeScriptUtxo(RPtr self, RPtr utxo, RPtr witness);
     public final native Result<Void> csl_bridge_txInputsBuilderAddKeyInput(RPtr self, RPtr hash, RPtr input, RPtr amount);
     public final native Result<Void> csl_bridge_txInputsBuilderAddNativeScriptInput(RPtr self, RPtr script, RPtr input, RPtr amount);
     public final native Result<Void> csl_bridge_txInputsBuilderAddPlutusScriptInput(RPtr self, RPtr witness, RPtr input, RPtr amount);

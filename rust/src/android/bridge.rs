@@ -210,7 +210,6 @@ use cardano_serialization_lib::TransactionWitnessSet;
 use cardano_serialization_lib::TransactionWitnessSets;
 use cardano_serialization_lib::TreasuryWithdrawals;
 use cardano_serialization_lib::TreasuryWithdrawalsAction;
-use cardano_serialization_lib::TxBuilderConstants;
 use cardano_serialization_lib::TxInputsBuilder;
 use cardano_serialization_lib::URL;
 use cardano_serialization_lib::UnitInterval;
@@ -5456,11 +5455,12 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1dRe
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1dRepToBech32(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1dRepToBech32(env: JNIEnv, _: JObject, self_ptr: JRPtr, cip_129_format_jboolean: jboolean) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
     let self_rptr = self_jrptr.typed_ref::<DRep>()?;
-    let result = self_rptr.to_bech32().into_result()?;
+    let cip_129_format = cip_129_format_jboolean.into_bool();
+    let result = self_rptr.to_bech32(cip_129_format).into_result()?;
     result.jstring(&env)
   })
   .jresult(&env)
@@ -22604,6 +22604,20 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1tra
 
 #[allow(non_snake_case)]
 #[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1transactionBuilderConfigBuilderDoNotBurnExtraChange(env: JNIEnv, _: JObject, self_ptr: JRPtr, do_not_burn_extra_change_jboolean: jboolean) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TransactionBuilderConfigBuilder>()?;
+    let do_not_burn_extra_change = do_not_burn_extra_change_jboolean.into_bool();
+    let result = self_rptr.do_not_burn_extra_change(do_not_burn_extra_change);
+    result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1transactionBuilderConfigBuilderBuild(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
   handle_exception_result(|| { 
     let self_jrptr = self_ptr.rptr(&env)?;
@@ -24599,55 +24613,59 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1tre
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1txBuilderConstantsPlutusDefaultCostModels(env: JNIEnv, _: JObject) -> jobject {
-  handle_exception_result(|| { 
-    let result = TxBuilderConstants::plutus_default_cost_models();
-    result.rptr().jptr(&env)
-  })
-  .jresult(&env)
-}
-
-
-#[allow(non_snake_case)]
-#[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1txBuilderConstantsPlutusAlonzoCostModels(env: JNIEnv, _: JObject) -> jobject {
-  handle_exception_result(|| { 
-    let result = TxBuilderConstants::plutus_alonzo_cost_models();
-    result.rptr().jptr(&env)
-  })
-  .jresult(&env)
-}
-
-
-#[allow(non_snake_case)]
-#[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1txBuilderConstantsPlutusVasilCostModels(env: JNIEnv, _: JObject) -> jobject {
-  handle_exception_result(|| { 
-    let result = TxBuilderConstants::plutus_vasil_cost_models();
-    result.rptr().jptr(&env)
-  })
-  .jresult(&env)
-}
-
-
-#[allow(non_snake_case)]
-#[no_mangle]
-pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1txBuilderConstantsPlutusConwayCostModels(env: JNIEnv, _: JObject) -> jobject {
-  handle_exception_result(|| { 
-    let result = TxBuilderConstants::plutus_conway_cost_models();
-    result.rptr().jptr(&env)
-  })
-  .jresult(&env)
-}
-
-
-
-#[allow(non_snake_case)]
-#[no_mangle]
 pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1txInputsBuilderNew(env: JNIEnv, _: JObject) -> jobject {
   handle_exception_result(|| { 
     let result = TxInputsBuilder::new();
     result.rptr().jptr(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1txInputsBuilderAddRegularUtxo(env: JNIEnv, _: JObject, self_ptr: JRPtr, utxo_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TxInputsBuilder>()?;
+    let utxo_jrptr = utxo_ptr.rptr(&env)?;
+    let utxo = utxo_jrptr.typed_ref::<TransactionUnspentOutput>()?;
+    self_rptr.add_regular_utxo(utxo).into_result()?;
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1txInputsBuilderAddPlutusScriptUtxo(env: JNIEnv, _: JObject, self_ptr: JRPtr, utxo_ptr: JRPtr, witness_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TxInputsBuilder>()?;
+    let utxo_jrptr = utxo_ptr.rptr(&env)?;
+    let utxo = utxo_jrptr.typed_ref::<TransactionUnspentOutput>()?;
+    let witness_jrptr = witness_ptr.rptr(&env)?;
+    let witness = witness_jrptr.typed_ref::<PlutusWitness>()?;
+    self_rptr.add_plutus_script_utxo(utxo, witness).into_result()?;
+    Ok(JObject::null())
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1txInputsBuilderAddNativeScriptUtxo(env: JNIEnv, _: JObject, self_ptr: JRPtr, utxo_ptr: JRPtr, witness_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<TxInputsBuilder>()?;
+    let utxo_jrptr = utxo_ptr.rptr(&env)?;
+    let utxo = utxo_jrptr.typed_ref::<TransactionUnspentOutput>()?;
+    let witness_jrptr = witness_ptr.rptr(&env)?;
+    let witness = witness_jrptr.typed_ref::<NativeScriptSource>()?;
+    self_rptr.add_native_script_utxo(utxo, witness).into_result()?;
+    Ok(JObject::null())
   })
   .jresult(&env)
 }

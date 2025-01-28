@@ -2306,8 +2306,8 @@ export class DRep extends Ptr {
     return Ptr._wrap(ret, ScriptHash);
   }
 
-  async to_bech32() {
-    const ret = await HaskellShelley.csl_bridge_dRepToBech32(this.ptr);
+  async to_bech32(cip_129_format) {
+    const ret = await HaskellShelley.csl_bridge_dRepToBech32(this.ptr, cip_129_format);
     return ret;
   }
 
@@ -9605,6 +9605,11 @@ export class TransactionBuilderConfigBuilder extends Ptr {
     return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
   }
 
+  async do_not_burn_extra_change(do_not_burn_extra_change) {
+    const ret = await HaskellShelley.csl_bridge_transactionBuilderConfigBuilderDoNotBurnExtraChange(this.ptr, do_not_burn_extra_change);
+    return Ptr._wrap(ret, TransactionBuilderConfigBuilder);
+  }
+
   async build() {
     const ret = await HaskellShelley.csl_bridge_transactionBuilderConfigBuilderBuild(this.ptr);
     return Ptr._wrap(ret, TransactionBuilderConfig);
@@ -10461,34 +10466,30 @@ export class TreasuryWithdrawalsAction extends Ptr {
 }
 
 
-export class TxBuilderConstants extends Ptr {
-  static async plutus_default_cost_models() {
-    const ret = await HaskellShelley.csl_bridge_txBuilderConstantsPlutusDefaultCostModels();
-    return Ptr._wrap(ret, Costmdls);
-  }
-
-  static async plutus_alonzo_cost_models() {
-    const ret = await HaskellShelley.csl_bridge_txBuilderConstantsPlutusAlonzoCostModels();
-    return Ptr._wrap(ret, Costmdls);
-  }
-
-  static async plutus_vasil_cost_models() {
-    const ret = await HaskellShelley.csl_bridge_txBuilderConstantsPlutusVasilCostModels();
-    return Ptr._wrap(ret, Costmdls);
-  }
-
-  static async plutus_conway_cost_models() {
-    const ret = await HaskellShelley.csl_bridge_txBuilderConstantsPlutusConwayCostModels();
-    return Ptr._wrap(ret, Costmdls);
-  }
-
-}
-
-
 export class TxInputsBuilder extends Ptr {
   static async new() {
     const ret = await HaskellShelley.csl_bridge_txInputsBuilderNew();
     return Ptr._wrap(ret, TxInputsBuilder);
+  }
+
+  add_regular_utxo(utxo) {
+    const utxoPtr = Ptr._assertClass(utxo, TransactionUnspentOutput);
+    const ret = HaskellShelley.csl_bridge_txInputsBuilderAddRegularUtxo(this.ptr, utxoPtr);
+    return ret;
+  }
+
+  add_plutus_script_utxo(utxo, witness) {
+    const utxoPtr = Ptr._assertClass(utxo, TransactionUnspentOutput);
+    const witnessPtr = Ptr._assertClass(witness, PlutusWitness);
+    const ret = HaskellShelley.csl_bridge_txInputsBuilderAddPlutusScriptUtxo(this.ptr, utxoPtr, witnessPtr);
+    return ret;
+  }
+
+  add_native_script_utxo(utxo, witness) {
+    const utxoPtr = Ptr._assertClass(utxo, TransactionUnspentOutput);
+    const witnessPtr = Ptr._assertClass(witness, NativeScriptSource);
+    const ret = HaskellShelley.csl_bridge_txInputsBuilderAddNativeScriptUtxo(this.ptr, utxoPtr, witnessPtr);
+    return ret;
   }
 
   add_key_input(hash, input, amount) {

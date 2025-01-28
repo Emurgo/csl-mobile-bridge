@@ -3149,9 +3149,9 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public final void csl_bridge_dRepToBech32(String self, Promise promise) {
+    public final void csl_bridge_dRepToBech32(String self, Boolean cip_129Format, Promise promise) {
         Native.I
-            .csl_bridge_dRepToBech32(new RPtr(self))
+            .csl_bridge_dRepToBech32(new RPtr(self), cip_129Format)
             .pour(promise);
     }
 
@@ -13184,6 +13184,14 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void csl_bridge_transactionBuilderConfigBuilderDoNotBurnExtraChange(String self, Boolean doNotBurnExtraChange, Promise promise) {
+        Native.I
+            .csl_bridge_transactionBuilderConfigBuilderDoNotBurnExtraChange(new RPtr(self), doNotBurnExtraChange)
+            .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void csl_bridge_transactionBuilderConfigBuilderBuild(String self, Promise promise) {
         Native.I
             .csl_bridge_transactionBuilderConfigBuilderBuild(new RPtr(self))
@@ -14365,43 +14373,31 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public final void csl_bridge_txBuilderConstantsPlutusDefaultCostModels( Promise promise) {
-        Native.I
-            .csl_bridge_txBuilderConstantsPlutusDefaultCostModels()
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void csl_bridge_txBuilderConstantsPlutusAlonzoCostModels( Promise promise) {
-        Native.I
-            .csl_bridge_txBuilderConstantsPlutusAlonzoCostModels()
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void csl_bridge_txBuilderConstantsPlutusVasilCostModels( Promise promise) {
-        Native.I
-            .csl_bridge_txBuilderConstantsPlutusVasilCostModels()
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-    @ReactMethod
-    public final void csl_bridge_txBuilderConstantsPlutusConwayCostModels( Promise promise) {
-        Native.I
-            .csl_bridge_txBuilderConstantsPlutusConwayCostModels()
-            .map(RPtr::toJs)
-            .pour(promise);
-    }
-
-
-    @ReactMethod
     public final void csl_bridge_txInputsBuilderNew( Promise promise) {
         Native.I
             .csl_bridge_txInputsBuilderNew()
             .map(RPtr::toJs)
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_txInputsBuilderAddRegularUtxo(String self, String utxo, Promise promise) {
+        Native.I
+            .csl_bridge_txInputsBuilderAddRegularUtxo(new RPtr(self), new RPtr(utxo))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_txInputsBuilderAddPlutusScriptUtxo(String self, String utxo, String witness, Promise promise) {
+        Native.I
+            .csl_bridge_txInputsBuilderAddPlutusScriptUtxo(new RPtr(self), new RPtr(utxo), new RPtr(witness))
+            .pour(promise);
+    }
+
+    @ReactMethod
+    public final void csl_bridge_txInputsBuilderAddNativeScriptUtxo(String self, String utxo, String witness, Promise promise) {
+        Native.I
+            .csl_bridge_txInputsBuilderAddNativeScriptUtxo(new RPtr(self), new RPtr(utxo), new RPtr(witness))
             .pour(promise);
     }
 
