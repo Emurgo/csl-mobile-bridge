@@ -203,7 +203,6 @@ use cardano_serialization_lib::TransactionWitnessSet;
 use cardano_serialization_lib::TransactionWitnessSets;
 use cardano_serialization_lib::TreasuryWithdrawals;
 use cardano_serialization_lib::TreasuryWithdrawalsAction;
-use cardano_serialization_lib::TxBuilderConstants;
 use cardano_serialization_lib::TxInputsBuilder;
 use cardano_serialization_lib::URL;
 use cardano_serialization_lib::UnitInterval;
@@ -4694,10 +4693,10 @@ pub unsafe extern "C" fn csl_bridge_d_rep_to_script_hash(self_rptr: RPtr, result
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_d_rep_to_bech32(self_rptr: RPtr, result: &mut CharPtr, error: &mut CharPtr) -> bool {
+pub unsafe extern "C" fn csl_bridge_d_rep_to_bech32(self_rptr: RPtr, cip_129_format: bool, result: &mut CharPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<DRep>()?;
-    let result = self_ref.to_bech32().into_result()?;
+    let result = self_ref.to_bech32(cip_129_format).into_result()?;
     Ok::<CharPtr, String>(result.into_cstr())
   })
   .response(result,  error)
@@ -19298,6 +19297,17 @@ pub unsafe extern "C" fn csl_bridge_transaction_builder_config_builder_deduplica
 
 
 #[no_mangle]
+pub unsafe extern "C" fn csl_bridge_transaction_builder_config_builder_do_not_burn_extra_change(self_rptr: RPtr, do_not_burn_extra_change: bool, result: &mut RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<TransactionBuilderConfigBuilder>()?;
+    let result = self_ref.do_not_burn_extra_change(do_not_burn_extra_change);
+    Ok::<RPtr, String>(result.rptr())
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
 pub unsafe extern "C" fn csl_bridge_transaction_builder_config_builder_build(self_rptr: RPtr, result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let self_ref = self_rptr.typed_ref::<TransactionBuilderConfigBuilder>()?;
@@ -21004,53 +21014,50 @@ pub unsafe extern "C" fn csl_bridge_treasury_withdrawals_action_new_with_policy_
 
 
 #[no_mangle]
-pub unsafe extern "C" fn csl_bridge_tx_builder_constants_plutus_default_cost_models(result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let result = TxBuilderConstants::plutus_default_cost_models();
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn csl_bridge_tx_builder_constants_plutus_alonzo_cost_models(result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let result = TxBuilderConstants::plutus_alonzo_cost_models();
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn csl_bridge_tx_builder_constants_plutus_vasil_cost_models(result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let result = TxBuilderConstants::plutus_vasil_cost_models();
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-#[no_mangle]
-pub unsafe extern "C" fn csl_bridge_tx_builder_constants_plutus_conway_cost_models(result: &mut RPtr, error: &mut CharPtr) -> bool {
-  handle_exception_result(|| { 
-    let result = TxBuilderConstants::plutus_conway_cost_models();
-    Ok::<RPtr, String>(result.rptr())
-  })
-  .response(result,  error)
-}
-
-
-
-#[no_mangle]
 pub unsafe extern "C" fn csl_bridge_tx_inputs_builder_new(result: &mut RPtr, error: &mut CharPtr) -> bool {
   handle_exception_result(|| { 
     let result = TxInputsBuilder::new();
     Ok::<RPtr, String>(result.rptr())
   })
   .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_tx_inputs_builder_add_regular_utxo(self_rptr: RPtr, utxo_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<TxInputsBuilder>()?;
+    let utxo = utxo_rptr.typed_ref::<TransactionUnspentOutput>()?;
+    self_ref.add_regular_utxo(utxo).into_result()?;
+    Ok(())
+  })
+  .response(&mut (),  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_tx_inputs_builder_add_plutus_script_utxo(self_rptr: RPtr, utxo_rptr: RPtr, witness_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<TxInputsBuilder>()?;
+    let utxo = utxo_rptr.typed_ref::<TransactionUnspentOutput>()?;
+    let witness = witness_rptr.typed_ref::<PlutusWitness>()?;
+    self_ref.add_plutus_script_utxo(utxo, witness).into_result()?;
+    Ok(())
+  })
+  .response(&mut (),  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_tx_inputs_builder_add_native_script_utxo(self_rptr: RPtr, utxo_rptr: RPtr, witness_rptr: RPtr, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<TxInputsBuilder>()?;
+    let utxo = utxo_rptr.typed_ref::<TransactionUnspentOutput>()?;
+    let witness = witness_rptr.typed_ref::<NativeScriptSource>()?;
+    self_ref.add_native_script_utxo(utxo, witness).into_result()?;
+    Ok(())
+  })
+  .response(&mut (),  error)
 }
 
 

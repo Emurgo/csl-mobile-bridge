@@ -2336,9 +2336,10 @@ export class DRep extends Ptr {
   to_script_hash: () => Promise<Optional<ScriptHash>>;
 
   /**
+  * @param {boolean} cip_129_format
   * @returns {Promise<string>}
   */
-  to_bech32: () => Promise<string>;
+  to_bech32: (cip_129_format: boolean) => Promise<string>;
 
   /**
   * @param {string} bech32_str
@@ -9829,6 +9830,12 @@ export class TransactionBuilderConfigBuilder extends Ptr {
   deduplicate_explicit_ref_inputs_with_regular_inputs: (deduplicate_explicit_ref_inputs_with_regular_inputs: boolean) => Promise<TransactionBuilderConfigBuilder>;
 
   /**
+  * @param {boolean} do_not_burn_extra_change
+  * @returns {Promise<TransactionBuilderConfigBuilder>}
+  */
+  do_not_burn_extra_change: (do_not_burn_extra_change: boolean) => Promise<TransactionBuilderConfigBuilder>;
+
+  /**
   * @returns {Promise<TransactionBuilderConfig>}
   */
   build: () => Promise<TransactionBuilderConfig>;
@@ -10712,35 +10719,31 @@ export class TreasuryWithdrawalsAction extends Ptr {
 }
 
 
-export class TxBuilderConstants extends Ptr {
-  /**
-  * @returns {Promise<Costmdls>}
-  */
-  static plutus_default_cost_models: () => Promise<Costmdls>;
-
-  /**
-  * @returns {Promise<Costmdls>}
-  */
-  static plutus_alonzo_cost_models: () => Promise<Costmdls>;
-
-  /**
-  * @returns {Promise<Costmdls>}
-  */
-  static plutus_vasil_cost_models: () => Promise<Costmdls>;
-
-  /**
-  * @returns {Promise<Costmdls>}
-  */
-  static plutus_conway_cost_models: () => Promise<Costmdls>;
-
-}
-
-
 export class TxInputsBuilder extends Ptr {
   /**
   * @returns {Promise<TxInputsBuilder>}
   */
   static new: () => Promise<TxInputsBuilder>;
+
+  /**
+  * @param {TransactionUnspentOutput} utxo
+  * @returns {Promise<void>}
+  */
+  add_regular_utxo: (utxo: TransactionUnspentOutput) => Promise<void>;
+
+  /**
+  * @param {TransactionUnspentOutput} utxo
+  * @param {PlutusWitness} witness
+  * @returns {Promise<void>}
+  */
+  add_plutus_script_utxo: (utxo: TransactionUnspentOutput, witness: PlutusWitness) => Promise<void>;
+
+  /**
+  * @param {TransactionUnspentOutput} utxo
+  * @param {NativeScriptSource} witness
+  * @returns {Promise<void>}
+  */
+  add_native_script_utxo: (utxo: TransactionUnspentOutput, witness: NativeScriptSource) => Promise<void>;
 
   /**
   * @param {Ed25519KeyHash} hash

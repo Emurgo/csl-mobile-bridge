@@ -172,7 +172,6 @@ use cardano_serialization_lib::TransactionWitnessSet;
 use cardano_serialization_lib::TransactionWitnessSets;
 use cardano_serialization_lib::TreasuryWithdrawals;
 use cardano_serialization_lib::TreasuryWithdrawalsAction;
-use cardano_serialization_lib::TxBuilderConstants;
 use cardano_serialization_lib::TxInputsBuilder;
 use cardano_serialization_lib::URL;
 use cardano_serialization_lib::UnitInterval;
@@ -370,7 +369,6 @@ impl RPtrRepresentable for TransactionWitnessSet {}
 impl RPtrRepresentable for TransactionWitnessSets {}
 impl RPtrRepresentable for TreasuryWithdrawals {}
 impl RPtrRepresentable for TreasuryWithdrawalsAction {}
-impl RPtrRepresentable for TxBuilderConstants {}
 impl RPtrRepresentable for TxInputsBuilder {}
 impl RPtrRepresentable for URL {}
 impl RPtrRepresentable for UnitInterval {}

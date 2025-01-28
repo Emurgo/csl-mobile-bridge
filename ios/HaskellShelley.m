@@ -4465,15 +4465,16 @@ RCT_EXPORT_METHOD(csl_bridge_dRepToScriptHash:(nonnull NSString *)selfPtr withRe
     }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
-RCT_EXPORT_METHOD(csl_bridge_dRepToBech32:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(csl_bridge_dRepToBech32:(nonnull NSString *)selfPtr withCip_129Format:(nonnull NSNumber *)cip_129FormatVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
-    [[CSLCSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
         CharPtr result;
-        RPtr self = [selfPtr  rPtr];
-        return csl_bridge_d_rep_to_bech32(self, &result, error)
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        BOOL cip_129Format = [[params objectAtIndex:1]  boolValue];
+        return csl_bridge_d_rep_to_bech32(self, cip_129Format, &result, error)
             ? [NSString stringFromCharPtr:&result]
             : nil;
-    }] exec:selfPtr andResolve:resolve orReject:reject];
+    }] exec:@[selfPtr, cip_129FormatVal] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(csl_bridge_dRepFromBech32:(nonnull NSString *)bech32StrVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
@@ -18777,6 +18778,18 @@ RCT_EXPORT_METHOD(csl_bridge_transactionBuilderConfigBuilderDeduplicateExplicitR
     }] exec:@[selfPtr, deduplicateExplicitRefInputsWithRegularInputsVal] andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(csl_bridge_transactionBuilderConfigBuilderDoNotBurnExtraChange:(nonnull NSString *)selfPtr withDoNotBurnExtraChange:(nonnull NSNumber *)doNotBurnExtraChangeVal withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr result;
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        BOOL doNotBurnExtraChange = [[params objectAtIndex:1]  boolValue];
+        return csl_bridge_transaction_builder_config_builder_do_not_burn_extra_change(self, doNotBurnExtraChange, &result, error)
+            ? [NSString stringFromPtr:result]
+            : nil;
+    }] exec:@[selfPtr, doNotBurnExtraChangeVal] andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(csl_bridge_transactionBuilderConfigBuilderBuild:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {
@@ -20455,47 +20468,6 @@ RCT_EXPORT_METHOD(csl_bridge_treasuryWithdrawalsActionNewWithPolicyHash:(nonnull
 }
 
 
-RCT_EXPORT_METHOD(csl_bridge_txBuilderConstantsPlutusDefaultCostModels:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
-{
-    [[CSLCSafeOperation new:^NSString*(id _void, CharPtr* error) {
-        RPtr result;
-        return csl_bridge_tx_builder_constants_plutus_default_cost_models(&result, error)
-            ? [NSString stringFromPtr:result]
-            : nil;
-    }] exec:nil andResolve:resolve orReject:reject];
-}
-
-RCT_EXPORT_METHOD(csl_bridge_txBuilderConstantsPlutusAlonzoCostModels:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
-{
-    [[CSLCSafeOperation new:^NSString*(id _void, CharPtr* error) {
-        RPtr result;
-        return csl_bridge_tx_builder_constants_plutus_alonzo_cost_models(&result, error)
-            ? [NSString stringFromPtr:result]
-            : nil;
-    }] exec:nil andResolve:resolve orReject:reject];
-}
-
-RCT_EXPORT_METHOD(csl_bridge_txBuilderConstantsPlutusVasilCostModels:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
-{
-    [[CSLCSafeOperation new:^NSString*(id _void, CharPtr* error) {
-        RPtr result;
-        return csl_bridge_tx_builder_constants_plutus_vasil_cost_models(&result, error)
-            ? [NSString stringFromPtr:result]
-            : nil;
-    }] exec:nil andResolve:resolve orReject:reject];
-}
-
-RCT_EXPORT_METHOD(csl_bridge_txBuilderConstantsPlutusConwayCostModels:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
-{
-    [[CSLCSafeOperation new:^NSString*(id _void, CharPtr* error) {
-        RPtr result;
-        return csl_bridge_tx_builder_constants_plutus_conway_cost_models(&result, error)
-            ? [NSString stringFromPtr:result]
-            : nil;
-    }] exec:nil andResolve:resolve orReject:reject];
-}
-
-
 RCT_EXPORT_METHOD(csl_bridge_txInputsBuilderNew:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(id _void, CharPtr* error) {
@@ -20504,6 +20476,38 @@ RCT_EXPORT_METHOD(csl_bridge_txInputsBuilderNew:(RCTPromiseResolveBlock)resolve 
             ? [NSString stringFromPtr:result]
             : nil;
     }] exec:nil andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_txInputsBuilderAddRegularUtxo:(nonnull NSString *)selfPtr withUtxo:(nonnull NSString *)utxoPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr utxo = [[params objectAtIndex:1]  rPtr];
+        csl_bridge_tx_inputs_builder_add_regular_utxo(self, utxo, error);
+        return nil;
+    }] exec:@[selfPtr, utxoPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_txInputsBuilderAddPlutusScriptUtxo:(nonnull NSString *)selfPtr withUtxo:(nonnull NSString *)utxoPtr withWitness:(nonnull NSString *)witnessPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr utxo = [[params objectAtIndex:1]  rPtr];
+        RPtr witness = [[params objectAtIndex:2]  rPtr];
+        csl_bridge_tx_inputs_builder_add_plutus_script_utxo(self, utxo, witness, error);
+        return nil;
+    }] exec:@[selfPtr, utxoPtr, witnessPtr] andResolve:resolve orReject:reject];
+}
+
+RCT_EXPORT_METHOD(csl_bridge_txInputsBuilderAddNativeScriptUtxo:(nonnull NSString *)selfPtr withUtxo:(nonnull NSString *)utxoPtr withWitness:(nonnull NSString *)witnessPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSString*(NSArray* params, CharPtr* error) {
+        RPtr self = [[params objectAtIndex:0]  rPtr];
+        RPtr utxo = [[params objectAtIndex:1]  rPtr];
+        RPtr witness = [[params objectAtIndex:2]  rPtr];
+        csl_bridge_tx_inputs_builder_add_native_script_utxo(self, utxo, witness, error);
+        return nil;
+    }] exec:@[selfPtr, utxoPtr, witnessPtr] andResolve:resolve orReject:reject];
 }
 
 RCT_EXPORT_METHOD(csl_bridge_txInputsBuilderAddKeyInput:(nonnull NSString *)selfPtr withHash:(nonnull NSString *)hashPtr withInput:(nonnull NSString *)inputPtr withAmount:(nonnull NSString *)amountPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
