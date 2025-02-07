@@ -230,6 +230,7 @@ final class Native {
     public final native Result<byte[]> csl_bridge_byronAddressToBytes(RPtr self);
     public final native Result<RPtr> csl_bridge_byronAddressFromBytes(byte[] bytes);
     public final native Result<Long> csl_bridge_byronAddressByronProtocolMagic(RPtr self);
+    public final native Result<Integer> csl_bridge_byronAddressByronAddressKind(RPtr self);
     public final native Result<byte[]> csl_bridge_byronAddressAttributes(RPtr self);
     public final native Result<Long> csl_bridge_byronAddressNetworkId(RPtr self);
     public final native Result<RPtr> csl_bridge_byronAddressFromBase58(String s);

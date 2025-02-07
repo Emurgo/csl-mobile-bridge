@@ -1178,6 +1178,11 @@ export class ByronAddress extends Ptr {
     return ret;
   }
 
+  async byron_address_kind() {
+    const ret = await HaskellShelley.csl_bridge_byronAddressByronAddressKind(this.ptr);
+    return ret;
+  }
+
   async attributes() {
     const ret = await HaskellShelley.csl_bridge_byronAddressAttributes(this.ptr);
     return uint8ArrayFromB64(ret);
@@ -12156,6 +12161,13 @@ export const BlockEra = Object.freeze({
   Babbage: 5,
   Conway: 6,
   Unknown: 7,
+});
+
+
+export const ByronAddressType = Object.freeze({
+  ATPubKey: 0,
+  ATScript: 1,
+  ATRedeem: 2,
 });
 
 

@@ -231,6 +231,7 @@ use cardano_serialization_lib::VotingProposalBuilder;
 use cardano_serialization_lib::VotingProposals;
 use cardano_serialization_lib::Withdrawals;
 use cardano_serialization_lib::WithdrawalsBuilder;
+use cardano_serialization_lib::legacy_address::ByronAddressType;
 
 
 #[no_mangle]
@@ -2436,6 +2437,17 @@ pub unsafe extern "C" fn csl_bridge_byron_address_byron_protocol_magic(self_rptr
     let self_ref = self_rptr.typed_ref::<ByronAddress>()?;
     let result = self_ref.byron_protocol_magic();
     Ok::<i64, String>(result as i64)
+  })
+  .response(result,  error)
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn csl_bridge_byron_address_byron_address_kind(self_rptr: RPtr, result: &mut i32, error: &mut CharPtr) -> bool {
+  handle_exception_result(|| { 
+    let self_ref = self_rptr.typed_ref::<ByronAddress>()?;
+    let result = self_ref.byron_address_kind();
+    Ok::<i32, String>(result as i32)
   })
   .response(result,  error)
 }

@@ -255,6 +255,7 @@ use cardano_serialization_lib::has_transaction_set_tag;
 use cardano_serialization_lib::hash_auxiliary_data;
 use cardano_serialization_lib::hash_plutus_data;
 use cardano_serialization_lib::hash_script_data;
+use cardano_serialization_lib::legacy_address::ByronAddressType;
 use cardano_serialization_lib::make_daedalus_bootstrap_witness;
 use cardano_serialization_lib::make_icarus_bootstrap_witness;
 use cardano_serialization_lib::make_vkey_witness;
@@ -2822,6 +2823,19 @@ pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1byr
     let self_rptr = self_jrptr.typed_ref::<ByronAddress>()?;
     let result = self_rptr.byron_protocol_magic();
     result.into_jlong().jobject(&env)
+  })
+  .jresult(&env)
+}
+
+
+#[allow(non_snake_case)]
+#[no_mangle]
+pub unsafe extern "C" fn Java_io_emurgo_rnhaskellshelley_Native_csl_1bridge_1byronAddressByronAddressKind(env: JNIEnv, _: JObject, self_ptr: JRPtr) -> jobject {
+  handle_exception_result(|| { 
+    let self_jrptr = self_ptr.rptr(&env)?;
+    let self_rptr = self_jrptr.typed_ref::<ByronAddress>()?;
+    let result = self_rptr.byron_address_kind();
+    (result.to_i32() as jint).jobject(&env)
   })
   .jresult(&env)
 }
