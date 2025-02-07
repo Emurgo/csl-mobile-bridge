@@ -1569,6 +1569,13 @@ public class HaskellShelleyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public final void csl_bridge_byronAddressByronAddressKind(String self, Promise promise) {
+        Native.I
+            .csl_bridge_byronAddressByronAddressKind(new RPtr(self))
+            .pour(promise);
+    }
+
+    @ReactMethod
     public final void csl_bridge_byronAddressAttributes(String self, Promise promise) {
         Native.I
             .csl_bridge_byronAddressAttributes(new RPtr(self))

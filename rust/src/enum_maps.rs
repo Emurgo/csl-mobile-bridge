@@ -23,6 +23,7 @@ use cardano_serialization_lib::TransactionMetadatumKind;
 use cardano_serialization_lib::TransactionSetsState;
 use cardano_serialization_lib::VoteKind;
 use cardano_serialization_lib::VoterKind;
+use cardano_serialization_lib::legacy_address::ByronAddressType;
 
 use crate::panic::Result;
 
@@ -87,6 +88,27 @@ impl ToEnum<BlockEra> for i32 {
             6 => Ok(BlockEra::Conway),
             7 => Ok(BlockEra::Unknown),
             _ => Err("Invalid value for BlockEra".into()),
+        }
+    }
+}
+
+impl ToPrimitive for ByronAddressType {
+    fn to_i32(&self) -> i32 {
+        match self {
+            ByronAddressType::ATPubKey => 0,
+            ByronAddressType::ATScript => 1,
+            ByronAddressType::ATRedeem => 2,
+        }
+    }
+}
+
+impl ToEnum<ByronAddressType> for i32 {
+    fn to_enum(&self) -> Result<ByronAddressType> {
+        match self {
+            0 => Ok(ByronAddressType::ATPubKey),
+            1 => Ok(ByronAddressType::ATScript),
+            2 => Ok(ByronAddressType::ATRedeem),
+            _ => Err("Invalid value for ByronAddressType".into()),
         }
     }
 }

@@ -2222,6 +2222,17 @@ RCT_EXPORT_METHOD(csl_bridge_byronAddressByronProtocolMagic:(nonnull NSString *)
     }] exec:selfPtr andResolve:resolve orReject:reject];
 }
 
+RCT_EXPORT_METHOD(csl_bridge_byronAddressByronAddressKind:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
+{
+    [[CSLCSafeOperation new:^NSNumber*(NSString* selfPtr, CharPtr* error) {
+        int32_t result;
+        RPtr self = [selfPtr  rPtr];
+        return csl_bridge_byron_address_byron_address_kind(self, &result, error)
+            ? [NSNumber numberWithLong:result]
+            : nil;
+    }] exec:selfPtr andResolve:resolve orReject:reject];
+}
+
 RCT_EXPORT_METHOD(csl_bridge_byronAddressAttributes:(nonnull NSString *)selfPtr withResolve:(RCTPromiseResolveBlock)resolve andReject:(RCTPromiseRejectBlock)reject)
 {
     [[CSLCSafeOperation new:^NSString*(NSString* selfPtr, CharPtr* error) {

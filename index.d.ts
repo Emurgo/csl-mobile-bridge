@@ -1158,6 +1158,11 @@ export class ByronAddress extends Ptr {
   byron_protocol_magic: () => Promise<number>;
 
   /**
+  * @returns {Promise<ByronAddressType>}
+  */
+  byron_address_kind: () => Promise<ByronAddressType>;
+
+  /**
   * @returns {Promise<Uint8Array>}
   */
   attributes: () => Promise<Uint8Array>;
@@ -12460,6 +12465,13 @@ export enum BlockEra {
   Babbage = 5,
   Conway = 6,
   Unknown = 7,
+}
+
+
+export enum ByronAddressType {
+  ATPubKey = 0,
+  ATScript = 1,
+  ATRedeem = 2,
 }
 
 

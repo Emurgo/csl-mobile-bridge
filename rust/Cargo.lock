@@ -87,9 +87,9 @@ checksum = "dfb24e866b15a1af2a1b663f10c6b6b8f397a84aadb828f12e5b289ec23a3a3c"
 
 [[package]]
 name = "cardano-serialization-lib"
-version = "14.0.0"
+version = "14.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "097bdf373ed3e91b0a2e46b7c017e47a986509b478659f1c688bb28e58b3300d"
+checksum = "3c41b58e0e1422f82a911f6b00af261be171c02202803d3a017f3d662e10a7e2"
 dependencies = [
  "bech32",
  "cbor_event",
@@ -222,7 +222,7 @@ source = "git+https://github.com/emurgo/cryptoxide?tag=0.4.4#cbc69c01642b263541c
 
 [[package]]
 name = "csl-mobile-bridge"
-version = "8.0.0"
+version = "8.1.0"
 dependencies = [
  "base64",
  "byteorder",
